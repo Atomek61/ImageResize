@@ -1,0 +1,1 @@
+..\bin\imgres @org\imglist.txt .\test4_%%SIZE%% -s 10,3840 -w "watermarks\atomekde.png?40,90,10?50"

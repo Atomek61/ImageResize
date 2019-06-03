@@ -1,0 +1,1 @@
+..\bin\imgres @org\imglist.txt .\test2_%%SIZE%% -s 640,800 -j 10 -p max

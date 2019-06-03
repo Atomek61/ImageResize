@@ -1,0 +1,17 @@
+[Common]
+Type=IRS
+Version=100
+
+[Settings]
+SrcFilenames=..\tst\org\img1.png|..\tst\org\img2.jpg|..\tst\org\img3.jpg|..\tst\org\img4.png|
+DstFolder=..\tst\test4_%SIZE%
+Sizes=10,3840
+JpgQuality=default
+PngCompression=default
+MrkPosition=1
+MrkEnabled=1
+MrkFilename=..\tst\watermarks\atomekde.png
+MrkSize=40.0
+MrkX=10.0
+MrkY=10.0
+MrkAlpha=50.0

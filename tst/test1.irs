@@ -1,0 +1,17 @@
+[Common]
+Type=IRS
+Version=100
+
+[Settings]
+SrcFilenames=..\tst\org\img1.png|..\tst\org\img2.jpg|..\tst\org\img3.jpg|..\tst\org\img4.png|
+DstFolder=..\tst\test1_%SIZE%
+Sizes=120,240
+JpgQuality=75
+PngCompression=default
+MrkPosition=3
+MrkEnabled=0
+MrkFilename=
+MrkSize=20.0
+MrkX=2.0
+MrkY=2.0
+MrkAlpha=50.0
