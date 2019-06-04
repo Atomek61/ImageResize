@@ -1,1 +1,0 @@
-for /d %%x in (test?_*) do rd /s /q "%%x"

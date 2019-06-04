@@ -7,10 +7,11 @@ interface
 
 uses
   Classes, Types, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ComCtrls,
-  ActnList, ExtCtrls, imgres, registry, aboutdlg, inifiles, strutils;
+  ActnList, ExtCtrls, imgres, registry, aboutdlg, inifiles, strutils, LMessages,
+  LCLIntf, Buttons;
 
 const
-  IMGRESGUIVER = '1.2';
+  IMGRESGUIVER = '1.3';
   IMGRESGUICPR = 'ImageResize V'+IMGRESGUIVER+' © 2019 Jan Schirrmacher, www.atomek.de';
 
   INITYPE = 'IRS';
@@ -27,6 +28,8 @@ const
 
   REGKEY = '\Software\Atomek\ImageResize';
 
+  LM_RUN = LM_USER + 1;
+
 type
 
   { TMainDialog }
@@ -39,6 +42,7 @@ type
   end;
 
   TMainDialog = class(TForm)
+    ActionHelp: TAction;
     ActionSave: TAction;
     ActionSaveAs: TAction;
     ActionOpen: TAction;
@@ -51,14 +55,14 @@ type
     ActionClearFilenames: TAction;
     ActionExecute: TAction;
     ActionList: TActionList;
+    ButtonAbout: TBitBtn;
+    ButtonClearSizes: TBitBtn;
+    ButtonClearSizes1: TBitBtn;
+    ButtonClearSizes2: TBitBtn;
+    ButtonClearSrcFiles: TBitBtn;
+    ButtonBrowseSrcFiles: TBitBtn;
+    ButtonExecute: TBitBtn;
     BrowseDstFolder: TSelectDirectoryDialog;
-    Button1: TButton;
-    ButtonAbout: TButton;
-    ButtonClearSizes: TButton;
-    ButtonBrowseWatermarkFilename: TButton;
-    ButtonBrowseFilenames: TButton;
-    ButtonBrowseFolder: TButton;
-    ButtonClearFilenames: TButton;
     CheckBoxMrkEnabled: TCheckBox;
     ComboBoxMrkPos: TComboBox;
     ComboBoxJpgQuality: TComboBox;
@@ -73,7 +77,8 @@ type
     GroupBox1: TGroupBox;
     GroupBoxJpgOptions: TGroupBox;
     GroupBoxPngOptions: TGroupBox;
-    ImageList: TImageList;
+    ImageList20x20: TImageList;
+    ImageList24x24: TImageList;
     Label1: TLabel;
     Label10: TLabel;
     Label11: TLabel;
@@ -111,6 +116,8 @@ type
     ToolButton4: TToolButton;
     ToolButton5: TToolButton;
     ToolButton6: TToolButton;
+    ToolButton7: TToolButton;
+    ToolButton8: TToolButton;
     procedure ActionAboutExecute(Sender: TObject);
     procedure ActionBrowseDstFolderExecute(Sender: TObject);
     procedure ActionBrowseFilenamesExecute(Sender: TObject);
@@ -118,18 +125,22 @@ type
     procedure ActionClearFilenamesExecute(Sender: TObject);
     procedure ActionClearSizesExecute(Sender: TObject);
     procedure ActionExecuteExecute(Sender: TObject);
+    procedure ActionHelpExecute(Sender: TObject);
     procedure ActionNewExecute(Sender: TObject);
     procedure ActionOpenExecute(Sender: TObject);
     procedure ActionSaveAsExecute(Sender: TObject);
     procedure ActionSaveExecute(Sender: TObject);
+    procedure ButtonExecuteClick(Sender: TObject);
     procedure ComboBoxSizesChange(Sender: TObject);
     procedure EditDstFolderChange(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
     procedure MemoSrcFilenamesChange(Sender: TObject);
     procedure PanelControlsClick(Sender: TObject);
     procedure TimerProgressBarOffTimer(Sender: TObject);
   private
+    FAutoExit :boolean;
     FIsSave :boolean;
     FIniFilename :string;
     FImgRes :TImgRes;
@@ -139,13 +150,16 @@ type
     procedure SetTitle(const Str :string);
     procedure OnPrint(Sender :TObject; const Line :string);
     procedure OnCanProgress(Sender :TObject; Progress :single; var Cancel :boolean);
+    procedure OnShowHandler(Sender :TObject);
     procedure SaveToRegistry;
     function LoadFromRegistry :boolean;
     procedure Save(const Filename :string);
+    procedure Load(const Filename :string);
     procedure Log(const Msg :string);
     function MrkBorderToPos(const Value :TPos) :TPos;
     function MrkPosToBorder(const Value :TPos) :TPos;
     procedure UpdateControls;
+    procedure LMRun(var Message: TLMessage); message LM_RUN;
   public
 
   end;
@@ -168,11 +182,35 @@ end;
 { TMainDialog }
 
 procedure TMainDialog.FormCreate(Sender: TObject);
+var
+  Params :TStringArray;
 begin
   DefaultFormatSettings.DecimalSeparator := '.';
   if not LoadFromRegistry then
     ActionNew.Execute;
   UpdateControls;
+  FAutoExit := Application.HasOption('X', 'AUTOEXIT');
+  Params := Application.GetNonOptions('AX', ['AUTOSTART', 'AUTOEXIT']);
+  if Length(Params)=1 then
+    Load(Params[0]);
+  if Application.HasOption('A', 'AUTOSTART') then
+    PostMessage(Handle, LM_RUN, 0, 0);
+end;
+
+procedure TMainDialog.FormShow(Sender: TObject);
+begin
+end;
+
+procedure TMainDialog.LMRun(var Message: TLMessage);
+begin
+  ActionExecute.Execute;
+  Application.ProcessMessages;
+  if FAutoExit then
+    Close;
+end;
+
+procedure TMainDialog.OnShowHandler(Sender: TObject);
+begin
 end;
 
 procedure TMainDialog.PanelControlsClick(Sender: TObject);
@@ -273,38 +311,9 @@ begin
 end;
 
 procedure TMainDialog.ActionOpenExecute(Sender: TObject);
-var
-  Ini :TIniFile;
-  IniVer :string;
-  IniTyp :string;
 begin
   if OpenDialog.Execute then begin
-    Ini := TIniFile.Create(OpenDialog.Filename);
-    try
-      IniTyp := Ini.ReadString('Common', 'Type', 'unknown');
-      if IniTyp<>INITYPE then
-        raise Exception.Create('Cant load Image Resize Settings File');
-      IniVer := Ini.ReadString('Common', 'Version', '000');
-      if IniVer<>INIVERSION then
-        Log(Format('Warning: Unexpected ini file version %s, %s expected', [IniVer, INIVERSION]));
-      MemoSrcFilenames.Text := ReplaceStr(Ini.ReadString('Settings', 'SrcFilenames', ''), '|', #13#10);
-      EditDstFolder.Text := Ini.ReadString('Settings', 'DstFolder', '');
-      ComboBoxSizes.Text := Ini.ReadString('Settings', 'Sizes', '');
-      ComboBoxJpgQuality.Text := Ini.ReadString('Settings', 'JpgQuality', '');
-      ComboBoxPngCompression.Text := Ini.ReadString('Settings', 'PngCompression', '');
-      ComboBoxMrkPos.ItemIndex := Ini.ReadInteger('Settings', 'MrkPosition', 0);
-      CheckBoxMrkEnabled.Checked := Ini.ReadBool('Settings', 'MrkEnabled', false);
-      EditMrkFilename.Text := Ini.ReadString('Settings', 'MrkFilename', '');
-      EditMrkSize.Text := Ini.ReadString('Settings', 'MrkSize', '');
-      EditMrkX.Text := Ini.ReadString('Settings', 'MrkX', '');
-      EditMrkY.Text := Ini.ReadString('Settings', 'MrkY','');
-      EditMrkAlpha.Text := Ini.ReadString('Settings', 'MrkAlpha', '');
-      FIsSave := true;
-      FIniFilename := OpenDialog.Filename;
-      SetTitle(''''+FIniFilename+'''');
-    finally
-       Ini.Free;
-    end;
+    Load(OpenDialog.Filename);
   end;
 end;
 
@@ -332,6 +341,42 @@ begin
     FIniFilename := Filename;
     SetTitle(''''+FIniFilename+'''');
     Log(Format('Settings saved to ''%s''', [FIniFilename]));
+  finally
+     Ini.Free;
+  end;
+end;
+
+procedure TMainDialog.Load(const Filename: string);
+var
+  Ini :TIniFile;
+  IniVer :string;
+  IniTyp :string;
+begin
+  if not FileExists(Filename) then
+    raise Exception.CreateFmt('File ''%s'' not found.', [Filename]);
+  Ini := TIniFile.Create(Filename);
+  try
+    IniTyp := Ini.ReadString('Common', 'Type', 'unknown');
+    if IniTyp<>INITYPE then
+      raise Exception.Create('Cant load Image Resize Settings File');
+    IniVer := Ini.ReadString('Common', 'Version', '000');
+    if IniVer<>INIVERSION then
+      Log(Format('Warning: Unexpected ini file version %s, %s expected', [IniVer, INIVERSION]));
+    MemoSrcFilenames.Text := ReplaceStr(Ini.ReadString('Settings', 'SrcFilenames', ''), '|', #13#10);
+    EditDstFolder.Text := Ini.ReadString('Settings', 'DstFolder', '');
+    ComboBoxSizes.Text := Ini.ReadString('Settings', 'Sizes', '');
+    ComboBoxJpgQuality.Text := Ini.ReadString('Settings', 'JpgQuality', '');
+    ComboBoxPngCompression.Text := Ini.ReadString('Settings', 'PngCompression', '');
+    ComboBoxMrkPos.ItemIndex := Ini.ReadInteger('Settings', 'MrkPosition', 0);
+    CheckBoxMrkEnabled.Checked := Ini.ReadBool('Settings', 'MrkEnabled', false);
+    EditMrkFilename.Text := Ini.ReadString('Settings', 'MrkFilename', '');
+    EditMrkSize.Text := Ini.ReadString('Settings', 'MrkSize', '');
+    EditMrkX.Text := Ini.ReadString('Settings', 'MrkX', '');
+    EditMrkY.Text := Ini.ReadString('Settings', 'MrkY','');
+    EditMrkAlpha.Text := Ini.ReadString('Settings', 'MrkAlpha', '');
+    FIsSave := true;
+    FIniFilename := Filename;
+    SetTitle(''''+Filename+'''');
   finally
      Ini.Free;
   end;
@@ -387,6 +432,11 @@ begin
     Save(FIniFilename);
 end;
 
+procedure TMainDialog.ButtonExecuteClick(Sender: TObject);
+begin
+  ActionExecute.Execute;
+end;
+
 procedure TMainDialog.MemoSrcFilenamesChange(Sender: TObject);
 begin
   LabelSrcFilnamesRequired.Enabled := Length(MemoSrcFilenames.Text) = 0;
@@ -439,7 +489,7 @@ end;
 
 procedure TMainDialog.ActionClearFilenamesExecute(Sender: TObject);
 begin
-  MemoSrcFilenames.Clear;
+  MemoSrcFilenames.Lines.Clear;
 end;
 
 procedure TMainDialog.ActionClearSizesExecute(Sender: TObject);
@@ -482,7 +532,10 @@ begin
     FCancelled := true;
   end else begin
     ActionExecute.Caption := 'Cancel';
+    ButtonExecute.Caption := 'Cancel';
     ActionExecute.ImageIndex := 5;
+    ButtonExecute.ImageIndex := 1;
+    ButtonExecute.Invalidate;
     ProgressBar.Position := 0;
     ProgressBar.Visible := true;
     TimerProgressBarOff.Enabled := false;
@@ -555,11 +608,18 @@ begin
       FImgRes.Free;
       FExecuting := false;
       ActionExecute.Caption := 'E&xecute';
+      ButtonExecute.Caption := 'Execute';
       ActionExecute.ImageIndex := 4;
+      ButtonExecute.ImageIndex := 2;
       TimerProgressBarOff.Enabled := true;
     end;
   end;
 
+end;
+
+procedure TMainDialog.ActionHelpExecute(Sender: TObject);
+begin
+  OpenUrl('http://www.atomek.de/imageresize/index.html#gui');
 end;
 
 end.

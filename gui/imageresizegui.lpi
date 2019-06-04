@@ -21,6 +21,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MajorVersionNr Value="1"/>
+      <MinorVersionNr Value="3"/>
       <RevisionNr Value="1"/>
       <BuildNr Value="1"/>
       <StringTable CompanyName="Atomek" FileDescription="jpg and png image resampler" LegalCopyright="© 2019 by Jan Schirrmacher"/>
@@ -55,7 +56,6 @@
           <Linking>
             <Debugging>
               <DebugInfoType Value="dsDwarf2Set"/>
-              <UseHeaptrc Value="True"/>
               <TrashVariables Value="True"/>
               <UseExternalDbgSyms Value="True"/>
             </Debugging>
@@ -115,7 +115,7 @@
         <PackageName Value="LCL"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="3">
+    <Units Count="4">
       <Unit0>
         <Filename Value="imageresizegui.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -134,6 +134,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit2>
+      <Unit3>
+        <Filename Value="..\src\imgres.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit3>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
