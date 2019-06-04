@@ -45,7 +45,6 @@ object AboutDialog: TAboutDialog
     ReadOnly = True
     ScrollBars = ssAutoBoth
     TabOrder = 1
-    WordWrap = False
   end
   object LabelUrl1: TLabel
     Left = 112

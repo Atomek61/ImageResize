@@ -18,12 +18,10 @@ const
   INIVERSION = '100';
 
   LICENSE =
-    'imgres.exe and ImageResize.exe (c) 2019 by Jan Schirrmacher, www.atomek.de'#10+
-    'imgres.exe and ImageResize.exe are free software. You can use it for'#10+
-    'any purpose private or commercial except selling it or disclaiming it'#10+
-    'as your work.'#10#10+
-    'There is no warranty for the results of this work.';
-
+    'Image Resize Copyright (c) 2019 Jan Schirrmacher, www.atomek.de'#10#10+
+    'Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify and merge copies of the Software, subject to the following conditions:'#10#10+
+    'The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.'#10#10+
+    'THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.';
   WEBURL = 'www.atomek.de/imageresize/index.html';
 
   REGKEY = '\Software\Atomek\ImageResize';
