@@ -1,5 +1,6 @@
 # .gitignore for Lazarus
 lib/
 backup/
+*.lps
 *.exe
 test?_
