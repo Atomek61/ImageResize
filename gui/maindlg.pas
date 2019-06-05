@@ -11,7 +11,7 @@ uses
   LCLIntf, Buttons;
 
 const
-  IMGRESGUIVER = '1.3';
+  IMGRESGUIVER = '1.4';
   IMGRESGUICPR = 'ImageResize V'+IMGRESGUIVER+' © 2019 Jan Schirrmacher, www.atomek.de';
 
   INITYPE = 'IRS';
@@ -27,6 +27,9 @@ const
   REGKEY = '\Software\Atomek\ImageResize';
 
   LM_RUN = LM_USER + 1;
+
+  DEFSIZES :array[0..10] of integer = (48, 120, 240, 360, 480, 640, 800, 960, 1200, 1920, 3840);
+
 
 type
 
@@ -62,8 +65,8 @@ type
     ButtonExecute: TBitBtn;
     BrowseDstFolder: TSelectDirectoryDialog;
     CheckBoxMrkEnabled: TCheckBox;
-    ComboBoxMrkPos: TComboBox;
     ComboBoxJpgQuality: TComboBox;
+    ComboBoxMrkPos: TComboBox;
     ComboBoxPngCompression: TComboBox;
     ComboBoxSizes: TComboBox;
     EditMrkX: TEdit;
@@ -72,7 +75,7 @@ type
     EditMrkSize: TEdit;
     EditMrkY: TEdit;
     EditMrkAlpha: TEdit;
-    GroupBox1: TGroupBox;
+    FlowPanelSizeButtons: TFlowPanel;
     GroupBoxJpgOptions: TGroupBox;
     GroupBoxPngOptions: TGroupBox;
     ImageList20x20: TImageList;
@@ -85,14 +88,15 @@ type
     Label14: TLabel;
     Label15: TLabel;
     Label16: TLabel;
+    Label17: TLabel;
+    Label3: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    LabelSizesRequired: TLabel;
     LabelSrcFilnamesRequired: TLabel;
     LabelDstFolderRequired: TLabel;
     Label2: TLabel;
-    LabelSizesRequired: TLabel;
-    Label3: TLabel;
     Label4: TLabel;
-    Label5: TLabel;
-    Label6: TLabel;
     Label7: TLabel;
     Label8: TLabel;
     Label9: TLabel;
@@ -101,11 +105,15 @@ type
     OpenDialog: TOpenDialog;
     OpenDialogSrcFilenames: TOpenDialog;
     OpenDialogMrkFilename: TOpenDialog;
+    PageControl: TPageControl;
     PanelMessages: TPanel;
     PanelControls: TPanel;
     ProgressBar: TProgressBar;
     SaveAsDialog: TSaveDialog;
     Splitter1: TSplitter;
+    TabSheetSizes: TTabSheet;
+    TabSheetQuality: TTabSheet;
+    TabSheetWatermark: TTabSheet;
     TimerProgressBarOff: TTimer;
     ToolBar: TToolBar;
     ToolButton1: TToolButton;
@@ -135,7 +143,6 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure MemoSrcFilenamesChange(Sender: TObject);
-    procedure PanelControlsClick(Sender: TObject);
     procedure TimerProgressBarOffTimer(Sender: TObject);
   private
     FAutoExit :boolean;
@@ -148,7 +155,6 @@ type
     procedure SetTitle(const Str :string);
     procedure OnPrint(Sender :TObject; const Line :string);
     procedure OnCanProgress(Sender :TObject; Progress :single; var Cancel :boolean);
-    procedure OnShowHandler(Sender :TObject);
     procedure SaveToRegistry;
     function LoadFromRegistry :boolean;
     procedure Save(const Filename :string);
@@ -158,6 +164,7 @@ type
     function MrkPosToBorder(const Value :TPos) :TPos;
     procedure UpdateControls;
     procedure LMRun(var Message: TLMessage); message LM_RUN;
+    procedure SizeButtonClick(Sender :TObject);
   public
 
   end;
@@ -182,6 +189,8 @@ end;
 procedure TMainDialog.FormCreate(Sender: TObject);
 var
   Params :TStringArray;
+  i :integer;
+  Button :TButton;
 begin
   DefaultFormatSettings.DecimalSeparator := '.';
   if not LoadFromRegistry then
@@ -193,6 +202,19 @@ begin
     Load(Params[0]);
   if Application.HasOption('A', 'AUTOSTART') then
     PostMessage(Handle, LM_RUN, 0, 0);
+
+  // Create Size Buttons
+  for i:=0 to High(DEFSIZES) do begin
+     Button := TButton.Create(self);
+     Button.TabStop := false;
+     Button.Caption := IntToStr(DEFSIZES[i]);
+     Button.Parent := FlowPanelSizeButtons;
+     Button.Tag := DEFSIZES[i];
+     Button.OnClick := @SizeButtonClick;
+     Button.Width := 58;
+     Button.Height := 44;
+     Button.Visible := true;
+  end;
 end;
 
 procedure TMainDialog.FormShow(Sender: TObject);
@@ -203,17 +225,20 @@ procedure TMainDialog.LMRun(var Message: TLMessage);
 begin
   ActionExecute.Execute;
   Application.ProcessMessages;
-  if FAutoExit then
+  if FAutoExit then begin
     Close;
+  end;
 end;
 
-procedure TMainDialog.OnShowHandler(Sender: TObject);
+procedure TMainDialog.SizeButtonClick(Sender: TObject);
+var
+  s :string;
 begin
-end;
-
-procedure TMainDialog.PanelControlsClick(Sender: TObject);
-begin
-
+  s := IntToStr((Sender as TButton).Tag);
+  if Length(Trim(ComboBoxSizes.Text))=0 then
+    ComboBoxSizes.Text := s
+  else
+    ComboBoxSizes.Text := ComboBoxSizes.Text + ', '+s;
 end;
 
 procedure TMainDialog.FormClose(Sender: TObject; var CloseAction: TCloseAction);

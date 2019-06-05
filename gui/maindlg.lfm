@@ -1,14 +1,14 @@
 object MainDialog: TMainDialog
   Left = 608
-  Height = 749
+  Height = 640
   Top = 120
-  Width = 715
+  Width = 640
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'ImageResize'
-  ClientHeight = 749
-  ClientWidth = 715
-  Constraints.MinHeight = 653
-  Constraints.MinWidth = 715
+  ClientHeight = 640
+  ClientWidth = 640
+  Constraints.MinHeight = 640
+  Constraints.MinWidth = 640
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
@@ -17,22 +17,21 @@ object MainDialog: TMainDialog
   LCLVersion = '2.0.0.3'
   object PanelControls: TPanel
     Left = 0
-    Height = 540
+    Height = 427
     Top = 0
-    Width = 715
+    Width = 640
     Align = alClient
     BevelOuter = bvNone
-    ClientHeight = 540
-    ClientWidth = 715
-    Constraints.MinHeight = 540
+    ClientHeight = 427
+    ClientWidth = 640
+    Constraints.MinHeight = 427
     TabOrder = 0
-    OnClick = PanelControlsClick
     object MemoSrcFilenames: TMemo
       Left = 8
-      Height = 396
+      Height = 266
       Hint = 'Enter a list of files with absolute pathes.'#13#10#13#10'Press Browse... and select multiple files while'#13#10'holding <STRG> or <SHIFT> and clicking. '
-      Top = 88
-      Width = 423
+      Top = 94
+      Width = 347
       Anchors = [akTop, akLeft, akRight, akBottom]
       OnChange = MemoSrcFilenamesChange
       ScrollBars = ssAutoVertical
@@ -42,7 +41,7 @@ object MainDialog: TMainDialog
     object Label1: TLabel
       Left = 24
       Height = 15
-      Top = 64
+      Top = 72
       Width = 81
       Caption = 'Source &File List:'
       FocusControl = MemoSrcFilenames
@@ -51,7 +50,7 @@ object MainDialog: TMainDialog
     object Label2: TLabel
       Left = 24
       Height = 15
-      Top = 489
+      Top = 378
       Width = 220
       Anchors = [akLeft, akBottom]
       Caption = '&Destination Folder (may include %SIZE%):'
@@ -62,303 +61,11 @@ object MainDialog: TMainDialog
       Left = 8
       Height = 23
       Hint = 'Required - destination folder of the resampled images.'#13#10#13#10'If multiple sizes are entered, insert a placeholder %SIZE%'#13#10'into the path where the program shall insert the current size .'
-      Top = 508
-      Width = 397
+      Top = 397
+      Width = 318
       Anchors = [akLeft, akRight, akBottom]
       OnChange = EditDstFolderChange
       TabOrder = 3
-    end
-    object Label3: TLabel
-      Left = 472
-      Height = 15
-      Top = 64
-      Width = 28
-      Anchors = [akTop, akRight]
-      Caption = 'Si&zes:'
-      FocusControl = ComboBoxSizes
-      ParentColor = False
-    end
-    object ComboBoxSizes: TComboBox
-      Left = 456
-      Height = 23
-      Hint = 'Enter a destination image size in pixels or multiple sizes separated by commas.'#13#10'The size refers to the longer side of the image.'#13#10#13#10'Examples:'#13#10'640'#13#10'120,480,960,1200'
-      Top = 83
-      Width = 217
-      Anchors = [akTop, akRight]
-      ItemHeight = 15
-      ItemIndex = 4
-      Items.Strings = (
-        'default'
-        '120'
-        '240'
-        '480'
-        '640'
-        '960'
-        '1920'
-        '3840'
-      )
-      OnChange = ComboBoxSizesChange
-      TabOrder = 5
-      Text = '640'
-    end
-    object GroupBoxJpgOptions: TGroupBox
-      Left = 446
-      Height = 81
-      Top = 120
-      Width = 121
-      Anchors = [akTop, akRight]
-      Caption = 'Jpg Options'
-      ClientHeight = 61
-      ClientWidth = 117
-      TabOrder = 7
-      object Label5: TLabel
-        Left = 13
-        Height = 15
-        Top = 8
-        Width = 82
-        Caption = '&Quality (1..100):'
-        FocusControl = ComboBoxJpgQuality
-        ParentColor = False
-      end
-      object ComboBoxJpgQuality: TComboBox
-        Left = 8
-        Height = 23
-        Hint = 'Enter a jpg compression quality from'#13#10#13#10'1 - high compression, poor quality, small image'#13#10'75 - good compression, good quality, medium size'#13#10'100 - low compression, highest quality, large file '#13#10#13#10'It makes not much sense to enter a higher rate, than'#13#10'the original file has.'
-        Top = 32
-        Width = 100
-        ItemHeight = 15
-        ItemIndex = 5
-        Items.Strings = (
-          'default'
-          '1'
-          '10'
-          '25'
-          '50'
-          '75'
-          '90'
-          '100'
-        )
-        TabOrder = 0
-        Text = '75'
-      end
-    end
-    object GroupBoxPngOptions: TGroupBox
-      Left = 585
-      Height = 81
-      Top = 120
-      Width = 121
-      Anchors = [akTop, akRight]
-      Caption = 'Png Options'
-      ClientHeight = 61
-      ClientWidth = 117
-      TabOrder = 8
-      object Label6: TLabel
-        Left = 13
-        Height = 15
-        Top = 8
-        Width = 73
-        Caption = '&Compression:'
-        FocusControl = ComboBoxPngCompression
-        ParentColor = False
-      end
-      object ComboBoxPngCompression: TComboBox
-        Left = 8
-        Height = 23
-        Hint = 'Select a png lossless compression degree.'
-        Top = 32
-        Width = 100
-        ItemHeight = 15
-        ItemIndex = 2
-        Items.Strings = (
-          'none'
-          'fastest'
-          'default'
-          'max'
-        )
-        Style = csDropDownList
-        TabOrder = 0
-        Text = 'default'
-      end
-    end
-    object GroupBox1: TGroupBox
-      Left = 446
-      Height = 257
-      Top = 216
-      Width = 258
-      Anchors = [akTop, akRight]
-      Caption = 'Watermark'
-      ClientHeight = 237
-      ClientWidth = 254
-      TabOrder = 9
-      object EditMrkFilename: TEdit
-        Left = 8
-        Height = 23
-        Hint = 'Select a png file with the desired watermark.'#13#10#13#10'A watermark is a little image, which usually appear'#13#10'in a corner of the image.'#13#10#13#10'Inkscape is a good tool for creating watermark files.'
-        Top = 57
-        Width = 213
-        TabOrder = 1
-      end
-      object Label7: TLabel
-        Left = 13
-        Height = 15
-        Top = 38
-        Width = 52
-        Caption = '&Imagefile:'
-        FocusControl = EditMrkFilename
-        ParentColor = False
-      end
-      object Label8: TLabel
-        Left = 13
-        Height = 15
-        Top = 94
-        Width = 46
-        Caption = '&Position:'
-        FocusControl = ComboBoxMrkPos
-        ParentColor = False
-      end
-      object ComboBoxMrkPos: TComboBox
-        Left = 125
-        Height = 23
-        Hint = 'Select the corner where the watermark will be aligned to.'
-        Top = 90
-        Width = 100
-        ItemHeight = 15
-        ItemIndex = 0
-        Items.Strings = (
-          'Top Left'
-          'Top Right'
-          'Bottom Left'
-          'Bottom Right'
-        )
-        Style = csDropDownList
-        TabOrder = 3
-        Text = 'Top Left'
-      end
-      object Label9: TLabel
-        Left = 13
-        Height = 15
-        Top = 154
-        Width = 92
-        Caption = '&Horizontal Space:'
-        FocusControl = EditMrkX
-        ParentColor = False
-      end
-      object EditMrkX: TEdit
-        Left = 125
-        Height = 23
-        Hint = 'Horizontal space of the watermark to the border in percent of the destination image width.'
-        Top = 149
-        Width = 48
-        TabOrder = 5
-        Text = '1'
-      end
-      object Label10: TLabel
-        Left = 181
-        Height = 15
-        Top = 154
-        Width = 10
-        Caption = '%'
-        ParentColor = False
-      end
-      object Label11: TLabel
-        Left = 13
-        Height = 15
-        Top = 182
-        Width = 75
-        Caption = '&Vertical Space:'
-        FocusControl = EditMrkY
-        ParentColor = False
-      end
-      object EditMrkY: TEdit
-        Left = 125
-        Height = 23
-        Hint = 'Vertical space of the watermark to the border in percent of the destination image height.'
-        Top = 177
-        Width = 48
-        TabOrder = 6
-        Text = '1'
-      end
-      object Label12: TLabel
-        Left = 181
-        Height = 15
-        Top = 182
-        Width = 10
-        Caption = '%'
-        ParentColor = False
-      end
-      object CheckBoxMrkEnabled: TCheckBox
-        Left = 10
-        Height = 19
-        Hint = 'Enable a watermark printing and select an existing png file with your copyright info or whatever.'
-        Top = 8
-        Width = 106
-        Caption = 'Print &Watermark'
-        TabOrder = 0
-      end
-      object Label13: TLabel
-        Left = 13
-        Height = 15
-        Top = 210
-        Width = 44
-        Caption = 'Opacit&y:'
-        FocusControl = EditMrkAlpha
-        ParentColor = False
-      end
-      object EditMrkAlpha: TEdit
-        Left = 125
-        Height = 23
-        Hint = 'Choose the watermarks opacity.'#13#10#13#10'A strong watermark has 100%,'#13#10'a weak one has 10% opacity.'
-        Top = 205
-        Width = 48
-        TabOrder = 7
-        Text = '50'
-      end
-      object Label14: TLabel
-        Left = 181
-        Height = 15
-        Top = 210
-        Width = 10
-        Caption = '%'
-        ParentColor = False
-      end
-      object Label15: TLabel
-        Left = 13
-        Height = 15
-        Top = 125
-        Width = 23
-        Caption = 'Siz&e:'
-        FocusControl = EditMrkSize
-        ParentColor = False
-      end
-      object EditMrkSize: TEdit
-        Left = 125
-        Height = 23
-        Hint = 'Size in percent of the watermark image in relation to the resampled image width.'
-        Top = 120
-        Width = 48
-        TabOrder = 4
-        Text = '10'
-      end
-      object Label16: TLabel
-        Left = 181
-        Height = 15
-        Top = 125
-        Width = 10
-        Caption = '%'
-        ParentColor = False
-      end
-      object ButtonClearSizes1: TBitBtn
-        Left = 224
-        Height = 25
-        Top = 56
-        Width = 25
-        Action = ActionBrowseMrkFilename
-        Anchors = [akTop, akRight]
-        Images = ImageList20x20
-        ImageIndex = 0
-        Spacing = 0
-        TabOrder = 2
-      end
     end
     object ToolBar: TToolBar
       Left = 8
@@ -372,7 +79,7 @@ object MainDialog: TMainDialog
       EdgeBorders = []
       Images = ImageList24x24
       ShowCaptions = True
-      TabOrder = 10
+      TabOrder = 6
       object ToolButton1: TToolButton
         Left = 1
         Top = 0
@@ -423,7 +130,7 @@ object MainDialog: TMainDialog
       Left = 8
       Height = 18
       Hint = 'Required'
-      Top = 61
+      Top = 69
       Width = 10
       Caption = '*'
       Font.Color = clRed
@@ -436,22 +143,9 @@ object MainDialog: TMainDialog
       Left = 10
       Height = 18
       Hint = 'Required'
-      Top = 489
+      Top = 376
       Width = 10
-      Caption = '*'
-      Font.Color = clRed
-      Font.Name = 'Courier New'
-      Font.Style = [fsBold]
-      ParentColor = False
-      ParentFont = False
-    end
-    object LabelSizesRequired: TLabel
-      Left = 456
-      Height = 18
-      Hint = 'Required'
-      Top = 62
-      Width = 10
-      Anchors = [akTop, akRight]
+      Anchors = [akLeft, akBottom]
       Caption = '*'
       Font.Color = clRed
       Font.Name = 'Courier New'
@@ -460,11 +154,11 @@ object MainDialog: TMainDialog
       ParentFont = False
     end
     object ButtonExecute: TBitBtn
-      Left = 584
-      Height = 27
+      Left = 504
+      Height = 29
       Hint = 'Starts the resampling process'
-      Top = 504
-      Width = 120
+      Top = 396
+      Width = 126
       Anchors = [akRight, akBottom]
       Caption = 'E&xecute'
       Default = True
@@ -549,12 +243,12 @@ object MainDialog: TMainDialog
       ImageIndex = 2
       OnClick = ButtonExecuteClick
       Spacing = 16
-      TabOrder = 11
+      TabOrder = 7
     end
     object ButtonBrowseSrcFiles: TBitBtn
-      Left = 344
+      Left = 184
       Height = 23
-      Top = 61
+      Top = 64
       Width = 83
       Action = ActionBrowseFilenames
       Anchors = [akTop, akRight]
@@ -563,9 +257,9 @@ object MainDialog: TMainDialog
       TabOrder = 1
     end
     object ButtonClearSrcFiles: TBitBtn
-      Left = 256
-      Height = 22
-      Top = 62
+      Left = 274
+      Height = 23
+      Top = 64
       Width = 81
       Action = ActionClearFilenames
       Anchors = [akTop, akRight]
@@ -573,33 +267,21 @@ object MainDialog: TMainDialog
       ImageIndex = 1
       TabOrder = 2
     end
-    object ButtonClearSizes: TBitBtn
-      Left = 677
-      Height = 25
-      Top = 82
-      Width = 25
-      Action = ActionClearSizes
-      Anchors = [akTop, akRight]
-      Images = ImageList20x20
-      ImageIndex = 1
-      Spacing = 0
-      TabOrder = 6
-    end
     object ButtonAbout: TBitBtn
-      Left = 608
-      Height = 30
+      Left = 531
+      Height = 27
       Top = 8
       Width = 99
       Action = ActionAbout
       Anchors = [akTop, akRight]
       Images = ImageList20x20
       ImageIndex = 3
-      TabOrder = 12
+      TabOrder = 8
     end
     object ButtonClearSizes2: TBitBtn
-      Left = 408
+      Left = 330
       Height = 25
-      Top = 507
+      Top = 396
       Width = 25
       Action = ActionBrowseDstFolder
       Anchors = [akRight, akBottom]
@@ -608,23 +290,383 @@ object MainDialog: TMainDialog
       Spacing = 0
       TabOrder = 4
     end
+    object PageControl: TPageControl
+      Left = 368
+      Height = 264
+      Top = 96
+      Width = 264
+      ActivePage = TabSheetSizes
+      Anchors = [akTop, akRight]
+      TabIndex = 0
+      TabOrder = 5
+      object TabSheetSizes: TTabSheet
+        Caption = 'Sizes'
+        ClientHeight = 236
+        ClientWidth = 256
+        object Label3: TLabel
+          Left = 32
+          Height = 15
+          Top = 19
+          Width = 28
+          Caption = 'Si&zes:'
+          FocusControl = ComboBoxSizes
+          ParentColor = False
+        end
+        object ComboBoxSizes: TComboBox
+          Left = 16
+          Height = 23
+          Hint = 'Enter a destination image size in pixels or multiple sizes separated by commas.'#13#10'The size refers to the longer side of the image.'#13#10#13#10'Examples:'#13#10'640'#13#10'120,480,960,1200'
+          Top = 40
+          Width = 193
+          Anchors = [akTop, akLeft, akRight]
+          ItemHeight = 15
+          ItemIndex = 4
+          Items.Strings = (
+            'default'
+            '120'
+            '240'
+            '480'
+            '640'
+            '960'
+            '1920'
+            '3840'
+          )
+          OnChange = ComboBoxSizesChange
+          TabOrder = 0
+          Text = '640'
+        end
+        object LabelSizesRequired: TLabel
+          Left = 16
+          Height = 18
+          Hint = 'Required'
+          Top = 19
+          Width = 10
+          Caption = '*'
+          Font.Color = clRed
+          Font.Name = 'Courier New'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+        end
+        object ButtonClearSizes: TBitBtn
+          Left = 211
+          Height = 25
+          Top = 39
+          Width = 25
+          Action = ActionClearSizes
+          Anchors = [akTop, akRight]
+          Images = ImageList20x20
+          ImageIndex = 1
+          Spacing = 0
+          TabOrder = 1
+        end
+        object FlowPanelSizeButtons: TFlowPanel
+          Left = 8
+          Height = 144
+          Top = 80
+          Width = 241
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BevelOuter = bvNone
+          ControlList = <>
+          FlowLayout = tlTop
+          FlowStyle = fsLeftRightTopBottom
+          TabOrder = 2
+        end
+      end
+      object TabSheetQuality: TTabSheet
+        Caption = 'Quality'
+        ClientHeight = 236
+        ClientWidth = 256
+        object GroupBoxJpgOptions: TGroupBox
+          Left = 8
+          Height = 65
+          Top = 16
+          Width = 240
+          Caption = 'Jpg Options'
+          ClientHeight = 45
+          ClientWidth = 236
+          TabOrder = 0
+          object Label5: TLabel
+            Left = 13
+            Height = 15
+            Top = 8
+            Width = 82
+            Caption = 'Quality (1..100):'
+            FocusControl = ComboBoxJpgQuality
+            ParentColor = False
+          end
+          object ComboBoxJpgQuality: TComboBox
+            Left = 112
+            Height = 23
+            Hint = 'Enter a jpg compression quality from'#13#10#13#10'1 - high compression, poor quality, small image'#13#10'75 - good compression, good quality, medium size'#13#10'100 - low compression, highest quality, large file '#13#10#13#10'It makes not much sense to enter a higher rate, than'#13#10'the original file has.'
+            Top = 5
+            Width = 100
+            ItemHeight = 15
+            ItemIndex = 5
+            Items.Strings = (
+              'default'
+              '1'
+              '10'
+              '25'
+              '50'
+              '75'
+              '90'
+              '100'
+            )
+            TabOrder = 0
+            Text = '75'
+          end
+        end
+        object GroupBoxPngOptions: TGroupBox
+          Left = 8
+          Height = 65
+          Top = 96
+          Width = 240
+          Caption = 'Png Options'
+          ClientHeight = 45
+          ClientWidth = 236
+          TabOrder = 1
+          object Label6: TLabel
+            Left = 13
+            Height = 15
+            Top = 8
+            Width = 73
+            Caption = '&Compression:'
+            FocusControl = ComboBoxPngCompression
+            ParentColor = False
+          end
+          object ComboBoxPngCompression: TComboBox
+            Left = 112
+            Height = 23
+            Hint = 'Select a png lossless compression degree.'
+            Top = 4
+            Width = 100
+            ItemHeight = 15
+            ItemIndex = 2
+            Items.Strings = (
+              'none'
+              'fastest'
+              'default'
+              'max'
+            )
+            Style = csDropDownList
+            TabOrder = 0
+            Text = 'default'
+          end
+        end
+      end
+      object TabSheetWatermark: TTabSheet
+        Caption = 'Watermark'
+        ClientHeight = 236
+        ClientWidth = 256
+        object EditMrkFilename: TEdit
+          Left = 8
+          Height = 23
+          Hint = 'Select a png file with the desired watermark.'#13#10#13#10'A watermark is a little image, which usually appear'#13#10'in a corner of the image.'#13#10#13#10'Inkscape is a good tool for creating watermark files.'
+          Top = 54
+          Width = 213
+          Anchors = [akTop, akLeft, akRight]
+          TabOrder = 0
+        end
+        object Label7: TLabel
+          Left = 13
+          Height = 15
+          Top = 35
+          Width = 52
+          Caption = '&Imagefile:'
+          FocusControl = EditMrkFilename
+          ParentColor = False
+        end
+        object Label8: TLabel
+          Left = 13
+          Height = 15
+          Top = 91
+          Width = 46
+          Caption = 'Posi&tion:'
+          FocusControl = ComboBoxMrkPos
+          ParentColor = False
+        end
+        object ComboBoxMrkPos: TComboBox
+          Left = 125
+          Height = 23
+          Hint = 'Select the corner where the watermark will be aligned to.'
+          Top = 87
+          Width = 100
+          ItemHeight = 15
+          ItemIndex = 0
+          Items.Strings = (
+            'Top Left'
+            'Top Right'
+            'Bottom Left'
+            'Bottom Right'
+          )
+          Style = csDropDownList
+          TabOrder = 1
+          Text = 'Top Left'
+        end
+        object Label9: TLabel
+          Left = 13
+          Height = 15
+          Top = 151
+          Width = 92
+          Caption = '&Horizontal Space:'
+          FocusControl = EditMrkX
+          ParentColor = False
+        end
+        object EditMrkX: TEdit
+          Left = 125
+          Height = 23
+          Hint = 'Horizontal space of the watermark to the border in percent of the destination image width.'
+          Top = 146
+          Width = 48
+          TabOrder = 2
+          Text = '1'
+        end
+        object Label10: TLabel
+          Left = 181
+          Height = 15
+          Top = 151
+          Width = 10
+          Caption = '%'
+          ParentColor = False
+        end
+        object Label11: TLabel
+          Left = 13
+          Height = 15
+          Top = 179
+          Width = 75
+          Caption = '&Vertical Space:'
+          FocusControl = EditMrkY
+          ParentColor = False
+        end
+        object EditMrkY: TEdit
+          Left = 125
+          Height = 23
+          Hint = 'Vertical space of the watermark to the border in percent of the destination image height.'
+          Top = 174
+          Width = 48
+          TabOrder = 3
+          Text = '1'
+        end
+        object Label12: TLabel
+          Left = 181
+          Height = 15
+          Top = 179
+          Width = 10
+          Caption = '%'
+          ParentColor = False
+        end
+        object CheckBoxMrkEnabled: TCheckBox
+          Left = 10
+          Height = 19
+          Hint = 'Enable a watermark printing and select an existing png file with your copyright info or whatever.'
+          Top = 8
+          Width = 62
+          Caption = 'Enabled'
+          TabOrder = 4
+        end
+        object Label13: TLabel
+          Left = 13
+          Height = 15
+          Top = 207
+          Width = 44
+          Caption = 'Opacit&y:'
+          FocusControl = EditMrkAlpha
+          ParentColor = False
+        end
+        object EditMrkAlpha: TEdit
+          Left = 125
+          Height = 23
+          Hint = 'Choose the watermarks opacity.'#13#10#13#10'A strong watermark has 100%,'#13#10'a weak one has 10% opacity.'
+          Top = 202
+          Width = 48
+          TabOrder = 5
+          Text = '50'
+        end
+        object Label14: TLabel
+          Left = 181
+          Height = 15
+          Top = 207
+          Width = 10
+          Caption = '%'
+          ParentColor = False
+        end
+        object Label15: TLabel
+          Left = 13
+          Height = 15
+          Top = 122
+          Width = 23
+          Caption = 'Siz&e:'
+          FocusControl = EditMrkSize
+          ParentColor = False
+        end
+        object EditMrkSize: TEdit
+          Left = 125
+          Height = 23
+          Hint = 'Size in percent of the watermark image in relation to the resampled image width.'
+          Top = 117
+          Width = 48
+          TabOrder = 6
+          Text = '10'
+        end
+        object Label16: TLabel
+          Left = 181
+          Height = 15
+          Top = 122
+          Width = 10
+          Caption = '%'
+          ParentColor = False
+        end
+        object ButtonClearSizes1: TBitBtn
+          Left = 224
+          Height = 25
+          Top = 53
+          Width = 25
+          Action = ActionBrowseMrkFilename
+          Anchors = [akTop, akRight]
+          Images = ImageList20x20
+          ImageIndex = 0
+          Spacing = 0
+          TabOrder = 7
+        end
+      end
+    end
+    object ProgressBar: TProgressBar
+      Left = 368
+      Height = 10
+      Top = 376
+      Width = 262
+      Anchors = [akRight, akBottom]
+      TabOrder = 9
+      Visible = False
+    end
+    object Label17: TLabel
+      Left = 376
+      Height = 15
+      Top = 72
+      Width = 62
+      Anchors = [akTop, akRight]
+      Caption = '&Parameters:'
+      FocusControl = PageControl
+      ParentColor = False
+    end
   end
   object PanelMessages: TPanel
     Left = 0
     Height = 208
-    Top = 541
-    Width = 715
+    Top = 432
+    Width = 640
     Align = alBottom
     BevelOuter = bvNone
     ClientHeight = 208
-    ClientWidth = 715
+    ClientWidth = 640
     Constraints.MinHeight = 56
     TabOrder = 1
     object MemoMessages: TMemo
       Left = 6
       Height = 173
       Top = 29
-      Width = 703
+      Width = 628
       Align = alClient
       BorderSpacing.Top = 4
       BorderSpacing.Around = 6
@@ -637,7 +679,7 @@ object MainDialog: TMainDialog
       Left = 10
       Height = 15
       Top = 4
-      Width = 705
+      Width = 630
       Align = alTop
       BorderSpacing.Left = 10
       BorderSpacing.Top = 4
@@ -645,29 +687,20 @@ object MainDialog: TMainDialog
       Caption = 'Messages:'
       ParentColor = False
     end
-    object ProgressBar: TProgressBar
-      Left = 585
-      Height = 20
-      Top = 0
-      Width = 119
-      Anchors = [akTop, akRight]
-      TabOrder = 1
-      Visible = False
-    end
   end
   object Splitter1: TSplitter
     Cursor = crVSplit
     Left = 0
     Height = 5
-    Top = 536
-    Width = 715
+    Top = 427
+    Width = 640
     Align = alBottom
     ResizeAnchor = akBottom
   end
   object ActionList: TActionList
     Images = ImageList24x24
-    left = 68
-    top = 92
+    left = 32
+    top = 592
     object ActionBrowseFilenames: TAction
       Caption = '&Browse...'
       OnExecute = ActionBrowseFilenamesExecute
@@ -729,29 +762,29 @@ object MainDialog: TMainDialog
   object OpenDialogSrcFilenames: TOpenDialog
     Filter = 'Image Files (*.jpg, *.png)|*.jpg;*.png|All Files|*.*'
     Options = [ofAllowMultiSelect, ofEnableSizing, ofViewDetail]
-    left = 68
-    top = 148
+    left = 104
+    top = 592
   end
   object BrowseDstFolder: TSelectDirectoryDialog
-    left = 68
-    top = 204
+    left = 200
+    top = 592
   end
   object OpenDialogMrkFilename: TOpenDialog
     Filter = 'Image Files (*.png)|*.png|All Files|*.*'
-    left = 68
-    top = 264
+    left = 104
+    top = 656
   end
   object TimerProgressBarOff: TTimer
     Enabled = False
     OnTimer = TimerProgressBarOffTimer
-    left = 552
-    top = 473
+    left = 482
+    top = 476
   end
   object ImageList24x24: TImageList
     Height = 24
     Width = 24
-    left = 200
-    top = 104
+    left = 432
+    top = 592
     Bitmap = {
       4C69070000001800000018000000000000000000000000000000000000000000
       0000000000000000B74300000000000000000000000000000000000000000000
@@ -1263,20 +1296,20 @@ object MainDialog: TMainDialog
   object SaveAsDialog: TSaveDialog
     DefaultExt = '.irs'
     Filter = 'Image Resize Settings (*.irs)|*.irs|All Files|*.*'
-    left = 64
-    top = 336
+    left = 32
+    top = 664
   end
   object OpenDialog: TOpenDialog
     DefaultExt = '.irs'
     Filter = 'Image Resize Settings (*.irs)|*.irs|All Files|*.*'
-    left = 160
-    top = 336
+    left = 208
+    top = 648
   end
   object ImageList20x20: TImageList
     Height = 20
     Width = 20
-    left = 296
-    top = 104
+    left = 544
+    top = 608
     Bitmap = {
       4C69040000001400000014000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
