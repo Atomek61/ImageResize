@@ -7,8 +7,8 @@ uses
   {$IFDEF UNIX}{$IFDEF UseCThreads}
   cthreads,
   {$ENDIF}{$ENDIF}
-  Classes, Types, SysUtils, CustApp, imgres,
-  { you can add units after this } fileutil, utils;
+  Classes, Types, SysUtils, CustApp,
+  { you can add units after this } fileutil, utils, imgres, generics.collections;
 
 const
   IMGRESCLIVER = '1.2';
@@ -149,10 +149,10 @@ begin
       if not StrToStringArray(Param, '?', Items) or (Length(Items)>3) then
         raise Exception.CreateFmt('Invalid number of watermark parameters ''%s''.', [Param]);
       MrkFilename := Items[0];
-      MrkSize := Processor.WatermarkSize;
-      MrkX := Processor.WatermarkX;
-      MrkY := Processor.WatermarkY;
-      MrkAlpha := Processor.WatermarkAlpha;
+      MrkSize := Processor.MrkSize;
+      MrkX := Processor.MrkX;
+      MrkY := Processor.MrkY;
+      MrkAlpha := Processor.MrkAlpha;
       if Length(Items)>1 then begin
         if not StrToSingleArray(Items[1], ',', FloatParams, FormatSettings) or (Length(FloatParams)<>3) then
           raise Exception.CreateFmt('Invalid number of watermark position parameters ''%s''.', [Items[1]]);
@@ -175,6 +175,9 @@ begin
     // Required Parameters: SrcFilename and Folder.
     SrcFilename := ParamStr(1);
     DstFolder := ParamStr(2);
+
+    // Check for size doublettes
+
 
     // Check if multiple sizes are given and placeholder %SIZE% is not set in DstFolder
     if (Length(Sizes)>1) and not (Pos('%SIZE%', DstFolder)>0) then
@@ -199,19 +202,20 @@ begin
     end else
       SrcFilenames.Add(SrcFilename);
 
+    Processor.DestinationFolder := DstFolder;
     Processor.JpgQuality := JpgQuality;
     Processor.PngCompression := PngCompression;
-    Processor.WatermarkFilename := MrkFilename;
-    Processor.WatermarkSize := MrkSize;
-    Processor.WatermarkX := MrkX;
-    Processor.WatermarkY := MrkY;
-    Processor.WatermarkAlpha := MrkAlpha;
+    Processor.MrkFilename := MrkFilename;
+    Processor.MrkSize := MrkSize;
+    Processor.MrkX := MrkX;
+    Processor.MrkY := MrkY;
+    Processor.MrkAlpha := MrkAlpha;
     if not Quiet then
       Processor.OnPrint := @OnPrint;
 
     ///////////////////////////////////////////////////
     // Finally call the processor...
-    Processor.Execute(SrcFilenames, DstFolder, Sizes);
+    Processor.Execute(SrcFilenames, Sizes);
     ///////////////////////////////////////////////////
   finally
     Processor.Free;

@@ -8,7 +8,7 @@ interface
 uses
   Classes, Types, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ComCtrls,
   ActnList, ExtCtrls, imgres, registry, aboutdlg, inifiles, strutils, LMessages,
-  LCLIntf, Buttons;
+  LCLIntf, Buttons, ImgList, LCLType, threading.dispatcher;
 
 const
   IMGRESGUIVER = '1.4';
@@ -65,8 +65,8 @@ type
     ButtonExecute: TBitBtn;
     BrowseDstFolder: TSelectDirectoryDialog;
     CheckBoxMrkEnabled: TCheckBox;
+    ComboBoxMrkPosition: TComboBox;
     ComboBoxJpgQuality: TComboBox;
-    ComboBoxMrkPos: TComboBox;
     ComboBoxPngCompression: TComboBox;
     ComboBoxSizes: TComboBox;
     EditMrkX: TEdit;
@@ -78,6 +78,7 @@ type
     FlowPanelSizeButtons: TFlowPanel;
     GroupBoxJpgOptions: TGroupBox;
     GroupBoxPngOptions: TGroupBox;
+    ImageListMrkPositions: TImageList;
     ImageList20x20: TImageList;
     ImageList24x24: TImageList;
     Label1: TLabel;
@@ -89,6 +90,7 @@ type
     Label15: TLabel;
     Label16: TLabel;
     Label17: TLabel;
+    Label18: TLabel;
     Label3: TLabel;
     Label5: TLabel;
     Label6: TLabel;
@@ -98,7 +100,6 @@ type
     Label2: TLabel;
     Label4: TLabel;
     Label7: TLabel;
-    Label8: TLabel;
     Label9: TLabel;
     MemoMessages: TMemo;
     MemoSrcFilenames: TMemo;
@@ -137,6 +138,12 @@ type
     procedure ActionSaveAsExecute(Sender: TObject);
     procedure ActionSaveExecute(Sender: TObject);
     procedure ButtonExecuteClick(Sender: TObject);
+    procedure ButtonMrkPos0Click(Sender: TObject);
+    procedure ComboBoxMrkPositionChange(Sender: TObject);
+    procedure ComboBoxMrkPositionDrawItem(Control: TWinControl; Index: Integer;
+      ARect: TRect; State: TOwnerDrawState);
+    procedure ComboBoxMrkPositionMeasureItem(Control: TWinControl;
+      Index: Integer; var AHeight: Integer);
     procedure ComboBoxSizesChange(Sender: TObject);
     procedure EditDstFolderChange(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -152,6 +159,7 @@ type
     FCancelled :boolean;
     FExecuting :boolean;
     FProgress :single;
+    FMrkPos :integer;
     procedure SetTitle(const Str :string);
     procedure OnPrint(Sender :TObject; const Line :string);
     procedure OnCanProgress(Sender :TObject; Progress :single; var Cancel :boolean);
@@ -165,6 +173,7 @@ type
     procedure UpdateControls;
     procedure LMRun(var Message: TLMessage); message LM_RUN;
     procedure SizeButtonClick(Sender :TObject);
+    procedure SetMrkPos(Value :integer);
   public
 
   end;
@@ -241,6 +250,12 @@ begin
     ComboBoxSizes.Text := ComboBoxSizes.Text + ', '+s;
 end;
 
+procedure TMainDialog.SetMrkPos(Value: integer);
+begin
+  FMrkPos := Value;
+  ComboBoxMrkPosition.ItemIndex := Value;
+end;
+
 procedure TMainDialog.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
   SaveToRegistry;
@@ -262,7 +277,7 @@ begin
       WriteBool('MrkEnabled', CheckBoxMrkEnabled.Checked);
       WriteString('MrkFilename', EditMrkFilename.Text);
       WriteString('MrkSize', EditMrkSize.Text);
-      WriteString('MrkPosition', ComboBoxMrkPos.Text);
+      WriteInteger('MrkPosition', FMrkPos);
       WriteString('MrkX', EditMrkX.Text);
       WriteString('MrkY', EditMrkY.Text);
       WriteString('MrkAlpha', EditMrkAlpha.Text);
@@ -292,7 +307,7 @@ begin
         CheckBoxMrkEnabled.Checked := ReadBool('MrkEnabled');
         EditMrkFilename.Text := ReadString('MrkFilename');
         EditMrkSize.Text := ReadString('MrkSize');
-        ComboBoxMrkPos.Text := ReadString('MrkPosition');
+        SetMrkPos(ReadInteger('MrkPosition'));
         EditMrkX.Text := ReadString('MrkX');
         EditMrkY.Text := ReadString('MrkY');
         EditMrkAlpha.Text := ReadString('MrkAlpha');
@@ -318,13 +333,13 @@ begin
     ComboBoxPngCompression.Text := TImgRes.PngCompressionToStr(ImgResizer.PngCompression);
     CheckBoxMrkEnabled.Checked := false;
     EditMrkFilename.Text := '';
-    ComboBoxMrkPos.ItemIndex := 3;
-    EditMrkSize.Text := Format('%.1f', [ImgResizer.WatermarkSize]);
-    with MrkPosToBorder(TPos.Create(ImgResizer.WatermarkX, ImgResizer.WatermarkY)) do begin
+    SetMrkPos(2);
+    EditMrkSize.Text := Format('%.1f', [ImgResizer.MrkSize]);
+    with MrkPosToBorder(TPos.Create(ImgResizer.MrkX, ImgResizer.MrkY)) do begin
       EditMrkX.Text := Format('%.1f', [x]);
       EditMrkY.Text := Format('%.1f', [y]);
     end;
-    EditMrkAlpha.Text := Format('%.1f', [ImgResizer.WatermarkAlpha]);
+    EditMrkAlpha.Text := Format('%.1f', [ImgResizer.MrkAlpha]);
     FIsSave := false;
     FIniFilename := '';
     SetTitle('unnamed');
@@ -353,7 +368,7 @@ begin
     Ini.WriteString('Settings', 'Sizes', ComboBoxSizes.Text);
     Ini.WriteString('Settings', 'JpgQuality', ComboBoxJpgQuality.Text);
     Ini.WriteString('Settings', 'PngCompression', ComboBoxPngCompression.Text);
-    Ini.WriteInteger('Settings', 'MrkPosition', ComboBoxMrkPos.ItemIndex);
+    Ini.WriteInteger('Settings', 'MrkPosition', FMrkPos);
     Ini.WriteBool('Settings', 'MrkEnabled', CheckBoxMrkEnabled.Checked);
     Ini.WriteString('Settings', 'MrkFilename', EditMrkFilename.Text);
     Ini.WriteString('Settings', 'MrkSize', EditMrkSize.Text);
@@ -390,7 +405,7 @@ begin
     ComboBoxSizes.Text := Ini.ReadString('Settings', 'Sizes', '');
     ComboBoxJpgQuality.Text := Ini.ReadString('Settings', 'JpgQuality', '');
     ComboBoxPngCompression.Text := Ini.ReadString('Settings', 'PngCompression', '');
-    ComboBoxMrkPos.ItemIndex := Ini.ReadInteger('Settings', 'MrkPosition', 0);
+    SetMrkPos(Ini.ReadInteger('Settings', 'MrkPosition', 0));
     CheckBoxMrkEnabled.Checked := Ini.ReadBool('Settings', 'MrkEnabled', false);
     EditMrkFilename.Text := Ini.ReadString('Settings', 'MrkFilename', '');
     EditMrkSize.Text := Ini.ReadString('Settings', 'MrkSize', '');
@@ -412,7 +427,11 @@ end;
 
 function TMainDialog.MrkBorderToPos(const Value :TPos): TPos;
 begin
-  case ComboBoxMrkPos.ItemIndex of
+  case FMrkPos of
+  0: // TopLeft
+    begin
+      result := Value;
+    end;
   1: // TopRight
     begin
       result.X := 100.0 - Value.X;
@@ -420,17 +439,13 @@ begin
     end;
   2: // BottomRight
     begin
-      result.X := Value.X;
-      result.Y := 100.0 - Value.Y;
-    end;
-  3:
-    begin
       result.X := 100.0 - Value.X;
       result.Y := 100.0 - Value.Y;
     end;
-  else // TopLeft
+  else // BottomLeft
     begin
-      result := Value;
+      result.X := Value.X;
+      result.Y := 100.0 - Value.Y;
     end;
   end;
 end;
@@ -458,6 +473,68 @@ end;
 procedure TMainDialog.ButtonExecuteClick(Sender: TObject);
 begin
   ActionExecute.Execute;
+end;
+
+procedure TMainDialog.ButtonMrkPos0Click(Sender: TObject);
+begin
+  SetMrkPos((Sender as TToolButton).Tag);
+end;
+
+procedure TMainDialog.ComboBoxMrkPositionChange(Sender: TObject);
+begin
+  SetMrkPos(ComboBoxMrkPosition.ItemIndex);
+end;
+
+procedure TMainDialog.ComboBoxMrkPositionDrawItem(Control: TWinControl; Index: Integer;
+  ARect: TRect; State: TOwnerDrawState);
+var
+  DrawingStyle :TDrawingStyle;
+  r :TRect;
+  ts :TTextStyle;
+begin
+  with ComboBoxMrkPosition do begin
+    if odSelected in State then
+      DrawingStyle := dsSelected
+    else
+      DrawingStyle := dsNormal;
+    Canvas.Brush.Color := clWindow;
+    r := ARect; r.Right := r.Left + 24;
+    Canvas.FillRect(r);
+    if odSelected in State then
+      Canvas.Brush.Color := clHighlight
+    else
+      Canvas.Brush.Color := clWindow;
+    r.Left := r.Right;
+    r.Right := ARect.Right;
+    Canvas.FillRect(r);
+    ImagelistMrkPositions.Draw(Canvas, ARect.Left, ARect.Top, Index, DrawingStyle, itImage, true);
+    if odSelected in State then
+      Canvas.Font.Color := clHighlightText
+    else
+      Canvas.Font.Color := clWindowText;
+    with ts do begin
+      Alignment := taLeftJustify;
+      Layout := tlCenter;
+      SingleLine := true;
+      Clipping := false;
+      ExpandTabs := false;
+      ShowPrefix := false;
+      Wordbreak := false;
+      Opaque := false;
+      SystemFont := false;
+      RightToLeft := false;
+      EndEllipsis := false;
+    end;
+    Canvas.TextRect(r, r.Left+4, 0, Items[Index], ts);
+    if odFocused in State then
+      Canvas.DrawFocusRect(ARect);
+  end;
+end;
+
+procedure TMainDialog.ComboBoxMrkPositionMeasureItem(Control: TWinControl;
+  Index: Integer; var AHeight: Integer);
+begin
+  AHeight := 24;
 end;
 
 procedure TMainDialog.MemoSrcFilenamesChange(Sender: TObject);
@@ -586,11 +663,11 @@ begin
 
         if CheckBoxMrkEnabled.Checked then begin
 
-          FImgRes.WatermarkFilename := EditMrkFilename.Text;
+          FImgRes.MrkFilename := EditMrkFilename.Text;
 
           if not TryStrToFloat(EditMrkSize.Text, x) or (x<0.0) or (x>100.0) then
             raise Exception.Create('Invalid watermark size.');
-          FImgRes.WatermarkSize := x;
+          FImgRes.MrkSize := x;
 
           if not TryStrToFloat(EditMrkX.Text, p.x) or (p.x<0.0) or (p.x>100.0) then
             raise Exception.Create('Invalid watermark x border.');
@@ -598,15 +675,15 @@ begin
             raise Exception.Create('Invalid watermark y border.');
 
           with MrkBorderToPos(p) do begin
-            FImgRes.WatermarkX := x;
-            FImgRes.WatermarkY := y;
+            FImgRes.MrkX := x;
+            FImgRes.MrkY := y;
           end;
 
           if not TryStrToFloat(EditMrkAlpha.Text, x) or (x<0.0) or (x>100.0) then
             raise Exception.Create('Invalid watermark opacity.');
-          FImgRes.WatermarkAlpha := x;
+          FImgRes.MrkAlpha := x;
         end else
-          FImgRes.WatermarkFilename := '';
+          FImgRes.MrkFilename := '';
 
         FImgRes.OnPrint := @OnPrint;
         FImgRes.OnCanProgress := @OnCanProgress;
@@ -619,7 +696,8 @@ begin
           Log('%SIZE% placeholder added to destination folder.');
         end;
 
-        FImgRes.Execute(MemoSrcFilenames.Lines, DstFolder, Sizes);
+        FImgRes.DestinationFolder := DstFolder;
+        FImgRes.Execute(MemoSrcFilenames.Lines, Sizes);
 
       except on E :Exception do
         begin

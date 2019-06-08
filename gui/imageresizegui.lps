@@ -3,15 +3,14 @@
   <ProjectSession>
     <PathDelim Value="\"/>
     <Version Value="11"/>
-    <BuildModes Active="Release"/>
-    <Units Count="21">
+    <BuildModes Active="Debug"/>
+    <Units Count="33">
       <Unit0>
         <Filename Value="imageresizegui.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="10"/>
+        <EditorIndex Value="-1"/>
         <CursorPos X="7" Y="4"/>
-        <UsageCount Value="82"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="94"/>
       </Unit0>
       <Unit1>
         <Filename Value="maindlg.pas"/>
@@ -19,10 +18,8 @@
         <ComponentName Value="MainDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="523"/>
-        <CursorPos X="12" Y="535"/>
-        <UsageCount Value="82"/>
+        <CursorPos X="48" Y="10"/>
+        <UsageCount Value="94"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
@@ -32,124 +29,132 @@
         <ComponentName Value="AboutDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="9"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="40"/>
         <CursorPos X="98" Y="52"/>
-        <UsageCount Value="68"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
+        <UsageCount Value="80"/>
       </Unit2>
       <Unit3>
         <Filename Value="..\src\imgres.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="5"/>
-        <TopLine Value="284"/>
-        <CursorPos X="20" Y="289"/>
-        <UsageCount Value="79"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="14" Y="9"/>
+        <UsageCount Value="91"/>
         <Loaded Value="True"/>
       </Unit3>
       <Unit4>
+        <Filename Value="..\src\threading.dispatcher.pas"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="368"/>
+        <CursorPos X="20" Y="385"/>
+        <UsageCount Value="23"/>
+        <Loaded Value="True"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\src\generics.queue.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="31"/>
+        <CursorPos X="3" Y="48"/>
+        <UsageCount Value="23"/>
+        <Loaded Value="True"/>
+      </Unit5>
+      <Unit6>
         <Filename Value="D:\Programme\Lazarus\lcl\shellctrls.pas"/>
         <UnitName Value="ShellCtrls"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="1330"/>
         <CursorPos Y="1341"/>
-        <UsageCount Value="12"/>
-      </Unit4>
-      <Unit5>
+        <UsageCount Value="11"/>
+      </Unit6>
+      <Unit7>
         <Filename Value="D:\Programme\Lazarus\lcl\include\control.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="22"/>
-        <UsageCount Value="11"/>
-      </Unit5>
-      <Unit6>
+        <UsageCount Value="10"/>
+      </Unit7>
+      <Unit8>
         <Filename Value="D:\Programme\Lazarus\lcl\interfaces\win32\win32memostrings.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="59"/>
         <CursorPos X="34" Y="64"/>
-        <UsageCount Value="11"/>
-      </Unit6>
-      <Unit7>
-        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\registry.pp"/>
-        <EditorIndex Value="12"/>
-        <TopLine Value="106"/>
-        <CursorPos X="15" Y="119"/>
-        <UsageCount Value="38"/>
-        <Loaded Value="True"/>
-      </Unit7>
-      <Unit8>
-        <Filename Value="D:\Programme\Lazarus\components\lazutils\lazutf8classes.pas"/>
-        <UnitName Value="LazUTF8Classes"/>
-        <EditorIndex Value="11"/>
-        <TopLine Value="143"/>
-        <CursorPos Y="151"/>
-        <UsageCount Value="37"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="10"/>
       </Unit8>
       <Unit9>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\registry.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="106"/>
+        <CursorPos X="15" Y="119"/>
+        <UsageCount Value="39"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="D:\Programme\Lazarus\components\lazutils\lazutf8classes.pas"/>
+        <UnitName Value="LazUTF8Classes"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="143"/>
+        <CursorPos Y="151"/>
+        <UsageCount Value="38"/>
+      </Unit10>
+      <Unit11>
         <Filename Value="..\..\..\..\Homepage\domain.atomek\artshots\index.html"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="23"/>
         <CursorPos X="12" Y="27"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
         <DefaultSyntaxHighlighter Value="HTML"/>
-      </Unit9>
-      <Unit10>
-        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\rtl\objpas\objpas.pp"/>
-        <EditorIndex Value="14"/>
-        <TopLine Value="27"/>
-        <CursorPos X="8" Y="48"/>
-        <UsageCount Value="36"/>
-        <Loaded Value="True"/>
-      </Unit10>
-      <Unit11>
-        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\regini.inc"/>
-        <EditorIndex Value="13"/>
-        <CursorPos X="21" Y="20"/>
-        <UsageCount Value="32"/>
-        <Loaded Value="True"/>
       </Unit11>
       <Unit12>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\rtl\objpas\objpas.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="27"/>
+        <CursorPos X="8" Y="48"/>
+        <UsageCount Value="37"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\regini.inc"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="21" Y="20"/>
+        <UsageCount Value="33"/>
+      </Unit13>
+      <Unit14>
         <Filename Value="..\..\BGRABITMAP 9.9.3\bgrabitmap\bgrabitmap.pas"/>
         <UnitName Value="BGRABitmap"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="103"/>
         <CursorPos X="35" Y="8"/>
-        <UsageCount Value="11"/>
-      </Unit12>
-      <Unit13>
-        <Filename Value="..\..\BGRABITMAP 9.9.4\bgrabitmap\bgradefaultbitmap.pas"/>
-        <UnitName Value="BGRADefaultBitmap"/>
-        <EditorIndex Value="6"/>
-        <TopLine Value="816"/>
-        <CursorPos X="62" Y="829"/>
-        <UsageCount Value="28"/>
-        <Loaded Value="True"/>
-      </Unit13>
-      <Unit14>
-        <Filename Value="..\..\BGRABITMAP 9.9.4\bgrabitmap\bgracustombitmap.inc"/>
-        <EditorIndex Value="8"/>
-        <UsageCount Value="28"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="10"/>
       </Unit14>
       <Unit15>
-        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-base\src\inifiles.pp"/>
-        <UnitName Value="IniFiles"/>
-        <EditorIndex Value="4"/>
-        <TopLine Value="200"/>
-        <CursorPos X="17" Y="214"/>
-        <UsageCount Value="21"/>
-        <Loaded Value="True"/>
+        <Filename Value="..\..\BGRABITMAP 9.9.4\bgrabitmap\bgradefaultbitmap.pas"/>
+        <UnitName Value="BGRADefaultBitmap"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="816"/>
+        <CursorPos X="62" Y="829"/>
+        <UsageCount Value="29"/>
       </Unit15>
       <Unit16>
-        <Filename Value="..\..\BGRABITMAP 9.9.4\bgrabitmap\bgrapixel.inc"/>
-        <EditorIndex Value="7"/>
-        <TopLine Value="162"/>
-        <CursorPos X="18" Y="177"/>
-        <UsageCount Value="18"/>
-        <Loaded Value="True"/>
+        <Filename Value="..\..\BGRABITMAP 9.9.4\bgrabitmap\bgracustombitmap.inc"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="29"/>
       </Unit16>
       <Unit17>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-base\src\inifiles.pp"/>
+        <UnitName Value="IniFiles"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="200"/>
+        <CursorPos X="17" Y="214"/>
+        <UsageCount Value="22"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="..\..\BGRABITMAP 9.9.4\bgrabitmap\bgrapixel.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="162"/>
+        <CursorPos X="18" Y="177"/>
+        <UsageCount Value="19"/>
+      </Unit18>
+      <Unit19>
         <Filename Value="maindlg.lfm"/>
         <ComponentName Value="MainDialog"/>
         <HasResources Value="True"/>
@@ -157,148 +162,233 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="444"/>
         <CursorPos X="12" Y="456"/>
-        <UsageCount Value="13"/>
+        <UsageCount Value="12"/>
         <DefaultSyntaxHighlighter Value="LFM"/>
-      </Unit17>
-      <Unit18>
-        <Filename Value="D:\Programme\Lazarus\lcl\forms.pp"/>
-        <UnitName Value="Forms"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="631"/>
-        <CursorPos X="23" Y="646"/>
-        <UsageCount Value="15"/>
-        <Loaded Value="True"/>
-      </Unit18>
-      <Unit19>
-        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-base\src\custapp.pp"/>
-        <UnitName Value="CustApp"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="57"/>
-        <CursorPos Y="81"/>
-        <UsageCount Value="15"/>
-        <Loaded Value="True"/>
       </Unit19>
       <Unit20>
+        <Filename Value="D:\Programme\Lazarus\lcl\forms.pp"/>
+        <UnitName Value="Forms"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="631"/>
+        <CursorPos X="23" Y="646"/>
+        <UsageCount Value="16"/>
+      </Unit20>
+      <Unit21>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-base\src\custapp.pp"/>
+        <UnitName Value="CustApp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="57"/>
+        <CursorPos Y="81"/>
+        <UsageCount Value="16"/>
+      </Unit21>
+      <Unit22>
         <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\rtl\objpas\sysutils\syshelph.inc"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="-1"/>
         <CursorPos X="3" Y="5"/>
+        <UsageCount Value="16"/>
+      </Unit22>
+      <Unit23>
+        <Filename Value="D:\Programme\Lazarus\lcl\controls.pp"/>
+        <UnitName Value="Controls"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="2383"/>
+        <CursorPos X="3" Y="2395"/>
+        <UsageCount Value="10"/>
+      </Unit23>
+      <Unit24>
+        <Filename Value="D:\Programme\Lazarus\lcl\imglist.pp"/>
+        <UnitName Value="ImgList"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="347"/>
+        <CursorPos X="15" Y="357"/>
+        <UsageCount Value="10"/>
+      </Unit24>
+      <Unit25>
+        <Filename Value="D:\Programme\Lazarus\components\lazutils\graphtype.pp"/>
+        <UnitName Value="GraphType"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="37"/>
+        <CursorPos X="3" Y="48"/>
+        <UsageCount Value="10"/>
+      </Unit25>
+      <Unit26>
+        <Filename Value="D:\Programme\Lazarus\lcl\stdctrls.pp"/>
+        <UnitName Value="StdCtrls"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="248"/>
+        <CursorPos X="3" Y="260"/>
+        <UsageCount Value="9"/>
+      </Unit26>
+      <Unit27>
+        <Filename Value="D:\Programme\Lazarus\lcl\lcltype.pp"/>
+        <UnitName Value="LCLType"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="1136"/>
+        <CursorPos X="14" Y="1144"/>
+        <UsageCount Value="14"/>
+        <Loaded Value="True"/>
+      </Unit27>
+      <Unit28>
+        <Filename Value="D:\Programme\Lazarus\lcl\graphics.pp"/>
+        <UnitName Value="Graphics"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="1119"/>
+        <CursorPos X="3" Y="966"/>
         <UsageCount Value="15"/>
         <Loaded Value="True"/>
-      </Unit20>
+      </Unit28>
+      <Unit29>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\rtl\objpas\classes\classesh.inc"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="1622"/>
+        <CursorPos Y="1626"/>
+        <UsageCount Value="15"/>
+        <Loaded Value="True"/>
+      </Unit29>
+      <Unit30>
+        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\dexif\dEXIF.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="25" Y="7"/>
+        <UsageCount Value="9"/>
+      </Unit30>
+      <Unit31>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\rtl\win\tthread.inc"/>
+        <EditorIndex Value="7"/>
+        <TopLine Value="92"/>
+        <CursorPos X="44" Y="110"/>
+        <UsageCount Value="13"/>
+        <Loaded Value="True"/>
+      </Unit31>
+      <Unit32>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\rtl\win\wininc\defines.inc"/>
+        <EditorIndex Value="8"/>
+        <TopLine Value="2255"/>
+        <CursorPos X="6" Y="2271"/>
+        <UsageCount Value="12"/>
+        <Loaded Value="True"/>
+      </Unit32>
     </Units>
-    <JumpHistory Count="28" HistoryIndex="27">
+    <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="127" Column="35" TopLine="105"/>
+        <Filename Value="..\src\threading.dispatcher.pas"/>
+        <Caret Line="128" Column="37" TopLine="103"/>
       </Position1>
       <Position2>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="495" TopLine="477"/>
+        <Filename Value="..\src\threading.dispatcher.pas"/>
+        <Caret Line="119" TopLine="109"/>
       </Position2>
       <Position3>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="126" TopLine="113"/>
+        <Filename Value="..\src\threading.dispatcher.pas"/>
+        <Caret Line="286" Column="3" TopLine="283"/>
       </Position3>
       <Position4>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="498" Column="18" TopLine="494"/>
+        <Filename Value="..\src\threading.dispatcher.pas"/>
+        <Caret Line="309" TopLine="299"/>
       </Position4>
       <Position5>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="489" Column="35" TopLine="483"/>
+        <Filename Value="..\src\threading.dispatcher.pas"/>
+        <Caret Line="311" Column="5" TopLine="301"/>
       </Position5>
       <Position6>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="8" Column="25"/>
+        <Filename Value="..\src\threading.dispatcher.pas"/>
+        <Caret Line="322" TopLine="314"/>
       </Position6>
       <Position7>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="22" Column="30" TopLine="11"/>
+        <Filename Value="..\src\threading.dispatcher.pas"/>
+        <Caret Line="363" Column="30" TopLine="344"/>
       </Position7>
       <Position8>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="201" Column="25" TopLine="185"/>
+        <Filename Value="..\src\threading.dispatcher.pas"/>
+        <Caret Line="125" TopLine="102"/>
       </Position8>
       <Position9>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="211" Column="29" TopLine="188"/>
+        <Filename Value="..\src\threading.dispatcher.pas"/>
+        <Caret Line="308" Column="7" TopLine="293"/>
       </Position9>
       <Position10>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="32" TopLine="17"/>
+        <Filename Value="..\src\threading.dispatcher.pas"/>
+        <Caret Line="364" Column="16" TopLine="343"/>
       </Position10>
       <Position11>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="31" Column="95" TopLine="17"/>
+        <Filename Value="..\src\threading.dispatcher.pas"/>
+        <Caret Line="308" Column="10" TopLine="293"/>
       </Position11>
       <Position12>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="203" Column="24" TopLine="197"/>
+        <Filename Value="..\src\threading.dispatcher.pas"/>
+        <Caret Line="365" Column="21" TopLine="351"/>
       </Position12>
       <Position13>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="168" TopLine="144"/>
+        <Filename Value="..\src\threading.dispatcher.pas"/>
+        <Caret Line="310" Column="61" TopLine="293"/>
       </Position13>
       <Position14>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="239" TopLine="227"/>
+        <Filename Value="..\src\threading.dispatcher.pas"/>
+        <Caret Line="365" Column="17" TopLine="349"/>
       </Position14>
       <Position15>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="212" Column="32" TopLine="186"/>
+        <Filename Value="..\src\threading.dispatcher.pas"/>
+        <Caret Line="345" TopLine="320"/>
       </Position15>
       <Position16>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="234" Column="40" TopLine="220"/>
+        <Filename Value="..\src\threading.dispatcher.pas"/>
+        <Caret Line="307" Column="7" TopLine="292"/>
       </Position16>
       <Position17>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="145" TopLine="132"/>
+        <Filename Value="..\src\threading.dispatcher.pas"/>
+        <Caret Line="363" Column="20" TopLine="349"/>
       </Position17>
       <Position18>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="211" Column="41" TopLine="185"/>
+        <Filename Value="..\src\threading.dispatcher.pas"/>
+        <Caret Line="364" TopLine="356"/>
       </Position18>
       <Position19>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="210" TopLine="196"/>
+        <Filename Value="..\src\threading.dispatcher.pas"/>
+        <Caret Line="367" TopLine="356"/>
       </Position19>
       <Position20>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="12" Column="21"/>
+        <Filename Value="..\src\threading.dispatcher.pas"/>
+        <Caret Line="16" TopLine="16"/>
       </Position20>
       <Position21>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="467" TopLine="457"/>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\rtl\objpas\classes\classesh.inc"/>
+        <Caret Line="1626" TopLine="1622"/>
       </Position21>
       <Position22>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="132" TopLine="122"/>
+        <Filename Value="..\src\threading.dispatcher.pas"/>
+        <Caret Line="40" TopLine="19"/>
       </Position22>
       <Position23>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="552" Column="3" TopLine="544"/>
+        <Filename Value="..\src\threading.dispatcher.pas"/>
+        <Caret Line="221" TopLine="221"/>
       </Position23>
       <Position24>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="541" Column="36" TopLine="528"/>
+        <Filename Value="..\src\threading.dispatcher.pas"/>
+        <Caret Line="42" TopLine="25"/>
       </Position24>
       <Position25>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="636" TopLine="613"/>
+        <Filename Value="..\src\threading.dispatcher.pas"/>
+        <Caret Line="210" Column="26" TopLine="340"/>
       </Position25>
       <Position26>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="165" TopLine="148"/>
+        <Filename Value="..\src\threading.dispatcher.pas"/>
+        <Caret Line="363" Column="34" TopLine="351"/>
       </Position26>
       <Position27>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="145" TopLine="132"/>
+        <Filename Value="..\src\threading.dispatcher.pas"/>
+        <Caret Line="368" Column="21" TopLine="352"/>
       </Position27>
       <Position28>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="534" Column="12" TopLine="522"/>
+        <Filename Value="..\src\threading.dispatcher.pas"/>
+        <Caret Line="373" Column="23" TopLine="354"/>
       </Position28>
+      <Position29>
+        <Filename Value="..\src\threading.dispatcher.pas"/>
+        <Caret Line="388" Column="19" TopLine="370"/>
+      </Position29>
+      <Position30>
+        <Filename Value="..\src\threading.dispatcher.pas"/>
+        <Caret Line="378" Column="25" TopLine="364"/>
+      </Position30>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>
@@ -308,6 +398,15 @@
     </RunParams>
   </ProjectSession>
   <Debugging>
+    <BreakPoints Count="1">
+      <Item1>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\src\threading.dispatcher.pas"/>
+        <Line Value="115"/>
+      </Item1>
+    </BreakPoints>
     <Watches Count="1">
       <Item1>
         <Expression Value="Registry."/>
