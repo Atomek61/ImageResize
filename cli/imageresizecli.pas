@@ -11,16 +11,17 @@ uses
   { you can add units after this } fileutil, utils, imgres, generics.collections;
 
 const
-  IMGRESCLIVER = '1.2';
+  IMGRESCLIVER = '1.3';
   IMGRESCLICPR = 'imgres CLI V'+IMGRESCLIVER+' (c) 2019 Jan Schirrmacher, www.atomek.de';
 
   INTROSTR = 'Free tool for jpg and png quality file resizing.';
-  USAGESTR = '  Usage: imgres (srcfilename|@srcfilelist) dstfolder [-s size[,size,..] [-j jpgquality]  [-p pngcompression] [-w watermark] [-h] [-q]';
+  USAGESTR = '  Usage: imgres (srcfilename|@srcfilelist) dstfolder [-s size[,size,..] [-j jpgquality]  [-p pngcompression] [-w watermark] [-t treadcount] [-h] [-q]';
   HINTSSTR =
     '  s size           - refers to the longer side of the image, size can be a single value or a list of comma-separated values'#10+
     '  j jpgquality     - is a quality from 1 to 100 percent (default is 75)'#10+
     '  p pngcompression - is one of none,fastest,default and max'#10+
     '  w watermark      - a watermark file and optional a position and opacity, see example'#10+
+    '  t threadcount    - number of threads to use'#10+
     '  h help           - outputs this text'#10+
     '  q quiet          - suppresses any message output'#10#10+
     '  dstfile must contain the placeholder ''%SIZE%'' when size is a list of sizes.'#10+
@@ -54,6 +55,7 @@ type
   protected
     procedure DoRun; override;
     procedure OnPrint(Sender :TObject; const Line :string);
+    procedure OnProgress(Sender :TObject; Progress :single);
   public
     constructor Create(AComponent :TComponent); override;
     procedure WriteHelp; virtual;
@@ -70,7 +72,7 @@ procedure TImageResizeCli.DoRun;
 var
   OptionCount :integer;
   Param :string;
-  Sizes :TIntegerDynArray;
+  Sizes :TSizes;
   Quiet :boolean;
   JpgQuality :integer;
   PngCompression :integer;
@@ -85,6 +87,7 @@ var
   MrkFilename :string;
   MrkSize, MrkX, MrkY :single;
   MrkAlpha :single;
+  ThreadCount :integer;
 
   function IncludeTrailingPathDelimiterEx(const Path :string) :string;
   begin
@@ -113,15 +116,15 @@ begin
   Processor := TImgRes.Create;
   try
 
-    // Size
+    // Sizes
     Param := GetOptionValue('s', 'size');
     if Param<>'' then begin
-      if not SizesStrToSizes(Param, Sizes) or (Length(Sizes)=0) then
+      if not TrySizesStrToSizes(Param, Sizes) or (Length(Sizes)=0) then
         raise Exception.CreateFmt('Invalid sizes ''%s''.', [Param]);
       inc(OptionCount, 2);
     end else begin
       SetLength(Sizes, 1);
-      Sizes[0] := Processor.Size;
+      Sizes[0] := DEFAULTSIZE;
     end;
 
     // JpgQuality
@@ -168,6 +171,14 @@ begin
       end;
     end;
 
+    Param := GetOptionValue('t', 'threadcount');
+    if Param<>'' then begin
+      if not TryStrToInt(Param, ThreadCount) or (ThreadCount<-1) then
+        raise Exception.CreateFmt('Invalid threadcount ''%s'', -1..n expected.', [Param]);
+      inc(OptionCount, 2);
+    end else
+      ThreadCount := 0;
+
     // Check number of parameters
     if ParamCount<>2+OptionCount then
       raise Exception.Create(ERRINVALIDNUMBEROFPARAMS);
@@ -175,9 +186,6 @@ begin
     // Required Parameters: SrcFilename and Folder.
     SrcFilename := ParamStr(1);
     DstFolder := ParamStr(2);
-
-    // Check for size doublettes
-
 
     // Check if multiple sizes are given and placeholder %SIZE% is not set in DstFolder
     if (Length(Sizes)>1) and not (Pos('%SIZE%', DstFolder)>0) then
@@ -202,7 +210,10 @@ begin
     end else
       SrcFilenames.Add(SrcFilename);
 
-    Processor.DestinationFolder := DstFolder;
+    // Prepare the processor
+    Processor.SrcFilenames := SrcFilenames;
+    Processor.DstFolder := DstFolder;
+    Processor.Sizes := SizesToSizesStr(Sizes);
     Processor.JpgQuality := JpgQuality;
     Processor.PngCompression := PngCompression;
     Processor.MrkFilename := MrkFilename;
@@ -210,13 +221,17 @@ begin
     Processor.MrkX := MrkX;
     Processor.MrkY := MrkY;
     Processor.MrkAlpha := MrkAlpha;
-    if not Quiet then
-      Processor.OnPrint := @OnPrint;
+    Processor.ThreadCount := ThreadCount;
+    if not Quiet then begin
+//      Processor.OnPrint := @OnPrint;
+      Processor.OnProgress := @OnProgress;
+    end;
 
     ///////////////////////////////////////////////////
     // Finally call the processor...
-    Processor.Execute(SrcFilenames, Sizes);
+    Processor.Execute;
     ///////////////////////////////////////////////////
+
   finally
     Processor.Free;
     SrcFilenames.Free;
@@ -229,6 +244,11 @@ end;
 procedure TImageResizeCli.OnPrint(Sender: TObject; const Line: string);
 begin
   WriteLn(Line);
+end;
+
+procedure TImageResizeCli.OnProgress(Sender: TObject; Progress: single);
+begin
+  Writeln(Format('Progress %.1f%%', [Progress*100.0]));
 end;
 
 constructor TImageResizeCli.Create(AComponent: TComponent);

@@ -13,12 +13,24 @@ type
   TContext = class;
   TWorker = class;
 
+  TLevel = (mlHint, mlNormal, mlWarning, mlAbort, mlFatal);
+
+  TPrintEvent = procedure(Sender :TObject; WorkerId: integer; const Line :string; Level :TLevel) of object;
+  TProgressEvent = procedure(Sender :TObject; Progress :single) of object;
+
   // The user must derive a task class and adds intances to a task list
+
+  { TCustomTask }
+
   TCustomTask = class abstract
   private
-    Worker :TWorker;
+    FWorker :TWorker;
   protected
     function Execute(Context :TContext) :boolean; virtual; abstract;
+    property Worker :TWorker read FWorker;
+    function GetTaskSteps :integer; virtual; // Progress system: tells dispatcher how many steps this task goes
+  public
+    property TaskSteps :integer read GetTaskSteps;
   end;
 
   { TTasks }
@@ -26,6 +38,7 @@ type
   TTasks = class(TQueue<TCustomTask>)
   public
     function Pop :TCustomTask;  overload;
+    function GetTotalSteps :integer;
   end;
 
   { TWorker }
@@ -40,6 +53,7 @@ type
     procedure Execute; override;
   public
     constructor Create(Context :TContext; Id :integer);
+    property Context :TContext read FContext;
     property Task :TCustomTask read FTask;
     property Id :integer read FId;
   end;
@@ -50,8 +64,6 @@ type
     Sender :TCustomTask;
     constructor Create(Sender :TCustomTask);
   end;
-
-  TLevel = (mlHint, mlNormal, mlWarning, mlAbort, mlFatal);
 
   { TPrintMessage }
 
@@ -64,8 +76,8 @@ type
   { TProgressMessage }
 
   TProgressMessage = class(TMessage)
-    Progress :single;
-    constructor Create(Sender :TCustomTask; Progress :single);
+    Steps :integer;
+    constructor Create(Sender :TCustomTask; Steps :integer);
   end;
 
   { TExitMessage }
@@ -104,13 +116,10 @@ type
   public
     constructor Create(Dispatcher :TDispatcher);
     destructor Destroy; override;
-    procedure Print(Sender :TCustomTask; const Text :string; Level :TLevel);
-    procedure Progress(Sender :TCustomTask; Progress :single);
+    procedure Print(Sender :TCustomTask; const Text :string; Level :TLevel = mlNormal);
+    procedure Progress(Sender :TCustomTask; Steps :integer);
     property Aborted :boolean read GetAborted; // To be checked frequently
   end;
-
-  TPrintEvent = procedure(Sender :TObject; WorkerId: integer; const Line :string; Level :TLevel) of object;
-  TProgressEvent = procedure(Sender :TObject; WorkerId: integer; Progress :single) of object;
 
   { TDispatcher }
 
@@ -119,10 +128,12 @@ type
     FAborted :boolean;
     FMaxWorkerCount :integer;
     FStopOnError :boolean;
+    FStepCount :integer;
+    FTotalSteps :integer;
     FOnPrint :TPrintEvent;
     FOnProgress :TProgressEvent;
     procedure Print(Sender :TCustomTask; const Text :string; Level :TLevel);
-    procedure Progress(Sender :TCustomTask; Progress :single);
+    procedure Progress(Sender :TCustomTask; Steps :integer);
   public
     constructor Create;
     destructor Destroy; override;
@@ -136,6 +147,13 @@ type
 
 implementation
 
+{ TCustomTask }
+
+function TCustomTask.GetTaskSteps: integer;
+begin
+  result := 1;
+end;
+
 { TTasks }
 
 function TTasks.Pop: TCustomTask;
@@ -144,12 +162,21 @@ begin
     raise Exception.Create('Pop on empty queue.');
 end;
 
+function TTasks.GetTotalSteps: integer;
+var
+  i :integer;
+begin
+  result := 0;
+  for i:=0 to Count-1 do
+    result += Items[i].GetTaskSteps;
+end;
+
 { TProgressMessage }
 
-constructor TProgressMessage.Create(Sender: TCustomTask; Progress: single);
+constructor TProgressMessage.Create(Sender: TCustomTask; Steps :integer);
 begin
   inherited Create(Sender);
-  self.Progress := Progress;
+  self.Steps := Steps;
 end;
 
 { TPrintMessage }
@@ -172,7 +199,7 @@ end;
 
 constructor TMessages.Create;
 begin
-  inherited Create(0);
+  inherited Create(1000);
   FQueueSection := TCriticalSection.Create;
 end;
 
@@ -221,7 +248,7 @@ end;
 procedure TWorker.Start(Task: TCustomTask);
 begin
   FTask := Task;
-  FTask.Worker := self;
+  FTask.FWorker := self;
   Suspended := false;
 end;
 
@@ -278,9 +305,9 @@ begin
   FMessages.Push(TPrintMessage.Create(Sender, Text, Level));
 end;
 
-procedure TContext.Progress(Sender: TCustomTask; Progress: single);
+procedure TContext.Progress(Sender: TCustomTask; Steps :integer);
 begin
-  FMessages.Push(TProgressMessage.Create(Sender, Progress));
+  FMessages.Push(TProgressMessage.Create(Sender, Steps));
 end;
 
 {
@@ -296,10 +323,11 @@ begin
     FOnPrint(Sender, Sender.Worker.Id, Text, Level);
 end;
 
-procedure TDispatcher.Progress(Sender: TCustomTask; Progress: single);
+procedure TDispatcher.Progress(Sender: TCustomTask; Steps :integer);
 begin
+  inc(FStepCount, Steps);
   if Assigned(FOnProgress) then
-    FOnProgress(Sender, Sender.Worker.Id, Progress);
+    FOnProgress(self, FStepCount/FTotalSteps);
 end;
 
 constructor TDispatcher.Create;
@@ -333,6 +361,10 @@ begin
   try
     Context.FDispatcher := self;
 
+    // Prepare progress system
+    FTotalSteps := Tasks.GetTotalSteps;
+    FStepCount := 0;
+
     // Calculate number of needed workers
     case MaxWorkerCount of
     0: // default
@@ -363,8 +395,8 @@ begin
       // If a task is available then assign it to a free worker
       if not Tasks.Empty and Pool.Pop(Worker) then begin
         Working[Worker.Id] := Worker;
-        Worker.Start(Tasks.Pop);
         inc(WorkingCount);
+        Worker.Start(Tasks.Pop);
       end;
 
       // Handle worker messages
@@ -391,7 +423,7 @@ begin
                 Exit(not FAborted);
             end;
           end else if Msg is TProgressMessage then with TProgressMessage(Msg) do begin
-            self.Progress(Sender, Progress);
+            self.Progress(Sender, Steps);
           end;
         finally
           Msg.Free;

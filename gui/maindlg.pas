@@ -8,7 +8,7 @@ interface
 uses
   Classes, Types, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ComCtrls,
   ActnList, ExtCtrls, imgres, registry, aboutdlg, inifiles, strutils, LMessages,
-  LCLIntf, Buttons, ImgList, LCLType, threading.dispatcher;
+  LCLIntf, Buttons, ImgList, LCLType;
 
 const
   IMGRESGUIVER = '1.4';
@@ -162,7 +162,7 @@ type
     FMrkPos :integer;
     procedure SetTitle(const Str :string);
     procedure OnPrint(Sender :TObject; const Line :string);
-    procedure OnCanProgress(Sender :TObject; Progress :single; var Cancel :boolean);
+    procedure OnProgress(Sender :TObject; Progress :single);
     procedure SaveToRegistry;
     function LoadFromRegistry :boolean;
     procedure Save(const Filename :string);
@@ -613,12 +613,13 @@ begin
   Log(Line);
 end;
 
-procedure TMainDialog.OnCanProgress(Sender: TObject; Progress: single; var Cancel: boolean);
+procedure TMainDialog.OnProgress(Sender: TObject; Progress: single);
 begin
   FProgress := Progress;
   ProgressBar.Position := round(Progress*100.0);
   Application.ProcessMessages;
-  Cancel := FCancelled;
+  if FCancelled then
+    (Sender as TImgRes).Cancel;
 end;
 
 procedure TMainDialog.ActionExecuteExecute(Sender: TObject);
@@ -652,7 +653,7 @@ begin
         if ComboBoxSizes.Text='default' then begin
           SetLength(Sizes, 1);
           Sizes[0] := 640;
-        end else if not SizesStrToSizes(ComboBoxSizes.Text, Sizes) then
+        end else if not TrySizesStrToSizes(ComboBoxSizes.Text, Sizes) then
           raise Exception.Create('Invalid Sizes string.');
         FImgRes := TImgRes.Create;
         if ComboBoxJpgQuality.Text = 'default' then
@@ -686,7 +687,7 @@ begin
           FImgRes.MrkFilename := '';
 
         FImgRes.OnPrint := @OnPrint;
-        FImgRes.OnCanProgress := @OnCanProgress;
+        FImgRes.OnProgress := @OnProgress;
 
         // If required, then append the %SIZE% placeholder
         DstFolder := EditDstFolder.Text;
@@ -696,8 +697,11 @@ begin
           Log('%SIZE% placeholder added to destination folder.');
         end;
 
-        FImgRes.DestinationFolder := DstFolder;
-        FImgRes.Execute(MemoSrcFilenames.Lines, Sizes);
+        FImgRes.Sizes := SizesToSizesStr(Sizes);
+        FImgRes.SrcFilenames := MemoSrcFilenames.Lines;
+        FImgRes.DstFolder := DstFolder;
+        FImgRes.ThreadCount := 0;
+        FImgRes.Execute;
 
       except on E :Exception do
         begin

@@ -1,6 +1,6 @@
 unit generics.queue;
 
-{$mode DELPHI}{$H+}
+{$mode delphi}
 
 interface
 
@@ -8,7 +8,6 @@ uses
   Classes, SysUtils;
 
 type
-
 
   { TCustomQueue }
 
@@ -36,7 +35,7 @@ type
     property Empty :boolean read GetEmpty;
     property Available :boolean read GetAvailable; // = not empty
   public
-    constructor Create(Capacity :integer); // Kann 0 sein, dann unbegrenztes Wachstum
+    constructor Create(ACapacity :integer = 0); // Kann 0 sein, dann unbegrenztes Wachstum
     destructor Destroy; override;
     procedure Push(Item :T); virtual;
     function Pop(out Item :T) :boolean; virtual;
@@ -58,10 +57,10 @@ implementation
 
 { TCustomQueue }
 
-constructor TCustomQueue<T>.Create(Capacity: integer);
+constructor TCustomQueue<T>.Create(ACapacity: integer);
 begin
   FCount := 0;
-  SetLength(FItems, Capacity);
+  SetLength(FItems, ACapacity);
   FTail := 0;
 end;
 
@@ -98,7 +97,7 @@ var
 begin
   if FCount>0 then begin
     n := Length(FItems);
-    if FHead<FTail then begin
+    if FHead<=FTail then begin
       m := n-FTail;
       SetLength(Tmp, m);
       Move(FItems[FTail], Tmp[0], m*sizeof(T));

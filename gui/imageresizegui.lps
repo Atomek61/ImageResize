@@ -10,7 +10,7 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="7" Y="4"/>
-        <UsageCount Value="94"/>
+        <UsageCount Value="95"/>
       </Unit0>
       <Unit1>
         <Filename Value="maindlg.pas"/>
@@ -18,8 +18,9 @@
         <ComponentName Value="MainDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <CursorPos X="48" Y="10"/>
-        <UsageCount Value="94"/>
+        <TopLine Value="132"/>
+        <CursorPos X="9" Y="157"/>
+        <UsageCount Value="95"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
@@ -32,14 +33,15 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="40"/>
         <CursorPos X="98" Y="52"/>
-        <UsageCount Value="80"/>
+        <UsageCount Value="81"/>
       </Unit2>
       <Unit3>
         <Filename Value="..\src\imgres.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="1"/>
-        <CursorPos X="14" Y="9"/>
-        <UsageCount Value="91"/>
+        <TopLine Value="268"/>
+        <CursorPos Y="289"/>
+        <UsageCount Value="92"/>
         <Loaded Value="True"/>
       </Unit3>
       <Unit4>
@@ -47,18 +49,18 @@
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="368"/>
-        <CursorPos X="20" Y="385"/>
-        <UsageCount Value="23"/>
+        <TopLine Value="279"/>
+        <CursorPos X="32" Y="294"/>
+        <UsageCount Value="24"/>
         <Loaded Value="True"/>
       </Unit4>
       <Unit5>
         <Filename Value="..\src\generics.queue.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="31"/>
-        <CursorPos X="3" Y="48"/>
-        <UsageCount Value="23"/>
+        <TopLine Value="24"/>
+        <CursorPos X="17" Y="38"/>
+        <UsageCount Value="24"/>
         <Loaded Value="True"/>
       </Unit5>
       <Unit6>
@@ -225,7 +227,7 @@
         <EditorIndex Value="4"/>
         <TopLine Value="1136"/>
         <CursorPos X="14" Y="1144"/>
-        <UsageCount Value="14"/>
+        <UsageCount Value="15"/>
         <Loaded Value="True"/>
       </Unit27>
       <Unit28>
@@ -234,7 +236,7 @@
         <EditorIndex Value="5"/>
         <TopLine Value="1119"/>
         <CursorPos X="3" Y="966"/>
-        <UsageCount Value="15"/>
+        <UsageCount Value="16"/>
         <Loaded Value="True"/>
       </Unit28>
       <Unit29>
@@ -242,7 +244,7 @@
         <EditorIndex Value="6"/>
         <TopLine Value="1622"/>
         <CursorPos Y="1626"/>
-        <UsageCount Value="15"/>
+        <UsageCount Value="16"/>
         <Loaded Value="True"/>
       </Unit29>
       <Unit30>
@@ -256,7 +258,7 @@
         <EditorIndex Value="7"/>
         <TopLine Value="92"/>
         <CursorPos X="44" Y="110"/>
-        <UsageCount Value="13"/>
+        <UsageCount Value="14"/>
         <Loaded Value="True"/>
       </Unit31>
       <Unit32>
@@ -264,130 +266,130 @@
         <EditorIndex Value="8"/>
         <TopLine Value="2255"/>
         <CursorPos X="6" Y="2271"/>
-        <UsageCount Value="12"/>
+        <UsageCount Value="13"/>
         <Loaded Value="True"/>
       </Unit32>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="..\src\threading.dispatcher.pas"/>
-        <Caret Line="128" Column="37" TopLine="103"/>
+        <Filename Value="..\src\generics.queue.pas"/>
+        <Caret Line="120" TopLine="101"/>
       </Position1>
       <Position2>
-        <Filename Value="..\src\threading.dispatcher.pas"/>
-        <Caret Line="119" TopLine="109"/>
+        <Filename Value="..\src\generics.queue.pas"/>
+        <Caret Line="119" TopLine="101"/>
       </Position2>
       <Position3>
-        <Filename Value="..\src\threading.dispatcher.pas"/>
-        <Caret Line="286" Column="3" TopLine="283"/>
+        <Filename Value="..\src\generics.queue.pas"/>
+        <Caret Line="128" TopLine="103"/>
       </Position3>
       <Position4>
-        <Filename Value="..\src\threading.dispatcher.pas"/>
-        <Caret Line="309" TopLine="299"/>
+        <Filename Value="..\src\generics.queue.pas"/>
+        <Caret Line="129" TopLine="104"/>
       </Position4>
       <Position5>
-        <Filename Value="..\src\threading.dispatcher.pas"/>
-        <Caret Line="311" Column="5" TopLine="301"/>
+        <Filename Value="..\src\generics.queue.pas"/>
+        <Caret Line="130" TopLine="105"/>
       </Position5>
       <Position6>
-        <Filename Value="..\src\threading.dispatcher.pas"/>
-        <Caret Line="322" TopLine="314"/>
+        <Filename Value="..\src\generics.queue.pas"/>
+        <Caret Line="134" TopLine="109"/>
       </Position6>
       <Position7>
-        <Filename Value="..\src\threading.dispatcher.pas"/>
-        <Caret Line="363" Column="30" TopLine="344"/>
+        <Filename Value="..\src\generics.queue.pas"/>
+        <Caret Line="135" TopLine="110"/>
       </Position7>
       <Position8>
-        <Filename Value="..\src\threading.dispatcher.pas"/>
-        <Caret Line="125" TopLine="102"/>
+        <Filename Value="..\src\generics.queue.pas"/>
+        <Caret Line="97" TopLine="82"/>
       </Position8>
       <Position9>
-        <Filename Value="..\src\threading.dispatcher.pas"/>
-        <Caret Line="308" Column="7" TopLine="293"/>
+        <Filename Value="..\src\generics.queue.pas"/>
+        <Caret Line="98" TopLine="82"/>
       </Position9>
       <Position10>
-        <Filename Value="..\src\threading.dispatcher.pas"/>
-        <Caret Line="364" Column="16" TopLine="343"/>
+        <Filename Value="..\src\generics.queue.pas"/>
+        <Caret Line="99" TopLine="82"/>
       </Position10>
       <Position11>
-        <Filename Value="..\src\threading.dispatcher.pas"/>
-        <Caret Line="308" Column="10" TopLine="293"/>
+        <Filename Value="..\src\generics.queue.pas"/>
+        <Caret Line="100" TopLine="82"/>
       </Position11>
       <Position12>
-        <Filename Value="..\src\threading.dispatcher.pas"/>
-        <Caret Line="365" Column="21" TopLine="351"/>
+        <Filename Value="..\src\generics.queue.pas"/>
+        <Caret Line="101" TopLine="87"/>
       </Position12>
       <Position13>
-        <Filename Value="..\src\threading.dispatcher.pas"/>
-        <Caret Line="310" Column="61" TopLine="293"/>
+        <Filename Value="..\src\generics.queue.pas"/>
+        <Caret Line="99" TopLine="87"/>
       </Position13>
       <Position14>
-        <Filename Value="..\src\threading.dispatcher.pas"/>
-        <Caret Line="365" Column="17" TopLine="349"/>
+        <Filename Value="..\src\generics.queue.pas"/>
+        <Caret Line="100" TopLine="87"/>
       </Position14>
       <Position15>
-        <Filename Value="..\src\threading.dispatcher.pas"/>
-        <Caret Line="345" TopLine="320"/>
+        <Filename Value="..\src\generics.queue.pas"/>
+        <Caret Line="107" TopLine="87"/>
       </Position15>
       <Position16>
-        <Filename Value="..\src\threading.dispatcher.pas"/>
-        <Caret Line="307" Column="7" TopLine="292"/>
+        <Filename Value="..\src\generics.queue.pas"/>
+        <Caret Line="99" TopLine="87"/>
       </Position16>
       <Position17>
-        <Filename Value="..\src\threading.dispatcher.pas"/>
-        <Caret Line="363" Column="20" TopLine="349"/>
+        <Filename Value="..\src\generics.queue.pas"/>
+        <Caret Line="100" TopLine="87"/>
       </Position17>
       <Position18>
-        <Filename Value="..\src\threading.dispatcher.pas"/>
-        <Caret Line="364" TopLine="356"/>
+        <Filename Value="..\src\generics.queue.pas"/>
+        <Caret Line="101" TopLine="87"/>
       </Position18>
       <Position19>
-        <Filename Value="..\src\threading.dispatcher.pas"/>
-        <Caret Line="367" TopLine="356"/>
+        <Filename Value="..\src\generics.queue.pas"/>
+        <Caret Line="102" TopLine="87"/>
       </Position19>
       <Position20>
-        <Filename Value="..\src\threading.dispatcher.pas"/>
-        <Caret Line="16" TopLine="16"/>
+        <Filename Value="..\src\generics.queue.pas"/>
+        <Caret Line="103" TopLine="87"/>
       </Position20>
       <Position21>
-        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\rtl\objpas\classes\classesh.inc"/>
-        <Caret Line="1626" TopLine="1622"/>
+        <Filename Value="..\src\generics.queue.pas"/>
+        <Caret Line="104" TopLine="87"/>
       </Position21>
       <Position22>
-        <Filename Value="..\src\threading.dispatcher.pas"/>
-        <Caret Line="40" TopLine="19"/>
+        <Filename Value="..\src\generics.queue.pas"/>
+        <Caret Line="105" TopLine="87"/>
       </Position22>
       <Position23>
-        <Filename Value="..\src\threading.dispatcher.pas"/>
-        <Caret Line="221" TopLine="221"/>
+        <Filename Value="..\src\generics.queue.pas"/>
+        <Caret Line="100" TopLine="87"/>
       </Position23>
       <Position24>
-        <Filename Value="..\src\threading.dispatcher.pas"/>
-        <Caret Line="42" TopLine="25"/>
+        <Filename Value="..\src\generics.queue.pas"/>
+        <Caret Line="111" TopLine="87"/>
       </Position24>
       <Position25>
-        <Filename Value="..\src\threading.dispatcher.pas"/>
-        <Caret Line="210" Column="26" TopLine="340"/>
+        <Filename Value="..\src\generics.queue.pas"/>
+        <Caret Line="97" TopLine="87"/>
       </Position25>
       <Position26>
         <Filename Value="..\src\threading.dispatcher.pas"/>
-        <Caret Line="363" Column="34" TopLine="351"/>
+        <Caret Line="230" Column="15" TopLine="219"/>
       </Position26>
       <Position27>
         <Filename Value="..\src\threading.dispatcher.pas"/>
-        <Caret Line="368" Column="21" TopLine="352"/>
+        <Caret Line="117" TopLine="96"/>
       </Position27>
       <Position28>
         <Filename Value="..\src\threading.dispatcher.pas"/>
-        <Caret Line="373" Column="23" TopLine="354"/>
+        <Caret Line="294" Column="31" TopLine="279"/>
       </Position28>
       <Position29>
         <Filename Value="..\src\threading.dispatcher.pas"/>
-        <Caret Line="388" Column="19" TopLine="370"/>
+        <Caret Line="93" TopLine="74"/>
       </Position29>
       <Position30>
         <Filename Value="..\src\threading.dispatcher.pas"/>
-        <Caret Line="378" Column="25" TopLine="364"/>
+        <Caret Line="202" Column="24" TopLine="200"/>
       </Position30>
     </JumpHistory>
     <RunParams>
@@ -398,7 +400,7 @@
     </RunParams>
   </ProjectSession>
   <Debugging>
-    <BreakPoints Count="1">
+    <BreakPoints Count="3">
       <Item1>
         <Kind Value="bpkSource"/>
         <WatchScope Value="wpsLocal"/>
@@ -406,6 +408,20 @@
         <Source Value="..\src\threading.dispatcher.pas"/>
         <Line Value="115"/>
       </Item1>
+      <Item2>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\src\threading.dispatcher.pas"/>
+        <Line Value="268"/>
+      </Item2>
+      <Item3>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\src\imgres.pas"/>
+        <Line Value="289"/>
+      </Item3>
     </BreakPoints>
     <Watches Count="1">
       <Item1>
