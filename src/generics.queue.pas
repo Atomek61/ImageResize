@@ -1,5 +1,15 @@
 unit generics.queue;
 
+////////////////////////////////////////////////////////////////////////////////
+//
+//  ImageResize (c) 2019 Jan Schirrmacher, www.atomek.de
+//
+//  See https://github.com/Atomek61/ImageResize.git for licensing
+//
+//  generics.queue.pas is a simple library for a ring buffer.
+//
+////////////////////////////////////////////////////////////////////////////////
+
 {$mode delphi}
 
 interface

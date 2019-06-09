@@ -1,5 +1,15 @@
 unit maindlg;
 
+////////////////////////////////////////////////////////////////////////////////
+//
+//  ImageResize (c) 2019 Jan Schirrmacher, www.atomek.de
+//
+//  See https://github.com/Atomek61/ImageResize.git for licensing
+//
+//  maindlg.pas is the GUI interface for the TImgRes-Processor.
+//
+////////////////////////////////////////////////////////////////////////////////
+
 {$mode objfpc}{$H+}
 {$MODESWITCH ADVANCEDRECORDS}
 

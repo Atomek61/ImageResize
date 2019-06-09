@@ -1,5 +1,18 @@
 unit imgres;
 
+////////////////////////////////////////////////////////////////////////////////
+//
+//  ImageResize (c) 2019 Jan Schirrmacher, www.atomek.de
+//
+//  See https://github.com/Atomek61/ImageResize.git for licensing
+//
+//  imgres.pas is the processing core of both, the CLI and the GUI applications.
+//
+//  It bases heavily on the BGRABitmap library and Atomeks threading.dispatcher
+//  library.
+//
+////////////////////////////////////////////////////////////////////////////////
+
 {$mode objfpc}{$H+}
 {$modeSwitch advancedRecords}
 
@@ -112,7 +125,7 @@ type
     constructor Create;
     destructor Destroy; override;
     class function GetVersion: string;
-    function Execute :boolean; overload;
+    function Execute :boolean;
     procedure Cancel;
     class function TryStrToPngCompression(const Str :string; out Value :integer) :boolean;
     class function PngCompressionToStr(const Value :integer) :string;
@@ -352,7 +365,7 @@ begin
   try
     SrcFilename := FImgRes.FParams.SrcFilenames[Task.FSrcFilenameIndex];
     if not Assigned(FSrcImgs[Task.FSrcFilenameIndex]) then begin
-      Task.Print(Format('Loading %s...', [ExtractFilename(SrcFilename)]));
+      Task.Print(Format('Loading ''%s''...', [ExtractFilename(SrcFilename)]));
       FSrcImgs[Task.FSrcFilenameIndex] := TBGRABitmap.Create(SrcFilename);
     end;
     result := FSrcImgs[Task.FSrcFilenameIndex];
@@ -427,7 +440,7 @@ const
   LEVELSTRS :array[TLevel] of string = ('Hint - ', '', 'Warning - ', 'Abort - ', 'Fatal - ');
 begin
   if Assigned(FOnPrint) then begin
-    FOnPrint(self, Format('%d: %s%s', [WorkerId, LEVELSTRS[Level], Line]));
+    FOnPrint(self, Format('[%d] %s%s', [WorkerId, LEVELSTRS[Level], Line]));
   end;
 end;
 
@@ -474,7 +487,7 @@ begin
   inherited Destroy;
 end;
 
-function TImgRes.Execute :boolean; overload;
+function TImgRes.Execute :boolean;
 var
   SharedTasks :TSharedTasks;
   Tasks :TTasks;
@@ -498,8 +511,12 @@ begin
     Dispatcher.OnPrint := @OnTaskPrint;
     Dispatcher.OnProgress := @OnTaskProgress;
     Dispatcher.MaxWorkerCount := ThreadCount;
-//    Dispatcher.StopOnError := true;
+
     result := Dispatcher.Execute(Tasks);
+
+    if Assigned(FOnPrint) then with Dispatcher.Stats do
+      FOnPrint(self, Format('Tasks=%d Successful=%d Failed=%d Elapsed=%.2fs',
+        [TaskCount, Successful, Failed, Elapsed/1000.0]));
 
   finally
     Dispatcher.Free;

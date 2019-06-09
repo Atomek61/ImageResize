@@ -11,17 +11,17 @@ uses
   { you can add units after this } fileutil, utils, imgres, generics.collections;
 
 const
-  IMGRESCLIVER = '1.3';
+  IMGRESCLIVER = '1.9';
   IMGRESCLICPR = 'imgres CLI V'+IMGRESCLIVER+' (c) 2019 Jan Schirrmacher, www.atomek.de';
 
   INTROSTR = 'Free tool for jpg and png quality file resizing.';
-  USAGESTR = '  Usage: imgres (srcfilename|@srcfilelist) dstfolder [-s size[,size,..] [-j jpgquality]  [-p pngcompression] [-w watermark] [-t treadcount] [-h] [-q]';
+  USAGESTR = '  Usage: imgres (srcfilename|@srcfilelist) dstfolder [-s size[,size,..] [-j jpgquality]  [-p pngcompression] [-w watermark] [-t threadcount] [-h] [-q]';
   HINTSSTR =
     '  s size           - refers to the longer side of the image, size can be a single value or a list of comma-separated values'#10+
     '  j jpgquality     - is a quality from 1 to 100 percent (default is 75)'#10+
     '  p pngcompression - is one of none,fastest,default and max'#10+
     '  w watermark      - a watermark file and optional a position and opacity, see example'#10+
-    '  t threadcount    - number of threads to use'#10+
+    '  t threadcount    - number of threads to use, 0 is maximum'#10+
     '  h help           - outputs this text'#10+
     '  q quiet          - suppresses any message output'#10#10+
     '  dstfile must contain the placeholder ''%SIZE%'' when size is a list of sizes.'#10+
@@ -223,8 +223,8 @@ begin
     Processor.MrkAlpha := MrkAlpha;
     Processor.ThreadCount := ThreadCount;
     if not Quiet then begin
-//      Processor.OnPrint := @OnPrint;
-      Processor.OnProgress := @OnProgress;
+      Processor.OnPrint := @OnPrint;
+//      Processor.OnProgress := @OnProgress;
     end;
 
     ///////////////////////////////////////////////////
