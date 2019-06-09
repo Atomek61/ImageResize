@@ -11,7 +11,7 @@ uses
   LCLIntf, Buttons, ImgList, LCLType;
 
 const
-  IMGRESGUIVER = '1.4';
+  IMGRESGUIVER = '1.9';
   IMGRESGUICPR = 'ImageResize V'+IMGRESGUIVER+' © 2019 Jan Schirrmacher, www.atomek.de';
 
   INITYPE = 'IRS';
@@ -65,6 +65,7 @@ type
     ButtonExecute: TBitBtn;
     BrowseDstFolder: TSelectDirectoryDialog;
     CheckBoxMrkEnabled: TCheckBox;
+    ComboBoxBoost: TComboBox;
     ComboBoxMrkPosition: TComboBox;
     ComboBoxJpgQuality: TComboBox;
     ComboBoxPngCompression: TComboBox;
@@ -91,9 +92,12 @@ type
     Label16: TLabel;
     Label17: TLabel;
     Label18: TLabel;
+    Label19: TLabel;
+    LabelCores: TLabel;
     Label3: TLabel;
     Label5: TLabel;
     Label6: TLabel;
+    Label8: TLabel;
     LabelSizesRequired: TLabel;
     LabelSrcFilnamesRequired: TLabel;
     LabelDstFolderRequired: TLabel;
@@ -112,6 +116,7 @@ type
     ProgressBar: TProgressBar;
     SaveAsDialog: TSaveDialog;
     Splitter1: TSplitter;
+    TabSheetRessources: TTabSheet;
     TabSheetSizes: TTabSheet;
     TabSheetQuality: TTabSheet;
     TabSheetWatermark: TTabSheet;
@@ -150,6 +155,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure MemoSrcFilenamesChange(Sender: TObject);
+    procedure PanelControlsClick(Sender: TObject);
     procedure TimerProgressBarOffTimer(Sender: TObject);
   private
     FAutoExit :boolean;
@@ -170,6 +176,8 @@ type
     procedure Log(const Msg :string);
     function MrkBorderToPos(const Value :TPos) :TPos;
     function MrkPosToBorder(const Value :TPos) :TPos;
+    function BoostStrToThreadCount(const Value :string) :integer;
+    function ThreadCountToBoostStr(ThreadCount :integer) :string;
     procedure UpdateControls;
     procedure LMRun(var Message: TLMessage); message LM_RUN;
     procedure SizeButtonClick(Sender :TObject);
@@ -224,6 +232,11 @@ begin
      Button.Height := 44;
      Button.Visible := true;
   end;
+
+  PageControl.ActivePageIndex := 0;
+
+  // Show number of cores
+  LabelCores.Caption := Format('%d Cores', [TThread.ProcessorCount]);
 end;
 
 procedure TMainDialog.FormShow(Sender: TObject);
@@ -242,12 +255,13 @@ end;
 procedure TMainDialog.SizeButtonClick(Sender: TObject);
 var
   s :string;
+  l :TSizes;
 begin
   s := IntToStr((Sender as TButton).Tag);
   if Length(Trim(ComboBoxSizes.Text))=0 then
     ComboBoxSizes.Text := s
-  else
-    ComboBoxSizes.Text := ComboBoxSizes.Text + ', '+s;
+  else if TrySizesStrToSizes(ComboBoxSizes.Text + ', '+s, l) then
+    ComboBoxSizes.Text := SizesToSizesStr(l);
 end;
 
 procedure TMainDialog.SetMrkPos(Value: integer);
@@ -281,6 +295,7 @@ begin
       WriteString('MrkX', EditMrkX.Text);
       WriteString('MrkY', EditMrkY.Text);
       WriteString('MrkAlpha', EditMrkAlpha.Text);
+      WriteString('ThreadCount', ComboBoxBoost.Text);
     end;
   finally
     Registry.CloseKey;
@@ -311,6 +326,7 @@ begin
         EditMrkX.Text := ReadString('MrkX');
         EditMrkY.Text := ReadString('MrkY');
         EditMrkAlpha.Text := ReadString('MrkAlpha');
+        ComboBoxBoost.Text := ReadString('ThreadCount');
         SetTitle('last settings');
       end;
     end;
@@ -455,6 +471,31 @@ begin
   result := MrkBorderToPos(Value);
 end;
 
+function TMainDialog.BoostStrToThreadCount(const Value: string): integer;
+var
+  s :string;
+begin
+  s := LowerCase(Trim(Value));
+  if s='single' then
+    result := 1
+  else if s='maximum' then
+    result := 0
+  else
+    result := StrToInt(s);
+end;
+
+function TMainDialog.ThreadCountToBoostStr(ThreadCount: integer): string;
+begin
+  case ThreadCount of
+  0:
+    result := 'maximum';
+  1:
+    result := 'single';
+  else
+    result := IntToStr(ThreadCount);
+  end;
+end;
+
 procedure TMainDialog.UpdateControls;
 begin
   LabelSrcFilnamesRequired.Enabled := Length(MemoSrcFilenames.Text) = 0;
@@ -542,6 +583,11 @@ begin
   LabelSrcFilnamesRequired.Enabled := Length(MemoSrcFilenames.Text) = 0;
 end;
 
+procedure TMainDialog.PanelControlsClick(Sender: TObject);
+begin
+
+end;
+
 procedure TMainDialog.EditDstFolderChange(Sender: TObject);
 begin
  LabelDstFolderRequired.Enabled := Length(EditDstFolder.Text) = 0;
@@ -611,6 +657,9 @@ end;
 procedure TMainDialog.OnPrint(Sender: TObject; const Line: string);
 begin
   Log(Line);
+  Application.ProcessMessages;
+  if FCancelled then
+    (Sender as TImgRes).Cancel;
 end;
 
 procedure TMainDialog.OnProgress(Sender: TObject; Progress: single);
@@ -700,7 +749,7 @@ begin
         FImgRes.Sizes := SizesToSizesStr(Sizes);
         FImgRes.SrcFilenames := MemoSrcFilenames.Lines;
         FImgRes.DstFolder := DstFolder;
-        FImgRes.ThreadCount := 0;
+        FImgRes.ThreadCount := BoostStrToThreadCount(ComboBoxBoost.Text);
         FImgRes.Execute;
 
       except on E :Exception do

@@ -92,20 +92,15 @@ end;
 
 procedure TCustomQueue<T>.Pack;
 var
-  n, m :integer;
   Tmp :array of T;
+  i, n :integer;
 begin
   if FCount>0 then begin
+    SetLength(Tmp, Count);
     n := Length(FItems);
-    if FHead<=FTail then begin
-      m := n-FTail;
-      SetLength(Tmp, m);
-      Move(FItems[FTail], Tmp[0], m*sizeof(T));
-      Move(FItems[0], FItems[m], FHead*sizeof(T));
-      Move(Tmp[0], FItems[0], m);
-    end else begin
-      Move(FItems[FTail], FItems[0], FCount*sizeof(T));
-    end;
+    for i:=0 to FCount-1 do
+      Tmp[i] := FItems[(FTail+i) mod n];
+    FItems := Tmp;
   end;
   FTail := 0;
   FHead := FCount;
@@ -131,9 +126,10 @@ end;
 
 procedure TCustomQueue<T>.SetCapacity(const Value: integer);
 begin
-  if Value=Capacity then Exit;
+  if (Value<0) or (Value=Capacity) then Exit;
   Pack;
-  while FCount>Capacity do Drop;
+  while FCount>Value do
+    Drop;
   SetLength(FItems, Value);
 end;
 

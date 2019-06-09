@@ -5,7 +5,7 @@ unit threading.dispatcher;
 interface
 
 uses
-  Classes, SysUtils, generics.queue, SyncObjs;
+  Classes, SysUtils, generics.collections, generics.queue, SyncObjs;
 
 type
 
@@ -29,15 +29,16 @@ type
     function Execute(Context :TContext) :boolean; virtual; abstract;
     property Worker :TWorker read FWorker;
     function GetTaskSteps :integer; virtual; // Progress system: tells dispatcher how many steps this task goes
+    procedure Print(const Text :string; Level :TLevel = mlNormal);
+    procedure Progress(Steps :integer);
   public
     property TaskSteps :integer read GetTaskSteps;
   end;
 
   { TTasks }
 
-  TTasks = class(TQueue<TCustomTask>)
+  TTasks = class(TObjectList<TCustomTask>)
   public
-    function Pop :TCustomTask;  overload;
     function GetTotalSteps :integer;
   end;
 
@@ -61,8 +62,8 @@ type
   { TMessage }
 
   TMessage = class
-    Sender :TCustomTask;
-    constructor Create(Sender :TCustomTask);
+    Task :TCustomTask;
+    constructor Create(Task :TCustomTask);
   end;
 
   { TPrintMessage }
@@ -116,9 +117,8 @@ type
   public
     constructor Create(Dispatcher :TDispatcher);
     destructor Destroy; override;
-    procedure Print(Sender :TCustomTask; const Text :string; Level :TLevel = mlNormal);
-    procedure Progress(Sender :TCustomTask; Steps :integer);
     property Aborted :boolean read GetAborted; // To be checked frequently
+    property Messages :TMessages read FMessages;
   end;
 
   { TDispatcher }
@@ -154,13 +154,21 @@ begin
   result := 1;
 end;
 
-{ TTasks }
-
-function TTasks.Pop: TCustomTask;
+procedure TCustomTask.Print(const Text: string; Level: TLevel);
 begin
-  if not inherited Pop(result) then
-    raise Exception.Create('Pop on empty queue.');
+  self.Worker.Context.Messages.Push(
+    TPrintMessage.Create(self, Text, Level)
+  );
 end;
+
+procedure TCustomTask.Progress(Steps: integer);
+begin
+  self.Worker.Context.Messages.Push(
+    TProgressMessage.Create(self, Steps)
+  );
+end;
+
+{ TTasks }
 
 function TTasks.GetTotalSteps: integer;
 var
@@ -175,31 +183,32 @@ end;
 
 constructor TProgressMessage.Create(Sender: TCustomTask; Steps :integer);
 begin
-  inherited Create(Sender);
   self.Steps := Steps;
+  inherited Create(Sender);
 end;
 
 { TPrintMessage }
 
 constructor TPrintMessage.Create(Sender: TCustomTask; const Value: string; Level: TLevel);
 begin
-  inherited Create(Sender);
   self.Text := Value;
   self.Level := Level;
+  inherited Create(Sender);
 end;
 
 { TMessage }
 
-constructor TMessage.Create(Sender: TCustomTask);
+constructor TMessage.Create(Task :TCustomTask);
 begin
-  self.Sender := Sender;
+  inherited Create;
+  self.Task := Task;
 end;
 
 { TMessages }
 
 constructor TMessages.Create;
 begin
-  inherited Create(1000);
+  inherited Create;
   FQueueSection := TCriticalSection.Create;
 end;
 
@@ -300,20 +309,6 @@ begin
   inherited Destroy;
 end;
 
-procedure TContext.Print(Sender: TCustomTask; const Text: string; Level: TLevel);
-begin
-  FMessages.Push(TPrintMessage.Create(Sender, Text, Level));
-end;
-
-procedure TContext.Progress(Sender: TCustomTask; Steps :integer);
-begin
-  FMessages.Push(TProgressMessage.Create(Sender, Steps));
-end;
-
-{
-function TDispatcher.Execute :boolean;
-}
-
 { TDispatcher }
 
 procedure TDispatcher.Print(Sender: TCustomTask; const Text: string;
@@ -351,9 +346,10 @@ var
   Context :TContext;
   Msg :TMessage;
   Id :integer;
+  NextTask :integer;
 begin
   // Is there anything to do?
-  if Tasks.Empty then
+  if Tasks.Count=0 then
     Exit(true);
 
   Pool := nil;
@@ -390,13 +386,15 @@ begin
 
     ////////////////////////////////////////////////////////////////////////////
     // Assign Tasks to Workers and handle their messages
+    NextTask := 0;
     while true do begin
 
       // If a task is available then assign it to a free worker
-      if not Tasks.Empty and Pool.Pop(Worker) then begin
+      if not FAborted and (NextTask<Tasks.Count) and Pool.Pop(Worker) then begin
         Working[Worker.Id] := Worker;
         inc(WorkingCount);
-        Worker.Start(Tasks.Pop);
+        Worker.Start(Tasks[NextTask]);
+        inc(NextTask);
       end;
 
       // Handle worker messages
@@ -405,25 +403,31 @@ begin
       while Context.FMessages.Pop(Msg) do begin
         try
           if Msg is TPrintMessage then with TPrintMessage(Msg) do begin
-            self.Print(Sender, Text, Level);
+            self.Print(Task, Text, Level);
             if Msg is TExitMessage then with TExitMessage(Msg) do begin
               // Waiting for the tasks worker to become suspended
-              while not Sender.Worker.Suspended do Sleep(0);
+              while not Task.Worker.Suspended do Sleep(0);
               // Adding newly available worker to the pool
-              Pool.Push(Sender.Worker);
+              Pool.Push(Task.Worker);
               // Remove him from the list of working
-              Working[Sender.Worker.Id] := nil;
+              Working[Task.Worker.Id] := nil;
               dec(WorkingCount);
+
+              // If all workers finished their work and aborted then finish
+              if (WorkingCount=0) and FAborted then
+                Exit(false);
+
+              // If all Tasks are done and no worker is currently running then finish
+              if (NextTask=Tasks.Count) and (WorkingCount=0) then
+                Exit(true);
+
               // When error occured and not already aborting and StopOnError then stop all workers
               if (Level in [mlAbort, mlFatal]) and not FAborted and StopOnError then
                 // Terminate running workers and continue waiting for their ExitMessage
                 Abort;
-              // If all Tasks are done and no worker is currently running then finish
-              if Tasks.Empty and (WorkingCount=0) then
-                Exit(not FAborted);
             end;
           end else if Msg is TProgressMessage then with TProgressMessage(Msg) do begin
-            self.Progress(Sender, Steps);
+            self.Progress(Task, Steps);
           end;
         finally
           Msg.Free;

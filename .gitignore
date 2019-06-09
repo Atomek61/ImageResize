@@ -4,3 +4,5 @@ backup/
 *.lps
 *.exe
 test?_
+*.dbg
+*.jif

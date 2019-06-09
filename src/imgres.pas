@@ -10,7 +10,7 @@ uses
   threading.dispatcher;
 
 const
-  IMGRESVER = '1.3';
+  IMGRESVER = '1.9';
   IMGRESCPR = 'imgres V'+IMGRESVER+' © 2019 Jan Schirrmacher, www.atomek.de';
 
   PROGRESSSTEPSPERFILE = 3;
@@ -204,12 +204,16 @@ var
   MrkRectSize :TSize;
   MrkRect :TRect;
   Params :^TParams;
+//  i :integer;
 begin
   Writer := nil;
   DstImg := nil;
-
+  result := false;
   try
     Params := @FSharedTasks.FImgRes.FParams;
+
+    if Context.Aborted then
+      Exit;
 
     // Destination Folder
     DstFolder := FSharedTasks.GetDstFolder(self);
@@ -218,8 +222,9 @@ begin
     SrcImg := FSharedTasks.GetSrcImg(self);
     SrcFilename := Params^.SrcFilenames[SrcIdx];
 
-    if Context.Aborted then Exit(false);
-    Context.Progress(self, 1);
+    if Context.Aborted then
+      Exit;
+    Progress(1);
 
     // Create Writer depending on file extension
     FileExt := LowerCase(ExtractFileExt(SrcFilename));
@@ -246,12 +251,13 @@ begin
 
     ////////////////////////////////////////////////////////////////////////////
     // Resampling...
-    Context.Print(self, Format('Resampling ''%s'' from %dx%d to %dx%d ', [
-      SrcFilename, SrcSize.cx, SrcSize.cy, DstSize.cx, DstSize.cy]));
+    Print(Format('Resampling ''%s'' from %dx%d to %dx%d...', [
+      ExtractFilename(SrcFilename), SrcSize.cx, SrcSize.cy, DstSize.cx, DstSize.cy]));
     DstImg := FSharedTasks.FImgRes.ResampleImg(SrcImg, DstSize);
     ////////////////////////////////////////////////////////////////////////////
-    if Context.Aborted then Exit(false);
-    Context.Progress(self, 1);
+    if Context.Aborted then
+      Exit;
+    Progress(1);
 
     ////////////////////////////////////////////////////////////////////////////
     // Watermark
@@ -270,22 +276,26 @@ begin
       MrkRect.Top := round((DstSize.cy - MrkRectSize.cy) * Params^.MrkY/100.0);
       MrkRect.Width := MrkRectSize.cx;
       MrkRect.Height := MrkRectSize.cy;
-
+      Print(Format('Watermarking ''%s''...', [
+        ExtractFilename(SrcFilename), SrcSize.cx, SrcSize.cy, DstSize.cx, DstSize.cy]));
       DstImg.StretchPutImage(MrkRect, MrkImg, dmLinearBlend, round(255*Params^.MrkAlpha/100.0));
     end;
-    if Context.Aborted then Exit(false);
-    Context.Progress(self, 1);
+    if Context.Aborted then
+      Exit;
+    Progress(1);
     ////////////////////////////////////////////////////////////////////////////
 
     // Saving...
     DstFiletitle := ExtractFilename(SrcFilename);
     DstFilename := IncludeTrailingPathDelimiter(DstFolder) + DstFiletitle;
-    Context.Print(self, Format('Saving ''%s''' , [DstFilename]));
+    Print(Format('Saving ''%s''...' , [DstFilename]));
     DstImg.SaveToFile(DstFilename, Writer);
-    Context.Progress(self, 1);
+    Progress(1);
 
     result := true;
   finally
+    if result = false then
+      Beep;
     Writer.Free;
     DstImg.Free;
   end;
@@ -313,9 +323,9 @@ begin
   SetLength(FSrcImgs, FImgRes.SrcFilenames.Count);
   FMrkImgsSection := TCriticalSection.Create;
   if FImgRes.FParams.MrkFilenameDependsOnSize then
-    SetLength(FMrkImgs, 1)
+    SetLength(FMrkImgs, Length(FImgRes.FParams.Sizes))
   else
-    SetLength(FMrkImgs, Length(FImgRes.FParams.Sizes));
+    SetLength(FMrkImgs, 1);
   FDstFoldersSection := TCriticalSection.Create;
   SetLength(FDstFolders, Length(FImgRes.FParams.Sizes));
 end;
@@ -342,7 +352,7 @@ begin
   try
     SrcFilename := FImgRes.FParams.SrcFilenames[Task.FSrcFilenameIndex];
     if not Assigned(FSrcImgs[Task.FSrcFilenameIndex]) then begin
-      Task.Worker.Context.Print(Task, Format('Loading %s...', [ExtractFilename(SrcFilename)]));
+      Task.Print(Format('Loading %s...', [ExtractFilename(SrcFilename)]));
       FSrcImgs[Task.FSrcFilenameIndex] := TBGRABitmap.Create(SrcFilename);
     end;
     result := FSrcImgs[Task.FSrcFilenameIndex];
@@ -367,7 +377,7 @@ begin
         Filename := ReplaceStr(FImgRes.FParams.MrkFilename, '%SIZE%', IntToStr(FImgRes.FParams.Sizes[Index]))
       else
         Filename := FImgRes.FParams.MrkFilename;
-      Task.Worker.Context.Print(Task, Format('Loading ''%s''...', [ExtractFilename(Filename)]));
+      Task.Print(Format('Loading ''%s''...', [ExtractFilename(Filename)]));
       FMrkImgs[Index] := TBGRABitmap.Create(Filename);
     end;
     result := FMrkImgs[Index]
@@ -386,7 +396,7 @@ begin
     Index := Task.FSizeIndex;
     if FDstFolders[Index]='' then begin
       DstFolder := ReplaceStr(FImgRes.FParams.DstFolder, '%SIZE%', IntToStr(FImgRes.FParams.Sizes[Index]));
-      Task.Worker.Context.Print(Task, Format('Creating folder ''%s''...', [DstFolder]));
+      Task.Print(Format('Creating folder ''%s''...', [DstFolder]));
       ForceDirectories(DstFolder);
       FDstFolders[Index] := DstFolder;
     end;
@@ -426,7 +436,7 @@ begin
   if Assigned(FOnProgress) then begin
     FOnProgress(self, Progress);
     if FCancel then
-      TDispatcher(Sender).Abort;
+      (Sender as TDispatcher).Abort;
   end;
 end;
 
@@ -483,11 +493,12 @@ begin
     Tasks.Capacity := n*m;
     for i:=0 to n-1 do
       for j:=0 to m-1 do
-        Tasks.Push(TResampleTask.Create(SharedTasks, i, j));
+        Tasks.Add(TResampleTask.Create(SharedTasks, i, j));
 
     Dispatcher.OnPrint := @OnTaskPrint;
     Dispatcher.OnProgress := @OnTaskProgress;
     Dispatcher.MaxWorkerCount := ThreadCount;
+//    Dispatcher.StopOnError := true;
     result := Dispatcher.Execute(Tasks);
 
   finally
@@ -543,7 +554,7 @@ procedure TImgRes.SetMrkFilename(AValue: string);
 begin
   if AValue=FParams.MrkFilename then Exit;
   FParams.MrkFilename := AValue;
-  FParams.MrkFilenameDependsOnSize := Pos(AValue, '%SIZE%')>0;
+  FParams.MrkFilenameDependsOnSize := Pos('%SIZE%', AValue)>0;
 end;
 
 procedure TImgRes.SetJpgQuality(AValue: integer);
