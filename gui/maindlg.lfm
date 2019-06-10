@@ -1,7 +1,7 @@
 object MainDialog: TMainDialog
-  Left = 507
+  Left = 292
   Height = 640
-  Top = 197
+  Top = 283
   Width = 640
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'ImageResize'
@@ -12,7 +12,6 @@ object MainDialog: TMainDialog
   OnClose = FormClose
   OnCreate = FormCreate
   OnDropFiles = FormDropFiles
-  OnShow = FormShow
   Position = poDefaultPosOnly
   ShowHint = True
   LCLVersion = '2.0.0.3'
@@ -28,7 +27,6 @@ object MainDialog: TMainDialog
     Constraints.MinHeight = 427
     ParentColor = False
     TabOrder = 0
-    OnClick = PanelControlsClick
     object MemoSrcFilenames: TMemo
       Left = 8
       Height = 264
@@ -74,7 +72,7 @@ object MainDialog: TMainDialog
       Left = 8
       Height = 48
       Top = 7
-      Width = 368
+      Width = 506
       Align = alNone
       ButtonHeight = 48
       ButtonWidth = 56
@@ -104,29 +102,41 @@ object MainDialog: TMainDialog
         Action = ActionSave
       end
       object ToolButton5: TToolButton
-        Left = 225
+        Left = 308
         Height = 48
         Top = 0
         Caption = 'ToolButton5'
         Style = tbsSeparator
       end
       object ToolButton6: TToolButton
-        Left = 233
+        Left = 316
         Top = 0
         Action = ActionExecute
       end
       object ToolButton7: TToolButton
-        Left = 294
+        Left = 377
         Top = 0
         Action = ActionHelp
         Caption = 'Help...'
       end
       object ToolButton8: TToolButton
-        Left = 289
+        Left = 372
         Height = 48
         Top = 0
         Caption = 'ToolButton8'
         Style = tbsDivider
+      end
+      object ToolButton9: TToolButton
+        Left = 233
+        Top = 0
+        Action = ActionEditWatermark
+      end
+      object ToolButton10: TToolButton
+        Left = 225
+        Height = 48
+        Top = 0
+        Caption = 'ToolButton10'
+        Style = tbsSeparator
       end
     end
     object LabelSrcFilnamesRequired: TLabel
@@ -298,9 +308,9 @@ object MainDialog: TMainDialog
       Height = 264
       Top = 96
       Width = 264
-      ActivePage = TabSheetRessources
+      ActivePage = TabSheetWatermark
       Anchors = [akTop, akRight]
-      TabIndex = 3
+      TabIndex = 2
       TabOrder = 5
       object TabSheetSizes: TTabSheet
         Caption = 'Sizes'
@@ -481,55 +491,55 @@ object MainDialog: TMainDialog
           ParentColor = False
         end
         object Label9: TLabel
-          Left = 13
+          Left = 136
           Height = 15
-          Top = 151
+          Top = 83
           Width = 48
           Caption = '&H-Space:'
           FocusControl = EditMrkX
           ParentColor = False
         end
         object EditMrkX: TEdit
-          Left = 80
+          Left = 191
           Height = 23
           Hint = 'Horizontal space of the watermark to the border in percent of the destination image width.'
-          Top = 146
+          Top = 80
           Width = 30
           OnChange = EditMrkSizeChange
           TabOrder = 5
           Text = '1'
         end
         object Label10: TLabel
-          Left = 128
+          Left = 239
           Height = 15
-          Top = 151
+          Top = 85
           Width = 10
           Caption = '%'
           ParentColor = False
         end
         object Label11: TLabel
-          Left = 13
+          Left = 138
           Height = 15
-          Top = 179
+          Top = 115
           Width = 46
           Caption = '&V-Space:'
           FocusControl = EditMrkY
           ParentColor = False
         end
         object EditMrkY: TEdit
-          Left = 80
+          Left = 191
           Height = 23
           Hint = 'Vertical space of the watermark to the border in percent of the destination image height.'
-          Top = 174
+          Top = 112
           Width = 30
           OnChange = EditMrkSizeChange
           TabOrder = 6
           Text = '1'
         end
         object Label12: TLabel
-          Left = 128
+          Left = 239
           Height = 15
-          Top = 179
+          Top = 117
           Width = 10
           Caption = '%'
           ParentColor = False
@@ -546,26 +556,26 @@ object MainDialog: TMainDialog
         object Label13: TLabel
           Left = 13
           Height = 15
-          Top = 207
+          Top = 115
           Width = 44
           Caption = 'Opacit&y:'
           FocusControl = EditMrkAlpha
           ParentColor = False
         end
         object EditMrkAlpha: TEdit
-          Left = 80
+          Left = 68
           Height = 23
           Hint = 'Choose the watermarks opacity.'#13#10#13#10'A strong watermark has 100%,'#13#10'a weak one has 10% opacity.'
-          Top = 202
+          Top = 112
           Width = 30
           OnChange = EditMrkSizeChange
-          TabOrder = 7
+          TabOrder = 4
           Text = '50'
         end
         object Label14: TLabel
-          Left = 128
+          Left = 116
           Height = 15
-          Top = 207
+          Top = 117
           Width = 10
           Caption = '%'
           ParentColor = False
@@ -573,31 +583,31 @@ object MainDialog: TMainDialog
         object Label15: TLabel
           Left = 13
           Height = 15
-          Top = 122
+          Top = 83
           Width = 23
           Caption = 'Siz&e:'
           FocusControl = EditMrkSize
           ParentColor = False
         end
         object EditMrkSize: TEdit
-          Left = 80
+          Left = 68
           Height = 23
           Hint = 'Size in percent of the watermark image in relation to the resampled image width.'
-          Top = 117
+          Top = 80
           Width = 30
           OnChange = EditMrkSizeChange
-          TabOrder = 4
+          TabOrder = 3
           Text = '10'
         end
         object Label16: TLabel
-          Left = 128
+          Left = 116
           Height = 15
-          Top = 122
+          Top = 85
           Width = 10
           Caption = '%'
           ParentColor = False
         end
-        object ButtonClearSizes1: TBitBtn
+        object ButtonBrowseMrkFilename: TBitBtn
           Left = 224
           Height = 25
           Top = 50
@@ -609,82 +619,73 @@ object MainDialog: TMainDialog
           Spacing = 0
           TabOrder = 2
         end
-        object Label18: TLabel
-          Left = 13
-          Height = 15
-          Top = 92
-          Width = 46
-          Caption = 'Posi&tion:'
-          FocusControl = ComboBoxMrkPosition
-          ParentColor = False
-        end
-        object ComboBoxMrkPosition: TComboBox
-          Left = 79
-          Height = 21
-          Top = 85
-          Width = 169
-          ItemHeight = 15
-          ItemIndex = 0
-          Items.Strings = (
-            'Top Left'
-            'Top Right'
-            'Bottom Right'
-            'Bottom Left'
-          )
-          OnChange = ComboBoxMrkPositionChange
-          OnDrawItem = ComboBoxMrkPositionDrawItem
-          OnMeasureItem = ComboBoxMrkPositionMeasureItem
-          Style = csOwnerDrawVariable
-          TabOrder = 3
-          Text = 'Top Left'
-        end
         object PaintBoxMrkPreview: TPaintBox
-          Left = 152
-          Height = 96
-          Top = 122
-          Width = 96
+          Cursor = crHandPoint
+          Left = 11
+          Height = 80
+          Top = 149
+          Width = 136
           OnMouseDown = PaintBoxMrkPreviewMouseDown
           OnPaint = PaintBoxMrkPreviewPaint
         end
-        object UpDown1: TUpDown
-          Left = 110
+        object UpDownMrkAlpha: TUpDown
+          Left = 98
           Height = 23
-          Top = 202
+          Top = 112
           Width = 17
           Associate = EditMrkAlpha
+          Increment = 5
           Min = 0
           Position = 50
-          TabOrder = 8
+          TabOrder = 7
+          Flat = True
         end
-        object UpDown2: TUpDown
-          Left = 110
+        object UpDownMrkSize: TUpDown
+          Left = 98
           Height = 23
-          Top = 117
+          Top = 80
           Width = 17
           Associate = EditMrkSize
+          Increment = 5
           Min = 0
           Position = 10
-          TabOrder = 9
+          TabOrder = 8
+          Flat = True
         end
-        object UpDown3: TUpDown
-          Left = 110
+        object UpDownMrkX: TUpDown
+          Left = 221
           Height = 23
-          Top = 146
+          Top = 80
           Width = 17
           Associate = EditMrkX
           Min = 0
           Position = 1
-          TabOrder = 10
+          TabOrder = 9
+          Flat = True
         end
-        object UpDown4: TUpDown
-          Left = 110
+        object UpDownMrkY: TUpDown
+          Left = 221
           Height = 23
-          Top = 174
+          Top = 112
           Width = 17
           Associate = EditMrkY
           Min = 0
           Position = 1
-          TabOrder = 11
+          TabOrder = 10
+          Flat = True
+        end
+        object Label20: TLabel
+          Left = 156
+          Height = 80
+          Top = 149
+          Width = 90
+          Alignment = taCenter
+          AutoSize = False
+          Caption = 'Click'#13#10'the watermarks'#13#10'position'
+          Font.Color = clGrayText
+          Layout = tlCenter
+          ParentColor = False
+          ParentFont = False
         end
       end
       object TabSheetRessources: TTabSheet
@@ -729,8 +730,10 @@ object MainDialog: TMainDialog
           Top = 104
           Width = 240
           AutoSize = False
-          Caption = 'ImageResizes can uses thread pooling'#13#10'to use the full computers power.'#13#10#13#10'The number of threads is limited to the'#13#10'available cores and the number of tasks.'#13#10#13#10'A task is a single resampling process.'
+          Caption = 'ImageResize uses thread pooling to benefit'#13#10'the full computers power.'#13#10#13#10'The number of threads is limited to the'#13#10'available cores and the number of tasks.'#13#10'A task is a single resampling process.'
+          Font.Color = clGrayText
           ParentColor = False
+          ParentFont = False
         end
         object CheckBoxStopOnError: TCheckBox
           Left = 8
@@ -741,15 +744,6 @@ object MainDialog: TMainDialog
           TabOrder = 1
         end
       end
-    end
-    object ProgressBar: TProgressBar
-      Left = 368
-      Height = 10
-      Top = 376
-      Width = 262
-      Anchors = [akRight, akBottom]
-      TabOrder = 9
-      Visible = False
     end
     object Label17: TLabel
       Left = 376
@@ -808,10 +802,19 @@ object MainDialog: TMainDialog
     Align = alBottom
     ResizeAnchor = akBottom
   end
+  object ProgressBar: TProgressBar
+    Left = 368
+    Height = 7
+    Top = 440
+    Width = 262
+    Anchors = [akTop, akRight]
+    TabOrder = 3
+    Visible = False
+  end
   object ActionList: TActionList
     Images = ImageList24x24
-    left = 32
-    top = 592
+    left = 24
+    top = 112
     object ActionBrowseFilenames: TAction
       Caption = '&Browse...'
       OnExecute = ActionBrowseFilenamesExecute
@@ -869,35 +872,40 @@ object MainDialog: TMainDialog
       OnExecute = ActionHelpExecute
       ShortCut = 112
     end
+    object ActionEditWatermark: TAction
+      Caption = '&Watermark...'
+      ImageIndex = 7
+      OnExecute = ActionEditWatermarkExecute
+    end
   end
   object OpenDialogSrcFilenames: TOpenDialog
     Filter = 'Image Files (*.jpg, *.png)|*.jpg;*.png|All Files|*.*'
     Options = [ofAllowMultiSelect, ofEnableSizing, ofViewDetail]
-    left = 104
-    top = 592
+    left = 128
+    top = 112
   end
   object BrowseDstFolder: TSelectDirectoryDialog
-    left = 200
-    top = 592
+    left = 248
+    top = 112
   end
   object OpenDialogMrkFilename: TOpenDialog
     Filter = 'Image Files (*.png)|*.png|All Files|*.*'
-    left = 104
-    top = 656
+    left = 24
+    top = 168
   end
   object TimerProgressBarOff: TTimer
     Enabled = False
     OnTimer = TimerProgressBarOffTimer
-    left = 482
-    top = 476
+    left = 128
+    top = 232
   end
   object ImageList24x24: TImageList
     Height = 24
     Width = 24
-    left = 432
-    top = 592
+    left = 248
+    top = 168
     Bitmap = {
-      4C69070000001800000018000000000000000000000000000000000000000000
+      4C69080000001800000018000000000000000000000000000000000000000000
       0000000000000000B74300000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1401,6 +1409,78 @@ object MainDialog: TMainDialog
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00000000000000000000DF8A5CFFDF8A5CFF0000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000DF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFF00000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000DF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFF000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000000000000000000000DF8A
+      5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFF000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000DF8A5CFFDF8A
+      5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFF00000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00000000000000000000000000000000000000000000DF8A5CFFDF8A5CFFDF8A
+      5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFF0000000000000000000000000000
+      0000000000000000000000000000000000007AC9DDFF7AC9DDFF7AC9DDFF7AC9
+      DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A
+      5CFFDF8A5CFFDF8A5CFFDF8A5CFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
+      DDFF7AC9DDFF2D6873FF00000000000000007AC9DDFF7AC9DDFF7AC9DDFF7AC9
+      DDFF7AC9DDFF7AC9DDFF7AC9DDFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A
+      5CFFDF8A5CFFDF8A5CFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
+      DDFF7AC9DDFF2D6873FF00000000000000007AC9DDFF7AC9DDFF7AC9DDFF7AC9
+      DDFF7AC9DDFF7AC9DDFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A
+      5CFFDF8A5CFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
+      DDFF7AC9DDFF2D6873FF00000000000000007AC9DDFF7AC9DDFF7AC9DDFF7AC9
+      DDFF7AC9DDFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A
+      5CFF6AAFC1FF355861FF1F3439FF22383DFF406A75FF72BCCFFF7AC9DDFF7AC9
+      DDFF7AC9DDFF2D6873FF00000000000000007AC9DDFF7AC9DDFF7AC9DDFF7AC9
+      DDFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFF558C
+      9AFF080D0FFF395E68FF5B95A4FF568E9CFF2E4B53FF0C1416FF67AABAFF7AC9
+      DDFF7AC9DDFF2D6873FF00000000000000007AC9DDFF7AC9DDFF7AC9DDFF7AC9
+      DDFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFF71BACDFF0A10
+      11FF5D9AA9FF5993A1FF243C42FF23393FFF5993A1FF497985FF17262AFF7AC9
+      DDFF7AC9DDFF2D6873FF00000000000000007AC9DDFF7AC9DDFF7AC9DDFF7AC9
+      DDFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFF7AC9DDFF4A7A87FF263E
+      44FF5D9AA9FF010203FF21373CFF315058FF45727DFF7AC9DDFF0D1517FF64A5
+      B5FF7AC9DDFF2D6873FF00000000000000007AC9DDFF7AC9DDFF7AC9DDFF7AC9
+      DDFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFF7AC9DDFF7AC9DDFF3E6670FF3B61
+      6BFF385C65FF000000FF6CB2C4FF7AC9DDFF7AC9DDFF7AC9DDFF22383DFF558D
+      9BFF7AC9DDFF2D6873FF00000000000000007AC9DDFF7AC9DDFF7AC9DDFF7AC9
+      DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF477581FF2D4B
+      52FF4D7F8CFF000000FF3B616AFF518694FF62A1B1FF7AC9DDFF142225FF5F9C
+      ACFF7AC9DDFF2D6873FF00000000000000007AC9DDFF7AC9DDFF7AC9DDFF7AC9
+      DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF6CB2C4FF080D
+      0FFF6BB1C2FF365962FF050809FF050809FF426C77FF5B96A5FF0D1618FF78C5
+      D9FF7AC9DDFF2D6873FF00000000000000007AC9DDFF7AC9DDFF7AC9DDFF7AC9
+      DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF4069
+      74FF121E21FF57909EFF77C4D8FF75C0D4FF4C7D89FF0A1011FF57909EFF7AC9
+      DDFF7AC9DDFF2D6873FF00000000000000007AC9DDFF7AC9DDFF7AC9DDFF7AC9
+      DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
+      DDFF518592FF18282CFF010203FF030506FF22393EFF5F9CACFF7AC9DDFF7AC9
+      DDFF7AC9DDFF2D6873FF00000000000000007AC9DDFF7AC9DDFF7AC9DDFF7AC9
+      DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
+      DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
+      DDFF7AC9DDFF2D6873FF00000000000000007AC9DDFF7AC9DDFF7AC9DDFF7AC9
+      DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
+      DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
+      DDFF7AC9DDFF2D6873FF00000000000000002D6873FF2D6873FF2D6873FF2D68
+      73FF2D6873FF2D6873FF2D6873FF2D6873FF2D6873FF2D6873FF2D6873FF2D68
+      73FF2D6873FF2D6873FF2D6873FF2D6873FF2D6873FF2D6873FF2D6873FF2D68
+      73FF2D6873FF2D6873FF00000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000
     }
   end
@@ -1419,8 +1499,8 @@ object MainDialog: TMainDialog
   object ImageList20x20: TImageList
     Height = 20
     Width = 20
-    left = 544
-    top = 608
+    left = 24
+    top = 232
     Bitmap = {
       4C69040000001400000014000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1628,8 +1708,8 @@ object MainDialog: TMainDialog
   object ImageListMrkPositions: TImageList
     Height = 24
     Width = 24
-    left = 440
-    top = 24
+    left = 128
+    top = 168
     Bitmap = {
       4C69040000001800000018000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

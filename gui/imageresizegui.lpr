@@ -8,7 +8,7 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, maindlg, aboutdlg, imgres, generics.queue, threading.dispatcher
-  { you can add units after this };
+  { you can add units after this }, mrkeditdlg;
 
 {$R *.res}
 
@@ -18,6 +18,7 @@ begin
   Application.Scaled:=True;
   Application.Initialize;
   Application.CreateForm(TMainDialog, MainDialog);
+  Application.CreateForm(TMrkEditDialog, MrkEditDialog);
   Application.Run;
 end.
 

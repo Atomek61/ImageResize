@@ -10,6 +10,7 @@ uses
 function StrToIntegerArray(const Str :string; Separator :char; out Values :TIntegerDynArray) :boolean;
 function StrToStringArray(const Str :string; Separator :char; out Values :TStringDynArray) :boolean;
 function StrToSingleArray(const Str :string; Separator :char; out Values :TSingleDynArray; const FormatSettings :TFormatSettings) :boolean;
+function RemoveQuotes(const Str :string) :string;
 
 function IsPathAbsolute(const Path :string) :boolean;
 
@@ -77,6 +78,17 @@ begin
     end;
   end;
   result := true;
+end;
+
+function RemoveQuotes(const Str :string) :string;
+var
+  s :string;
+begin
+  s := Trim(Str);
+  if (Length(s)>=2) and ((s[1]='"') and (s[Length(s)]='"')) or ((s[1]='''') and (s[Length(s)]='''')) then
+    result := Copy(s, 2, Length(s)-2)
+  else
+    result := s;
 end;
 
 end.

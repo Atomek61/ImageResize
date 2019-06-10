@@ -23,10 +23,13 @@ uses
   threading.dispatcher;
 
 const
-  IMGRESVER = '1.9';
+  IMGRESVER = '1.9.2';
   IMGRESCPR = 'imgres V'+IMGRESVER+' © 2019 Jan Schirrmacher, www.atomek.de';
 
-  PROGRESSSTEPSPERFILE = 3;
+  PROGRESSSTEPSPERFILE = 4;
+
+  REGKEY = '\Software\Atomek\ImageResize';
+
 
 const
   DEFAULTSIZE           = 640;
@@ -320,7 +323,7 @@ end;
 
 function TImgRes.TResampleTask.GetTaskSteps: integer;
 begin
-  result := 4; // Loading, Resampling, Watermarking, Saving
+  result := PROGRESSSTEPSPERFILE; // Loading, Resampling, Watermarking, Saving
 end;
 
 constructor TImgRes.TResampleTask.Create(SharedTasks :TSharedTasks; const SrcFilenameIndex, SizeIndex: integer);
@@ -522,7 +525,7 @@ begin
     result := Dispatcher.Execute(Tasks);
 
     if Assigned(FOnPrint) then with Dispatcher.Stats do
-      FOnPrint(self, Format('Tasks=%d Successful=%d Failed=%d Elapsed=%.2fs',
+      FOnPrint(self, Format('Tasks: %d, Successful: %d, Failed: %d, Elapsed: %.2fs',
         [TaskCount, Successful, Failed, Elapsed/1000.0]));
 
   finally
