@@ -22,6 +22,7 @@
       <AutoIncrementBuild Value="True"/>
       <MajorVersionNr Value="1"/>
       <MinorVersionNr Value="9"/>
+      <RevisionNr Value="1"/>
       <StringTable CompanyName="Atomek" FileDescription="jpg and png image resampler" LegalCopyright="© 2019 by Jan Schirrmacher"/>
     </VersionInfo>
     <BuildModes Count="3">
@@ -55,7 +56,6 @@
           <Linking>
             <Debugging>
               <DebugInfoType Value="dsDwarf2Set"/>
-              <UseHeaptrc Value="True"/>
               <TrashVariables Value="True"/>
               <UseExternalDbgSyms Value="True"/>
             </Debugging>

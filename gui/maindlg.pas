@@ -18,10 +18,10 @@ interface
 uses
   Classes, Types, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ComCtrls,
   ActnList, ExtCtrls, imgres, registry, aboutdlg, inifiles, strutils, LMessages,
-  LCLIntf, Buttons, ImgList, LCLType;
+  LCLIntf, Buttons, ImgList, LCLType, BGRABitmap, BGRABitmapTypes;
 
 const
-  IMGRESGUIVER = '1.9';
+  IMGRESGUIVER = '1.9.1';
   IMGRESGUICPR = 'ImageResize V'+IMGRESGUIVER+' © 2019 Jan Schirrmacher, www.atomek.de';
 
   INITYPE = 'IRS';
@@ -74,6 +74,7 @@ type
     ButtonBrowseSrcFiles: TBitBtn;
     ButtonExecute: TBitBtn;
     BrowseDstFolder: TSelectDirectoryDialog;
+    CheckBoxStopOnError: TCheckBox;
     CheckBoxMrkEnabled: TCheckBox;
     ComboBoxBoost: TComboBox;
     ComboBoxMrkPosition: TComboBox;
@@ -121,6 +122,7 @@ type
     OpenDialogSrcFilenames: TOpenDialog;
     OpenDialogMrkFilename: TOpenDialog;
     PageControl: TPageControl;
+    PaintBoxMrkPreview: TPaintBox;
     PanelMessages: TPanel;
     PanelControls: TPanel;
     ProgressBar: TProgressBar;
@@ -140,6 +142,10 @@ type
     ToolButton6: TToolButton;
     ToolButton7: TToolButton;
     ToolButton8: TToolButton;
+    UpDown1: TUpDown;
+    UpDown2: TUpDown;
+    UpDown3: TUpDown;
+    UpDown4: TUpDown;
     procedure ActionAboutExecute(Sender: TObject);
     procedure ActionBrowseDstFolderExecute(Sender: TObject);
     procedure ActionBrowseFilenamesExecute(Sender: TObject);
@@ -161,10 +167,15 @@ type
       Index: Integer; var AHeight: Integer);
     procedure ComboBoxSizesChange(Sender: TObject);
     procedure EditDstFolderChange(Sender: TObject);
+    procedure EditMrkSizeChange(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
+    procedure FormDropFiles(Sender: TObject; const FileNames: array of String);
     procedure FormShow(Sender: TObject);
     procedure MemoSrcFilenamesChange(Sender: TObject);
+    procedure PaintBoxMrkPreviewMouseDown(Sender: TObject;
+      Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure PaintBoxMrkPreviewPaint(Sender: TObject);
     procedure PanelControlsClick(Sender: TObject);
     procedure TimerProgressBarOffTimer(Sender: TObject);
   private
@@ -220,6 +231,7 @@ var
   Button :TButton;
 begin
   DefaultFormatSettings.DecimalSeparator := '.';
+  AllowDropFiles := true;
   if not LoadFromRegistry then
     ActionNew.Execute;
   UpdateControls;
@@ -249,6 +261,11 @@ begin
   LabelCores.Caption := Format('%d Cores', [TThread.ProcessorCount]);
 end;
 
+procedure TMainDialog.FormDropFiles(Sender: TObject; const FileNames: array of String);
+begin
+  MemoSrcFilenames.Lines.AddStrings(Filenames);
+end;
+
 procedure TMainDialog.FormShow(Sender: TObject);
 begin
 end;
@@ -272,12 +289,14 @@ begin
     ComboBoxSizes.Text := s
   else if TrySizesStrToSizes(ComboBoxSizes.Text + ', '+s, l) then
     ComboBoxSizes.Text := SizesToSizesStr(l);
+  UpdateControls;
 end;
 
 procedure TMainDialog.SetMrkPos(Value: integer);
 begin
   FMrkPos := Value;
   ComboBoxMrkPosition.ItemIndex := Value;
+  PaintBoxMrkPreview.Invalidate;
 end;
 
 procedure TMainDialog.FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -306,6 +325,7 @@ begin
       WriteString('MrkY', EditMrkY.Text);
       WriteString('MrkAlpha', EditMrkAlpha.Text);
       WriteString('ThreadCount', ComboBoxBoost.Text);
+      WriteBool('StopOnError', CheckBoxStopOnError.Checked);
     end;
   finally
     Registry.CloseKey;
@@ -337,6 +357,8 @@ begin
         EditMrkY.Text := ReadString('MrkY');
         EditMrkAlpha.Text := ReadString('MrkAlpha');
         ComboBoxBoost.Text := ReadString('ThreadCount');
+        CheckBoxStopOnError.Checked := ReadBool('StopOnError');
+
         SetTitle('last settings');
       end;
     end;
@@ -593,6 +615,80 @@ begin
   LabelSrcFilnamesRequired.Enabled := Length(MemoSrcFilenames.Text) = 0;
 end;
 
+procedure TMainDialog.PaintBoxMrkPreviewMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+var
+  sx :single;
+  sy :single;
+  r :TRect;
+begin
+  r := PaintBoxMrkPreview.ClientRect;
+  sx := X/r.Width;
+  EditMrkX.Text := Format('%.1f', [sx*100.0]);
+  sy := Y/r.Height;
+  EditMrkY.Text := Format('%.1f', [sy*100.0]);
+  SetMrkPos(0);
+end;
+
+procedure TMainDialog.PaintBoxMrkPreviewPaint(Sender: TObject);
+var
+  sz :single;
+  sx :single;
+  sy :single;
+  op :single;
+  sr :single;
+  r :TRect;
+  w, h, x, y :integer;
+  Img :TBGRABitmap;
+  bkg :TBGRAPixel;
+  frm :TBGRAPixel;
+  mrk :TBGRAPixel;
+begin
+  r := PaintBoxMrkPreview.ClientRect;
+  bkg.FromColor($00F9F7DF);
+  frm.FromColor(clBlack);
+  Img := TBGRABitmap.Create(r.Width, r.Height, bkg);
+  Img.Rectangle(r, frm);
+  sr := 2.0;
+  try
+    sz := StrToFloat(EditMrkSize.Text)/100.0;
+    sx := StrToFloat(EditMrkX.Text)/100.0;
+    sy := StrToFloat(EditMrkY.Text)/100.0;
+    op := StrToFloat(EditMrkAlpha.Text)/100.0;
+    w := round(r.Width*sz);
+    h := round(r.Width*sz/sr);
+    case ComboBoxMrkPosition.ItemIndex of
+    0:
+      begin
+        x := round((r.Width-w)*sx);
+        y := round((r.Height-h)*sy);
+      end;
+    1:
+      begin
+        x := round((r.Width-w)*(1.0-sx));
+        y := round((r.Height-h)*sy);
+      end;
+    2:
+      begin
+        x := round((r.Width-w)*(1.0-sx));
+        y := round((r.Height-h)*(1.0-sy));
+      end;
+    3:
+      begin
+        x := round((r.Width-w)*sx);
+        y := round((r.Height-h)*(1.0-sy));
+      end;
+    end;
+    mrk.FromColor(clBlue);
+    mrk.Alpha := round(255*op);
+
+    Img.FillRect(x, y, x+w, y+h, mrk, dmDrawWithTransparency);
+
+    Img.Draw(PaintBoxMrkPreview.Canvas, r);
+  except
+  end;
+  Img.Free;
+end;
+
 procedure TMainDialog.PanelControlsClick(Sender: TObject);
 begin
 
@@ -601,6 +697,11 @@ end;
 procedure TMainDialog.EditDstFolderChange(Sender: TObject);
 begin
  LabelDstFolderRequired.Enabled := Length(EditDstFolder.Text) = 0;
+end;
+
+procedure TMainDialog.EditMrkSizeChange(Sender: TObject);
+begin
+  PaintBoxMrkPreview.Invalidate;
 end;
 
 procedure TMainDialog.ComboBoxSizesChange(Sender: TObject);

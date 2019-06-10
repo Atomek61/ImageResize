@@ -36,6 +36,8 @@ const
   DEFAULTMRKX           = 98.0;
   DEFAULTMRKY           = 98.0;
   DEFAULTMRKALPHA       = 50.0;
+  DEFAULT_THREADCOUNT   = 0;
+  DEFAULT_STOPONERROR   = true;
 
 type
 
@@ -62,7 +64,8 @@ type
       MrkX :single;
       MrkY :single;
       MrkAlpha :single;
-      ThreadCount: integer;
+      ThreadCount :integer;
+      StopOnError :boolean;
     end;
 
     // Cached objects while execution, shared by the workers. This is, that
@@ -140,6 +143,7 @@ type
     property MrkY :single read FParams.MrkY write SetMrkY;
     property MrkAlpha :single read FParams.MrkAlpha write SetMrkAlpha;
     property ThreadCount :integer read FParams.ThreadCount write SetThreadCount;
+    property StopOnError :boolean read FParams.StopOnError write FParams.StopOnError;
     property OnPrint :TPrintEvent read FOnPrint write FOnPrint;
     property OnProgress :TProgressEvent read FOnProgress write FOnProgress;
   end;
@@ -479,6 +483,8 @@ begin
   FParams.MrkX           := DEFAULTMRKX;
   FParams.MrkY           := DEFAULTMRKY;
   FParams.MrkAlpha       := DEFAULTMRKALPHA;
+  FParams.ThreadCount    := DEFAULT_THREADCOUNT;
+  FParams.StopOnError    := DEFAULT_STOPONERROR;
 end;
 
 destructor TImgRes.Destroy;
@@ -511,6 +517,7 @@ begin
     Dispatcher.OnPrint := @OnTaskPrint;
     Dispatcher.OnProgress := @OnTaskProgress;
     Dispatcher.MaxWorkerCount := ThreadCount;
+    Dispatcher.StopOnError := StopOnError;
 
     result := Dispatcher.Execute(Tasks);
 

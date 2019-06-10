@@ -11,7 +11,7 @@ uses
   { you can add units after this } fileutil, utils, imgres, generics.collections;
 
 const
-  IMGRESCLIVER = '1.9';
+  IMGRESCLIVER = '1.9.1';
   IMGRESCLICPR = 'imgres CLI V'+IMGRESCLIVER+' (c) 2019 Jan Schirrmacher, www.atomek.de';
 
   INTROSTR = 'Free tool for jpg and png quality file resizing.';
@@ -22,6 +22,7 @@ const
     '  p pngcompression - is one of none,fastest,default and max'#10+
     '  w watermark      - a watermark file and optional a position and opacity, see example'#10+
     '  t threadcount    - number of threads to use, 0 is maximum'#10+
+    '  x stoponerror    - Stop on error flag'#10+
     '  h help           - outputs this text'#10+
     '  q quiet          - suppresses any message output'#10#10+
     '  dstfile must contain the placeholder ''%SIZE%'' when size is a list of sizes.'#10+
@@ -88,6 +89,7 @@ var
   MrkSize, MrkX, MrkY :single;
   MrkAlpha :single;
   ThreadCount :integer;
+  StopOnError :boolean;
 
   function IncludeTrailingPathDelimiterEx(const Path :string) :string;
   begin
@@ -171,6 +173,7 @@ begin
       end;
     end;
 
+    // Threading control
     Param := GetOptionValue('t', 'threadcount');
     if Param<>'' then begin
       if not TryStrToInt(Param, ThreadCount) or (ThreadCount<-1) then
@@ -178,6 +181,11 @@ begin
       inc(OptionCount, 2);
     end else
       ThreadCount := 0;
+
+    // StopOnError-Flag
+    StopOnError := HasOption('x', 'stoponerror');
+    if StopOnError then
+      inc(OptionCount);
 
     // Check number of parameters
     if ParamCount<>2+OptionCount then
@@ -222,6 +230,7 @@ begin
     Processor.MrkY := MrkY;
     Processor.MrkAlpha := MrkAlpha;
     Processor.ThreadCount := ThreadCount;
+    Processor.StopOnError := StopOnError;
     if not Quiet then begin
       Processor.OnPrint := @OnPrint;
 //      Processor.OnProgress := @OnProgress;

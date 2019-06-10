@@ -431,6 +431,10 @@ begin
     NextTask := 0;
     while true do begin
 
+      // If StopOnError and all Workers have stop then Exit
+      if FAborted and StopOnError and (WorkingCount=0) then
+        Exit(false);
+
       // If a task is available then assign it to a free worker
       if not FAborted and (NextTask<Tasks.Count) and Pool.Pop(Worker) then begin
         Working[Worker.Id] := Worker;
