@@ -148,16 +148,16 @@ begin
       PngCompression := Processor.PngCompression;
 
     // Watermark "C:\Folder\mark%SIZE%.png:-1.0,-1.0:50.0"
+    MrkFilename := '';
+    MrkSize := Processor.MrkSize;
+    MrkX := Processor.MrkX;
+    MrkY := Processor.MrkY;
+    MrkAlpha := Processor.MrkAlpha;
     Param := GetOptionValue('w', 'watermark');
     if Param<>'' then begin
       inc(OptionCount, 2);
       if not StrToStringArray(Param, '?', Items) or (Length(Items)>3) then
         raise Exception.CreateFmt('Invalid number of watermark parameters ''%s''.', [Param]);
-      MrkFilename := Items[0];
-      MrkSize := Processor.MrkSize;
-      MrkX := Processor.MrkX;
-      MrkY := Processor.MrkY;
-      MrkAlpha := Processor.MrkAlpha;
       if Length(Items)>1 then begin
         if not StrToSingleArray(Items[1], ',', FloatParams, FormatSettings) or (Length(FloatParams)<>3) then
           raise Exception.CreateFmt('Invalid number of watermark position parameters ''%s''.', [Items[1]]);
