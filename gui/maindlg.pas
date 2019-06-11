@@ -21,7 +21,7 @@ uses
   LCLIntf, Buttons, ImgList, LCLType, BGRABitmap, BGRABitmapTypes;
 
 const
-  IMGRESGUIVER = '1.9.3';
+  IMGRESGUIVER = '1.9.4';
   IMGRESGUICPR = 'ImageResize V'+IMGRESGUIVER+' © 2019 Jan Schirrmacher, www.atomek.de';
 
   INITYPE = 'IRS';
@@ -66,6 +66,7 @@ type
     ActionClearFilenames: TAction;
     ActionExecute: TAction;
     ActionList: TActionList;
+    ButtonEditWatermark: TBitBtn;
     ButtonAbout: TBitBtn;
     ButtonClearSizes: TBitBtn;
     ButtonBrowseMrkFilename: TBitBtn;
@@ -368,7 +369,7 @@ begin
     MemoSrcFilenames.Lines.Clear;
     EditDstFolder.Text := '';
     ComboBoxSizes.Text := IntToStr(DEFAULTSIZE);
-    ComboBoxJpgQuality.Text := IntToStr(ImgResizer.JpgQuality);
+    ComboBoxJpgQuality.Text := ImgResizer.JpgQualityToStr(ImgResizer.JpgQuality);
     ComboBoxPngCompression.Text := TImgRes.PngCompressionToStr(ImgResizer.PngCompression);
     CheckBoxMrkEnabled.Checked := false;
     EditMrkFilename.Text := '';
@@ -538,11 +539,11 @@ var
   mrk :TBGRAPixel;
 begin
   r := PaintBoxMrkPreview.ClientRect;
-  bkg.FromColor($00F9F7DF);
+  bkg.FromColor($00F7DBCC);
   frm.FromColor(clBlack);
   Img := TBGRABitmap.Create(r.Width, r.Height, bkg);
-  Img.Rectangle(r, frm);
-  sr := 2.0;
+//  Img.Rectangle(r, frm);
+  sr := 4.0;
   try
     sz := StrToFloat(EditMrkSize.Text)/100.0;
     sx := StrToFloat(EditMrkX.Text)/100.0;
@@ -552,7 +553,7 @@ begin
     h := round(r.Width*sz/sr);
     x := round((r.Width-w)*sx);
     y := round((r.Height-h)*sy);
-    mrk.FromColor(clBlue);
+    mrk.FromColor($00FF8000);
     mrk.Alpha := round(255*op);
 
     Img.FillRect(x, y, x+w, y+h, mrk, dmDrawWithTransparency);
@@ -669,6 +670,7 @@ var
   x :single;
   p :TPos;
   DstFolder :string;
+  IntValue :integer;
 begin
   if FExecuting then begin
     FCancelled := true;
@@ -697,10 +699,9 @@ begin
         end else if not TrySizesStrToSizes(ComboBoxSizes.Text, Sizes) then
           raise Exception.Create('Invalid Sizes string.');
         FImgRes := TImgRes.Create;
-        if ComboBoxJpgQuality.Text = 'default' then
-          FImgRes.JpgQuality := 75
-        else
-          FImgRes.JpgQuality := StrToInt(ComboBoxJpgQuality.Text);
+        if not TImgRes.TryStrToJpgQuality(ComboBoxJpgQuality.Text, IntValue) then
+          raise Exception.Create('Invalid jpg quality.');
+        FImgRes.JpgQuality := IntValue;
         FImgRes.PngCompression := ComboBoxPngCompression.ItemIndex;
 
         if CheckBoxMrkEnabled.Checked then begin

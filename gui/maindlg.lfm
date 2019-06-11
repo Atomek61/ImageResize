@@ -308,9 +308,9 @@ object MainDialog: TMainDialog
       Height = 264
       Top = 96
       Width = 264
-      ActivePage = TabSheetWatermark
+      ActivePage = TabSheetQuality
       Anchors = [akTop, akRight]
-      TabIndex = 2
+      TabIndex = 1
       TabOrder = 5
       object TabSheetSizes: TTabSheet
         Caption = 'Sizes'
@@ -475,7 +475,7 @@ object MainDialog: TMainDialog
         object EditMrkFilename: TEdit
           Left = 8
           Height = 23
-          Hint = 'Select a png file with the desired watermark.'#13#10#13#10'A watermark is a little image, which usually appear'#13#10'in a corner of the image.'#13#10#13#10'Inkscape is a good tool for creating watermark files.'
+          Hint = 'Select a png file with the desired watermark.'#13#10#13#10'A watermark is a little image, which usually'#13#10'appears in a corner of the image.'#13#10#13#10'Inkscape is a good tool for creating'#13#10'watermark files. Or use the inbuilt'#13#10'editor.'
           Top = 51
           Width = 213
           Anchors = [akTop, akLeft, akRight]
@@ -491,20 +491,20 @@ object MainDialog: TMainDialog
           ParentColor = False
         end
         object Label9: TLabel
-          Left = 136
+          Left = 130
           Height = 15
           Top = 83
-          Width = 48
-          Caption = '&H-Space:'
+          Width = 58
+          Caption = '&Horizontal:'
           FocusControl = EditMrkX
           ParentColor = False
         end
         object EditMrkX: TEdit
-          Left = 191
+          Left = 195
           Height = 23
           Hint = 'Horizontal space of the watermark to the border in percent of the destination image width.'
           Top = 80
-          Width = 30
+          Width = 26
           OnChange = EditMrkSizeChange
           TabOrder = 5
           Text = '1'
@@ -512,26 +512,26 @@ object MainDialog: TMainDialog
         object Label10: TLabel
           Left = 239
           Height = 15
-          Top = 85
+          Top = 83
           Width = 10
           Caption = '%'
           ParentColor = False
         end
         object Label11: TLabel
-          Left = 138
+          Left = 132
           Height = 15
           Top = 115
-          Width = 46
-          Caption = '&V-Space:'
+          Width = 41
+          Caption = '&Vertical:'
           FocusControl = EditMrkY
           ParentColor = False
         end
         object EditMrkY: TEdit
-          Left = 191
+          Left = 195
           Height = 23
           Hint = 'Vertical space of the watermark to the border in percent of the destination image height.'
           Top = 112
-          Width = 30
+          Width = 26
           OnChange = EditMrkSizeChange
           TabOrder = 6
           Text = '1'
@@ -539,7 +539,7 @@ object MainDialog: TMainDialog
         object Label12: TLabel
           Left = 239
           Height = 15
-          Top = 117
+          Top = 115
           Width = 10
           Caption = '%'
           ParentColor = False
@@ -563,19 +563,19 @@ object MainDialog: TMainDialog
           ParentColor = False
         end
         object EditMrkAlpha: TEdit
-          Left = 68
+          Left = 62
           Height = 23
           Hint = 'Choose the watermarks opacity.'#13#10#13#10'A strong watermark has 100%,'#13#10'a weak one has 10% opacity.'
           Top = 112
-          Width = 30
+          Width = 26
           OnChange = EditMrkSizeChange
           TabOrder = 4
           Text = '50'
         end
         object Label14: TLabel
-          Left = 116
+          Left = 106
           Height = 15
-          Top = 117
+          Top = 115
           Width = 10
           Caption = '%'
           ParentColor = False
@@ -590,19 +590,19 @@ object MainDialog: TMainDialog
           ParentColor = False
         end
         object EditMrkSize: TEdit
-          Left = 68
+          Left = 62
           Height = 23
           Hint = 'Size in percent of the watermark image in relation to the resampled image width.'
           Top = 80
-          Width = 30
+          Width = 26
           OnChange = EditMrkSizeChange
           TabOrder = 3
           Text = '10'
         end
         object Label16: TLabel
-          Left = 116
+          Left = 106
           Height = 15
-          Top = 85
+          Top = 83
           Width = 10
           Caption = '%'
           ParentColor = False
@@ -629,7 +629,7 @@ object MainDialog: TMainDialog
           OnPaint = PaintBoxMrkPreviewPaint
         end
         object UpDownMrkAlpha: TUpDown
-          Left = 98
+          Left = 88
           Height = 23
           Top = 112
           Width = 17
@@ -637,11 +637,11 @@ object MainDialog: TMainDialog
           Increment = 5
           Min = 0
           Position = 50
-          TabOrder = 7
+          TabOrder = 8
           Flat = True
         end
         object UpDownMrkSize: TUpDown
-          Left = 98
+          Left = 88
           Height = 23
           Top = 80
           Width = 17
@@ -649,7 +649,7 @@ object MainDialog: TMainDialog
           Increment = 5
           Min = 0
           Position = 10
-          TabOrder = 8
+          TabOrder = 9
           Flat = True
         end
         object UpDownMrkX: TUpDown
@@ -660,7 +660,7 @@ object MainDialog: TMainDialog
           Associate = EditMrkX
           Min = 0
           Position = 1
-          TabOrder = 9
+          TabOrder = 10
           Flat = True
         end
         object UpDownMrkY: TUpDown
@@ -671,12 +671,12 @@ object MainDialog: TMainDialog
           Associate = EditMrkY
           Min = 0
           Position = 1
-          TabOrder = 10
+          TabOrder = 11
           Flat = True
         end
         object Label20: TLabel
-          Left = 156
-          Height = 80
+          Left = 152
+          Height = 48
           Top = 149
           Width = 90
           Alignment = taCenter
@@ -686,6 +686,16 @@ object MainDialog: TMainDialog
           Layout = tlCenter
           ParentColor = False
           ParentFont = False
+        end
+        object ButtonEditWatermark: TBitBtn
+          Left = 158
+          Height = 27
+          Top = 202
+          Width = 91
+          Action = ActionEditWatermark
+          Caption = 'Edit...'
+          Spacing = 12
+          TabOrder = 7
         end
       end
       object TabSheetRessources: TTabSheet
@@ -1502,7 +1512,7 @@ object MainDialog: TMainDialog
     left = 24
     top = 232
     Bitmap = {
-      4C69040000001400000014000000000000000000000000000000000000000000
+      4C69050000001400000014000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1700,6 +1710,56 @@ object MainDialog: TMainDialog
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000000000000000000000DF8A
+      5C80DF8A5C80DF8A5C8000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00000000000000000000DF8A5CFFDF8A5CFFDF8A5CFFDF8A5C80000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00000000000000000000000000000000000000000000DF8A5CFFDF8A5CFFDF8A
+      5CFFDF8A5CFFDF8A5C8000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000DF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFF00000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000DF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A
+      5CFF000000000000000000000000000000000000000000000000000000000000
+      00007AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFFDF8A5CFFDF8A
+      5CFFDF8A5CFFDF8A5CFFDF8A5CFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
+      DDFF7AC9DDFF2D6873FF00000000000000007AC9DDFF7AC9DDFF7AC9DDFF7AC9
+      DDFF7AC9DDFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFF7AC9DDFF7AC9
+      DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF2D6873FF000000000000
+      00007AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A
+      5CFFDF8A5CFF426C77FF22383DFF22383DFF436E79FF73BED1FF7AC9DDFF7AC9
+      DDFF7AC9DDFF2D6873FF00000000000000007AC9DDFF7AC9DDFF7AC9DDFFADA9
+      9CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFF172629FF4D7E8BFF75C0D4FF75C0
+      D4FF4C7D89FF18282CFF6FB6C8FF7AC9DDFF7AC9DDFF2D6873FF000000000000
+      00007AC9DDFF7AC9DDFF7AC9DDFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFF253D
+      43FF619FAFFF528895FF18272BFF172629FF5992A1FF5B96A5FF2A454CFF7AC9
+      DDFF7AC9DDFF2D6873FF00000000000000007AC9DDFF7AC9DDFF7AC9DDFFDF8A
+      5CFFDF8A5CFFADA99CFF7AC9DDFF1B2C30FF7AC9DDFF0E1719FF72BCCFFF70B9
+      CBFF4E808DFF7AC9DDFF162529FF79C7DBFF7AC9DDFF2D6873FF000000000000
+      00007AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF1E31
+      36FF7AC9DDFF090F10FF79C7DBFF78C5D9FF62A2B2FF7AC9DDFF1A2A2FFF77C4
+      D8FF7AC9DDFF2D6873FF00000000000000007AC9DDFF7AC9DDFF7AC9DDFF7AC9
+      DDFF7AC9DDFF7AC9DDFF7AC9DDFF1A2B2FFF6DB4C6FF385C65FF274046FF2740
+      46FF45727DFF69ADBEFF1E3136FF7AC9DDFF7AC9DDFF2D6873FF000000000000
+      00007AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF5C98
+      A7FF1D2F34FF6AAFC1FF65A6B6FF65A6B6FF69ADBEFF1B2C30FF609FAEFF7AC9
+      DDFF7AC9DDFF2D6873FF00000000000000007AC9DDFF7AC9DDFF7AC9DDFF7AC9
+      DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF5F9CACFF243B41FF1C2E32FF1C2E
+      32FF253C42FF65A6B6FF7AC9DDFF7AC9DDFF7AC9DDFF2D6873FF000000000000
+      00007AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
+      DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
+      DDFF7AC9DDFF2D6873FF00000000000000007AC9DDFF7AC9DDFF7AC9DDFF7AC9
+      DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF00000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00002D6873FF2D6873FF2D6873FF2D6873FF2D6873FF2D6873FF2D6873FF2D68
+      73FF2D6873FF00000000000000FF000000FF00000000000000FF000000FF0000
+      0000000000FF000000FF00000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000FF0000
+      00FF00000000000000FF000000FF00000000000000FF000000FF000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000

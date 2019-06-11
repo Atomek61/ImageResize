@@ -135,6 +135,8 @@ type
     procedure Cancel;
     class function TryStrToPngCompression(const Str :string; out Value :integer) :boolean;
     class function PngCompressionToStr(const Value :integer) :string;
+    class function TryStrToJpgQuality(const Str :string; out Value :integer) :boolean;
+    class function JpgQualityToStr(const Value :integer) :string;
     property SrcFilenames :TStrings read GetSrcFilenames write SetSrcFilnames;
     property DstFolder :string read FParams.DstFolder write FParams.DstFolder;
     property Sizes :string read GetSizes write SetSizes;
@@ -559,6 +561,25 @@ begin
   if (Value<0) or (Value>High(PNGCOMPRS)) then
     raise Exception.CreateFmt('Invalid png compression %d (0..3).', [Value]);
   result := PNGCOMPRS[Value];
+end;
+
+class function TImgRes.TryStrToJpgQuality(const Str :string; out Value :integer) :boolean;
+begin
+  if SameText(Trim(Str), 'default') then begin
+    Value := DEFAULTJPGQUALITY;
+    result := true;
+  end else
+    result := TryStrToInt(Str, Value) and (Value>=1) and (Value<=100);
+end;
+
+class function TImgRes.JpgQualityToStr(const Value :integer) :string;
+begin
+  if (Value<1) or (Value>100) then
+    raise Exception.CreateFmt('Invalid jpg quality %d (1..100).', [Value]);
+  if Value=DEFAULTJPGQUALITY then
+    result := 'default'
+  else
+    result := IntToStr(Value);
 end;
 
 procedure TImgRes.SetSizes(AValue :string);

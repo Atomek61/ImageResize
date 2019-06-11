@@ -8,16 +8,22 @@ uses
   Classes, SysUtils, Registry, Forms, Controls, Graphics, Dialogs, StdCtrls,
   ColorBox, ComCtrls, ExtCtrls, Buttons, ActnList, BGRABitmap;
 
+const
+  DIALOGTITLE = 'Watermark Editor';
 
 type
 
   { TMrkEditDialog }
 
   TMrkEditDialog = class(TForm)
+    ActionFont: TAction;
+    ActionSaveAs: TAction;
+    ActionOk: TAction;
     ActionList1: TActionList;
     ButtonBrowseFont: TBitBtn;
     ButtonOkAndSave: TBitBtn;
-    ButtonCancel: TButton;
+    ButtonOkAndSave1: TBitBtn;
+    ButtonOkAndSave2: TBitBtn;
     ColorBoxFontColor: TColorBox;
     ColorBoxShadowColor: TColorBox;
     EditWidth: TEdit;
@@ -37,18 +43,24 @@ type
     PanelPreview: TPanel;
     SaveDialog: TSaveDialog;
     UpDownShadowBlur: TUpDown;
+    procedure ActionFontExecute(Sender: TObject);
+    procedure ActionOkExecute(Sender: TObject);
+    procedure ActionSaveAsExecute(Sender: TObject);
     procedure ButtonBrowseFontClick(Sender: TObject);
-    procedure ButtonOkAndSaveClick(Sender: TObject);
-    procedure EditTextChange(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure PaintBoxPreviewPaint(Sender: TObject);
     procedure UpDownShadowBlurChanging(Sender: TObject; var AllowChange: Boolean
       );
+    procedure EditChanged(Sender :TObject);
+
   private
     FMrkFilename :string;
+    FDirty :boolean;
     function CreateMrkBitmap(Out Img :TBGRABitmap) :boolean;
     procedure SaveToRegistry;
     function LoadFromRegistry :boolean;
+    procedure SaveToFile(const Filename :string);
   public
     class function Execute(out MrkFilename :string) :boolean;
   end;
@@ -81,10 +93,16 @@ end;
 procedure TMrkEditDialog.UpDownShadowBlurChanging(Sender: TObject;
   var AllowChange: Boolean);
 begin
-  EditTextChange(nil);
+  EditChanged(nil);
 end;
 
-procedure TMrkEditDialog.ButtonBrowseFontClick(Sender: TObject);
+procedure TMrkEditDialog.EditChanged(Sender: TObject);
+begin
+  FDirty := true;
+  PaintBoxPreview.Invalidate;
+end;
+
+procedure TMrkEditDialog.ActionFontExecute(Sender: TObject);
 var
   FontName :string;
   FontStyle :TFontStyles;
@@ -101,25 +119,37 @@ begin
   end;
 end;
 
-procedure TMrkEditDialog.ButtonOkAndSaveClick(Sender: TObject);
-var
-  Img :TBGRABitmap;
+procedure TMrkEditDialog.ActionOkExecute(Sender: TObject);
 begin
-  if CreateMrkBitmap(Img) and SaveDialog.Execute then begin
-    FMrkFilename := SaveDialog.Filename;
-    Img.SaveToFile(FMrkFilename);
+  if FDirty then begin
+    if SaveDialog.Execute then begin
+      SaveToFile(SaveDialog.Filename);
+      ModalResult := mrOk;
+    end;
+  end else
     ModalResult := mrOk;
-    SaveToRegistry;
-  end;
 end;
 
-procedure TMrkEditDialog.EditTextChange(Sender: TObject);
+procedure TMrkEditDialog.ActionSaveAsExecute(Sender: TObject);
 begin
-  PaintBoxPreview.Invalidate;
+  if SaveDialog.Execute then
+    SaveToFile(SaveDialog.Filename);
+end;
+
+procedure TMrkEditDialog.ButtonBrowseFontClick(Sender: TObject);
+begin
+  ActionFont.Execute;
+end;
+
+procedure TMrkEditDialog.FormClose(Sender: TObject;
+  var CloseAction: TCloseAction);
+begin
+  SaveToRegistry;
 end;
 
 procedure TMrkEditDialog.FormCreate(Sender: TObject);
 begin
+  Caption := DIALOGTITLE;
   LoadFromRegistry;
 end;
 
@@ -174,6 +204,24 @@ begin
   finally
     Registry.Free;
   end;
+  FDirty := false;
+end;
+
+procedure TMrkEditDialog.SaveToFile(const Filename: string);
+var
+  Img :TBGRABitmap;
+begin
+  Img := nil;
+  try
+    if CreateMrkBitmap(Img) then begin
+      FMrkFilename := Filename;
+      Img.SaveToFile(FMrkFilename);
+      Caption := DIALOGTITLE + ' - ' + ExtractFilename(FMrkFilename);
+      FDirty := false;
+    end;
+  finally
+    Img.Free;
+  end;
 end;
 
 procedure TMrkEditDialog.SaveToRegistry;
@@ -195,6 +243,7 @@ begin
     Registry.CloseKey;
     Registry.Free;
   end;
+  FDirty := false;
 end;
 
 end.

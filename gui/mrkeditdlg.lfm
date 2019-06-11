@@ -1,12 +1,14 @@
 object MrkEditDialog: TMrkEditDialog
   Left = 272
-  Height = 222
+  Height = 395
   Top = 357
-  Width = 687
-  BorderStyle = bsDialog
+  Width = 684
   Caption = 'Watermark Image Editor'
-  ClientHeight = 222
-  ClientWidth = 687
+  ClientHeight = 395
+  ClientWidth = 684
+  Constraints.MinHeight = 220
+  Constraints.MinWidth = 684
+  OnClose = FormClose
   OnCreate = FormCreate
   ShowHint = True
   LCLVersion = '2.0.0.3'
@@ -15,9 +17,9 @@ object MrkEditDialog: TMrkEditDialog
     Height = 23
     Top = 48
     Width = 217
-    OnChange = EditTextChange
+    OnChange = EditChanged
     TabOrder = 1
-    Text = '© 2019 www.atomek.de'
+    Text = '© 2019 Your Name'
   end
   object Label1: TLabel
     Left = 24
@@ -42,7 +44,7 @@ object MrkEditDialog: TMrkEditDialog
     Height = 23
     Top = 80
     Width = 189
-    OnChange = EditTextChange
+    OnChange = EditChanged
     TabOrder = 2
     Text = '"Arial", Bold, Italic'
   end
@@ -54,7 +56,7 @@ object MrkEditDialog: TMrkEditDialog
     Selected = clWhite
     Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbPrettyNames]
     ItemHeight = 16
-    OnChange = EditTextChange
+    OnChange = EditChanged
     TabOrder = 4
   end
   object Label3: TLabel
@@ -74,7 +76,7 @@ object MrkEditDialog: TMrkEditDialog
     Selected = clNavy
     Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbPrettyNames]
     ItemHeight = 16
-    OnChange = EditTextChange
+    OnChange = EditChanged
     TabOrder = 5
   end
   object Label4: TLabel
@@ -101,6 +103,7 @@ object MrkEditDialog: TMrkEditDialog
     Hint = 'Width of the resulting raster image,'#13#10'about 200px is a good value.'
     Top = 16
     Width = 41
+    OnChange = EditChanged
     TabOrder = 0
     Text = '200'
   end
@@ -118,6 +121,7 @@ object MrkEditDialog: TMrkEditDialog
     Height = 23
     Top = 176
     Width = 104
+    OnChangeBounds = EditChanged
     TabOrder = 6
     Text = '6'
   end
@@ -130,40 +134,83 @@ object MrkEditDialog: TMrkEditDialog
     Min = 0
     OnChanging = UpDownShadowBlurChanging
     Position = 6
-    TabOrder = 9
+    TabOrder = 7
   end
   object ButtonBrowseFont: TBitBtn
     Left = 272
     Height = 25
     Top = 79
     Width = 25
-    Images = ImageList20x20
-    ImageIndex = 3
+    Glyph.Data = {
+      76060000424D7606000000000000360000002800000014000000140000000100
+      2000000000004006000064000000640000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00000000000000000000000000000000000000000000000000FF000000FF0000
+      0000000000FF000000FF00000000000000FF000000FF00000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000FF000000FF00000000000000FF000000FF000000000000
+      00FF000000FF0000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00000000000000000000000000000000000000000000000000009999992C9999
+      9982999999BF999999BF999999A3999999400000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00000000000000000000000000009999992E999999FF999999FF999999770000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000009999
+      992C999999FF999999FF99999975000000000000000000000000000000000000
+      0000000000000000000000000000000000000000002C00000082000000BF0000
+      00BF000000A300000040000000009999992C999999FF999999FF999999750000
+      0000999999059999995B00000000000000000000000000000000000000000000
+      0000000000000000002E000000FF000000FF0000007700000000000000009999
+      992C999999FF999999FF99999975000000009999995799999962000000000000
+      000000000000000000000000000000000000000000000000002C000000FF0000
+      00FF0000007500000000000000009999992C999999FF999999FF999999BA9999
+      999E999999FA9999996200000000000000000000000000000000000000000000
+      0000000000000000002C000000FF000000FF0000007500000000000000052424
+      2477999999FF999999FF9999997399999919999999BA99999962000000000000
+      000000000000000000000000000000000000000000000000002C000000FF0000
+      00FF0000007500000000000000572121217D999999FF999999FF9999996C0000
+      0000999999209999996200000000000000000000000000000000000000000000
+      0000000000000000002C000000FF000000FF000000BA0000009E000000FA2121
+      217D999999FF999999FF9999996C00000000000000009999992A999999059999
+      996500000000000000000000000000000000000000000000002C000000FF0000
+      00FF0000007300000019000000BA2121217D999999FF999999FF9999996C0000
+      000000000000000000009999996C9999996C0000000000000000000000000000
+      0000000000000000002C000000FF000000FF0000006C00000000535353464949
+      49BB999999FF999999FF999999B69999997E99999986999999BC999999FF9999
+      996C00000000000000000000000000000000000000000000002C000000FF0000
+      00FF0000006C00000000000000000000002A0000000500000065000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000002C000000FF000000FF0000006C00000000000000000000
+      00000000006C0000006C00000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000002C00000092000000FF0000
+      00FF000000B60000007E00000086000000BC000000FF0000006C000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000
+    }
     OnClick = ButtonBrowseFontClick
     TabOrder = 3
   end
-  object ButtonCancel: TButton
-    Left = 512
-    Height = 27
-    Top = 184
-    Width = 75
-    Cancel = True
-    Caption = 'Cancel'
-    ModalResult = 2
-    TabOrder = 8
-  end
   object PanelPreview: TPanel
     Left = 312
-    Height = 145
+    Height = 320
     Top = 27
     Width = 362
+    Anchors = [akTop, akLeft, akRight, akBottom]
     BevelOuter = bvLowered
-    ClientHeight = 145
+    ClientHeight = 320
     ClientWidth = 362
-    TabOrder = 10
+    TabOrder = 11
     object PaintBoxPreview: TPaintBox
       Left = 1
-      Height = 143
+      Height = 318
       Top = 1
       Width = 360
       Align = alClient
@@ -179,16 +226,40 @@ object MrkEditDialog: TMrkEditDialog
     ParentColor = False
   end
   object ButtonOkAndSave: TBitBtn
-    Left = 599
+    Left = 368
     Height = 27
-    Top = 184
-    Width = 75
-    Caption = 'Ok'
+    Top = 359
+    Width = 90
+    Action = ActionOk
+    Anchors = [akRight, akBottom]
     Default = True
     Images = ImageList20x20
+    TabOrder = 8
+  end
+  object ButtonOkAndSave1: TBitBtn
+    Left = 472
+    Height = 27
+    Top = 359
+    Width = 91
+    Action = ActionSaveAs
+    Anchors = [akRight, akBottom]
+    Images = ImageList20x20
     ImageIndex = 2
-    OnClick = ButtonOkAndSaveClick
-    TabOrder = 7
+    TabOrder = 9
+  end
+  object ButtonOkAndSave2: TBitBtn
+    Left = 575
+    Height = 27
+    Top = 359
+    Width = 99
+    Anchors = [akRight, akBottom]
+    Cancel = True
+    Caption = 'Cancel'
+    GlyphShowMode = gsmAlways
+    ModalResult = 2
+    Images = ImageList20x20
+    ImageIndex = 1
+    TabOrder = 10
   end
   object FontDialog: TFontDialog
     Font.CharSet = ANSI_CHARSET
@@ -421,7 +492,22 @@ object MrkEditDialog: TMrkEditDialog
     }
   end
   object ActionList1: TActionList
+    Images = ImageList20x20
     left = 308
     top = 160
+    object ActionOk: TAction
+      Caption = 'Ok'
+      OnExecute = ActionOkExecute
+    end
+    object ActionSaveAs: TAction
+      Caption = 'Save as...'
+      ImageIndex = 2
+      OnExecute = ActionSaveAsExecute
+    end
+    object ActionFont: TAction
+      Caption = 'Font...'
+      ImageIndex = 3
+      OnExecute = ActionFontExecute
+    end
   end
 end
