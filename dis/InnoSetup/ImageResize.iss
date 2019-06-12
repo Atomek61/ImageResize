@@ -1,5 +1,5 @@
 #define PROGNAME "ImageResize"
-#define PROGVER "1.9.3"
+#define PROGVER "1.9.5"
 
 #define PROGEXE "ImageResize.exe"
 

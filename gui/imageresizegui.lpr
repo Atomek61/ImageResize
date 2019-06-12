@@ -18,7 +18,6 @@ begin
   Application.Scaled:=True;
   Application.Initialize;
   Application.CreateForm(TMainDialog, MainDialog);
-  Application.CreateForm(TMrkEditDialog, MrkEditDialog);
   Application.Run;
 end.
 

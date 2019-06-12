@@ -28,7 +28,7 @@ const
 
   PROGRESSSTEPSPERFILE = 4;
 
-  REGKEY = '\Software\Atomek\ImageResize';
+  REGKEY = 'Software\Atomek\Image Resize';
 
 
 const

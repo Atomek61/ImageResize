@@ -6,23 +6,30 @@ interface
 
 uses
   Classes, SysUtils, Registry, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ColorBox, ComCtrls, ExtCtrls, Buttons, ActnList, BGRABitmap;
+  ColorBox, ComCtrls, ExtCtrls, Buttons, ActnList, BGRABitmap,
+  mrk.utils, IniFiles;
 
 const
   DIALOGTITLE = 'Watermark Editor';
+  WAMSINIEXT = '.was';
+  WAMSINITYP = 'WAMS';
+  WAMSINIVER = 100;
 
 type
 
   { TMrkEditDialog }
 
   TMrkEditDialog = class(TForm)
+    ActionDefault: TAction;
+    ActionSave: TAction;
+    ActionNew: TAction;
+    ActionOpen: TAction;
     ActionFont: TAction;
     ActionSaveAs: TAction;
     ActionOk: TAction;
     ActionList1: TActionList;
     ButtonBrowseFont: TBitBtn;
     ButtonOkAndSave: TBitBtn;
-    ButtonOkAndSave1: TBitBtn;
     ButtonOkAndSave2: TBitBtn;
     ColorBoxFontColor: TColorBox;
     ColorBoxShadowColor: TColorBox;
@@ -32,6 +39,7 @@ type
     EditFont: TEdit;
     FontDialog: TFontDialog;
     ImageList20x20: TImageList;
+    ImageList24x24: TImageList;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
@@ -39,28 +47,39 @@ type
     Label5: TLabel;
     Label6: TLabel;
     Label7: TLabel;
+    OpenDialog: TOpenDialog;
     PaintBoxPreview: TPaintBox;
     PanelPreview: TPanel;
     SaveDialog: TSaveDialog;
+    ToolBar: TToolBar;
+    ToolButton1: TToolButton;
+    ToolButton2: TToolButton;
+    ToolButton3: TToolButton;
+    ToolButton5: TToolButton;
     UpDownShadowBlur: TUpDown;
+    procedure ActionDefaultExecute(Sender: TObject);
     procedure ActionFontExecute(Sender: TObject);
+    procedure ActionNewExecute(Sender: TObject);
     procedure ActionOkExecute(Sender: TObject);
+    procedure ActionOpenExecute(Sender: TObject);
     procedure ActionSaveAsExecute(Sender: TObject);
     procedure ButtonBrowseFontClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure PaintBoxPreviewPaint(Sender: TObject);
-    procedure UpDownShadowBlurChanging(Sender: TObject; var AllowChange: Boolean
-      );
+    procedure UpDownShadowBlurChanging(Sender: TObject; var AllowChange: Boolean      );
     procedure EditChanged(Sender :TObject);
-
   private
     FMrkFilename :string;
     FDirty :boolean;
+    function TryDialogToParams(out Params :TWatermarkParams) :boolean;
+    procedure DialogToParams(out Params :TWatermarkParams);
+    procedure ParamsToDialog(const Params :TWatermarkParams);
     function CreateMrkBitmap(Out Img :TBGRABitmap) :boolean;
     procedure SaveToRegistry;
-    function LoadFromRegistry :boolean;
+    procedure LoadFromRegistry;
     procedure SaveToFile(const Filename :string);
+    procedure SetDirty;
   public
     class function Execute(out MrkFilename :string) :boolean;
   end;
@@ -71,7 +90,7 @@ var
 implementation
 
 uses
-  mrk.utils, imgres;
+  imgres, graphics.utils;
 
 const
   DLGREGKEY = REGKEY + '\MrkEditor';
@@ -83,9 +102,11 @@ const
 procedure TMrkEditDialog.PaintBoxPreviewPaint(Sender: TObject);
 var
   Img :TBGRABitmap;
+  Fit :TRect;
 begin
   if CreateMrkBitmap(Img) then begin
-    Img.Draw(PaintBoxPreview.Canvas, 0, 0, false);
+    Fit := FitRect(TRect.Create(0, 0, Img.Width, Img.Height), PaintBoxPreview.ClientRect);
+    Img.Draw(PaintBoxPreview.Canvas, Fit, false);
     Img.Free;
   end;
 end;
@@ -98,8 +119,43 @@ end;
 
 procedure TMrkEditDialog.EditChanged(Sender: TObject);
 begin
-  FDirty := true;
+  SetDirty;
   PaintBoxPreview.Invalidate;
+end;
+
+function TMrkEditDialog.TryDialogToParams(out Params: TWatermarkParams): boolean;
+begin
+  with Params do begin
+    if not TryStrToInt(EditWidth.Text, Width) then Exit(false);
+    Text := EditText.Text;
+    if not TryStrToFontInfo(EditFont.Text, Params.FontName, Params.FontStyle) then Exit(false);
+    FontColor := ColorBoxFontColor.Selected;
+    ShadowColor := ColorBoxShadowColor.Selected;
+    ShadowBlur := UpDownShadowBlur.Position;
+  end;
+  result := true;
+end;
+
+procedure TMrkEditDialog.DialogToParams(out Params: TWatermarkParams);
+begin
+  if not TryDialogToParams(Params) then
+    raise Exception.Create('Invalid parameters');
+end;
+
+procedure TMrkEditDialog.ParamsToDialog(const Params: TWatermarkParams);
+var
+  OldDirty :boolean;
+begin
+  OldDirty := FDirty;
+  with Params do begin
+    EditWidth.Text := IntToStr(Width);
+    EditText.Text := Text;
+    EditFont.Text := FontInfoToStr(FontName, FontStyle);
+    ColorBoxFontColor.Selected := FontColor;
+    ColorBoxShadowColor.Selected := ShadowColor;
+    UpDownShadowBlur.Position := ShadowBlur;
+  end;
+  FDirty := OldDirty;
 end;
 
 procedure TMrkEditDialog.ActionFontExecute(Sender: TObject);
@@ -119,6 +175,40 @@ begin
   end;
 end;
 
+procedure TMrkEditDialog.ActionDefaultExecute(Sender: TObject);
+var
+  Ini: TRegistryIniFile;
+  Params :TWatermarkParams;
+begin
+  if not TryDialogToParams(Params) then
+    raise Exception.Create('Invalid parameter.');
+  Ini := TRegistryIniFile.Create(REGKEY);
+  try
+    Params.SaveToIni(Ini, WATERMARKDEFAULTSECTION);
+  finally
+    Ini.Free;
+  end;
+  FDirty := false;
+end;
+
+procedure TMrkEditDialog.ActionNewExecute(Sender: TObject);
+var
+  Ini: TRegistryIniFile;
+  Params :TWatermarkParams;
+begin
+  Ini := TRegistryIniFile.Create(REGKEY);
+  try
+    if Ini.RegIniFile.KeyExists(WATERMARKDEFAULTSECTION) then
+      Params.LoadFromIni(Ini, WATERMARKDEFAULTSECTION)
+    else
+      Params.Defaults;
+  finally
+    Ini.Free;
+  end;
+  ParamsToDialog(Params);
+  FDirty := false;
+end;
+
 procedure TMrkEditDialog.ActionOkExecute(Sender: TObject);
 begin
   if FDirty then begin
@@ -128,6 +218,34 @@ begin
     end;
   end else
     ModalResult := mrOk;
+end;
+
+procedure TMrkEditDialog.ActionOpenExecute(Sender: TObject);
+var
+  Params :TWatermarkParams;
+  Ini :TIniFile;
+  Ver :integer;
+  PngFilename :string;
+begin
+  if OpenDialog.Execute then begin
+    Params.Defaults;
+    DialogToParams(Params);
+    Ini := TIniFile.Create(OpenDialog.Filename);
+    if Ini.ReadString('Common', 'Type', '')<>WAMSINITYP then
+      raise Exception.CreateFmt('Invalid filetype, %s expected.', [WAMSINITYP]);
+    Ver := Ini.ReadInteger('Common', 'Version', 0);
+    if Ver<>WAMSINIVER then
+      raise Exception.CreateFmt('Incompatible file version %.2f, %.2f expected.', [Ver, WAMSINITYP]);
+    PngFilename := Copy(OpenDialog.Filename, 1, Length(OpenDialog.Filename)-Length(WAMSINIEXT));
+    if FileExists(PngFilename) then begin
+      FMrkFilename := PngFilename;
+      ActionOk.Enabled := true;
+    end;
+    Params.LoadFromIni(Ini);
+    ParamsToDialog(Params);
+    Caption := DIALOGTITLE + ' - ' + ExtractFilename(OpenDialog.Filename);
+    FDirty := false;
+  end;
 end;
 
 procedure TMrkEditDialog.ActionSaveAsExecute(Sender: TObject);
@@ -155,17 +273,11 @@ end;
 
 function TMrkEditDialog.CreateMrkBitmap(out Img: TBGRABitmap): boolean;
 var
-  Params :TWatermarkImageParams;
+  Params :TWatermarkParams;
 begin
-  with Params do begin
-    Width := PaintBoxPreview.Width;//StrToInt(EditWidth.Text);
-    Text := EditText.Text;
-    if not TryStrToFontInfo(EditFont.Text, Params.FontName, Params.FontStyle) then Exit(false);
-    Params.FontColor := ColorBoxFontColor.Selected;
-    Params.ShadowColor := ColorBoxShadowColor.Selected;
-    Params.ShadowBlur := UpDownShadowBlur.Position;
-    result := TryCreateWatermarkImage(Params, Img);
-  end;
+  Params.Defaults;
+  result := TryDialogToParams(Params)
+    and TryCreateWatermarkImage(Params, Img);
 end;
 
 class function TMrkEditDialog.Execute(out MrkFilename: string): boolean;
@@ -182,27 +294,18 @@ begin
   end;
 end;
 
-function TMrkEditDialog.LoadFromRegistry :boolean;
+procedure TMrkEditDialog.LoadFromRegistry;
 var
-  Registry: TRegistry;
+  Ini :TRegistryIniFile;
+  Params :TWatermarkParams;
 begin
-  Registry := TRegistry.Create;
+  Ini := TRegistryIniFile.Create(REGKEY);
   try
-    Registry.RootKey := HKEY_CURRENT_USER;
-    // Navigate to proper "directory":
-    with Registry do begin
-      result := OpenKey(DLGREGKEY, false);
-      if result then begin
-        EditWidth.Text := ReadString('Size');
-        EditText.Text := ReadString('Text');
-        EditFont.Text := ReadString('Font');
-        ColorBoxFontColor.Selected := ReadInteger('FontColor');
-        ColorBoxShadowColor.Selected := ReadInteger('ShadowColor');
-        UpDownShadowBlur.Position := ReadInteger('ShadowBlur');
-      end;
-    end;
+    Ini.RegIniFile.RootKey := HKEY_CURRENT_USER;
+    Params.LoadFromIni(Ini);
+    ParamsToDialog(Params);
   finally
-    Registry.Free;
+    Ini.Free;
   end;
   FDirty := false;
 end;
@@ -210,38 +313,52 @@ end;
 procedure TMrkEditDialog.SaveToFile(const Filename: string);
 var
   Img :TBGRABitmap;
+  Params :TWatermarkParams;
+  Ini :TIniFile;
 begin
   Img := nil;
+  Ini := nil;
   try
+    DialogToParams(Params);
     if CreateMrkBitmap(Img) then begin
       FMrkFilename := Filename;
+      ActionOk.Enabled := true;
       Img.SaveToFile(FMrkFilename);
+      Ini := TIniFile.Create(FMrkFilename + WAMSINIEXT);
+      Ini.WriteString('Common', 'Type', WAMSINITYP);
+      Ini.WriteInteger('Common', 'Version', WAMSINIVER);
+      Params.SaveToIni(Ini);
       Caption := DIALOGTITLE + ' - ' + ExtractFilename(FMrkFilename);
       FDirty := false;
     end;
   finally
     Img.Free;
+    Ini.Free;
+  end;
+end;
+
+procedure TMrkEditDialog.SetDirty;
+begin
+  if not FDirty then begin
+    Caption := DIALOGTITLE + '*';
+    FDirty := true;
+    FMrkFilename := '';
+    ActionOk.Enabled := false;
   end;
 end;
 
 procedure TMrkEditDialog.SaveToRegistry;
 var
-  Registry: TRegistry;
+  Ini: TRegistryIniFile;
+  Params :TWatermarkParams;
 begin
-  Registry := TRegistry.Create;
+  if not TryDialogToParams(Params) then
+    raise Exception.Create('Invalid parameter.');
+  Ini := TRegistryIniFile.Create(REGKEY);
   try
-    // Navigate to proper "directory":
-    if Registry.OpenKey(DLGREGKEY, true) then with Registry do begin
-      WriteString('Size', EditWidth.Text);
-      WriteString('Text', EditText.Text);
-      WriteString('Font', EditFont.Text);
-      WriteInteger('FontColor', ColorBoxFontColor.Selected);
-      WriteInteger('ShadowColor', ColorBoxShadowColor.Selected);
-      WriteInteger('ShadowBlur', UpDownShadowBlur.Position);
-    end;
+    Params.SaveToIni(Ini);
   finally
-    Registry.CloseKey;
-    Registry.Free;
+    Ini.Free;
   end;
   FDirty := false;
 end;

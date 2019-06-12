@@ -21,13 +21,13 @@ uses
   LCLIntf, Buttons, ImgList, LCLType, BGRABitmap, BGRABitmapTypes;
 
 const
-  IMGRESGUIVER = '1.9.4';
+  IMGRESGUIVER = '1.9.5';
   IMGRESGUICPR = 'ImageResize V'+IMGRESGUIVER+' © 2019 Jan Schirrmacher, www.atomek.de';
 
   INITYPE = 'IRS';
   INIVERSION = '100';
 
-  GUIREGKEY = REGKEY + '\AppSettings';
+  GUIREGKEY = REGKEY + '\Settings';
 
   LICENSE =
     'Image Resize Copyright (c) 2019 Jan Schirrmacher, www.atomek.de'#10#10+
