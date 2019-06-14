@@ -308,48 +308,24 @@ object MainDialog: TMainDialog
       Height = 264
       Top = 96
       Width = 264
-      ActivePage = TabSheetQuality
+      ActivePage = TabSheetSizes
       Anchors = [akTop, akRight]
-      TabIndex = 1
+      TabIndex = 0
       TabOrder = 5
       object TabSheetSizes: TTabSheet
         Caption = 'Sizes'
         ClientHeight = 236
         ClientWidth = 256
         object Label3: TLabel
-          Left = 32
+          Left = 29
           Height = 15
           Top = 19
           Width = 28
           Caption = 'Si&zes:'
-          FocusControl = ComboBoxSizes
           ParentColor = False
         end
-        object ComboBoxSizes: TComboBox
-          Left = 16
-          Height = 23
-          Hint = 'Enter a destination image size in pixels or multiple sizes separated by commas.'#13#10'The size refers to the longer side of the image.'#13#10#13#10'Examples:'#13#10'640'#13#10'120,480,960,1200'
-          Top = 40
-          Width = 193
-          Anchors = [akTop, akLeft, akRight]
-          ItemHeight = 15
-          ItemIndex = 4
-          Items.Strings = (
-            'default'
-            '120'
-            '240'
-            '480'
-            '640'
-            '960'
-            '1920'
-            '3840'
-          )
-          OnChange = ComboBoxSizesChange
-          TabOrder = 0
-          Text = '640'
-        end
         object LabelSizesRequired: TLabel
-          Left = 16
+          Left = 13
           Height = 18
           Hint = 'Required'
           Top = 19
@@ -362,16 +338,16 @@ object MainDialog: TMainDialog
           ParentFont = False
         end
         object ButtonClearSizes: TBitBtn
-          Left = 211
+          Left = 224
           Height = 25
-          Top = 39
+          Top = 40
           Width = 25
           Action = ActionClearSizes
           Anchors = [akTop, akRight]
           Images = ImageList20x20
           ImageIndex = 1
           Spacing = 0
-          TabOrder = 1
+          TabOrder = 0
         end
         object FlowPanelSizeButtons: TFlowPanel
           Left = 8
@@ -383,7 +359,15 @@ object MainDialog: TMainDialog
           ControlList = <>
           FlowLayout = tlTop
           FlowStyle = fsLeftRightTopBottom
+          TabOrder = 1
+        end
+        object EditSizes: TEdit
+          Left = 8
+          Height = 23
+          Top = 41
+          Width = 213
           TabOrder = 2
+          Text = '640'
         end
       end
       object TabSheetQuality: TTabSheet
@@ -477,7 +461,7 @@ object MainDialog: TMainDialog
           Height = 23
           Hint = 'Select a png file with the desired watermark.'#13#10#13#10'A watermark is a little image, which usually'#13#10'appears in a corner of the image.'#13#10#13#10'Inkscape is a good tool for creating'#13#10'watermark files. Or use the inbuilt'#13#10'editor.'
           Top = 51
-          Width = 213
+          Width = 185
           Anchors = [akTop, akLeft, akRight]
           TabOrder = 1
         end
@@ -506,7 +490,7 @@ object MainDialog: TMainDialog
           Top = 80
           Width = 26
           OnChange = EditMrkSizeChange
-          TabOrder = 5
+          TabOrder = 6
           Text = '1'
         end
         object Label10: TLabel
@@ -533,7 +517,7 @@ object MainDialog: TMainDialog
           Top = 112
           Width = 26
           OnChange = EditMrkSizeChange
-          TabOrder = 6
+          TabOrder = 7
           Text = '1'
         end
         object Label12: TLabel
@@ -569,7 +553,7 @@ object MainDialog: TMainDialog
           Top = 112
           Width = 26
           OnChange = EditMrkSizeChange
-          TabOrder = 4
+          TabOrder = 5
           Text = '50'
         end
         object Label14: TLabel
@@ -585,7 +569,7 @@ object MainDialog: TMainDialog
           Height = 15
           Top = 83
           Width = 23
-          Caption = 'Siz&e:'
+          Caption = 'Si&ze:'
           FocusControl = EditMrkSize
           ParentColor = False
         end
@@ -596,7 +580,7 @@ object MainDialog: TMainDialog
           Top = 80
           Width = 26
           OnChange = EditMrkSizeChange
-          TabOrder = 3
+          TabOrder = 4
           Text = '10'
         end
         object Label16: TLabel
@@ -608,7 +592,7 @@ object MainDialog: TMainDialog
           ParentColor = False
         end
         object ButtonBrowseMrkFilename: TBitBtn
-          Left = 224
+          Left = 196
           Height = 25
           Top = 50
           Width = 25
@@ -618,15 +602,6 @@ object MainDialog: TMainDialog
           ImageIndex = 0
           Spacing = 0
           TabOrder = 2
-        end
-        object PaintBoxMrkPreview: TPaintBox
-          Cursor = crHandPoint
-          Left = 11
-          Height = 80
-          Top = 149
-          Width = 136
-          OnMouseDown = PaintBoxMrkPreviewMouseDown
-          OnPaint = PaintBoxMrkPreviewPaint
         end
         object UpDownMrkAlpha: TUpDown
           Left = 88
@@ -675,27 +650,139 @@ object MainDialog: TMainDialog
           Flat = True
         end
         object Label20: TLabel
-          Left = 152
+          Left = 157
           Height = 48
-          Top = 149
+          Top = 152
           Width = 90
           Alignment = taCenter
           AutoSize = False
-          Caption = 'Click'#13#10'the watermarks'#13#10'position'
+          Caption = 'Click or drag'#13#10'the watermarks'#13#10'position'
           Font.Color = clGrayText
           Layout = tlCenter
           ParentColor = False
           ParentFont = False
         end
         object ButtonEditWatermark: TBitBtn
-          Left = 158
-          Height = 27
-          Top = 202
-          Width = 91
-          Action = ActionEditWatermark
-          Caption = 'Edit...'
-          Spacing = 12
-          TabOrder = 7
+          Left = 221
+          Height = 25
+          Top = 50
+          Width = 25
+          Glyph.Data = {
+            36090000424D3609000000000000360000002800000018000000180000000100
+            2000000000000009000064000000640000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000002D68
+            73FF2D6873FF2D6873FF2D6873FF2D6873FF2D6873FF2D6873FF2D6873FF2D68
+            73FF2D6873FF2D6873FF2D6873FF2D6873FF2D6873FF2D6873FF2D6873FF2D68
+            73FF2D6873FF2D6873FF2D6873FF2D6873FF2D6873FF00000000000000007AC9
+            DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
+            DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
+            DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF2D6873FF00000000000000007AC9
+            DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
+            DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
+            DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF2D6873FF00000000000000007AC9
+            DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
+            DDFF7AC9DDFF7AC9DDFF7AC9DDFF518592FF18282CFF010203FF030506FF2239
+            3EFF5F9CACFF7AC9DDFF7AC9DDFF7AC9DDFF2D6873FF00000000000000007AC9
+            DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
+            DDFF7AC9DDFF7AC9DDFF406974FF121E21FF57909EFF77C4D8FF75C0D4FF4C7D
+            89FF0A1011FF57909EFF7AC9DDFF7AC9DDFF2D6873FF00000000000000007AC9
+            DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
+            DDFF7AC9DDFF6CB2C4FF080D0FFF6BB1C2FF365962FF050809FF050809FF426C
+            77FF5B96A5FF0D1618FF78C5D9FF7AC9DDFF2D6873FF00000000000000007AC9
+            DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
+            DDFF7AC9DDFF477581FF2D4B52FF4D7F8CFF000000FF3B616AFF518694FF62A1
+            B1FF7AC9DDFF142225FF5F9CACFF7AC9DDFF2D6873FF00000000000000007AC9
+            DDFF7AC9DDFF7AC9DDFF7AC9DDFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFF7AC9
+            DDFF7AC9DDFF3E6670FF3B616BFF385C65FF000000FF6CB2C4FF7AC9DDFF7AC9
+            DDFF7AC9DDFF22383DFF558D9BFF7AC9DDFF2D6873FF00000000000000007AC9
+            DDFF7AC9DDFF7AC9DDFF7AC9DDFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A
+            5CFF7AC9DDFF4A7A87FF263E44FF5D9AA9FF010203FF21373CFF315058FF4572
+            7DFF7AC9DDFF0D1517FF64A5B5FF7AC9DDFF2D6873FF00000000000000007AC9
+            DDFF7AC9DDFF7AC9DDFF7AC9DDFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A
+            5CFFDF8A5CFF71BACDFF0A1011FF5D9AA9FF5993A1FF243C42FF23393FFF5993
+            A1FF497985FF17262AFF7AC9DDFF7AC9DDFF2D6873FF00000000000000007AC9
+            DDFF7AC9DDFF7AC9DDFF7AC9DDFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A
+            5CFFDF8A5CFFDF8A5CFF558C9AFF080D0FFF395E68FF5B95A4FF568E9CFF2E4B
+            53FF0C1416FF67AABAFF7AC9DDFF7AC9DDFF2D6873FF00000000000000007AC9
+            DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A
+            5CFFDF8A5CFFDF8A5CFFDF8A5CFF6AAFC1FF355861FF1F3439FF22383DFF406A
+            75FF72BCCFFF7AC9DDFF7AC9DDFF7AC9DDFF2D6873FF00000000000000007AC9
+            DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFFDF8A5CFFDF8A5CFFDF8A
+            5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
+            DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF2D6873FF00000000000000007AC9
+            DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFFDF8A5CFFDF8A
+            5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFF7AC9DDFF7AC9DDFF7AC9
+            DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF2D6873FF00000000000000007AC9
+            DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFFDF8A
+            5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFF7AC9DDFF7AC9
+            DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF2D6873FF00000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000DF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFF0000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            000000000000DF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A
+            5CFF000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            00000000000000000000DF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A
+            5CFFDF8A5CFF0000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000DF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A
+            5CFFDF8A5CFF0000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            000000000000000000000000000000000000DF8A5CFFDF8A5CFFDF8A5CFFDF8A
+            5CFF000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            00000000000000000000000000000000000000000000DF8A5CFFDF8A5CFF0000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000
+          }
+          Images = ImageList20x20
+          ImageIndex = 4
+          OnClick = ActionEditWatermarkExecute
+          ParentShowHint = False
+          Spacing = 0
+          TabOrder = 3
+        end
+        object LabelMrkSpace: TLabel
+          Left = 157
+          Height = 15
+          Top = 214
+          Width = 90
+          Alignment = taCenter
+          AutoSize = False
+          Font.Color = clGrayText
+          ParentColor = False
+          ParentFont = False
+        end
+        object PanelPreview: TPanel
+          Left = 8
+          Height = 85
+          Top = 144
+          Width = 144
+          BevelOuter = bvLowered
+          ClientHeight = 85
+          ClientWidth = 144
+          TabOrder = 12
+          object PaintBoxMrkPreview: TPaintBox
+            Cursor = crNone
+            Left = 1
+            Height = 83
+            Top = 1
+            Width = 142
+            Align = alClient
+            OnMouseDown = PaintBoxMrkPreviewMouseDown
+            OnMouseLeave = PaintBoxMrkPreviewMouseLeave
+            OnMouseMove = PaintBoxMrkPreviewMouseMove
+            OnMouseUp = PaintBoxMrkPreviewMouseUp
+            OnPaint = PaintBoxMrkPreviewPaint
+          end
         end
       end
       object TabSheetRessources: TTabSheet

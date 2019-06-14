@@ -5,12 +5,12 @@ Version=100
 [Settings]
 SrcFilenames=..\tst\org\img1.png|..\tst\org\img2.jpg|..\tst\org\img3.jpg|..\tst\org\img4.png|
 DstFolder=..\tst\test5_%SIZE%
-Sizes=640,960
+Sizes=48, 120, 640, 800, 960
 JpgQuality=default
 PngCompression=default
 MrkPosition=3
 MrkEnabled=1
-MrkFilename=..\tst\watermarks\mark%SIZE%.png
+MrkFilename=..\tst\watermarks\%SIZE%.png
 MrkSize=40
 MrkX=5
 MrkY=5

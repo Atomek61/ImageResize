@@ -1,0 +1,11 @@
+[Common]
+Type=WAMS
+Version=100
+
+[Watermark]
+Width=200
+Text=360
+Font="Courier New", bold
+FontColor=$F0CAA6
+ShadowBlur=6
+ShadowColor=$800080

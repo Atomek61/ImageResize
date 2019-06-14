@@ -109,7 +109,7 @@ end;
 procedure TWatermarkParams.Defaults;
 begin
   Width := 200;
-  Text := '@ 2019 Your Name';
+  Text := '© 2019 Your Name';
   FontName := 'Courier New';
   FontStyle := [fsBold];
   FontColor := clWhite;

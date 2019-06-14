@@ -20,9 +20,7 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
-      <MajorVersionNr Value="1"/>
-      <MinorVersionNr Value="9"/>
-      <RevisionNr Value="5"/>
+      <MajorVersionNr Value="2"/>
       <StringTable CompanyName="Atomek" FileDescription="jpg and png image resampler" LegalCopyright="© 2019 by Jan Schirrmacher"/>
     </VersionInfo>
     <BuildModes Count="3">
@@ -118,7 +116,7 @@
         <PackageName Value="LCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="10">
+    <Units Count="9">
       <Unit0>
         <Filename Value="imageresizegui.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -164,10 +162,6 @@
         <Filename Value="..\src\graphics.utils.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit8>
-      <Unit9>
-        <Filename Value="..\src\png.utils.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit9>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

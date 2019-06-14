@@ -24,17 +24,21 @@ end;
 function StrToIntegerArray(const Str :string; Separator :char; out Values :TIntegerDynArray) :boolean;
 var
   i, p, n, x :integer;
+  item :string;
 begin
   SetLength(Values, 0);
   p := 1;
   n := 0;
   for i:=1 to Length(Str)+1 do begin
     if (i>Length(Str)) or (Str[i]=Separator) then begin
-      if not TryStrToInt(Copy(Str, p, i-p), x) then Exit(false);
-      SetLength(Values, n+1);
-      Values[n] := x;
+      item := Trim(Copy(Str, p, i-p));
+      if item<>'' then begin
+        if not TryStrToInt(item, x) then Exit(false);
+        SetLength(Values, n+1);
+        Values[n] := x;
+        inc(n);
+      end;
       p := i+1;
-      inc(n);
     end;
   end;
   result := true;

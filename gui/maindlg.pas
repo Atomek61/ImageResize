@@ -21,13 +21,15 @@ uses
   LCLIntf, Buttons, ImgList, LCLType, BGRABitmap, BGRABitmapTypes;
 
 const
-  IMGRESGUIVER = '1.9.5';
+  IMGRESGUIVER = '2.0';
   IMGRESGUICPR = 'ImageResize V'+IMGRESGUIVER+' © 2019 Jan Schirrmacher, www.atomek.de';
 
   INITYPE = 'IRS';
   INIVERSION = '100';
 
   GUIREGKEY = REGKEY + '\Settings';
+
+  MRKRECTRATIO = 3.0;
 
   LICENSE =
     'Image Resize Copyright (c) 2019 Jan Schirrmacher, www.atomek.de'#10#10+
@@ -80,7 +82,7 @@ type
     ComboBoxBoost: TComboBox;
     ComboBoxJpgQuality: TComboBox;
     ComboBoxPngCompression: TComboBox;
-    ComboBoxSizes: TComboBox;
+    EditSizes: TEdit;
     EditMrkX: TEdit;
     EditMrkFilename: TEdit;
     EditDstFolder: TEdit;
@@ -102,6 +104,7 @@ type
     Label15: TLabel;
     Label16: TLabel;
     Label17: TLabel;
+    LabelMrkSpace: TLabel;
     Label19: TLabel;
     Label20: TLabel;
     LabelCores: TLabel;
@@ -123,6 +126,7 @@ type
     OpenDialogMrkFilename: TOpenDialog;
     PageControl: TPageControl;
     PaintBoxMrkPreview: TPaintBox;
+    PanelPreview: TPanel;
     PanelMessages: TPanel;
     PanelControls: TPanel;
     ProgressBar: TProgressBar;
@@ -162,15 +166,20 @@ type
     procedure ActionSaveAsExecute(Sender: TObject);
     procedure ActionSaveExecute(Sender: TObject);
     procedure ButtonExecuteClick(Sender: TObject);
-    procedure ComboBoxSizesChange(Sender: TObject);
     procedure EditDstFolderChange(Sender: TObject);
     procedure EditMrkSizeChange(Sender: TObject);
+    procedure EditSizesChange(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDropFiles(Sender: TObject; const FileNames: array of String);
     procedure MemoSrcFilenamesChange(Sender: TObject);
     procedure PaintBoxMrkPreviewMouseDown(Sender: TObject;
       Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure PaintBoxMrkPreviewMouseLeave(Sender: TObject);
+    procedure PaintBoxMrkPreviewMouseMove(Sender: TObject; Shift: TShiftState;
+      X, Y: Integer);
+    procedure PaintBoxMrkPreviewMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
     procedure PaintBoxMrkPreviewPaint(Sender: TObject);
     procedure TimerProgressBarOffTimer(Sender: TObject);
   private
@@ -181,7 +190,8 @@ type
     FCancelled :boolean;
     FExecuting :boolean;
     FProgress :single;
-    FMrkPos :integer;
+    FMrkDragging :boolean;
+    FMrkOffset :TSize; // while dragging
     procedure SetTitle(const Str :string);
     procedure OnPrint(Sender :TObject; const Line :string);
     procedure OnProgress(Sender :TObject; Progress :single);
@@ -195,6 +205,9 @@ type
     procedure UpdateControls;
     procedure LMRun(var Message: TLMessage); message LM_RUN;
     procedure SizeButtonClick(Sender :TObject);
+    function MouseToSpace(X, Y :integer) :TSize;
+    function MouseToMrkSpace(X, Y :integer; out Value :TSize) :boolean;
+    function CalcMarkRect(out Rect :TRect) :boolean;
   public
 
   end;
@@ -276,10 +289,10 @@ var
   l :TSizes;
 begin
   s := IntToStr((Sender as TButton).Tag);
-  if Length(Trim(ComboBoxSizes.Text))=0 then
-    ComboBoxSizes.Text := s
-  else if TrySizesStrToSizes(ComboBoxSizes.Text + ', '+s, l) then
-    ComboBoxSizes.Text := SizesToSizesStr(l);
+  if Length(Trim(EditSizes.Text))=0 then
+    EditSizes.Text := s
+  else if TrySizesStrToSizes(EditSizes.Text + ', '+s, l) then
+    EditSizes.Text := SizesToSizesStr(l);
   UpdateControls;
 end;
 
@@ -298,13 +311,12 @@ begin
     if Registry.OpenKey(GUIREGKEY, true) then with Registry do begin
       WriteString('SrcFilenames', MemoSrcFilenames.Text);
       WriteString('DstFolder', EditDstFolder.Text);
-      WriteString('Sizes', ComboBoxSizes.Text);
+      WriteString('Sizes', EditSizes.Text);
       WriteString('JpgOptions.Quality', ComboBoxJpgQuality.Text);
       WriteString('PngOptions.Compression', ComboBoxPngCompression.Text);
       WriteBool('MrkEnabled', CheckBoxMrkEnabled.Checked);
       WriteString('MrkFilename', EditMrkFilename.Text);
       WriteString('MrkSize', EditMrkSize.Text);
-      WriteInteger('MrkPosition', FMrkPos);
       WriteString('MrkX', EditMrkX.Text);
       WriteString('MrkY', EditMrkY.Text);
       WriteString('MrkAlpha', EditMrkAlpha.Text);
@@ -339,7 +351,7 @@ begin
       if result then begin
         MemoSrcFilenames.Text := ReadString('SrcFilenames');
         EditDstFolder.Text := ReadString('DstFolder');
-        ComboBoxSizes.Text := ReadString('Sizes');
+        EditSizes.Text := ReadString('Sizes');
         ComboBoxJpgQuality.Text := ReadString('JpgOptions.Quality');
         ComboBoxPngCompression.Text := ReadString('PngOptions.Compression');
         CheckBoxMrkEnabled.Checked := ReadBool('MrkEnabled');
@@ -368,7 +380,7 @@ begin
   try
     MemoSrcFilenames.Lines.Clear;
     EditDstFolder.Text := '';
-    ComboBoxSizes.Text := IntToStr(DEFAULTSIZE);
+    EditSizes.Text := IntToStr(DEFAULTSIZE);
     ComboBoxJpgQuality.Text := ImgResizer.JpgQualityToStr(ImgResizer.JpgQuality);
     ComboBoxPngCompression.Text := TImgRes.PngCompressionToStr(ImgResizer.PngCompression);
     CheckBoxMrkEnabled.Checked := false;
@@ -402,10 +414,9 @@ begin
     Ini.WriteString('Common', 'Version', INIVERSION);
     Ini.WriteString('Settings', 'SrcFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, '|'));
     Ini.WriteString('Settings', 'DstFolder', EditDstFolder.Text);
-    Ini.WriteString('Settings', 'Sizes', ComboBoxSizes.Text);
+    Ini.WriteString('Settings', 'Sizes', EditSizes.Text);
     Ini.WriteString('Settings', 'JpgQuality', ComboBoxJpgQuality.Text);
     Ini.WriteString('Settings', 'PngCompression', ComboBoxPngCompression.Text);
-    Ini.WriteInteger('Settings', 'MrkPosition', FMrkPos);
     Ini.WriteBool('Settings', 'MrkEnabled', CheckBoxMrkEnabled.Checked);
     Ini.WriteString('Settings', 'MrkFilename', EditMrkFilename.Text);
     Ini.WriteString('Settings', 'MrkSize', EditMrkSize.Text);
@@ -439,7 +450,7 @@ begin
       Log(Format('Warning: Unexpected ini file version %s, %s expected', [IniVer, INIVERSION]));
     MemoSrcFilenames.Text := ReplaceStr(Ini.ReadString('Settings', 'SrcFilenames', ''), '|', #13#10);
     EditDstFolder.Text := Ini.ReadString('Settings', 'DstFolder', '');
-    ComboBoxSizes.Text := Ini.ReadString('Settings', 'Sizes', '');
+    EditSizes.Text := Ini.ReadString('Settings', 'Sizes', '');
     ComboBoxJpgQuality.Text := Ini.ReadString('Settings', 'JpgQuality', '');
     ComboBoxPngCompression.Text := Ini.ReadString('Settings', 'PngCompression', '');
     CheckBoxMrkEnabled.Checked := Ini.ReadBool('Settings', 'MrkEnabled', false);
@@ -490,7 +501,7 @@ procedure TMainDialog.UpdateControls;
 begin
   LabelSrcFilnamesRequired.Enabled := Length(MemoSrcFilenames.Text) = 0;
   LabelDstFolderRequired.Enabled := Length(EditDstFolder.Text) = 0;
-  LabelSizesRequired.Enabled := Length(ComboBoxSizes.Text) = 0;
+  LabelSizesRequired.Enabled := Length(EditSizes.Text) = 0;
 end;
 
 procedure TMainDialog.ActionSaveExecute(Sender: TObject);
@@ -511,54 +522,146 @@ begin
   LabelSrcFilnamesRequired.Enabled := Length(MemoSrcFilenames.Text) = 0;
 end;
 
-procedure TMainDialog.PaintBoxMrkPreviewMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+function TMainDialog.MouseToSpace(X, Y: integer): TSize;
 var
   sx :single;
   sy :single;
   r :TRect;
 begin
   r := PaintBoxMrkPreview.ClientRect;
+  if X<r.Left then X := r.Left else if X>r.Right then X := r.Right;
+  if Y<r.Top then Y := r.Top else if Y>r.Bottom then Y := r.Bottom;
   sx := X/r.Width;
-  UpDownMrkX.Position := Round(sx*100.0);
+  result.cx := Round(sx*100.0);
   sy := Y/r.Height;
-  UpDownMrkY.Position := Round(sy*100.0);
+  result.cy := Round(sy*100.0);
+end;
+
+function TMainDialog.CalcMarkRect(out Rect :TRect) :boolean;
+var
+  iz, ix, iy :integer;
+  sz, sx, sy :single;
+  r :TRect;
+  w, h, x, y :single;
+begin
+  r := PaintBoxMrkPreview.ClientRect;
+  result := TryStrToInt(EditMrkSize.Text, iz)
+    and TryStrToInt(EditMrkX.Text, ix)
+    and TryStrToInt(EditMrkY.Text, iy);
+  if result then begin
+    sz := iz/100.0; sx := ix/100.0; sy := iy/100.0;
+
+    w := r.Width*sz;
+    h := w/MRKRECTRATIO;
+    x := (r.Width-w)*sx;
+    y := (r.Height-h)*sy;
+    Rect.Left := round(x);
+    Rect.Top := round(y);
+    Rect.Right := round(x + w);
+    Rect.Bottom:= round(y + h);
+  end;
+end;
+
+procedure TMainDialog.PaintBoxMrkPreviewMouseLeave(Sender: TObject);
+begin
+  LabelMrkSpace.Caption := '';
+end;
+
+function TMainDialog.MouseToMrkSpace(X, Y :integer; out Value :TSize) :boolean;
+var
+  r :TRect;
+  iz :integer;
+  sz, sx, sy, w, h :single;
+begin
+  result := TryStrToInt(EditMrkSize.Text, iz);
+  if result then begin
+    sz := iz/100.0;
+    r := PaintBoxMrkPreview.ClientRect;
+    sx := X/(r.width*(1-sz));
+    sy := Y/(r.Height-r.Width*sz/MRKRECTRATIO);
+    Value.cx := round(sx*100.0);
+    if Value.cx<0 then Value.cx := 0 else if Value.cx>100 then Value.cx := 100;
+    Value.cy := round(sy*100.0);
+    if Value.cy<0 then Value.cy := 0 else if Value.cy>100 then Value.cy := 100;
+  end;
+end;
+
+procedure TMainDialog.PaintBoxMrkPreviewMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+var
+  r :TRect;
+begin
+  if CalcMarkRect(r) then begin
+    FMrkDragging := r.Contains(TPoint.Create(X, Y));
+    if FMrkDragging then begin
+      FMrkOffset.cx := X - r.Left;
+      FMrkOffset.cy := Y - r.Top;
+      Exit;
+    end;
+  end;
+  with MouseToSpace(X, Y) do begin
+    UpDownMrkX.Position := cx;
+    UpDownMrkY.Position := cy;
+  end;
+end;
+
+procedure TMainDialog.PaintBoxMrkPreviewMouseMove(Sender: TObject;
+  Shift: TShiftState; X, Y: Integer);
+var
+  r :TRect;
+  MrkSpace :TSize;
+begin
+  if FMrkDragging then begin
+    if MouseToMrkSpace(X - FMrkOffset.cx, Y - FMrkOffset.cy, MrkSpace) then begin
+      UpDownMrkX.Position := MrkSpace.cx;
+      UpDownMrkY.Position := MrkSpace.cy;
+      PaintBoxMrkPreview.Invalidate;
+      LabelMrkSpace.Caption := Format('%3d%% %3d%%', [MrkSpace.cx, MrkSpace.cy]);
+    end;
+  end else begin
+    with MouseToSpace(X, Y) do
+      LabelMrkSpace.Caption := Format('%3d%% %3d%%', [cx, cy]);
+    if CalcMarkRect(r) and r.Contains(TPoint.Create(X, Y)) then
+      PaintBoxMrkPreview.Cursor := crHandPoint
+    else
+      PaintBoxMrkPreview.Cursor := crCross;
+  end;
+end;
+
+procedure TMainDialog.PaintBoxMrkPreviewMouseUp(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+var
+  MrkSpace :TSize;
+begin
+  if FMrkDragging then begin
+    FMrkDragging := false;
+    if MouseToMrkSpace(X - FMrkOffset.cx, Y - FMrkOffset.cy, MrkSpace) then begin
+      UpDownMrkX.Position := MrkSpace.cx;
+      UpDownMrkY.Position := MrkSpace.cy;
+    end;
+  end else
+    PaintBoxMrkPreview.Cursor := crHandPoint;
 end;
 
 procedure TMainDialog.PaintBoxMrkPreviewPaint(Sender: TObject);
 var
-  sz :single;
-  sx :single;
-  sy :single;
   op :single;
-  sr :single;
-  r :TRect;
-  w, h, x, y :integer;
+  cr, r :TRect;
   Img :TBGRABitmap;
   bkg :TBGRAPixel;
   frm :TBGRAPixel;
   mrk :TBGRAPixel;
 begin
-  r := PaintBoxMrkPreview.ClientRect;
+  cr := PaintBoxMrkPreview.ClientRect;
   bkg.FromColor($00F7DBCC);
   frm.FromColor(clBlack);
-  Img := TBGRABitmap.Create(r.Width, r.Height, bkg);
-//  Img.Rectangle(r, frm);
-  sr := 4.0;
+  Img := TBGRABitmap.Create(cr.Width, cr.Height, bkg);
   try
-    sz := StrToFloat(EditMrkSize.Text)/100.0;
-    sx := StrToFloat(EditMrkX.Text)/100.0;
-    sy := StrToFloat(EditMrkY.Text)/100.0;
     op := StrToFloat(EditMrkAlpha.Text)/100.0;
-    w := round(r.Width*sz);
-    h := round(r.Width*sz/sr);
-    x := round((r.Width-w)*sx);
-    y := round((r.Height-h)*sy);
-    mrk.FromColor($00FF8000);
-    mrk.Alpha := round(255*op);
-
-    Img.FillRect(x, y, x+w, y+h, mrk, dmDrawWithTransparency);
-
-    Img.Draw(PaintBoxMrkPreview.Canvas, r);
+    mrk.FromColor($00FF8000, round(255*op));
+    frm.FromColor(clNavy, round(30+225*op));
+    if CalcMarkRect(r) then
+      Img.Rectangle(r, frm, mrk, dmDrawWithTransparency);
+    Img.Draw(PaintBoxMrkPreview.Canvas, cr);
   except
   end;
   Img.Free;
@@ -574,9 +677,9 @@ begin
   PaintBoxMrkPreview.Invalidate;
 end;
 
-procedure TMainDialog.ComboBoxSizesChange(Sender: TObject);
+procedure TMainDialog.EditSizesChange(Sender: TObject);
 begin
-  LabelSizesRequired.Enabled := Length(ComboBoxSizes.Text) = 0;
+  LabelSizesRequired.Enabled := Length(EditSizes.Text) = 0;
 end;
 
 procedure TMainDialog.ActionSaveAsExecute(Sender: TObject);
@@ -622,8 +725,11 @@ end;
 
 procedure TMainDialog.ActionClearSizesExecute(Sender: TObject);
 begin
-  ComboBoxSizes.Text := '';
-  UpdateControls;
+  with EditSizes do if (SelLength>0) and (SelLength<Length(Text)) then
+    SelText := ''
+  else
+    EditSizes.Text := '';
+//  UpdateControls;
 end;
 
 procedure TMainDialog.ActionEditWatermarkExecute(Sender: TObject);
@@ -693,10 +799,10 @@ begin
           raise Exception.Create('Missing source filenames.');
         if (EditDstFolder.Text='') then
           raise Exception.Create('Missing destination folder.');
-        if ComboBoxSizes.Text='default' then begin
+        if EditSizes.Text='default' then begin
           SetLength(Sizes, 1);
           Sizes[0] := 640;
-        end else if not TrySizesStrToSizes(ComboBoxSizes.Text, Sizes) then
+        end else if not TrySizesStrToSizes(EditSizes.Text, Sizes) then
           raise Exception.Create('Invalid Sizes string.');
         FImgRes := TImgRes.Create;
         if not TImgRes.TryStrToJpgQuality(ComboBoxJpgQuality.Text, IntValue) then

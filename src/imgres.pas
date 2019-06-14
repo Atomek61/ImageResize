@@ -52,9 +52,7 @@ type
   TProgressEvent = procedure(Sender :TObject; Progress :single) of object;
 
   TImgRes = class
-  private type
-    TResampleTask = class;
-
+  public type
     TParams = record
       SrcFilenames :TStringList;
       DstFolder :string;
@@ -70,6 +68,9 @@ type
       ThreadCount :integer;
       StopOnError :boolean;
     end;
+
+  private type
+    TResampleTask = class;
 
     // Cached objects while execution, shared by the workers. This is, that
     // Bitmaps are loaded only once, not by every Worker
