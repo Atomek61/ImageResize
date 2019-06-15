@@ -25,9 +25,12 @@ const
   IMGRESGUICPR = 'ImageResize V'+IMGRESGUIVER+' © 2019 Jan Schirrmacher, www.atomek.de';
 
   INITYPE = 'IRS';
-  INIVERSION = '100';
+  INIVERSION = '200';
 
   GUIREGKEY = REGKEY + '\Settings';
+
+  COMMONSECTION = 'Common';
+  SETTINGSSECTION = 'Settings';
 
   MRKRECTRATIO = 3.0;
 
@@ -68,28 +71,29 @@ type
     ActionClearFilenames: TAction;
     ActionExecute: TAction;
     ActionList: TActionList;
-    ButtonEditWatermark: TBitBtn;
     ButtonAbout: TBitBtn;
-    ButtonClearSizes: TBitBtn;
     ButtonBrowseMrkFilename: TBitBtn;
+    ButtonClearSizes: TBitBtn;
     ButtonClearSizes2: TBitBtn;
     ButtonClearSrcFiles: TBitBtn;
     ButtonBrowseSrcFiles: TBitBtn;
+    ButtonMrkEdit: TBitBtn;
     ButtonExecute: TBitBtn;
     BrowseDstFolder: TSelectDirectoryDialog;
-    CheckBoxStopOnError: TCheckBox;
     CheckBoxMrkEnabled: TCheckBox;
+    CheckBoxStopOnError: TCheckBox;
     ComboBoxBoost: TComboBox;
     ComboBoxJpgQuality: TComboBox;
     ComboBoxPngCompression: TComboBox;
-    EditSizes: TEdit;
-    EditMrkX: TEdit;
-    EditMrkFilename: TEdit;
-    EditDstFolder: TEdit;
-    EditMrkSize: TEdit;
-    EditMrkY: TEdit;
     EditMrkAlpha: TEdit;
+    EditMrkFilename: TEdit;
+    EditMrkSize: TEdit;
+    EditMrkX: TEdit;
+    EditMrkY: TEdit;
+    EditSizes: TEdit;
+    EditDstFolder: TEdit;
     FlowPanelSizeButtons: TFlowPanel;
+    GroupBoxMrkLayout: TGroupBox;
     GroupBoxJpgOptions: TGroupBox;
     GroupBoxPngOptions: TGroupBox;
     ImageListMrkPositions: TImageList;
@@ -104,38 +108,42 @@ type
     Label15: TLabel;
     Label16: TLabel;
     Label17: TLabel;
-    LabelMrkSpace: TLabel;
     Label19: TLabel;
     Label20: TLabel;
+    Label21: TLabel;
+    Label7: TLabel;
+    Label9: TLabel;
     LabelCores: TLabel;
     Label3: TLabel;
     Label5: TLabel;
     Label6: TLabel;
     Label8: TLabel;
+    LabelMrkSpace: TLabel;
     LabelSizesRequired: TLabel;
     LabelSrcFilnamesRequired: TLabel;
     LabelDstFolderRequired: TLabel;
     Label2: TLabel;
     Label4: TLabel;
-    Label7: TLabel;
-    Label9: TLabel;
     MemoMessages: TMemo;
     MemoSrcFilenames: TMemo;
     OpenDialog: TOpenDialog;
     OpenDialogSrcFilenames: TOpenDialog;
     OpenDialogMrkFilename: TOpenDialog;
     PageControl: TPageControl;
+    PaintBox1: TPaintBox;
     PaintBoxMrkPreview: TPaintBox;
-    PanelPreview: TPanel;
+    PanelMrkSourceFile: TPanel;
     PanelMessages: TPanel;
     PanelControls: TPanel;
+    PanelMrkSourceImage: TPanel;
+    PanelPreview: TPanel;
     ProgressBar: TProgressBar;
     SaveAsDialog: TSaveDialog;
     Splitter1: TSplitter;
+    TabSheetMrk: TTabSheet;
     TabSheetRessources: TTabSheet;
     TabSheetSizes: TTabSheet;
     TabSheetQuality: TTabSheet;
-    TabSheetWatermark: TTabSheet;
     TimerProgressBarOff: TTimer;
     ToolBar: TToolBar;
     ToolButton1: TToolButton;
@@ -152,6 +160,9 @@ type
     UpDownMrkSize: TUpDown;
     UpDownMrkX: TUpDown;
     UpDownMrkY: TUpDown;
+    procedure CheckBoxMrkEnabledChange(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure ActionAboutExecute(Sender: TObject);
     procedure ActionBrowseDstFolderExecute(Sender: TObject);
     procedure ActionBrowseFilenamesExecute(Sender: TObject);
@@ -169,8 +180,7 @@ type
     procedure EditDstFolderChange(Sender: TObject);
     procedure EditMrkSizeChange(Sender: TObject);
     procedure EditSizesChange(Sender: TObject);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
-    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
     procedure FormDropFiles(Sender: TObject; const FileNames: array of String);
     procedure MemoSrcFilenamesChange(Sender: TObject);
     procedure PaintBoxMrkPreviewMouseDown(Sender: TObject;
@@ -190,15 +200,21 @@ type
     FCancelled :boolean;
     FExecuting :boolean;
     FProgress :single;
+    FMrkSource :integer;
+    FMrkImage :TBGRABitmap;
     FMrkDragging :boolean;
     FMrkOffset :TSize; // while dragging
     procedure SetTitle(const Str :string);
+    procedure SetMrkSource(Value :integer);
+    function GetMrkSource :integer;
     procedure OnPrint(Sender :TObject; const Line :string);
     procedure OnProgress(Sender :TObject; Progress :single);
-    procedure SaveToRegistry;
+    function LoadFromIni(Ini :TCustomIniFile) :boolean;
+    procedure SaveToIni(Ini :TCustomIniFile);
     function LoadFromRegistry :boolean;
-    procedure Save(const Filename :string);
-    procedure Load(const Filename :string);
+    procedure SaveToRegistry;
+    function LoadFromFile(const Filename :string) :boolean;
+    procedure SaveToFile(const Filename :string);
     procedure Log(const Msg :string);
     function BoostStrToThreadCount(const Value :string) :integer;
     function ThreadCountToBoostStr(ThreadCount :integer) :string;
@@ -240,33 +256,167 @@ var
 begin
   DefaultFormatSettings.DecimalSeparator := '.';
   AllowDropFiles := true;
+  FMrkImage := TBGRABitmap.Create;
+  PanelMrkSourceImage.Left := PanelMrkSourceFile.Left;
+  PanelMrkSourceImage.Top := PanelMrkSourceFile.Top;
+  PanelMrkSourceImage.Width := PanelMrkSourceFile.Width;
   if not LoadFromRegistry then
     ActionNew.Execute;
   UpdateControls;
   FAutoExit := Application.HasOption('X', 'AUTOEXIT');
   Params := Application.GetNonOptions('AX', ['AUTOSTART', 'AUTOEXIT']);
   if Length(Params)=1 then
-    Load(Params[0]);
+    LoadFromFile(Params[0]);
   if Application.HasOption('A', 'AUTOSTART') then
     PostMessage(Handle, LM_RUN, 0, 0);
 
   // Create Size Buttons
   for i:=0 to High(DEFSIZES) do begin
-     Button := TButton.Create(self);
-     Button.TabStop := false;
-     Button.Caption := IntToStr(DEFSIZES[i]);
-     Button.Parent := FlowPanelSizeButtons;
-     Button.Tag := DEFSIZES[i];
-     Button.OnClick := @SizeButtonClick;
-     Button.Width := 58;
-     Button.Height := 44;
-     Button.Visible := true;
+    Button := TButton.Create(self);
+    Button.TabStop := false;
+    Button.Caption := IntToStr(DEFSIZES[i]);
+    Button.Parent := FlowPanelSizeButtons;
+    Button.Tag := DEFSIZES[i];
+    Button.OnClick := @SizeButtonClick;
+    Button.Width := 58;
+    Button.Height := 44;
+    Button.Visible := true;
   end;
 
   PageControl.ActivePageIndex := 0;
 
   // Show number of cores
   LabelCores.Caption := Format('%d Cores', [TThread.ProcessorCount]);
+end;
+
+procedure TMainDialog.CheckBoxMrkEnabledChange(Sender: TObject);
+const
+  MRKSOURCES :array[boolean] of integer = (msDisabled, msFile);
+begin
+  SetMrkSource(MRKSOURCES[CheckBoxMrkEnabled.Checked]);
+end;
+
+procedure TMainDialog.FormDestroy(Sender: TObject);
+begin
+  FMrkImage.Free;
+end;
+
+function TMainDialog.LoadFromIni(Ini :TCustomIniFile) :boolean;
+var
+  IniVer :string;
+  IniTyp :string;
+begin
+  with Ini do begin
+    IniTyp := Ini.ReadString('Common', 'Type', 'unknown');
+    result := IniTyp=INITYPE;
+    if not result then begin
+       Log('Cant load Image Resize Settings File');
+       Exit;
+    end;
+    IniVer := Ini.ReadString('Common', 'Version', '000');
+    result := IniVer=INIVERSION;
+    if not result then begin
+      Log(Format('Warning: Unexpected format %s (%s expected).', [IniVer, INIVERSION]));
+      Exit;
+    end;
+    MemoSrcFilenames.Text := ReplaceStr(ReadString(SETTINGSSECTION, 'SrcFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, '|')), '|', #13#10);
+    EditDstFolder.Text := ReadString(SETTINGSSECTION, 'DstFolder', EditDstFolder.Text);
+    EditSizes.Text := ReadString(SETTINGSSECTION, 'Sizes', EditSizes.Text);
+    ComboBoxJpgQuality.Text := ReadString(SETTINGSSECTION, 'JpgOptions.Quality', ComboBoxJpgQuality.Text);
+    ComboBoxPngCompression.Text := ReadString(SETTINGSSECTION, 'PngOptions.Compression', ComboBoxPngCompression.Text);
+    SetMrkSource(ReadInteger(SETTINGSSECTION, 'MrkSource', GetMrkSource));
+    EditMrkFilename.Text := ReadString(SETTINGSSECTION, 'MrkFilename', EditMrkFilename.Text);
+//    EditMrkLine.Text := ReadString(SETTINGSSECTION, 'MrkLine', EditMrkLine.Text);
+    UpDownMrkSize.Position := ReadInteger(SETTINGSSECTION, 'MrkSize', UpDownMrkSize.Position);
+    UpDownMrkX.Position := ReadInteger(SETTINGSSECTION, 'MrkX', UpDownMrkX.Position);
+    UpDownMrkY.Position := ReadInteger(SETTINGSSECTION, 'MrkY', UpDownMrkY.Position);
+    UpDownMrkAlpha.Position := ReadInteger(SETTINGSSECTION, 'Alpha', UpDownMrkAlpha.Position);
+    ComboBoxBoost.Text := ReadString(SETTINGSSECTION, 'ThreadCount', ComboBoxBoost.Text);
+    CheckBoxStopOnError.Checked := ReadBool(SETTINGSSECTION, 'StopOnError', CheckBoxStopOnError.Checked);
+  end;
+end;
+
+procedure TMainDialog.SaveToIni(Ini :TCustomIniFile);
+begin
+  // Navigate to proper "directory":
+  with Ini do begin
+    WriteString(COMMONSECTION, 'Type', INITYPE);
+    WriteString(COMMONSECTION, 'Version', INIVERSION);
+    WriteString(SETTINGSSECTION, 'SrcFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, '|'));
+    WriteString(SETTINGSSECTION, 'DstFolder', EditDstFolder.Text);
+    WriteString(SETTINGSSECTION, 'Sizes', EditSizes.Text);
+    WriteString(SETTINGSSECTION, 'JpgOptions.Quality', ComboBoxJpgQuality.Text);
+    WriteString(SETTINGSSECTION, 'PngOptions.Compression', ComboBoxPngCompression.Text);
+    WriteInteger(SETTINGSSECTION, 'MrkSource', GetMrkSource);
+    WriteString(SETTINGSSECTION, 'MrkFilename', EditMrkFilename.Text);
+//    WriteString(SETTINGSSECTION, 'MrkLine', EditMrkLine.Text);
+    WriteString(SETTINGSSECTION, 'MrkSize', EditMrkSize.Text);
+    WriteString(SETTINGSSECTION, 'MrkX', EditMrkX.Text);
+    WriteString(SETTINGSSECTION, 'MrkY', EditMrkY.Text);
+    WriteString(SETTINGSSECTION, 'MrkAlpha', EditMrkAlpha.Text);
+    WriteString(SETTINGSSECTION, 'ThreadCount', ComboBoxBoost.Text);
+    WriteBool(SETTINGSSECTION, 'StopOnError', CheckBoxStopOnError.Checked);
+  end;
+end;
+
+function TMainDialog.LoadFromRegistry: boolean;
+var
+  Ini :TRegistryIniFile;
+begin
+  Ini := TRegistryIniFile.Create(GUIREGKEY, KEY_READ);
+  try
+    result := LoadFromIni(Ini);
+  finally
+     Ini.Free;
+  end;
+end;
+
+procedure TMainDialog.SaveToRegistry;
+var
+  Ini :TRegistryIniFile;
+begin
+  Ini := TRegistryIniFile.Create(GUIREGKEY);
+  try
+    SaveToIni(Ini);
+  finally
+     Ini.Free;
+  end;
+  SetTitle('last settings');
+end;
+
+function TMainDialog.LoadFromFile(const Filename: string) :boolean;
+var
+  Ini :TIniFile;
+begin
+  if not FileExists(Filename) then
+    raise Exception.CreateFmt('File ''%s'' not found.', [Filename]);
+  Ini := TIniFile.Create(Filename);
+  try
+    result := LoadFromIni(Ini);
+    if result then begin
+      FIsSave := true;
+      FIniFilename := Filename;
+      SetTitle(''''+Filename+'''');
+    end;
+  finally
+     Ini.Free;
+  end;
+end;
+
+procedure TMainDialog.SaveToFile(const Filename: string);
+var
+  Ini :TIniFile;
+begin
+  Ini := TIniFile.Create(Filename);
+  try
+    SaveToIni(Ini);
+    FIsSave := true;
+    FIniFilename := Filename;
+    SetTitle(''''+FIniFilename+'''');
+    Log(Format('Settings saved to ''%s''', [FIniFilename]));
+  finally
+    Ini.Free;
+  end;
 end;
 
 procedure TMainDialog.FormDropFiles(Sender: TObject; const FileNames: array of String);
@@ -301,76 +451,6 @@ begin
   SaveToRegistry;
 end;
 
-procedure TMainDialog.SaveToRegistry;
-var
-  Registry: TRegistry;
-begin
-  Registry := TRegistry.Create;
-  try
-    // Navigate to proper "directory":
-    if Registry.OpenKey(GUIREGKEY, true) then with Registry do begin
-      WriteString('SrcFilenames', MemoSrcFilenames.Text);
-      WriteString('DstFolder', EditDstFolder.Text);
-      WriteString('Sizes', EditSizes.Text);
-      WriteString('JpgOptions.Quality', ComboBoxJpgQuality.Text);
-      WriteString('PngOptions.Compression', ComboBoxPngCompression.Text);
-      WriteBool('MrkEnabled', CheckBoxMrkEnabled.Checked);
-      WriteString('MrkFilename', EditMrkFilename.Text);
-      WriteString('MrkSize', EditMrkSize.Text);
-      WriteString('MrkX', EditMrkX.Text);
-      WriteString('MrkY', EditMrkY.Text);
-      WriteString('MrkAlpha', EditMrkAlpha.Text);
-      WriteString('ThreadCount', ComboBoxBoost.Text);
-      WriteBool('StopOnError', CheckBoxStopOnError.Checked);
-    end;
-  finally
-    Registry.CloseKey;
-    Registry.Free;
-  end;
-end;
-
-function TMainDialog.LoadFromRegistry :boolean;
-var
-  Registry: TRegistry;
-
-  procedure LoadUpDown(UpDown :TUpDown; const Name :string);
-  var
-    x :single;
-  begin
-    if TryStrToFloat(Registry.ReadString(Name), x) then
-      UpDown.Position := round(x);
-  end;
-
-begin
-  Registry := TRegistry.Create;
-  try
-    Registry.RootKey := HKEY_CURRENT_USER;
-    // Navigate to proper "directory":
-    with Registry do begin
-      result := OpenKey(GUIREGKEY, false);
-      if result then begin
-        MemoSrcFilenames.Text := ReadString('SrcFilenames');
-        EditDstFolder.Text := ReadString('DstFolder');
-        EditSizes.Text := ReadString('Sizes');
-        ComboBoxJpgQuality.Text := ReadString('JpgOptions.Quality');
-        ComboBoxPngCompression.Text := ReadString('PngOptions.Compression');
-        CheckBoxMrkEnabled.Checked := ReadBool('MrkEnabled');
-        EditMrkFilename.Text := ReadString('MrkFilename');
-        LoadUpDown(UpDownMrkSize, 'MrkSize');
-        LoadUpDown(UpDownMrkX, 'MrkX');
-        LoadUpDown(UpDownMrkY, 'MrkY');
-        LoadUpDown(UpDownMrkAlpha, 'MrkAlpha');
-        ComboBoxBoost.Text := ReadString('ThreadCount');
-        CheckBoxStopOnError.Checked := ReadBool('StopOnError');
-
-        SetTitle('last settings');
-      end;
-    end;
-  finally
-    Registry.Free;
-  end;
-end;
-
 procedure TMainDialog.ActionNewExecute(Sender: TObject);
 var
   ImgResizer :TImgRes;
@@ -383,7 +463,6 @@ begin
     EditSizes.Text := IntToStr(DEFAULTSIZE);
     ComboBoxJpgQuality.Text := ImgResizer.JpgQualityToStr(ImgResizer.JpgQuality);
     ComboBoxPngCompression.Text := TImgRes.PngCompressionToStr(ImgResizer.PngCompression);
-    CheckBoxMrkEnabled.Checked := false;
     EditMrkFilename.Text := '';
     UpDownMrkSize.Position := round(ImgResizer.MrkSize);
     UpDownMrkX.Position := round(ImgResizer.MrkX);
@@ -400,70 +479,7 @@ end;
 procedure TMainDialog.ActionOpenExecute(Sender: TObject);
 begin
   if OpenDialog.Execute then begin
-    Load(OpenDialog.Filename);
-  end;
-end;
-
-procedure TMainDialog.Save(const Filename: string);
-var
-  Ini :TIniFile;
-begin
-  Ini := TIniFile.Create(Filename);
-  try
-    Ini.WriteString('Common', 'Type', INITYPE);
-    Ini.WriteString('Common', 'Version', INIVERSION);
-    Ini.WriteString('Settings', 'SrcFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, '|'));
-    Ini.WriteString('Settings', 'DstFolder', EditDstFolder.Text);
-    Ini.WriteString('Settings', 'Sizes', EditSizes.Text);
-    Ini.WriteString('Settings', 'JpgQuality', ComboBoxJpgQuality.Text);
-    Ini.WriteString('Settings', 'PngCompression', ComboBoxPngCompression.Text);
-    Ini.WriteBool('Settings', 'MrkEnabled', CheckBoxMrkEnabled.Checked);
-    Ini.WriteString('Settings', 'MrkFilename', EditMrkFilename.Text);
-    Ini.WriteString('Settings', 'MrkSize', EditMrkSize.Text);
-    Ini.WriteString('Settings', 'MrkX', EditMrkX.Text);
-    Ini.WriteString('Settings', 'MrkY', EditMrkY.Text);
-    Ini.WriteString('Settings', 'MrkAlpha', EditMrkAlpha.Text);
-    FIsSave := true;
-    FIniFilename := Filename;
-    SetTitle(''''+FIniFilename+'''');
-    Log(Format('Settings saved to ''%s''', [FIniFilename]));
-  finally
-     Ini.Free;
-  end;
-end;
-
-procedure TMainDialog.Load(const Filename: string);
-var
-  Ini :TIniFile;
-  IniVer :string;
-  IniTyp :string;
-begin
-  if not FileExists(Filename) then
-    raise Exception.CreateFmt('File ''%s'' not found.', [Filename]);
-  Ini := TIniFile.Create(Filename);
-  try
-    IniTyp := Ini.ReadString('Common', 'Type', 'unknown');
-    if IniTyp<>INITYPE then
-      raise Exception.Create('Cant load Image Resize Settings File');
-    IniVer := Ini.ReadString('Common', 'Version', '000');
-    if IniVer<>INIVERSION then
-      Log(Format('Warning: Unexpected ini file version %s, %s expected', [IniVer, INIVERSION]));
-    MemoSrcFilenames.Text := ReplaceStr(Ini.ReadString('Settings', 'SrcFilenames', ''), '|', #13#10);
-    EditDstFolder.Text := Ini.ReadString('Settings', 'DstFolder', '');
-    EditSizes.Text := Ini.ReadString('Settings', 'Sizes', '');
-    ComboBoxJpgQuality.Text := Ini.ReadString('Settings', 'JpgQuality', '');
-    ComboBoxPngCompression.Text := Ini.ReadString('Settings', 'PngCompression', '');
-    CheckBoxMrkEnabled.Checked := Ini.ReadBool('Settings', 'MrkEnabled', false);
-    EditMrkFilename.Text := Ini.ReadString('Settings', 'MrkFilename', '');
-    UpDownMrkSize.Position := Ini.ReadInteger('Settings', 'MrkSize', UpDownMrkSize.Position);
-    UpDownMrkX.Position := Ini.ReadInteger('Settings', 'MrkX', UpDownMrkSize.Position);
-    UpDownMrkY.Position := Ini.ReadInteger('Settings', 'MrkY', UpDownMrkY.Position);
-    UpDownMrkAlpha.Position := Ini.ReadInteger('Settings', 'MrkAlpha', UpDownMrkAlpha.Position);
-    FIsSave := true;
-    FIniFilename := Filename;
-    SetTitle(''''+Filename+'''');
-  finally
-     Ini.Free;
+    LoadFromFile(OpenDialog.Filename);
   end;
 end;
 
@@ -509,7 +525,7 @@ begin
   if not FIsSave then
     ActionSaveAs.Execute
   else
-    Save(FIniFilename);
+    SaveToFile(FIniFilename);
 end;
 
 procedure TMainDialog.ButtonExecuteClick(Sender: TObject);
@@ -571,7 +587,7 @@ function TMainDialog.MouseToMrkSpace(X, Y :integer; out Value :TSize) :boolean;
 var
   r :TRect;
   iz :integer;
-  sz, sx, sy, w, h :single;
+  sz, sx, sy :single;
 begin
   result := TryStrToInt(EditMrkSize.Text, iz);
   if result then begin
@@ -686,7 +702,7 @@ procedure TMainDialog.ActionSaveAsExecute(Sender: TObject);
 begin
   SaveAsDialog.Filename := FIniFilename;
   if SaveAsDialog.Execute then begin
-    Save(SaveAsDialog.Filename);
+    SaveToFile(SaveAsDialog.Filename);
   end;
 end;
 
@@ -736,10 +752,11 @@ procedure TMainDialog.ActionEditWatermarkExecute(Sender: TObject);
 var
   MrkFilename :string;
 begin
-  if TMrkEditDialog.Execute(MrkFilename) then begin
+  if TMrkEditDialog.GetFilename(MrkFilename) then begin
+    SetMrkSource(msFile);
     EditMrkFilename.Text := MrkFilename;
     EditMrkFilename.SelStart := Length(EditMrkFilename.Text);
-    PageControl.ActivePage := TabSheetWatermark;
+    PageControl.ActivePage := TabSheetMrk;
   end;
 end;
 
@@ -751,6 +768,28 @@ end;
 procedure TMainDialog.SetTitle(const Str: string);
 begin
   Caption := 'Image Resize - '+Str;
+end;
+
+procedure TMainDialog.SetMrkSource(Value: integer);
+begin
+  if (Value=FMrkSource) or (Value<0) or (Value>2) then Exit;
+  case FMrkSource of
+  msFile: PanelMrkSourceFile.Visible := false;
+  msImage: PanelMrkSourceImage.Visible := false;
+  end;
+  FMrkSource := Value;
+  CheckBoxMrkEnabled.Checked := FMrkSource<>msDisabled;
+  case FMrkSource of
+  msFile: PanelMrkSourceFile.Visible := true;
+  msImage: PanelMrkSourceImage.Visible := true;
+  end;
+  ButtonMrkEdit.Visible := FMrkSource<>msDisabled;
+  GroupBoxMrkLayout.Visible := FMrkSource<>msDisabled;
+end;
+
+function TMainDialog.GetMrkSource: integer;
+begin
+  result := FMrkSource;
 end;
 
 procedure TMainDialog.OnPrint(Sender: TObject; const Line: string);
@@ -810,7 +849,7 @@ begin
         FImgRes.JpgQuality := IntValue;
         FImgRes.PngCompression := ComboBoxPngCompression.ItemIndex;
 
-        if CheckBoxMrkEnabled.Checked then begin
+        if GetMrkSource = msFile then begin
 
           FImgRes.MrkFilename := EditMrkFilename.Text;
 

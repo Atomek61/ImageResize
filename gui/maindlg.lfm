@@ -1,38 +1,39 @@
 object MainDialog: TMainDialog
-  Left = 292
-  Height = 640
-  Top = 283
-  Width = 640
+  Left = 351
+  Height = 655
+  Top = 119
+  Width = 660
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'ImageResize'
-  ClientHeight = 640
-  ClientWidth = 640
-  Constraints.MinHeight = 640
+  ClientHeight = 655
+  ClientWidth = 660
+  Constraints.MinHeight = 655
   Constraints.MinWidth = 640
   OnClose = FormClose
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnDropFiles = FormDropFiles
   Position = poDefaultPosOnly
   ShowHint = True
   LCLVersion = '2.0.0.3'
   object PanelControls: TPanel
     Left = 0
-    Height = 427
+    Height = 442
     Top = 0
-    Width = 640
+    Width = 660
     Align = alClient
     BevelOuter = bvNone
-    ClientHeight = 427
-    ClientWidth = 640
-    Constraints.MinHeight = 427
+    ClientHeight = 442
+    ClientWidth = 660
+    Constraints.MinHeight = 442
     ParentColor = False
     TabOrder = 0
     object MemoSrcFilenames: TMemo
       Left = 8
-      Height = 264
+      Height = 279
       Hint = 'Enter a list of files with absolute pathes.'#13#10#13#10'Press Browse... and select multiple files while'#13#10'holding <STRG> or <SHIFT> and clicking. '
       Top = 96
-      Width = 347
+      Width = 352
       Anchors = [akTop, akLeft, akRight, akBottom]
       OnChange = MemoSrcFilenamesChange
       ScrollBars = ssAutoVertical
@@ -51,7 +52,7 @@ object MainDialog: TMainDialog
     object Label2: TLabel
       Left = 24
       Height = 15
-      Top = 378
+      Top = 384
       Width = 220
       Anchors = [akLeft, akBottom]
       Caption = '&Destination Folder (may include %SIZE%):'
@@ -62,8 +63,8 @@ object MainDialog: TMainDialog
       Left = 8
       Height = 23
       Hint = 'Required - destination folder of the resampled images.'#13#10#13#10'If multiple sizes are entered, insert a placeholder %SIZE%'#13#10'into the path where the program shall insert the current size .'
-      Top = 397
-      Width = 318
+      Top = 403
+      Width = 326
       Anchors = [akLeft, akRight, akBottom]
       OnChange = EditDstFolderChange
       TabOrder = 3
@@ -156,7 +157,7 @@ object MainDialog: TMainDialog
       Left = 10
       Height = 18
       Hint = 'Required'
-      Top = 376
+      Top = 381
       Width = 10
       Anchors = [akLeft, akBottom]
       Caption = '*'
@@ -167,10 +168,10 @@ object MainDialog: TMainDialog
       ParentFont = False
     end
     object ButtonExecute: TBitBtn
-      Left = 504
+      Left = 524
       Height = 29
       Hint = 'Starts the resampling process'
-      Top = 396
+      Top = 402
       Width = 126
       Anchors = [akRight, akBottom]
       Caption = 'E&xecute'
@@ -259,7 +260,7 @@ object MainDialog: TMainDialog
       TabOrder = 7
     end
     object ButtonBrowseSrcFiles: TBitBtn
-      Left = 184
+      Left = 190
       Height = 28
       Top = 64
       Width = 83
@@ -270,7 +271,7 @@ object MainDialog: TMainDialog
       TabOrder = 1
     end
     object ButtonClearSrcFiles: TBitBtn
-      Left = 274
+      Left = 280
       Height = 28
       Top = 64
       Width = 81
@@ -281,7 +282,7 @@ object MainDialog: TMainDialog
       TabOrder = 2
     end
     object ButtonAbout: TBitBtn
-      Left = 531
+      Left = 551
       Height = 27
       Top = 8
       Width = 99
@@ -292,9 +293,9 @@ object MainDialog: TMainDialog
       TabOrder = 8
     end
     object ButtonClearSizes2: TBitBtn
-      Left = 330
+      Left = 336
       Height = 25
-      Top = 396
+      Top = 402
       Width = 25
       Action = ActionBrowseDstFolder
       Anchors = [akRight, akBottom]
@@ -304,18 +305,18 @@ object MainDialog: TMainDialog
       TabOrder = 4
     end
     object PageControl: TPageControl
-      Left = 368
-      Height = 264
+      Left = 376
+      Height = 280
       Top = 96
-      Width = 264
-      ActivePage = TabSheetSizes
+      Width = 276
+      ActivePage = TabSheetMrk
       Anchors = [akTop, akRight]
-      TabIndex = 0
+      TabIndex = 2
       TabOrder = 5
       object TabSheetSizes: TTabSheet
         Caption = 'Sizes'
-        ClientHeight = 236
-        ClientWidth = 256
+        ClientHeight = 252
+        ClientWidth = 268
         object Label3: TLabel
           Left = 29
           Height = 15
@@ -338,7 +339,7 @@ object MainDialog: TMainDialog
           ParentFont = False
         end
         object ButtonClearSizes: TBitBtn
-          Left = 224
+          Left = 236
           Height = 25
           Top = 40
           Width = 25
@@ -351,9 +352,9 @@ object MainDialog: TMainDialog
         end
         object FlowPanelSizeButtons: TFlowPanel
           Left = 8
-          Height = 144
+          Height = 160
           Top = 80
-          Width = 241
+          Width = 253
           Anchors = [akTop, akLeft, akRight, akBottom]
           BevelOuter = bvNone
           ControlList = <>
@@ -365,23 +366,23 @@ object MainDialog: TMainDialog
           Left = 8
           Height = 23
           Top = 41
-          Width = 213
+          Width = 226
           TabOrder = 2
           Text = '640'
         end
       end
       object TabSheetQuality: TTabSheet
         Caption = 'Quality'
-        ClientHeight = 236
-        ClientWidth = 256
+        ClientHeight = 252
+        ClientWidth = 268
         object GroupBoxJpgOptions: TGroupBox
           Left = 8
           Height = 65
           Top = 16
-          Width = 240
+          Width = 248
           Caption = 'Jpg Options'
           ClientHeight = 45
-          ClientWidth = 236
+          ClientWidth = 244
           TabOrder = 0
           object Label5: TLabel
             Left = 13
@@ -418,10 +419,10 @@ object MainDialog: TMainDialog
           Left = 8
           Height = 65
           Top = 96
-          Width = 240
+          Width = 248
           Caption = 'Png Options'
           ClientHeight = 45
-          ClientWidth = 236
+          ClientWidth = 244
           TabOrder = 1
           object Label6: TLabel
             Left = 13
@@ -452,221 +453,302 @@ object MainDialog: TMainDialog
           end
         end
       end
-      object TabSheetWatermark: TTabSheet
+      object TabSheetMrk: TTabSheet
         Caption = 'Watermark'
-        ClientHeight = 236
-        ClientWidth = 256
-        object EditMrkFilename: TEdit
-          Left = 8
-          Height = 23
-          Hint = 'Select a png file with the desired watermark.'#13#10#13#10'A watermark is a little image, which usually'#13#10'appears in a corner of the image.'#13#10#13#10'Inkscape is a good tool for creating'#13#10'watermark files. Or use the inbuilt'#13#10'editor.'
-          Top = 51
-          Width = 185
-          Anchors = [akTop, akLeft, akRight]
-          TabOrder = 1
-        end
-        object Label7: TLabel
-          Left = 13
-          Height = 15
-          Top = 32
-          Width = 52
-          Caption = '&Imagefile:'
-          FocusControl = EditMrkFilename
-          ParentColor = False
-        end
-        object Label9: TLabel
-          Left = 130
-          Height = 15
-          Top = 83
-          Width = 58
-          Caption = '&Horizontal:'
-          FocusControl = EditMrkX
-          ParentColor = False
-        end
-        object EditMrkX: TEdit
-          Left = 195
-          Height = 23
-          Hint = 'Horizontal space of the watermark to the border in percent of the destination image width.'
-          Top = 80
-          Width = 26
-          OnChange = EditMrkSizeChange
-          TabOrder = 6
-          Text = '1'
-        end
-        object Label10: TLabel
-          Left = 239
-          Height = 15
-          Top = 83
-          Width = 10
-          Caption = '%'
-          ParentColor = False
-        end
-        object Label11: TLabel
-          Left = 132
-          Height = 15
-          Top = 115
-          Width = 41
-          Caption = '&Vertical:'
-          FocusControl = EditMrkY
-          ParentColor = False
-        end
-        object EditMrkY: TEdit
-          Left = 195
-          Height = 23
-          Hint = 'Vertical space of the watermark to the border in percent of the destination image height.'
-          Top = 112
-          Width = 26
-          OnChange = EditMrkSizeChange
-          TabOrder = 7
-          Text = '1'
-        end
-        object Label12: TLabel
-          Left = 239
-          Height = 15
-          Top = 115
-          Width = 10
-          Caption = '%'
-          ParentColor = False
-        end
-        object CheckBoxMrkEnabled: TCheckBox
-          Left = 13
-          Height = 19
-          Hint = 'Enable a watermark printing and select an existing png file with your copyright info or whatever.'
-          Top = 8
-          Width = 62
-          Caption = 'Enabled'
-          TabOrder = 0
-        end
-        object Label13: TLabel
-          Left = 13
-          Height = 15
-          Top = 115
-          Width = 44
-          Caption = 'Opacit&y:'
-          FocusControl = EditMrkAlpha
-          ParentColor = False
-        end
-        object EditMrkAlpha: TEdit
-          Left = 62
-          Height = 23
-          Hint = 'Choose the watermarks opacity.'#13#10#13#10'A strong watermark has 100%,'#13#10'a weak one has 10% opacity.'
-          Top = 112
-          Width = 26
-          OnChange = EditMrkSizeChange
-          TabOrder = 5
-          Text = '50'
-        end
-        object Label14: TLabel
-          Left = 106
-          Height = 15
-          Top = 115
-          Width = 10
-          Caption = '%'
-          ParentColor = False
-        end
-        object Label15: TLabel
-          Left = 13
-          Height = 15
-          Top = 83
-          Width = 23
-          Caption = 'Si&ze:'
-          FocusControl = EditMrkSize
-          ParentColor = False
-        end
-        object EditMrkSize: TEdit
-          Left = 62
-          Height = 23
-          Hint = 'Size in percent of the watermark image in relation to the resampled image width.'
-          Top = 80
-          Width = 26
-          OnChange = EditMrkSizeChange
+        ClientHeight = 252
+        ClientWidth = 268
+        object GroupBoxMrkLayout: TGroupBox
+          Left = 5
+          Height = 177
+          Top = 72
+          Width = 255
+          Caption = 'Layout'
+          ClientHeight = 157
+          ClientWidth = 251
           TabOrder = 4
-          Text = '10'
+          Visible = False
+          object Label15: TLabel
+            Left = 8
+            Height = 15
+            Top = 3
+            Width = 23
+            Caption = 'Si&ze:'
+            FocusControl = EditMrkSize
+            ParentColor = False
+          end
+          object Label13: TLabel
+            Left = 8
+            Height = 15
+            Top = 35
+            Width = 44
+            Caption = 'Opacit&y:'
+            FocusControl = EditMrkAlpha
+            ParentColor = False
+          end
+          object EditMrkAlpha: TEdit
+            Left = 57
+            Height = 23
+            Hint = 'Choose the watermarks opacity.'#13#10#13#10'A strong watermark has 100%,'#13#10'a weak one has 10% opacity.'
+            Top = 32
+            Width = 26
+            OnChange = EditMrkSizeChange
+            TabOrder = 2
+            Text = '50'
+          end
+          object Label14: TLabel
+            Left = 101
+            Height = 15
+            Top = 35
+            Width = 10
+            Caption = '%'
+            ParentColor = False
+          end
+          object EditMrkSize: TEdit
+            Left = 57
+            Height = 23
+            Hint = 'Size in percent of the watermark image in relation to the resampled image width.'
+            Top = 0
+            Width = 26
+            OnChange = EditMrkSizeChange
+            TabOrder = 0
+            Text = '10'
+          end
+          object Label16: TLabel
+            Left = 101
+            Height = 15
+            Top = 3
+            Width = 10
+            Caption = '%'
+            ParentColor = False
+          end
+          object UpDownMrkAlpha: TUpDown
+            Left = 83
+            Height = 23
+            Top = 32
+            Width = 17
+            Associate = EditMrkAlpha
+            Increment = 5
+            Min = 0
+            Position = 50
+            TabOrder = 3
+            Flat = True
+          end
+          object UpDownMrkSize: TUpDown
+            Left = 83
+            Height = 23
+            Top = 0
+            Width = 17
+            Associate = EditMrkSize
+            Increment = 5
+            Min = 0
+            Position = 10
+            TabOrder = 1
+            Flat = True
+          end
+          object Label9: TLabel
+            Left = 127
+            Height = 15
+            Top = 3
+            Width = 58
+            Caption = '&Horizontal:'
+            FocusControl = EditMrkX
+            ParentColor = False
+          end
+          object EditMrkX: TEdit
+            Left = 191
+            Height = 23
+            Hint = 'Horizontal space of the watermark to the border in percent of the destination image width.'
+            Top = 0
+            Width = 26
+            OnChange = EditMrkSizeChange
+            TabOrder = 4
+            Text = '1'
+          end
+          object Label10: TLabel
+            Left = 236
+            Height = 15
+            Top = 3
+            Width = 10
+            Caption = '%'
+            ParentColor = False
+          end
+          object Label11: TLabel
+            Left = 129
+            Height = 15
+            Top = 35
+            Width = 41
+            Caption = '&Vertical:'
+            FocusControl = EditMrkY
+            ParentColor = False
+          end
+          object EditMrkY: TEdit
+            Left = 191
+            Height = 23
+            Hint = 'Vertical space of the watermark to the border in percent of the destination image height.'
+            Top = 32
+            Width = 26
+            OnChange = EditMrkSizeChange
+            TabOrder = 6
+            Text = '1'
+          end
+          object Label12: TLabel
+            Left = 236
+            Height = 15
+            Top = 35
+            Width = 10
+            Caption = '%'
+            ParentColor = False
+          end
+          object UpDownMrkX: TUpDown
+            Left = 217
+            Height = 23
+            Top = 0
+            Width = 17
+            Associate = EditMrkX
+            Min = 0
+            Position = 1
+            TabOrder = 5
+            Flat = True
+          end
+          object UpDownMrkY: TUpDown
+            Left = 217
+            Height = 23
+            Top = 32
+            Width = 17
+            Associate = EditMrkY
+            Min = 0
+            Position = 1
+            TabOrder = 7
+            Flat = True
+          end
+          object Label20: TLabel
+            Left = 155
+            Height = 48
+            Top = 70
+            Width = 90
+            Alignment = taCenter
+            AutoSize = False
+            Caption = 'Click or drag'#13#10'the watermarks'#13#10'position'
+            Font.Color = clGrayText
+            Layout = tlCenter
+            ParentColor = False
+            ParentFont = False
+          end
+          object LabelMrkSpace: TLabel
+            Left = 155
+            Height = 15
+            Top = 133
+            Width = 90
+            Alignment = taCenter
+            AutoSize = False
+            Font.Color = clGrayText
+            ParentColor = False
+            ParentFont = False
+          end
+          object PanelPreview: TPanel
+            Left = 8
+            Height = 88
+            Top = 64
+            Width = 144
+            BevelOuter = bvLowered
+            ClientHeight = 88
+            ClientWidth = 144
+            TabOrder = 8
+            object PaintBoxMrkPreview: TPaintBox
+              Cursor = crNone
+              Left = 1
+              Height = 86
+              Top = 1
+              Width = 142
+              Align = alClient
+              OnMouseDown = PaintBoxMrkPreviewMouseDown
+              OnMouseLeave = PaintBoxMrkPreviewMouseLeave
+              OnMouseMove = PaintBoxMrkPreviewMouseMove
+              OnMouseUp = PaintBoxMrkPreviewMouseUp
+              OnPaint = PaintBoxMrkPreviewPaint
+            end
+          end
         end
-        object Label16: TLabel
-          Left = 106
-          Height = 15
-          Top = 83
-          Width = 10
-          Caption = '%'
-          ParentColor = False
-        end
-        object ButtonBrowseMrkFilename: TBitBtn
-          Left = 196
+        object PanelMrkSourceFile: TPanel
+          Left = 5
           Height = 25
-          Top = 50
-          Width = 25
-          Action = ActionBrowseMrkFilename
-          Anchors = [akTop, akRight]
-          Images = ImageList20x20
-          ImageIndex = 0
-          Spacing = 0
+          Top = 40
+          Width = 259
+          BevelOuter = bvNone
+          ClientHeight = 25
+          ClientWidth = 259
           TabOrder = 2
+          Visible = False
+          object Label7: TLabel
+            Left = 0
+            Height = 25
+            Top = 0
+            Width = 51
+            Align = alLeft
+            BorderSpacing.Right = 6
+            Caption = 'Fi&lename:'
+            FocusControl = EditMrkFilename
+            Layout = tlCenter
+            ParentColor = False
+          end
+          object EditMrkFilename: TEdit
+            Left = 57
+            Height = 25
+            Hint = 'Select a png file with the desired watermark.'#13#10#13#10'A watermark is a little image, which usually'#13#10'appears in a corner of the image.'#13#10#13#10'Inkscape is a good tool for creating'#13#10'watermark files. Or use the inbuilt'#13#10'editor.'
+            Top = 0
+            Width = 177
+            Align = alClient
+            Anchors = [akTop, akLeft, akRight]
+            TabOrder = 0
+          end
+          object ButtonBrowseMrkFilename: TBitBtn
+            Left = 234
+            Height = 25
+            Top = 0
+            Width = 25
+            Action = ActionBrowseMrkFilename
+            Align = alRight
+            Anchors = [akTop, akRight]
+            Images = ImageList20x20
+            ImageIndex = 0
+            Spacing = 0
+            TabOrder = 1
+          end
         end
-        object UpDownMrkAlpha: TUpDown
-          Left = 88
-          Height = 23
-          Top = 112
-          Width = 17
-          Associate = EditMrkAlpha
-          Increment = 5
-          Min = 0
-          Position = 50
-          TabOrder = 8
-          Flat = True
+        object PanelMrkSourceImage: TPanel
+          Left = 10
+          Height = 26
+          Top = 64
+          Width = 254
+          BevelOuter = bvNone
+          ClientHeight = 26
+          ClientWidth = 254
+          TabOrder = 3
+          Visible = False
+          object Label21: TLabel
+            Left = 0
+            Height = 26
+            Top = 0
+            Width = 25
+            Align = alLeft
+            BorderSpacing.Right = 8
+            Caption = '&Line:'
+            Layout = tlCenter
+            ParentColor = False
+          end
+          object PaintBox1: TPaintBox
+            Left = 33
+            Height = 26
+            Top = 0
+            Width = 221
+            Align = alClient
+          end
         end
-        object UpDownMrkSize: TUpDown
-          Left = 88
-          Height = 23
-          Top = 80
-          Width = 17
-          Associate = EditMrkSize
-          Increment = 5
-          Min = 0
-          Position = 10
-          TabOrder = 9
-          Flat = True
-        end
-        object UpDownMrkX: TUpDown
-          Left = 221
-          Height = 23
-          Top = 80
-          Width = 17
-          Associate = EditMrkX
-          Min = 0
-          Position = 1
-          TabOrder = 10
-          Flat = True
-        end
-        object UpDownMrkY: TUpDown
-          Left = 221
-          Height = 23
-          Top = 112
-          Width = 17
-          Associate = EditMrkY
-          Min = 0
-          Position = 1
-          TabOrder = 11
-          Flat = True
-        end
-        object Label20: TLabel
-          Left = 157
-          Height = 48
-          Top = 152
-          Width = 90
-          Alignment = taCenter
-          AutoSize = False
-          Caption = 'Click or drag'#13#10'the watermarks'#13#10'position'
-          Font.Color = clGrayText
-          Layout = tlCenter
-          ParentColor = False
-          ParentFont = False
-        end
-        object ButtonEditWatermark: TBitBtn
-          Left = 221
+        object ButtonMrkEdit: TBitBtn
+          Left = 208
           Height = 25
-          Top = 50
-          Width = 25
+          Top = 7
+          Width = 56
           Glyph.Data = {
             36090000424D3609000000000000360000002800000018000000180000000100
             2000000000000009000064000000640000000000000000000000000000000000
@@ -748,47 +830,23 @@ object MainDialog: TMainDialog
           OnClick = ActionEditWatermarkExecute
           ParentShowHint = False
           Spacing = 0
-          TabOrder = 3
+          TabOrder = 1
+          Visible = False
         end
-        object LabelMrkSpace: TLabel
-          Left = 157
-          Height = 15
-          Top = 214
-          Width = 90
-          Alignment = taCenter
-          AutoSize = False
-          Font.Color = clGrayText
-          ParentColor = False
-          ParentFont = False
-        end
-        object PanelPreview: TPanel
+        object CheckBoxMrkEnabled: TCheckBox
           Left = 8
-          Height = 85
-          Top = 144
-          Width = 144
-          BevelOuter = bvLowered
-          ClientHeight = 85
-          ClientWidth = 144
-          TabOrder = 12
-          object PaintBoxMrkPreview: TPaintBox
-            Cursor = crNone
-            Left = 1
-            Height = 83
-            Top = 1
-            Width = 142
-            Align = alClient
-            OnMouseDown = PaintBoxMrkPreviewMouseDown
-            OnMouseLeave = PaintBoxMrkPreviewMouseLeave
-            OnMouseMove = PaintBoxMrkPreviewMouseMove
-            OnMouseUp = PaintBoxMrkPreviewMouseUp
-            OnPaint = PaintBoxMrkPreviewPaint
-          end
+          Height = 19
+          Top = 8
+          Width = 62
+          Caption = '&Enabled'
+          OnChange = CheckBoxMrkEnabledChange
+          TabOrder = 0
         end
       end
       object TabSheetRessources: TTabSheet
         Caption = 'Boost'
-        ClientHeight = 236
-        ClientWidth = 256
+        ClientHeight = 252
+        ClientWidth = 268
         object Label8: TLabel
           Left = 8
           Height = 15
@@ -825,7 +883,7 @@ object MainDialog: TMainDialog
           Left = 8
           Height = 120
           Top = 104
-          Width = 240
+          Width = 256
           AutoSize = False
           Caption = 'ImageResize uses thread pooling to benefit'#13#10'the full computers power.'#13#10#13#10'The number of threads is limited to the'#13#10'available cores and the number of tasks.'#13#10'A task is a single resampling process.'
           Font.Color = clGrayText
@@ -843,7 +901,7 @@ object MainDialog: TMainDialog
       end
     end
     object Label17: TLabel
-      Left = 376
+      Left = 384
       Height = 15
       Top = 72
       Width = 62
@@ -856,19 +914,19 @@ object MainDialog: TMainDialog
   object PanelMessages: TPanel
     Left = 0
     Height = 208
-    Top = 432
-    Width = 640
+    Top = 447
+    Width = 660
     Align = alBottom
     BevelOuter = bvNone
     ClientHeight = 208
-    ClientWidth = 640
+    ClientWidth = 660
     Constraints.MinHeight = 56
     TabOrder = 1
     object MemoMessages: TMemo
       Left = 6
       Height = 173
       Top = 29
-      Width = 628
+      Width = 648
       Align = alClient
       BorderSpacing.Top = 4
       BorderSpacing.Around = 6
@@ -881,7 +939,7 @@ object MainDialog: TMainDialog
       Left = 10
       Height = 15
       Top = 4
-      Width = 630
+      Width = 650
       Align = alTop
       BorderSpacing.Left = 10
       BorderSpacing.Top = 4
@@ -894,17 +952,17 @@ object MainDialog: TMainDialog
     Cursor = crVSplit
     Left = 0
     Height = 5
-    Top = 427
-    Width = 640
+    Top = 442
+    Width = 660
     Align = alBottom
     ResizeAnchor = akBottom
   end
   object ProgressBar: TProgressBar
-    Left = 368
+    Left = 376
     Height = 7
-    Top = 440
-    Width = 262
-    Anchors = [akTop, akRight]
+    Top = 455
+    Width = 272
+    Anchors = [akRight, akBottom]
     TabOrder = 3
     Visible = False
   end
@@ -1585,13 +1643,13 @@ object MainDialog: TMainDialog
     DefaultExt = '.irs'
     Filter = 'Image Resize Settings (*.irs)|*.irs|All Files|*.*'
     left = 32
-    top = 664
+    top = 296
   end
   object OpenDialog: TOpenDialog
     DefaultExt = '.irs'
     Filter = 'Image Resize Settings (*.irs)|*.irs|All Files|*.*'
-    left = 208
-    top = 648
+    left = 120
+    top = 304
   end
   object ImageList20x20: TImageList
     Height = 20

@@ -57,6 +57,7 @@ type
     ToolButton3: TToolButton;
     ToolButton5: TToolButton;
     UpDownShadowBlur: TUpDown;
+    procedure FormCreate(Sender: TObject);
     procedure ActionDefaultExecute(Sender: TObject);
     procedure ActionFontExecute(Sender: TObject);
     procedure ActionNewExecute(Sender: TObject);
@@ -65,23 +66,25 @@ type
     procedure ActionSaveAsExecute(Sender: TObject);
     procedure ButtonBrowseFontClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
-    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
     procedure PaintBoxPreviewPaint(Sender: TObject);
     procedure UpDownShadowBlurChanging(Sender: TObject; var AllowChange: Boolean      );
     procedure EditChanged(Sender :TObject);
   private
+    FMrkSource :integer;
     FMrkFilename :string;
+    FMrkImage :TBGRABitmap;
     FDirty :boolean;
     function TryDialogToParams(out Params :TWatermarkParams) :boolean;
     procedure DialogToParams(out Params :TWatermarkParams);
     procedure ParamsToDialog(const Params :TWatermarkParams);
-    function CreateMrkBitmap(Out Img :TBGRABitmap) :boolean;
+    function CreateMrkBitmap(var Img :TBGRABitmap) :boolean;
     procedure SaveToRegistry;
     procedure LoadFromRegistry;
     procedure SaveToFile(const Filename :string);
     procedure SetDirty;
   public
-    class function Execute(out MrkFilename :string) :boolean;
+    class function GetFilename(out MrkFilename :string) :boolean;
   end;
 
 var
@@ -101,14 +104,11 @@ const
 
 procedure TMrkEditDialog.PaintBoxPreviewPaint(Sender: TObject);
 var
-  Img :TBGRABitmap;
   Fit :TRect;
 begin
-  if CreateMrkBitmap(Img) then begin
-    Fit := FitRect(TRect.Create(0, 0, Img.Width, Img.Height), PaintBoxPreview.ClientRect);
-    Img.Draw(PaintBoxPreview.Canvas, Fit, false);
-    Img.Free;
-  end;
+  if not Assigned(FMrkImage) then Exit;
+  Fit := FitRect(TRect.Create(0, 0, FMrkImage.Width, FMrkImage.Height), PaintBoxPreview.ClientRect);
+  FMrkImage.Draw(PaintBoxPreview.Canvas, Fit, false);
 end;
 
 procedure TMrkEditDialog.UpDownShadowBlurChanging(Sender: TObject;
@@ -120,7 +120,8 @@ end;
 procedure TMrkEditDialog.EditChanged(Sender: TObject);
 begin
   SetDirty;
-  PaintBoxPreview.Invalidate;
+  if CreateMrkBitmap(FMrkImage) then
+    PaintBoxPreview.Invalidate;
 end;
 
 function TMrkEditDialog.TryDialogToParams(out Params: TWatermarkParams): boolean;
@@ -182,7 +183,7 @@ var
 begin
   if not TryDialogToParams(Params) then
     raise Exception.Create('Invalid parameter.');
-  Ini := TRegistryIniFile.Create(REGKEY);
+  Ini := TRegistryIniFile.Create(DLGREGKEY);
   try
     Params.SaveToIni(Ini, WATERMARKDEFAULTSECTION);
   finally
@@ -237,14 +238,14 @@ begin
     if Ver<>WAMSINIVER then
       raise Exception.CreateFmt('Incompatible file version %.2f, %.2f expected.', [Ver, WAMSINITYP]);
     PngFilename := Copy(OpenDialog.Filename, 1, Length(OpenDialog.Filename)-Length(WAMSINIEXT));
-    if FileExists(PngFilename) then begin
-      FMrkFilename := PngFilename;
-      ActionOk.Enabled := true;
-    end;
     Params.LoadFromIni(Ini);
     ParamsToDialog(Params);
     Caption := DIALOGTITLE + ' - ' + ExtractFilename(OpenDialog.Filename);
     FDirty := false;
+    if FileExists(PngFilename) then begin
+      FMrkFilename := PngFilename;
+      ActionOk.Enabled := true;
+    end;
   end;
 end;
 
@@ -268,10 +269,16 @@ end;
 procedure TMrkEditDialog.FormCreate(Sender: TObject);
 begin
   Caption := DIALOGTITLE;
+  FMrkImage := nil;
   LoadFromRegistry;
 end;
 
-function TMrkEditDialog.CreateMrkBitmap(out Img: TBGRABitmap): boolean;
+procedure TMrkEditDialog.FormDestroy(Sender: TObject);
+begin
+  FMrkImage.Free;
+end;
+
+function TMrkEditDialog.CreateMrkBitmap(var Img: TBGRABitmap): boolean;
 var
   Params :TWatermarkParams;
 begin
@@ -280,12 +287,13 @@ begin
     and TryCreateWatermarkImage(Params, Img);
 end;
 
-class function TMrkEditDialog.Execute(out MrkFilename: string): boolean;
+class function TMrkEditDialog.GetFilename(out MrkFilename: string): boolean;
 var
   Dialog :TMrkEditDialog;
 begin
   Dialog := TMrkEditDialog.Create(Application);
   try
+    Dialog.FMrkSource := msFile;
     result := Dialog.ShowModal=mrOk;
     if result then
       MrkFilename := Dialog.FMrkFilename;

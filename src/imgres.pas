@@ -30,7 +30,6 @@ const
 
   REGKEY = 'Software\Atomek\Image Resize';
 
-
 const
   DEFAULTSIZE           = 640;
   DEFAULTPNGCOMPRESSION = 2;
@@ -42,15 +41,20 @@ const
   DEFAULT_THREADCOUNT   = 0;
   DEFAULT_STOPONERROR   = true;
 
+  // Watermark sources
+  msDisabled  = 0;
+  msFile      = 1;
+  msImage     = 2;
+
 type
 
   TSizes = array of integer;
 
-  { TImgRes }
-
   TPrintEvent = procedure(Sender :TObject; const Line :string) of object;
   TProgressEvent = procedure(Sender :TObject; Progress :single) of object;
 
+  //////////////////////////////////////////////////////////////////////////////
+  // Main class: resamples a list a images to a list of sizes
   TImgRes = class
   public type
     TParams = record
@@ -59,7 +63,9 @@ type
       Sizes :TSizes;
       JpgQuality :integer;
       PngCompression :integer;
+      MrkSource :integer;
       MrkFilename :string;
+      MrkImage :TBGRABitmap;
       MrkFilenameDependsOnSize :boolean; // if MrkFilename contains %SIZE%
       MrkSize :single;
       MrkX :single;
@@ -68,7 +74,6 @@ type
       ThreadCount :integer;
       StopOnError :boolean;
     end;
-
   private type
     TResampleTask = class;
 
@@ -115,6 +120,8 @@ type
     function GetSizes: string;
     function GetSrcFilenames: TStrings;
     procedure SetMrkFilename(AValue: string);
+    procedure SetMrkImage(AValue :TBGRABitmap);
+    procedure SetMrkSource(AValue :integer);
     procedure SetSizes(AValue: string);
     procedure SetJpgQuality(AValue: integer);
     procedure SetPngCompression(AValue: integer);
@@ -122,7 +129,7 @@ type
     procedure SetMrkX(AValue: single);
     procedure SetMrkY(AValue: single);
     procedure SetMrkAlpha(AValue: single);
-    procedure SetSrcFilnames(AValue: TStrings);
+    procedure SetSrcFilenames(AValue: TStrings);
     procedure SetThreadCount(AValue: integer);
     function ResampleImg(Img :TBgraBitmap; const Size :TSize) :TBgraBitmap;
     class function CalcResamplingSize(const Size :TSize; LongWidth :integer) :TSize;
@@ -138,12 +145,14 @@ type
     class function PngCompressionToStr(const Value :integer) :string;
     class function TryStrToJpgQuality(const Str :string; out Value :integer) :boolean;
     class function JpgQualityToStr(const Value :integer) :string;
-    property SrcFilenames :TStrings read GetSrcFilenames write SetSrcFilnames;
+    property SrcFilenames :TStrings read GetSrcFilenames write SetSrcFilenames;
     property DstFolder :string read FParams.DstFolder write FParams.DstFolder;
     property Sizes :string read GetSizes write SetSizes;
     property JpgQuality :integer read FParams.JpgQuality write SetJpgQuality;
     property PngCompression :integer read FParams.PngCompression write SetPngCompression;
-    property MrkFilename :string read FParams.MrkFilename write SetMrkFilename;
+    property MrkSource :integer read FParams.MrkSource write SetMrkSource;
+    property MrkFilename :string read FParams.MrkFilename write SetMrkFilename; // if msFile
+    property MrkImage :TBGRABitmap read FParams.MrkImage write SetMrkImage; // if msImage
     property MrkSize :single read FParams.MrkSize write SetMrkSize;
     property MrkX :single read FParams.MrkX write SetMrkX;
     property MrkY :single read FParams.MrkY write SetMrkY;
@@ -391,19 +400,28 @@ var
 begin
   FMrkImgsSection.Enter;
   try
-    if FImgRes.FParams.MrkFilenameDependsOnSize then
-      Index := Task.FSizeIndex
-    else
-      Index := 0;
-    if not Assigned(FMrkImgs[Index]) then begin
-      if FImgRes.FParams.MrkFilenameDependsOnSize then
-        Filename := ReplaceStr(FImgRes.FParams.MrkFilename, '%SIZE%', IntToStr(FImgRes.FParams.Sizes[Index]))
-      else
-        Filename := FImgRes.FParams.MrkFilename;
-      Task.Print(Format('Loading ''%s''...', [ExtractFilename(Filename)]));
-      FMrkImgs[Index] := TBGRABitmap.Create(Filename);
+    case FImgRes.FParams.MrkSource of
+    msImage:
+      begin;
+        result := FImgRes.FParams.MrkImage;
+      end;
+    msFile:
+      begin
+        if FImgRes.FParams.MrkFilenameDependsOnSize then
+          Index := Task.FSizeIndex
+        else
+          Index := 0;
+        if not Assigned(FMrkImgs[Index]) then begin
+          if FImgRes.FParams.MrkFilenameDependsOnSize then
+            Filename := ReplaceStr(FImgRes.FParams.MrkFilename, '%SIZE%', IntToStr(FImgRes.FParams.Sizes[Index]))
+          else
+            Filename := FImgRes.FParams.MrkFilename;
+          Task.Print(Format('Loading ''%s''...', [ExtractFilename(Filename)]));
+          FMrkImgs[Index] := TBGRABitmap.Create(Filename);
+        end;
+        result := FMrkImgs[Index]
+      end;
     end;
-    result := FMrkImgs[Index]
   finally
     FMrkImgsSection.Leave;
   end;
@@ -485,6 +503,7 @@ begin
   FParams.JpgQuality     := DEFAULTJPGQUALITY;
   FParams.PngCompression := DEFAULTPNGCOMPRESSION;
   FParams.MrkFilename    := '';
+  FParams.MrkImage       := TBGRABitmap.Create;
   FParams.MrkSize        := DEFAULTMRKSIZE;
   FParams.MrkX           := DEFAULTMRKX;
   FParams.MrkY           := DEFAULTMRKY;
@@ -496,6 +515,7 @@ end;
 destructor TImgRes.Destroy;
 begin
   FParams.SrcFilenames.Free;
+  FParams.MrkImage.Free;
   inherited Destroy;
 end;
 
@@ -606,6 +626,18 @@ begin
   FParams.MrkFilenameDependsOnSize := Pos('%SIZE%', AValue)>0;
 end;
 
+procedure TImgRes.SetMrkImage(AValue :TBGRABitmap);
+begin
+  FParams.MrkImage.Assign(AValue);
+end;
+
+procedure TImgRes.SetMrkSource(AValue: integer);
+begin
+  if (AValue<0) or (AValue>2) then
+    raise Exception.CreateFmt('Invalid watermark source %d (0..2).', [AValue]);
+  FParams.MrkSource := AValue;
+end;
+
 procedure TImgRes.SetJpgQuality(AValue: integer);
 begin
   if FParams.JpgQuality=AValue then Exit;
@@ -650,7 +682,7 @@ begin
   FParams.MrkAlpha:=AValue;
 end;
 
-procedure TImgRes.SetSrcFilnames(AValue: TStrings);
+procedure TImgRes.SetSrcFilenames(AValue: TStrings);
 begin
   FParams.SrcFilenames.Assign(AValue);
 end;

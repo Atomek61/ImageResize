@@ -6,7 +6,7 @@ unit mrk.utils;
 interface
 
 uses
-  Classes, SysUtils, Types, strutils, Graphics, BGRABitmap, BGRABitmapTypes, BGRAGradients,
+  Classes, SysUtils, Types, Graphics, BGRABitmap, BGRABitmapTypes, BGRAGradients,
   IniFiles;
 
 const
@@ -31,7 +31,7 @@ type
     procedure LoadFromIni(Ini :TCustomIniFile; const Key :string = WATERMARKSECTION);
   end;
 
-function TryCreateWatermarkImage(const Params :TWatermarkParams; out Img :TBGRABitmap) :boolean;
+function TryCreateWatermarkImage(const Params :TWatermarkParams; var Img :TBGRABitmap) :boolean;
 function TryStrToFontInfo(const Str :string; out FontName :string; out FontStyle :TFontStyles) :boolean;
 function FontInfoToStr(const FontName :string; FontStyle :TFontStyles) :string;
 
@@ -40,7 +40,7 @@ implementation
 uses
   utils;
 
-function TryCreateWatermarkImage(const Params :TWatermarkParams; out Img :TBGRABitmap) :boolean;
+function TryCreateWatermarkImage(const Params :TWatermarkParams; var Img :TBGRABitmap) :boolean;
 var
   Height :integer;
   TextSize :TSize;
@@ -72,6 +72,7 @@ begin
 
   FontPixel.FromColor(Params.FontColor);
   ShadowPixel.FromColor(Params.ShadowColor);
+  FreeAndNil(Img);
   Img := TextShadow(Params.Width, Height, Params.Text, FontHeight,
     FontPixel, ShadowPixel, 0, 0, Params.ShadowBlur, Params.FontStyle, Params.FontName);
   result := true;
