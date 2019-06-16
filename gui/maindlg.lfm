@@ -1,7 +1,7 @@
 object MainDialog: TMainDialog
-  Left = 217
+  Left = 325
   Height = 655
-  Top = 144
+  Top = 150
   Width = 660
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'ImageResize'
@@ -309,9 +309,9 @@ object MainDialog: TMainDialog
       Height = 280
       Top = 96
       Width = 276
-      ActivePage = TabSheetSizes
+      ActivePage = TabSheetRessources
       Anchors = [akTop, akRight]
-      TabIndex = 0
+      TabIndex = 3
       TabOrder = 5
       object TabSheetSizes: TTabSheet
         Caption = 'Sizes'
@@ -359,7 +359,6 @@ object MainDialog: TMainDialog
           OnChange = EditSizesChange
           OnExit = EditSizesExit
           TabOrder = 1
-          Text = '640'
         end
         object ToolBarSizeButtons: TToolBar
           Left = 4
@@ -983,7 +982,7 @@ object MainDialog: TMainDialog
       OnExecute = ActionBrowseDstFolderExecute
     end
     object ActionAbout: TAction
-      Caption = '&About...'
+      Caption = 'Abo&ut...'
       OnExecute = ActionAboutExecute
     end
     object ActionBrowseMrkFilename: TAction
@@ -2210,7 +2209,7 @@ object MainDialog: TMainDialog
   end
   object ApplicationProperties1: TApplicationProperties
     OnException = ApplicationProperties1Exception
-    left = 523
-    top = 64
+    left = 256
+    top = 232
   end
 end

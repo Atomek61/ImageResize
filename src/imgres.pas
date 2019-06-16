@@ -23,7 +23,7 @@ uses
   threading.dispatcher;
 
 const
-  IMGRESVER = '1.9.2';
+  IMGRESVER = '1.9.3';
   IMGRESCPR = 'imgres V'+IMGRESVER+' © 2019 Jan Schirrmacher, www.atomek.de';
 
   PROGRESSSTEPSPERFILE = 4;

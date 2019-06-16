@@ -21,7 +21,7 @@ uses
   LCLIntf, Buttons, ImgList, LCLType, BGRABitmap, BGRABitmapTypes, Generics.Collections;
 
 const
-  IMGRESGUIVER = '2.0';
+  IMGRESGUIVER = '2.1';
   IMGRESGUICPR = 'ImageResize V'+IMGRESGUIVER+' © 2019 Jan Schirrmacher, www.atomek.de';
 
   INITYPE = 'IRS';
@@ -33,6 +33,8 @@ const
   SETTINGSSECTION = 'Settings';
 
   MRKRECTRATIO = 3.0;
+
+  LINESEP = '|';
 
   LICENSE =
     'Image Resize Copyright (c) 2019 Jan Schirrmacher, www.atomek.de'#10#10+
@@ -210,7 +212,6 @@ type
     FMrkImage :TBGRABitmap;
     FMrkDragging :boolean;
     FMrkOffset :TSize; // while dragging
-    FSizeDict :TSizeDict;
     procedure SetTitle(const Str :string);
     procedure SetMrkSource(Value :integer);
     function GetMrkSource :integer;
@@ -266,7 +267,6 @@ begin
   AllowDropFiles := true;
   // Create Size Buttons
   for i:=0 to High(DEFSIZES) do begin
-    //FSizeDict.Add(DEFSIZES[i], i);
     Button := TToolButton.Create(ToolBarSizeButtons);
     Button.Parent := ToolBarSizeButtons;
     Button.Caption := IntToStr(DEFSIZES[i]);
@@ -278,7 +278,6 @@ begin
   ToolBarSizeButtons.ButtonWidth := ToolBarSizeButtons.Width div 4;
   ToolBarSizeButtons.ButtonHeight := ToolBarSizeButtons.Height div 4;
 
-  FSizeDict := TSizeDict.Create;
   FMrkImage := TBGRABitmap.Create;
   PanelMrkSourceImage.Left := PanelMrkSourceFile.Left;
   PanelMrkSourceImage.Top := PanelMrkSourceFile.Top;
@@ -299,16 +298,15 @@ begin
   LabelCores.Caption := Format('%d Cores', [TThread.ProcessorCount]);
 end;
 
+procedure TMainDialog.FormDestroy(Sender: TObject);
+begin
+  FMrkImage.Free;
+end;
+
 procedure TMainDialog.ApplicationProperties1Exception(Sender: TObject;
   E: Exception);
 begin
   Log('Error - '+E.Message);
-end;
-
-procedure TMainDialog.FormDestroy(Sender: TObject);
-begin
-  FMrkImage.Free;
-  FSizeDict.Free
 end;
 
 procedure TMainDialog.CheckBoxMrkEnabledChange(Sender: TObject);
@@ -341,7 +339,7 @@ begin
       Log(Format('Warning: Unexpected format %s (%s expected).', [IniVer, INIVERSION]));
       Exit;
     end;
-    MemoSrcFilenames.Text := ReplaceStr(ReadString(SETTINGSSECTION, 'SrcFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, '|')), '|', #13#10);
+    MemoSrcFilenames.Text := ReplaceStr(ReadString(SETTINGSSECTION, 'SrcFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, LINESEP)), LINESEP, #13#10);
     EditDstFolder.Text := ReadString(SETTINGSSECTION, 'DstFolder', EditDstFolder.Text);
     EditSizes.Text := ReadString(SETTINGSSECTION, 'Sizes', EditSizes.Text);
     UpdateSizes;
@@ -365,7 +363,8 @@ begin
   with Ini do begin
     WriteString(COMMONSECTION, 'Type', INITYPE);
     WriteString(COMMONSECTION, 'Version', INIVERSION);
-    WriteString(SETTINGSSECTION, 'SrcFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, '|'));
+    EraseSection(SETTINGSSECTION);
+    WriteString(SETTINGSSECTION, 'SrcFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, LINESEP));
     WriteString(SETTINGSSECTION, 'DstFolder', EditDstFolder.Text);
     WriteString(SETTINGSSECTION, 'Sizes', EditSizes.Text);
     WriteString(SETTINGSSECTION, 'JpgOptions.Quality', ComboBoxJpgQuality.Text);
@@ -500,7 +499,7 @@ begin
   try
     MemoSrcFilenames.Lines.Clear;
     EditDstFolder.Text := '';
-    EditSizes.Text := IntToStr(DEFAULTSIZE);
+    EditSizes.Text := '';
     ComboBoxJpgQuality.Text := ImgResizer.JpgQualityToStr(ImgResizer.JpgQuality);
     ComboBoxPngCompression.Text := TImgRes.PngCompressionToStr(ImgResizer.PngCompression);
     EditMrkFilename.Text := '';
@@ -510,6 +509,10 @@ begin
     UpDownMrkAlpha.Position := round(ImgResizer.MrkAlpha);
     FIsSave := false;
     FIniFilename := '';
+    SetMrkSource(msDisabled);
+    UpdateSizes;
+    UpdateControls;
+    PageControl.ActivePage := TabSheetSizes;
     SetTitle('unnamed');
   finally
     ImgResizer.Free;
@@ -906,7 +909,7 @@ begin
         FImgRes.PngCompression := ComboBoxPngCompression.ItemIndex;
 
         if GetMrkSource = msFile then begin
-
+          FImgRes.MrkSource := msFile;
           FImgRes.MrkFilename := EditMrkFilename.Text;
 
           if not TryStrToFloat(EditMrkSize.Text, x) or (x<0.0) or (x>100.0) then
@@ -924,8 +927,10 @@ begin
           if not TryStrToFloat(EditMrkAlpha.Text, x) or (x<0.0) or (x>100.0) then
             raise Exception.Create('Invalid watermark opacity.');
           FImgRes.MrkAlpha := x;
-        end else
+        end else begin
+          FImgRes.MrkSource := msDisabled;
           FImgRes.MrkFilename := '';
+        end;
 
         FImgRes.OnPrint := @OnPrint;
         FImgRes.OnProgress := @OnProgress;

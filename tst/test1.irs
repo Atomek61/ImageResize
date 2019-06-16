@@ -1,17 +1,18 @@
 [Common]
 Type=IRS
-Version=100
+Version=200
 
 [Settings]
 SrcFilenames=..\tst\org\img1.png|..\tst\org\img2.jpg|..\tst\org\img3.jpg|..\tst\org\img4.png|
 DstFolder=..\tst\test1_%SIZE%
-Sizes=120,240
-JpgQuality=default
-PngCompression=default
-MrkPosition=2
-MrkEnabled=0
+Sizes=120, 240
+JpgOptions.Quality=default
+PngOptions.Compression=default
+MrkSource=0
 MrkFilename=
 MrkSize=20
 MrkX=2
 MrkY=2
 MrkAlpha=50
+ThreadCount=Single
+StopOnError=0

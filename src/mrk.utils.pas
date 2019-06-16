@@ -48,11 +48,25 @@ var
   FontHeight :integer;
   FontPixel :TBGRAPixel;
   ShadowPixel :TBGRAPixel;
-  Tmp :TBGRABitmap;
+//  Tmp :TBGRABitmap;
+  Bmp :TBitmap;
+//  Font :TFont;
 begin
+  Bmp := TBitmap.Create;
+  try
+    with Params do begin
+      Bmp.Canvas.Font.Name := FontName;
+      Bmp.Canvas.Font.Height := 20;
+      Bmp.Canvas.Font.Style := FontStyle;
+    end;
+    TextSize := Bmp.Canvas.TextExtent(Params.Text);
+    TextSize.cx := round(TextSize.cx*1.25);
+  finally
+    Bmp.Free;
+  end;
 
   // Get an idea of the texts size
-  Tmp := TBGRABitmap.Create(1, 1);
+{  Tmp := TBGRABitmap.Create(1, 1);
   try
     with Params do begin
       Tmp.FontHeight := 20;
@@ -64,7 +78,7 @@ begin
   finally
     Tmp.Free;
   end;
-
+}
   // Calc images size
   d := Params.ShadowBlur;
   FontHeight := round((Params.Width-2*d)*TextSize.cy/TextSize.cx);

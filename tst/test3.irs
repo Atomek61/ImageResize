@@ -1,17 +1,18 @@
 [Common]
 Type=IRS
-Version=100
+Version=200
 
 [Settings]
 SrcFilenames=..\tst\org\img1.png|..\tst\org\img2.jpg|..\tst\org\img3.jpg|..\tst\org\img4.png|
 DstFolder=..\tst\test3_%SIZE%
-Sizes=960,1200
-JpgQuality=default
-PngCompression=default
-MrkPosition=1
-MrkEnabled=1
+Sizes=960, 1200
+JpgOptions.Quality=default
+PngOptions.Compression=default
+MrkSource=0
 MrkFilename=D:\Mf\DEV\Lazarus\ImageResize\tst\watermarks\wwwatomekde.png
 MrkSize=40
 MrkX=10
 MrkY=10
 MrkAlpha=50
+ThreadCount=Single
+StopOnError=0
