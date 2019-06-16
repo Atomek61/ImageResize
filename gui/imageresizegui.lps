@@ -3,14 +3,14 @@
   <ProjectSession>
     <PathDelim Value="\"/>
     <Version Value="11"/>
-    <BuildModes Active="Debug"/>
-    <Units Count="69">
+    <BuildModes Active="Release"/>
+    <Units Count="73">
       <Unit0>
         <Filename Value="imageresizegui.lpr"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="37" Y="14"/>
-        <UsageCount Value="164"/>
+        <UsageCount Value="171"/>
       </Unit0>
       <Unit1>
         <Filename Value="maindlg.pas"/>
@@ -18,12 +18,18 @@
         <ComponentName Value="MainDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+<<<<<<< HEAD
         <IsVisibleTab Value="True"/>
         <TopLine Value="121"/>
         <CursorPos X="3" Y="689"/>
         <UsageCount Value="164"/>
+=======
+        <EditorIndex Value="1"/>
+        <TopLine Value="23"/>
+        <CursorPos X="23" Y="30"/>
+        <UsageCount Value="171"/>
+>>>>>>> SizeButtons2
         <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="aboutdlg.pas"/>
@@ -34,15 +40,16 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="40"/>
         <CursorPos X="98" Y="52"/>
-        <UsageCount Value="150"/>
+        <UsageCount Value="157"/>
       </Unit2>
       <Unit3>
         <Filename Value="..\src\imgres.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="31"/>
-        <CursorPos X="3" Y="45"/>
-        <UsageCount Value="161"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="16"/>
+        <CursorPos X="22" Y="25"/>
+        <UsageCount Value="168"/>
         <Loaded Value="True"/>
       </Unit3>
       <Unit4>
@@ -51,7 +58,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="420"/>
         <CursorPos X="79" Y="434"/>
-        <UsageCount Value="93"/>
+        <UsageCount Value="100"/>
       </Unit4>
       <Unit5>
         <Filename Value="..\src\generics.queue.pas"/>
@@ -59,15 +66,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="69"/>
         <CursorPos Y="86"/>
-        <UsageCount Value="93"/>
+        <UsageCount Value="100"/>
       </Unit5>
       <Unit6>
         <Filename Value="..\src\mrk.utils.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="8"/>
-        <TopLine Value="56"/>
-        <CursorPos Y="81"/>
-        <UsageCount Value="71"/>
+        <TopLine Value="54"/>
+        <CursorPos X="5" Y="62"/>
+        <UsageCount Value="78"/>
         <Loaded Value="True"/>
       </Unit6>
       <Unit7>
@@ -76,12 +82,18 @@
         <ComponentName Value="MrkEditDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+<<<<<<< HEAD
         <EditorIndex Value="3"/>
         <TopLine Value="337"/>
         <CursorPos Y="350"/>
         <UsageCount Value="66"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
+=======
+        <EditorIndex Value="-1"/>
+        <CursorPos Y="158"/>
+        <UsageCount Value="73"/>
+>>>>>>> SizeButtons2
       </Unit7>
       <Unit8>
         <Filename Value="..\src\graphics.utils.pas"/>
@@ -89,7 +101,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="14"/>
         <CursorPos Y="37"/>
-        <UsageCount Value="54"/>
+        <UsageCount Value="61"/>
       </Unit8>
       <Unit9>
         <Filename Value="..\src\png.utils.pas"/>
@@ -108,11 +120,10 @@
       </Unit10>
       <Unit11>
         <Filename Value="D:\Programme\Lazarus\lcl\include\control.inc"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="1191"/>
         <CursorPos X="15" Y="1198"/>
-        <UsageCount Value="24"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="28"/>
       </Unit11>
       <Unit12>
         <Filename Value="D:\Programme\Lazarus\lcl\interfaces\win32\win32memostrings.inc"/>
@@ -168,11 +179,10 @@
       <Unit19>
         <Filename Value="..\..\BGRABITMAP 9.9.4\bgrabitmap\bgradefaultbitmap.pas"/>
         <UnitName Value="BGRADefaultBitmap"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="239"/>
         <CursorPos Y="250"/>
-        <UsageCount Value="53"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="57"/>
       </Unit19>
       <Unit20>
         <Filename Value="..\..\BGRABITMAP 9.9.4\bgrabitmap\bgracustombitmap.inc"/>
@@ -185,9 +195,9 @@
         <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-base\src\inifiles.pp"/>
         <UnitName Value="IniFiles"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="135"/>
+        <TopLine Value="168"/>
         <CursorPos X="3" Y="150"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="23"/>
       </Unit21>
       <Unit22>
         <Filename Value="..\..\BGRABITMAP 9.9.4\bgrabitmap\bgrapixel.inc"/>
@@ -272,10 +282,11 @@
       <Unit32>
         <Filename Value="D:\Programme\Lazarus\lcl\graphics.pp"/>
         <UnitName Value="Graphics"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="57"/>
-        <CursorPos X="3" Y="72"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="1138"/>
+        <CursorPos X="17" Y="1060"/>
         <UsageCount Value="37"/>
+        <Loaded Value="True"/>
       </Unit32>
       <Unit33>
         <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\rtl\objpas\classes\classesh.inc"/>
@@ -408,15 +419,13 @@
         <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-image\src\fpcanvas.pp"/>
         <UnitName Value="FPCanvas"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="71"/>
-        <CursorPos X="3" Y="83"/>
+        <TopLine Value="68"/>
+        <CursorPos X="34" Y="87"/>
         <UsageCount Value="21"/>
       </Unit51>
       <Unit52>
         <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\rtl-objpas\src\inc\strutils.pp"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="25"/>
-        <CursorPos X="22" Y="44"/>
         <UsageCount Value="19"/>
       </Unit52>
       <Unit53>
@@ -502,127 +511,151 @@
       <Unit64>
         <Filename Value="..\..\BGRABITMAP 9.9.4\bgrabitmap\bgragradients.pas"/>
         <UnitName Value="BGRAGradients"/>
-        <EditorIndex Value="9"/>
+        <EditorIndex Value="-1"/>
         <CursorPos Y="15"/>
-        <UsageCount Value="12"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="16"/>
       </Unit64>
       <Unit65>
         <Filename Value="..\..\BGRABITMAP 9.9.4\bgrabitmap\bgratextfx.pas"/>
         <UnitName Value="BGRATextFX"/>
-        <EditorIndex Value="10"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="84"/>
         <CursorPos Y="97"/>
-        <UsageCount Value="12"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="16"/>
       </Unit65>
       <Unit66>
         <Filename Value="D:\Programme\Lazarus\lcl\include\customaction.inc"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="99"/>
         <CursorPos Y="112"/>
-        <UsageCount Value="11"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="15"/>
       </Unit66>
       <Unit67>
         <Filename Value="D:\Programme\Lazarus\lcl\include\controlactionlink.inc"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="29"/>
         <CursorPos Y="42"/>
-        <UsageCount Value="10"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="14"/>
       </Unit67>
       <Unit68>
         <Filename Value="D:\Programme\Lazarus\lcl\include\customedit.inc"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="635"/>
         <CursorPos Y="644"/>
-        <UsageCount Value="10"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="14"/>
       </Unit68>
+      <Unit69>
+        <Filename Value="D:\Programme\Lazarus\lcl\comctrls.pp"/>
+        <UnitName Value="ComCtrls"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="16"/>
+        <CursorPos X="52" Y="39"/>
+        <UsageCount Value="14"/>
+      </Unit69>
+      <Unit70>
+        <Filename Value="D:\Programme\Lazarus\lcl\include\toolbutton.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1030"/>
+        <CursorPos X="3" Y="1036"/>
+        <UsageCount Value="14"/>
+      </Unit70>
+      <Unit71>
+        <Filename Value="D:\Programme\Lazarus\components\sparta\generics\source\inc\generics.dictionariesh.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="249"/>
+        <CursorPos X="44" Y="614"/>
+        <UsageCount Value="14"/>
+      </Unit71>
+      <Unit72>
+        <Filename Value="D:\Programme\Lazarus\lcl\include\canvas.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1688"/>
+        <CursorPos X="30" Y="1695"/>
+        <UsageCount Value="10"/>
+      </Unit72>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="D:\Programme\Lazarus\lcl\include\controlactionlink.inc"/>
-        <Caret Line="42" TopLine="29"/>
+        <Filename Value="..\src\mrk.utils.pas"/>
+        <Caret Line="60" TopLine="50"/>
       </Position1>
       <Position2>
-        <Filename Value="D:\Programme\Lazarus\lcl\include\customaction.inc"/>
-        <Caret Line="127" TopLine="115"/>
+        <Filename Value="..\src\mrk.utils.pas"/>
+        <Caret Line="56" TopLine="50"/>
       </Position2>
       <Position3>
-        <Filename Value="mrkeditdlg.pas"/>
-        <Caret Line="356" TopLine="335"/>
+        <Filename Value="..\src\mrk.utils.pas"/>
+        <Caret Line="60" Column="43" TopLine="56"/>
       </Position3>
       <Position4>
-        <Filename Value="mrkeditdlg.pas"/>
-        <Caret Line="123" TopLine="110"/>
+        <Filename Value="D:\Programme\Lazarus\lcl\graphics.pp"/>
       </Position4>
       <Position5>
-        <Filename Value="mrkeditdlg.pas"/>
-        <Caret Line="124" TopLine="110"/>
+        <Filename Value="D:\Programme\Lazarus\lcl\graphics.pp"/>
+        <Caret Line="199" Column="10" TopLine="178"/>
       </Position5>
       <Position6>
-        <Filename Value="mrkeditdlg.pas"/>
-        <Caret Line="125" TopLine="110"/>
+        <Filename Value="D:\Programme\Lazarus\lcl\graphics.pp"/>
+        <Caret Line="203" Column="32" TopLine="182"/>
       </Position6>
       <Position7>
-        <Filename Value="D:\Programme\Lazarus\lcl\include\customedit.inc"/>
-        <Caret Line="653" TopLine="640"/>
+        <Filename Value="D:\Programme\Lazarus\lcl\graphics.pp"/>
+        <Caret Line="204" Column="10" TopLine="183"/>
       </Position7>
       <Position8>
-        <Filename Value="D:\Programme\Lazarus\lcl\include\customedit.inc"/>
-        <Caret Line="655" TopLine="640"/>
+        <Filename Value="D:\Programme\Lazarus\lcl\graphics.pp"/>
+        <Caret Line="412" Column="30" TopLine="394"/>
       </Position8>
       <Position9>
-        <Filename Value="D:\Programme\Lazarus\lcl\include\customedit.inc"/>
-        <Caret Line="609" TopLine="596"/>
+        <Filename Value="..\src\mrk.utils.pas"/>
+        <Caret Line="65" TopLine="56"/>
       </Position9>
       <Position10>
-        <Filename Value="D:\Programme\Lazarus\lcl\include\customedit.inc"/>
-        <Caret Line="647" TopLine="635"/>
+        <Filename Value="..\src\mrk.utils.pas"/>
+        <Caret Line="66" TopLine="56"/>
       </Position10>
       <Position11>
-        <Filename Value="mrkeditdlg.pas"/>
-        <Caret Line="12" Column="63" TopLine="8"/>
+        <Filename Value="..\src\mrk.utils.pas"/>
+        <Caret Line="68" TopLine="56"/>
       </Position11>
       <Position12>
-        <Filename Value="mrkeditdlg.pas"/>
-        <Caret Line="351" TopLine="331"/>
+        <Filename Value="..\src\mrk.utils.pas"/>
+        <Caret Line="67" TopLine="56"/>
       </Position12>
       <Position13>
-        <Filename Value="mrkeditdlg.pas"/>
-        <Caret Line="232" TopLine="219"/>
+        <Filename Value="..\src\mrk.utils.pas"/>
+        <Caret Line="68" TopLine="56"/>
       </Position13>
       <Position14>
-        <Filename Value="mrkeditdlg.pas"/>
-        <Caret Line="233" TopLine="219"/>
+        <Filename Value="..\src\mrk.utils.pas"/>
+        <Caret Line="69" TopLine="56"/>
       </Position14>
       <Position15>
-        <Filename Value="mrkeditdlg.pas"/>
-        <Caret Line="141" TopLine="128"/>
+        <Filename Value="..\src\mrk.utils.pas"/>
+        <Caret Line="67" TopLine="56"/>
       </Position15>
       <Position16>
-        <Filename Value="mrkeditdlg.pas"/>
-        <Caret Line="351" TopLine="338"/>
+        <Filename Value="..\src\mrk.utils.pas"/>
+        <Caret Line="70" TopLine="56"/>
       </Position16>
       <Position17>
-        <Filename Value="mrkeditdlg.pas"/>
-        <Caret Line="123" TopLine="110"/>
+        <Filename Value="..\src\mrk.utils.pas"/>
+        <Caret Line="72" Column="19" TopLine="56"/>
       </Position17>
       <Position18>
-        <Filename Value="mrkeditdlg.pas"/>
-        <Caret Line="124" TopLine="110"/>
+        <Filename Value="..\src\mrk.utils.pas"/>
+        <Caret Line="74" Column="9" TopLine="53"/>
       </Position18>
       <Position19>
-        <Filename Value="mrkeditdlg.pas"/>
-        <Caret Line="125" TopLine="110"/>
+        <Filename Value="..\src\mrk.utils.pas"/>
+        <Caret Line="65" TopLine="60"/>
       </Position19>
       <Position20>
-        <Filename Value="D:\Programme\Lazarus\lcl\include\customedit.inc"/>
-        <Caret Line="653" TopLine="634"/>
+        <Filename Value="..\src\mrk.utils.pas"/>
+        <Caret Line="66" TopLine="60"/>
       </Position20>
       <Position21>
+<<<<<<< HEAD
         <Filename Value="mrkeditdlg.pas"/>
         <Caret Line="351" TopLine="338"/>
       </Position21>
@@ -661,6 +694,46 @@
       <Position30>
         <Filename Value="maindlg.pas"/>
         <Caret Line="905" Column="18" TopLine="885"/>
+=======
+        <Filename Value="..\src\mrk.utils.pas"/>
+        <Caret Line="68" TopLine="60"/>
+      </Position21>
+      <Position22>
+        <Filename Value="..\src\mrk.utils.pas"/>
+        <Caret Line="67" TopLine="60"/>
+      </Position22>
+      <Position23>
+        <Filename Value="..\src\mrk.utils.pas"/>
+        <Caret Line="68" TopLine="60"/>
+      </Position23>
+      <Position24>
+        <Filename Value="..\src\mrk.utils.pas"/>
+        <Caret Line="69" TopLine="60"/>
+      </Position24>
+      <Position25>
+        <Filename Value="..\src\mrk.utils.pas"/>
+        <Caret Line="70" TopLine="60"/>
+      </Position25>
+      <Position26>
+        <Filename Value="..\src\mrk.utils.pas"/>
+        <Caret Line="67" TopLine="60"/>
+      </Position26>
+      <Position27>
+        <Filename Value="..\src\mrk.utils.pas"/>
+        <Caret Line="70" TopLine="60"/>
+      </Position27>
+      <Position28>
+        <Filename Value="..\src\mrk.utils.pas"/>
+        <Caret Line="72" TopLine="60"/>
+      </Position28>
+      <Position29>
+        <Filename Value="..\src\mrk.utils.pas"/>
+        <Caret Line="66" TopLine="60"/>
+      </Position29>
+      <Position30>
+        <Filename Value="..\src\mrk.utils.pas"/>
+        <Caret Line="92" TopLine="62"/>
+>>>>>>> SizeButtons2
       </Position30>
     </JumpHistory>
     <RunParams>

@@ -1,17 +1,18 @@
 [Common]
 Type=IRS
-Version=100
+Version=200
 
 [Settings]
 SrcFilenames=..\tst\org\img1.png|..\tst\org\img2.jpg|..\tst\org\img3.jpg|..\tst\org\img4.png|
 DstFolder=..\tst\test4_%SIZE%
-Sizes=10,3840
-JpgQuality=default
-PngCompression=default
-MrkPosition=1
-MrkEnabled=1
+Sizes=10, 3840
+JpgOptions.Quality=default
+PngOptions.Compression=default
+MrkSource=0
 MrkFilename=..\tst\watermarks\testtesttest.png
 MrkSize=40
 MrkX=10
 MrkY=10
 MrkAlpha=50
+ThreadCount=Single
+StopOnError=0

@@ -5,7 +5,7 @@ Version=100
 [Watermark]
 Width=200
 Text=© 2019 www.atomek.de
-Font="Courier New", bold
-FontColor=$FFFFFF
+Font="Lucida Calligraphy", bold
+FontColor=$F0FBFF
 ShadowBlur=6
-ShadowColor=$800000
+ShadowColor=$000000

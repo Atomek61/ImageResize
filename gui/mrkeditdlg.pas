@@ -197,7 +197,7 @@ var
   Ini: TRegistryIniFile;
   Params :TWatermarkParams;
 begin
-  Ini := TRegistryIniFile.Create(REGKEY);
+  Ini := TRegistryIniFile.Create(DLGREGKEY);
   try
     if Ini.RegIniFile.KeyExists(WATERMARKDEFAULTSECTION) then
       Params.LoadFromIni(Ini, WATERMARKDEFAULTSECTION)
