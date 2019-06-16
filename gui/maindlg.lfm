@@ -309,9 +309,9 @@ object MainDialog: TMainDialog
       Height = 280
       Top = 96
       Width = 276
-      ActivePage = TabSheetMrk
+      ActivePage = TabSheetSizes
       Anchors = [akTop, akRight]
-      TabIndex = 2
+      TabIndex = 0
       TabOrder = 5
       object TabSheetSizes: TTabSheet
         Caption = 'Sizes'
