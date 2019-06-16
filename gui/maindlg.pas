@@ -18,7 +18,7 @@ interface
 uses
   Classes, Types, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ComCtrls,
   ActnList, ExtCtrls, imgres, registry, aboutdlg, inifiles, strutils, LMessages,
-  LCLIntf, Buttons, ImgList, LCLType, BGRABitmap, BGRABitmapTypes;
+  LCLIntf, Buttons, ImgList, LCLType, BGRABitmap, BGRABitmapTypes, Generics.Collections;
 
 const
   IMGRESGUIVER = '2.0';
@@ -43,11 +43,14 @@ const
 
   LM_RUN = LM_USER + 1;
 
-  DEFSIZES :array[0..11] of integer = (48, 120, 240, 360, 480, 640, 800, 960, 1200, 1920, 2560, 3840);
+  DEFSIZES :array[0..15] of integer = (32, 48, 64, 120, 240, 360, 480, 640, 800, 960, 1280, 1600, 1920, 2560, 3840, 4096);
 
 type
 
   { TMainDialog }
+
+  TSizeDict = specialize TDictionary<integer, integer>;
+
 
   { TPos }
 
@@ -71,6 +74,7 @@ type
     ActionClearFilenames: TAction;
     ActionExecute: TAction;
     ActionList: TActionList;
+    ApplicationProperties1: TApplicationProperties;
     ButtonAbout: TBitBtn;
     ButtonBrowseMrkFilename: TBitBtn;
     ButtonClearSizes: TBitBtn;
@@ -92,7 +96,6 @@ type
     EditMrkY: TEdit;
     EditSizes: TEdit;
     EditDstFolder: TEdit;
-    FlowPanelSizeButtons: TFlowPanel;
     GroupBoxMrkLayout: TGroupBox;
     GroupBoxJpgOptions: TGroupBox;
     GroupBoxPngOptions: TGroupBox;
@@ -146,6 +149,7 @@ type
     TabSheetQuality: TTabSheet;
     TimerProgressBarOff: TTimer;
     ToolBar: TToolBar;
+    ToolBarSizeButtons: TToolBar;
     ToolButton1: TToolButton;
     ToolButton10: TToolButton;
     ToolButton2: TToolButton;
@@ -160,7 +164,7 @@ type
     UpDownMrkSize: TUpDown;
     UpDownMrkX: TUpDown;
     UpDownMrkY: TUpDown;
-    procedure CheckBoxMrkEnabledChange(Sender: TObject);
+    procedure ApplicationProperties1Exception(Sender: TObject; E: Exception);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure ActionAboutExecute(Sender: TObject);
@@ -192,6 +196,8 @@ type
       Shift: TShiftState; X, Y: Integer);
     procedure PaintBoxMrkPreviewPaint(Sender: TObject);
     procedure TimerProgressBarOffTimer(Sender: TObject);
+    procedure CheckBoxMrkEnabledChange(Sender: TObject);
+    procedure EditSizesExit(Sender: TObject);
   private
     FAutoExit :boolean;
     FIsSave :boolean;
@@ -204,6 +210,7 @@ type
     FMrkImage :TBGRABitmap;
     FMrkDragging :boolean;
     FMrkOffset :TSize; // while dragging
+    FSizeDict :TSizeDict;
     procedure SetTitle(const Str :string);
     procedure SetMrkSource(Value :integer);
     function GetMrkSource :integer;
@@ -218,6 +225,7 @@ type
     procedure Log(const Msg :string);
     function BoostStrToThreadCount(const Value :string) :integer;
     function ThreadCountToBoostStr(ThreadCount :integer) :string;
+    procedure UpdateSizes;
     procedure UpdateControls;
     procedure LMRun(var Message: TLMessage); message LM_RUN;
     procedure SizeButtonClick(Sender :TObject);
@@ -252,10 +260,25 @@ procedure TMainDialog.FormCreate(Sender: TObject);
 var
   Params :TStringArray;
   i :integer;
-  Button :TButton;
+  Button :TToolButton;
 begin
   DefaultFormatSettings.DecimalSeparator := '.';
   AllowDropFiles := true;
+  // Create Size Buttons
+  for i:=0 to High(DEFSIZES) do begin
+    //FSizeDict.Add(DEFSIZES[i], i);
+    Button := TToolButton.Create(ToolBarSizeButtons);
+    Button.Parent := ToolBarSizeButtons;
+    Button.Caption := IntToStr(DEFSIZES[i]);
+    Button.Style := tbsCheck;
+    Button.Tag := DEFSIZES[i];
+    Button.OnClick := @SizeButtonClick;
+    Button.Visible := true;
+  end;
+  ToolBarSizeButtons.ButtonWidth := ToolBarSizeButtons.Width div 4;
+  ToolBarSizeButtons.ButtonHeight := ToolBarSizeButtons.Height div 4;
+
+  FSizeDict := TSizeDict.Create;
   FMrkImage := TBGRABitmap.Create;
   PanelMrkSourceImage.Left := PanelMrkSourceFile.Left;
   PanelMrkSourceImage.Top := PanelMrkSourceFile.Top;
@@ -270,23 +293,22 @@ begin
   if Application.HasOption('A', 'AUTOSTART') then
     PostMessage(Handle, LM_RUN, 0, 0);
 
-  // Create Size Buttons
-  for i:=0 to High(DEFSIZES) do begin
-    Button := TButton.Create(self);
-    Button.TabStop := false;
-    Button.Caption := IntToStr(DEFSIZES[i]);
-    Button.Parent := FlowPanelSizeButtons;
-    Button.Tag := DEFSIZES[i];
-    Button.OnClick := @SizeButtonClick;
-    Button.Width := 58;
-    Button.Height := 44;
-    Button.Visible := true;
-  end;
-
   PageControl.ActivePageIndex := 0;
 
   // Show number of cores
   LabelCores.Caption := Format('%d Cores', [TThread.ProcessorCount]);
+end;
+
+procedure TMainDialog.ApplicationProperties1Exception(Sender: TObject;
+  E: Exception);
+begin
+  Log('Error - '+E.Message);
+end;
+
+procedure TMainDialog.FormDestroy(Sender: TObject);
+begin
+  FMrkImage.Free;
+  FSizeDict.Free
 end;
 
 procedure TMainDialog.CheckBoxMrkEnabledChange(Sender: TObject);
@@ -296,9 +318,9 @@ begin
   SetMrkSource(MRKSOURCES[CheckBoxMrkEnabled.Checked]);
 end;
 
-procedure TMainDialog.FormDestroy(Sender: TObject);
+procedure TMainDialog.EditSizesExit(Sender: TObject);
 begin
-  FMrkImage.Free;
+  UpdateSizes;
 end;
 
 function TMainDialog.LoadFromIni(Ini :TCustomIniFile) :boolean;
@@ -322,6 +344,7 @@ begin
     MemoSrcFilenames.Text := ReplaceStr(ReadString(SETTINGSSECTION, 'SrcFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, '|')), '|', #13#10);
     EditDstFolder.Text := ReadString(SETTINGSSECTION, 'DstFolder', EditDstFolder.Text);
     EditSizes.Text := ReadString(SETTINGSSECTION, 'Sizes', EditSizes.Text);
+    UpdateSizes;
     ComboBoxJpgQuality.Text := ReadString(SETTINGSSECTION, 'JpgOptions.Quality', ComboBoxJpgQuality.Text);
     ComboBoxPngCompression.Text := ReadString(SETTINGSSECTION, 'PngOptions.Compression', ComboBoxPngCompression.Text);
     SetMrkSource(ReadInteger(SETTINGSSECTION, 'MrkSource', GetMrkSource));
@@ -435,14 +458,31 @@ end;
 
 procedure TMainDialog.SizeButtonClick(Sender: TObject);
 var
-  s :string;
-  l :TSizes;
+  SizeStr :string;
+  Sizes :TSizes;
+  Button :TToolButton;
+  i, j :integer;
 begin
-  s := IntToStr((Sender as TButton).Tag);
-  if Length(Trim(EditSizes.Text))=0 then
-    EditSizes.Text := s
-  else if TrySizesStrToSizes(EditSizes.Text + ', '+s, l) then
-    EditSizes.Text := SizesToSizesStr(l);
+  Button := Sender as TToolButton;
+  if Button.Down then begin
+    SizeStr := IntToStr(Button.Tag);
+    if Length(Trim(EditSizes.Text))=0 then
+      EditSizes.Text := SizeStr
+    else
+      EditSizes.Text := EditSizes.Text + ', ' + SizeStr;
+  end else begin
+    if TrySizesStrToSizes(EditSizes.Text, Sizes) then begin
+      for i:=0 to High(Sizes) do
+        if Sizes[i]=Button.Tag then begin
+          for j:=i to Length(Sizes)-2 do
+            Sizes[j] := Sizes[j+1];
+          SetLength(Sizes, Length(Sizes)-1);
+          EditSizes.Text := SizesToSizesStr(Sizes);
+          break;
+        end;
+    end;
+  end;
+  UpdateSizes;
   UpdateControls;
 end;
 
@@ -510,6 +550,22 @@ begin
     result := 'single';
   else
     result := IntToStr(ThreadCount);
+  end;
+end;
+
+procedure TMainDialog.UpdateSizes;
+var
+  i :integer;
+  SizeDict :TSizeDict;
+  Sizes :TSizes;
+begin
+  if TrySizesStrToSizes(EditSizes.Text, Sizes) then begin
+    EditSizes.Text := SizesToSizesStr(Sizes);
+    SizeDict := TSizeDict.Create;
+    for i:=0 to High(Sizes) do
+      SizeDict.Add(Sizes[i], i);
+    with ToolBarSizeButtons do for i:=0 to ButtonCount-1 do
+      Buttons[i].Down := SizeDict.ContainsKey(Buttons[i].Tag);
   end;
 end;
 
@@ -745,7 +801,7 @@ begin
     SelText := ''
   else
     EditSizes.Text := '';
-//  UpdateControls;
+  UpdateSizes;
 end;
 
 procedure TMainDialog.ActionEditWatermarkExecute(Sender: TObject);
