@@ -548,7 +548,7 @@ begin
     result := Dispatcher.Execute(Tasks);
 
     if Assigned(FOnPrint) then with Dispatcher.Stats do
-      FOnPrint(self, Format('Tasks: %d, Successful: %d, Failed: %d, Elapsed: %.2fs',
+      FOnPrint(self, Format('Tasks:%d  Successful:%d  Failed:%d  Elapsed:%.2fs',
         [TaskCount, Successful, Failed, Elapsed/1000.0]));
 
   finally
