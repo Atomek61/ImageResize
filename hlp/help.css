@@ -1,0 +1,39 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+:root {
+  --bkghue: 216;
+  --fgdhue: 204;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+  padding: 0;
+  font: 14pt "Open Sans";
+  background-color: hsl(var(--bkghue), 40%, 90%);
+  background-image: url("images/bkgshutter.png");
+  color: hsl(var(--fgdhue), 20%, 40%);
+  max-width: 800px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  padding: 0;
+  margin: 0.3em 0px 0px 0px;
+  line-height: 1.3em;
+}
+
+h1 {font-size: 24pt; border-bottom: 2px solid hsl(var(--fgdhue), 20%, 40%);}
+h2 {font-size: 20pt;}
+h3 {font-size: 16pt; font-weight: bold;}
+h4 {font-size: 14pt; font-style: italic;}
+
+p {
+  margin: 1em 0 1em 0;
+}
+
+table {
+  margin: 1em 0 1em 0;
+}
+
+td {
+  padding: 0.2em 0.4em 0.2em 0;
+}

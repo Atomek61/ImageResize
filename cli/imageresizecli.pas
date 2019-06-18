@@ -11,8 +11,8 @@ uses
   { you can add units after this } fileutil, utils, imgres, generics.collections;
 
 const
-  IMGRESCLIVER = '1.9.1';
-  IMGRESCLICPR = 'imgres CLI V'+IMGRESCLIVER+' (c) 2019 Jan Schirrmacher, www.atomek.de';
+  IMGRESCLIVER = '1.9.2';
+  IMGRESCLICPR = 'imgres CLI V'+IMGRESCLIVER+' for engine V'+IMGRESVER+' (c) 2019 Jan Schirrmacher, www.atomek.de';
 
   INTROSTR = 'Free tool for jpg and png quality file resizing.';
   USAGESTR = '  Usage: imgres (srcfilename|@srcfilelist) dstfolder [-s size[,size,..] [-j jpgquality]  [-p pngcompression] [-w watermark] [-t threadcount] [-h] [-q]';
@@ -85,6 +85,7 @@ var
   i :integer;
   Items :TStringDynArray;
   FloatParams :TSingleDynArray;
+  MrkSource :integer;
   MrkFilename :string;
   MrkSize, MrkX, MrkY :single;
   MrkAlpha :single;
@@ -148,6 +149,7 @@ begin
       PngCompression := Processor.PngCompression;
 
     // Watermark "C:\Folder\mark%SIZE%.png:-1.0,-1.0:50.0"
+    MrkSource := msDisabled;
     MrkFilename := '';
     MrkSize := Processor.MrkSize;
     MrkX := Processor.MrkX;
@@ -156,8 +158,10 @@ begin
     Param := GetOptionValue('w', 'watermark');
     if Param<>'' then begin
       inc(OptionCount, 2);
-      if not StrToStringArray(Param, '?', Items) or (Length(Items)>3) then
+      if not StrToStringArray(Param, '?', Items) or (Length(Items)<1) or (Length(Items)>3) then
         raise Exception.CreateFmt('Invalid number of watermark parameters ''%s''.', [Param]);
+      MrkSource := msFile;
+      MrkFilename := Items[0];
       if Length(Items)>1 then begin
         if not StrToSingleArray(Items[1], ',', FloatParams, FormatSettings) or (Length(FloatParams)<>3) then
           raise Exception.CreateFmt('Invalid number of watermark position parameters ''%s''.', [Items[1]]);
@@ -224,6 +228,7 @@ begin
     Processor.Sizes := SizesToSizesStr(Sizes);
     Processor.JpgQuality := JpgQuality;
     Processor.PngCompression := PngCompression;
+    Processor.MrkSource := MrkSource;
     Processor.MrkFilename := MrkFilename;
     Processor.MrkSize := MrkSize;
     Processor.MrkX := MrkX;

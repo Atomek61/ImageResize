@@ -43,7 +43,7 @@ object MainDialog: TMainDialog
     object Label1: TLabel
       Left = 24
       Height = 15
-      Top = 72
+      Top = 77
       Width = 81
       Caption = 'Source &File List:'
       FocusControl = MemoSrcFilenames
@@ -141,10 +141,10 @@ object MainDialog: TMainDialog
       end
     end
     object LabelSrcFilnamesRequired: TLabel
-      Left = 8
+      Left = 10
       Height = 18
       Hint = 'Required'
-      Top = 69
+      Top = 74
       Width = 10
       Caption = '*'
       Font.Color = clRed
@@ -318,9 +318,9 @@ object MainDialog: TMainDialog
         ClientHeight = 252
         ClientWidth = 268
         object Label3: TLabel
-          Left = 25
+          Left = 23
           Height = 15
-          Top = 14
+          Top = 17
           Width = 28
           Caption = 'Si&zes:'
           ParentColor = False

@@ -1,0 +1,186 @@
+<!DOCTYPE HTML>
+<html lang="de">
+
+  <head>
+    <meta charset="UTF-8"/>
+    <title>Image Resize Documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>   
+    <link rel="stylesheet" href="../help.css"/>
+  </head>
+
+  <body>
+  
+    <h1 id="overview">Overview</h1>
+    <p>
+      <i>Image Resize</i> is a program for bulk resizing and watermarking of
+      JPEG and PNG images.
+    </p>
+    <p>
+      Capabilities
+    </p>
+    <ul>
+      <li>Resamples a list of files</li>
+      <li>Resamples each image to a list of sizes</li>
+      <li>Resampling algorithm is <i>Lanczos</i></li>
+      <li>Optional watermark printing</li>
+      <li>Accepts .jpg and .png files</li>
+      <li>Controls compression qualities</li>
+      <li>GUI, CLI and API interfaces available</li>
+    </ul>
+    <p>
+      Incapabilites
+    </p>
+    <ul>
+      <li>stretching</li>
+      <li>format conversion (JPEG remains JPEG and PNG remains PNG)</li>
+      <li>preview</li>
+      <li>file renaming</li>
+      <li>meta information handling (EXIF)</li>
+    </ul>
+    
+    <h1 id="basics">Basic Instructions</h1>
+    <p>
+      The program needs at least three informations to work:
+    </p>
+    <ol>
+      <li>Enter a source filename or a list of source filenames<br/><img src="images/minsrc.png"/></li>
+      <li>Enter a destination folder and a placeholder for the size, in case of a list of sizes<br/><img src="images/mindst.png"/></li>
+      <li>Enter a destination size or a list of destination sizes<br/><img src="images/minsize.png"/></li>
+      <li>Press<br/><img src="images/minexec.png"/></li>
+    </ol>
+    <p>
+      Optionally a watermark file can be chosen to be printed at any place and
+      at any size to each resulting image.
+    </p>
+    
+    <h1 id="srcfilelist">Entering multiple Source Files</h1>
+    <p>
+      Image Resize can resample a list of source files. The list consists of
+      fully qualified filenames and can be entered
+    </p>
+    <ol>
+      <li>manually, each line a file</li>
+      <li>by browsing a folder with <b>Browse...</b></li>
+      <li>dragging files from the explorer into the window</li>
+    </ol>
+    <p>
+      The list can contain .jpg files and .png files. The filenames will be
+      retained. Relative pathes are based on the programs working directory.
+    </p>
+    
+    <h1 id="dstfolder">Destination Folder</h1>
+    <p>
+      A destination folder is required. You can enter it manually or browse it
+      with <img src="images/btnbrowsedstfolder.png"/>
+    </p>
+    <p>
+      If you enter multiple destination sizes, then you should enter the placeholder
+      <i>%SIZE%</i> in the path, where Image Resize will insert the size in pixels.
+      If multiple sizes are entered and the placeholder is missing, it will be
+      appended automatically.
+    </p>
+    
+    <h1>Sizes List</h1>
+    <p>
+      Image Resize can create mutliple resolutions for each source file. Enter
+      a list of sizes just by appending the additional sizes with commas.<br/>
+      <img src="images/multiplesizes.png"/>
+    </p>
+    <p>
+      You can enter all sizes you want. The buttons beneath the list are only
+      suggestions.
+    </p>
+    <p>
+      Change the list manually, by pressing the suggested size buttons or with
+      the clear button <img src="images/btnclearsizes.png"/>. To remove a single
+      size, double-click the size and press the clear button, or press the
+      appropriate suggestion button again.
+    </p>
+    
+    <h1 id="qualities">Image Qualities</h1>
+    <p>
+      You can control the degree of compression for either the JPEG format or
+      the PNG format.
+    </p>
+    <p>
+      For JPEG encoded files a better quality results in larger files (lower 
+      compression) of the destination files. 75 to 90 percent are good choices.
+      <br/><img src="images/jpgqualities.png"/>
+    </p>
+    <p>
+      In the case of PNG files there are 4 compression degrees possible - none, 
+      fastest, default and maximum. The quality of the resulting file is always
+      the same, because PNG compression is lossless. The drawback of a maximum
+      compression is the the effort of compression/uncompression.
+      <br/><img src="images/pngqualities.png"/>
+    </p>
+    
+    <h1 id="watermark">Watermark Printing</h1>
+    <p>
+      A watermark is a semi-transparent small image, that adds a copyright note
+      or whatever to your images. The image must exsist as a PNG file and can
+      have an alpha channel, which means transparency. When printing the
+      image an additional transparency can be entered. 20 to 30 percent is good
+      for a discreet appearance, from 50% above the watermark becomes more visible.
+    </p>
+    
+    <h2 id="mrkenable">Enabled</h2>
+    <p>Check this check box to enable watermark printing.</p>
+    
+    <h2 id="mrkfilename">Filename</h2>
+    <p>
+      Enter or browse a PNG file which will be scaled and printed to all destination
+      images.
+    </p>
+    <p>
+      Usually you have to create only one watermark file for all the destination
+      images sizes, because the size is in percent and the watermark will be stretched
+      to the right size. So its ok to create a watermark file with a high resolution,
+      lets say 400px width.
+    </p>
+    <p>
+      There is a way to 
+    </p>
+    <p>
+      You can create a watermark image with
+    </p>
+    <ul>
+      <li>Incscape - a free vector graphic editor</li>
+      <li>Greenfish Icon Editor - a raster images graphic editor</li>
+      <li>with the inbuilt <a href="mrkeditor">Watermark Editor</a></li>
+    </ul>
+    <p>
+      You can use transparency, but keep in mind, that Image Resize allows
+      an overall opacity, so you dont have to consider the printing transparency.
+    </p>
+    <p>
+      Its a good idea to have any glow, shadow or outline effect for a better
+      contrast on dark and bright backgrounds:<br/>
+      <img src="images/watermark3.png"/>
+    </p>
+    
+    <h2 id="mrksize">Size</h2>
+    <p>
+      The watermarks size is the <u>width</u> in percent of the destination image.
+    </p>
+    
+    <h2 id="mrkopaque">Opacity</h2>
+    <p>
+      An opacity of 0% makes the watermark invisible, an opacity of 100% makes
+      it fully opaque. A value of 40% is a good one.
+    </p>
+    <table>
+      <tr><td>10%</td><td><img src="images/opaque10.jpg"/></td>
+      <td>20%</td><td><img src="images/opaque20.jpg"/></td></tr>
+      <tr><td>30%</td><td><img src="images/opaque30.jpg"/></td>
+      <td>40%</td><td><img src="images/opaque40.jpg"/></td></tr>
+      <tr><td>50%</td><td><img src="images/opaque50.jpg"/></td>
+      <td>60%</td><td><img src="images/opaque60.jpg"/></td></tr>
+      <tr><td>70%</td><td><img src="images/opaque70.jpg"/></td>
+      <td>80%</td><td><img src="images/opaque80.jpg"/></td></tr>
+      <tr><td>90%</td><td><img src="images/opaque90.jpg"/></td>
+      <td>100%</td><td><img src="images/opaque100.jpg"/></td></tr>
+    </table>
+  
+  </body>
+</html>

@@ -1,0 +1,11 @@
+[Common]
+Type=WAMS
+Version=100
+
+[Watermark]
+Width=200
+Text=© 2019 WWW.ATOMEK.DE
+Font="Arial Rounded MT Bold"
+FontColor=$000000
+ShadowBlur=6
+ShadowColor=$F0CAA6
