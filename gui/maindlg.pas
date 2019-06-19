@@ -16,12 +16,13 @@ unit maindlg;
 interface
 
 uses
-  Classes, Types, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ComCtrls,
-  ActnList, ExtCtrls, imgres, registry, aboutdlg, inifiles, strutils, LMessages,
-  LCLIntf, Buttons, ImgList, LCLType, BGRABitmap, BGRABitmapTypes, Generics.Collections;
+  Classes, Types, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
+  ComCtrls, ActnList, ExtCtrls, imgres, registry, aboutdlg, inifiles, strutils,
+  LMessages, LCLIntf, Buttons, ImgList, LCLType, LazHelpHTML, BGRABitmap,
+  BGRABitmapTypes, Generics.Collections;
 
 const
-  IMGRESGUIVER = '2.1';
+  IMGRESGUIVER = '2.2';
   IMGRESGUICPR = 'ImageResize V'+IMGRESGUIVER+' © 2019 Jan Schirrmacher, www.atomek.de';
 
   INITYPE = 'IRS';
@@ -42,6 +43,8 @@ const
     'The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.'#10#10+
     'THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.';
   WEBURL = 'www.atomek.de/imageresize/index.html';
+
+  WEBHELPURL = 'http://www.atomek.de/imageresize/hlp22/gui/';
 
   LM_RUN = LM_USER + 1;
 
@@ -101,6 +104,8 @@ type
     GroupBoxMrkLayout: TGroupBox;
     GroupBoxJpgOptions: TGroupBox;
     GroupBoxPngOptions: TGroupBox;
+    HTMLBrowserHelpViewer: THTMLBrowserHelpViewer;
+    HTMLHelpDatabase: THTMLHelpDatabase;
     ImageListMrkPositions: TImageList;
     ImageList20x20: TImageList;
     ImageList24x24: TImageList;
@@ -196,6 +201,8 @@ type
       X, Y: Integer);
     procedure PaintBoxMrkPreviewMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
+    procedure PaintBoxMrkPreviewMouseWheel(Sender: TObject; Shift: TShiftState;
+      WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
     procedure PaintBoxMrkPreviewPaint(Sender: TObject);
     procedure TimerProgressBarOffTimer(Sender: TObject);
     procedure CheckBoxMrkEnabledChange(Sender: TObject);
@@ -243,7 +250,7 @@ var
 implementation
 
 uses
-  mrkeditdlg;
+  math, mrkeditdlg, helpintfs;
 
 {$R *.lfm}
 
@@ -296,6 +303,10 @@ begin
 
   // Show number of cores
   LabelCores.Caption := Format('%d Cores', [TThread.ProcessorCount]);
+
+  // If no local help files, then use online help
+  if not FileExists(IncludeTrailingPathDelimiter(ExtractFilePath(Application.ExeName))+'hlp/gui/index.html') then
+    HTMLHelpDatabase.BaseURL := WEBHELPURL;
 end;
 
 procedure TMainDialog.FormDestroy(Sender: TObject);
@@ -717,6 +728,30 @@ begin
     PaintBoxMrkPreview.Cursor := crHandPoint;
 end;
 
+procedure TMainDialog.PaintBoxMrkPreviewMouseWheel(Sender: TObject;
+  Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint;
+  var Handled: Boolean);
+
+  procedure ChangePos(Dir :integer);
+  var
+    v :integer;
+  begin
+    with UpDownMrkSize do begin
+      v := Position + Dir*5;
+      if v<0 then v := 0 else if v>100 then v := 100;
+      v := (v div 5) * 5;
+      if v<1 then v := 1 else if v>100 then v := 100;
+      Position := v
+    end;
+  end;
+
+begin
+  if Shift = [ssCtrl] then begin
+    ChangePos(Sign(WheelDelta));
+    Handled := true;
+  end;
+end;
+
 procedure TMainDialog.PaintBoxMrkPreviewPaint(Sender: TObject);
 var
   op :single;
@@ -970,7 +1005,8 @@ end;
 
 procedure TMainDialog.ActionHelpExecute(Sender: TObject);
 begin
-  OpenUrl('http://www.atomek.de/imageresize/index.html#gui');
+  ShowHelpOrErrorForKeyword('','HTML/index.html');
+//  OpenUrl('http://www.atomek.de/imageresize/index.html#gui');
 end;
 
 end.

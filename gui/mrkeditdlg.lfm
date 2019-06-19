@@ -1,13 +1,13 @@
 object MrkEditDialog: TMrkEditDialog
   Left = 277
-  Height = 348
+  Height = 280
   Top = 344
   Width = 684
   BorderIcons = [biSystemMenu]
   Caption = 'Watermark Image Editor'
-  ClientHeight = 348
+  ClientHeight = 280
   ClientWidth = 684
-  Constraints.MinHeight = 220
+  Constraints.MinHeight = 280
   Constraints.MinWidth = 684
   OnClose = FormClose
   OnCreate = FormCreate
@@ -18,7 +18,9 @@ object MrkEditDialog: TMrkEditDialog
     Left = 80
     Height = 23
     Top = 112
-    Width = 217
+    Width = 189
+    HelpType = htKeyword
+    HelpKeyword = 'HTML/index.html#mrktext'
     OnChange = EditChanged
     TabOrder = 1
     Text = '© 2019 Your Name'
@@ -46,8 +48,10 @@ object MrkEditDialog: TMrkEditDialog
     Height = 23
     Top = 144
     Width = 189
+    HelpType = htKeyword
+    HelpKeyword = 'HTML/index.html#mrkfont'
     OnChange = EditChanged
-    TabOrder = 2
+    TabOrder = 3
     Text = '"Arial", Bold, Italic'
   end
   object ColorBoxFontColor: TColorBox
@@ -55,11 +59,13 @@ object MrkEditDialog: TMrkEditDialog
     Height = 22
     Top = 176
     Width = 120
+    HelpType = htKeyword
+    HelpKeyword = 'HTML/index.html#mrkcolor'
     Selected = clWhite
     Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbPrettyNames]
     ItemHeight = 16
     OnChange = EditChanged
-    TabOrder = 4
+    TabOrder = 5
   end
   object Label3: TLabel
     Left = 24
@@ -75,18 +81,20 @@ object MrkEditDialog: TMrkEditDialog
     Height = 22
     Top = 208
     Width = 121
+    HelpType = htKeyword
+    HelpKeyword = 'HTML/index.html#mrkshadow'
     Selected = clNavy
     Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbPrettyNames]
     ItemHeight = 16
     OnChange = EditChanged
-    TabOrder = 5
+    TabOrder = 6
   end
   object Label4: TLabel
     Left = 24
     Height = 15
     Top = 211
     Width = 45
-    Caption = 'Shado&w:'
+    Caption = 'S&hadow:'
     FocusControl = ColorBoxShadowColor
     ParentColor = False
   end
@@ -94,8 +102,8 @@ object MrkEditDialog: TMrkEditDialog
     Left = 24
     Height = 15
     Top = 82
-    Width = 23
-    Caption = 'Si&ze:'
+    Width = 35
+    Caption = '&Width:'
     FocusControl = EditWidth
     ParentColor = False
   end
@@ -105,6 +113,8 @@ object MrkEditDialog: TMrkEditDialog
     Hint = 'Width of the resulting raster image,'#13#10'about 200px is a good value.'
     Top = 80
     Width = 41
+    HelpType = htKeyword
+    HelpKeyword = 'HTML/index.html#mrkwidth'
     OnChange = EditChanged
     TabOrder = 0
     Text = '200'
@@ -123,8 +133,10 @@ object MrkEditDialog: TMrkEditDialog
     Height = 23
     Top = 240
     Width = 104
+    HelpType = htKeyword
+    HelpKeyword = 'HTML/index.html#mrkblur'
     OnChangeBounds = EditChanged
-    TabOrder = 6
+    TabOrder = 7
     Text = '6'
   end
   object UpDownShadowBlur: TUpDown
@@ -136,7 +148,7 @@ object MrkEditDialog: TMrkEditDialog
     Min = 0
     OnChanging = UpDownShadowBlurChanging
     Position = 6
-    TabOrder = 7
+    TabOrder = 8
   end
   object ButtonBrowseFont: TBitBtn
     Left = 272
@@ -198,21 +210,21 @@ object MrkEditDialog: TMrkEditDialog
       0000000000000000000000000000000000000000000000000000
     }
     OnClick = ButtonBrowseFontClick
-    TabOrder = 3
+    TabOrder = 4
   end
   object PanelPreview: TPanel
     Left = 312
-    Height = 270
+    Height = 202
     Top = 30
     Width = 362
     Anchors = [akTop, akLeft, akRight, akBottom]
     BevelOuter = bvLowered
-    ClientHeight = 270
+    ClientHeight = 202
     ClientWidth = 362
-    TabOrder = 10
+    TabOrder = 11
     object PaintBoxPreview: TPaintBox
       Left = 1
-      Height = 268
+      Height = 200
       Top = 1
       Width = 360
       Align = alClient
@@ -230,18 +242,18 @@ object MrkEditDialog: TMrkEditDialog
   object ButtonOkAndSave: TBitBtn
     Left = 480
     Height = 27
-    Top = 312
+    Top = 244
     Width = 90
     Action = ActionOk
     Anchors = [akRight, akBottom]
     Default = True
     Images = ImageList20x20
-    TabOrder = 8
+    TabOrder = 9
   end
   object ButtonOkAndSave2: TBitBtn
     Left = 575
     Height = 27
-    Top = 312
+    Top = 244
     Width = 99
     Anchors = [akRight, akBottom]
     Cancel = True
@@ -250,7 +262,7 @@ object MrkEditDialog: TMrkEditDialog
     ModalResult = 2
     Images = ImageList20x20
     ImageIndex = 1
-    TabOrder = 9
+    TabOrder = 10
   end
   object ToolBar: TToolBar
     Left = 8
@@ -264,7 +276,7 @@ object MrkEditDialog: TMrkEditDialog
     EdgeBorders = []
     Images = ImageList24x24
     ShowCaptions = True
-    TabOrder = 11
+    TabOrder = 12
     object ToolButton1: TToolButton
       Left = 1
       Top = 0
@@ -285,6 +297,17 @@ object MrkEditDialog: TMrkEditDialog
       Top = 0
       Action = ActionDefault
     end
+  end
+  object ButtonInsertCopyright: TBitBtn
+    Left = 272
+    Height = 25
+    Top = 111
+    Width = 25
+    Images = ImageList20x20
+    ImageIndex = 4
+    OnClick = ButtonInsertCopyrightClick
+    Spacing = 0
+    TabOrder = 2
   end
   object FontDialog: TFontDialog
     Font.CharSet = ANSI_CHARSET
@@ -313,7 +336,7 @@ object MrkEditDialog: TMrkEditDialog
     left = 408
     top = 152
     Bitmap = {
-      4C69040000001400000014000000000000000000000000000000000000000000
+      4C69050000001400000014000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -513,6 +536,56 @@ object MrkEditDialog: TMrkEditDialog
       00FF00000000000000FF000000FF00000000000000FF000000FF000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000065060B4965060B9965060BBD65060BB865060B7D6506
+      0B1D000000000000000000000000000000000000000000000000000000000000
+      00000000000000000000000000000000000065060B1665060BBE65060BFA6506
+      0BB465060B8365060B8F65060BD165060BFA65060B7900000000000000000000
+      0000000000000000000000000000000000000000000000000000000000006506
+      0B0865060BD065060BC665060B1D000000000000000000000000000000006506
+      0B5265060BF265060B7900000000000000000000000000000000000000000000
+      000000000000000000000000000065060B7C65060BE065060B0A65060B166506
+      0BAC65060BF865060BF565060B920000000065060B4F65060BFA65060B210000
+      0000000000000000000000000000000000000000000000000000000000006506
+      0BE765060B640000000065060BB165060BC365060B1065060B2B65060BE76506
+      0B440000000065060BC565060B85000000000000000000000000000000000000
+      000000000000000000000000000065060BFF65060B1D65060B0965060BFC6506
+      0B5D000000000000000000000000000000000000000065060B7B65060BBC0000
+      0000000000000000000000000000000000000000000000000000000000006506
+      0BFF65060B1065060B1565060BFF65060B500000000000000000000000000000
+      00000000000065060B6E65060BCA000000000000000000000000000000000000
+      000000000000000000000000000065060BFC65060B3965060B0265060BE96506
+      0B7E000000000000000065060B6665060B200000000065060B9965060BA50000
+      0000000000000000000000000000000000000000000000000000000000006506
+      0BBB65060BA00000000065060B6165060BF565060B8E65060BAE65060BF06506
+      0B2965060B1065060BEE65060B56000000000000000000000000000000000000
+      000000000000000000000000000065060B3665060BFC65060B55000000006506
+      0B2E65060B7765060B7565060B1A65060B0565060BB265060BD165060B020000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000065060B6965060BFA65060B9D65060B3465060B0265060B0F65060B506506
+      0BCE65060BE365060B2300000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000065060B3E65060BC76506
+      0BFF65060BFF65060BFF65060BF865060B9965060B1500000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000065060B1965060B3C65060B3765060B050000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000
     }
   end
@@ -543,7 +616,7 @@ object MrkEditDialog: TMrkEditDialog
       ImageIndex = 3
     end
     object ActionSaveAs: TAction
-      Caption = 'Save as...'
+      Caption = 'Save &as...'
       Hint = 'Saves a .png (Portable Network Graphics) file'#13#10'with the current watermark for later use in'#13#10'ImageResize.'#13#10#13#10'Moreover the settings are saved as a .was file.'#13#10#13#10'You can load a .was file to edit the settings again.'
       ImageIndex = 3
       OnExecute = ActionSaveAsExecute
@@ -557,6 +630,9 @@ object MrkEditDialog: TMrkEditDialog
     object ActionFont: TAction
       Caption = 'Font...'
       OnExecute = ActionFontExecute
+    end
+    object ActionInsertCopyright: TAction
+      Caption = 'ActionInsertCopyright'
     end
   end
   object ImageList24x24: TImageList

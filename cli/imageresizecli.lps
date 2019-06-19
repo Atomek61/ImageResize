@@ -9,8 +9,8 @@
         <Filename Value="imageresizecli.pas"/>
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="242"/>
-        <CursorPos X="29" Y="258"/>
+        <TopLine Value="243"/>
+        <CursorPos Y="255"/>
         <UsageCount Value="132"/>
         <Loaded Value="True"/>
       </Unit0>
@@ -601,28 +601,21 @@
     </RunParams>
   </ProjectSession>
   <Debugging>
-    <BreakPoints Count="3">
+    <BreakPoints Count="2">
       <Item1>
         <Kind Value="bpkSource"/>
         <WatchScope Value="wpsLocal"/>
         <WatchKind Value="wpkWrite"/>
         <Source Value="imageresizecli.pas"/>
-        <Line Value="255"/>
+        <Line Value="104"/>
       </Item1>
       <Item2>
         <Kind Value="bpkSource"/>
         <WatchScope Value="wpsLocal"/>
         <WatchKind Value="wpkWrite"/>
-        <Source Value="imageresizecli.pas"/>
-        <Line Value="104"/>
-      </Item2>
-      <Item3>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
         <Source Value="..\src\imgres.pas"/>
         <Line Value="297"/>
-      </Item3>
+      </Item2>
     </BreakPoints>
     <Watches Count="1">
       <Item1>

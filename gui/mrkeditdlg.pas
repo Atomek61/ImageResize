@@ -20,6 +20,7 @@ type
   { TMrkEditDialog }
 
   TMrkEditDialog = class(TForm)
+    ActionInsertCopyright: TAction;
     ActionDefault: TAction;
     ActionSave: TAction;
     ActionNew: TAction;
@@ -28,6 +29,7 @@ type
     ActionSaveAs: TAction;
     ActionOk: TAction;
     ActionList1: TActionList;
+    ButtonInsertCopyright: TBitBtn;
     ButtonBrowseFont: TBitBtn;
     ButtonOkAndSave: TBitBtn;
     ButtonOkAndSave2: TBitBtn;
@@ -57,6 +59,7 @@ type
     ToolButton3: TToolButton;
     ToolButton5: TToolButton;
     UpDownShadowBlur: TUpDown;
+    procedure ButtonInsertCopyrightClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure ActionDefaultExecute(Sender: TObject);
     procedure ActionFontExecute(Sender: TObject);
@@ -271,6 +274,11 @@ begin
   Caption := DIALOGTITLE;
   FMrkImage := nil;
   LoadFromRegistry;
+end;
+
+procedure TMrkEditDialog.ButtonInsertCopyrightClick(Sender: TObject);
+begin
+  EditText.SelText := '©';
 end;
 
 procedure TMrkEditDialog.FormDestroy(Sender: TObject);

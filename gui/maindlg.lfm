@@ -34,6 +34,8 @@ object MainDialog: TMainDialog
       Hint = 'Enter a list of files with absolute pathes.'#13#10#13#10'Press Browse... and select multiple files while'#13#10'holding <STRG> or <SHIFT> and clicking. '
       Top = 96
       Width = 352
+      HelpType = htKeyword
+      HelpKeyword = 'HTML/index.html#srcfilelist'
       Anchors = [akTop, akLeft, akRight, akBottom]
       OnChange = MemoSrcFilenamesChange
       ScrollBars = ssAutoVertical
@@ -65,6 +67,8 @@ object MainDialog: TMainDialog
       Hint = 'Required - destination folder of the resampled images.'#13#10#13#10'If multiple sizes are entered, insert a placeholder %SIZE%'#13#10'into the path where the program shall insert the current size .'
       Top = 403
       Width = 326
+      HelpType = htKeyword
+      HelpKeyword = 'HTML/index.html#dstfolder'
       Anchors = [akLeft, akRight, akBottom]
       OnChange = EditDstFolderChange
       TabOrder = 3
@@ -307,13 +311,15 @@ object MainDialog: TMainDialog
     object PageControl: TPageControl
       Left = 376
       Height = 280
-      Top = 96
+      Top = 95
       Width = 276
-      ActivePage = TabSheetSizes
+      ActivePage = TabSheetRessources
       Anchors = [akTop, akRight]
-      TabIndex = 0
+      TabIndex = 3
       TabOrder = 5
       object TabSheetSizes: TTabSheet
+        HelpType = htKeyword
+        HelpKeyword = 'HTML/index.html#sizes'
         Caption = 'Sizes'
         ClientHeight = 252
         ClientWidth = 268
@@ -372,6 +378,8 @@ object MainDialog: TMainDialog
         end
       end
       object TabSheetQuality: TTabSheet
+        HelpType = htKeyword
+        HelpKeyword = 'HTML/index.html#quality'
         Caption = 'Quality'
         ClientHeight = 252
         ClientWidth = 268
@@ -454,6 +462,8 @@ object MainDialog: TMainDialog
         end
       end
       object TabSheetMrk: TTabSheet
+        HelpType = htKeyword
+        HelpKeyword = 'HTML/index.html#watermark'
         Caption = 'Watermark'
         ClientHeight = 252
         ClientWidth = 268
@@ -540,7 +550,7 @@ object MainDialog: TMainDialog
             Width = 17
             Associate = EditMrkSize
             Increment = 5
-            Min = 0
+            Min = 1
             Position = 10
             TabOrder = 1
             Flat = True
@@ -628,7 +638,7 @@ object MainDialog: TMainDialog
             Width = 90
             Alignment = taCenter
             AutoSize = False
-            Caption = 'Click or drag'#13#10'the watermarks'#13#10'position'
+            Caption = 'Click or drag'#13#10'the watermark'
             Font.Color = clGrayText
             Layout = tlCenter
             ParentColor = False
@@ -665,6 +675,7 @@ object MainDialog: TMainDialog
               OnMouseLeave = PaintBoxMrkPreviewMouseLeave
               OnMouseMove = PaintBoxMrkPreviewMouseMove
               OnMouseUp = PaintBoxMrkPreviewMouseUp
+              OnMouseWheel = PaintBoxMrkPreviewMouseWheel
               OnPaint = PaintBoxMrkPreviewPaint
             end
           end
@@ -844,6 +855,8 @@ object MainDialog: TMainDialog
         end
       end
       object TabSheetRessources: TTabSheet
+        HelpType = htKeyword
+        HelpKeyword = 'HTML/index.html#boost'
         Caption = 'Boost'
         ClientHeight = 252
         ClientWidth = 268
@@ -1025,7 +1038,6 @@ object MainDialog: TMainDialog
       Caption = '&Help...'
       ImageIndex = 6
       OnExecute = ActionHelpExecute
-      ShortCut = 112
     end
     object ActionEditWatermark: TAction
       Caption = '&Watermark...'
@@ -2211,5 +2223,18 @@ object MainDialog: TMainDialog
     OnException = ApplicationProperties1Exception
     left = 256
     top = 232
+  end
+  object HTMLHelpDatabase: THTMLHelpDatabase
+    BaseURL = 'file://hlp/gui/'
+    AutoRegister = True
+    KeywordPrefix = 'HTML/'
+    left = 511
+    top = 66
+  end
+  object HTMLBrowserHelpViewer: THTMLBrowserHelpViewer
+    BrowserParams = '%s'
+    AutoRegister = True
+    left = 552
+    top = 66
   end
 end
