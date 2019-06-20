@@ -6,347 +6,357 @@
     <title>Image Resize Documentation</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>   
     <link rel="stylesheet" href="../help.css"/>
+    <style>
+      br+img {margin-top: 0.3em}
+    </style>
   </head>
 
   <body>
+    <header style="background-image: url('../images/title.jpg');">
+    </header>
   
-    <h1 id="overview">Overview</h1>
-    <p>
-      <i>Image Resize</i> is a program for bulk resizing and watermarking of
-      JPEG and PNG images.
-    </p>
+    <div class="contents">
+      <h1 id="overview">Overview</h1>
+      <p>
+        <i>Image Resize</i> is a program for bulk resizing and watermarking of
+        JPEG and PNG images.
+      </p>
+      
+      <h2 id="contents">Contents</h2>
+      <a href="#basics">Basics</a><br/>
+      <a href="#srcfilelist">Source File List</a><br/>
+      <a href="#dstfolder">Destination Folder</a><br/>
+      <a href="#sizes">Sizes</a><br/>
+      <a href="#quality">Quality</a><br/>
+      <a href="#watermark">Watermark</a><br/>
+      <a href="#boost">Boost</a><br/>
+      <a href="#saving">Saving and Loading</a><br/>
+      <a href="#commandline">Commandline Parameters</a><br/>
+      <a href="#mrkeditor">Watermark Editor</a><br/>
+      
+      <p>
+        Capabilities
+      </p>
+      <ul>
+        <li>resamples a list of files</li>
+        <li>resamples each image to a list of sizes</li>
+        <li>uses <i>Lanczos</i> filtering</li>
+        <li>optional watermark printing</li>
+        <li>accepts .jpg and .png files</li>
+        <li>controls compression qualities</li>
+        <li>GUI, CLI and API interfaces available</li>
+      </ul>
+      <p>
+        Incapabilites
+      </p>
+      <ul>
+        <li>stretching</li>
+        <li>format conversion (JPEG remains JPEG and PNG remains PNG)</li>
+        <li>preview</li>
+        <li>file renaming</li>
+        <li>meta information handling (EXIF)</li>
+      </ul>
+      
+      <h1 id="basics">Basic Instructions</h1>
+      <p>
+        The program needs at least three informations to work:
+      </p>
+      <ol>
+        <li>A source filename or a list of source filenames<br/><img src="images/minsrc.png"/></li>
+        <li>A destination folder and a placeholder for the size, in case of a list of sizes<br/><img src="images/mindst.png"/></li>
+        <li>A destination size or a list of destination sizes<br/><img src="images/minsize.png"/></li>
+      </ol>
+      <p>
+        Finally press <img class="btn" src="images/minexec.png"/> to start the resampling.
+      </p>
+      <p>
+        Optionally a watermark file can be chosen to be printed at any place and
+        at any size to each resulting image.
+      </p>
+      
+      <h1 id="srcfilelist">Source File List</h1>
+      <p>
+        Image Resize can resample a list of source files. The list consists of
+        path/filenames and can be entered
+      </p>
+      <ol>
+        <li>manually, each line a file</li>
+        <li>by browsing a folder with <b>Browse...</b></li>
+        <li>dragging files from the explorer into the window</li>
+      </ol>
+      <p>
+        The list can contain .jpg files and .png files. The filenames will be
+        retained. Relative pathes are based on the programs working directory.
+      </p>
+      <a class="chfot" href="#contents">Contents</a>
+      
+      <h1 id="dstfolder">Destination Folder</h1>
+      <p>
+        A destination folder is required. You can enter it manually or browse it
+        with <img class="btn" src="images/btnbrowse.png"/>
+      </p>
+      <p>
+        If you enter multiple destination sizes, then you should enter the placeholder
+        <b><i>%SIZE%</i></b> in the path, where Image Resize will insert the size in pixels.
+        If multiple sizes are entered and the placeholder is missing, it will be
+        appended automatically.
+      </p>
+      <a class="chfot" href="#contents">Contents</a>
+      
+      <h1 id="sizes">Sizes</h1>
+      <p>
+        A <i>size</i> is the width of the longer side of the resized image. Usually
+        the source size is larger than the destination size.
+      </p>
+      <p>
+        Image Resize can create mutliple resolutions for each source file. Enter
+        a list of sizes just by appending the additional sizes with commas.<br/>
+        <img src="images/multiplesizes.png"/>
+      </p>
+      <p>
+        You can enter all sizes you want. The buttons beneath the list are only
+        suggestions.
+      </p>
+      <p>
+        Change the list manually, by pressing the suggested size buttons or with
+        the clear button <img class="btn" src="images/btnclearsizes.png"/>&nbsp;.
+        To remove a single size, double-click the size and press the clear button,
+        or press the associated suggestion button again.
+      </p>
+      <a class="chfot" href="#contents">Contents</a>
+      
+      <h1 id="quality">Quality</h1>
+      <p>
+        You can control the degree of compression for the JPEG format and for
+        the PNG format.
+      </p>
+      <p>
+        For JPEG encoded files a better quality results in larger files and lower 
+        compression of the destination files. 75 to 90 percent are good choices.
+        <br/><img src="images/jpgqualities.png"/>
+      </p>
+      <p>
+        In the case of PNG files there are 4 compression degrees possible - none, 
+        fastest, default and maximum. The quality of the resulting file is always
+        the same, because PNG compression is lossless. The drawback of a maximum
+        compression is the the effort of compression/uncompression.
+        <br/><img src="images/pngqualities.png"/>
+      </p>
+      <a class="chfot" href="#contents">Contents</a>
+      
+      <h1 id="watermark">Watermark</h1>
+      <p>
+        A watermark is a semi-transparent small image, that adds a copyright note
+        or whatever to your images. The image must exsist as a PNG file and can
+        have an alpha channel, which means transparency. When printing the
+        image an additional transparency can be entered. 20 to 30 percent is good
+        for a discreet appearance, from 50% above the watermark becomes more visible.
+      </p>
+      
+      <h3 id="mrkenable">Enabled</h3>
+      <p>Check this check box to enable watermark printing.</p>
+      
+      <h3 id="mrkfilename">Filename</h3>
+      <p>
+        Enter or browse a PNG file which will be scaled and printed to all destination
+        images.
+      </p>
+      <p>
+        Usually you have to create only one watermark file for all the destination
+        images sizes, because the size is in percent and the watermark will be stretched
+        to the right size. So its ok to create a watermark file with a high resolution,
+        lets say 400px width.
+      </p>
+      <p>
+        There is a way to assign a different watermark image for each size. For
+        this case, enter the placeholder <i><b>%Size%</b></i> into the watermark
+        filename. You must have prepared a watermark file for each size.
+      </p>
+      <p>
+        You can create a watermark image with
+      </p>
+      <ul>
+        <li><a href="http://inkscape.org">Inkscape</a> - a free vector graphic editor</li>
+        <li><a href="http://gimp.org">Gimp</a> - a free raster graphic editor</li>
+        <li><a href="http://greenfishsoftware.org">Greenfish Icon Editor</a> - a raster images graphic editor</li>
+        <li>with the inbuilt <a href="#mrkeditor">Watermark Editor</a></li>
+      </ul>
+      <p>
+        You can use transparency, but keep in mind, that Image Resize allows
+        an overall opacity, so you dont have to consider the printing transparency.
+      </p>
+      <p>
+        Its a good idea to have any glow, shadow or outline effect for a better
+        contrast on dark and bright backgrounds:<br/>
+        <img src="images/watermark3.png"/>
+      </p>
+      
+      <h3 id="mrksize">Size</h3>
+      <p>
+        The watermarks size is the <u>width</u> in percent of the destination image.
+      </p>
+      
+      <h3 id="mrkopaque">Opacity</h3>
+      <p>
+        An opacity of 0% makes the watermark invisible, an opacity of 100% makes
+        it fully opaque. A value of 40% is a good choice.
+      </p>
+      <table>
+        <tr><td>10%</td><td><img src="images/opaque10.jpg"/></td>
+        <td>20%</td><td><img src="images/opaque20.jpg"/></td></tr>
+        <tr><td>30%</td><td><img src="images/opaque30.jpg"/></td>
+        <td>40%</td><td><img src="images/opaque40.jpg"/></td></tr>
+        <tr><td>50%</td><td><img src="images/opaque50.jpg"/></td>
+        <td>60%</td><td><img src="images/opaque60.jpg"/></td></tr>
+        <tr><td>70%</td><td><img src="images/opaque70.jpg"/></td>
+        <td>80%</td><td><img src="images/opaque80.jpg"/></td></tr>
+        <tr><td>90%</td><td><img src="images/opaque90.jpg"/></td>
+        <td>100%</td><td><img src="images/opaque100.jpg"/></td></tr>
+      </table>
+      
+      <h3 id="mrkx">Horizontal Position</h3>
+      <p>
+        The watermarks position is in percent of the horizontal space. If the X-size
+        is 10%, the image is 640px width, the watermark has a size of 20% then the
+        position is 10% * (640px - 20% * 640px) = 51px from the left. 50% means a
+        horizontal centered position.
+      </p>
     
-    <h2 id="contents">Contents</h2>
-    <a href="#basics">Basics</a><br/>
-    <a href="#srcfilelist">Source File List</a><br/>
-    <a href="#dstfolder">Destination Folder</a><br/>
-    <a href="#sizes">Sizes</a><br/>
-    <a href="#quality">Quality</a><br/>
-    <a href="#watermark">Watermark</a><br/>
-    <a href="#boost">Boost</a><br/>
-    <a href="#saving">Saving and Loading</a><br/>
-    <a href="#commandline">Commandline Parameters</a><br/>
-    <a href="#watermarkeditor">Watermark Editor</a><br/>
-    
-    <p>
-      Capabilities
-    </p>
-    <ul>
-      <li>resamples a list of files</li>
-      <li>resamples each image to a list of sizes</li>
-      <li>uses <i>Lanczos</i> filtering</li>
-      <li>optional watermark printing</li>
-      <li>accepts .jpg and .png files</li>
-      <li>controls compression qualities</li>
-      <li>GUI, CLI and API interfaces available</li>
-    </ul>
-    <p>
-      Incapabilites
-    </p>
-    <ul>
-      <li>stretching</li>
-      <li>format conversion (JPEG remains JPEG and PNG remains PNG)</li>
-      <li>preview</li>
-      <li>file renaming</li>
-      <li>meta information handling (EXIF)</li>
-    </ul>
-    
-    <h1 id="basics">Basic Instructions</h1>
-    <p>
-      The program needs at least three informations to work:
-    </p>
-    <ol>
-      <li>A source filename or a list of source filenames<br/><img src="images/minsrc.png"/></li>
-      <li>A destination folder and a placeholder for the size, in case of a list of sizes<br/><img src="images/mindst.png"/></li>
-      <li>A destination size or a list of destination sizes<br/><img src="images/minsize.png"/></li>
-    </ol>
-    <p>
-      Finally press <img class="btn" src="images/minexec.png"/> to start the resampling.
-    </p>
-    <p>
-      Optionally a watermark file can be chosen to be printed at any place and
-      at any size to each resulting image.
-    </p>
-    
-    <h1 id="srcfilelist">Source File List</h1>
-    <p>
-      Image Resize can resample a list of source files. The list consists of
-      path/filenames and can be entered
-    </p>
-    <ol>
-      <li>manually, each line a file</li>
-      <li>by browsing a folder with <b>Browse...</b></li>
-      <li>dragging files from the explorer into the window</li>
-    </ol>
-    <p>
-      The list can contain .jpg files and .png files. The filenames will be
-      retained. Relative pathes are based on the programs working directory.
-    </p>
-    <a class="chfot" href="#contents">Contents</a>
-    
-    <h1 id="dstfolder">Destination Folder</h1>
-    <p>
-      A destination folder is required. You can enter it manually or browse it
-      with <img class="btn" src="images/btnbrowse.png"/>
-    </p>
-    <p>
-      If you enter multiple destination sizes, then you should enter the placeholder
-      <b><i>%SIZE%</i></b> in the path, where Image Resize will insert the size in pixels.
-      If multiple sizes are entered and the placeholder is missing, it will be
-      appended automatically.
-    </p>
-    <a class="chfot" href="#contents">Contents</a>
-    
-    <h1 id="sizes">Sizes</h1>
-    <p>
-      A <i>size</i> is the width of the longer side of the resized image. Usually
-      the source size is larger than the destination size.
-    </p>
-    <p>
-      Image Resize can create mutliple resolutions for each source file. Enter
-      a list of sizes just by appending the additional sizes with commas.<br/>
-      <img src="images/multiplesizes.png"/>
-    </p>
-    <p>
-      You can enter all sizes you want. The buttons beneath the list are only
-      suggestions.
-    </p>
-    <p>
-      Change the list manually, by pressing the suggested size buttons or with
-      the clear button <img class="btn" src="images/btnclearsizes.png"/>. To remove a single
-      size, double-click the size and press the clear button, or press the
-      appropriate suggestion button again.
-    </p>
-    <a class="chfot" href="#contents">Contents</a>
-    
-    <h1 id="quality">Quality</h1>
-    <p>
-      You can control the degree of compression for either the JPEG format or
-      the PNG format.
-    </p>
-    <p>
-      For JPEG encoded files a better quality results in larger files (lower 
-      compression) of the destination files. 75 to 90 percent are good choices.
-      <br/><img src="images/jpgqualities.png"/>
-    </p>
-    <p>
-      In the case of PNG files there are 4 compression degrees possible - none, 
-      fastest, default and maximum. The quality of the resulting file is always
-      the same, because PNG compression is lossless. The drawback of a maximum
-      compression is the the effort of compression/uncompression.
-      <br/><img src="images/pngqualities.png"/>
-    </p>
-    <a class="chfot" href="#contents">Contents</a>
-    
-    <h1 id="watermark">Watermark</h1>
-    <p>
-      A watermark is a semi-transparent small image, that adds a copyright note
-      or whatever to your images. The image must exsist as a PNG file and can
-      have an alpha channel, which means transparency. When printing the
-      image an additional transparency can be entered. 20 to 30 percent is good
-      for a discreet appearance, from 50% above the watermark becomes more visible.
-    </p>
-    
-    <h3 id="mrkenable">Enabled</h3>
-    <p>Check this check box to enable watermark printing.</p>
-    
-    <h3 id="mrkfilename">Filename</h3>
-    <p>
-      Enter or browse a PNG file which will be scaled and printed to all destination
-      images.
-    </p>
-    <p>
-      Usually you have to create only one watermark file for all the destination
-      images sizes, because the size is in percent and the watermark will be stretched
-      to the right size. So its ok to create a watermark file with a high resolution,
-      lets say 400px width.
-    </p>
-    <p>
-      There is a way to assign a different watermark image for each size. For
-      this case, enter the placeholder <i><b>%Size%</b></i> into the watermark
-      filename. You must have prepared a watermark file for each size.
-    </p>
-    <p>
-      You can create a watermark image with
-    </p>
-    <ul>
-      <li>Incscape - a free vector graphic editor</li>
-      <li>Greenfish Icon Editor - a raster images graphic editor</li>
-      <li>with the inbuilt <a href="mrkeditor">Watermark Editor</a></li>
-    </ul>
-    <p>
-      You can use transparency, but keep in mind, that Image Resize allows
-      an overall opacity, so you dont have to consider the printing transparency.
-    </p>
-    <p>
-      Its a good idea to have any glow, shadow or outline effect for a better
-      contrast on dark and bright backgrounds:<br/>
-      <img src="images/watermark3.png"/>
-    </p>
-    
-    <h3 id="mrksize">Size</h3>
-    <p>
-      The watermarks size is the <u>width</u> in percent of the destination image.
-    </p>
-    
-    <h3 id="mrkopaque">Opacity</h3>
-    <p>
-      An opacity of 0% makes the watermark invisible, an opacity of 100% makes
-      it fully opaque. A value of 40% is a good one.
-    </p>
-    <table>
-      <tr><td>10%</td><td><img src="images/opaque10.jpg"/></td>
-      <td>20%</td><td><img src="images/opaque20.jpg"/></td></tr>
-      <tr><td>30%</td><td><img src="images/opaque30.jpg"/></td>
-      <td>40%</td><td><img src="images/opaque40.jpg"/></td></tr>
-      <tr><td>50%</td><td><img src="images/opaque50.jpg"/></td>
-      <td>60%</td><td><img src="images/opaque60.jpg"/></td></tr>
-      <tr><td>70%</td><td><img src="images/opaque70.jpg"/></td>
-      <td>80%</td><td><img src="images/opaque80.jpg"/></td></tr>
-      <tr><td>90%</td><td><img src="images/opaque90.jpg"/></td>
-      <td>100%</td><td><img src="images/opaque100.jpg"/></td></tr>
-    </table>
-    
-    <h3 id="mrkx">Horizontal Position</h3>
-    <p>
-      The watermarks position is in percent of the horizontal space. If the X-size
-      is 10%, the image is 640px width, the watermark has a size of 20% then the
-      position is 10% * (640px - 20% * 640px) = 51px from the left. 50% means a
-      horizontal centered position.
-    </p>
-  
-    <h3 id="mrky">Vertical Position</h3>
-    <p>
-      The watermarks position is in percent of the vertical space. 50% means a
-      vertical centered position. 100% means a bottom aligned watermark.
-    </p>
-    
-    <h1 id="boost">Boost</h1>
-    <h3 id="threads">Threads</h3>
-    <p>
-      Image Resize can utilize the computers full processor power by its thread
-      pooling system. <i>Single</i> means, only one core is used for resampling.
-      You can enter up to the number of the available cores (just enter "maximum")
-      to use the full computers power.
-    </p>
-    <p>
-      In systems with hyper-threading the number of "cores" is the double of the
-      physical cores. Hyper-threading doesnt really accelerate the processing
-      here. If you have 12 cores (6 real cores, 2 threads per core), then using
-      12 threads instead of 6 increases the performance by only about 8%.
-    </p>
-    <h3 id="stoponerr">Stop on Error</h3>
-    <p>
-      This options enables an immediate stop, when an error occures. Otherwise
-      only the current task (task = single resampling) is cancelled.
-    </p>
-    <a class="chfot" href="#contents">Contents</a>
-    
-    <h1 id="saving">Saving and Loading .irs Files</h1>
-    <p>
-      .irs files (Image Resize Settings) are simple text based INI-files. They
-      contain all settings you con see in the main dialog except the
-      <i><b>Boost</b></i>-Settings.
-    </p><p>
-      Because Image Resize stores all current visible settings in the registry,
-      the program doesnt query for saving unsaved settings.
-    </p>
-    <a class="chfot" href="#contents">Contents</a>
-    
-    <h1 id="commandline">Commandline Parameters</h1>
-    <h3><i>filename.irs</i></h3>
-    <p>
-      You can let Image Resize load an .irs file on start by entering a filename
-      as parameter. This way you cab drag a .irs file onto the ImageResize link.
-    </p>
-    <h3>-A  or  -AUTOSTART</h3>
-    <p>
-      Lets Image Resize auto-press the Execute-Button automatically on starting.
-    </p>
-    <h3>-X  or  -AUTOEXIT</h3>
-    <p>
-      Lets Image Resize close after running the conversion process automatically.
-    </p>
-    <a class="chfot" href="#contents">Contents</a>
-    
-    <h1 id="watermarkeditor">Watermark Editor</h1>
-    <p>
-      With <img class="btn" href="images/btnwatermarkeditor.png"/> you can open the
-      inbuilt watermark editor. This simple dialog lets you design a single
-      text line with glow effect and colors of your choice.
-    </p>
-    <table>
-      <tr><td><img src="images/bntnewfav.png"/></td>
-        <td>
-          Load new favorite settings.
-        </td>
-      </tr>
-      <tr><td><img src="images/bntsavefav.png"/></td>
-        <td>
-          Save the current settings as a favorite, which can be loaded later.
-        </td>
-      </tr>
-      <tr><td><img src="images/btnbrowse.png"/></td>
-        <td>
-          Load a previous saved .was file with watermark settings.
-        </td>
-      </tr>
-      <tr><td><img src="images/btnsaveas.png"/></td>
-        <td>
-          Save the current watermark image as a PNG file and the settings to
-          the same folder and with the sdame name but with .was file extension.
-        </td>
-      </tr>
-      <tr id="mrkwidth"><td><b>Size</b></td>
-        <td>
-          Enter the width of the watermark image in pixels. The image will be
-          printed independently from this size with the layouts size setting in
-          percent. Here you enter the resolution of the images. 200px or 400px
-          is a good choice.
-        </td>
-      </tr>
-      <tr id="mrktext"><td><b>Text</b></td>
-        <td>
-          Enter a line of text to this field. Enter the © character with
-          &lt;ALT&gt; &lt;0&gt; &lt;1&gt; &lt;6&gt; &lt;9&gt; or with the
-          <img class="btn" src="images/btninsertcopyright.png"/> button.
-        </td>
-      </tr>
-      <tr id="mrkfont"><td><b>Font</b></td>
-        <td>
-          Enter a font name in quotes and optionally the styles <i>italic</i> and
-          <i>bold</i> or select a font with the dialog <img class="btn" src="images/btnfont.png"/>.
-          Note: some fonts may not render with the right size. I did not find out the
-          reason.
-        </td>
-      </tr>
-      <tr id="mrkcolor"><td><b>Color</b></td>
-        <td>
-          Select a character color (foreground)
-        </td>
-      </tr>
-      <tr id="mrkshadow"><td><b>Shadow</b></td>
-        <td>
-          Select a shadow color (background glowing)
-        </td>
-      </tr>
-      <tr id="mrkblur"><td><b>Blur</b></td>
-        <td>
-          Select a shadow blur in pixel. 6 is a good choice, depending on the
-          width.
-        </td>
-      </tr>
-      <tr><td><b>Ok</b></td>
-        <td>
-          In order to use an edited watermark, you have to save it first or loaded
-          one from a file. Then the Ok-button will be enabled.
-        </td>
-      </tr>
-      <tr><td><b>Cancel</b></td>
-        <td>
-          Closes the dialog without using the last filename.
-        </td>
-      </tr>
-    </table>
+      <h3 id="mrky">Vertical Position</h3>
+      <p>
+        The watermarks position is in percent of the vertical space. 50% means a
+        vertical centered position. 100% means a bottom aligned watermark.
+      </p>
+      <a class="chfot" href="#contents">Contents</a>
+      
+      <h1 id="boost">Boost</h1>
+      <h3 id="threads">Threads</h3>
+      <p>
+        Image Resize can utilize the computers full processor power by its thread
+        pooling system. <i>Single</i> means, only one core is used for resampling.
+        You can enter up to the number of the available cores (just enter "maximum")
+        to use the full computers power.
+      </p>
+      <p>
+        In systems with hyper-threading the number of "cores" is the double of the
+        physical cores. Hyper-threading doesnt really accelerate the processing
+        here. If you have 12 cores (6 real cores, 2 threads per core), then using
+        12 threads instead of 6 increases the performance by only about 8%.
+      </p>
+      <h3 id="stoponerr">Stop on Error</h3>
+      <p>
+        This options enables an immediate stop, when an error occures. Otherwise
+        only the current task (task = single resampling) is cancelled.
+      </p>
+      <a class="chfot" href="#contents">Contents</a>
+      
+      <h1 id="saving">Saving and Loading .irs Files</h1>
+      <p>
+        .irs files (Image Resize Settings) are simple text based INI-files. They
+        contain all settings you con see in the main dialog except the
+        <i><b>Boost</b></i>-Settings.
+      </p><p>
+        Because Image Resize stores all current visible settings in the registry,
+        the program doesnt query for saving unsaved settings.
+      </p>
+      <a class="chfot" href="#contents">Contents</a>
+      
+      <h1 id="commandline">Commandline Parameters</h1>
+      <h3><i>filename.irs</i></h3>
+      <p>
+        You can let Image Resize load an .irs file on start by entering a filename
+        as parameter. This way you cab drag a .irs file onto the ImageResize link.
+      </p>
+      <h3>-A  or  -AUTOSTART</h3>
+      <p>
+        Lets Image Resize auto-press the Execute-Button automatically on starting.
+      </p>
+      <h3>-X  or  -AUTOEXIT</h3>
+      <p>
+        Lets Image Resize close after running the conversion process automatically.
+      </p>
+      <a class="chfot" href="#contents">Contents</a>
+      
+      <h1 id="mrkeditor">Watermark Editor</h1>
+      <p>
+        With <img class="btn" src="images/btnwatermarkeditor.png"/> you can open the
+        inbuilt watermark editor. This simple dialog lets you design a single
+        text line with glow effect and colors of your choice.
+      </p>
+      <table>
+        <tr><td><img src="images/bntnewfav.png"/></td>
+          <td>
+            Load new favorite settings.
+          </td>
+        </tr>
+        <tr><td><img src="images/bntsavefav.png"/></td>
+          <td>
+            Save the current settings as a favorite, which can be loaded later.
+          </td>
+        </tr>
+        <tr><td><img src="images/btnbrowse.png"/></td>
+          <td>
+            Load a previous saved .was file with watermark settings.
+          </td>
+        </tr>
+        <tr><td><img src="images/btnsaveas.png"/></td>
+          <td>
+            Save the current watermark image as a PNG file and the settings to
+            the same folder and with the sdame name but with .was file extension.
+          </td>
+        </tr>
+        <tr id="mrkwidth"><td><b>Size</b></td>
+          <td>
+            Enter the width of the watermark image in pixels. The image will be
+            printed independently from this size with the layouts size setting in
+            percent. Here you enter the resolution of the images. 200px or 400px
+            is a good choice.
+          </td>
+        </tr>
+        <tr id="mrktext"><td><b>Text</b></td>
+          <td>
+            Enter a line of text to this field. Enter the © character with
+            &lt;ALT&gt; &lt;0&gt; &lt;1&gt; &lt;6&gt; &lt;9&gt; or with the
+            <img class="btn" src="images/btninsertcopyright.png"/> button.
+          </td>
+        </tr>
+        <tr id="mrkfont"><td><b>Font</b></td>
+          <td>
+            Enter a font name in quotes and optionally the styles <i>italic</i> and
+            <i>bold</i> or select a font with the dialog <img class="btn" src="images/btnfont.png"/>.
+            Note: some fonts may not render with the right size. I did not find out the
+            reason.
+          </td>
+        </tr>
+        <tr id="mrkcolor"><td><b>Color</b></td>
+          <td>
+            Select a character color (foreground)
+          </td>
+        </tr>
+        <tr id="mrkshadow"><td><b>Shadow</b></td>
+          <td>
+            Select a shadow color (background glowing)
+          </td>
+        </tr>
+        <tr id="mrkblur"><td><b>Blur</b></td>
+          <td>
+            Select a shadow blur in pixel. 6 is a good choice, depending on the
+            width.
+          </td>
+        </tr>
+        <tr><td><b>Ok</b></td>
+          <td>
+            In order to use an edited watermark, you have to save it first or loaded
+            one from a file. Then the Ok-button will be enabled.
+          </td>
+        </tr>
+        <tr><td><b>Cancel</b></td>
+          <td>
+            Closes the dialog without using the last filename.
+          </td>
+        </tr>
+      </table>
+      <a class="chfot" href="#contents">Contents</a>
+    </div>
   </body>
 </html>

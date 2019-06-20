@@ -20,8 +20,6 @@ type
     LabelUrl2: TLabel;
     MemoLicense: TMemo;
     procedure Button1Click(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
-    procedure Image1Click(Sender: TObject);
   private
 
   public
@@ -37,16 +35,6 @@ implementation
 procedure TAboutDialog.Button1Click(Sender: TObject);
 begin
   Close;
-end;
-
-procedure TAboutDialog.FormCreate(Sender: TObject);
-begin
-
-end;
-
-procedure TAboutDialog.Image1Click(Sender: TObject);
-begin
-
 end;
 
 class function TAboutDialog.Execute(const Text1, Text2, License: string): boolean;

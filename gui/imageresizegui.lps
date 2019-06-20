@@ -8,7 +8,7 @@
       <Unit0>
         <Filename Value="imageresizegui.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="4"/>
         <CursorPos Y="22"/>
         <UsageCount Value="179"/>
         <Loaded Value="True"/>
@@ -19,7 +19,6 @@
         <ComponentName Value="MainDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
         <TopLine Value="259"/>
         <CursorPos X="21" Y="271"/>
@@ -33,15 +32,18 @@
         <ComponentName Value="AboutDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="2"/>
         <TopLine Value="40"/>
-        <CursorPos X="98" Y="52"/>
+        <CursorPos X="25" Y="50"/>
         <UsageCount Value="165"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit2>
       <Unit3>
         <Filename Value="..\src\imgres.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="6"/>
         <TopLine Value="535"/>
         <CursorPos X="39" Y="551"/>
         <UsageCount Value="176"/>
@@ -77,7 +79,7 @@
         <ComponentName Value="MrkEditDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="3"/>
         <TopLine Value="279"/>
         <CursorPos X="50" Y="281"/>
         <UsageCount Value="81"/>
@@ -271,7 +273,7 @@
       <Unit32>
         <Filename Value="D:\Programme\Lazarus\lcl\graphics.pp"/>
         <UnitName Value="Graphics"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="7"/>
         <TopLine Value="1138"/>
         <CursorPos X="17" Y="1060"/>
         <UsageCount Value="42"/>
@@ -279,7 +281,7 @@
       </Unit32>
       <Unit33>
         <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\rtl\objpas\classes\classesh.inc"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="5"/>
         <TopLine Value="94"/>
         <CursorPos X="44" Y="102"/>
         <UsageCount Value="23"/>
