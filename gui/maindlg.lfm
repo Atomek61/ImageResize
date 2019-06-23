@@ -313,9 +313,9 @@ object MainDialog: TMainDialog
       Height = 280
       Top = 95
       Width = 276
-      ActivePage = TabSheetRessources
+      ActivePage = TabSheetRename
       Anchors = [akTop, akRight]
-      TabIndex = 3
+      TabIndex = 2
       TabOrder = 5
       object TabSheetSizes: TTabSheet
         HelpType = htKeyword
@@ -329,6 +329,7 @@ object MainDialog: TMainDialog
           Top = 17
           Width = 28
           Caption = 'Si&zes:'
+          FocusControl = EditSizes
           ParentColor = False
         end
         object LabelSizesRequired: TLabel
@@ -354,7 +355,7 @@ object MainDialog: TMainDialog
           Images = ImageList20x20
           ImageIndex = 1
           Spacing = 0
-          TabOrder = 0
+          TabOrder = 1
         end
         object EditSizes: TEdit
           Left = 6
@@ -364,7 +365,7 @@ object MainDialog: TMainDialog
           Width = 228
           OnChange = EditSizesChange
           OnExit = EditSizesExit
-          TabOrder = 1
+          TabOrder = 0
         end
         object ToolBarSizeButtons: TToolBar
           Left = 4
@@ -458,6 +459,98 @@ object MainDialog: TMainDialog
             Style = csDropDownList
             TabOrder = 0
             Text = 'default'
+          end
+        end
+      end
+      object TabSheetRename: TTabSheet
+        HelpType = htKeyword
+        HelpKeyword = 'HTML/index.html#rename'
+        Caption = 'Rename'
+        ClientHeight = 252
+        ClientWidth = 268
+        object CheckBoxRenEnabled: TCheckBox
+          Left = 8
+          Height = 19
+          Top = 8
+          Width = 62
+          Caption = '&Enabled'
+          OnClick = CheckBoxRenEnabledClick
+          TabOrder = 0
+        end
+        object GroupBoxRename: TGroupBox
+          Left = 8
+          Height = 210
+          Top = 34
+          Width = 249
+          Caption = 'Filename Template'
+          ClientHeight = 190
+          ClientWidth = 245
+          TabOrder = 1
+          Visible = False
+          object RadioButtonRenSimple: TRadioButton
+            Left = 8
+            Height = 19
+            Top = 3
+            Width = 184
+            HelpType = htKeyword
+            HelpKeyword = 'HTML/index.html#rensimple'
+            Caption = '&1 Simple - a folder for each size'
+            TabOrder = 0
+          end
+          object RadioButtonRenCustom: TRadioButton
+            Left = 8
+            Height = 19
+            Top = 55
+            Width = 71
+            HelpType = htKeyword
+            HelpKeyword = 'HTML/index.html#rencustom'
+            Caption = '&3 Custom'
+            TabOrder = 2
+          end
+          object Label22: TLabel
+            Left = 8
+            Height = 72
+            Top = 114
+            Width = 120
+            AutoSize = False
+            Caption = 'Placeholders:'#13#10'%SIZE:n,d%'#13#10'  n - start number'#13#10'  d - number of digits'
+            Font.Color = clGrayText
+            ParentColor = False
+            ParentFont = False
+          end
+          object Label23: TLabel
+            Left = 136
+            Height = 72
+            Top = 114
+            Width = 104
+            AutoSize = False
+            Caption = '%SIZE%'#13#10'%FILENAME%'#13#10'%FILEEXT%'
+            Font.Color = clGrayText
+            ParentColor = False
+            ParentFont = False
+          end
+          object RadioButtonRenAdvanced: TRadioButton
+            Left = 8
+            Height = 19
+            Top = 29
+            Width = 199
+            HelpType = htKeyword
+            HelpKeyword = 'HTML/index.html#renadvanced'
+            Caption = '&2 Advanced - all files in one folder'
+            TabOrder = 1
+          end
+          object EditRenTemplate: TComboBox
+            Left = 8
+            Height = 23
+            Top = 80
+            Width = 232
+            ItemHeight = 15
+            Items.Strings = (
+              'img%INDEX:1,3%.%FILEEXT%'
+              'img%INDEX:1,3%_%SIZE%.%FILEEXT%'
+            )
+            OnEnter = EditRenTemplateEnter
+            TabOrder = 3
           end
         end
       end
@@ -756,10 +849,10 @@ object MainDialog: TMainDialog
           end
         end
         object ButtonMrkEdit: TBitBtn
-          Left = 208
+          Left = 239
           Height = 25
-          Top = 7
-          Width = 56
+          Top = 11
+          Width = 25
           Glyph.Data = {
             36090000424D3609000000000000360000002800000018000000180000000100
             2000000000000009000064000000640000000000000000000000000000000000
@@ -973,7 +1066,7 @@ object MainDialog: TMainDialog
   object ProgressBar: TProgressBar
     Left = 376
     Height = 7
-    Top = 455
+    Top = 451
     Width = 272
     Anchors = [akRight, akBottom]
     TabOrder = 3
@@ -2228,13 +2321,13 @@ object MainDialog: TMainDialog
     BaseURL = 'file://hlp/gui/'
     AutoRegister = True
     KeywordPrefix = 'HTML/'
-    left = 511
-    top = 66
+    left = 528
+    top = 40
   end
   object HTMLBrowserHelpViewer: THTMLBrowserHelpViewer
     BrowserParams = '%s'
     AutoRegister = True
-    left = 552
-    top = 66
+    left = 576
+    top = 40
   end
 end

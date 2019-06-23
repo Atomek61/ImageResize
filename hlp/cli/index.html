@@ -1,0 +1,217 @@
+<!DOCTYPE HTML>
+<html lang="de">
+
+  <head>
+    <meta charset="UTF-8"/>
+    <title>Image Resize Documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>   
+    <link rel="stylesheet" href="../help.css"/>
+    <style>
+    </style>
+  </head>
+
+  <body>
+    <header style="background-image: url('../images/title.jpg');">
+    </header>
+  
+    <div class="contents">
+      <h1 id="overview">Overview</h1>
+      <p>
+        <i>imgres</i> is a command line interface (CLI) for the bulk resizing
+        and watermarking tool <i>TImageResize</i>. It converts (resamples)
+        JPEG and PNG images.
+      </p>
+
+      <a href="images/cli.png">
+        <div class="ct">
+          <img src="images/cli.png" style="width: 80%"/>
+        </div>
+      </a>
+      <h2 id="syntax">Syntax</h2>
+      <p>
+        <b> imgres <i>filename folder size</i><br/>
+        [-j jpgquality]
+        [-p pngcompression]<br/>
+        [-w watermark]<br/>
+        [-t threadcount]<br/>
+        [-x]<br/>
+        [-h] [-q]</b>
+      </p>
+
+      <h2 id="params">Parameters</h2>
+      <table class="partab">
+        <tr>
+          <td>
+            <i>filename</i><br/>
+          </td>
+          <td>
+            <ol>
+              <li>
+                Path/filename of the source image file. This can be a jpg file
+                or a png file.<br/>
+              </li>
+              <li>
+                Text file with a filename list. The filename must preceeded
+                by @.
+              </li>
+              <li>
+                Path/wildcards - i.e. C:\MyImages\img???.jpg;*.png
+              </li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <i>folder</i>
+          </td>
+          <td>
+            The folder where to store the resulting file. This can be a relative
+            path. If its the dot '.' the result will be saved "inplaced", replacing
+            the source file.<br/>
+            If you create multiple files with different sizes, enter a placeholder
+            <i>%SIZE%</i> where the program will insert the size.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <i>size</i>
+          </td>
+          <td>
+            Size in pixels of the resampled image. The size refers to the longer
+            side of the image. This means, imgres always bewares the width/heigth ratio.<br/>
+            You can specify multiple sizes, separated by a comma to let the
+            process create multiple resampled files. Because the files will have the
+            same names, it is required to enter a placeholder <i>%SIZE%</i> in
+            the dstfolder.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <i>-h</i><br/>
+            <i>-help</i>
+          </td>
+          <td>
+            Shows a help text.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <i>-q</i><br/>
+            <i>-quiet</i>
+          </td>
+          <td>
+            Quiet mode, supresses any console output.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <i>-j&nbsp;value</i><br/>
+            <i>-jpgquality&nbsp;value</i>
+          </td>
+          <td>
+            A value between 1 and 100, where 1 is the lowest and 100 is
+            the highest quality. This partameter refers only to jpg files.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <i>-p&nbsp;value</i><br/>
+            <i>-pngcompression&nbsp;value</i>
+          </td>
+          <td>
+            One of the strings <i>none</i>,<i>fastest</i>,<i>default</i> and <i>max</i>.
+            The png format has a loss-less compression, so this parameter has
+            an impact to the compression/decompression effort, not to the
+            image quality.
+          </td>
+        </tr>
+        <tr id="placing">
+          <td>
+            <i>-w value</i><br/>
+            <i>-watermark value</i>
+          </td>
+          <td>
+            <p>
+              A watermark is a png image containing a copyright or what ever. The
+              watermark can be printed an any position. The position is in percent
+              and refers to the images width resp. height. The <i>Size</i> is in
+              percent of the images width.
+            </p><p>
+              The positions in percent refers to the difference of the images
+              size and the watermarks size. Thus, 50%/50% centeres the image.
+              0% is left/upper alignment, 100% results in a right/bottom
+              aligment.
+            </p><p>
+              The value format is:
+            </p><p>
+              <b><code>filename[?size,x,y[?opacity]]</code></b>
+            </p><p>
+              If you want to use spaces, set the parameter in quotes.
+              Defaults are size=20%, x=98%, y=98%, opacity=50%
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <i>-t value</i><br/>
+            <i>-threadcount value</i>
+          </td>
+          <td>
+            <p>
+              0 - (default) uses as many threads as processors are availabe
+            </p><p>
+              1 - single thread, all resamplings are in sequential order
+            </p><p>
+              n - number of threads to use. n is automatically limited to either
+              the number of available processors or the number of tasks.
+            </p><p>
+              A "task" is a resampling request. If you have 4 source files and
+              2 destination sizes, you will get 8 tasks.
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <i>-x</i><br/>
+            <i>-stoponerror</i>
+          </td>
+          <td>
+            <p>
+              If an error occures, this flag lets the program stop as soon as possible.
+              Note: some tasks may run intoo the same error and report it.
+            </p>
+          </td>
+        </tr>
+      </table>
+      
+      <h2 id="howworks">Examples</h2>
+      <p>
+        The tool needs a source file, a destination folder and a destination size.
+        It loads the image (jpg or png), resamples it to the desired size and
+        saves the result to the destination folder, always using the original name.
+      </p><p>
+        To resample multiple files you can create a list of files like this
+      </p><p>
+        <span class="cmd">dir /B *.jpg &gt; imglist.txt</span>
+      </p><p>
+        To use the filelist, put an @ in front of the lists path and name
+      </p><p>
+        <span class="cmd">imgres @imglist.txt .\img640 640</span>
+      </p><p>
+        To resample multiple files in multiple resolutions, just enter multiple
+        comma separated sizes without spaces.
+      </p><p>
+        <span class="cmd">imgres @imglist.txt .\img%SIZE% 240,640,1280</span>
+      </p><p>
+        Note: the placeholder %SIZE% in the destination path is required.
+      </p><p>
+        <span class="cmd">imgres image.jpg img640 640 -w "watermark.png?60,2,98?20"</span>
+      </p><p>
+        This creates a 640px jpg with a 640*60%=384px size watermark at the
+        left bottom corner. 2% for the left margin, 98% percent means 2% from
+        the bottom border.
+      </p>
+
+    </div>
+  </body>
+</html>

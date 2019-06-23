@@ -19,11 +19,11 @@ unit imgres;
 interface
 
 uses
-  Classes, SysUtils, Types, SyncObjs, BGRABitmap, BGRABitmapTypes,
+  Classes, SysUtils, StrUtils, Types, SyncObjs, BGRABitmap, BGRABitmapTypes,
   threading.dispatcher;
 
 const
-  IMGRESVER = '1.9.3';
+  IMGRESVER = '2.0';
   IMGRESCPR = 'imgres V'+IMGRESVER+' © 2019 Jan Schirrmacher, www.atomek.de';
 
   PROGRESSSTEPSPERFILE = 4;
@@ -31,15 +31,20 @@ const
   REGKEY = 'Software\Atomek\Image Resize';
 
 const
-  DEFAULTSIZE           = 640;
-  DEFAULTPNGCOMPRESSION = 2;
-  DEFAULTJPGQUALITY     = 75;
-  DEFAULTMRKSIZE        = 20.0;
-  DEFAULTMRKX           = 98.0;
-  DEFAULTMRKY           = 98.0;
-  DEFAULTMRKALPHA       = 50.0;
-  DEFAULT_THREADCOUNT   = 0;
-  DEFAULT_STOPONERROR   = true;
+//  DEFAULTSIZE            = 640;
+  DEFAULTPNGCOMPRESSION    = 2;
+  DEFAULTJPGQUALITY        = 75;
+  DEFAULTMRKSIZE           = 20.0;
+  DEFAULTMRKX              = 98.0;
+  DEFAULTMRKY              = 98.0;
+  DEFAULTMRKALPHA          = 50.0;
+  DEFAULT_THREADCOUNT      = 0;
+  DEFAULT_STOPONERROR      = true;
+  DEFAULT_RENENABLED       = false;
+  DEFAULT_RENFMTSTR        = 'img%2:s.%1:s';
+  DEFAULT_RENFILETEMPLATE  = 'img%INDEX:1,3%.%FILEEXT%';
+  DEFAULT_RENINDEXSTART    = 1;
+  DEFAULT_RENINDEXDIGITS   = 3;
 
   // Watermark sources
   msDisabled  = 0;
@@ -55,8 +60,17 @@ type
 
   //////////////////////////////////////////////////////////////////////////////
   // Main class: resamples a list a images to a list of sizes
+
+  { TImgRes }
+
   TImgRes = class
   public type
+    TRenameParams = record
+      Enabled :boolean;
+      FmtStr :string;
+      IndexDigits :integer;
+      IndexStart :integer;
+    end;
     TParams = record
       SrcFilenames :TStringList;
       DstFolder :string;
@@ -73,6 +87,7 @@ type
       MrkAlpha :single;
       ThreadCount :integer;
       StopOnError :boolean;
+      Ren :TRenameParams;
     end;
   private type
     TResampleTask = class;
@@ -99,17 +114,13 @@ type
     { TResampleTask }
 
     TResampleTask = class(TCustomTask)
-    private
-      FSharedTasks :TSharedTasks;
-      FSrcFilenameIndex :integer;
-      FSizeIndex :integer;
     protected
       function Execute(Context :TContext) :boolean; override;
       function GetTaskSteps :integer; override;
     public
-      constructor Create(SharedTasks :TSharedTasks; const SrcFilenameIndex, SizeIndex :integer);
-      property SrcIdx :integer read FSrcFilenameIndex;
-      property DstIdx :integer read FSizeIndex;
+      SharedTasks :TSharedTasks;
+      SrcFilenameIndex :integer;
+      SizeIndex :integer;
     end;
 
   private
@@ -117,8 +128,10 @@ type
     FCancel :boolean;
     FOnPrint :TPrintEvent;
     FOnProgress :TProgressEvent;
+    function GetDstFiletemplate: string;
     function GetSizes: string;
     function GetSrcFilenames: TStrings;
+    procedure SetDstFiletemplate(AValue: string);
     procedure SetMrkFilename(AValue: string);
     procedure SetMrkImage(AValue :TBGRABitmap);
     procedure SetMrkSource(AValue :integer);
@@ -145,8 +158,11 @@ type
     class function PngCompressionToStr(const Value :integer) :string;
     class function TryStrToJpgQuality(const Str :string; out Value :integer) :boolean;
     class function JpgQualityToStr(const Value :integer) :string;
+    class function TryStrToRenameParams(const Str :string; out Params :TRenameParams; out ErrStr :string) :boolean;
+    class function RenameParamsToStr(const Params :TRenameParams) :string;
     property SrcFilenames :TStrings read GetSrcFilenames write SetSrcFilenames;
     property DstFolder :string read FParams.DstFolder write FParams.DstFolder;
+    property DstFiletemplate :string read GetDstFiletemplate write SetDstFiletemplate;
     property Sizes :string read GetSizes write SetSizes;
     property JpgQuality :integer read FParams.JpgQuality write SetJpgQuality;
     property PngCompression :integer read FParams.PngCompression write SetPngCompression;
@@ -159,6 +175,7 @@ type
     property MrkAlpha :single read FParams.MrkAlpha write SetMrkAlpha;
     property ThreadCount :integer read FParams.ThreadCount write SetThreadCount;
     property StopOnError :boolean read FParams.StopOnError write FParams.StopOnError;
+    property RenEnabled :boolean read FParams.Ren.Enabled;
     property OnPrint :TPrintEvent read FOnPrint write FOnPrint;
     property OnProgress :TProgressEvent read FOnProgress write FOnProgress;
   end;
@@ -166,10 +183,12 @@ type
 function TrySizesStrToSizes(const Str :string; out Values :TSizes) :boolean;
 function SizesToSizesStr(const Sizes :TSizes) :string;
 
+//function
+
 implementation
 
 uses
-  ZStream, FPWriteJpeg, FPWritePng, FPImage, strutils, utils,
+  Math, ZStream, FPWriteJpeg, FPWritePng, FPImage, utils,
   generics.collections;
 
 const
@@ -224,8 +243,10 @@ var
   SrcImg :TBGRABitmap;
   SrcFilename :string;
   DstFolder :string;
-  FileExt :string;
+  DstFileExt :string;
+  DstFileExtU :string;
   DstFiletitle :string;
+  DstFiletitleExt :string;
   DstFilename :string;
   DstImg :TBGRABitmap;
   Writer :TFPCustomImageWriter;
@@ -235,49 +256,54 @@ var
   MrkImg :TBGRABitmap;
   MrkRectSize :TSize;
   MrkRect :TRect;
-  Params :^TParams;
-//  i :integer;
+  ImgRes :TImgRes;
+  IndexStr :string; // Index to display
+  SizeStr :string;
+//  IndexDigits :integer;
+  n :integer;
 begin
   Writer := nil;
   DstImg := nil;
   result := false;
   try
-    Params := @FSharedTasks.FImgRes.FParams;
+    ImgRes := SharedTasks.FImgRes;
 
     if Context.Aborted then
       Exit;
 
     // Destination Folder
-    DstFolder := FSharedTasks.GetDstFolder(self);
+    DstFolder := SharedTasks.GetDstFolder(self);
 
     // Source File
-    SrcImg := FSharedTasks.GetSrcImg(self);
-    SrcFilename := Params^.SrcFilenames[SrcIdx];
+    SrcImg := SharedTasks.GetSrcImg(self);
+    SrcFilename := ImgRes.SrcFilenames[SrcFilenameIndex];
 
     if Context.Aborted then
       Exit;
     Progress(1);
 
     // Create Writer depending on file extension
-    FileExt := LowerCase(ExtractFileExt(SrcFilename));
-    if (FileExt = '.jpg') or (FileExt = '.jpeg') then begin
+    DstFileExt := ExtractFileExt(SrcFilename);
+    if Length(DstFileExt)>0 then DstFileExt := Copy(DstFileExt, 2, Length(DstFileExt)-1);
+    DstFileExtU := UpperCase(DstFileExt);
+    if (DstFileExtU = 'JPG') or (DstFileExtU = 'JPEG') then begin
 
       // Jpg-options
       Writer := TFPWriterJPEG.Create;
       with TFPWriterJPEG(Writer) do
-        CompressionQuality := TFPJPEGCompressionQuality(Params^.JpgQuality);
+        CompressionQuality := TFPJPEGCompressionQuality(ImgRes.JpgQuality);
 
-    end else if FileExt = '.png' then begin
+    end else if DstFileExtU = 'PNG' then begin
 
       // Png-options
       Writer := TFPWriterPNG.Create;
       with TFPWriterPNG(Writer) do
-        CompressionLevel := ZStream.TCompressionLevel(Params^.PngCompression);
+        CompressionLevel := ZStream.TCompressionLevel(ImgRes.PngCompression);
     end else
-      raise Exception.CreateFmt('Format %s not supported.', [FileExt]);
+      raise Exception.CreateFmt('Format %s not supported.', [DstFileExt]);
 
     // Calculate new size
-    Size := Params^.Sizes[FSizeIndex];
+    Size := ImgRes.FParams.Sizes[SizeIndex];
     SrcSize := TSize.Create(SrcImg.Width, SrcImg.Height);
     DstSize := CalcResamplingSize(SrcSize, Size);
 
@@ -285,7 +311,7 @@ begin
     // Resampling...
     Print(Format('Resampling ''%s'' from %dx%d to %dx%d...', [
       ExtractFilename(SrcFilename), SrcSize.cx, SrcSize.cy, DstSize.cx, DstSize.cy]));
-    DstImg := FSharedTasks.FImgRes.ResampleImg(SrcImg, DstSize);
+    DstImg := SharedTasks.FImgRes.ResampleImg(SrcImg, DstSize);
     ////////////////////////////////////////////////////////////////////////////
     if Context.Aborted then
       Exit;
@@ -293,24 +319,24 @@ begin
 
     ////////////////////////////////////////////////////////////////////////////
     // Watermark
-    if Params^.MrkFilename<>'' then begin
-      MrkImg := FSharedTasks.GetMrkImg(self);
+    if ImgRes.MrkFilename<>'' then begin
+      MrkImg := SharedTasks.GetMrkImg(self);
 
       // Watermark size inpercent of the width or original size if MrkSize=0.0
-      if Params^.MrkSize<>0.0 then begin
-        MrkRectSize.cx := round(DstSize.cx*Params^.MrkSize/100.0);
-        MrkRectSize.cy := round(DstSize.cx*Params^.MrkSize/100.0 * MrkImg.Height/MrkImg.Width);
+      if ImgRes.MrkSize<>0.0 then begin
+        MrkRectSize.cx := round(DstSize.cx*ImgRes.MrkSize/100.0);
+        MrkRectSize.cy := round(DstSize.cx*ImgRes.MrkSize/100.0 * MrkImg.Height/MrkImg.Width);
       end else begin
         MrkRectSize.cx := MrkImg.Width;
         MrkRectSize.cy := MrkImg.Height;
       end;
-      MrkRect.Left := round((DstSize.cx - MrkRectSize.cx) * Params^.MrkX/100.0);
-      MrkRect.Top := round((DstSize.cy - MrkRectSize.cy) * Params^.MrkY/100.0);
+      MrkRect.Left := round((DstSize.cx - MrkRectSize.cx) * ImgRes.MrkX/100.0);
+      MrkRect.Top := round((DstSize.cy - MrkRectSize.cy) * ImgRes.MrkY/100.0);
       MrkRect.Width := MrkRectSize.cx;
       MrkRect.Height := MrkRectSize.cy;
       Print(Format('Watermarking ''%s''...', [
         ExtractFilename(SrcFilename), SrcSize.cx, SrcSize.cy, DstSize.cx, DstSize.cy]));
-      DstImg.StretchPutImage(MrkRect, MrkImg, dmLinearBlend, round(255*Params^.MrkAlpha/100.0));
+      DstImg.StretchPutImage(MrkRect, MrkImg, dmLinearBlend, round(255*ImgRes.MrkAlpha/100.0));
     end;
     if Context.Aborted then
       Exit;
@@ -318,8 +344,31 @@ begin
     ////////////////////////////////////////////////////////////////////////////
 
     // Saving...
-    DstFiletitle := ExtractFilename(SrcFilename);
-    DstFilename := IncludeTrailingPathDelimiter(DstFolder) + DstFiletitle;
+    if ImgRes.FParams.Ren.Enabled then begin
+      // Specialize the prepared template
+      // %FILENAME%
+      DstFiletitle := ExtractFilename(SrcFilename);
+      if Length(DstFileExt)>0 then
+        DstFiletitle := Copy(DstFiletitle, 1, Length(DstFiletitle)-Length(DstFileExt)-1);
+      // %FILEEXT% - has been extracted previously
+      // %INDEX%
+      if ImgRes.FParams.Ren.IndexDigits = 0 then
+        IndexStr := IntToStr(SrcFilenameIndex)
+      else begin
+        if ImgRes.FParams.Ren.IndexDigits = -1 then
+          n := round(log10(ImgRes.FParams.SrcFilenames.Count))+1
+        else
+          n := ImgRes.FParams.Ren.IndexDigits;
+        IndexStr := Format('%*.*d', [n, n, SrcFilenameIndex+ImgRes.FParams.Ren.IndexStart]);
+      end;
+      // %SIZE%
+      SizeStr := IntToStr(Size);
+      DstFiletitleExt := Format(ImgRes.FParams.Ren.FmtStr,
+        [DstFiletitle, DstFileExt, IndexStr, SizeStr]);
+    end else
+      DstFiletitleExt := ExtractFilename(SrcFilename);
+
+    DstFilename := IncludeTrailingPathDelimiter(DstFolder) + DstFiletitleExt;
     Print(Format('Saving ''%s''...' , [DstFilename]));
     DstImg.SaveToFile(DstFilename, Writer);
     Progress(1);
@@ -336,14 +385,6 @@ end;
 function TImgRes.TResampleTask.GetTaskSteps: integer;
 begin
   result := PROGRESSSTEPSPERFILE; // Loading, Resampling, Watermarking, Saving
-end;
-
-constructor TImgRes.TResampleTask.Create(SharedTasks :TSharedTasks; const SrcFilenameIndex, SizeIndex: integer);
-begin
-  inherited Create;
-  FSharedTasks := SharedTasks;
-  FSrcFilenameIndex := SrcFilenameIndex;
-  FSizeIndex := SizeIndex;
 end;
 
 { TImgRes.TSharedTasks }
@@ -382,12 +423,12 @@ var
 begin
   FSrcImgsSection.Enter;
   try
-    SrcFilename := FImgRes.FParams.SrcFilenames[Task.FSrcFilenameIndex];
-    if not Assigned(FSrcImgs[Task.FSrcFilenameIndex]) then begin
+    SrcFilename := FImgRes.FParams.SrcFilenames[Task.SrcFilenameIndex];
+    if not Assigned(FSrcImgs[Task.SrcFilenameIndex]) then begin
       Task.Print(Format('Loading ''%s''...', [ExtractFilename(SrcFilename)]));
-      FSrcImgs[Task.FSrcFilenameIndex] := TBGRABitmap.Create(SrcFilename);
+      FSrcImgs[Task.SrcFilenameIndex] := TBGRABitmap.Create(SrcFilename);
     end;
-    result := FSrcImgs[Task.FSrcFilenameIndex];
+    result := FSrcImgs[Task.SrcFilenameIndex];
   finally
     FSrcImgsSection.Leave;
   end;
@@ -408,7 +449,7 @@ begin
     msFile:
       begin
         if FImgRes.FParams.MrkFilenameDependsOnSize then
-          Index := Task.FSizeIndex
+          Index := Task.SizeIndex
         else
           Index := 0;
         if not Assigned(FMrkImgs[Index]) then begin
@@ -434,7 +475,7 @@ var
 begin
   FDstFoldersSection.Enter;
   try
-    Index := Task.FSizeIndex;
+    Index := Task.SizeIndex;
     if FDstFolders[Index]='' then begin
       DstFolder := ReplaceStr(FImgRes.FParams.DstFolder, '%SIZE%', IntToStr(FImgRes.FParams.Sizes[Index]));
       Task.Print(Format('Creating folder ''%s''...', [DstFolder]));
@@ -497,19 +538,22 @@ end;
 
 constructor TImgRes.Create;
 begin
-  FParams.SrcFilenames   := TStringList.Create;
-  SetLength(FParams.Sizes, 1);
-  FParams.Sizes[0]       := DEFAULTSIZE;
-  FParams.JpgQuality     := DEFAULTJPGQUALITY;
-  FParams.PngCompression := DEFAULTPNGCOMPRESSION;
-  FParams.MrkFilename    := '';
-  FParams.MrkImage       := TBGRABitmap.Create;
-  FParams.MrkSize        := DEFAULTMRKSIZE;
-  FParams.MrkX           := DEFAULTMRKX;
-  FParams.MrkY           := DEFAULTMRKY;
-  FParams.MrkAlpha       := DEFAULTMRKALPHA;
-  FParams.ThreadCount    := DEFAULT_THREADCOUNT;
-  FParams.StopOnError    := DEFAULT_STOPONERROR;
+  FParams.SrcFilenames    := TStringList.Create;
+  SetLength(FParams.Sizes, 0);
+  FParams.JpgQuality      := DEFAULTJPGQUALITY;
+  FParams.PngCompression  := DEFAULTPNGCOMPRESSION;
+  FParams.MrkFilename     := '';
+  FParams.MrkImage        := TBGRABitmap.Create;
+  FParams.MrkSize         := DEFAULTMRKSIZE;
+  FParams.MrkX            := DEFAULTMRKX;
+  FParams.MrkY            := DEFAULTMRKY;
+  FParams.MrkAlpha        := DEFAULTMRKALPHA;
+  FParams.ThreadCount     := DEFAULT_THREADCOUNT;
+  FParams.StopOnError     := DEFAULT_STOPONERROR;
+  FParams.Ren.Enabled     := DEFAULT_RENENABLED;
+  FParams.Ren.FmtStr      := DEFAULT_RENFMTSTR;
+  FParams.Ren.IndexStart  := DEFAULT_RENINDEXSTART;
+  FParams.Ren.IndexDigits := DEFAULT_RENINDEXDIGITS;
 end;
 
 destructor TImgRes.Destroy;
@@ -522,23 +566,43 @@ end;
 function TImgRes.Execute :boolean;
 var
   SharedTasks :TSharedTasks;
+  Task :TResampleTask;
   Tasks :TTasks;
   Dispatcher :TDispatcher;
   i, j, n, m :integer;
 begin
+  // Check main parameters
+  if Length(FParams.Sizes)=0 then
+    raise Exception.Create('Missing sizes.');
+  if FParams.SrcFilenames.Count=0 then
+    Exit(true);
+
+  // Check, if multiple sizes, then either %SIZE% must be in folder or in renamed filename
+  if Length(FParams.Sizes)>1 then begin
+    if not ((Pos('%SIZE%', FParams.DstFolder)>0) or (FParams.Ren.Enabled and (Pos('%3:s', FParams.Ren.FmtStr)>0))) then
+      raise Exception.Create('Multiple sizes, placeholder %SIZE% not found in either folder or filename template.');
+  end;
+
   FCancel := false;
   SharedTasks := TSharedTasks.Create(self);
   Tasks := TTasks.Create;
   Dispatcher := TDispatcher.Create;
   try
+    // Prepare the destination file renaminf feature
+
     n := FParams.SrcFilenames.Count;
     m := Length(FParams.Sizes);
 
     // For each SrcFilename/Size create a task
     Tasks.Capacity := n*m;
     for i:=0 to n-1 do
-      for j:=0 to m-1 do
-        Tasks.Add(TResampleTask.Create(SharedTasks, i, j));
+      for j:=0 to m-1 do begin
+        Task := TResampleTask.Create;
+        Task.SharedTasks := SharedTasks;
+        Task.SrcFilenameIndex := i;
+        Task.SizeIndex := j;
+        Tasks.Add(Task);
+      end;
 
     Dispatcher.OnPrint := @OnTaskPrint;
     Dispatcher.OnProgress := @OnTaskProgress;
@@ -603,6 +667,92 @@ begin
     result := IntToStr(Value);
 end;
 
+class function TImgRes.TryStrToRenameParams(const Str: string; out Params: TRenameParams; out ErrStr: string): boolean;
+var
+  Placeholders :TStringArray;
+  Items :TStringArray;
+  i, ParamCount :integer;
+
+  function IsPlaceHolder(const Placeholder :string; out Index :integer) :boolean;
+  var
+    i :integer;
+  begin
+    for i:=0 to High(Placeholders) do
+      if SameText(Placeholder, Copy(Placeholders[i], 1, Length(Placeholder))) then begin
+        Index := i;
+        inc(ParamCount);
+        Exit(true);
+       end;
+    result := false;
+  end;
+
+  function Err(const Msg :string) :boolean;
+  begin
+    ErrStr := Msg;
+    result := false;
+  end;
+
+begin
+  if not TryStrToPlaceholders(Str, '%', Placeholders) then
+    Exit(Err(Format('Invalid renaming parameter ''%s''.', [Str])));
+
+  Params.FmtStr := '';
+  Params.Enabled := false;
+  Params.IndexDigits := -1; // Default - as long as maximum Index needs + 1
+  Params.IndexStart := 1;
+  ParamCount := 0;
+  if Length(Str)>0 then begin
+    // %FILENAME%, %FILEEXT%, %INDEX:N,W%, %SIZE%
+    // %0:s        %1:s       %2:s         %3:s
+    // Default: img%2:s.%1:s
+    Params.FmtStr := Str;
+    if IsPlaceholder('FILEEXT', i) then begin
+      Params.FmtStr := ReplaceStr(Params.FmtStr, '%FILEEXT%', '%1:s');
+    end;
+    if IsPlaceholder('FILENAME', i) then begin
+      Params.FmtStr := ReplaceStr(Params.FmtStr, '%FILENAME%', '%0:s');
+    end;
+    if IsPlaceholder('INDEX', i) then begin
+      // Parse Parameters
+      if not TryParsePlaceholderParams(Placeholders[i], ':', Items) then
+        Exit(Err(Format('Invalid INDEX placeholder parameters ''%s''.', [Placeholders[i]])));
+      if (Length(Items)>0) then begin
+        if not (TryStrToInt(Items[0], Params.IndexStart)) or (Params.IndexStart<0) then
+          Exit(Err(Format('Invalid INDEX start ''%s''.', [Items[0]])));
+        if (Length(Items)>1) then begin
+          // auto, 0, 1, ...
+          if SameText(Items[1], 'AUTO') then
+            Params.IndexDigits := -1
+          else if not (TryStrToInt(Items[1], Params.IndexDigits)) or (Params.IndexDigits<0) then
+            Exit(Err(Format('Invalid INDEX digits number ''%s''.', [Items[1]])));
+        end else if (Length(Items)>2) then
+          Exit(Err(Format('Invalid INDEX parameter count ''%s'' (2 expected).', [Placeholders[i]])));
+      end;
+      Params.FmtStr := ReplaceStr(Params.FmtStr, '%'+Placeholders[i]+'%', '%2:s');
+    end;
+    if IsPlaceholder('SIZE', i) then begin
+      Params.FmtStr := ReplaceStr(Params.FmtStr, '%SIZE%', '%3:s');
+    end;
+    if ParamCount<Length(Placeholders) then
+      Exit(Err('Unknown or invalid placeholder.'));
+    Params.Enabled := true;
+    result := true;
+  end;
+end;
+
+class function TImgRes.RenameParamsToStr(const Params: TRenameParams): string;
+begin
+  if Params.Enabled then begin
+    result := Format(Params.FmtStr, [
+      '%FILENAME%', // 0
+      '%FILEEXT%',  // 1
+      '%'+Format('INDEX:%d,%d', [Params.IndexStart, Params.IndexDigits])+'%',
+      '%SIZE%'
+    ]);
+  end else
+    result := '';
+end;
+
 procedure TImgRes.SetSizes(AValue :string);
 begin
   if not TrySizesStrToSizes(AValue, FParams.Sizes) then
@@ -614,9 +764,24 @@ begin
   result := SizesToSizesStr(FParams.Sizes);
 end;
 
+function TImgRes.GetDstFiletemplate: string;
+begin
+  result := RenameParamsToStr(FParams.Ren);
+end;
+
 function TImgRes.GetSrcFilenames: TStrings;
 begin
   result := FParams.SrcFilenames;
+end;
+
+procedure TImgRes.SetDstFiletemplate(AValue: string);
+var
+  ErrMsg :string;
+  Params :TRenameParams;
+begin
+  if not TryStrToRenameParams(AValue, Params, ErrMsg) then
+    raise Exception.Create(ErrMsg);
+  FParams.Ren := Params;
 end;
 
 procedure TImgRes.SetMrkFilename(AValue: string);

@@ -1,1 +1,1 @@
-..\bin\imgres @org\imglist.txt .\test5_%%SIZE%% -s 640,960 -w "watermarks\%%SIZE%%.png?40,5,95?90" -t 1
+..\bin\imgres @org\imglist.txt .\test5_%%SIZE%% 640,960 -w "watermarks\%%SIZE%%.png?40,5,95?90" -t 1

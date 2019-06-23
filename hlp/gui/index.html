@@ -28,6 +28,7 @@
       <a href="#dstfolder">Destination Folder</a><br/>
       <a href="#sizes">Sizes</a><br/>
       <a href="#quality">Quality</a><br/>
+      <a href="#renaming">Renaming</a><br/>
       <a href="#watermark">Watermark</a><br/>
       <a href="#boost">Boost</a><br/>
       <a href="#saving">Saving and Loading</a><br/>
@@ -45,6 +46,7 @@
         <li>accepts .jpg and .png files</li>
         <li>controls compression qualities</li>
         <li>GUI, CLI and API interfaces available</li>
+        <li>systematic file renaming</li>
       </ul>
       <p>
         Incapabilites
@@ -53,25 +55,20 @@
         <li>stretching</li>
         <li>format conversion (JPEG remains JPEG and PNG remains PNG)</li>
         <li>preview</li>
-        <li>file renaming</li>
         <li>meta information handling (EXIF)</li>
       </ul>
       
-      <h1 id="basics">Basic Instructions</h1>
+      <h1 id="basics">Basics</h1>
       <p>
-        The program needs at least three informations to work:
+        The program needs at least these informations to work:
       </p>
       <ol>
-        <li>A source filename or a list of source filenames<br/><img src="images/minsrc.png"/></li>
-        <li>A destination folder and a placeholder for the size, in case of a list of sizes<br/><img src="images/mindst.png"/></li>
+        <li>A source filename or a list<br/><img src="images/minsrc.png"/></li>
+        <li>A destination folder<br/><img src="images/mindst.png"/></li>
         <li>A destination size or a list of destination sizes<br/><img src="images/minsize.png"/></li>
       </ol>
       <p>
         Finally press <img class="btn" src="images/minexec.png"/> to start the resampling.
-      </p>
-      <p>
-        Optionally a watermark file can be chosen to be printed at any place and
-        at any size to each resulting image.
       </p>
       
       <h1 id="srcfilelist">Source File List</h1>
@@ -85,8 +82,8 @@
         <li>dragging files from the explorer into the window</li>
       </ol>
       <p>
-        The list can contain .jpg files and .png files. The filenames will be
-        retained. Relative pathes are based on the programs working directory.
+        The list can contain JPEG files and PNG files. The filenames can be
+        retained or <a href="#renaming">renamed</a>. Relative pathes are based on the programs working directory.
       </p>
       <a class="chfot" href="#contents">Contents</a>
       
@@ -97,7 +94,7 @@
       </p>
       <p>
         If you enter multiple destination sizes, then you should enter the placeholder
-        <b><i>%SIZE%</i></b> in the path, where Image Resize will insert the size in pixels.
+        <span class="plh">%SIZE%</span> in the path, where Image Resize will insert the size in pixels.
         If multiple sizes are entered and the placeholder is missing, it will be
         appended automatically.
       </p>
@@ -144,6 +141,86 @@
       </p>
       <a class="chfot" href="#contents">Contents</a>
       
+      <h1 id="renaming">Renaming</h1>
+      <p>
+        Usually Image Resize can keep the filenames, because for each size
+        a different folder will be created.
+      </p>
+      <p>
+        Another strategy is to create different sizes into the same folder. To
+        avoid filename conflicts, filenames for different sizes have the size
+        in their name. This is achieved by creating a template filename, which
+        contains placeholders for certain parameters. The program forms the
+        new filename by replacing the placeholders.
+      </p>
+      
+      <h2 id="rensimple">Simple Filename Template</h2>
+      <p>
+        The simple filename template forms filenames like this: <i>img085.jpg</i>.
+        The files are numbered beginning with 1 and they dont contain the
+        image size. Thus its required to create a folder for each size. You will have
+        to insert the placeholder <span class="plh">%SIZE%</span> in the folder.
+      </p>
+      <p>
+        The simple filename template is
+        <span class="plh">img%INDEX:1,3%.%FILEEXT%</span>.
+        The INDEX is the zero-based current number of the source image in the
+        list. The numbers 1 and 3 behind the keyword INDEX means, that the
+        index counting starts with 1 and the number will have 3 digits with
+        leading zeroes.
+      </p>
+      
+      <h2 id="renadvanced">Advanced Filename Template</h2>
+      <p>
+        This Template <span class="plh">img%INDEX:1,3%_%SIZE%.%FILEEXT%</span>
+        enables you to create all files in the same directory. The filename
+        conflict is solved by using the <span class="plh">%SIZE%</span>
+        -placeholder.
+      </p>
+      
+      <h2 id="rencustom">Custom Filename Templates</h2>
+      <p>
+        To let the program form a destination filename, you can enter a
+        <i>template</i>. The template contains <i>placeholders</i> for special
+        values, which will be known while processing an beeing inserted.
+      </p>
+      <p>
+        Examples for valid templates for the case where all resulting images
+        filenames with different sizes will not collide in the same directory
+        may look like this:
+      </p>
+      <p><span class="plh">img%INDEX:1,3%_%SIZE%.%FILEEXT%</span></p>
+      <p><span class="plh">%FILENAME%_%SIZE%.%FILEEXT%</span></p>
+      
+      <h2>Available Placeholders</h2>
+      <table class="partab">
+        <tr>
+          <td><span class="plh">%FILENAME%</span></td>
+          <td>This is the original filename without the path and without the
+          file extension</td>
+        </tr>
+        <tr>
+          <td><span class="plh">%FILEEXT%</span></td>
+          <td>The original filenames extension without the dot</td>
+        </tr>
+        <tr>
+          <td><span class="plh">%INDEX:N,D%</span></td>
+          <td>
+            The 0-based index (current number) of the file in the list.
+            <i>N</i> is an offset. A series usually begins with one, but for 
+            adding images to existing lists it may be usefull the enter another
+            start-index of the new files. <i>D</i> is the number of digits of
+            the number.<br/><br/>
+            Note: the parameters <i>N</i> and <i>D</i> are not available for the
+            <span class="plh">%SIZE%</span> placeholder.
+          </td>
+        </tr>
+        <tr>
+          <td><span class="plh">%SIZE%</span></td>
+          <td>The destination size in pixels of the current image</td>
+        </tr>
+      </table>
+      
       <h1 id="watermark">Watermark</h1>
       <p>
         A watermark is a semi-transparent small image, that adds a copyright note
@@ -169,7 +246,7 @@
       </p>
       <p>
         There is a way to assign a different watermark image for each size. For
-        this case, enter the placeholder <i><b>%Size%</b></i> into the watermark
+        this case, enter the placeholder <span class="plh">%Size%</span> into the watermark
         filename. You must have prepared a watermark file for each size.
       </p>
       <p>

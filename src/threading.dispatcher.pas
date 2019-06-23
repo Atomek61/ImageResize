@@ -389,11 +389,11 @@ begin
   Pool := nil;
   Context := nil;
   try
-    if Tasks.Count=0 then
-      Exit(true);
-
     // Time measurement from now
     t0 := TThread.GetTickCount64;
+
+    if Tasks.Count=0 then
+      Exit(true);
 
     // Create a Context as an asynchronuos link between tasks and Dispatcher
     Context := TContext.Create(self);
@@ -493,9 +493,11 @@ begin
   finally
     Context.Free;
     // Fire all workers
-    while Pool.Pop(Worker) do
-      Worker.Free;
-    Pool.Free;
+    if Assigned(Pool) then begin
+      while Pool.Pop(Worker) do
+        Worker.Free;
+      Pool.Free;
+    end;
     FStats.Elapsed := TThread.GetTickCount64-t0;
   end;
 end;

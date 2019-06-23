@@ -22,7 +22,7 @@ uses
   BGRABitmapTypes, Generics.Collections;
 
 const
-  IMGRESGUIVER = '2.2';
+  IMGRESGUIVER = '2.3';
   IMGRESGUICPR = 'ImageResize V'+IMGRESGUIVER+' © 2019 Jan Schirrmacher, www.atomek.de';
 
   INITYPE = 'IRS';
@@ -50,12 +50,14 @@ const
 
   DEFSIZES :array[0..15] of integer = (32, 48, 64, 120, 240, 360, 480, 640, 800, 960, 1280, 1600, 1920, 2560, 3840, 4096);
 
+  RENSIMPLETEMPLATE = 'img%INDEX:1,3%.%FILEEXT%';
+  RENADVANCEDTEMPLATE = 'img%INDEX:1,3%_%SIZE%.%FILEEXT%';
+
 type
 
   { TMainDialog }
 
   TSizeDict = specialize TDictionary<integer, integer>;
-
 
   { TPos }
 
@@ -89,8 +91,10 @@ type
     ButtonMrkEdit: TBitBtn;
     ButtonExecute: TBitBtn;
     BrowseDstFolder: TSelectDirectoryDialog;
+    CheckBoxRenEnabled: TCheckBox;
     CheckBoxMrkEnabled: TCheckBox;
     CheckBoxStopOnError: TCheckBox;
+    EditRenTemplate: TComboBox;
     ComboBoxBoost: TComboBox;
     ComboBoxJpgQuality: TComboBox;
     ComboBoxPngCompression: TComboBox;
@@ -101,6 +105,7 @@ type
     EditMrkY: TEdit;
     EditSizes: TEdit;
     EditDstFolder: TEdit;
+    GroupBoxRename: TGroupBox;
     GroupBoxMrkLayout: TGroupBox;
     GroupBoxJpgOptions: TGroupBox;
     GroupBoxPngOptions: TGroupBox;
@@ -121,6 +126,8 @@ type
     Label19: TLabel;
     Label20: TLabel;
     Label21: TLabel;
+    Label22: TLabel;
+    Label23: TLabel;
     Label7: TLabel;
     Label9: TLabel;
     LabelCores: TLabel;
@@ -148,8 +155,12 @@ type
     PanelMrkSourceImage: TPanel;
     PanelPreview: TPanel;
     ProgressBar: TProgressBar;
+    RadioButtonRenSimple: TRadioButton;
+    RadioButtonRenCustom: TRadioButton;
+    RadioButtonRenAdvanced: TRadioButton;
     SaveAsDialog: TSaveDialog;
     Splitter1: TSplitter;
+    TabSheetRename: TTabSheet;
     TabSheetMrk: TTabSheet;
     TabSheetRessources: TTabSheet;
     TabSheetSizes: TTabSheet;
@@ -172,6 +183,8 @@ type
     UpDownMrkX: TUpDown;
     UpDownMrkY: TUpDown;
     procedure ApplicationProperties1Exception(Sender: TObject; E: Exception);
+    procedure CheckBoxRenEnabledClick(Sender: TObject);
+    procedure EditRenTemplateEnter(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure ActionAboutExecute(Sender: TObject);
@@ -320,6 +333,16 @@ begin
   Log('Error - '+E.Message);
 end;
 
+procedure TMainDialog.CheckBoxRenEnabledClick(Sender: TObject);
+begin
+  GroupBoxRename.Visible := CheckBoxRenEnabled.Checked;
+end;
+
+procedure TMainDialog.EditRenTemplateEnter(Sender: TObject);
+begin
+  RadioButtonRenCustom.Checked := true;
+end;
+
 procedure TMainDialog.CheckBoxMrkEnabledChange(Sender: TObject);
 const
   MRKSOURCES :array[boolean] of integer = (msDisabled, msFile);
@@ -358,13 +381,17 @@ begin
     ComboBoxPngCompression.Text := ReadString(SETTINGSSECTION, 'PngOptions.Compression', ComboBoxPngCompression.Text);
     SetMrkSource(ReadInteger(SETTINGSSECTION, 'MrkSource', GetMrkSource));
     EditMrkFilename.Text := ReadString(SETTINGSSECTION, 'MrkFilename', EditMrkFilename.Text);
-//    EditMrkLine.Text := ReadString(SETTINGSSECTION, 'MrkLine', EditMrkLine.Text);
     UpDownMrkSize.Position := ReadInteger(SETTINGSSECTION, 'MrkSize', UpDownMrkSize.Position);
     UpDownMrkX.Position := ReadInteger(SETTINGSSECTION, 'MrkX', UpDownMrkX.Position);
     UpDownMrkY.Position := ReadInteger(SETTINGSSECTION, 'MrkY', UpDownMrkY.Position);
     UpDownMrkAlpha.Position := ReadInteger(SETTINGSSECTION, 'Alpha', UpDownMrkAlpha.Position);
     ComboBoxBoost.Text := ReadString(SETTINGSSECTION, 'ThreadCount', ComboBoxBoost.Text);
     CheckBoxStopOnError.Checked := ReadBool(SETTINGSSECTION, 'StopOnError', CheckBoxStopOnError.Checked);
+    CheckBoxRenEnabled.Checked := ReadBool(SETTINGSSECTION, 'RenEnabled', CheckBoxRenEnabled.Checked);
+    RadioButtonRenSimple.Checked := ReadBool(SETTINGSSECTION, 'RenSimple', RadioButtonRenSimple.Checked);
+    RadioButtonRenAdvanced.Checked := ReadBool(SETTINGSSECTION, 'RenAdvanced', RadioButtonRenAdvanced.Checked);
+    RadioButtonRenCustom.Checked := ReadBool(SETTINGSSECTION, 'RenCustom', RadioButtonRenCustom.Checked);
+    EditRenTemplate.Text := ReadString(SETTINGSSECTION, 'RenTemplate', EditRenTemplate.Text);
   end;
 end;
 
@@ -382,13 +409,17 @@ begin
     WriteString(SETTINGSSECTION, 'PngOptions.Compression', ComboBoxPngCompression.Text);
     WriteInteger(SETTINGSSECTION, 'MrkSource', GetMrkSource);
     WriteString(SETTINGSSECTION, 'MrkFilename', EditMrkFilename.Text);
-//    WriteString(SETTINGSSECTION, 'MrkLine', EditMrkLine.Text);
     WriteString(SETTINGSSECTION, 'MrkSize', EditMrkSize.Text);
     WriteString(SETTINGSSECTION, 'MrkX', EditMrkX.Text);
     WriteString(SETTINGSSECTION, 'MrkY', EditMrkY.Text);
     WriteString(SETTINGSSECTION, 'MrkAlpha', EditMrkAlpha.Text);
     WriteString(SETTINGSSECTION, 'ThreadCount', ComboBoxBoost.Text);
     WriteBool(SETTINGSSECTION, 'StopOnError', CheckBoxStopOnError.Checked);
+    WriteBool(SETTINGSSECTION, 'RenEnabled', CheckBoxRenEnabled.Checked);
+    WriteBool(SETTINGSSECTION, 'RenSimple', RadioButtonRenSimple.Checked);
+    WriteBool(SETTINGSSECTION, 'RenAdvanced', RadioButtonRenAdvanced.Checked);
+    WriteBool(SETTINGSSECTION, 'RenCustom', RadioButtonRenCustom.Checked);
+    WriteString(SETTINGSSECTION, 'RenTemplate', EditRenTemplate.Text);
   end;
 end;
 
@@ -402,6 +433,7 @@ begin
   finally
      Ini.Free;
   end;
+  SetTitle('last settings');
 end;
 
 procedure TMainDialog.SaveToRegistry;
@@ -414,7 +446,6 @@ begin
   finally
      Ini.Free;
   end;
-  SetTitle('last settings');
 end;
 
 function TMainDialog.LoadFromFile(const Filename: string) :boolean;
@@ -520,6 +551,9 @@ begin
     UpDownMrkAlpha.Position := round(ImgResizer.MrkAlpha);
     FIsSave := false;
     FIniFilename := '';
+    CheckBoxRenEnabled.Checked := ImgResizer.RenEnabled;
+    RadioButtonRenSimple.Checked := true;
+    EditRenTemplate.Text := DEFAULT_RENFILETEMPLATE;
     SetMrkSource(msDisabled);
     UpdateSizes;
     UpdateControls;
@@ -928,21 +962,40 @@ begin
     Application.ProcessMessages;
     try
       try
+        // Source filenames
         if (MemoSrcFilenames.Text='') then
           raise Exception.Create('Missing source filenames.');
+
+        // Destination folder
         if (EditDstFolder.Text='') then
           raise Exception.Create('Missing destination folder.');
+
+        // Sizes
         if EditSizes.Text='default' then begin
           SetLength(Sizes, 1);
           Sizes[0] := 640;
         end else if not TrySizesStrToSizes(EditSizes.Text, Sizes) then
           raise Exception.Create('Invalid Sizes string.');
+
+        // Quality
         FImgRes := TImgRes.Create;
         if not TImgRes.TryStrToJpgQuality(ComboBoxJpgQuality.Text, IntValue) then
           raise Exception.Create('Invalid jpg quality.');
         FImgRes.JpgQuality := IntValue;
         FImgRes.PngCompression := ComboBoxPngCompression.ItemIndex;
 
+        // Rename
+        if CheckBoxRenEnabled.Checked then begin
+          if RadioButtonRenSimple.Checked then
+            FImgRes.DstFiletemplate := RENSIMPLETEMPLATE
+          else if RadioButtonRenAdvanced.Checked then
+            FImgRes.DstFiletemplate := RENADVANCEDTEMPLATE
+          else
+            FImgRes.DstFiletemplate := EditRenTemplate.Text;
+        end else
+          FImgRes.DstFiletemplate := '';
+
+        // Watermark
         if GetMrkSource = msFile then begin
           FImgRes.MrkSource := msFile;
           FImgRes.MrkFilename := EditMrkFilename.Text;
@@ -967,21 +1020,22 @@ begin
           FImgRes.MrkFilename := '';
         end;
 
+        // Hook the processor
         FImgRes.OnPrint := @OnPrint;
         FImgRes.OnProgress := @OnProgress;
 
-        // If required, then append the %SIZE% placeholder
+        // warn, if %SIZE% placeholder is not containes either in
+        // DstFolder nor in FileTemplate
         DstFolder := EditDstFolder.Text;
-        if (Length(Sizes)>1) and (Pos('%SIZE%', DstFolder)=0) then begin
-          DstFolder := DstFolder + '%SIZE%';
-          EditDstFolder.Text := DstFolder;
-          Log('%SIZE% placeholder added to destination folder.');
-        end;
+        if (Length(Sizes)>1) and (Pos('%SIZE%', DstFolder)=0)
+         and not (FImgRes.RenEnabled and (Pos('%SIZE%', FImgRes.DstFiletemplate)>0)) then
+          raise Exception.Create('Enter playholder %SIZE% to either the destination folder or the file template.');
 
         FImgRes.Sizes := SizesToSizesStr(Sizes);
         FImgRes.SrcFilenames := MemoSrcFilenames.Lines;
         FImgRes.DstFolder := DstFolder;
         FImgRes.ThreadCount := BoostStrToThreadCount(ComboBoxBoost.Text);
+        FImgRes.StopOnError := CheckBoxStopOnError.Checked;
         FImgRes.Execute;
 
       except on E :Exception do

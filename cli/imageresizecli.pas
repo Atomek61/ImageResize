@@ -11,35 +11,39 @@ uses
   { you can add units after this } fileutil, utils, imgres, generics.collections;
 
 const
-  IMGRESCLIVER = '1.9.2';
+  IMGRESCLIVER = '2.0';
   IMGRESCLICPR = 'imgres CLI V'+IMGRESCLIVER+' for engine V'+IMGRESVER+' (c) 2019 Jan Schirrmacher, www.atomek.de';
 
   INTROSTR = 'Free tool for jpg and png quality file resizing.';
-  USAGESTR = '  Usage: imgres (srcfilename|@srcfilelist) dstfolder [-s size[,size,..] [-j jpgquality]  [-p pngcompression] [-w watermark] [-t threadcount] [-h] [-q]';
+  USAGESTR = '  Usage: imgres filenames folder size [-j jpgquality]  [-p pngcompression] [-w watermark] [-t threadcount] [-h] [-q]';
   HINTSSTR =
-    '  s size           - refers to the longer side of the image, size can be a single value or a list of comma-separated values'#10+
-    '  j jpgquality     - is a quality from 1 to 100 percent (default is 75)'#10+
-    '  p pngcompression - is one of none,fastest,default and max'#10+
+    '  filenames        - Is a single JPEG or PNG file, a text filename preceeded by @ with a list of filenames'#10+
+    '                     or a wildcard with path/mask. Multiple masks are separated by semikolon.'#10+
+    '  folder           - Is the folder where to store the resulting resized files. The folder must contain'#10+
+    '                     the placeholder ''%SIZE%'' when there are multiple sizes. Non-existing folders'#10+
+    '                     will be created.'#10+
+    '  size             - Is a size in pixels or a comma-separated list of sizes, where the size refers to'#10+
+    '                     the longer side of the image.'#10+
+    '  j jpgquality     - a quality from 1 to 100 percent (default is 75)'#10+
+    '  p pngcompression - one of none,fastest,default and max'#10+
+    '  r rename         - rename files numbered, enter a template with place holders'#10+
+    '                     %SIZE% and %INDEX[:w,n]% with w=number of digits, n=startindex'#10+
     '  w watermark      - a watermark file and optional a position and opacity, see example'#10+
     '  t threadcount    - number of threads to use, 0 is maximum'#10+
-    '  x stoponerror    - Stop on error flag'#10+
+    '  x stoponerror    - stop on error flag'#10+
     '  h help           - outputs this text'#10+
-    '  q quiet          - suppresses any message output'#10#10+
-    '  dstfile must contain the placeholder ''%SIZE%'' when size is a list of sizes.'#10+
-    '  A srcfilelist preceeded by ''@'' refers to a file containing a list of source files.'#10+
-    '  The srcfilelist may contain relative pathes - they refer to the srcfilelist location.'#10+
-    '  Non-existing folders will be created.'#10;
+    '  q quiet          - suppresses any message output'#10#10;
   EXAMPLESTR =
     'Examples:'#10+'  imgres myimage.png \Images\res640 -s 640'#10+
     '  resamples a single png image with the default quality.'#10#10+
 
-    '  imgres ..\theimage.jpg C:\TEMP\res%SIZE% -s 480,640,800 -j 50'#10+
+    '  imgres ..\theimage.jpg C:\TEMP\res%SIZE% 480,640,800 -j 50'#10+
     '  resamples a single jpg with 3 different resolutions and stores them to different folders with 50% quality'#10#10+
 
-    '  imgres @mylist.txt img%SIZE% -s 640,1920 -j 1 -p max -q'#10+
+    '  imgres @mylist.txt img%SIZE% 640,1920 -j 1 -p max -q'#10+
     '  resamples a list of files which path/name is stored in a file with smallest file sizes in quiet mode.'#10#10+
 
-    '  imgres myfile.jpg /MyImages -s 640 -w "mywatermark.png?10,1,98?50"'#10+
+    '  imgres myimages\*.jpg;*.png /MyImages 640 -w "mywatermark.png?10,1,98?50"'#10+
     '  adds a watermark of 10% width, 1% from the left, 2% from the bottom, with 50% opacity.'#10;
   ERRINVALIDNUMBEROFPARAMS = 'Invalid number of parameters.';
   ERRINVALIDSRCFILENAME = 'Invalid parameter srcfilename.';
@@ -79,6 +83,7 @@ var
   PngCompression :integer;
   Processor :TImgRes;
   DstFolder :string;
+  DstFileTemplate :string;
   SrcFolder :string;
   SrcFilename :string;
   SrcFilenames :TStringList;
@@ -91,6 +96,7 @@ var
   MrkAlpha :single;
   ThreadCount :integer;
   StopOnError :boolean;
+  Path, Mask :string;
 
   function IncludeTrailingPathDelimiterEx(const Path :string) :string;
   begin
@@ -118,17 +124,6 @@ begin
   SrcFilenames := nil;
   Processor := TImgRes.Create;
   try
-
-    // Sizes
-    Param := GetOptionValue('s', 'size');
-    if Param<>'' then begin
-      if not TrySizesStrToSizes(Param, Sizes) or (Length(Sizes)=0) then
-        raise Exception.CreateFmt('Invalid sizes ''%s''.', [Param]);
-      inc(OptionCount, 2);
-    end else begin
-      SetLength(Sizes, 1);
-      Sizes[0] := DEFAULTSIZE;
-    end;
 
     // JpgQuality
     Param := GetOptionValue('j', 'jpgquality');
@@ -191,17 +186,25 @@ begin
     if StopOnError then
       inc(OptionCount);
 
+    // Filerenaming
+    DstFileTemplate := GetOptionValue('r', 'rename');
+    if DstFileTemplate<>'' then begin
+      inc(OptionCount, 2);
+    end else
+      DstFileTemplate := '';
+
     // Check number of parameters
-    if ParamCount<>2+OptionCount then
+    if ParamCount<>3+OptionCount then
       raise Exception.Create(ERRINVALIDNUMBEROFPARAMS);
 
-    // Required Parameters: SrcFilename and Folder.
+    // Required Parameters: SrcFilename, Folder, Size.
     SrcFilename := ParamStr(1);
     DstFolder := ParamStr(2);
 
-    // Check if multiple sizes are given and placeholder %SIZE% is not set in DstFolder
-    if (Length(Sizes)>1) and not (Pos('%SIZE%', DstFolder)>0) then
-      raise Exception.Create(ERRMISSINGSIZE);
+    // Sizes
+    Param := ParamStr(3);
+    if not TrySizesStrToSizes(Param, Sizes) or (Length(Sizes)=0) then
+      raise Exception.CreateFmt('Invalid sizes ''%s''.', [Param]);
 
     // Dont allow empty parameters
     if Length(SrcFilename)=0 then
@@ -209,7 +212,7 @@ begin
     if Length(DstFolder)=0 then
       raise Exception.Create(ERRINVALIDDSTFOLDER);
 
-    // srcfilelist
+    // source file list
     SrcFilenames := TStringList.Create;
     if SrcFilename[1]='@' then begin
       // Build srcfile list with
@@ -219,8 +222,13 @@ begin
       for i:=0 to SrcFilenames.Count-1 do
         if not IsPathAbsolute(SrcFilenames[i]) then
           SrcFilenames[i] := SrcFolder + SrcFilenames[i];
-    end else
+    end else if IsWildcard(SrcFilename) then begin
+      Path := ExtractFilePath(SrcFilename);
+      Mask := ExtractFilename(SrcFilename);
+      FindAllFiles(SrcFilenames, Path, Mask, false);
+    end else begin
       SrcFilenames.Add(SrcFilename);
+    end;
 
     // Prepare the processor
     Processor.SrcFilenames := SrcFilenames;
@@ -236,6 +244,13 @@ begin
     Processor.MrkAlpha := MrkAlpha;
     Processor.ThreadCount := ThreadCount;
     Processor.StopOnError := StopOnError;
+    Processor.DstFiletemplate := DstFileTemplate;
+
+    // Check if multiple sizes are given and placeholder %SIZE% is not set in DstFolder
+    if (Length(Sizes)>1) and not ((Pos('%SIZE%', DstFolder)>0)
+     or (Processor.RenEnabled and (Pos('%SIZE%', DstFileTemplate)>0))) then
+      raise Exception.Create(ERRMISSINGSIZE);
+
     if not Quiet then begin
       Processor.OnPrint := @OnPrint;
 //      Processor.OnProgress := @OnProgress;

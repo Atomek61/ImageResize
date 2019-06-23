@@ -7,7 +7,7 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, maindlg, aboutdlg, imgres, generics.queue, threading.dispatcher
+  Forms, maindlg, aboutdlg, imgres, generics.queue, threading.dispatcher, utils
   { you can add units after this }, mrkeditdlg;
 
 {$R *.res}
