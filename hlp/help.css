@@ -1,5 +1,3 @@
-@import url(https://fonts.googleapis.com/css?family=Open+Sans);
-
 :root {
   --bkghue: 216;
   --fgdhue: 204;
@@ -11,6 +9,7 @@ body {
   padding: 0;
   color: hsl(var(--fgdhue), 20%, 80%);
   background-color: hsl(var(--bkghue), 40%, 10%);
+  font: 14pt "Verdana";
 }
 
 a:link {color: hsl(240, 100%, 80%);}
@@ -23,9 +22,14 @@ header {
   margin-right: auto;
 }
 
+footer {
+  font-size: 10pt;
+  padding: 1em;
+  color: hsl(var(--fgdhue), 20%, 60%);
+}
+
 .contents {
   padding: 1em 5% 1em 5%;
-  font: 14pt "Open Sans";
   background-image: url("images/bkgshutter2.png");
 }
 

@@ -3,14 +3,14 @@
   <ProjectSession>
     <PathDelim Value="\"/>
     <Version Value="11"/>
-    <BuildModes Active="Release"/>
-    <Units Count="74">
+    <BuildModes Active="Debug"/>
+    <Units Count="78">
       <Unit0>
         <Filename Value="imageresizegui.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="13"/>
         <CursorPos X="49" Y="10"/>
-        <UsageCount Value="199"/>
+        <UsageCount Value="201"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
@@ -21,9 +21,9 @@
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="380"/>
-        <CursorPos X="5" Y="394"/>
-        <UsageCount Value="199"/>
+        <TopLine Value="438"/>
+        <CursorPos Y="453"/>
+        <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
@@ -33,19 +33,19 @@
         <ComponentName Value="AboutDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="11"/>
         <TopLine Value="27"/>
         <CursorPos X="15" Y="35"/>
-        <UsageCount Value="185"/>
+        <UsageCount Value="190"/>
         <Loaded Value="True"/>
       </Unit2>
       <Unit3>
         <Filename Value="..\src\imgres.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="7"/>
-        <TopLine Value="34"/>
-        <CursorPos Y="45"/>
-        <UsageCount Value="196"/>
+        <EditorIndex Value="15"/>
+        <TopLine Value="720"/>
+        <CursorPos X="38" Y="729"/>
+        <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit3>
       <Unit4>
@@ -54,7 +54,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="420"/>
         <CursorPos X="79" Y="434"/>
-        <UsageCount Value="128"/>
+        <UsageCount Value="133"/>
       </Unit4>
       <Unit5>
         <Filename Value="..\src\generics.queue.pas"/>
@@ -62,14 +62,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="69"/>
         <CursorPos Y="86"/>
-        <UsageCount Value="128"/>
+        <UsageCount Value="133"/>
       </Unit5>
       <Unit6>
         <Filename Value="..\src\mrk.utils.pas"/>
         <IsPartOfProject Value="True"/>
-        <TopLine Value="51"/>
-        <CursorPos X="20" Y="56"/>
-        <UsageCount Value="106"/>
+        <TopLine Value="11"/>
+        <CursorPos X="26" Y="15"/>
+        <UsageCount Value="111"/>
         <Loaded Value="True"/>
       </Unit6>
       <Unit7>
@@ -78,10 +78,10 @@
         <ComponentName Value="MrkEditDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="4"/>
-        <TopLine Value="279"/>
-        <CursorPos X="50" Y="281"/>
-        <UsageCount Value="101"/>
+        <EditorIndex Value="12"/>
+        <TopLine Value="52"/>
+        <CursorPos X="24" Y="313"/>
+        <UsageCount Value="106"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit7>
@@ -91,14 +91,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="14"/>
         <CursorPos Y="37"/>
-        <UsageCount Value="89"/>
+        <UsageCount Value="94"/>
       </Unit8>
       <Unit9>
         <Filename Value="..\src\utils.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="16"/>
         <CursorPos X="66" Y="36"/>
-        <UsageCount Value="40"/>
+        <UsageCount Value="45"/>
         <Loaded Value="True"/>
       </Unit9>
       <Unit10>
@@ -132,10 +132,11 @@
       </Unit13>
       <Unit14>
         <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\registry.pp"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="495"/>
-        <CursorPos X="3" Y="497"/>
-        <UsageCount Value="38"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="605"/>
+        <CursorPos X="28" Y="629"/>
+        <UsageCount Value="40"/>
+        <Loaded Value="True"/>
       </Unit14>
       <Unit15>
         <Filename Value="D:\Programme\Lazarus\components\lazutils\lazutf8classes.pas"/>
@@ -192,10 +193,11 @@
       <Unit22>
         <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-base\src\inifiles.pp"/>
         <UnitName Value="IniFiles"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="168"/>
-        <CursorPos X="3" Y="150"/>
+        <EditorIndex Value="7"/>
+        <TopLine Value="568"/>
+        <CursorPos X="35" Y="573"/>
         <UsageCount Value="22"/>
+        <Loaded Value="True"/>
       </Unit22>
       <Unit23>
         <Filename Value="..\..\BGRABITMAP 9.9.4\bgrabitmap\bgrapixel.inc"/>
@@ -218,10 +220,11 @@
       <Unit25>
         <Filename Value="D:\Programme\Lazarus\lcl\forms.pp"/>
         <UnitName Value="Forms"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="1248"/>
-        <CursorPos X="3" Y="1249"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="61"/>
+        <CursorPos X="35" Y="746"/>
         <UsageCount Value="11"/>
+        <Loaded Value="True"/>
       </Unit25>
       <Unit26>
         <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-base\src\custapp.pp"/>
@@ -280,18 +283,18 @@
       <Unit33>
         <Filename Value="D:\Programme\Lazarus\lcl\graphics.pp"/>
         <UnitName Value="Graphics"/>
-        <EditorIndex Value="9"/>
+        <EditorIndex Value="17"/>
         <TopLine Value="1138"/>
         <CursorPos X="17" Y="1060"/>
-        <UsageCount Value="51"/>
+        <UsageCount Value="54"/>
         <Loaded Value="True"/>
       </Unit33>
       <Unit34>
         <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\rtl\objpas\classes\classesh.inc"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="14"/>
         <TopLine Value="94"/>
         <CursorPos X="44" Y="102"/>
-        <UsageCount Value="32"/>
+        <UsageCount Value="35"/>
         <Loaded Value="True"/>
       </Unit34>
       <Unit35>
@@ -490,9 +493,10 @@
       </Unit61>
       <Unit62>
         <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\regdef.inc"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="11" Y="25"/>
-        <UsageCount Value="9"/>
+        <EditorIndex Value="5"/>
+        <CursorPos X="50" Y="18"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
       </Unit62>
       <Unit63>
         <Filename Value="D:\Programme\Lazarus\lcl\include\customcombobox.inc"/>
@@ -569,131 +573,161 @@
       <Unit73>
         <Filename Value="D:\Programme\Lazarus\lcl\helpintfs.pas"/>
         <UnitName Value="HelpIntfs"/>
-        <EditorIndex Value="2"/>
-        <UsageCount Value="18"/>
+        <EditorIndex Value="10"/>
+        <UsageCount Value="21"/>
         <Loaded Value="True"/>
       </Unit73>
+      <Unit74>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\winreg.inc"/>
+        <EditorIndex Value="8"/>
+        <TopLine Value="64"/>
+        <CursorPos X="30" Y="70"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit74>
+      <Unit75>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\rtl\win\wininc\ascfun.inc"/>
+        <EditorIndex Value="9"/>
+        <TopLine Value="368"/>
+        <CursorPos X="10" Y="383"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit75>
+      <Unit76>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\rtl\objpas\sysutils\osutilsh.inc"/>
+        <EditorIndex Value="4"/>
+        <CursorPos X="11" Y="22"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit76>
+      <Unit77>
+        <Filename Value="D:\Programme\Lazarus\lcl\include\customform.inc"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="951"/>
+        <CursorPos X="10" Y="939"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit77>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="163" Column="43" TopLine="148"/>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\registry.pp"/>
+        <Caret Line="488" TopLine="486"/>
       </Position1>
       <Position2>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="161" TopLine="148"/>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\registry.pp"/>
+        <Caret Line="185" TopLine="167"/>
       </Position2>
       <Position3>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="767" Column="44" TopLine="740"/>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\registry.pp"/>
+        <Caret Line="500" Column="3" TopLine="498"/>
       </Position3>
       <Position4>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="545" TopLine="519"/>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\registry.pp"/>
       </Position4>
       <Position5>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="544" TopLine="529"/>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\registry.pp"/>
+        <Caret Line="181" Column="16" TopLine="157"/>
       </Position5>
       <Position6>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="543" Column="67" TopLine="537"/>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\registry.pp"/>
+        <Caret Line="207" Column="54" TopLine="185"/>
       </Position6>
       <Position7>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="193" TopLine="177"/>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\registry.pp"/>
+        <Caret Line="495" Column="14" TopLine="471"/>
       </Position7>
       <Position8>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="750" Column="31" TopLine="740"/>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\registry.pp"/>
+        <Caret Line="500" Column="14" TopLine="476"/>
       </Position8>
       <Position9>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="52" TopLine="38"/>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\registry.pp"/>
+        <Caret Line="511" Column="14" TopLine="487"/>
       </Position9>
       <Position10>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="987" Column="61" TopLine="971"/>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\registry.pp"/>
+        <Caret Line="516" Column="14" TopLine="492"/>
       </Position10>
       <Position11>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1024" Column="20" TopLine="1010"/>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\registry.pp"/>
+        <Caret Line="529" Column="22" TopLine="505"/>
       </Position11>
       <Position12>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="223" Column="5" TopLine="209"/>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\registry.pp"/>
+        <Caret Line="535" Column="22" TopLine="511"/>
       </Position12>
       <Position13>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="195" TopLine="170"/>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\registry.pp"/>
+        <Caret Line="541" Column="22" TopLine="517"/>
       </Position13>
       <Position14>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="551" TopLine="529"/>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\registry.pp"/>
+        <Caret Line="547" Column="22" TopLine="523"/>
       </Position14>
       <Position15>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1024" TopLine="1009"/>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\registry.pp"/>
+        <Caret Line="552" Column="14" TopLine="528"/>
       </Position15>
       <Position16>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1025" Column="33" TopLine="1011"/>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\registry.pp"/>
+        <Caret Line="557" Column="14" TopLine="533"/>
       </Position16>
       <Position17>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="23" Column="48"/>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\registry.pp"/>
+        <Caret Line="563" Column="14" TopLine="539"/>
       </Position17>
       <Position18>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="49" Column="42" TopLine="43"/>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\registry.pp"/>
+        <Caret Line="569" Column="22" TopLine="545"/>
       </Position18>
       <Position19>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="931" TopLine="902"/>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\registry.pp"/>
+        <Caret Line="575" Column="22" TopLine="551"/>
       </Position19>
       <Position20>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="238" TopLine="216"/>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\registry.pp"/>
+        <Caret Line="580" Column="16" TopLine="556"/>
       </Position20>
       <Position21>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="45" Column="3" TopLine="34"/>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\registry.pp"/>
+        <Caret Line="592" Column="14" TopLine="568"/>
       </Position21>
       <Position22>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="546" Column="18" TopLine="540"/>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\registry.pp"/>
+        <Caret Line="598" Column="14" TopLine="574"/>
       </Position22>
       <Position23>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="197" TopLine="182"/>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\registry.pp"/>
+        <Caret Line="604" Column="14" TopLine="580"/>
       </Position23>
       <Position24>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="985" Column="53" TopLine="288"/>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\registry.pp"/>
+        <Caret Line="610" Column="14" TopLine="586"/>
       </Position24>
       <Position25>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="242" TopLine="229"/>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\registry.pp"/>
+        <Caret Line="615" Column="14" TopLine="591"/>
       </Position25>
       <Position26>
-        <Filename Value="aboutdlg.pas"/>
-        <Caret Line="50" Column="27" TopLine="28"/>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\registry.pp"/>
+        <Caret Line="621" Column="14" TopLine="597"/>
       </Position26>
       <Position27>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1038" TopLine="1017"/>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\registry.pp"/>
+        <Caret Line="626" Column="19" TopLine="602"/>
       </Position27>
       <Position28>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="1039" TopLine="1018"/>
+        <Caret Line="440" TopLine="431"/>
       </Position28>
       <Position29>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="1038" TopLine="1017"/>
+        <Caret Line="188" TopLine="172"/>
       </Position29>
       <Position30>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="394" Column="5" TopLine="381"/>
+        <Caret Line="312" TopLine="298"/>
       </Position30>
     </JumpHistory>
     <RunParams>

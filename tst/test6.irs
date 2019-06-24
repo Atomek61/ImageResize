@@ -1,0 +1,23 @@
+[Common]
+Type=IRS
+Version=200
+
+[Settings]
+SrcFilenames=..\tst\org1\app.png|..\tst\org1\bird.jpg|..\tst\org1\boats.jpg|..\tst\org1\industry.jpg|..\tst\org1\sailing.jpg|
+DstFolder=..\tst\test_6
+Sizes=360, 480, 640
+JpgOptions.Quality=default
+PngOptions.Compression=default
+MrkSource=0
+MrkFilename=
+MrkSize=20
+MrkX=98
+MrkY=98
+MrkAlpha=50
+ThreadCount=Maximum
+StopOnError=1
+RenEnabled=1
+RenSimple=0
+RenAdvanced=1
+RenCustom=0
+RenTemplate=img%INDEX:1,3%.%FILEEXT%

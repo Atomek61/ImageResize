@@ -27,14 +27,14 @@ const
     '  j jpgquality     - a quality from 1 to 100 percent (default is 75)'#10+
     '  p pngcompression - one of none,fastest,default and max'#10+
     '  r rename         - rename files numbered, enter a template with place holders'#10+
-    '                     %SIZE% and %INDEX[:w,n]% with w=number of digits, n=startindex'#10+
+    '                     %SIZE% and %INDEX[:n[,d]]% with n=startindex, d=number of digits/auto'#10+
     '  w watermark      - a watermark file and optional a position and opacity, see example'#10+
     '  t threadcount    - number of threads to use, 0 is maximum'#10+
     '  x stoponerror    - stop on error flag'#10+
     '  h help           - outputs this text'#10+
     '  q quiet          - suppresses any message output'#10#10;
   EXAMPLESTR =
-    'Examples:'#10+'  imgres myimage.png \Images\res640 -s 640'#10+
+    'Examples:'#10+'  imgres myimage.png \Images\res640 640'#10+
     '  resamples a single png image with the default quality.'#10#10+
 
     '  imgres ..\theimage.jpg C:\TEMP\res%SIZE% 480,640,800 -j 50'#10+
@@ -43,8 +43,11 @@ const
     '  imgres @mylist.txt img%SIZE% 640,1920 -j 1 -p max -q'#10+
     '  resamples a list of files which path/name is stored in a file with smallest file sizes in quiet mode.'#10#10+
 
-    '  imgres myimages\*.jpg;*.png /MyImages 640 -w "mywatermark.png?10,1,98?50"'#10+
-    '  adds a watermark of 10% width, 1% from the left, 2% from the bottom, with 50% opacity.'#10;
+    '  imgres myimages\*.jpg;*.png \MyImages 640 -w "mywatermark.png?10,1,98?50"'#10+
+    '  adds a watermark of 10% width, 1% from the left, 2% from the bottom, with 50% opacity.'#10#10+
+
+    '  More info at www.atomek.de/imageresize/cli/index.html';
+
   ERRINVALIDNUMBEROFPARAMS = 'Invalid number of parameters.';
   ERRINVALIDSRCFILENAME = 'Invalid parameter srcfilename.';
   ERRINVALIDDSTFOLDER = 'Invalid parameter dstfolder.';
@@ -251,10 +254,8 @@ begin
      or (Processor.RenEnabled and (Pos('%SIZE%', DstFileTemplate)>0))) then
       raise Exception.Create(ERRMISSINGSIZE);
 
-    if not Quiet then begin
+    if not Quiet then
       Processor.OnPrint := @OnPrint;
-//      Processor.OnProgress := @OnProgress;
-    end;
 
     ///////////////////////////////////////////////////
     // Finally call the processor...
@@ -266,7 +267,6 @@ begin
     SrcFilenames.Free;
   end;
 
-  // stop program loop
   Terminate;
 end;
 

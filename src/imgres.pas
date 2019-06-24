@@ -28,7 +28,7 @@ const
 
   PROGRESSSTEPSPERFILE = 4;
 
-  REGKEY = 'Software\Atomek\Image Resize';
+  IMGRESREGKEY = 'Software\Atomek\Image Resize';
 
 const
 //  DEFAULTSIZE            = 640;
@@ -182,8 +182,6 @@ type
 
 function TrySizesStrToSizes(const Str :string; out Values :TSizes) :boolean;
 function SizesToSizesStr(const Sizes :TSizes) :string;
-
-//function
 
 implementation
 
@@ -375,8 +373,6 @@ begin
 
     result := true;
   finally
-    if result = false then
-      Beep;
     Writer.Free;
     DstImg.Free;
   end;
@@ -736,8 +732,8 @@ begin
     if ParamCount<Length(Placeholders) then
       Exit(Err('Unknown or invalid placeholder.'));
     Params.Enabled := true;
-    result := true;
   end;
+  result := true;
 end;
 
 class function TImgRes.RenameParamsToStr(const Params: TRenameParams): string;

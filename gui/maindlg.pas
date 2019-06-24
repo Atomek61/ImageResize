@@ -28,7 +28,7 @@ const
   INITYPE = 'IRS';
   INIVERSION = '200';
 
-  GUIREGKEY = REGKEY + '\Settings';
+  GUIREGKEY = IMGRESREGKEY;
 
   COMMONSECTION = 'Common';
   SETTINGSSECTION = 'Settings';
@@ -44,7 +44,7 @@ const
     'THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.';
   WEBURL = 'www.atomek.de/imageresize/index.html';
 
-  WEBHELPURL = 'http://www.atomek.de/imageresize/hlp22/gui/';
+  WEBHELPURL = 'http://www.atomek.de/imageresize/hlp23/gui/';
 
   LM_RUN = LM_USER + 1;
 
@@ -204,8 +204,8 @@ type
     procedure EditDstFolderChange(Sender: TObject);
     procedure EditMrkSizeChange(Sender: TObject);
     procedure EditSizesChange(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
     procedure FormDropFiles(Sender: TObject; const FileNames: array of String);
+    procedure FormShow(Sender: TObject);
     procedure MemoSrcFilenamesChange(Sender: TObject);
     procedure PaintBoxMrkPreviewMouseDown(Sender: TObject;
       Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -229,7 +229,6 @@ type
     FExecuting :boolean;
     FProgress :single;
     FMrkSource :integer;
-    FMrkImage :TBGRABitmap;
     FMrkDragging :boolean;
     FMrkOffset :TSize; // while dragging
     procedure SetTitle(const Str :string);
@@ -263,7 +262,7 @@ var
 implementation
 
 uses
-  math, mrkeditdlg, helpintfs;
+  math, mrkeditdlg, helpintfs, Windows;
 
 {$R *.lfm}
 
@@ -278,13 +277,17 @@ end;
 { TMainDialog }
 
 procedure TMainDialog.FormCreate(Sender: TObject);
+begin
+  DefaultFormatSettings.DecimalSeparator := '.';
+  AllowDropFiles := true;
+end;
+
+procedure TMainDialog.FormShow(Sender: TObject);
 var
   Params :TStringArray;
   i :integer;
   Button :TToolButton;
 begin
-  DefaultFormatSettings.DecimalSeparator := '.';
-  AllowDropFiles := true;
   // Create Size Buttons
   for i:=0 to High(DEFSIZES) do begin
     Button := TToolButton.Create(ToolBarSizeButtons);
@@ -298,7 +301,6 @@ begin
   ToolBarSizeButtons.ButtonWidth := ToolBarSizeButtons.Width div 4;
   ToolBarSizeButtons.ButtonHeight := ToolBarSizeButtons.Height div 4;
 
-  FMrkImage := TBGRABitmap.Create;
   PanelMrkSourceImage.Left := PanelMrkSourceFile.Left;
   PanelMrkSourceImage.Top := PanelMrkSourceFile.Top;
   PanelMrkSourceImage.Width := PanelMrkSourceFile.Width;
@@ -322,9 +324,13 @@ begin
     HTMLHelpDatabase.BaseURL := WEBHELPURL;
 end;
 
-procedure TMainDialog.FormDestroy(Sender: TObject);
+procedure TMainDialog.LMRun(var Message: TLMessage);
 begin
-  FMrkImage.Free;
+  ActionExecute.Execute;
+  Application.ProcessMessages;
+  if FAutoExit then begin
+    Close;
+  end;
 end;
 
 procedure TMainDialog.ApplicationProperties1Exception(Sender: TObject;
@@ -440,11 +446,11 @@ procedure TMainDialog.SaveToRegistry;
 var
   Ini :TRegistryIniFile;
 begin
-  Ini := TRegistryIniFile.Create(GUIREGKEY);
+  Ini := TRegistryIniFile.Create(GUIREGKEY, KEY_WRITE);
   try
     SaveToIni(Ini);
   finally
-     Ini.Free;
+    Ini.Free;
   end;
 end;
 
@@ -486,15 +492,6 @@ end;
 procedure TMainDialog.FormDropFiles(Sender: TObject; const FileNames: array of String);
 begin
   MemoSrcFilenames.Lines.AddStrings(Filenames);
-end;
-
-procedure TMainDialog.LMRun(var Message: TLMessage);
-begin
-  ActionExecute.Execute;
-  Application.ProcessMessages;
-  if FAutoExit then begin
-    Close;
-  end;
 end;
 
 procedure TMainDialog.SizeButtonClick(Sender: TObject);
@@ -610,10 +607,14 @@ begin
   if TrySizesStrToSizes(EditSizes.Text, Sizes) then begin
     EditSizes.Text := SizesToSizesStr(Sizes);
     SizeDict := TSizeDict.Create;
-    for i:=0 to High(Sizes) do
-      SizeDict.Add(Sizes[i], i);
-    with ToolBarSizeButtons do for i:=0 to ButtonCount-1 do
-      Buttons[i].Down := SizeDict.ContainsKey(Buttons[i].Tag);
+    try
+      for i:=0 to High(Sizes) do
+        SizeDict.Add(Sizes[i], i);
+      with ToolBarSizeButtons do for i:=0 to ButtonCount-1 do
+        Buttons[i].Down := SizeDict.ContainsKey(Buttons[i].Tag);
+    finally
+      SizeDict.Free;
+    end;
   end;
 end;
 

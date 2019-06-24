@@ -99,7 +99,7 @@ uses
   imgres, graphics.utils;
 
 const
-  DLGREGKEY = REGKEY + '\MrkEditor';
+  DLGREGKEY = IMGRESREGKEY + '\MrkEditor';
 
 {$R *.lfm}
 
@@ -315,7 +315,7 @@ var
   Ini :TRegistryIniFile;
   Params :TWatermarkParams;
 begin
-  Ini := TRegistryIniFile.Create(REGKEY);
+  Ini := TRegistryIniFile.Create(DLGREGKEY);
   try
     Ini.RegIniFile.RootKey := HKEY_CURRENT_USER;
     Params.LoadFromIni(Ini);
@@ -370,7 +370,7 @@ var
 begin
   if not TryDialogToParams(Params) then
     raise Exception.Create('Invalid parameter.');
-  Ini := TRegistryIniFile.Create(REGKEY);
+  Ini := TRegistryIniFile.Create(DLGREGKEY);
   try
     Params.SaveToIni(Ini);
   finally

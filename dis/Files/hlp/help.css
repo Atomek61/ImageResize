@@ -9,9 +9,12 @@ body {
   margin: 0;
   max-width: 800px;
   padding: 0;
-  color: hsl(var(--fgdhue), 20%, 40%);
-  background-color: hsl(var(--bkghue), 40%, 90%);
+  color: hsl(var(--fgdhue), 20%, 80%);
+  background-color: hsl(var(--bkghue), 40%, 10%);
 }
+
+a:link {color: hsl(240, 100%, 80%);}
+a:visited {color: hsl(240, 40%, 50%);}
 
 header {
   height: 160px;
@@ -23,7 +26,7 @@ header {
 .contents {
   padding: 1em 5% 1em 5%;
   font: 14pt "Open Sans";
-  background-image: url("images/bkgshutter.png");
+  background-image: url("images/bkgshutter2.png");
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -52,3 +55,25 @@ td {
 .btn {position:relative; top: 4px;}
 
 .chfot {margin-bottom: 2em; margin-top: 1.5em;}
+
+.ct {display: flex; justify-content: space-around;}
+
+.partab {border-collapse: collapse;}
+.partab td {
+  vertical-align: top;
+  border-top: 1px solid hsl(var(--fgdhue), 20%, 60%);
+  margin: 0 0 1em 0;
+}
+
+.cmd {
+  margin: 1em;
+  padding: 2px 4px 2px 4px;
+  color: silver;
+  background-color: black;
+  font: 11pt Courier;
+ }
+
+.plh {
+  font: italic bold 14pt "Courier New";
+  color: hsl(20, 20%, 80%);
+}

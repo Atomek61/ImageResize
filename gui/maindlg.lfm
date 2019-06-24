@@ -11,8 +11,8 @@ object MainDialog: TMainDialog
   Constraints.MinWidth = 640
   OnClose = FormClose
   OnCreate = FormCreate
-  OnDestroy = FormDestroy
   OnDropFiles = FormDropFiles
+  OnShow = FormShow
   Position = poDefaultPosOnly
   ShowHint = True
   LCLVersion = '2.0.0.3'
