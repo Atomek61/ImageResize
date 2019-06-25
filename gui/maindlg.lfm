@@ -77,7 +77,7 @@ object MainDialog: TMainDialog
       Left = 8
       Height = 48
       Top = 7
-      Width = 506
+      Width = 450
       Align = alNone
       ButtonHeight = 48
       ButtonWidth = 56
@@ -313,9 +313,9 @@ object MainDialog: TMainDialog
       Height = 280
       Top = 95
       Width = 276
-      ActivePage = TabSheetRename
+      ActivePage = TabSheetSizes
       Anchors = [akTop, akRight]
-      TabIndex = 2
+      TabIndex = 0
       TabOrder = 5
       object TabSheetSizes: TTabSheet
         HelpType = htKeyword
@@ -1009,7 +1009,7 @@ object MainDialog: TMainDialog
     object Label17: TLabel
       Left = 384
       Height = 15
-      Top = 72
+      Top = 77
       Width = 62
       Anchors = [akTop, akRight]
       Caption = '&Parameters:'

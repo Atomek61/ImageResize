@@ -78,6 +78,7 @@ type
     FMrkFilename :string;
     FMrkImage :TBGRABitmap;
     FDirty :boolean;
+    FRegKey :string;
     function TryDialogToParams(out Params :TWatermarkParams) :boolean;
     procedure DialogToParams(out Params :TWatermarkParams);
     procedure ParamsToDialog(const Params :TWatermarkParams);
@@ -87,7 +88,7 @@ type
     procedure SaveToFile(const Filename :string);
     procedure SetDirty;
   public
-    class function GetFilename(out MrkFilename :string) :boolean;
+    class function GetFilename(const RegKey :string; out MrkFilename :string) :boolean;
   end;
 
 var
@@ -99,7 +100,7 @@ uses
   imgres, graphics.utils;
 
 const
-  DLGREGKEY = IMGRESREGKEY + '\MrkEditor';
+  DLGREGKEY = 'MrkEditor';
 
 {$R *.lfm}
 
@@ -186,7 +187,7 @@ var
 begin
   if not TryDialogToParams(Params) then
     raise Exception.Create('Invalid parameter.');
-  Ini := TRegistryIniFile.Create(DLGREGKEY);
+  Ini := TRegistryIniFile.Create(FRegKey+DLGREGKEY);
   try
     Params.SaveToIni(Ini, WATERMARKDEFAULTSECTION);
   finally
@@ -200,7 +201,7 @@ var
   Ini: TRegistryIniFile;
   Params :TWatermarkParams;
 begin
-  Ini := TRegistryIniFile.Create(DLGREGKEY);
+  Ini := TRegistryIniFile.Create(FRegKey+DLGREGKEY);
   try
     if Ini.RegIniFile.KeyExists(WATERMARKDEFAULTSECTION) then
       Params.LoadFromIni(Ini, WATERMARKDEFAULTSECTION)
@@ -295,13 +296,14 @@ begin
     and TryCreateWatermarkImage(Params, Img);
 end;
 
-class function TMrkEditDialog.GetFilename(out MrkFilename: string): boolean;
+class function TMrkEditDialog.GetFilename(const RegKey :string; out MrkFilename: string): boolean;
 var
   Dialog :TMrkEditDialog;
 begin
   Dialog := TMrkEditDialog.Create(Application);
   try
     Dialog.FMrkSource := msFile;
+    Dialog.FRegKey := RegKey;
     result := Dialog.ShowModal=mrOk;
     if result then
       MrkFilename := Dialog.FMrkFilename;
@@ -315,7 +317,7 @@ var
   Ini :TRegistryIniFile;
   Params :TWatermarkParams;
 begin
-  Ini := TRegistryIniFile.Create(DLGREGKEY);
+  Ini := TRegistryIniFile.Create(FRegKey+DLGREGKEY);
   try
     Ini.RegIniFile.RootKey := HKEY_CURRENT_USER;
     Params.LoadFromIni(Ini);
@@ -370,7 +372,7 @@ var
 begin
   if not TryDialogToParams(Params) then
     raise Exception.Create('Invalid parameter.');
-  Ini := TRegistryIniFile.Create(DLGREGKEY);
+  Ini := TRegistryIniFile.Create(FRegKey+DLGREGKEY);
   try
     Params.SaveToIni(Ini);
   finally

@@ -28,7 +28,7 @@ const
 
   PROGRESSSTEPSPERFILE = 4;
 
-  IMGRESREGKEY = 'Software\Atomek\Image Resize';
+  IMGRESREGKEY = 'Software\Atomek\Image Resize\';
 
 const
 //  DEFAULTSIZE            = 640;

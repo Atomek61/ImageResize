@@ -11,8 +11,8 @@ uses
 
 const
   WATERMARKPARAMSVERSION = 100;
-  WATERMARKSECTION = 'Watermark';
-  WATERMARKDEFAULTSECTION = 'Default Watermark';
+  WATERMARKSECTION = 'Settings';
+  WATERMARKDEFAULTSECTION = 'Favorite';
 
 type
 

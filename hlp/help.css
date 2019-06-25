@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
 :root {
   --bkghue: 216;
   --fgdhue: 204;
@@ -9,7 +11,8 @@ body {
   padding: 0;
   color: hsl(var(--fgdhue), 20%, 80%);
   background-color: hsl(var(--bkghue), 40%, 10%);
-  font: 14pt "Verdana";
+  font: 14pt "Verdana"; /* fallback */
+  font: 14pt "Open Sans";
 }
 
 a:link {color: hsl(240, 100%, 80%);}

@@ -18,8 +18,8 @@ interface
 uses
   Classes, Types, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
   ComCtrls, ActnList, ExtCtrls, imgres, registry, aboutdlg, inifiles, strutils,
-  LMessages, LCLIntf, Buttons, ImgList, LCLType, LazHelpHTML, BGRABitmap,
-  BGRABitmapTypes, Generics.Collections;
+  LMessages, LCLIntf, Buttons, ImgList, LCLType, LazHelpHTML, IniPropStorage,
+  BGRABitmap, BGRABitmapTypes, Generics.Collections;
 
 const
   IMGRESGUIVER = '2.3';
@@ -28,7 +28,7 @@ const
   INITYPE = 'IRS';
   INIVERSION = '200';
 
-  GUIREGKEY = IMGRESREGKEY;
+  GUIREGKEY = IMGRESREGKEY+IMGRESGUIVER+'\';
 
   COMMONSECTION = 'Common';
   SETTINGSSECTION = 'Settings';
@@ -881,7 +881,7 @@ procedure TMainDialog.ActionEditWatermarkExecute(Sender: TObject);
 var
   MrkFilename :string;
 begin
-  if TMrkEditDialog.GetFilename(MrkFilename) then begin
+  if TMrkEditDialog.GetFilename(GUIREGKEY, MrkFilename) then begin
     SetMrkSource(msFile);
     EditMrkFilename.Text := MrkFilename;
     EditMrkFilename.SelStart := Length(EditMrkFilename.Text);
