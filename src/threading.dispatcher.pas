@@ -474,7 +474,7 @@ begin
 
               // If all Tasks are done and no worker is currently running then finish
               if (NextTask=Tasks.Count) and (WorkingCount=0) then
-                Exit(true);
+                Exit(FStats.Failed = 0);
 
               // When error occured and not already aborting and StopOnError then stop all workers
               if (Level in [mlAbort, mlFatal]) and not FAborted and StopOnError then

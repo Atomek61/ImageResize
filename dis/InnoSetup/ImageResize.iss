@@ -1,5 +1,5 @@
 #define PROGNAME "ImageResize"
-#define PROGVER "2.3"
+#define PROGVER "2.4"
 
 #define PROGEXE "ImageResize.exe"
 
@@ -26,7 +26,7 @@ WelcomeLabel2=This will install [name/ver] on your computer.%n%n[name] is jpg an
 [Tasks]
 Name: desktopicon; Description: "Create a desktop icon for the Windows application";
 Name: htmlhelp; Description: "Install the HTML based helpfiles";
-Name: installconsoleapp; Description: "Install the commandline tool imres.exe";
+Name: installconsoleapp; Description: "Install the commandline tool imgres.exe";
 
 [Run]
 Filename: {app}\ImageResize.exe; Description: "Start {#PROGNAME} now"; Flags: postinstall; 

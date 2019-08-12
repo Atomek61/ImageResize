@@ -5,7 +5,7 @@ unit aboutdlg;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls;
+  Classes, SysUtils, {fileinfo, }Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls;
 
 type
 
@@ -13,7 +13,7 @@ type
 
   TAboutDialog = class(TForm)
     Button1: TButton;
-    Image1: TImage;
+    ImageMainIcon: TImage;
     LabelImgresGuiCpr: TLabel;
     LabelImgresStr: TLabel;
     LabelUrl1: TLabel;
@@ -40,12 +40,21 @@ end;
 class function TAboutDialog.Execute(const Text1, Text2, License: string): boolean;
 var
   AboutDialog: TAboutDialog;
+//  FileVerInfo: TFileVersionInfo;
 begin
+{  FileVerInfo:=TFileVersionInfo.Create(nil);
+  try
+    FileVerInfo.ReadFileInfo;
+    writeln('File version: ',FileVerInfo.VersionStrings.Values['FileVersion']);
+  finally
+    FileVerInfo.Free;
+  end;}
   AboutDialog := TAboutDialog.Create(nil);
   with AboutDialog do try
     LabelImgresGuiCpr.Caption := Text1;
     LabelImgresStr.Caption := Text2;
     MemoLicense.Text := License;
+    ImageMainIcon.Picture.Icon := Application.Icon;
     result := ShowModal = mrOk;
   finally
     AboutDialog.Free;

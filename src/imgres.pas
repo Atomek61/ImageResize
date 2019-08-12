@@ -51,6 +51,8 @@ const
   msFile      = 1;
   msImage     = 2;
 
+  DEFSIZES :array[0..15] of integer = (32, 48, 64, 120, 240, 360, 480, 640, 800, 960, 1280, 1600, 1920, 2560, 3840, 4096);
+
 type
 
   TSizes = array of integer;
@@ -617,7 +619,6 @@ begin
     SharedTasks.Free;
   end;
 
-  result := true;
 end;
 
 procedure TImgRes.Cancel;

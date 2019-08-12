@@ -18,11 +18,13 @@ interface
 uses
   Classes, Types, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
   ComCtrls, ActnList, ExtCtrls, imgres, registry, aboutdlg, inifiles, strutils,
-  LMessages, LCLIntf, Buttons, ImgList, LCLType, LazHelpHTML, IniPropStorage,
+  LMessages, LCLIntf, Buttons, ImgList, LCLType, LazHelpHTML,
   BGRABitmap, BGRABitmapTypes, Generics.Collections;
 
 const
-  IMGRESGUIVER = '2.3';
+  WEBHELPURL = 'http://www.atomek.de/imageresize/hlp23/gui/';
+
+  IMGRESGUIVER = '2.4';
   IMGRESGUICPR = 'ImageResize V'+IMGRESGUIVER+' © 2019 Jan Schirrmacher, www.atomek.de';
 
   INITYPE = 'IRS';
@@ -44,14 +46,16 @@ const
     'THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.';
   WEBURL = 'www.atomek.de/imageresize/index.html';
 
-  WEBHELPURL = 'http://www.atomek.de/imageresize/hlp23/gui/';
 
   LM_RUN = LM_USER + 1;
 
-  DEFSIZES :array[0..15] of integer = (32, 48, 64, 120, 240, 360, 480, 640, 800, 960, 1280, 1600, 1920, 2560, 3840, 4096);
-
   RENSIMPLETEMPLATE = 'img%INDEX:1,3%.%FILEEXT%';
   RENADVANCEDTEMPLATE = 'img%INDEX:1,3%_%SIZE%.%FILEEXT%';
+
+  THUMBNAILIMGMAX = 240;
+  DOCIMGMAX = 960;
+
+  SIZEBTNHINTFMT = '%s - %dpx';
 
 type
 
@@ -277,22 +281,33 @@ end;
 { TMainDialog }
 
 procedure TMainDialog.FormCreate(Sender: TObject);
+var
+  i :integer;
+  Button :TToolButton;
+  Cpt :string;
 begin
   DefaultFormatSettings.DecimalSeparator := '.';
   AllowDropFiles := true;
-end;
 
-procedure TMainDialog.FormShow(Sender: TObject);
-var
-  Params :TStringArray;
-  i :integer;
-  Button :TToolButton;
-begin
   // Create Size Buttons
   for i:=0 to High(DEFSIZES) do begin
     Button := TToolButton.Create(ToolBarSizeButtons);
     Button.Parent := ToolBarSizeButtons;
     Button.Caption := IntToStr(DEFSIZES[i]);
+    if DEFSIZES[i]<=THUMBNAILIMGMAX then
+      Cpt := 'Small - Thumbnail size'
+    else if DEFSIZES[i]<=DOCIMGMAX then
+      Cpt := 'Medium - Document size'
+    else
+      Cpt := 'Large - Desktop size';
+
+    Button.Hint := Format(SIZEBTNHINTFMT, [Cpt, DEFSIZES[i]]);
+    if DEFSIZES[i]<300 then
+        Button.ImageIndex := 5
+    else if DEFSIZES[i]<1000 then
+      Button.ImageIndex := 6
+    else
+      Button.ImageIndex := 7;
     Button.Style := tbsCheck;
     Button.Tag := DEFSIZES[i];
     Button.OnClick := @SizeButtonClick;
@@ -301,6 +316,12 @@ begin
   ToolBarSizeButtons.ButtonWidth := ToolBarSizeButtons.Width div 4;
   ToolBarSizeButtons.ButtonHeight := ToolBarSizeButtons.Height div 4;
 
+end;
+
+procedure TMainDialog.FormShow(Sender: TObject);
+var
+  Params :TStringArray;
+begin
   PanelMrkSourceImage.Left := PanelMrkSourceFile.Left;
   PanelMrkSourceImage.Top := PanelMrkSourceFile.Top;
   PanelMrkSourceImage.Width := PanelMrkSourceFile.Width;
@@ -390,7 +411,7 @@ begin
     UpDownMrkSize.Position := ReadInteger(SETTINGSSECTION, 'MrkSize', UpDownMrkSize.Position);
     UpDownMrkX.Position := ReadInteger(SETTINGSSECTION, 'MrkX', UpDownMrkX.Position);
     UpDownMrkY.Position := ReadInteger(SETTINGSSECTION, 'MrkY', UpDownMrkY.Position);
-    UpDownMrkAlpha.Position := ReadInteger(SETTINGSSECTION, 'Alpha', UpDownMrkAlpha.Position);
+    UpDownMrkAlpha.Position := ReadInteger(SETTINGSSECTION, 'MrkAlpha', UpDownMrkAlpha.Position);
     ComboBoxBoost.Text := ReadString(SETTINGSSECTION, 'ThreadCount', ComboBoxBoost.Text);
     CheckBoxStopOnError.Checked := ReadBool(SETTINGSSECTION, 'StopOnError', CheckBoxStopOnError.Checked);
     CheckBoxRenEnabled.Checked := ReadBool(SETTINGSSECTION, 'RenEnabled', CheckBoxRenEnabled.Checked);
@@ -852,9 +873,17 @@ begin
 end;
 
 procedure TMainDialog.ActionBrowseDstFolderExecute(Sender: TObject);
+var
+  s :string;
+  f :string;
 begin
+  s := EditDstFolder.Text;
+  f := '';
+  if Pos('%SIZE%', s)>0 then
+    f := ExtractFilename(s);
+  BrowseDstFolder.Filename := LeftStr(s, Length(s)-Length(f));
   if BrowseDstFolder.Execute then begin
-    EditDstFolder.Text := BrowseDstFolder.FileName;
+    EditDstFolder.Text := IncludeTrailingPathDelimiter(BrowseDstFolder.FileName)+f;
   end;
 end;
 
