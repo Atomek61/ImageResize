@@ -1031,8 +1031,8 @@ object MainDialog: TMainDialog
     TabOrder = 1
     object MemoMessages: TMemo
       Left = 6
-      Height = 173
-      Top = 29
+      Height = 192
+      Top = 10
       Width = 648
       Align = alClient
       BorderSpacing.Top = 4
@@ -1041,18 +1041,6 @@ object MainDialog: TMainDialog
       ScrollBars = ssAutoVertical
       TabOrder = 0
       TabStop = False
-    end
-    object Label4: TLabel
-      Left = 10
-      Height = 15
-      Top = 4
-      Width = 650
-      Align = alTop
-      BorderSpacing.Left = 10
-      BorderSpacing.Top = 4
-      BorderSpacing.Bottom = 2
-      Caption = 'Messages:'
-      ParentColor = False
     end
   end
   object Splitter1: TSplitter
@@ -1067,7 +1055,7 @@ object MainDialog: TMainDialog
   object ProgressBar: TProgressBar
     Left = 376
     Height = 7
-    Top = 451
+    Top = 435
     Width = 272
     Anchors = [akRight, akBottom]
     TabOrder = 3

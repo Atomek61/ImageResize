@@ -6,6 +6,8 @@
 [Setup]
 AppName={#PROGNAME}
 AppVersion={#PROGVER}
+AppPublisher=Atomek - Jan Schirrmacher
+AppPublisherURL=http://www.atomek.de
 WizardStyle=modern
 DefaultDirName={autopf}\{#PROGNAME}
 DefaultGroupName=Atomek\{#PROGNAME}

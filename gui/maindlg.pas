@@ -144,7 +144,6 @@ type
     LabelSrcFilnamesRequired: TLabel;
     LabelDstFolderRequired: TLabel;
     Label2: TLabel;
-    Label4: TLabel;
     MemoMessages: TMemo;
     MemoSrcFilenames: TMemo;
     OpenDialog: TOpenDialog;
@@ -339,6 +338,9 @@ begin
 
   // Show number of cores
   LabelCores.Caption := Format('%d Cores', [TThread.ProcessorCount]);
+
+  // Show initial message in Message log
+  Log(Format('ImageResize %s, resizer %s, %d cores', [IMGRESGUIVER, IMGRESVER, TThread.ProcessorCount]));
 
   // If no local help files, then use online help
   if not FileExists(IncludeTrailingPathDelimiter(ExtractFilePath(Application.ExeName))+'hlp/gui/index.html') then

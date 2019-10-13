@@ -20,11 +20,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="864"/>
-        <CursorPos Y="885"/>
+        <TopLine Value="328"/>
+        <CursorPos X="105" Y="343"/>
         <UsageCount Value="201"/>
         <Bookmarks Count="1">
-          <Item0 X="27" Y="304"/>
+          <Item0 X="27" Y="303"/>
         </Bookmarks>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -45,8 +45,8 @@
         <Filename Value="..\src\imgres.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="9"/>
-        <TopLine Value="24"/>
-        <CursorPos X="15" Y="31"/>
+        <TopLine Value="10"/>
+        <CursorPos X="12" Y="26"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit3>
@@ -639,126 +639,123 @@
         <Loaded Value="True"/>
       </Unit82>
     </Units>
-    <JumpHistory Count="30" HistoryIndex="29">
+    <JumpHistory Count="29" HistoryIndex="28">
       <Position1>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="339" Column="26" TopLine="332"/>
-      </Position1>
-      <Position2>
-        <Filename Value="maindlg.pas"/>
-      </Position2>
-      <Position3>
-        <Filename Value="imageresizegui.lpr"/>
-        <Caret Line="17" Column="36"/>
-      </Position3>
-      <Position4>
-        <Filename Value="D:\Programme\Lazarus2.0.2\lcl\forms.pp"/>
-        <Caret Line="1848" Column="3" TopLine="1832"/>
-      </Position4>
-      <Position5>
         <Filename Value="aboutdlg.pas"/>
         <Caret Line="49" Column="46" TopLine="23"/>
-      </Position5>
-      <Position6>
+      </Position1>
+      <Position2>
         <Filename Value="imageresizegui.lpr"/>
         <Caret Line="17" Column="36"/>
-      </Position6>
-      <Position7>
+      </Position2>
+      <Position3>
         <Filename Value="D:\Programme\Lazarus2.0.2\lcl\forms.pp"/>
         <Caret Line="912" TopLine="890"/>
-      </Position7>
-      <Position8>
+      </Position3>
+      <Position4>
         <Filename Value="D:\Programme\Lazarus2.0.2\lcl\include\hintwindow.inc"/>
         <Caret Line="108" TopLine="108"/>
+      </Position4>
+      <Position5>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="4" Column="42"/>
+      </Position5>
+      <Position6>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="410" Column="27" TopLine="403"/>
+      </Position6>
+      <Position7>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="663" Column="3" TopLine="660"/>
+      </Position7>
+      <Position8>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="878" Column="27" TopLine="874"/>
       </Position8>
       <Position9>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="4" Column="42"/>
+        <Caret Line="879" Column="3" TopLine="862"/>
       </Position9>
       <Position10>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="410" Column="27" TopLine="403"/>
+        <Caret Line="216" Column="60" TopLine="201"/>
       </Position10>
       <Position11>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="663" Column="3" TopLine="660"/>
+        <Caret Line="886" TopLine="864"/>
       </Position11>
       <Position12>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="878" Column="27" TopLine="874"/>
+        <Caret Line="880" Column="57" TopLine="864"/>
       </Position12>
       <Position13>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="879" Column="3" TopLine="862"/>
+        <Caret Line="877" Column="20" TopLine="864"/>
       </Position13>
       <Position14>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="216" Column="60" TopLine="201"/>
+        <Caret Line="895" TopLine="871"/>
       </Position14>
       <Position15>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="886" TopLine="864"/>
+        <Caret Line="905" Column="3" TopLine="889"/>
       </Position15>
       <Position16>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="880" Column="57" TopLine="864"/>
+        <Caret Line="895" TopLine="889"/>
       </Position16>
       <Position17>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="877" Column="20" TopLine="864"/>
+        <Caret Line="896" TopLine="889"/>
       </Position17>
       <Position18>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="895" TopLine="871"/>
+        <Caret Line="897" TopLine="889"/>
       </Position18>
       <Position19>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="905" Column="3" TopLine="889"/>
+        <Caret Line="899" Column="27" TopLine="886"/>
       </Position19>
       <Position20>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="895" TopLine="889"/>
+        <Caret Line="25" Column="3" TopLine="5"/>
       </Position20>
       <Position21>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="896" TopLine="889"/>
+        <Filename Value="aboutdlg.pas"/>
+        <Caret Line="43" Column="21" TopLine="27"/>
       </Position21>
       <Position22>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="897" TopLine="889"/>
+        <Filename Value="aboutdlg.pas"/>
+        <Caret Line="52" TopLine="33"/>
       </Position22>
       <Position23>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="899" Column="27" TopLine="886"/>
+        <Caret Line="26" Column="36" TopLine="10"/>
       </Position23>
       <Position24>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="25" Column="3" TopLine="5"/>
+        <Filename Value="aboutdlg.pas"/>
+        <Caret Line="51" Column="8" TopLine="23"/>
       </Position24>
       <Position25>
-        <Filename Value="aboutdlg.pas"/>
-        <Caret Line="43" Column="21" TopLine="27"/>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="27" Column="3" TopLine="5"/>
       </Position25>
       <Position26>
-        <Filename Value="aboutdlg.pas"/>
-        <Caret Line="52" TopLine="33"/>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="885" TopLine="864"/>
       </Position26>
       <Position27>
-        <Filename Value="aboutdlg.pas"/>
-        <Caret Line="8" Column="32" TopLine="23"/>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="884" TopLine="863"/>
       </Position27>
       <Position28>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="26" Column="36" TopLine="10"/>
+        <Caret Line="20" Column="58"/>
       </Position28>
       <Position29>
-        <Filename Value="aboutdlg.pas"/>
-        <Caret Line="51" Column="8" TopLine="23"/>
-      </Position29>
-      <Position30>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="27" Column="3" TopLine="5"/>
-      </Position30>
+        <Caret Line="343" Column="102" TopLine="319"/>
+      </Position29>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>
