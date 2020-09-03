@@ -21,8 +21,9 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MajorVersionNr Value="2"/>
-      <MinorVersionNr Value="4"/>
-      <StringTable CompanyName="Atomek" FileDescription="jpg and png image resampler" LegalCopyright="© 2019 by Jan Schirrmacher"/>
+      <MinorVersionNr Value="5"/>
+      <BuildNr Value="3"/>
+      <StringTable CompanyName="Atomek" FileDescription="jpg and png image resampler" LegalCopyright="© 2020 by Jan Schirrmacher"/>
     </VersionInfo>
     <BuildModes Count="3">
       <Item1 Name="Default" Default="True"/>

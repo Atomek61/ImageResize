@@ -1,7 +1,7 @@
 object MainDialog: TMainDialog
-  Left = 236
+  Left = 762
   Height = 655
-  Top = 326
+  Top = 698
   Width = 660
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'ImageResize'
@@ -15,7 +15,7 @@ object MainDialog: TMainDialog
   OnShow = FormShow
   Position = poDefaultPosOnly
   ShowHint = True
-  LCLVersion = '2.0.2.0'
+  LCLVersion = '2.0.8.0'
   object PanelControls: TPanel
     Left = 0
     Height = 442
@@ -30,7 +30,7 @@ object MainDialog: TMainDialog
     TabOrder = 0
     object MemoSrcFilenames: TMemo
       Left = 8
-      Height = 279
+      Height = 256
       Hint = 'Enter a list of files with absolute pathes.'#13#10#13#10'Press Browse... and select multiple files while'#13#10'holding <STRG> or <SHIFT> and clicking. '
       Top = 96
       Width = 352
@@ -1015,6 +1015,15 @@ object MainDialog: TMainDialog
       Anchors = [akTop, akRight]
       Caption = '&Parameters:'
       FocusControl = PageControl
+      ParentColor = False
+    end
+    object LabelSourceFileListMessage: TLabel
+      Left = 8
+      Height = 15
+      Top = 352
+      Width = 352
+      Alignment = taRightJustify
+      AutoSize = False
       ParentColor = False
     end
   end

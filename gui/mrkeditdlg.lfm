@@ -13,7 +13,7 @@ object MrkEditDialog: TMrkEditDialog
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   ShowHint = True
-  LCLVersion = '2.0.0.3'
+  LCLVersion = '2.0.2.0'
   object EditText: TEdit
     Left = 80
     Height = 23
@@ -317,9 +317,9 @@ object MrkEditDialog: TMrkEditDialog
     Font.Pitch = fpVariable
     Font.Quality = fqDraft
     Font.Style = [fsBold, fsItalic]
-    MinFontSize = 20
-    MaxFontSize = 20
-    Options = [fdLimitSize]
+    MinFontSize = 36
+    MaxFontSize = 6
+    Options = []
     left = 256
     top = 168
   end

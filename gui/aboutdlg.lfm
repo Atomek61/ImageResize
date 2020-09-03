@@ -10,7 +10,7 @@ object AboutDialog: TAboutDialog
   Constraints.MinHeight = 224
   Constraints.MinWidth = 540
   Position = poScreenCenter
-  LCLVersion = '2.0.2.0'
+  LCLVersion = '2.0.8.0'
   object Button1: TButton
     Left = 704
     Height = 25
@@ -49,8 +49,8 @@ object AboutDialog: TAboutDialog
     Left = 112
     Height = 15
     Top = 80
-    Width = 246
-    Caption = 'Build with Lazarus 2.0, using BGRABitmap 9.9.3'
+    Width = 252
+    Caption = 'Build with Lazarus 2.0.8, using BGRABitmap 10.6'
     ParentColor = False
   end
   object ImageMainIcon: TImage
@@ -72,7 +72,7 @@ object AboutDialog: TAboutDialog
     Left = 112
     Height = 15
     Top = 40
-    Width = 81
+    Width = 80
     Caption = '%IMGRESSTR%'
     ParentColor = False
   end

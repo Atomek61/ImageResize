@@ -2,7 +2,7 @@ unit imgres;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
-//  ImageResize (c) 2019 Jan Schirrmacher, www.atomek.de
+//  ImageResize (c) 2020 Jan Schirrmacher, www.atomek.de
 //
 //  See https://github.com/Atomek61/ImageResize.git for licensing
 //
@@ -23,8 +23,8 @@ uses
   threading.dispatcher;
 
 const
-  IMGRESVER = '2.0';
-  IMGRESCPR = 'imgres V'+IMGRESVER+' © 2019 Jan Schirrmacher, www.atomek.de';
+  IMGRESVER = '2.5';
+  IMGRESCPR = 'imgres V'+IMGRESVER+' © 2020 Jan Schirrmacher, www.atomek.de';
 
   PROGRESSSTEPSPERFILE = 4;
 
@@ -307,6 +307,11 @@ begin
     SrcSize := TSize.Create(SrcImg.Width, SrcImg.Height);
     DstSize := CalcResamplingSize(SrcSize, Size);
 
+    // Warning, if upsampling
+    if (SrcSize.cx<DstSize.cx) or (DstSize.cy<DstSize.cy) then
+      Print(Format('Upsampling ''%s''', [
+         ExtractFilename(SrcFilename)]), mlWarning);
+
     ////////////////////////////////////////////////////////////////////////////
     // Resampling...
     Print(Format('Resampling ''%s'' from %dx%d to %dx%d...', [
@@ -322,7 +327,7 @@ begin
     if ImgRes.MrkFilename<>'' then begin
       MrkImg := SharedTasks.GetMrkImg(self);
 
-      // Watermark size inpercent of the width or original size if MrkSize=0.0
+      // Watermark size in percent of the width or original size if MrkSize=0.0
       if ImgRes.MrkSize<>0.0 then begin
         MrkRectSize.cx := round(DstSize.cx*ImgRes.MrkSize/100.0);
         MrkRectSize.cy := round(DstSize.cx*ImgRes.MrkSize/100.0 * MrkImg.Height/MrkImg.Width);
@@ -610,8 +615,8 @@ begin
     result := Dispatcher.Execute(Tasks);
 
     if Assigned(FOnPrint) then with Dispatcher.Stats do
-      FOnPrint(self, Format('Tasks:%d  Successful:%d  Failed:%d  Elapsed:%.2fs',
-        [TaskCount, Successful, Failed, Elapsed/1000.0]));
+      FOnPrint(self, Format('Images: %d, Sizes: %d, Tasks:%d, Successful:%d, Failed:%d, Elapsed:%.2fs',
+        [n, m, TaskCount, Successful, Failed, Elapsed/1000.0]));
 
   finally
     Dispatcher.Free;

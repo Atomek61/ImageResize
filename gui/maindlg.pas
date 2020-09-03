@@ -132,6 +132,7 @@ type
     Label21: TLabel;
     Label22: TLabel;
     Label23: TLabel;
+    LabelSourceFileListMessage: TLabel;
     Label7: TLabel;
     Label9: TLabel;
     LabelCores: TLabel;
@@ -664,6 +665,7 @@ end;
 procedure TMainDialog.MemoSrcFilenamesChange(Sender: TObject);
 begin
   LabelSrcFilnamesRequired.Enabled := Length(MemoSrcFilenames.Text) = 0;
+  LabelSourceFileListMessage.Caption := Format('%d source files', [MemoSrcFilenames.Lines.Count]);
 end;
 
 function TMainDialog.MouseToSpace(X, Y: integer): TSize;
