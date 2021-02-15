@@ -8,7 +8,8 @@
       <Unit0>
         <Filename Value="imageresizecli.pas"/>
         <IsPartOfProject Value="True"/>
-        <TopLine Value="259"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="12"/>
         <CursorPos X="52" Y="228"/>
         <UsageCount Value="151"/>
         <Loaded Value="True"/>
@@ -16,9 +17,9 @@
       <Unit1>
         <Filename Value="..\src\imgres.pas"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="4"/>
-        <CursorPos X="19" Y="26"/>
+        <TopLine Value="4"/>
+        <CursorPos X="27" Y="21"/>
         <UsageCount Value="87"/>
         <Bookmarks Count="1">
           <Item0 X="3" Y="333"/>
@@ -47,8 +48,8 @@
         <Filename Value="..\src\threading.dispatcher.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="15"/>
-        <TopLine Value="443"/>
-        <CursorPos X="12" Y="448"/>
+        <TopLine Value="2"/>
+        <CursorPos Y="42"/>
         <UsageCount Value="80"/>
         <Loaded Value="True"/>
       </Unit4>
@@ -507,7 +508,7 @@
         <Loaded Value="True"/>
       </Unit64>
     </Units>
-    <JumpHistory Count="29" HistoryIndex="28">
+    <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="imageresizecli.pas"/>
         <Caret Line="225" TopLine="202"/>
@@ -623,6 +624,10 @@
         <Filename Value="..\src\imgres.pas"/>
         <Caret Line="108" TopLine="94"/>
       </Position29>
+      <Position30>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="26" Column="19" TopLine="7"/>
+      </Position30>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>
