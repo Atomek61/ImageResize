@@ -6,7 +6,7 @@ unit threading.dispatcher;
 //
 //  See https://github.com/Atomek61/ImageResize.git for licensing
 //
-//  threading.dispatcher.pas is the core mechanism of therad pooling, created
+//  threading.dispatcher.pas is the core mechanism of thread pooling, created
 //  for ImageResize, but its independend.
 //
 ////////////////////////////////////////////////////////////////////////////////
@@ -25,16 +25,14 @@ type
   TWorker = class;
 
   // Flags for printing and workers exit messages
-  TLevel = (mlHint, mlNormal, mlWarning, mlAbort, mlFatal);
+  TLevel = (mlHint, mlNormal, mlWarning, mlCancelled, mlFatal);
 
   TPrintEvent = procedure(Sender :TObject; WorkerId: integer; const Line :string; Level :TLevel) of object;
   TProgressEvent = procedure(Sender :TObject; Progress :single) of object;
 
-  // The user must derive a task class and adds intances to a task list
-
   // Derive a class from this and override the Execute-Method
   // The customers Execute-Method
-  // - can frequently check Context.Aborted to Exit(false)
+  // - can frequently check Context.Cancelled to Exit(false)
   // - can Print a text, which will be threadsave queued to the outer thread
   // - should output Progress steps, the sum of the steps must be equal to
   //   the GetTaskSteps-result.
@@ -56,12 +54,13 @@ type
 
   // A list of Tasks must be managed from outside and passed to the Execute-
   // Method of the Dispatcher.
+  // At runtime, add TCustomTask-Derivates to this list.
   TTasks = class(TObjectList<TCustomTask>)
   public
     function GetTotalSteps :integer;
   end;
 
-  // A Worker is a thread of the pool. The Dispatcher assignes a sequence of
+  // A Worker is a thread of the pool. The Dispatcher assigns a sequence of
   // tasks to it. Initially suspended, it is startet by the dispatcher.
   // A worker instance works on a sequence of tasks. The loop is
   // controlled in Execute.
@@ -128,16 +127,16 @@ type
   end;
 
   // This is a helper object passed in the Execute-Method of the customers
-  // Task-Class. It can be used to check if the user required Abortion.
+  // Task-Class. It can be used to check if the user requests cancelling.
   TContext = class
   private
     FDispatcher :TDispatcher;
     FMessages :TMessages;
-    function GetAborted: boolean;
+    function GetCancelled: boolean;
   public
     constructor Create(Dispatcher :TDispatcher);
     destructor Destroy; override;
-    property Aborted :boolean read GetAborted; // To be checked frequently
+    property Cancelled :boolean read GetCancelled; // To be checked frequently
     property Messages :TMessages read FMessages;
   end;
 
@@ -153,7 +152,7 @@ type
       Elapsed :integer; //ms
     end;
   private
-    FAborted :boolean;
+    FCancelled :boolean;
     FMaxWorkerCount :integer;
     FStopOnError :boolean;
     FStepCount :integer;
@@ -167,7 +166,7 @@ type
     constructor Create;
     destructor Destroy; override;
     function Execute(Tasks :TTasks) :boolean;
-    procedure Abort;
+    procedure Cancel;
     property MaxWorkerCount :integer read FMaxWorkerCount write FMaxWorkerCount;
     property StopOnError :boolean read FStopOnError write FStopOnError;
     property OnPrint :TPrintEvent read FOnPrint write FOnPrint;
@@ -300,7 +299,7 @@ begin
       if FTask.Execute(FContext) then
         ExitMessage := TExitMessage.Create(FTask, 'Ok', mlNormal)
       else
-        ExitMessage := TExitMessage.Create(FTask, 'Aborted', mlAbort);
+        ExitMessage := TExitMessage.Create(FTask, 'Cancelled', mlCancelled);
     except on E :Exception do
       ExitMessage := TExitMessage.Create(FTask, E.Message, mlFatal);
     end;
@@ -322,9 +321,9 @@ end;
 
 { TContext }
 
-function TContext.GetAborted: boolean;
+function TContext.GetCancelled: boolean;
 begin
-  result := FDispatcher.FAborted;
+  result := FDispatcher.FCancelled;
 end;
 
 constructor TContext.Create(Dispatcher: TDispatcher);
@@ -432,11 +431,11 @@ begin
     while true do begin
 
       // If StopOnError and all Workers have stop then Exit
-      if FAborted and StopOnError and (WorkingCount=0) then
+      if FCancelled and StopOnError and (WorkingCount=0) then
         Exit(false);
 
       // If a task is available then assign it to a free worker
-      if not FAborted and (NextTask<Tasks.Count) and Pool.Pop(Worker) then begin
+      if not FCancelled and (NextTask<Tasks.Count) and Pool.Pop(Worker) then begin
         Working[Worker.Id] := Worker;
         inc(WorkingCount);
         Worker.Start(Tasks[NextTask]);
@@ -469,7 +468,7 @@ begin
                 inc(FStats.Failed);
 
               // If all workers finished their work and aborted then finish
-              if (WorkingCount=0) and FAborted then
+              if (WorkingCount=0) and FCancelled then
                 Exit(false);
 
               // If all Tasks are done and no worker is currently running then finish
@@ -477,9 +476,9 @@ begin
                 Exit(FStats.Failed = 0);
 
               // When error occured and not already aborting and StopOnError then stop all workers
-              if (Level in [mlAbort, mlFatal]) and not FAborted and StopOnError then
+              if (Level in [mlCancelled, mlFatal]) and not FCancelled and StopOnError then
                 // Terminate running workers and continue waiting for their ExitMessage
-                Abort;
+                Cancel;
             end;
           end else if Msg is TProgressMessage then with TProgressMessage(Msg) do begin
             self.Progress(Task, Steps);
@@ -502,9 +501,9 @@ begin
   end;
 end;
 
-procedure TDispatcher.Abort;
+procedure TDispatcher.Cancel;
 begin
-  FAborted := true;
+  FCancelled := true;
 end;
 
 end.

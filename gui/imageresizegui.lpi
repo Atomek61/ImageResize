@@ -22,7 +22,7 @@
       <AutoIncrementBuild Value="True"/>
       <MajorVersionNr Value="2"/>
       <MinorVersionNr Value="5"/>
-      <BuildNr Value="3"/>
+      <BuildNr Value="4"/>
       <StringTable CompanyName="Atomek" FileDescription="jpg and png image resampler" LegalCopyright="© 2020 by Jan Schirrmacher"/>
     </VersionInfo>
     <BuildModes Count="3">

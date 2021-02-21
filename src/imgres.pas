@@ -268,7 +268,7 @@ begin
   try
     ImgRes := SharedTasks.FImgRes;
 
-    if Context.Aborted then
+    if Context.Cancelled then
       Exit;
 
     // Destination Folder
@@ -278,7 +278,7 @@ begin
     SrcImg := SharedTasks.GetSrcImg(self);
     SrcFilename := ImgRes.SrcFilenames[SrcFilenameIndex];
 
-    if Context.Aborted then
+    if Context.Cancelled then
       Exit;
     Progress(1);
 
@@ -318,7 +318,7 @@ begin
       ExtractFilename(SrcFilename), SrcSize.cx, SrcSize.cy, DstSize.cx, DstSize.cy]));
     DstImg := SharedTasks.FImgRes.ResampleImg(SrcImg, DstSize);
     ////////////////////////////////////////////////////////////////////////////
-    if Context.Aborted then
+    if Context.Cancelled then
       Exit;
     Progress(1);
 
@@ -343,7 +343,7 @@ begin
         ExtractFilename(SrcFilename), SrcSize.cx, SrcSize.cy, DstSize.cx, DstSize.cy]));
       DstImg.StretchPutImage(MrkRect, MrkImg, dmLinearBlend, round(255*ImgRes.MrkAlpha/100.0));
     end;
-    if Context.Aborted then
+    if Context.Cancelled then
       Exit;
     Progress(1);
     ////////////////////////////////////////////////////////////////////////////
@@ -512,7 +512,7 @@ const
   LEVELSTRS :array[TLevel] of string = ('Hint - ', '', 'Warning - ', 'Abort - ', 'Fatal - ');
 begin
   if Assigned(FOnPrint) then begin
-    FOnPrint(self, Format('[%d] %s%s', [WorkerId, LEVELSTRS[Level], Line]));
+    FOnPrint(self, Format('[%d] %s%s', [WorkerId+1, LEVELSTRS[Level], Line]));
   end;
 end;
 
@@ -521,7 +521,7 @@ begin
   if Assigned(FOnProgress) then begin
     FOnProgress(self, Progress);
     if FCancel then
-      (Sender as TDispatcher).Abort;
+      (Sender as TDispatcher).Cancel;
   end;
 end;
 

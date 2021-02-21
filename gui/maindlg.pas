@@ -22,40 +22,41 @@ uses
   BGRABitmap, BGRABitmapTypes, Generics.Collections;
 
 const
-  WEBHELPURL = 'http://www.atomek.de/imageresize/hlp23/gui/';
+  WEBHELPURL      = 'http://www.atomek.de/imageresize/hlp23/gui/';
 
-  IMGRESGUIVER = '2.4';
-  IMGRESGUICPR = 'ImageResize V'+IMGRESGUIVER+' © 2019 Jan Schirrmacher, www.atomek.de';
+  IMGRESGUIVER    = '2.6';
+  IMGRESGUICPR    = 'ImageResize V'+IMGRESGUIVER+' © 2021 Jan Schirrmacher, www.atomek.de';
 
-  INITYPE = 'IRS';
-  INIVERSION = '200';
+  INITYPE         = 'IRS';
+  INIVERSION200   = '200';
+  INIVERSION      = '210';
 
-  GUIREGKEY = IMGRESREGKEY+IMGRESGUIVER+'\';
+  GUIREGKEY       = IMGRESREGKEY+IMGRESGUIVER+'\';
 
-  COMMONSECTION = 'Common';
+  COMMONSECTION   = 'Common';
   SETTINGSSECTION = 'Settings';
 
-  MRKRECTRATIO = 3.0;
+  MRKRECTRATIO    = 3.0;
 
-  LINESEP = '|';
+  LINESEP         = '|';
 
   LICENSE =
-    'Image Resize Copyright (c) 2019 Jan Schirrmacher, www.atomek.de'#10#10+
+    'Image Resize Copyright (c) 2021 Jan Schirrmacher, www.atomek.de'#10#10+
     'Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify and merge copies of the Software, subject to the following conditions:'#10#10+
     'The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.'#10#10+
     'THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.';
   WEBURL = 'www.atomek.de/imageresize/index.html';
 
 
-  LM_RUN = LM_USER + 1;
+  LM_RUN          = LM_USER + 1;
 
   RENSIMPLETEMPLATE = 'img%INDEX:1,3%.%FILEEXT%';
   RENADVANCEDTEMPLATE = 'img%INDEX:1,3%_%SIZE%.%FILEEXT%';
 
   THUMBNAILIMGMAX = 240;
-  DOCIMGMAX = 960;
+  DOCIMGMAX       = 960;
 
-  SIZEBTNHINTFMT = '%s - %dpx';
+  SIZEBTNHINTFMT  = '%s - %dpx';
 
 type
 
@@ -71,6 +72,7 @@ type
   end;
 
   TMainDialog = class(TForm)
+    ActionBrowseSrcFolder: TAction;
     ActionEditWatermark: TAction;
     ActionHelp: TAction;
     ActionSave: TAction;
@@ -86,8 +88,11 @@ type
     ActionExecute: TAction;
     ActionList: TActionList;
     ApplicationProperties1: TApplicationProperties;
+    Bevel1: TBevel;
+    BrowseSrcFolder: TSelectDirectoryDialog;
     ButtonAbout: TBitBtn;
     ButtonBrowseMrkFilename: TBitBtn;
+    ButtonBrowseSrcFolder: TBitBtn;
     ButtonClearSizes: TBitBtn;
     ButtonClearSizes2: TBitBtn;
     ButtonClearSrcFiles: TBitBtn;
@@ -98,6 +103,8 @@ type
     CheckBoxRenEnabled: TCheckBox;
     CheckBoxMrkEnabled: TCheckBox;
     CheckBoxStopOnError: TCheckBox;
+    EditSrcFolder: TEdit;
+    EditSrcMasks: TEdit;
     EditRenTemplate: TComboBox;
     ComboBoxBoost: TComboBox;
     ComboBoxJpgQuality: TComboBox;
@@ -109,6 +116,9 @@ type
     EditMrkY: TEdit;
     EditSizes: TEdit;
     EditDstFolder: TEdit;
+    GroupBoxDstFolder: TGroupBox;
+    GroupBoxParams: TGroupBox;
+    GroupBoxImageFiles: TGroupBox;
     GroupBoxRename: TGroupBox;
     GroupBoxMrkLayout: TGroupBox;
     GroupBoxJpgOptions: TGroupBox;
@@ -126,12 +136,13 @@ type
     Label14: TLabel;
     Label15: TLabel;
     Label16: TLabel;
-    Label17: TLabel;
+    Label18: TLabel;
     Label19: TLabel;
     Label20: TLabel;
     Label21: TLabel;
     Label22: TLabel;
     Label23: TLabel;
+    Label4: TLabel;
     LabelSourceFileListMessage: TLabel;
     Label7: TLabel;
     Label9: TLabel;
@@ -142,23 +153,27 @@ type
     Label8: TLabel;
     LabelMrkSpace: TLabel;
     LabelSizesRequired: TLabel;
-    LabelSrcFilnamesRequired: TLabel;
+    LabelSrcFilenamesRequired: TLabel;
     LabelDstFolderRequired: TLabel;
     Label2: TLabel;
     MemoMessages: TMemo;
     MemoSrcFilenames: TMemo;
+    NotebookFileSource: TNotebook;
     OpenDialog: TOpenDialog;
     OpenDialogSrcFilenames: TOpenDialog;
     OpenDialogMrkFilename: TOpenDialog;
-    PageControl: TPageControl;
+    PageFilelist: TPage;
+    PagePathMask: TPage;
+    PageControlParams: TPageControl;
     PaintBox1: TPaintBox;
     PaintBoxMrkPreview: TPaintBox;
     PanelMrkSourceFile: TPanel;
-    PanelMessages: TPanel;
     PanelControls: TPanel;
     PanelMrkSourceImage: TPanel;
     PanelPreview: TPanel;
     ProgressBar: TProgressBar;
+    RadioButtonFilelist: TRadioButton;
+    RadioButtonPathMask: TRadioButton;
     RadioButtonRenSimple: TRadioButton;
     RadioButtonRenCustom: TRadioButton;
     RadioButtonRenAdvanced: TRadioButton;
@@ -186,12 +201,12 @@ type
     UpDownMrkSize: TUpDown;
     UpDownMrkX: TUpDown;
     UpDownMrkY: TUpDown;
-    procedure ApplicationProperties1Exception(Sender: TObject; E: Exception);
-    procedure CheckBoxRenEnabledClick(Sender: TObject);
-    procedure EditRenTemplateEnter(Sender: TObject);
+    procedure EditSrcFolderChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure ActionAboutExecute(Sender: TObject);
+    procedure ActionBrowseSrcFolderExecute(Sender: TObject);
     procedure ActionBrowseDstFolderExecute(Sender: TObject);
     procedure ActionBrowseFilenamesExecute(Sender: TObject);
     procedure ActionBrowseMrkFilenameExecute(Sender: TObject);
@@ -204,12 +219,14 @@ type
     procedure ActionOpenExecute(Sender: TObject);
     procedure ActionSaveAsExecute(Sender: TObject);
     procedure ActionSaveExecute(Sender: TObject);
+    procedure CheckBoxRenEnabledClick(Sender: TObject);
+    procedure EditRenTemplateEnter(Sender: TObject);
     procedure ButtonExecuteClick(Sender: TObject);
     procedure EditDstFolderChange(Sender: TObject);
     procedure EditMrkSizeChange(Sender: TObject);
     procedure EditSizesChange(Sender: TObject);
     procedure FormDropFiles(Sender: TObject; const FileNames: array of String);
-    procedure FormShow(Sender: TObject);
+    procedure ApplicationProperties1Exception(Sender: TObject; E: Exception);
     procedure MemoSrcFilenamesChange(Sender: TObject);
     procedure PaintBoxMrkPreviewMouseDown(Sender: TObject;
       Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -221,6 +238,9 @@ type
     procedure PaintBoxMrkPreviewMouseWheel(Sender: TObject; Shift: TShiftState;
       WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
     procedure PaintBoxMrkPreviewPaint(Sender: TObject);
+    procedure PanelControlsClick(Sender: TObject);
+    procedure PanelControlsResize(Sender: TObject);
+    procedure RadioButtonFilelistChange(Sender: TObject);
     procedure TimerProgressBarOffTimer(Sender: TObject);
     procedure CheckBoxMrkEnabledChange(Sender: TObject);
     procedure EditSizesExit(Sender: TObject);
@@ -256,6 +276,7 @@ type
     function MouseToSpace(X, Y :integer) :TSize;
     function MouseToMrkSpace(X, Y :integer; out Value :TSize) :boolean;
     function CalcMarkRect(out Rect :TRect) :boolean;
+    procedure CheckSrcRequired;
   public
 
   end;
@@ -266,7 +287,7 @@ var
 implementation
 
 uses
-  math, mrkeditdlg, helpintfs, Windows;
+  math, mrkeditdlg, helpintfs, Windows, FileUtil;
 
 {$R *.lfm}
 
@@ -318,6 +339,11 @@ begin
 
 end;
 
+procedure TMainDialog.EditSrcFolderChange(Sender: TObject);
+begin
+   CheckSrcRequired;
+end;
+
 procedure TMainDialog.FormShow(Sender: TObject);
 var
   Params :TStringArray;
@@ -335,7 +361,7 @@ begin
   if Application.HasOption('A', 'AUTOSTART') then
     PostMessage(Handle, LM_RUN, 0, 0);
 
-  PageControl.ActivePageIndex := 0;
+  PageControlParams.ActivePageIndex := 0;
 
   // Show number of cores
   LabelCores.Caption := Format('%d Cores', [TThread.ProcessorCount]);
@@ -363,6 +389,15 @@ begin
   Log('Error - '+E.Message);
 end;
 
+procedure TMainDialog.ActionBrowseSrcFolderExecute(Sender: TObject);
+begin
+  BrowseSrcFolder.Filename := EditDstFolder.Text;
+  if BrowseSrcFolder.Execute then begin
+    EditSrcFolder.Text := IncludeTrailingPathDelimiter(BrowseSrcFolder.FileName);
+  end;
+
+end;
+
 procedure TMainDialog.CheckBoxRenEnabledClick(Sender: TObject);
 begin
   GroupBoxRename.Visible := CheckBoxRenEnabled.Checked;
@@ -385,6 +420,41 @@ begin
   UpdateSizes;
 end;
 
+procedure TMainDialog.ActionNewExecute(Sender: TObject);
+var
+  ImgResizer :TImgRes;
+begin
+  MemoMessages.Lines.Clear;
+  ImgResizer := TImgRes.Create;
+  try
+    MemoSrcFilenames.Lines.Clear;
+    EditSrcFolder.Text := '';
+    EditSrcMasks.Text := '*.jpg; *.png';
+    EditDstFolder.Text := '';
+    EditSizes.Text := '';
+    RadioButtonFileList.Checked := true;
+    ComboBoxJpgQuality.Text := ImgResizer.JpgQualityToStr(ImgResizer.JpgQuality);
+    ComboBoxPngCompression.Text := TImgRes.PngCompressionToStr(ImgResizer.PngCompression);
+    EditMrkFilename.Text := '';
+    UpDownMrkSize.Position := round(ImgResizer.MrkSize);
+    UpDownMrkX.Position := round(ImgResizer.MrkX);
+    UpDownMrkY.Position := round(ImgResizer.MrkY);
+    UpDownMrkAlpha.Position := round(ImgResizer.MrkAlpha);
+    FIsSave := false;
+    FIniFilename := '';
+    CheckBoxRenEnabled.Checked := ImgResizer.RenEnabled;
+    RadioButtonRenSimple.Checked := true;
+    EditRenTemplate.Text := DEFAULT_RENFILETEMPLATE;
+    SetMrkSource(msDisabled);
+    UpdateSizes;
+    UpdateControls;
+    PageControlParams.ActivePage := TabSheetSizes;
+    SetTitle('unnamed');
+  finally
+    ImgResizer.Free;
+  end;
+end;
+
 function TMainDialog.LoadFromIni(Ini :TCustomIniFile) :boolean;
 var
   IniVer :string;
@@ -398,11 +468,17 @@ begin
        Exit;
     end;
     IniVer := Ini.ReadString('Common', 'Version', '000');
-    result := IniVer=INIVERSION;
+    result := (IniVer=INIVERSION) or (IniVer=INIVERSION200);
     if not result then begin
       Log(Format('Warning: Unexpected format %s (%s expected).', [IniVer, INIVERSION]));
       Exit;
     end;
+    case ReadInteger(SETTINGSSECTION, 'SrcMode', NotebookFileSource.PageIndex) of
+    0: RadioButtonFileList.Checked := true;
+    1: RadioButtonPathMask.Checked := true;
+    end;
+    EditSrcFolder.Text := ReadString(SETTINGSSECTION, 'SrcFolder', EditSrcFolder.Text);
+    EditSrcMasks.Text := ReadString(SETTINGSSECTION, 'SrcMasks', EditSrcMasks.Text);
     MemoSrcFilenames.Text := ReplaceStr(ReadString(SETTINGSSECTION, 'SrcFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, LINESEP)), LINESEP, #13#10);
     EditDstFolder.Text := ReadString(SETTINGSSECTION, 'DstFolder', EditDstFolder.Text);
     EditSizes.Text := ReadString(SETTINGSSECTION, 'Sizes', EditSizes.Text);
@@ -432,6 +508,10 @@ begin
     WriteString(COMMONSECTION, 'Type', INITYPE);
     WriteString(COMMONSECTION, 'Version', INIVERSION);
     EraseSection(SETTINGSSECTION);
+    WriteInteger(SETTINGSSECTION, 'SrcMode', NotebookFileSource.PageIndex);
+    WriteString(SETTINGSSECTION, 'SrcFolder', EditSrcFolder.Text);
+    WriteString(SETTINGSSECTION, 'SrcMasks', EditSrcMasks.Text);
+    WriteString(SETTINGSSECTION, 'DstFolder', EditDstFolder.Text);
     WriteString(SETTINGSSECTION, 'SrcFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, LINESEP));
     WriteString(SETTINGSSECTION, 'DstFolder', EditDstFolder.Text);
     WriteString(SETTINGSSECTION, 'Sizes', EditSizes.Text);
@@ -553,38 +633,6 @@ begin
   SaveToRegistry;
 end;
 
-procedure TMainDialog.ActionNewExecute(Sender: TObject);
-var
-  ImgResizer :TImgRes;
-begin
-  MemoMessages.Lines.Clear;
-  ImgResizer := TImgRes.Create;
-  try
-    MemoSrcFilenames.Lines.Clear;
-    EditDstFolder.Text := '';
-    EditSizes.Text := '';
-    ComboBoxJpgQuality.Text := ImgResizer.JpgQualityToStr(ImgResizer.JpgQuality);
-    ComboBoxPngCompression.Text := TImgRes.PngCompressionToStr(ImgResizer.PngCompression);
-    EditMrkFilename.Text := '';
-    UpDownMrkSize.Position := round(ImgResizer.MrkSize);
-    UpDownMrkX.Position := round(ImgResizer.MrkX);
-    UpDownMrkY.Position := round(ImgResizer.MrkY);
-    UpDownMrkAlpha.Position := round(ImgResizer.MrkAlpha);
-    FIsSave := false;
-    FIniFilename := '';
-    CheckBoxRenEnabled.Checked := ImgResizer.RenEnabled;
-    RadioButtonRenSimple.Checked := true;
-    EditRenTemplate.Text := DEFAULT_RENFILETEMPLATE;
-    SetMrkSource(msDisabled);
-    UpdateSizes;
-    UpdateControls;
-    PageControl.ActivePage := TabSheetSizes;
-    SetTitle('unnamed');
-  finally
-    ImgResizer.Free;
-  end;
-end;
-
 procedure TMainDialog.ActionOpenExecute(Sender: TObject);
 begin
   if OpenDialog.Execute then begin
@@ -644,7 +692,7 @@ end;
 
 procedure TMainDialog.UpdateControls;
 begin
-  LabelSrcFilnamesRequired.Enabled := Length(MemoSrcFilenames.Text) = 0;
+  LabelSrcFilenamesRequired.Enabled := Length(MemoSrcFilenames.Text) = 0;
   LabelDstFolderRequired.Enabled := Length(EditDstFolder.Text) = 0;
   LabelSizesRequired.Enabled := Length(EditSizes.Text) = 0;
 end;
@@ -664,8 +712,7 @@ end;
 
 procedure TMainDialog.MemoSrcFilenamesChange(Sender: TObject);
 begin
-  LabelSrcFilnamesRequired.Enabled := Length(MemoSrcFilenames.Text) = 0;
-  LabelSourceFileListMessage.Caption := Format('%d source files', [MemoSrcFilenames.Lines.Count]);
+  CheckSrcRequired;
 end;
 
 function TMainDialog.MouseToSpace(X, Y: integer): TSize;
@@ -706,6 +753,15 @@ begin
     Rect.Right := round(x + w);
     Rect.Bottom:= round(y + h);
   end;
+end;
+
+procedure TMainDialog.CheckSrcRequired;
+begin
+  LabelSrcFilenamesRequired.Enabled :=
+     RadioButtonFilelist.Checked and (Length(MemoSrcFilenames.Text) = 0)
+  or RadioButtonPathMask.Checked and (Length(EditSrcFolder.text) = 0);
+  LabelSourceFileListMessage.Caption := Format('%d source files', [MemoSrcFilenames.Lines.Count]);
+
 end;
 
 procedure TMainDialog.PaintBoxMrkPreviewMouseLeave(Sender: TObject);
@@ -837,6 +893,30 @@ begin
   Img.Free;
 end;
 
+procedure TMainDialog.PanelControlsClick(Sender: TObject);
+begin
+
+end;
+
+procedure TMainDialog.PanelControlsResize(Sender: TObject);
+  procedure Place(Control :TControl; Target :TControl);
+  begin
+    Control.Left := Target.Left+ 8;
+    Control.Top := Target.Top;
+  end;
+
+begin
+  Place(LabelSrcFilenamesRequired, GroupBoxImageFiles);
+  Place(LabelDstFolderRequired, GroupBoxDstFolder);
+  Place(LabelSizesRequired, GroupBoxParams);
+end;
+
+procedure TMainDialog.RadioButtonFilelistChange(Sender: TObject);
+begin
+  NotebookFileSource.PageIndex := (Sender as TRadioButton).Tag;
+  CheckSrcRequired;
+end;
+
 procedure TMainDialog.EditDstFolderChange(Sender: TObject);
 begin
  LabelDstFolderRequired.Enabled := Length(EditDstFolder.Text) = 0;
@@ -918,7 +998,7 @@ begin
     SetMrkSource(msFile);
     EditMrkFilename.Text := MrkFilename;
     EditMrkFilename.SelStart := Length(EditMrkFilename.Text);
-    PageControl.ActivePage := TabSheetMrk;
+    PageControlParams.ActivePage := TabSheetMrk;
   end;
 end;
 
@@ -978,6 +1058,7 @@ var
   p :TPos;
   DstFolder :string;
   IntValue :integer;
+  SrcFilenames :TStringList;
 begin
   if FExecuting then begin
     FCancelled := true;
@@ -995,10 +1076,24 @@ begin
     FCancelled := false;
     Application.ProcessMessages;
     try
+      SrcFilenames := TStringList.Create;
       try
         // Source filenames
-        if (MemoSrcFilenames.Text='') then
-          raise Exception.Create('Missing source filenames.');
+        case NotebookFileSource.PageIndex of
+        0:
+          begin
+            if (MemoSrcFilenames.Text='') then
+              raise Exception.Create('Missing source filenames.');
+
+            SrcFilenames.Assign(MemoSrcFilenames.Lines);
+          end;
+        1:
+          begin
+            if (EditSrcFolder.Text='') or not DirectoryExists(EditSrcFolder.Text) then
+              raise Exception.Create('Missing source folder.');
+            FindAllFiles(SrcFilenames, EditSrcFolder.Text, EditSrcMasks.Text, false);
+          end;
+        end;
 
         // Destination folder
         if (EditDstFolder.Text='') then
@@ -1066,7 +1161,7 @@ begin
           raise Exception.Create('Enter playholder %SIZE% to either the destination folder or the file template.');
 
         FImgRes.Sizes := SizesToSizesStr(Sizes);
-        FImgRes.SrcFilenames := MemoSrcFilenames.Lines;
+        FImgRes.SrcFilenames := SrcFilenames;
         FImgRes.DstFolder := DstFolder;
         FImgRes.ThreadCount := BoostStrToThreadCount(ComboBoxBoost.Text);
         FImgRes.StopOnError := CheckBoxStopOnError.Checked;
@@ -1078,9 +1173,10 @@ begin
         end;
       end;
     finally
-      if FCancelled then Log(Format('Cancelled at %.0f%%', [FProgress*100.0]));
+      SrcFilenames.Free;
       FImgRes.Free;
       FExecuting := false;
+      if FCancelled then Log(Format('Cancelled at %.0f%%', [FProgress*100.0]));
       ActionExecute.Caption := 'E&xecute';
       ButtonExecute.Caption := 'Execute';
       ActionExecute.ImageIndex := 4;
