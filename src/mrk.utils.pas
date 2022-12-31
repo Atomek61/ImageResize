@@ -60,7 +60,7 @@ begin
       Bmp.Canvas.Font.Style := FontStyle;
     end;
     TextSize := Bmp.Canvas.TextExtent(Params.Text);
-//    TextSize.cx := round(TextSize.cx*1.25);
+    TextSize.cx := round(TextSize.cx);
   finally
     Bmp.Free;
   end;

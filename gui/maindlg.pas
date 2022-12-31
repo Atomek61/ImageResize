@@ -2,7 +2,7 @@ unit maindlg;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
-//  ImageResize (c) 2019 Jan Schirrmacher, www.atomek.de
+//  ImageResize (c) 2022 Jan Schirrmacher, www.atomek.de
 //
 //  See https://github.com/Atomek61/ImageResize.git for licensing
 //
@@ -19,19 +19,19 @@ uses
   Classes, Types, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
   ComCtrls, ActnList, ExtCtrls, imgres, registry, aboutdlg, inifiles, strutils,
   LMessages, LCLIntf, Buttons, ImgList, LCLType, LazHelpHTML,
-  BGRABitmap, BGRABitmapTypes, Generics.Collections;
+  BGRABitmap, BGRABitmapTypes, BGLVirtualScreen, Generics.Collections;
 
 const
   WEBHELPURL      = 'http://www.atomek.de/imageresize/hlp23/gui/';
 
   IMGRESGUIVER    = '2.6';
-  IMGRESGUICPR    = 'ImageResize V'+IMGRESGUIVER+' © 2021 Jan Schirrmacher, www.atomek.de';
+  IMGRESGUICPR    = 'ImageResize V'+IMGRESGUIVER+' © 2022 Jan Schirrmacher, www.atomek.de';
 
   INITYPE         = 'IRS';
   INIVERSION200   = '200';
   INIVERSION      = '210';
 
-  GUIREGKEY       = IMGRESREGKEY+IMGRESGUIVER+'\';
+  GUIREGKEY       = IMGRESREGKEY+IMGRESGUIVER;
 
   COMMONSECTION   = 'Common';
   SETTINGSSECTION = 'Settings';
@@ -41,7 +41,7 @@ const
   LINESEP         = '|';
 
   LICENSE =
-    'Image Resize Copyright (c) 2021 Jan Schirrmacher, www.atomek.de'#10#10+
+    'Image Resize Copyright (c) 2022 Jan Schirrmacher, www.atomek.de'#10#10+
     'Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify and merge copies of the Software, subject to the following conditions:'#10#10+
     'The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.'#10#10+
     'THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.';
@@ -102,7 +102,9 @@ type
     BrowseDstFolder: TSelectDirectoryDialog;
     CheckBoxRenEnabled: TCheckBox;
     CheckBoxMrkEnabled: TCheckBox;
+    CheckBoxShake: TCheckBox;
     CheckBoxStopOnError: TCheckBox;
+    ComboBoxShakeSeed: TComboBox;
     EditSrcFolder: TEdit;
     EditSrcMasks: TEdit;
     EditRenTemplate: TComboBox;
@@ -136,6 +138,7 @@ type
     Label14: TLabel;
     Label15: TLabel;
     Label16: TLabel;
+    LabelShakeSeed: TLabel;
     Label18: TLabel;
     Label19: TLabel;
     Label20: TLabel;
@@ -179,7 +182,8 @@ type
     RadioButtonRenAdvanced: TRadioButton;
     SaveAsDialog: TSaveDialog;
     Splitter1: TSplitter;
-    TabSheetRename: TTabSheet;
+    TabSheetCode: TTabSheet;
+    TabSheetRenaming: TTabSheet;
     TabSheetMrk: TTabSheet;
     TabSheetRessources: TTabSheet;
     TabSheetSizes: TTabSheet;
@@ -291,6 +295,22 @@ uses
 
 {$R *.lfm}
 
+function StrToShakeSeed(const Value :string) :integer;
+begin
+  if Value='<random>' then
+    result := 0
+  else
+    if not TryStrToInt(Value, result) then raise Exception.Create('Invalid Shake Seed.');
+end;
+
+function ShakeSeedToStr(Value :integer) :string;
+begin
+  if Value<=0 then
+    result := '<random>'
+  else
+    result := IntToStr(Value);
+end;
+
 { TPos }
 
 constructor TPos.Create(ax, ay: single);
@@ -339,11 +359,6 @@ begin
 
 end;
 
-procedure TMainDialog.EditSrcFolderChange(Sender: TObject);
-begin
-   CheckSrcRequired;
-end;
-
 procedure TMainDialog.FormShow(Sender: TObject);
 var
   Params :TStringArray;
@@ -383,6 +398,11 @@ begin
   end;
 end;
 
+procedure TMainDialog.EditSrcFolderChange(Sender: TObject);
+begin
+   CheckSrcRequired;
+end;
+
 procedure TMainDialog.ApplicationProperties1Exception(Sender: TObject;
   E: Exception);
 begin
@@ -399,8 +419,14 @@ begin
 end;
 
 procedure TMainDialog.CheckBoxRenEnabledClick(Sender: TObject);
+var
+  Vis :boolean;
 begin
-  GroupBoxRename.Visible := CheckBoxRenEnabled.Checked;
+  Vis := CheckBoxRenEnabled.Checked;
+  GroupBoxRename.Visible := Vis;
+  CheckBoxShake.Visible := Vis;
+  LabelShakeSeed.Visible := Vis;
+  ComboBoxShakeSeed.Visible := Vis;
 end;
 
 procedure TMainDialog.EditRenTemplateEnter(Sender: TObject);
@@ -445,6 +471,8 @@ begin
     CheckBoxRenEnabled.Checked := ImgResizer.RenEnabled;
     RadioButtonRenSimple.Checked := true;
     EditRenTemplate.Text := DEFAULT_RENFILETEMPLATE;
+    CheckBoxShake.Checked := DEFAULT_SHAKE;
+    ComboBoxShakeSeed.Text := '<random>';
     SetMrkSource(msDisabled);
     UpdateSizes;
     UpdateControls;
@@ -498,6 +526,8 @@ begin
     RadioButtonRenAdvanced.Checked := ReadBool(SETTINGSSECTION, 'RenAdvanced', RadioButtonRenAdvanced.Checked);
     RadioButtonRenCustom.Checked := ReadBool(SETTINGSSECTION, 'RenCustom', RadioButtonRenCustom.Checked);
     EditRenTemplate.Text := ReadString(SETTINGSSECTION, 'RenTemplate', EditRenTemplate.Text);
+    CheckBoxShake.Checked := ReadBool(SETTINGSSECTION, 'Shake', CheckBoxShake.Checked);
+    ComboBoxShakeSeed.Text := ShakeSeedToStr(ReadInteger(SETTINGSSECTION, 'ShakeSeed', 0));
   end;
 end;
 
@@ -530,6 +560,8 @@ begin
     WriteBool(SETTINGSSECTION, 'RenAdvanced', RadioButtonRenAdvanced.Checked);
     WriteBool(SETTINGSSECTION, 'RenCustom', RadioButtonRenCustom.Checked);
     WriteString(SETTINGSSECTION, 'RenTemplate', EditRenTemplate.Text);
+    WriteBool(SETTINGSSECTION, 'Shake', CheckBoxShake.Checked);
+    WriteInteger(SETTINGSSECTION, 'ShakeSeed', StrToShakeSeed(ComboBoxShakeSeed.Text));
   end;
 end;
 
@@ -541,7 +573,10 @@ begin
   try
     result := LoadFromIni(Ini);
   finally
-     Ini.Free;
+    try
+      Ini.Free;
+    except
+    end;
   end;
   SetTitle('last settings');
 end;
@@ -554,7 +589,10 @@ begin
   try
     SaveToIni(Ini);
   finally
-    Ini.Free;
+    try
+      Ini.Free;
+    except
+    end;
   end;
 end;
 
@@ -1123,6 +1161,8 @@ begin
             FImgRes.DstFiletemplate := EditRenTemplate.Text;
         end else
           FImgRes.DstFiletemplate := '';
+        FImgRes.Shake := CheckBoxShake.Checked;
+        FImgRes.ShakeSeed := StrToShakeSeed(ComboBoxShakeSeed.Text);
 
         // Watermark
         if GetMrkSource = msFile then begin

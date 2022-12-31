@@ -115,8 +115,8 @@ type
     constructor Create;
     destructor Destroy; override;
     function GetCount :integer; override;
-    procedure Push(Item :T); override;
-    function Pop(out Item :T) :boolean; override;
+    procedure Push(Item :TMessage); override;
+    function Pop(out Item :TMessage) :boolean; override;
   end;
 
   // A queue of available workers, used be the Dispatcher
@@ -254,7 +254,7 @@ begin
   FQueueSection.Leave;
 end;
 
-procedure TMessages.Push(Item: T);
+procedure TMessages.Push(Item: TMessage);
 begin
   FQueueSection.Enter;
   try
@@ -264,7 +264,7 @@ begin
   end;
 end;
 
-function TMessages.Pop(out Item: T): boolean;
+function TMessages.Pop(out Item: TMessage): boolean;
 begin
   FQueueSection.Enter;
   try

@@ -23,12 +23,12 @@ uses
   threading.dispatcher;
 
 const
-  IMGRESVER = '2.5';
-  IMGRESCPR = 'imgres V'+IMGRESVER+' © 2020 Jan Schirrmacher, www.atomek.de';
+  IMGRESVER = '2.6';
+  IMGRESCPR = 'imgres V'+IMGRESVER+' © 2022 Jan Schirrmacher, www.atomek.de';
 
   PROGRESSSTEPSPERFILE = 4;
 
-  IMGRESREGKEY = 'Software\Atomek\Image Resize\';
+  IMGRESREGKEY = 'SOFTWARE\Atomek\Image Resize\';
 
 const
 //  DEFAULTSIZE            = 640;
@@ -45,6 +45,8 @@ const
   DEFAULT_RENFILETEMPLATE  = 'img%INDEX:1,3%.%FILEEXT%';
   DEFAULT_RENINDEXSTART    = 1;
   DEFAULT_RENINDEXDIGITS   = 3;
+  DEFAULT_SHAKE            = false;
+  DEFAULT_SHAKESEED        = 0;
 
   // Watermark sources
   msDisabled  = 0;
@@ -90,6 +92,8 @@ type
       ThreadCount :integer;
       StopOnError :boolean;
       Ren :TRenameParams;
+      Shake :boolean;
+      ShakeSeed :integer;
     end;
   private type
     TResampleTask = class;
@@ -146,6 +150,7 @@ type
     procedure SetMrkAlpha(AValue: single);
     procedure SetSrcFilenames(AValue: TStrings);
     procedure SetThreadCount(AValue: integer);
+    procedure SetShakeSeed(AValue :integer);
     function ResampleImg(Img :TBgraBitmap; const Size :TSize) :TBgraBitmap;
     class function CalcResamplingSize(const Size :TSize; LongWidth :integer) :TSize;
     procedure OnTaskPrint(Sender :TObject; WorkerId: integer; const Line :string; Level :TLevel);
@@ -178,6 +183,8 @@ type
     property ThreadCount :integer read FParams.ThreadCount write SetThreadCount;
     property StopOnError :boolean read FParams.StopOnError write FParams.StopOnError;
     property RenEnabled :boolean read FParams.Ren.Enabled;
+    property Shake :boolean read FParams.Shake write FParams.Shake;
+    property ShakeSeed :integer read FParams.ShakeSeed write SetShakeSeed;
     property OnPrint :TPrintEvent read FOnPrint write FOnPrint;
     property OnProgress :TProgressEvent read FOnProgress write FOnProgress;
   end;
@@ -197,6 +204,15 @@ const
 type
   TIntegerArrayHelper = specialize TArrayHelper<Integer>;
 
+procedure ShakeSequence(List :TStrings);
+var
+  n, i :integer;
+begin
+  n := List.Count;
+  for i:=0 to n-1 do
+    List.Exchange(i, Random(n));
+end;
+
 function TrySizesStrToSizes(const Str :string; out Values :TSizes) :boolean;
 var
   Raw :TIntegerDynArray;
@@ -211,6 +227,7 @@ begin
   // Remove doublettes
   if Length(Raw)>0 then begin
     n := 1;
+    Values := nil;
     SetLength(Values, 1);
     Values[0] := Raw[0];
     for i:=1 to High(Raw) do begin
@@ -533,6 +550,12 @@ begin
   FParams.ThreadCount := AValue;
 end;
 
+procedure TImgRes.SetShakeSeed(AValue: integer);
+begin
+  if AValue<0 then AValue := 0;
+  FParams.ShakeSeed := AValue;
+end;
+
 function TImgRes.ResampleImg(Img :TBgraBitmap; const Size :TSize) :TBgraBitmap;
 begin
   Img.ResampleFilter := rfLanczos2;
@@ -557,6 +580,8 @@ begin
   FParams.Ren.FmtStr      := DEFAULT_RENFMTSTR;
   FParams.Ren.IndexStart  := DEFAULT_RENINDEXSTART;
   FParams.Ren.IndexDigits := DEFAULT_RENINDEXDIGITS;
+  FParams.Shake           := DEFAULT_SHAKE;
+  FParams.ShakeSeed       := DEFAULT_SHAKESEED;
 end;
 
 destructor TImgRes.Destroy;
@@ -591,10 +616,14 @@ begin
   Tasks := TTasks.Create;
   Dispatcher := TDispatcher.Create;
   try
-    // Prepare the destination file renaminf feature
-
+    // Prepare the destination file renaming feature
     n := FParams.SrcFilenames.Count;
     m := Length(FParams.Sizes);
+    // If the files list hasto be randomly remixed, its the right moment
+    if FParams.Shake then begin
+      if FParams.ShakeSeed=0 then Randomize else RandSeed := FParams.ShakeSeed;
+      ShakeSequence(FParams.SrcFilenames);
+    end;
 
     // For each SrcFilename/Size create a task
     Tasks.Capacity := n*m;
@@ -857,6 +886,11 @@ end;
 class function TImgRes.GetVersion: string;
 begin
   result := IMGRESVER;
+end;
+
+initialization
+begin
+  Randomize;
 end;
 
 end.

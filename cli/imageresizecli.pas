@@ -7,44 +7,51 @@ uses
   {$IFDEF UNIX}{$IFDEF UseCThreads}
   cthreads,
   {$ENDIF}{$ENDIF}
-  Classes, Types, SysUtils, CustApp,
+  Classes, Types, SysUtils, CustApp, interfaces,
   { you can add units after this } fileutil, utils, imgres, generics.collections;
 
 const
-  IMGRESCLIVER = '2.0';
-  IMGRESCLICPR = 'imgres CLI V'+IMGRESCLIVER+' for engine V'+IMGRESVER+' (c) 2019 Jan Schirrmacher, www.atomek.de';
+  IMGRESCLIVER = '2.1';
+  IMGRESCLICPR = 'imgres CLI V'+IMGRESCLIVER+' for engine V'+IMGRESVER+' (c) 2022 Jan Schirrmacher, www.atomek.de';
 
   INTROSTR = 'Free tool for jpg and png quality file resizing.';
-  USAGESTR = '  Usage: imgres filenames folder size [-j jpgquality]  [-p pngcompression] [-w watermark] [-t threadcount] [-h] [-q]';
+  USAGESTR = '  Usage: imgres filenames folder size {-option [param]}';
   HINTSSTR =
-    '  filenames        - Is a single JPEG or PNG file, a text filename preceeded by @ with a list of filenames'#10+
-    '                     or a wildcard with path/mask. Multiple masks are separated by semikolon.'#10+
-    '  folder           - Is the folder where to store the resulting resized files. The folder must contain'#10+
-    '                     the placeholder ''%SIZE%'' when there are multiple sizes. Non-existing folders'#10+
-    '                     will be created.'#10+
-    '  size             - Is a size in pixels or a comma-separated list of sizes, where the size refers to'#10+
-    '                     the longer side of the image.'#10+
-    '  j jpgquality     - a quality from 1 to 100 percent (default is 75)'#10+
-    '  p pngcompression - one of none,fastest,default and max'#10+
-    '  r rename         - rename files numbered, enter a template with place holders'#10+
+    '  filenames         - Is a single JPEG or PNG file, a text filename preceeded by @ with a list of filenames'#10+
+    '                      or a wildcard with path/mask. Multiple masks are separated by semikolon.'#10+
+    '  folder            - Is the folder where to store the resulting resized files. The folder must contain'#10+
+    '                      the placeholder ''%SIZE%'' when there are multiple sizes. Non-existing folders'#10+
+    '                      will be created.'#10+
+    '  size              - Is a size in pixels or a comma-separated list of sizes, where the size refers to'#10+
+    '                      the longer side of the image.'#10+
+    '  {-option [param]} - Is a list of pairs of option/parameter. Some options dont have a parameter.'#10#10+
+    'Options:'#10#10+
+    ' -j jpgquality     - a quality from 1 to 100 percent (default is 75)'#10+
+    ' -p pngcompression - one of none,fastest,default and max'#10+
+    ' -r rename         - rename files numbered, enter a template with place holders'#10+
     '                     %SIZE% and %INDEX[:n[,d]]% with n=startindex, d=number of digits/auto'#10+
-    '  w watermark      - a watermark file and optional a position and opacity, see example'#10+
-    '  t threadcount    - number of threads to use, 0 is maximum'#10+
-    '  x stoponerror    - stop on error flag'#10+
-    '  h help           - outputs this text'#10+
-    '  q quiet          - suppresses any message output'#10#10;
+    ' -w watermark      - a watermark file and optional a position and opacity, see example'#10+
+    ' -t threadcount    - number of threads to use, 0 is maximum'#10+
+    ' -x stoponerror    - stop on error flag'#10+
+    ' -s shake          - shakes the image list, makes sense together with -r.'#10+
+    '                     A random seed of 0 (assumed if ommited) means an unpredictable sequence.'#10+
+    '                     A fix value will shake a list always in the same manner, '#10+
+    '                     unless the number of files doesnt change.'#10+
+    ' -h help           - outputs this text'#10+
+    ' -q quit           - suppresses any message output'#10#10;
   EXAMPLESTR =
-    'Examples:'#10+'  imgres myimage.png \Images\res640 640'#10+
-    '  resamples a single png image with the default quality.'#10#10+
+    'Examples:'#10#10+
+    '  imgres myimage.png \Images\res640 640'#10+
+    '    resamples a single png image with the default quality.'#10#10+
 
     '  imgres ..\theimage.jpg C:\TEMP\res%SIZE% 480,640,800 -j 50'#10+
-    '  resamples a single jpg with 3 different resolutions and stores them to different folders with 50% quality'#10#10+
+    '    resamples a single jpg with 3 different resolutions and stores them to different folders with 50% quality'#10#10+
 
     '  imgres @mylist.txt img%SIZE% 640,1920 -j 1 -p max -q'#10+
-    '  resamples a list of files which path/name is stored in a file with smallest file sizes in quiet mode.'#10#10+
+    '    resamples a list of files which path/name is stored in a file with smallest file sizes in quiet mode.'#10#10+
 
     '  imgres myimages\*.jpg;*.png \MyImages 640 -w "mywatermark.png?10,1,98?50"'#10+
-    '  adds a watermark of 10% width, 1% from the left, 2% from the bottom, with 50% opacity.'#10#10+
+    '    adds a watermark of 10% width, 1% from the left, 2% from the bottom, with 50% opacity.'#10#10+
 
     '  More info at www.atomek.de/imageresize/cli/index.html';
 
@@ -52,6 +59,7 @@ const
   ERRINVALIDSRCFILENAME = 'Invalid parameter srcfilename.';
   ERRINVALIDDSTFOLDER = 'Invalid parameter dstfolder.';
   ERRMISSINGSIZE = 'For multiple sizes dstfolder must contain placeholder ''%SIZE%''.';
+  ERRINVALIDSHAKESEED = 'Invalid shake seed value, 0..n expected.';
 
 type
 
@@ -100,6 +108,8 @@ var
   ThreadCount :integer;
   StopOnError :boolean;
   Path, Mask :string;
+  Shake :boolean;
+  ShakeSeed :integer;
 
   function IncludeTrailingPathDelimiterEx(const Path :string) :string;
   begin
@@ -196,6 +206,22 @@ begin
     end else
       DstFileTemplate := '';
 
+    // File Shaking
+    Shake := HasOption('s', 'shake');
+    if Shake then begin
+      inc(OptionCount, 1);
+      Param := GetOptionValue('s', 'shake');
+      if Param<>'' then begin
+        inc(OptionCount, 1);
+        if not TryStrToInt(Param, ShakeSeed) or (ShakeSeed<0) then
+          raise Exception.Create(ERRINVALIDSHAKESEED);
+      end else
+        ShakeSeed := 0;
+    end else begin
+      Shake := false;
+      ShakeSeed := 0;
+    end;
+
     // Check number of parameters
     if ParamCount<>3+OptionCount then
       raise Exception.Create(ERRINVALIDNUMBEROFPARAMS);
@@ -248,6 +274,8 @@ begin
     Processor.ThreadCount := ThreadCount;
     Processor.StopOnError := StopOnError;
     Processor.DstFiletemplate := DstFileTemplate;
+    Processor.Shake := Shake;
+    Processor.ShakeSeed := ShakeSeed;
 
     // Check if multiple sizes are given and placeholder %SIZE% is not set in DstFolder
     if (Length(Sizes)>1) and not ((Pos('%SIZE%', DstFolder)>0)

@@ -2,54 +2,53 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="11"/>
+    <Version Value="12"/>
     <BuildModes Active="Release"/>
-    <Units Count="66">
+    <Units Count="69">
       <Unit0>
         <Filename Value="imageresizecli.pas"/>
         <IsPartOfProject Value="True"/>
-        <TopLine Value="198"/>
-        <CursorPos X="33" Y="227"/>
-        <UsageCount Value="152"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="14"/>
+        <CursorPos X="67" Y="27"/>
+        <UsageCount Value="156"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="..\src\imgres.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="5"/>
-        <TopLine Value="4"/>
-        <CursorPos X="27" Y="21"/>
-        <UsageCount Value="88"/>
+        <EditorIndex Value="6"/>
+        <UsageCount Value="92"/>
         <Bookmarks Count="1">
-          <Item0 X="3" Y="333"/>
+          <Item0 X="3" Y="339"/>
         </Bookmarks>
         <Loaded Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="..\src\utils.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="10"/>
+        <EditorIndex Value="8"/>
         <TopLine Value="94"/>
         <CursorPos X="28" Y="113"/>
-        <UsageCount Value="88"/>
+        <UsageCount Value="92"/>
         <Loaded Value="True"/>
       </Unit2>
       <Unit3>
         <Filename Value="..\src\generics.queue.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="19"/>
+        <EditorIndex Value="10"/>
         <TopLine Value="30"/>
         <CursorPos X="46" Y="38"/>
-        <UsageCount Value="81"/>
+        <UsageCount Value="85"/>
         <Loaded Value="True"/>
       </Unit3>
       <Unit4>
         <Filename Value="..\src\threading.dispatcher.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="16"/>
+        <EditorIndex Value="9"/>
         <TopLine Value="2"/>
         <CursorPos Y="42"/>
-        <UsageCount Value="81"/>
+        <UsageCount Value="85"/>
         <Loaded Value="True"/>
       </Unit4>
       <Unit5>
@@ -122,10 +121,10 @@
       <Unit14>
         <Filename Value="D:\Programme\Lazarus\components\lazutils\lazutf8classes.pas"/>
         <UnitName Value="LazUTF8Classes"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="5"/>
         <TopLine Value="134"/>
-        <CursorPos Y="153"/>
-        <UsageCount Value="27"/>
+        <CursorPos Y="145"/>
+        <UsageCount Value="29"/>
         <Loaded Value="True"/>
       </Unit14>
       <Unit15>
@@ -174,20 +173,18 @@
       <Unit21>
         <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\rtl\objpas\types.pp"/>
         <UnitName Value="Types"/>
-        <EditorIndex Value="15"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="44"/>
         <CursorPos X="3" Y="54"/>
         <UsageCount Value="51"/>
-        <Loaded Value="True"/>
       </Unit21>
       <Unit22>
         <Filename Value="D:\Programme\Lazarus\components\lazutils\fileutil.pas"/>
         <UnitName Value="FileUtil"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="156"/>
         <CursorPos X="24" Y="167"/>
         <UsageCount Value="51"/>
-        <Loaded Value="True"/>
       </Unit22>
       <Unit23>
         <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\bgralclbitmap.pas"/>
@@ -229,11 +226,10 @@
       </Unit27>
       <Unit28>
         <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\rtl\objpas\classes\classesh.inc"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="1680"/>
         <CursorPos X="20" Y="1693"/>
         <UsageCount Value="23"/>
-        <Loaded Value="True"/>
       </Unit28>
       <Unit29>
         <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\csscolorconst.inc"/>
@@ -272,11 +268,10 @@
       </Unit33>
       <Unit34>
         <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\rtl\win\sysutils.pp"/>
-        <EditorIndex Value="13"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="1177"/>
         <CursorPos X="35" Y="1195"/>
         <UsageCount Value="41"/>
-        <Loaded Value="True"/>
       </Unit34>
       <Unit35>
         <Filename Value="..\..\ATOMEK.Delphi\StringFns.pas"/>
@@ -416,11 +411,10 @@
       </Unit52>
       <Unit53>
         <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\rtl\inc\systemh.inc"/>
-        <EditorIndex Value="14"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="1127"/>
         <CursorPos X="23" Y="1138"/>
         <UsageCount Value="30"/>
-        <Loaded Value="True"/>
       </Unit53>
       <Unit54>
         <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\rtl\objpas\sysutils\sysutils.inc"/>
@@ -439,19 +433,17 @@
       <Unit56>
         <Filename Value="D:\Programme\Lazarus\components\sparta\generics\source\generics.collections.pas"/>
         <UnitName Value="Generics.Collections"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="100"/>
         <CursorPos X="3" Y="118"/>
         <UsageCount Value="30"/>
-        <Loaded Value="True"/>
       </Unit56>
       <Unit57>
         <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\rtl-objpas\src\inc\strutils.pp"/>
-        <EditorIndex Value="12"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="99"/>
         <CursorPos Y="110"/>
         <UsageCount Value="16"/>
-        <Loaded Value="True"/>
       </Unit57>
       <Unit58>
         <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\rtl\objpas\objpas.pp"/>
@@ -462,180 +454,198 @@
       </Unit58>
       <Unit59>
         <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\rtl\objpas\sysutils\diskh.inc"/>
-        <EditorIndex Value="9"/>
+        <EditorIndex Value="-1"/>
         <CursorPos X="10" Y="23"/>
         <UsageCount Value="21"/>
-        <Loaded Value="True"/>
       </Unit59>
       <Unit60>
         <Filename Value="..\tst\clitest5.cmd"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="7"/>
         <CursorPos X="108"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="22"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="None"/>
       </Unit60>
       <Unit61>
         <Filename Value="D:\Programme\Lazarus\components\lazutils\fileutil.inc"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="716"/>
-        <CursorPos X="34" Y="731"/>
-        <UsageCount Value="18"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="657"/>
+        <CursorPos Y="681"/>
+        <UsageCount Value="20"/>
         <Loaded Value="True"/>
       </Unit61>
       <Unit62>
         <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\rtl\objpas\sysutils\syshelph.inc"/>
-        <EditorIndex Value="11"/>
+        <EditorIndex Value="-1"/>
         <CursorPos X="3" Y="5"/>
         <UsageCount Value="15"/>
-        <Loaded Value="True"/>
       </Unit62>
       <Unit63>
         <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\rtl\objpas\sysutils\osutilsh.inc"/>
-        <EditorIndex Value="17"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="13"/>
         <CursorPos X="11" Y="30"/>
         <UsageCount Value="14"/>
-        <Loaded Value="True"/>
       </Unit63>
       <Unit64>
         <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\rtl\win\wininc\func.inc"/>
-        <EditorIndex Value="18"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="148"/>
         <CursorPos X="24" Y="154"/>
         <UsageCount Value="14"/>
-        <Loaded Value="True"/>
       </Unit64>
       <Unit65>
         <Filename Value="C:\Programme\D\Lazarus\components\lazutils\fileutil.pas"/>
         <UnitName Value="FileUtil"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="149"/>
-        <CursorPos X="11" Y="172"/>
-        <UsageCount Value="10"/>
+        <EditorIndex Value="3"/>
+        <UsageCount Value="12"/>
         <Loaded Value="True"/>
       </Unit65>
+      <Unit66>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.2.2\source\packages\fcl-base\src\custapp.pp"/>
+        <UnitName Value="CustApp"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="59"/>
+        <CursorPos X="14" Y="72"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit66>
+      <Unit67>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.2.2\source\rtl\objpas\objpas.pp"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="21"/>
+        <CursorPos X="8" Y="35"/>
+        <UsageCount Value="12"/>
+        <Loaded Value="True"/>
+      </Unit67>
+      <Unit68>
+        <Filename Value="D:\Programme\Lazarus\fpc\3.2.2\source\rtl\inc\systemh.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="694"/>
+        <CursorPos X="3" Y="708"/>
+        <UsageCount Value="10"/>
+      </Unit68>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="227" TopLine="203"/>
+        <Caret Line="255" TopLine="227"/>
       </Position1>
       <Position2>
-        <Filename Value="imageresizecli.pas"/>
-        <Caret Line="228" TopLine="204"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="185" TopLine="169"/>
       </Position2>
       <Position3>
-        <Filename Value="imageresizecli.pas"/>
-        <Caret Line="234" TopLine="220"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="153" TopLine="139"/>
       </Position3>
       <Position4>
-        <Filename Value="imageresizecli.pas"/>
-        <Caret Line="110" TopLine="96"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="152" TopLine="138"/>
       </Position4>
       <Position5>
-        <Filename Value="imageresizecli.pas"/>
-        <Caret Line="216" TopLine="202"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="554" TopLine="538"/>
       </Position5>
       <Position6>
-        <Filename Value="imageresizecli.pas"/>
-        <Caret Line="217" TopLine="202"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="159" TopLine="148"/>
       </Position6>
       <Position7>
-        <Filename Value="imageresizecli.pas"/>
-        <Caret Line="225" TopLine="202"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="583" TopLine="563"/>
       </Position7>
       <Position8>
-        <Filename Value="imageresizecli.pas"/>
-        <Caret Line="226" TopLine="202"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="227" Column="40" TopLine="215"/>
       </Position8>
       <Position9>
-        <Filename Value="imageresizecli.pas"/>
-        <Caret Line="227" TopLine="203"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="746" TopLine="718"/>
       </Position9>
       <Position10>
-        <Filename Value="imageresizecli.pas"/>
-        <Caret Line="228" TopLine="204"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="162" TopLine="145"/>
       </Position10>
       <Position11>
-        <Filename Value="imageresizecli.pas"/>
-        <Caret Line="234" TopLine="220"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="624" Column="78" TopLine="618"/>
       </Position11>
       <Position12>
-        <Filename Value="imageresizecli.pas"/>
-        <Caret Line="250" TopLine="236"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="625" Column="54" TopLine="610"/>
       </Position12>
       <Position13>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="251" TopLine="236"/>
+        <Caret Line="210" TopLine="205"/>
       </Position13>
       <Position14>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="254" TopLine="236"/>
+        <Caret Line="211" TopLine="205"/>
       </Position14>
       <Position15>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="270" TopLine="256"/>
+        <Caret Line="212" TopLine="205"/>
       </Position15>
       <Position16>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="165" Column="14" TopLine="151"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="213" TopLine="205"/>
       </Position16>
       <Position17>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="134" TopLine="120"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="214" TopLine="205"/>
       </Position17>
       <Position18>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="782" Column="3" TopLine="776"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="219" TopLine="205"/>
       </Position18>
       <Position19>
         <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="161" TopLine="147"/>
+        <Caret Line="623" TopLine="610"/>
       </Position19>
       <Position20>
-        <Filename Value="imageresizecli.pas"/>
-        <Caret Line="256" Column="25" TopLine="244"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="233" TopLine="219"/>
       </Position20>
       <Position21>
-        <Filename Value="imageresizecli.pas"/>
-        <Caret Line="37" Column="57" TopLine="22"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="623" TopLine="609"/>
       </Position21>
       <Position22>
         <Filename Value="imageresizecli.pas"/>
+        <Caret Line="211" TopLine="205"/>
       </Position22>
       <Position23>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="118" TopLine="108"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="212" TopLine="205"/>
       </Position23>
       <Position24>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="276" TopLine="251"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="213" TopLine="205"/>
       </Position24>
       <Position25>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="109" TopLine="91"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="214" TopLine="205"/>
       </Position25>
       <Position26>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="416" TopLine="416"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="215" TopLine="205"/>
       </Position26>
       <Position27>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="108" TopLine="94"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="216" TopLine="205"/>
       </Position27>
       <Position28>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="26" Column="19" TopLine="7"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="278" Column="38" TopLine="253"/>
       </Position28>
       <Position29>
-        <Filename Value="imageresizecli.pas"/>
-        <Caret Line="228" Column="52" TopLine="192"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="605" Column="41" TopLine="600"/>
       </Position29>
       <Position30>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="227" Column="33" TopLine="198"/>
+        <Caret Line="207" Column="36" TopLine="197"/>
       </Position30>
     </JumpHistory>
     <RunParams>
@@ -643,41 +653,36 @@
       <Modes Count="1" ActiveMode="default">
         <Mode0 Name="default">
           <local>
-            <CommandLineParams Value="tst\org2\*.jpg tst 400,500,600 -r img%INDEX:1,3%_%SIZE%.%FILEEXT%"/>
+            <CommandLineParams Value="D:\TEMP\*.jpg D:\TEMP\IMG%SIZE% 400,500 -r &quot;img%INDEX:1,3%.%FILEEXT%&quot; -s 1000"/>
             <WorkingDirectory Value="D:\Mf\DEV\Lazarus\ImageResize"/>
           </local>
         </Mode0>
       </Modes>
     </RunParams>
+    <HistoryLists Count="3">
+      <List0 Name="WorkingDirectory" Type="File" Count="1">
+        <Item1 Value="D:\Mf\DEV\Lazarus\ImageResize"/>
+      </List0>
+      <List1 Name="LaunchingApplication" Type="File" Count="1">
+        <Item1 Value="C:\WINDOWS\system32\cmd.exe /C ${TargetCmdLine}"/>
+      </List1>
+      <List2 Name="CommandLineParameters" Count="8">
+        <Item1 Value="D:\TEMP\*.jpg D:\TEMP\IMG%SIZE% 400,500 -r &quot;img%INDEX:1,3%.%FILEEXT%&quot; -s 1000"/>
+        <Item2 Value="D:\TEMP\*.jpg D:\TEMP\IMG%SIZE% 400,500 -r &quot;img%INDEX:1,3%.%FILEEXT%&quot; -s"/>
+        <Item3 Value="D:\TEMP\*.jpg D:\TEMP\IMG%SIZE% 400,500 -s"/>
+        <Item4 Value="D:\TEMP\*.jpg D:\TEMP 400,500 -s"/>
+        <Item5 Value="..\tst\org\*.* ..\tst 400,500,600 -r img%INDEX:1,3%_%SIZE%.%FILEEXT% -s"/>
+        <Item6 Value="..\tst\org2\*.jpg ..\tst 400,500,600 -r img%INDEX:1,3%_%SIZE%.%FILEEXT% -s"/>
+        <Item7 Value="tst\org2\*.jpg tst 400,500,600 -r img%INDEX:1,3%_%SIZE%.%FILEEXT% -s"/>
+        <Item8 Value="tst\org2\*.jpg tst 400,500,600 -r img%INDEX:1,3%_%SIZE%.%FILEEXT%"/>
+      </List2>
+    </HistoryLists>
   </ProjectSession>
   <Debugging>
-    <BreakPoints Count="3">
-      <Item1>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="imageresizecli.pas"/>
-        <Line Value="270"/>
-      </Item1>
-      <Item2>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="imageresizecli.pas"/>
-        <Line Value="253"/>
-      </Item2>
-      <Item3>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="imageresizecli.pas"/>
-        <Line Value="219"/>
-      </Item3>
-    </BreakPoints>
-    <Watches Count="1">
-      <Item1>
+    <Watches>
+      <Item>
         <Expression Value="FSize"/>
-      </Item1>
+      </Item>
     </Watches>
   </Debugging>
 </CONFIG>
