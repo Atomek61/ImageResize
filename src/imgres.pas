@@ -48,11 +48,11 @@ const
   DEFAULT_SHAKE            = false;
   DEFAULT_SHAKESEED        = 0;
 
-  // Watermark sources
-  msDisabled  = 0;
-  msFile      = 1;
-  msImage     = 2;
-
+  //// Watermark sources
+  //msDisabled  = 0;
+  //msFile      = 1;
+  //msImage     = 2;
+  //
   DEFSIZES :array[0..15] of integer = (32, 48, 64, 120, 240, 360, 480, 640, 800, 960, 1280, 1600, 1920, 2560, 3840, 4096);
 
 type
@@ -81,7 +81,6 @@ type
       Sizes :TSizes;
       JpgQuality :integer;
       PngCompression :integer;
-      MrkSource :integer;
       MrkFilename :string;
       MrkImage :TBGRABitmap;
       MrkFilenameDependsOnSize :boolean; // if MrkFilename contains %SIZE%
@@ -139,8 +138,6 @@ type
     function GetSrcFilenames: TStrings;
     procedure SetDstFiletemplate(AValue: string);
     procedure SetMrkFilename(AValue: string);
-    procedure SetMrkImage(AValue :TBGRABitmap);
-    procedure SetMrkSource(AValue :integer);
     procedure SetSizes(AValue: string);
     procedure SetJpgQuality(AValue: integer);
     procedure SetPngCompression(AValue: integer);
@@ -173,9 +170,7 @@ type
     property Sizes :string read GetSizes write SetSizes;
     property JpgQuality :integer read FParams.JpgQuality write SetJpgQuality;
     property PngCompression :integer read FParams.PngCompression write SetPngCompression;
-    property MrkSource :integer read FParams.MrkSource write SetMrkSource;
     property MrkFilename :string read FParams.MrkFilename write SetMrkFilename; // if msFile
-    property MrkImage :TBGRABitmap read FParams.MrkImage write SetMrkImage; // if msImage
     property MrkSize :single read FParams.MrkSize write SetMrkSize;
     property MrkX :single read FParams.MrkX write SetMrkX;
     property MrkY :single read FParams.MrkY write SetMrkY;
@@ -461,28 +456,19 @@ var
 begin
   FMrkImgsSection.Enter;
   try
-    case FImgRes.FParams.MrkSource of
-    msImage:
-      begin;
-        result := FImgRes.FParams.MrkImage;
-      end;
-    msFile:
-      begin
-        if FImgRes.FParams.MrkFilenameDependsOnSize then
-          Index := Task.SizeIndex
-        else
-          Index := 0;
-        if not Assigned(FMrkImgs[Index]) then begin
-          if FImgRes.FParams.MrkFilenameDependsOnSize then
-            Filename := ReplaceStr(FImgRes.FParams.MrkFilename, '%SIZE%', IntToStr(FImgRes.FParams.Sizes[Index]))
-          else
-            Filename := FImgRes.FParams.MrkFilename;
-          Task.Print(Format('Loading ''%s''...', [ExtractFilename(Filename)]));
-          FMrkImgs[Index] := TBGRABitmap.Create(Filename);
-        end;
-        result := FMrkImgs[Index]
-      end;
+    if FImgRes.FParams.MrkFilenameDependsOnSize then
+      Index := Task.SizeIndex
+    else
+      Index := 0;
+    if not Assigned(FMrkImgs[Index]) then begin
+      if FImgRes.FParams.MrkFilenameDependsOnSize then
+        Filename := ReplaceStr(FImgRes.FParams.MrkFilename, '%SIZE%', IntToStr(FImgRes.FParams.Sizes[Index]))
+      else
+        Filename := FImgRes.FParams.MrkFilename;
+      Task.Print(Format('Loading ''%s''...', [ExtractFilename(Filename)]));
+      FMrkImgs[Index] := TBGRABitmap.Create(Filename);
     end;
+    result := FMrkImgs[Index]
   finally
     FMrkImgsSection.Leave;
   end;
@@ -820,18 +806,6 @@ begin
   if AValue=FParams.MrkFilename then Exit;
   FParams.MrkFilename := AValue;
   FParams.MrkFilenameDependsOnSize := Pos('%SIZE%', AValue)>0;
-end;
-
-procedure TImgRes.SetMrkImage(AValue :TBGRABitmap);
-begin
-  FParams.MrkImage.Assign(AValue);
-end;
-
-procedure TImgRes.SetMrkSource(AValue: integer);
-begin
-  if (AValue<0) or (AValue>2) then
-    raise Exception.CreateFmt('Invalid watermark source %d (0..2).', [AValue]);
-  FParams.MrkSource := AValue;
 end;
 
 procedure TImgRes.SetJpgQuality(AValue: integer);

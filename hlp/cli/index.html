@@ -5,17 +5,17 @@
     <meta charset="UTF-8"/>
     <title>Image Resize Documentation</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>   
-    <link rel="stylesheet" href="../help.css"/>
+    <link rel="stylesheet" href="help.css"/>
   </head>
 
   <body>
-    <header style="background-image: url('../images/title.jpg');">
+    <header style="background-image: url('images/title.jpg');">
     </header>
   
     <div class="contents">
       <h1 id="overview">Overview</h1>
       <p>
-        <i>imgres</i> is a command line interface (CLI) for the bulk resizing
+        <i>imgres</i> 3.0 is a command line interface (CLI) for the bulk resizing
         and watermarking tool <i>TImageResize</i>. It converts (resamples)
         JPEG and PNG images.
       </p>
@@ -33,6 +33,7 @@
         [-w watermark]<br/>
         [-t threadcount]<br/>
         [-r rename]<br/>
+        [-s shake]<br/>
         [-x]<br/>
         [-h] [-q]</b>
       </p>
@@ -126,7 +127,7 @@
         </tr>
         <tr id="placing">
           <td>
-            <i>-w value</i><br/>
+            <i>-w&nbsp;value</i><br/>
             <i>-watermark value</i>
           </td>
           <td>
@@ -152,7 +153,7 @@
         </tr>
         <tr>
           <td>
-            <i>-t value</i><br/>
+            <i>-t&nbsp;value</i><br/>
             <i>-threadcount value</i>
           </td>
           <td>
@@ -183,7 +184,7 @@
         </tr>
         <tr>
           <td>
-            <i>-r template</i><br/>
+            <i>-r&nbsp;template</i><br/>
             <i>-rename template</i>
           </td>
           <td>
@@ -204,6 +205,20 @@
               Destination file renaming with the <span class="plh">%SIZE%</span>
               -placeholder enables you to create all resized images into the
               same folder without any naming conflict.
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <i>-s&nbsp;seed</i><br/>
+            <i>-shake seed</i>
+          </td>
+          <td>
+            <p>
+              Mixes the renamed destination files randomly. To get the same (random) sequence of files, enter a <i>seed</i> not equal to zero. Multiple executions of the resampling processor will then result in the same order, as long as the number of files does not change.
+            </p>
+            <p>
+              A seed of 0 results in another sequence of files you press Execute.
             </p>
           </td>
         </tr>
@@ -246,7 +261,7 @@
     </div>
     
     <footer>
-      © 2019 Jan Schirrmacher, www.atomek.de
+      © 2023 Jan Schirrmacher, www.atomek.de
     </footer>
   </body>
 </html>

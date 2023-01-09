@@ -1,13 +1,13 @@
 # Image Resize
 A free Lazarus web image resampling and watermarking utility
 
-The Image Resize programs depend on package BGRABitmapPack (9.9.3)
+The Image Resize programs depends on package BGRABitmapPack (11.4)
 
 Documentation: www.atomek.de/imageresize/index.html
 
 License: see license.txt
 
-I developed it with Lazarus 2.0 under Windows 10 64-bit.
+I developed it with Lazarus 2.2.4 and Windows 10 64-bit.
 Please try it under Linux or macOS and let me know if it works (it should).
 
 jan@atomek.de, www.atomek.de

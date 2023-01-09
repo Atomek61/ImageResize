@@ -5,33 +5,33 @@
     <meta charset="UTF-8"/>
     <title>Image Resize Documentation</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>   
-    <link rel="stylesheet" href="../help.css"/>
+    <link rel="stylesheet" href="help.css"/>
     <style>
       br+img {margin-top: 0.3em}
       .atop td {vertical-align: top;}
-      .atop tr td:nth-child(1)  {font-weight: bold; font-style: italic;}
+      .atop tr td:nth-child(1)  {width: 7em; font-weight: bold; font-style: italic;}
       .framed {border: 1px solid silver;}
     </style>
   </head>
 
   <body>
-    <header style="background-image: url('../images/title.jpg');">
+    <header style="background-image: url('images/title.jpg');">
     </header>
   
     <div class="contents">
       <h1 id="overview">Overview</h1>
       <p>
-        <i>Image Resize</i> is a program for bulk resizing and watermarking of
+        <i>Image Resize</i> 3.0 is a program for bulk resizing and watermarking of
         JPEG and PNG images.
       </p>
       
       <h2 id="contents">Contents</h2>
-      <a href="#basics">Basics</a><br/>
+      <a href="#overview">Overview</a><br/>
       <a href="#srcfilelist">Source File List</a><br/>
       <a href="#dstfolder">Destination Folder</a><br/>
       <a href="#sizes">Sizes</a><br/>
       <a href="#quality">Quality</a><br/>
-      <a href="#renaming">Renaming</a><br/>
+      <a href="#renaming">Renaming and Shaking</a><br/>
       <a href="#watermark">Watermark</a><br/>
       <a href="#boost">Boost</a><br/>
       <a href="#saving">Saving and Loading</a><br/>
@@ -50,6 +50,7 @@
         <li>controls compression qualities</li>
         <li>GUI, CLI and API interfaces available</li>
         <li>systematic file renaming</li>
+        <li>shaking the file sequence randomly</li>
       </ul>
       <p>
         Incapabilites
@@ -61,12 +62,12 @@
         <li>meta information handling (EXIF)</li>
       </ul>
       
-      <h1 id="basics">Basics</h1>
+      <h1 id="overview">Overview</h1>
       <p>
         The program needs at least these informations to work:
       </p>
       <ol>
-        <li>A source filename or a list<br/><img src="images/minsrc.png"/></li>
+        <li>A source filename, a list of filenames or a folder with file wildcards<br/><img src="images/minsrc.png"/></li>
         <li>A destination folder<br/><img src="images/mindst.png"/></li>
         <li>A destination size or a list of destination sizes<br/><img src="images/minsize.png"/></li>
       </ol>
@@ -74,7 +75,7 @@
         Finally press <img class="btn" src="images/minexec.png"/> to start the resampling.
       </p>
       
-      <h1 id="srcfilelist">Source File List</h1>
+      <h1 id="srcfolder">Source File List</h1>
       <p>
         Image Resize can resample a list of source files. The list consists of
         path/filenames and can be entered
@@ -83,6 +84,7 @@
         <li>manually, each line a file</li>
         <li>by browsing a folder with <img class="btn" src="images/btnbrowsesrcfiles.png"/></li>
         <li>dragging files from the explorer into the window</li>
+        <li>by entering a source folder with an optional list of wildcards</li>
       </ol>
       <p>
         The list can contain JPEG files and PNG files. The filenames can be
@@ -144,29 +146,20 @@
       </p>
       <a class="chfot" href="#contents">Contents</a>
       
-      <h1 id="renaming">Renaming</h1>
+      <h1 id="renaming">Renaming and Shaking</h1>
       <p>
         Renaming of the destination image files becomes interesting, if its
-        not your strategy to create folder for each destination image size.
+        not your strategy to create folder for each destination image size, but to put all files (of different sizes) in one folder. In this case the multiple resolutions of a single source image must have different names.
       </p>
       <p>
-        Strategy 1: Usually Image Resize can keep the filenames, because for each size
-        a different folder will be created.
+        After enabling Renaming by checking <i>Enable</i>, select one of the <i>Strategies</i>. 
       </p>
-      <p>
-        Strategy 2: Put all destination images into the same folder and avoid
-        filename conflicts by appending the size in the filename.
-        This is achieved by creating a template filename, which contains
-        placeholders for certain parameters. The program forms the new filename
-        by replacing the placeholders.
-      </p>
-      
-      <h2 id="rensimple">Strategy 1 - Simple Filename Template</h2>
+
+      <h2 id="rensimple"><b>Simple</b> Strategy</h2>
       <p>
         The simple filename template forms filenames like this: <i>img085.jpg</i>.
         The files are numbered beginning with 1 and they dont contain the
-        image size. Thus its required to create a folder for each size. You will have
-        to insert the placeholder <span class="plh">%SIZE%</span> in the folder.
+        image size. Thus its required to create a folder for each size. You must insert the placeholder <span class="plh">%SIZE%</span> in the destination folders name.
       </p>
       <p>
         The simple filename template is
@@ -177,20 +170,20 @@
         leading zeroes.
       </p>
       
-      <h2 id="renadvanced">Strategy 2 - Advanced Filename Template</h2>
+      <h2 id="renadvanced"><b>Advanced</b>Strategy</h2>
       <p>
         The advanced filename template
-        <span class="plh">img%INDEX:1,3%_%SIZE%.%FILEEXT%</span>
-        enables you to create all files in the same directory. It create a
+        <span class="plh">img%INDEX:1,3%_%SIZE%.%FILEEXT%</span> (example)
+        enables you to create all files in the same directory. It creates a
         filename like <i>img085_1920.jpg</i>. The filename conflict is solved
         by using the <span class="plh">%SIZE%</span>-placeholder.
       </p>
       
-      <h2 id="rencustom">Custom Filename Templates</h2>
+      <h2 id="rencustom"><b>Custom</b> Strategy</h2>
       <p>
         To let the program form a destination filename, you can enter a
         <i>template</i> of your own. The template contains <i>placeholders</i>
-        for special values, which will be known while processing and beeing
+        for special values, which will be known while processing an beeing
         inserted.
       </p>
       <p>
@@ -232,6 +225,13 @@
           <td>The destination size in pixels of the current image</td>
         </tr>
       </table>
+      <h2 id="shaking">Shaking</h2>
+      <p>
+        <i>Shaking</i> means that the order of the destination files is mixed randomly. Image Resize will first build or take the source file list and will then shake the images.
+      </p>
+      <p>
+        The parameter <i>Seed</i> controls the random sequence. A seed of 0 will lead to another order each time you execute Image Resize. Any other, but constant value will initialize the random sequence in the same manner as long as the number of files does not change.
+      </p>
       
       <h1 id="watermark">Watermark</h1>
       <p>
@@ -253,13 +253,11 @@
       <p>
         Usually you have to create only one watermark file for all the destination
         images sizes, because the size is in percent and the watermark will be stretched
-        to the right size. So its ok to create a watermark file with a high resolution,
-        lets say 400px width.
+        to the right size. So its ok to create a watermark file with a high resolution.
       </p>
       <p>
         There is a way to assign a different watermark image for each size. For
-        this case, enter the placeholder <span class="plh">%SIZE%</span> into the watermark
-        filename. You must have prepared a watermark file for each size.
+        this case, enter the placeholder <span class="plh">%SIZE%</span> into the watermark filename. You must have prepared a watermark file for each size.
       </p>
       <p>
         You can create a watermark image with every program that supports then
@@ -270,7 +268,7 @@
         <li><a href="http://gimp.org">Gimp</a> - a free raster graphic editor</li>
         <li><a href="http://greenfishsoftware.org">Greenfish Icon Editor</a> - a raster images graphic editor</li>
         <li>with the inbuilt <a href="#mrkeditor">Watermark Editor</a></li>
-      </ul>
+      </ul>      
       <p>
         You can use transparency, but keep in mind, that Image Resize allows
         an overall opacity, so you dont have to consider the printing transparency.
@@ -279,12 +277,6 @@
         Its a good idea to have any glow, shadow or outline effect for a better
         contrast on dark and bright backgrounds:<br/>
         <img src="images/watermark3.png"/>
-      </p>
-      
-      <h3 id="mrksize">Size</h3>
-      <p>
-        The watermarks size is the <u>width</u> in percent of the destination
-        image. I prefer a size of 400px.
       </p>
       
       <h3 id="mrkopaque">Opacity</h3>
@@ -380,37 +372,38 @@
         text line with a glow effect and colors of your choice.
       </p>
       <p>
-        <span class="framed" onclick="document.getElementById('wmimg').style.display = 'block';document.getElementById('btnshowwmimg').style.display = 'none';" id="btnshowwmimg">Show the dialog</span><br/>
-        <img style="display: none;" id="wmimg" src="images/watermarkeditor.png"/>
+        The <i>Preview</i> displays the image opaque and without transparency. The transparency is to be defined in the Image Resize watermark settings.
+      </p>
+      <p>
+        To get an impression with a white or dark background click on one of the buttons <img src='images/whiteblackbkg.png'/>.
+      </p>
+      <p>
+        <img style="max-width: 80%" src="images/watermarkeditor.png"/>
       </p>
       <table class="atop">
-        <tr><td><img src="images/bntnewfav.png"/></td>
+        <tr><td><img src="images/btnnew.png"/></td>
           <td>
-            Load new favorite settings.
-          </td>
-        </tr>
-        <tr><td><img src="images/bntsavefav.png"/></td>
-          <td>
-            Save the current settings as a favorite, which can be loaded later.
+            Loads default settings.
           </td>
         </tr>
         <tr><td><img src="images/btnbrowse.png"/></td>
           <td>
-            Load a previous saved .was file with watermark settings.
+            Loads a previous saved .was file with watermark settings.
           </td>
         </tr>
-        <tr><td><img src="images/btnsaveas.png"/></td>
+        <tr><td><img src="images/btnsave.png"/></td>
           <td>
-            Save the current watermark image as a PNG file and the settings to
-            the same folder and with the sdame name but with .was file extension.
+            Save the current watermark settings as a .was file and an image as a .png image file. The image file is needed by Image Resize, the settings file is for editing and creating the image. 
           </td>
         </tr>
-        <tr id="mrkwidth"><td>Size</td>
+        <tr><td><img src="images/bntnewfav.png"/></td>
           <td>
-            Enter the width of the watermark image in pixels. The image will be
-            printed independently from this size with the layouts size setting in
-            percent. Here you enter the resolution of the images. 200px or 400px
-            is a good choice.
+            Load your favorite settings.
+          </td>
+        </tr>
+        <tr><td><img src="images/btnsavefav.png"/></td>
+          <td>
+            Save the current settings as your favorite, which can be loaded later.
           </td>
         </tr>
         <tr id="mrktext"><td>Text</td>
@@ -422,26 +415,46 @@
         </tr>
         <tr id="mrkfont"><td>Font</td>
           <td>
-            Enter a font name in quotes and optionally the styles <i>italic</i> and
+            Select a font with size in <i>Points</i>, a name in quotes and optionally the styles <i>italic</i> and
             <i>bold</i> or select a font with the dialog <img class="btn" src="images/btnfont.png"/>.
-            Note: some fonts may not render with the right size. I did not find out the
-            reason.
+            The quality of the watermark image depends on the font height. 12pt results in visible pixels, 48pt results in a smooth watermark font.
           </td>
         </tr>
-        <tr id="mrkcolor"><td>Color</td>
+        <tr id="mrkcolor"><td>Font Color</td>
           <td>
             Select a character color (foreground)
           </td>
         </tr>
+        <tr id="mrkoutline"><td>Outline</td>
+          <td>
+            The font has a thin outline of the selected color
+            width.
+          </td>
+        </tr>
+        <tr id="mrkoutlinecolor"><td>Outline Color</td>
+          <td>
+            The outlines color.
+          </td>
+        </tr>
         <tr id="mrkshadow"><td>Shadow</td>
           <td>
-            Select a shadow color (background glowing)
+            Enable a shadow (background glowing)
+          </td>
+        </tr>
+        <tr id="mrkshadowcolor"><td>Shadow Color</td>
+          <td>
+            Select a shadow color
           </td>
         </tr>
         <tr id="mrkblur"><td>Blur</td>
           <td>
             Select a shadow blur in pixel. 6 is a good choice, depending on the
-            width.
+            font size. If you enlarge the font size, you may adjust the blur.
+          </td>
+        </tr>
+        <tr id="mrkquality"><td>Quality</td>
+          <td>
+            Controls the shadows appearance. Try out the settings <i>normal</i>, <i>disk</i>, <i>Corona</i>, <i>precise</i>, <i>fast</i> and <i>box</i>. Precise is a very thind shadow, like an outline.
           </td>
         </tr>
         <tr><td>Ok</td>
@@ -456,11 +469,14 @@
           </td>
         </tr>
       </table>
+      <p>
+        <b>Important:</b> The effective size of the watermark image is determined by the font size (height) and the length of the text (+ shadow). The higher the font size, the higher the images resolution. The effective size of the watermark results from the percentual scaling in the watermark settings (not in the watermark editors settings). 
+      </p>
       <a class="chfot" href="#contents">Contents</a>
     </div>
 
     <footer>
-      © 2019 Jan Schirrmacher, www.atomek.de
+      © 2023 Jan Schirrmacher, www.atomek.de
     </footer>
   </body>
 </html>

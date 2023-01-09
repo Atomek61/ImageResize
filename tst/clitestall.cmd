@@ -1,5 +1,5 @@
-call test1.cmd
-call test2.cmd
-call test3.cmd
-call test4.cmd
-call test5.cmd
+call clitest1.cmd
+call clitest2.cmd
+call clitest3.cmd
+call clitest4.cmd
+call clitest5.cmd

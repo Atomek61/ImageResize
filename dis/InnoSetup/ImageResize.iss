@@ -1,5 +1,5 @@
-#define PROGNAME "ImageResize"
-#define PROGVER "2.5"
+﻿#define PROGNAME "ImageResize"
+#define PROGVER "3.0"
 
 #define PROGEXE "ImageResize.exe"
 
@@ -19,15 +19,15 @@ OutputDir=.
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
 DisableWelcomePage=No
-WizardImageFile=res\welcomelighthouse.bmp
+WizardImageFile=res\welcome.bmp
 OutputBaseFilename=Install{#PROGNAME}
 
 [Messages]
-WelcomeLabel2=This will install [name/ver] on your computer.%n%n[name] is jpg and png image resampling tool.%nThere is a graphical user interface and a commandline interface available.
+WelcomeLabel2=This will install [name/ver] on your computer.%n%n[name] is a jpg and png image resampling tool.%n- Available as GUI app or%n- as commandline interface
 
 [Tasks]
 Name: desktopicon; Description: "Create a desktop icon for the Windows application";
-Name: htmlhelp; Description: "Install the HTML based helpfiles";
+Name: localhelp; Description: "Install the HTML based helpfiles";
 Name: installconsoleapp; Description: "Install the commandline tool imgres.exe";
 
 [Run]
@@ -36,7 +36,7 @@ Filename: {app}\ImageResize.exe; Description: "Start {#PROGNAME} now"; Flags: po
 [Files]
 Source: Files\ImageResize.exe; DestDir: "{app}"; 
 Source: Files\imgres.exe; DestDir: "{win}"; Tasks: installconsoleapp; 
-Source: Files\hlp\*.*; DestDir: "{app}\hlp"; Flags: recursesubdirs; Tasks: htmlhelp; 
+Source: Files\hlp\*.*; DestDir: "{app}\hlp"; Flags: recursesubdirs; Tasks: localhelp; 
 
 [Icons]
 Name: "{group}\{#PROGNAME}"; Filename: "{app}\{#PROGEXE}";

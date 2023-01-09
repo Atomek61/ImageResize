@@ -1,14 +1,14 @@
 object MainDialog: TMainDialog
-  Left = 854
-  Height = 655
-  Top = 268
-  Width = 640
+  Left = 464
+  Height = 720
+  Top = 480
+  Width = 800
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'ImageResize'
-  ClientHeight = 655
-  ClientWidth = 640
-  Constraints.MinHeight = 655
-  Constraints.MinWidth = 640
+  ClientHeight = 720
+  ClientWidth = 800
+  Constraints.MinHeight = 720
+  Constraints.MinWidth = 800
   OnClose = FormClose
   OnCreate = FormCreate
   OnDropFiles = FormDropFiles
@@ -18,14 +18,15 @@ object MainDialog: TMainDialog
   LCLVersion = '2.2.4.0'
   object PanelControls: TPanel
     Left = 0
-    Height = 446
+    Height = 511
     Top = 0
-    Width = 640
+    Width = 800
     Align = alClient
     BevelOuter = bvNone
-    ClientHeight = 446
-    ClientWidth = 640
-    Constraints.MinHeight = 442
+    ClientHeight = 511
+    ClientWidth = 800
+    Constraints.MinHeight = 508
+    Constraints.MinWidth = 800
     ParentColor = False
     TabOrder = 0
     OnClick = PanelControlsClick
@@ -102,10 +103,10 @@ object MainDialog: TMainDialog
       end
     end
     object ButtonExecute: TBitBtn
-      Left = 504
+      Left = 664
       Height = 29
       Hint = 'Starts the resampling process'
-      Top = 392
+      Top = 457
       Width = 126
       Anchors = [akRight, akBottom]
       Caption = 'E&xecute'
@@ -194,7 +195,7 @@ object MainDialog: TMainDialog
       TabOrder = 2
     end
     object ButtonAbout: TBitBtn
-      Left = 531
+      Left = 691
       Height = 27
       Top = 8
       Width = 99
@@ -206,35 +207,37 @@ object MainDialog: TMainDialog
     end
     object GroupBoxImageFiles: TGroupBox
       Left = 8
-      Height = 320
+      Height = 385
       Top = 64
-      Width = 328
+      Width = 377
+      HelpType = htKeyword
+      HelpKeyword = 'HTML/index.html#srcfolder'
       Anchors = [akTop, akLeft, akRight, akBottom]
       Caption = '    Image &Files'
-      ClientHeight = 300
-      ClientWidth = 324
+      ClientHeight = 365
+      ClientWidth = 373
       TabOrder = 3
       object NotebookFileSource: TNotebook
         Left = 0
-        Height = 261
+        Height = 326
         Top = 39
-        Width = 324
+        Width = 373
         PageIndex = 0
         Align = alClient
-        TabOrder = 0
+        TabOrder = 2
         object PageFilelist: TPage
+          HelpType = htKeyword
+          HelpKeyword = 'HTML/index.html#srcfolder'
           object MemoSrcFilenames: TMemo
             Left = 4
-            Height = 207
+            Height = 269
             Hint = 'Enter a list of files with absolute pathes.'#13#10#13#10'Press Browse... and select multiple files while'#13#10'holding <STRG> or <SHIFT> and clicking. '
             Top = 32
-            Width = 316
-            HelpType = htKeyword
-            HelpKeyword = 'HTML/index.html#srcfilelist'
+            Width = 574
             Anchors = [akTop, akLeft, akRight, akBottom]
             OnChange = MemoSrcFilenamesChange
             ScrollBars = ssAutoVertical
-            TabOrder = 0
+            TabOrder = 2
             WordWrap = False
           end
           object Label1: TLabel
@@ -247,7 +250,7 @@ object MainDialog: TMainDialog
             ParentColor = False
           end
           object ButtonBrowseSrcFiles: TBitBtn
-            Left = 221
+            Left = 479
             Height = 27
             Top = 0
             Width = 99
@@ -255,10 +258,10 @@ object MainDialog: TMainDialog
             Anchors = [akTop, akRight]
             Images = ImageList20x20
             ImageIndex = 0
-            TabOrder = 1
+            TabOrder = 0
           end
           object ButtonClearSrcFiles: TBitBtn
-            Left = 120
+            Left = 378
             Height = 27
             Top = 0
             Width = 99
@@ -266,13 +269,13 @@ object MainDialog: TMainDialog
             Anchors = [akTop, akRight]
             Images = ImageList20x20
             ImageIndex = 1
-            TabOrder = 2
+            TabOrder = 1
           end
           object LabelSourceFileListMessage: TLabel
             Left = 4
             Height = 14
-            Top = 240
-            Width = 316
+            Top = 302
+            Width = 574
             Alignment = taRightJustify
             Anchors = [akLeft, akRight, akBottom]
             AutoSize = False
@@ -281,22 +284,22 @@ object MainDialog: TMainDialog
         end
         object PagePathMask: TPage
           object ButtonBrowseSrcFolder: TBitBtn
-            Left = 221
+            Left = 335
             Height = 27
-            Top = 0
-            Width = 99
+            Top = 30
+            Width = 27
             Action = ActionBrowseSrcFolder
             Anchors = [akTop, akRight]
             Images = ImageList20x20
             ImageIndex = 0
-            TabOrder = 0
+            TabOrder = 1
           end
           object Label4: TLabel
             Left = 8
             Height = 15
             Top = 14
             Width = 75
-            Caption = 'S&ource Folder:'
+            Caption = 'Source Folder:'
             FocusControl = EditSrcFolder
             ParentColor = False
           end
@@ -305,12 +308,10 @@ object MainDialog: TMainDialog
             Height = 23
             Hint = 'Enter a source folder with your images.'
             Top = 32
-            Width = 312
-            HelpType = htKeyword
-            HelpKeyword = 'HTML/index.html#dstfolder'
+            Width = 327
             Anchors = [akTop, akLeft, akRight]
             OnChange = EditSrcFolderChange
-            TabOrder = 1
+            TabOrder = 0
           end
           object Label18: TLabel
             Left = 8
@@ -326,9 +327,7 @@ object MainDialog: TMainDialog
             Height = 23
             Hint = 'Enter a source folder with your images.'
             Top = 88
-            Width = 312
-            HelpType = htKeyword
-            HelpKeyword = 'HTML/index.html#dstfolder'
+            Width = 327
             Anchors = [akTop, akLeft, akRight]
             OnChange = EditDstFolderChange
             TabOrder = 2
@@ -344,7 +343,7 @@ object MainDialog: TMainDialog
         Caption = 'List of Files'
         Checked = True
         OnChange = RadioButtonFilelistChange
-        TabOrder = 1
+        TabOrder = 0
         TabStop = True
       end
       object RadioButtonPathMask: TRadioButton
@@ -355,13 +354,13 @@ object MainDialog: TMainDialog
         Width = 119
         Caption = 'All Files of a Folder'
         OnChange = RadioButtonFilelistChange
-        TabOrder = 2
+        TabOrder = 1
       end
       object Bevel1: TBevel
         Left = 4
         Height = 7
         Top = 32
-        Width = 316
+        Width = 365
         Align = alTop
         BorderSpacing.Left = 4
         BorderSpacing.Top = 32
@@ -370,20 +369,20 @@ object MainDialog: TMainDialog
       end
     end
     object GroupBoxParams: TGroupBox
-      Left = 347
-      Height = 316
+      Left = 395
+      Height = 384
       Top = 64
-      Width = 286
+      Width = 398
       Anchors = [akTop, akRight]
       Caption = '    &Parameters'
-      ClientHeight = 296
-      ClientWidth = 282
+      ClientHeight = 364
+      ClientWidth = 394
       TabOrder = 4
       object PageControlParams: TPageControl
         Left = 4
-        Height = 292
+        Height = 360
         Top = 0
-        Width = 274
+        Width = 386
         ActivePage = TabSheetRenaming
         Align = alClient
         BorderSpacing.Left = 4
@@ -397,8 +396,8 @@ object MainDialog: TMainDialog
           HelpType = htKeyword
           HelpKeyword = 'HTML/index.html#sizes'
           Caption = 'Sizes'
-          ClientHeight = 244
-          ClientWidth = 266
+          ClientHeight = 332
+          ClientWidth = 378
           object Label3: TLabel
             Left = 23
             Height = 15
@@ -409,7 +408,7 @@ object MainDialog: TMainDialog
             ParentColor = False
           end
           object ButtonClearSizes: TBitBtn
-            Left = 234
+            Left = 346
             Height = 25
             Top = 35
             Width = 25
@@ -425,16 +424,16 @@ object MainDialog: TMainDialog
             Height = 23
             Hint = 'Enter a comma-separated list of image sizes.'#13#10#13#10'The size refers to the longer side of an image.'#13#10#13#10'You can build a list by clicking the suggested'#13#10'sizes from the button field.'
             Top = 36
-            Width = 228
+            Width = 338
             OnChange = EditSizesChange
             OnExit = EditSizesExit
             TabOrder = 0
           end
           object ToolBarSizeButtons: TToolBar
             Left = 4
-            Height = 176
+            Height = 256
             Top = 72
-            Width = 257
+            Width = 366
             Align = alNone
             EdgeBorders = []
             Images = ImageList20x20
@@ -446,8 +445,8 @@ object MainDialog: TMainDialog
           HelpType = htKeyword
           HelpKeyword = 'HTML/index.html#quality'
           Caption = 'Quality'
-          ClientHeight = 244
-          ClientWidth = 266
+          ClientHeight = 332
+          ClientWidth = 378
           object GroupBoxJpgOptions: TGroupBox
             Left = 8
             Height = 65
@@ -530,8 +529,9 @@ object MainDialog: TMainDialog
           HelpType = htKeyword
           HelpKeyword = 'HTML/index.html#rename'
           Caption = 'Renaming'
-          ClientHeight = 244
-          ClientWidth = 266
+          ClientHeight = 332
+          ClientWidth = 378
+          OnContextPopup = TabSheetRenamingContextPopup
           object CheckBoxRenEnabled: TCheckBox
             Left = 8
             Height = 19
@@ -543,18 +543,18 @@ object MainDialog: TMainDialog
           end
           object GroupBoxRename: TGroupBox
             Left = 8
-            Height = 188
-            Top = 56
+            Height = 208
+            Top = 31
             Width = 249
-            Caption = 'Filename Template'
-            ClientHeight = 168
+            Caption = 'Strategy'
+            ClientHeight = 188
             ClientWidth = 245
-            TabOrder = 3
+            TabOrder = 1
             Visible = False
             object RadioButtonRenSimple: TRadioButton
               Left = 8
               Height = 19
-              Top = 3
+              Top = 8
               Width = 184
               HelpType = htKeyword
               HelpKeyword = 'HTML/index.html#rensimple'
@@ -564,7 +564,7 @@ object MainDialog: TMainDialog
             object RadioButtonRenCustom: TRadioButton
               Left = 8
               Height = 19
-              Top = 55
+              Top = 64
               Width = 71
               HelpType = htKeyword
               HelpKeyword = 'HTML/index.html#rencustom'
@@ -572,9 +572,9 @@ object MainDialog: TMainDialog
               TabOrder = 2
             end
             object Label22: TLabel
-              Left = 8
+              Left = 24
               Height = 58
-              Top = 104
+              Top = 120
               Width = 120
               AutoSize = False
               Caption = 'Placeholders:'#13#10'%SIZE:n,d%'#13#10'  n - start number'#13#10'  d - number of digits'
@@ -583,10 +583,10 @@ object MainDialog: TMainDialog
               ParentFont = False
             end
             object Label23: TLabel
-              Left = 136
+              Left = 152
               Height = 58
-              Top = 105
-              Width = 104
+              Top = 121
+              Width = 88
               AutoSize = False
               Caption = '%SIZE%'#13#10'%FILENAME%'#13#10'%FILEEXT%'
               Font.Color = clGrayText
@@ -596,7 +596,7 @@ object MainDialog: TMainDialog
             object RadioButtonRenAdvanced: TRadioButton
               Left = 8
               Height = 19
-              Top = 29
+              Top = 36
               Width = 199
               HelpType = htKeyword
               HelpKeyword = 'HTML/index.html#renadvanced'
@@ -604,10 +604,10 @@ object MainDialog: TMainDialog
               TabOrder = 1
             end
             object EditRenTemplate: TComboBox
-              Left = 8
+              Left = 24
               Height = 23
-              Top = 80
-              Width = 232
+              Top = 88
+              Width = 216
               ItemHeight = 15
               Items.Strings = (
                 'img%INDEX:1,3%.%FILEEXT%'
@@ -617,54 +617,67 @@ object MainDialog: TMainDialog
               TabOrder = 3
             end
           end
-          object CheckBoxShake: TCheckBox
-            Left = 20
-            Height = 19
-            Hint = 'Check to let the mages be mixed (shaked).'
-            Top = 32
-            Width = 51
-            Caption = '&Shake'
-            OnClick = CheckBoxRenEnabledClick
-            TabOrder = 1
-          end
-          object LabelShakeSeed: TLabel
-            Left = 104
-            Height = 15
-            Top = 34
-            Width = 28
-            Caption = 'Seed:'
-            ParentColor = False
-          end
-          object ComboBoxShakeSeed: TComboBox
-            Left = 144
-            Height = 23
-            Hint = 'Enter a number, ets say 1000, to create always the same shaked order or 0 for shaking always randomly.'
-            Top = 31
-            Width = 104
-            ItemHeight = 15
-            ItemIndex = 0
-            Items.Strings = (
-              '<random>'
-            )
+          object GroupBoxShaking: TGroupBox
+            Left = 8
+            Height = 79
+            Top = 246
+            Width = 249
+            HelpType = htKeyword
+            HelpKeyword = 'HTML/index.html#shaking'
+            Caption = 'Shake'
+            ClientHeight = 59
+            ClientWidth = 245
             TabOrder = 2
-            Text = '<random>'
+            Visible = False
+            object CheckBoxShake: TCheckBox
+              Left = 16
+              Height = 19
+              Hint = 'Check to let the mages be mixed (shaked).'
+              Top = 4
+              Width = 55
+              Caption = '&Enable'
+              OnClick = CheckBoxRenEnabledClick
+              TabOrder = 0
+            end
+            object LabelShakeSeed: TLabel
+              Left = 32
+              Height = 15
+              Top = 31
+              Width = 28
+              Caption = 'Seed:'
+              ParentColor = False
+            end
+            object ComboBoxShakeSeed: TComboBox
+              Left = 72
+              Height = 23
+              Hint = 'Enter a number, ets say 1000, to create always the same shaked order or 0 for shaking always randomly.'
+              Top = 28
+              Width = 104
+              ItemHeight = 15
+              ItemIndex = 0
+              Items.Strings = (
+                '<random>'
+              )
+              TabOrder = 1
+              Text = '<random>'
+            end
           end
         end
         object TabSheetMrk: TTabSheet
           HelpType = htKeyword
           HelpKeyword = 'HTML/index.html#watermark'
           Caption = 'Watermark'
-          ClientHeight = 244
-          ClientWidth = 266
+          ClientHeight = 332
+          ClientWidth = 378
           object GroupBoxMrkLayout: TGroupBox
             Left = 5
-            Height = 177
+            Height = 256
             Top = 72
-            Width = 255
+            Width = 367
             Caption = 'Layout'
-            ClientHeight = 157
-            ClientWidth = 251
-            TabOrder = 4
+            ClientHeight = 236
+            ClientWidth = 363
+            TabOrder = 2
             Visible = False
             object Label15: TLabel
               Left = 8
@@ -685,17 +698,17 @@ object MainDialog: TMainDialog
               ParentColor = False
             end
             object EditMrkAlpha: TEdit
-              Left = 57
+              Left = 64
               Height = 23
               Hint = 'Choose the watermarks opacity.'#13#10#13#10'A strong watermark has 100%,'#13#10'a weak one has 10% opacity.'
               Top = 32
-              Width = 26
+              Width = 34
               OnChange = EditMrkSizeChange
               TabOrder = 2
               Text = '50'
             end
             object Label14: TLabel
-              Left = 101
+              Left = 116
               Height = 15
               Top = 35
               Width = 10
@@ -703,17 +716,17 @@ object MainDialog: TMainDialog
               ParentColor = False
             end
             object EditMrkSize: TEdit
-              Left = 57
+              Left = 64
               Height = 23
               Hint = 'Size in percent of the watermark image in relation to the resampled image width.'
               Top = 0
-              Width = 26
+              Width = 34
               OnChange = EditMrkSizeChange
               TabOrder = 0
               Text = '10'
             end
             object Label16: TLabel
-              Left = 101
+              Left = 116
               Height = 15
               Top = 3
               Width = 10
@@ -721,7 +734,7 @@ object MainDialog: TMainDialog
               ParentColor = False
             end
             object UpDownMrkAlpha: TUpDown
-              Left = 83
+              Left = 98
               Height = 23
               Top = 32
               Width = 17
@@ -733,7 +746,7 @@ object MainDialog: TMainDialog
               Flat = True
             end
             object UpDownMrkSize: TUpDown
-              Left = 83
+              Left = 98
               Height = 23
               Top = 0
               Width = 17
@@ -745,7 +758,7 @@ object MainDialog: TMainDialog
               Flat = True
             end
             object Label9: TLabel
-              Left = 127
+              Left = 144
               Height = 15
               Top = 3
               Width = 58
@@ -754,17 +767,17 @@ object MainDialog: TMainDialog
               ParentColor = False
             end
             object EditMrkX: TEdit
-              Left = 191
+              Left = 210
               Height = 23
               Hint = 'Horizontal space of the watermark to the border in percent of the destination image width.'
               Top = 0
-              Width = 26
+              Width = 34
               OnChange = EditMrkSizeChange
               TabOrder = 4
               Text = '1'
             end
             object Label10: TLabel
-              Left = 236
+              Left = 263
               Height = 15
               Top = 3
               Width = 10
@@ -772,7 +785,7 @@ object MainDialog: TMainDialog
               ParentColor = False
             end
             object Label11: TLabel
-              Left = 129
+              Left = 144
               Height = 15
               Top = 35
               Width = 41
@@ -781,17 +794,17 @@ object MainDialog: TMainDialog
               ParentColor = False
             end
             object EditMrkY: TEdit
-              Left = 191
+              Left = 210
               Height = 23
               Hint = 'Vertical space of the watermark to the border in percent of the destination image height.'
               Top = 32
-              Width = 26
+              Width = 34
               OnChange = EditMrkSizeChange
               TabOrder = 6
               Text = '1'
             end
             object Label12: TLabel
-              Left = 236
+              Left = 263
               Height = 15
               Top = 35
               Width = 10
@@ -799,7 +812,7 @@ object MainDialog: TMainDialog
               ParentColor = False
             end
             object UpDownMrkX: TUpDown
-              Left = 217
+              Left = 244
               Height = 23
               Top = 0
               Width = 17
@@ -810,7 +823,7 @@ object MainDialog: TMainDialog
               Flat = True
             end
             object UpDownMrkY: TUpDown
-              Left = 217
+              Left = 244
               Height = 23
               Top = 32
               Width = 17
@@ -821,9 +834,9 @@ object MainDialog: TMainDialog
               Flat = True
             end
             object Label20: TLabel
-              Left = 155
+              Left = 272
               Height = 48
-              Top = 70
+              Top = 8
               Width = 90
               Alignment = taCenter
               AutoSize = False
@@ -846,19 +859,19 @@ object MainDialog: TMainDialog
             end
             object PanelPreview: TPanel
               Left = 8
-              Height = 88
+              Height = 168
               Top = 64
-              Width = 144
+              Width = 346
               BevelOuter = bvLowered
-              ClientHeight = 88
-              ClientWidth = 144
+              ClientHeight = 168
+              ClientWidth = 346
               TabOrder = 8
               object PaintBoxMrkPreview: TPaintBox
                 Cursor = crNone
                 Left = 1
-                Height = 86
+                Height = 166
                 Top = 1
-                Width = 142
+                Width = 344
                 Align = alClient
                 OnMouseDown = PaintBoxMrkPreviewMouseDown
                 OnMouseLeave = PaintBoxMrkPreviewMouseLeave
@@ -873,11 +886,11 @@ object MainDialog: TMainDialog
             Left = 5
             Height = 25
             Top = 40
-            Width = 259
+            Width = 363
             BevelOuter = bvNone
             ClientHeight = 25
-            ClientWidth = 259
-            TabOrder = 2
+            ClientWidth = 363
+            TabOrder = 1
             Visible = False
             object Label7: TLabel
               Left = 0
@@ -896,16 +909,16 @@ object MainDialog: TMainDialog
               Height = 25
               Hint = 'Select a png file with the desired watermark.'#13#10#13#10'A watermark is a little image, which usually'#13#10'appears in a corner of the image.'#13#10#13#10'Inkscape is a good tool for creating'#13#10'watermark files. Or use the inbuilt'#13#10'editor.'
               Top = 0
-              Width = 177
+              Width = 225
               Align = alClient
               Anchors = [akTop, akLeft, akRight]
               TabOrder = 0
             end
             object ButtonBrowseMrkFilename: TBitBtn
-              Left = 234
+              Left = 282
               Height = 25
               Top = 0
-              Width = 25
+              Width = 27
               Action = ActionBrowseMrkFilename
               Align = alRight
               Anchors = [akTop, akRight]
@@ -914,124 +927,96 @@ object MainDialog: TMainDialog
               Spacing = 0
               TabOrder = 1
             end
-          end
-          object PanelMrkSourceImage: TPanel
-            Left = 10
-            Height = 26
-            Top = 64
-            Width = 254
-            BevelOuter = bvNone
-            ClientHeight = 26
-            ClientWidth = 254
-            TabOrder = 3
-            Visible = False
-            object Label21: TLabel
-              Left = 0
-              Height = 26
+            object ButtonMrkEdit: TBitBtn
+              Left = 325
+              Height = 25
               Top = 0
-              Width = 25
-              Align = alLeft
-              BorderSpacing.Right = 8
-              Caption = '&Line:'
-              Layout = tlCenter
-              ParentColor = False
+              Width = 38
+              Align = alRight
+              BorderSpacing.Left = 16
+              Glyph.Data = {
+                36090000424D3609000000000000360000002800000018000000180000000100
+                2000000000000009000064000000640000000000000000000000000000000000
+                0000000000000000000000000000000000000000000000000000000000000000
+                0000000000000000000000000000000000000000000000000000000000000000
+                0000000000000000000000000000000000000000000000000000000000000000
+                0000000000000000000000000000000000000000000000000000000000000000
+                0000000000000000000000000000000000000000000000000000000000000000
+                0000000000000000000000000000000000000000000000000000000000002D68
+                73FF2D6873FF2D6873FF2D6873FF2D6873FF2D6873FF2D6873FF2D6873FF2D68
+                73FF2D6873FF2D6873FF2D6873FF2D6873FF2D6873FF2D6873FF2D6873FF2D68
+                73FF2D6873FF2D6873FF2D6873FF2D6873FF2D6873FF00000000000000007AC9
+                DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
+                DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
+                DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF2D6873FF00000000000000007AC9
+                DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
+                DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
+                DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF2D6873FF00000000000000007AC9
+                DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
+                DDFF7AC9DDFF7AC9DDFF7AC9DDFF518592FF18282CFF010203FF030506FF2239
+                3EFF5F9CACFF7AC9DDFF7AC9DDFF7AC9DDFF2D6873FF00000000000000007AC9
+                DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
+                DDFF7AC9DDFF7AC9DDFF406974FF121E21FF57909EFF77C4D8FF75C0D4FF4C7D
+                89FF0A1011FF57909EFF7AC9DDFF7AC9DDFF2D6873FF00000000000000007AC9
+                DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
+                DDFF7AC9DDFF6CB2C4FF080D0FFF6BB1C2FF365962FF050809FF050809FF426C
+                77FF5B96A5FF0D1618FF78C5D9FF7AC9DDFF2D6873FF00000000000000007AC9
+                DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
+                DDFF7AC9DDFF477581FF2D4B52FF4D7F8CFF000000FF3B616AFF518694FF62A1
+                B1FF7AC9DDFF142225FF5F9CACFF7AC9DDFF2D6873FF00000000000000007AC9
+                DDFF7AC9DDFF7AC9DDFF7AC9DDFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFF7AC9
+                DDFF7AC9DDFF3E6670FF3B616BFF385C65FF000000FF6CB2C4FF7AC9DDFF7AC9
+                DDFF7AC9DDFF22383DFF558D9BFF7AC9DDFF2D6873FF00000000000000007AC9
+                DDFF7AC9DDFF7AC9DDFF7AC9DDFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A
+                5CFF7AC9DDFF4A7A87FF263E44FF5D9AA9FF010203FF21373CFF315058FF4572
+                7DFF7AC9DDFF0D1517FF64A5B5FF7AC9DDFF2D6873FF00000000000000007AC9
+                DDFF7AC9DDFF7AC9DDFF7AC9DDFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A
+                5CFFDF8A5CFF71BACDFF0A1011FF5D9AA9FF5993A1FF243C42FF23393FFF5993
+                A1FF497985FF17262AFF7AC9DDFF7AC9DDFF2D6873FF00000000000000007AC9
+                DDFF7AC9DDFF7AC9DDFF7AC9DDFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A
+                5CFFDF8A5CFFDF8A5CFF558C9AFF080D0FFF395E68FF5B95A4FF568E9CFF2E4B
+                53FF0C1416FF67AABAFF7AC9DDFF7AC9DDFF2D6873FF00000000000000007AC9
+                DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A
+                5CFFDF8A5CFFDF8A5CFFDF8A5CFF6AAFC1FF355861FF1F3439FF22383DFF406A
+                75FF72BCCFFF7AC9DDFF7AC9DDFF7AC9DDFF2D6873FF00000000000000007AC9
+                DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFFDF8A5CFFDF8A5CFFDF8A
+                5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
+                DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF2D6873FF00000000000000007AC9
+                DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFFDF8A5CFFDF8A
+                5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFF7AC9DDFF7AC9DDFF7AC9
+                DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF2D6873FF00000000000000007AC9
+                DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFFDF8A
+                5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFF7AC9DDFF7AC9
+                DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF2D6873FF00000000000000000000
+                0000000000000000000000000000000000000000000000000000000000000000
+                0000DF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFF0000
+                0000000000000000000000000000000000000000000000000000000000000000
+                0000000000000000000000000000000000000000000000000000000000000000
+                000000000000DF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A
+                5CFF000000000000000000000000000000000000000000000000000000000000
+                0000000000000000000000000000000000000000000000000000000000000000
+                00000000000000000000DF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A
+                5CFFDF8A5CFF0000000000000000000000000000000000000000000000000000
+                0000000000000000000000000000000000000000000000000000000000000000
+                0000000000000000000000000000DF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A
+                5CFFDF8A5CFF0000000000000000000000000000000000000000000000000000
+                0000000000000000000000000000000000000000000000000000000000000000
+                000000000000000000000000000000000000DF8A5CFFDF8A5CFFDF8A5CFFDF8A
+                5CFF000000000000000000000000000000000000000000000000000000000000
+                0000000000000000000000000000000000000000000000000000000000000000
+                00000000000000000000000000000000000000000000DF8A5CFFDF8A5CFF0000
+                0000000000000000000000000000000000000000000000000000000000000000
+                0000000000000000000000000000000000000000000000000000000000000000
+                0000000000000000000000000000000000000000000000000000000000000000
+                0000000000000000000000000000000000000000000000000000
+              }
+              Images = ImageList20x20
+              ImageIndex = 4
+              OnClick = ActionEditWatermarkExecute
+              ParentShowHint = False
+              Spacing = 0
+              TabOrder = 2
             end
-            object PaintBox1: TPaintBox
-              Left = 33
-              Height = 26
-              Top = 0
-              Width = 221
-              Align = alClient
-            end
-          end
-          object ButtonMrkEdit: TBitBtn
-            Left = 239
-            Height = 25
-            Top = 11
-            Width = 25
-            Glyph.Data = {
-              36090000424D3609000000000000360000002800000018000000180000000100
-              2000000000000009000064000000640000000000000000000000000000000000
-              0000000000000000000000000000000000000000000000000000000000000000
-              0000000000000000000000000000000000000000000000000000000000000000
-              0000000000000000000000000000000000000000000000000000000000000000
-              0000000000000000000000000000000000000000000000000000000000000000
-              0000000000000000000000000000000000000000000000000000000000000000
-              0000000000000000000000000000000000000000000000000000000000002D68
-              73FF2D6873FF2D6873FF2D6873FF2D6873FF2D6873FF2D6873FF2D6873FF2D68
-              73FF2D6873FF2D6873FF2D6873FF2D6873FF2D6873FF2D6873FF2D6873FF2D68
-              73FF2D6873FF2D6873FF2D6873FF2D6873FF2D6873FF00000000000000007AC9
-              DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
-              DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
-              DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF2D6873FF00000000000000007AC9
-              DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
-              DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
-              DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF2D6873FF00000000000000007AC9
-              DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
-              DDFF7AC9DDFF7AC9DDFF7AC9DDFF518592FF18282CFF010203FF030506FF2239
-              3EFF5F9CACFF7AC9DDFF7AC9DDFF7AC9DDFF2D6873FF00000000000000007AC9
-              DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
-              DDFF7AC9DDFF7AC9DDFF406974FF121E21FF57909EFF77C4D8FF75C0D4FF4C7D
-              89FF0A1011FF57909EFF7AC9DDFF7AC9DDFF2D6873FF00000000000000007AC9
-              DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
-              DDFF7AC9DDFF6CB2C4FF080D0FFF6BB1C2FF365962FF050809FF050809FF426C
-              77FF5B96A5FF0D1618FF78C5D9FF7AC9DDFF2D6873FF00000000000000007AC9
-              DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
-              DDFF7AC9DDFF477581FF2D4B52FF4D7F8CFF000000FF3B616AFF518694FF62A1
-              B1FF7AC9DDFF142225FF5F9CACFF7AC9DDFF2D6873FF00000000000000007AC9
-              DDFF7AC9DDFF7AC9DDFF7AC9DDFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFF7AC9
-              DDFF7AC9DDFF3E6670FF3B616BFF385C65FF000000FF6CB2C4FF7AC9DDFF7AC9
-              DDFF7AC9DDFF22383DFF558D9BFF7AC9DDFF2D6873FF00000000000000007AC9
-              DDFF7AC9DDFF7AC9DDFF7AC9DDFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A
-              5CFF7AC9DDFF4A7A87FF263E44FF5D9AA9FF010203FF21373CFF315058FF4572
-              7DFF7AC9DDFF0D1517FF64A5B5FF7AC9DDFF2D6873FF00000000000000007AC9
-              DDFF7AC9DDFF7AC9DDFF7AC9DDFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A
-              5CFFDF8A5CFF71BACDFF0A1011FF5D9AA9FF5993A1FF243C42FF23393FFF5993
-              A1FF497985FF17262AFF7AC9DDFF7AC9DDFF2D6873FF00000000000000007AC9
-              DDFF7AC9DDFF7AC9DDFF7AC9DDFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A
-              5CFFDF8A5CFFDF8A5CFF558C9AFF080D0FFF395E68FF5B95A4FF568E9CFF2E4B
-              53FF0C1416FF67AABAFF7AC9DDFF7AC9DDFF2D6873FF00000000000000007AC9
-              DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A
-              5CFFDF8A5CFFDF8A5CFFDF8A5CFF6AAFC1FF355861FF1F3439FF22383DFF406A
-              75FF72BCCFFF7AC9DDFF7AC9DDFF7AC9DDFF2D6873FF00000000000000007AC9
-              DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFFDF8A5CFFDF8A5CFFDF8A
-              5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9
-              DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF2D6873FF00000000000000007AC9
-              DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFFDF8A5CFFDF8A
-              5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFF7AC9DDFF7AC9DDFF7AC9
-              DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF2D6873FF00000000000000007AC9
-              DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFFDF8A
-              5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFF7AC9DDFF7AC9
-              DDFF7AC9DDFF7AC9DDFF7AC9DDFF7AC9DDFF2D6873FF00000000000000000000
-              0000000000000000000000000000000000000000000000000000000000000000
-              0000DF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFF0000
-              0000000000000000000000000000000000000000000000000000000000000000
-              0000000000000000000000000000000000000000000000000000000000000000
-              000000000000DF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A
-              5CFF000000000000000000000000000000000000000000000000000000000000
-              0000000000000000000000000000000000000000000000000000000000000000
-              00000000000000000000DF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A
-              5CFFDF8A5CFF0000000000000000000000000000000000000000000000000000
-              0000000000000000000000000000000000000000000000000000000000000000
-              0000000000000000000000000000DF8A5CFFDF8A5CFFDF8A5CFFDF8A5CFFDF8A
-              5CFFDF8A5CFF0000000000000000000000000000000000000000000000000000
-              0000000000000000000000000000000000000000000000000000000000000000
-              000000000000000000000000000000000000DF8A5CFFDF8A5CFFDF8A5CFFDF8A
-              5CFF000000000000000000000000000000000000000000000000000000000000
-              0000000000000000000000000000000000000000000000000000000000000000
-              00000000000000000000000000000000000000000000DF8A5CFFDF8A5CFF0000
-              0000000000000000000000000000000000000000000000000000000000000000
-              0000000000000000000000000000000000000000000000000000000000000000
-              0000000000000000000000000000000000000000000000000000000000000000
-              0000000000000000000000000000000000000000000000000000
-            }
-            Images = ImageList20x20
-            ImageIndex = 4
-            OnClick = ActionEditWatermarkExecute
-            ParentShowHint = False
-            Spacing = 0
-            TabOrder = 1
-            Visible = False
           end
           object CheckBoxMrkEnabled: TCheckBox
             Left = 8
@@ -1047,8 +1032,8 @@ object MainDialog: TMainDialog
           HelpType = htKeyword
           HelpKeyword = 'HTML/index.html#boost'
           Caption = 'Boost'
-          ClientHeight = 244
-          ClientWidth = 266
+          ClientHeight = 332
+          ClientWidth = 378
           object Label8: TLabel
             Left = 8
             Height = 15
@@ -1101,26 +1086,25 @@ object MainDialog: TMainDialog
             TabOrder = 1
           end
         end
-        object TabSheetCode: TTabSheet
-          Caption = 'Coding'
-        end
       end
     end
     object GroupBoxDstFolder: TGroupBox
       Left = 8
       Height = 58
-      Top = 384
-      Width = 328
+      Top = 449
+      Width = 377
+      HelpType = htKeyword
+      HelpKeyword = 'HTML/index.html#dstfolder'
       Anchors = [akLeft, akRight, akBottom]
       Caption = '    &Destination Folder'
       ClientHeight = 38
-      ClientWidth = 324
+      ClientWidth = 373
       TabOrder = 5
       object Label2: TLabel
         Left = 176
         Height = 13
         Top = -8
-        Width = 113
+        Width = 162
         Anchors = [akTop, akLeft, akRight]
         Caption = '( may include %SIZE% )'
         FocusControl = EditDstFolder
@@ -1133,18 +1117,16 @@ object MainDialog: TMainDialog
         Height = 23
         Hint = 'Enter a destination folder of the resampled images.'#13#10#13#10'If multiple sizes are entered, insert a placeholder %SIZE%'#13#10'into the path where the program shall insert the current size .'
         Top = 8
-        Width = 281
-        HelpType = htKeyword
-        HelpKeyword = 'HTML/index.html#dstfolder'
+        Width = 330
         Anchors = [akTop, akLeft, akRight]
         OnChange = EditDstFolderChange
         TabOrder = 0
       end
-      object ButtonClearSizes2: TBitBtn
-        Left = 295
-        Height = 25
-        Top = 7
-        Width = 25
+      object ButtonBrowseDstFolder: TBitBtn
+        Left = 296
+        Height = 27
+        Top = 152
+        Width = 27
         Action = ActionBrowseDstFolder
         Anchors = [akTop, akRight]
         Images = ImageList20x20
@@ -1197,16 +1179,16 @@ object MainDialog: TMainDialog
     Cursor = crVSplit
     Left = 0
     Height = 5
-    Top = 446
-    Width = 640
+    Top = 511
+    Width = 800
     Align = alBottom
     ResizeAnchor = akBottom
   end
   object ProgressBar: TProgressBar
-    Left = 348
+    Left = 401
     Height = 7
-    Top = 434
-    Width = 280
+    Top = 499
+    Width = 387
     Anchors = [akRight, akBottom]
     TabOrder = 2
     Visible = False
@@ -1214,8 +1196,8 @@ object MainDialog: TMainDialog
   object MemoMessages: TMemo
     Left = 6
     Height = 192
-    Top = 457
-    Width = 628
+    Top = 522
+    Width = 788
     Align = alBottom
     BorderSpacing.Around = 6
     ReadOnly = True
@@ -1225,8 +1207,8 @@ object MainDialog: TMainDialog
   end
   object ActionList: TActionList
     Images = ImageList24x24
-    Left = 48
-    Top = 464
+    Left = 120
+    Top = 600
     object ActionBrowseFilenames: TAction
       Caption = '&Browse...'
       OnExecute = ActionBrowseFilenamesExecute
@@ -1236,7 +1218,6 @@ object MainDialog: TMainDialog
       OnExecute = ActionClearFilenamesExecute
     end
     object ActionBrowseSrcFolder: TAction
-      Caption = '&Browse...'
       OnExecute = ActionBrowseSrcFolderExecute
     end
     object ActionBrowseDstFolder: TAction
@@ -1296,12 +1277,12 @@ object MainDialog: TMainDialog
   object OpenDialogSrcFilenames: TOpenDialog
     Filter = 'Image Files (*.jpg, *.png)|*.jpg;*.png|All Files|*.*'
     Options = [ofAllowMultiSelect, ofEnableSizing, ofViewDetail]
-    Left = 152
-    Top = 464
+    Left = 192
+    Top = 600
   end
   object BrowseDstFolder: TSelectDirectoryDialog
-    Left = 272
-    Top = 464
+    Left = 256
+    Top = 600
   end
   object OpenDialogMrkFilename: TOpenDialog
     Filter = 'Image Files (*.png)|*.png|All Files|*.*'
@@ -1311,8 +1292,8 @@ object MainDialog: TMainDialog
   object TimerProgressBarOff: TTimer
     Enabled = False
     OnTimer = TimerProgressBarOffTimer
-    Left = 456
-    Top = 480
+    Left = 352
+    Top = 616
   end
   object ImageList24x24: TImageList
     Height = 24
@@ -1320,7 +1301,7 @@ object MainDialog: TMainDialog
     Left = 256
     Top = 520
     Bitmap = {
-      4C7A080000001800000018000000B60300000000000078DAED9ADD4B544118C6
+      4C7A080000001800000018000000B70300000000000078DAED9ADD4B544118C6
       B764630BED0B53092AB59290948234576D3335A22CD0C2523463CDCAAFA0B544
       13A4BAB0482CA32FD1A490F4A23044A504152C312AD8E8A6C0A8A83F40BA0B22
       82B799C31E1967F71CCFC7CCD1B579E061CFCE99F9BDE33BEFCCCE85369B9286
@@ -1329,28 +1310,28 @@ object MainDialog: TMainDialog
       33EF982D7F9AE7FBD78F3C7FFCDCD6F606BC5E6F406BE4FBD5BF2CCCC6DFCDF1
       FDE3E9951E3EAE13594AF336337FB97EACE0F3C88F95F317F959D8F9E1C53762
       9B90102745F77F02DAC1C00FC4D56BC167CF5FDBDA6BCA6A7CB36C353E4B36CD
-      67CD26F93CD8329F171B8B277B9E0B7C567B9ECF7C21A1199AF4EC0133D6CAD7
-      2BC1177C2BEBD32AFEE0E0A0AA59F1E5F7FF3B9F8EC13AFF66EB48DC7FC4FD47
-      48DC7FC4FD41F0C5FD47DC7FC4FD47484848C898521FD940366F3E8F18349F75
-      8C407C963194F8AC62A8F159C4988D6F36C65CF383757D83757F05DBF9262424
-      C45A9781DF18DC4FB61EB69E317AFA1B998FD67146D95AC69B65AB7158B103F1
-      58B39562F0D81356CD9D57EEADA81D2B6ADF8ABD6BC5D96326861567BA905070
-      E86B71F472E45464177222B29D1117F3C69181F26FE46EE47526D815C87F03B0
-      494F216F33C04EA6D85E64B7EFEF2943FE42BCFB81ECD0C97F4C8C9FA0F38DBE
-      4721FF24FA94E8E49F457E88FC023943A14F1FC16F665C4F762A47F50CD90EE4
-      6704FB0F720C2336CEFB5BAA864E32649339C1F555C1302F0304FB17722E4376
-      24B51FB219D74B12C19EE470BEC5238FF9DC1A84E733999F31C1F7E387FACE66
-      E9F74BFCA2CFBDBE371703364F368F18349B650C25360BFE7C6537BCFB066A56
-      632B8D49283F0F5AF846D85AF946D95AF86AECCABE579054E0860D3B9C109BB2
-      0B322A6BA166F48366BE1A3BBFA5031C612BC059520E45F7BAE1E8CD4E48CC39
-      02A1E11170E6E9B029BE67F83D2C5BB90A8E773C81C23B5DB0293D13363A774B
-      CFFB2F3641645CBC613E6E3FD0700DE25CD9127FD1E21088D9990EDB730B606F
-      4DA3F43E6C4D2494F53CD7CD97DB5DA7CF419ABB0A528A4F49FF9F5A3D303163
-      1C5E8BFC1B0F74D527E97DB5572021E7301CBAD422F1D3DC959077F52E9476F5
-      4BEFC36337C389CE5EC37C3C5FBCB655FDE3905C580A76C752C999D5755074BF
-      07C222A2A0FEF567C37CEC8C8A0BB07A7D0C1CBBF510EA2626A1F6E54738D878
-      5D5A77DCA677FF06725ED36D88DAB2555AE310FB128875BAA6F3C282AFC556F2
-      F1330F2F843BC63FA27AF87F
+      67CD26F93CD8329F171B8B277B9E0B7C567B9ECF7C21214B35E9D90366AC95AF
+      57822FF856F279D7BF55FCC1C14155B3E22BC5FBDFF8740CD6F9375B47E2FE26
+      EE6F42E2FE23F8822FEE3FE2FE23EE3F42424273A5D4473690CD9BCF2306CD67
+      1D23109F650C253EAB186A7C163166E39B8D31D7FC605DDF60DD5FC176BE0909
+      09B1D665E03706F793AD87AD678C9EFE46E6A3759C51B696F166D96A1C56EC40
+      3CD66CA5183CF6845573E7957B2B6AC78ADAB762EF5A71F6988961C5992E2414
+      1CFA5A1CBD1C3915D9859C886C67C4C5BC7164A0FC1BB91B799D097605F2DF00
+      6CD253C8DB0CB09329B617D9EDFB7BCA90BF10EF7E203B74F21F13E327E87CA3
+      EF51C83F893E253AF967911F22BF40CE50E8D347F09B19D7939DCA513D43B603
+      F919C1FE831CC3888DF3FE96AAA1930CD9644E707D5530CCCB00C1FE859CCB90
+      1D49ED876CC6F59244B027399C6FF1C8633EB706E1F94CE6674CF0FDF8A1BEB3
+      59FAFD12BFE873AFEFCDC580CD93CD2306CD66194389CD823F5FD90DEFBE819A
+      D5D84A6312CACF8316BE11B656BE51B616BE1ABBB2EF152415B861C30E27C4A6
+      EC828CCA5AA819FDA099AFC6CE6FE90047D80A70969443D1BD6E387AB3131273
+      8E406878049C793A6C8AEF197E0FCB56AE82E31D4FA0F04E176C4ACF848DCEDD
+      D2F3FE8B4D1019176F988FDB0F345C833857B6C45FB438046276A6C3F6DC02D8
+      5BD328BD0F5B1309653DCF75F3E576D7E97390E6AE8294E253D2FF77560F4CCC
+      1887D722FFC6035DF5497A5FED1548C8390C872EB548FC347725E45DBD0BA55D
+      FDD2FBF0D8CD70A2B3D7301FCF17AF6D55FF3824179682DDB1547266751D14DD
+      EF81B08828A87FFDD9301F3BA3E202AC5E1F03C76E3D84BA8949A87DF9110E36
+      5E97D61DB7E9DDBF819CD7741BA2B66C95D638C4BE04629DAEE9BCB0E06BB195
+      7CFCCCC30BE18EF10FADD28AE2
     }
   end
   object SaveAsDialog: TSaveDialog
@@ -1413,21 +1394,21 @@ object MainDialog: TMainDialog
   end
   object ApplicationProperties1: TApplicationProperties
     OnException = ApplicationProperties1Exception
-    Left = 376
-    Top = 472
+    Left = 504
+    Top = 544
   end
   object HTMLHelpDatabase: THTMLHelpDatabase
-    BaseURL = 'file://hlp/gui/'
+    BaseURL = 'file://hlp'
     AutoRegister = True
     KeywordPrefix = 'HTML/'
-    Left = 528
-    Top = 40
+    Left = 520
+    Top = 8
   end
   object HTMLBrowserHelpViewer: THTMLBrowserHelpViewer
     BrowserParams = '%s'
     AutoRegister = True
     Left = 576
-    Top = 40
+    Top = 8
   end
   object BrowseSrcFolder: TSelectDirectoryDialog
     Filter = '*.jpg;*.png'
@@ -1435,5 +1416,10 @@ object MainDialog: TMainDialog
     Options = [ofPathMustExist, ofEnableSizing]
     Left = 72
     Top = 592
+  end
+  object IniPropStorage1: TIniPropStorage
+    StoredValues = <>
+    Left = 472
+    Top = 8
   end
 end

@@ -2,7 +2,7 @@ unit maindlg;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
-//  ImageResize (c) 2022 Jan Schirrmacher, www.atomek.de
+//  ImageResize (c) 2023 Jan Schirrmacher, www.atomek.de
 //
 //  See https://github.com/Atomek61/ImageResize.git for licensing
 //
@@ -17,19 +17,20 @@ interface
 
 uses
   Classes, Types, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ComCtrls, ActnList, ExtCtrls, imgres, registry, aboutdlg, inifiles, strutils,
-  LMessages, LCLIntf, Buttons, ImgList, LCLType, LazHelpHTML,
-  BGRABitmap, BGRABitmapTypes, BGLVirtualScreen, Generics.Collections;
+  ComCtrls, ActnList, ExtCtrls, imgres, aboutdlg, inifiles, strutils,
+  LMessages, LCLIntf, Buttons, ImgList, LCLType, LazHelpHTML, IniPropStorage,
+  BGRABitmap, BGRABitmapTypes, BGLVirtualScreen, Generics.Collections, WinDirs;
 
 const
-  WEBHELPURL      = 'http://www.atomek.de/imageresize/hlp23/gui/';
+  WEBHELPURL      = 'http://www.atomek.de/imageresize/hlp30/gui/';
 
-  IMGRESGUIVER    = '2.6';
-  IMGRESGUICPR    = 'ImageResize V'+IMGRESGUIVER+' © 2022 Jan Schirrmacher, www.atomek.de';
+  IMGRESGUIVER    = '3.0';
+  IMGRESGUICPR    = 'ImageResize V'+IMGRESGUIVER+' © 2023 Jan Schirrmacher, www.atomek.de';
 
   INITYPE         = 'IRS';
   INIVERSION200   = '200';
-  INIVERSION      = '210';
+  INIVERSION210   = '210';
+  INIVERSION      = '300';
 
   GUIREGKEY       = IMGRESREGKEY+IMGRESGUIVER;
 
@@ -41,7 +42,7 @@ const
   LINESEP         = '|';
 
   LICENSE =
-    'Image Resize Copyright (c) 2022 Jan Schirrmacher, www.atomek.de'#10#10+
+    'Image Resize Copyright (c) 2023 Jan Schirrmacher, www.atomek.de'#10#10+
     'Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify and merge copies of the Software, subject to the following conditions:'#10#10+
     'The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.'#10#10+
     'THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.';
@@ -94,7 +95,7 @@ type
     ButtonBrowseMrkFilename: TBitBtn;
     ButtonBrowseSrcFolder: TBitBtn;
     ButtonClearSizes: TBitBtn;
-    ButtonClearSizes2: TBitBtn;
+    ButtonBrowseDstFolder: TBitBtn;
     ButtonClearSrcFiles: TBitBtn;
     ButtonBrowseSrcFiles: TBitBtn;
     ButtonMrkEdit: TBitBtn;
@@ -118,6 +119,7 @@ type
     EditMrkY: TEdit;
     EditSizes: TEdit;
     EditDstFolder: TEdit;
+    GroupBoxShaking: TGroupBox;
     GroupBoxDstFolder: TGroupBox;
     GroupBoxParams: TGroupBox;
     GroupBoxImageFiles: TGroupBox;
@@ -130,6 +132,7 @@ type
     ImageListMrkPositions: TImageList;
     ImageList20x20: TImageList;
     ImageList24x24: TImageList;
+    IniPropStorage1: TIniPropStorage;
     Label1: TLabel;
     Label10: TLabel;
     Label11: TLabel;
@@ -142,7 +145,6 @@ type
     Label18: TLabel;
     Label19: TLabel;
     Label20: TLabel;
-    Label21: TLabel;
     Label22: TLabel;
     Label23: TLabel;
     Label4: TLabel;
@@ -168,11 +170,9 @@ type
     PageFilelist: TPage;
     PagePathMask: TPage;
     PageControlParams: TPageControl;
-    PaintBox1: TPaintBox;
     PaintBoxMrkPreview: TPaintBox;
     PanelMrkSourceFile: TPanel;
     PanelControls: TPanel;
-    PanelMrkSourceImage: TPanel;
     PanelPreview: TPanel;
     ProgressBar: TProgressBar;
     RadioButtonFilelist: TRadioButton;
@@ -182,7 +182,6 @@ type
     RadioButtonRenAdvanced: TRadioButton;
     SaveAsDialog: TSaveDialog;
     Splitter1: TSplitter;
-    TabSheetCode: TTabSheet;
     TabSheetRenaming: TTabSheet;
     TabSheetMrk: TTabSheet;
     TabSheetRessources: TTabSheet;
@@ -205,6 +204,7 @@ type
     UpDownMrkSize: TUpDown;
     UpDownMrkX: TUpDown;
     UpDownMrkY: TUpDown;
+    procedure CheckBoxMrkEnabledChange(Sender: TObject);
     procedure EditSrcFolderChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -245,8 +245,10 @@ type
     procedure PanelControlsClick(Sender: TObject);
     procedure PanelControlsResize(Sender: TObject);
     procedure RadioButtonFilelistChange(Sender: TObject);
+    procedure TabSheetRenamingContextPopup(Sender: TObject; MousePos: TPoint;
+      var Handled: Boolean);
     procedure TimerProgressBarOffTimer(Sender: TObject);
-    procedure CheckBoxMrkEnabledChange(Sender: TObject);
+//    procedure CheckBoxMrkEnabledChange(Sender: TObject);
     procedure EditSizesExit(Sender: TObject);
   private
     FAutoExit :boolean;
@@ -256,18 +258,16 @@ type
     FCancelled :boolean;
     FExecuting :boolean;
     FProgress :single;
-    FMrkSource :integer;
     FMrkDragging :boolean;
     FMrkOffset :TSize; // while dragging
+    function GetSettingsFilename(CanCreate :boolean) :string;
     procedure SetTitle(const Str :string);
-    procedure SetMrkSource(Value :integer);
-    function GetMrkSource :integer;
     procedure OnPrint(Sender :TObject; const Line :string);
     procedure OnProgress(Sender :TObject; Progress :single);
     function LoadFromIni(Ini :TCustomIniFile) :boolean;
     procedure SaveToIni(Ini :TCustomIniFile);
-    function LoadFromRegistry :boolean;
-    procedure SaveToRegistry;
+    function LoadSettings :boolean;
+    procedure SaveSettings;
     function LoadFromFile(const Filename :string) :boolean;
     procedure SaveToFile(const Filename :string);
     procedure Log(const Msg :string);
@@ -362,11 +362,10 @@ end;
 procedure TMainDialog.FormShow(Sender: TObject);
 var
   Params :TStringArray;
+  LocalHelpFolder :string;
 begin
-  PanelMrkSourceImage.Left := PanelMrkSourceFile.Left;
-  PanelMrkSourceImage.Top := PanelMrkSourceFile.Top;
-  PanelMrkSourceImage.Width := PanelMrkSourceFile.Width;
-  if not LoadFromRegistry then
+
+  if not LoadSettings then
     ActionNew.Execute;
   UpdateControls;
   FAutoExit := Application.HasOption('X', 'AUTOEXIT');
@@ -385,8 +384,11 @@ begin
   Log(Format('ImageResize %s, resizer %s, %d cores', [IMGRESGUIVER, IMGRESVER, TThread.ProcessorCount]));
 
   // If no local help files, then use online help
-  if not FileExists(IncludeTrailingPathDelimiter(ExtractFilePath(Application.ExeName))+'hlp/gui/index.html') then
-    HTMLHelpDatabase.BaseURL := WEBHELPURL;
+  LocalHelpFolder := IncludeTrailingPathDelimiter(ExtractFilePath(Application.ExeName))+'hlp';
+  if not FileExists(LocalHelpFolder+'\index.html') then
+    HTMLHelpDatabase.BaseURL := WEBHELPURL
+  else
+    HTMLHelpDatabase.BaseURL := 'file://' + LocalHelpFolder;
 end;
 
 procedure TMainDialog.LMRun(var Message: TLMessage);
@@ -401,6 +403,15 @@ end;
 procedure TMainDialog.EditSrcFolderChange(Sender: TObject);
 begin
    CheckSrcRequired;
+end;
+
+procedure TMainDialog.CheckBoxMrkEnabledChange(Sender: TObject);
+var
+  Vis :boolean;
+begin
+  Vis := CheckBoxMrkEnabled.Checked;
+  PanelMrkSourceFile.Visible := Vis;
+  GroupBoxMrkLayout.Visible := Vis;
 end;
 
 procedure TMainDialog.ApplicationProperties1Exception(Sender: TObject;
@@ -424,9 +435,7 @@ var
 begin
   Vis := CheckBoxRenEnabled.Checked;
   GroupBoxRename.Visible := Vis;
-  CheckBoxShake.Visible := Vis;
-  LabelShakeSeed.Visible := Vis;
-  ComboBoxShakeSeed.Visible := Vis;
+  GroupBoxShaking.Visible := Vis;
 end;
 
 procedure TMainDialog.EditRenTemplateEnter(Sender: TObject);
@@ -434,16 +443,14 @@ begin
   RadioButtonRenCustom.Checked := true;
 end;
 
-procedure TMainDialog.CheckBoxMrkEnabledChange(Sender: TObject);
-const
-  MRKSOURCES :array[boolean] of integer = (msDisabled, msFile);
-begin
-  SetMrkSource(MRKSOURCES[CheckBoxMrkEnabled.Checked]);
-end;
-
 procedure TMainDialog.EditSizesExit(Sender: TObject);
 begin
   UpdateSizes;
+end;
+
+function TMainDialog.GetSettingsFilename(CanCreate :boolean): string;
+begin
+  result := IncludeTrailingPathDelimiter(GetWindowsSpecialDir(FOLDERID_LocalAppData, CanCreate))+ChangeFileExt(ExtractFileName(Application.ExeName), '.'+IMGRESGUIVER)+'\settings.ini';
 end;
 
 procedure TMainDialog.ActionNewExecute(Sender: TObject);
@@ -473,7 +480,7 @@ begin
     EditRenTemplate.Text := DEFAULT_RENFILETEMPLATE;
     CheckBoxShake.Checked := DEFAULT_SHAKE;
     ComboBoxShakeSeed.Text := '<random>';
-    SetMrkSource(msDisabled);
+    CheckBoxMrkEnabled.Checked := false;
     UpdateSizes;
     UpdateControls;
     PageControlParams.ActivePage := TabSheetSizes;
@@ -496,7 +503,7 @@ begin
        Exit;
     end;
     IniVer := Ini.ReadString('Common', 'Version', '000');
-    result := (IniVer=INIVERSION) or (IniVer=INIVERSION200);
+    result := (IniVer=INIVERSION) or (IniVer=INIVERSION200) or (IniVer=INIVERSION210);
     if not result then begin
       Log(Format('Warning: Unexpected format %s (%s expected).', [IniVer, INIVERSION]));
       Exit;
@@ -513,7 +520,7 @@ begin
     UpdateSizes;
     ComboBoxJpgQuality.Text := ReadString(SETTINGSSECTION, 'JpgOptions.Quality', ComboBoxJpgQuality.Text);
     ComboBoxPngCompression.Text := ReadString(SETTINGSSECTION, 'PngOptions.Compression', ComboBoxPngCompression.Text);
-    SetMrkSource(ReadInteger(SETTINGSSECTION, 'MrkSource', GetMrkSource));
+    CheckBoxMrkEnabled.Checked := ReadBool(SETTINGSSECTION, 'MrkEnabled', CheckBoxMrkEnabled.Checked);
     EditMrkFilename.Text := ReadString(SETTINGSSECTION, 'MrkFilename', EditMrkFilename.Text);
     UpDownMrkSize.Position := ReadInteger(SETTINGSSECTION, 'MrkSize', UpDownMrkSize.Position);
     UpDownMrkX.Position := ReadInteger(SETTINGSSECTION, 'MrkX', UpDownMrkX.Position);
@@ -547,7 +554,7 @@ begin
     WriteString(SETTINGSSECTION, 'Sizes', EditSizes.Text);
     WriteString(SETTINGSSECTION, 'JpgOptions.Quality', ComboBoxJpgQuality.Text);
     WriteString(SETTINGSSECTION, 'PngOptions.Compression', ComboBoxPngCompression.Text);
-    WriteInteger(SETTINGSSECTION, 'MrkSource', GetMrkSource);
+    WriteBool(SETTINGSSECTION, 'MrkEnabled', CheckBoxMrkEnabled.Checked);
     WriteString(SETTINGSSECTION, 'MrkFilename', EditMrkFilename.Text);
     WriteString(SETTINGSSECTION, 'MrkSize', EditMrkSize.Text);
     WriteString(SETTINGSSECTION, 'MrkX', EditMrkX.Text);
@@ -565,34 +572,32 @@ begin
   end;
 end;
 
-function TMainDialog.LoadFromRegistry: boolean;
+function TMainDialog.LoadSettings: boolean;
 var
-  Ini :TRegistryIniFile;
+  Ini :TIniFile;
+  Filename :string;
 begin
-  Ini := TRegistryIniFile.Create(GUIREGKEY, KEY_READ);
+  Filename := GetSettingsFilename(false);
+  if not FileExists(Filename) then Exit(false);
+  Ini := TIniFile.Create(Filename);
   try
     result := LoadFromIni(Ini);
   finally
-    try
-      Ini.Free;
-    except
-    end;
+    Ini.Free;
   end;
-  SetTitle('last settings');
+  if result then
+    SetTitle('last settings');
 end;
 
-procedure TMainDialog.SaveToRegistry;
+procedure TMainDialog.SaveSettings;
 var
-  Ini :TRegistryIniFile;
+  Ini :TIniFile;
 begin
-  Ini := TRegistryIniFile.Create(GUIREGKEY, KEY_WRITE);
+  Ini := TIniFile.Create(GetSettingsFilename(true));
   try
     SaveToIni(Ini);
   finally
-    try
-      Ini.Free;
-    except
-    end;
+    Ini.Free;
   end;
 end;
 
@@ -668,7 +673,7 @@ end;
 
 procedure TMainDialog.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-  SaveToRegistry;
+  SaveSettings;
 end;
 
 procedure TMainDialog.ActionOpenExecute(Sender: TObject);
@@ -817,7 +822,10 @@ begin
   if result then begin
     sz := iz/100.0;
     r := PaintBoxMrkPreview.ClientRect;
-    sx := X/(r.width*(1-sz));
+    if sz>=1.0 then
+      sx := 0
+    else
+      sx := X/(r.width*(1-sz));
     sy := Y/(r.Height-r.Width*sz/MRKRECTRATIO);
     Value.cx := round(sx*100.0);
     if Value.cx<0 then Value.cx := 0 else if Value.cx>100 then Value.cx := 100;
@@ -955,6 +963,12 @@ begin
   CheckSrcRequired;
 end;
 
+procedure TMainDialog.TabSheetRenamingContextPopup(Sender: TObject;
+  MousePos: TPoint; var Handled: Boolean);
+begin
+
+end;
+
 procedure TMainDialog.EditDstFolderChange(Sender: TObject);
 begin
  LabelDstFolderRequired.Enabled := Length(EditDstFolder.Text) = 0;
@@ -1032,8 +1046,7 @@ procedure TMainDialog.ActionEditWatermarkExecute(Sender: TObject);
 var
   MrkFilename :string;
 begin
-  if TMrkEditDialog.GetFilename(GUIREGKEY, MrkFilename) then begin
-    SetMrkSource(msFile);
+  if TMrkEditDialog.GetFilename(MrkFilename) then begin
     EditMrkFilename.Text := MrkFilename;
     EditMrkFilename.SelStart := Length(EditMrkFilename.Text);
     PageControlParams.ActivePage := TabSheetMrk;
@@ -1048,28 +1061,6 @@ end;
 procedure TMainDialog.SetTitle(const Str: string);
 begin
   Caption := 'Image Resize - '+Str;
-end;
-
-procedure TMainDialog.SetMrkSource(Value: integer);
-begin
-  if (Value=FMrkSource) or (Value<0) or (Value>2) then Exit;
-  case FMrkSource of
-  msFile: PanelMrkSourceFile.Visible := false;
-  msImage: PanelMrkSourceImage.Visible := false;
-  end;
-  FMrkSource := Value;
-  CheckBoxMrkEnabled.Checked := FMrkSource<>msDisabled;
-  case FMrkSource of
-  msFile: PanelMrkSourceFile.Visible := true;
-  msImage: PanelMrkSourceImage.Visible := true;
-  end;
-  ButtonMrkEdit.Visible := FMrkSource<>msDisabled;
-  GroupBoxMrkLayout.Visible := FMrkSource<>msDisabled;
-end;
-
-function TMainDialog.GetMrkSource: integer;
-begin
-  result := FMrkSource;
 end;
 
 procedure TMainDialog.OnPrint(Sender: TObject; const Line: string);
@@ -1101,6 +1092,7 @@ begin
   if FExecuting then begin
     FCancelled := true;
   end else begin
+    FProgress := 0;
     ActionExecute.Caption := 'Cancel';
     ButtonExecute.Caption := 'Cancel';
     ActionExecute.ImageIndex := 5;
@@ -1138,6 +1130,7 @@ begin
           raise Exception.Create('Missing destination folder.');
 
         // Sizes
+        Sizes := nil;
         if EditSizes.Text='default' then begin
           SetLength(Sizes, 1);
           Sizes[0] := 640;
@@ -1165,29 +1158,23 @@ begin
         FImgRes.ShakeSeed := StrToShakeSeed(ComboBoxShakeSeed.Text);
 
         // Watermark
-        if GetMrkSource = msFile then begin
-          FImgRes.MrkSource := msFile;
-          FImgRes.MrkFilename := EditMrkFilename.Text;
+        FImgRes.MrkFilename := EditMrkFilename.Text;
 
-          if not TryStrToFloat(EditMrkSize.Text, x) or (x<0.0) or (x>100.0) then
-            raise Exception.Create('Invalid watermark size.');
-          FImgRes.MrkSize := x;
+        if not TryStrToFloat(EditMrkSize.Text, x) or (x<0.0) or (x>100.0) then
+          raise Exception.Create('Invalid watermark size.');
+        FImgRes.MrkSize := x;
 
-          if not TryStrToFloat(EditMrkX.Text, p.x) or (p.x<0.0) or (p.x>100.0) then
-            raise Exception.Create('Invalid watermark x border.');
-          if not TryStrToFloat(EditMrkY.Text, p.y) or (p.y<0.0) or (p.y>100.0) then
-            raise Exception.Create('Invalid watermark y border.');
+        if not TryStrToFloat(EditMrkX.Text, p.x) or (p.x<0.0) or (p.x>100.0) then
+          raise Exception.Create('Invalid watermark x border.');
+        if not TryStrToFloat(EditMrkY.Text, p.y) or (p.y<0.0) or (p.y>100.0) then
+          raise Exception.Create('Invalid watermark y border.');
 
-          FImgRes.MrkX := StrToFloat(EditMrkX.Text);
-          FImgRes.MrkY := StrToFloat(EditMrkY.Text);
+        FImgRes.MrkX := StrToFloat(EditMrkX.Text);
+        FImgRes.MrkY := StrToFloat(EditMrkY.Text);
 
-          if not TryStrToFloat(EditMrkAlpha.Text, x) or (x<0.0) or (x>100.0) then
-            raise Exception.Create('Invalid watermark opacity.');
-          FImgRes.MrkAlpha := x;
-        end else begin
-          FImgRes.MrkSource := msDisabled;
-          FImgRes.MrkFilename := '';
-        end;
+        if not TryStrToFloat(EditMrkAlpha.Text, x) or (x<0.0) or (x>100.0) then
+          raise Exception.Create('Invalid watermark opacity.');
+        FImgRes.MrkAlpha := x;
 
         // Hook the processor
         FImgRes.OnPrint := @OnPrint;

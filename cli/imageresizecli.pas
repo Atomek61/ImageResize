@@ -11,8 +11,8 @@ uses
   { you can add units after this } fileutil, utils, imgres, generics.collections;
 
 const
-  IMGRESCLIVER = '2.1';
-  IMGRESCLICPR = 'imgres CLI V'+IMGRESCLIVER+' for engine V'+IMGRESVER+' (c) 2022 Jan Schirrmacher, www.atomek.de';
+  IMGRESCLIVER = '3.0';
+  IMGRESCLICPR = 'imgres CLI V'+IMGRESCLIVER+' for engine V'+IMGRESVER+' (c) 2023 Jan Schirrmacher, www.atomek.de';
 
   INTROSTR = 'Free tool for jpg and png quality file resizing.';
   USAGESTR = '  Usage: imgres filenames folder size {-option [param]}';
@@ -101,7 +101,6 @@ var
   i :integer;
   Items :TStringDynArray;
   FloatParams :TSingleDynArray;
-  MrkSource :integer;
   MrkFilename :string;
   MrkSize, MrkX, MrkY :single;
   MrkAlpha :single;
@@ -157,7 +156,6 @@ begin
       PngCompression := Processor.PngCompression;
 
     // Watermark "C:\Folder\mark%SIZE%.png:-1.0,-1.0:50.0"
-    MrkSource := msDisabled;
     MrkFilename := '';
     MrkSize := Processor.MrkSize;
     MrkX := Processor.MrkX;
@@ -168,7 +166,6 @@ begin
       inc(OptionCount, 2);
       if not StrToStringArray(Param, '?', Items) or (Length(Items)<1) or (Length(Items)>3) then
         raise Exception.CreateFmt('Invalid number of watermark parameters ''%s''.', [Param]);
-      MrkSource := msFile;
       MrkFilename := Items[0];
       if Length(Items)>1 then begin
         if not StrToSingleArray(Items[1], ',', FloatParams, FormatSettings) or (Length(FloatParams)<>3) then
@@ -265,7 +262,6 @@ begin
     Processor.Sizes := SizesToSizesStr(Sizes);
     Processor.JpgQuality := JpgQuality;
     Processor.PngCompression := PngCompression;
-    Processor.MrkSource := MrkSource;
     Processor.MrkFilename := MrkFilename;
     Processor.MrkSize := MrkSize;
     Processor.MrkX := MrkX;
