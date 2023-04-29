@@ -141,7 +141,7 @@ type
   end;
 
   // Main pool handler. Its Execute-Method is called from a processor with
-  // a prepared tasklist. The Dispatcher assignes tasks to available workers,
+  // a prepared tasklist. The Dispatcher assigns tasks to available workers,
   // handles the workers messages and watches abortion.
   TDispatcher = class
   public type

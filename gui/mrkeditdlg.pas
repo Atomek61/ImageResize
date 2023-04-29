@@ -377,8 +377,11 @@ var
   Params :TWatermarkParams;
 begin
   Params.Defaults;
-  result := TryDialogToParams(Params)
-    and TryCreateWatermarkImage(Params, Img);
+  result := TryDialogToParams(Params);
+  if result then begin
+    FreeAndNil(Img);
+    result := TryCreateWatermarkImage(Params, Img);
+  end;
 end;
 
 class function TMrkEditDialog.GetFilename(out MrkFilename: string): boolean;

@@ -23,8 +23,8 @@ uses
   threading.dispatcher;
 
 const
-  IMGRESVER = '2.6';
-  IMGRESCPR = 'imgres V'+IMGRESVER+' © 2022 Jan Schirrmacher, www.atomek.de';
+  IMGRESVER = '2.7';
+  IMGRESCPR = 'imgres V'+IMGRESVER+' © 2023 Jan Schirrmacher, www.atomek.de';
 
   PROGRESSSTEPSPERFILE = 4;
 
@@ -99,11 +99,15 @@ type
 
     // Cached objects while execution, shared by the workers. This is, that
     // Bitmaps are loaded only once, not by every Worker
-    TSharedTasks = class
+
+    { TSharedRessources }
+
+    TSharedRessources = class
     private
       FImgRes :TImgRes;
       FSrcImgsSection :TCriticalSection;
       FSrcImgs :array of TBGRABitmap;
+      FSrcImgsRefCount :array of integer; // Increases on each use/unuse, when all Taskas are done - then the Imgage can be freed
       FMrkImgsSection :TCriticalSection;
       FMrkImgs :array of TBGRABitmap; // cached for each size
       FDstFoldersSection :TCriticalSection;
@@ -111,7 +115,8 @@ type
     public
       constructor Create(AImgRes :TImgRes);
       destructor Destroy; override;
-      function GetSrcImg(Task :TResampleTask) :TBGRABitmap;
+      function RequestSrcImg(Task :TResampleTask) :TBGRABitmap;
+      procedure ReleaseSrcImg(Task :TResampleTask);
       function GetMrkImg(Task :TResampleTask) :TBGRABitmap;
       function GetDstFolder(Task :TResampleTask) :string;
     end;
@@ -123,7 +128,7 @@ type
       function Execute(Context :TContext) :boolean; override;
       function GetTaskSteps :integer; override;
     public
-      SharedTasks :TSharedTasks;
+      SharedRessources :TSharedRessources;
       SrcFilenameIndex :integer;
       SizeIndex :integer;
     end;
@@ -277,17 +282,17 @@ begin
   Writer := nil;
   DstImg := nil;
   result := false;
+  ImgRes := SharedRessources.FImgRes;
+
+  if Context.Cancelled then
+    Exit;
+
+  // Destination Folder
+  DstFolder := SharedRessources.GetDstFolder(self);
+
+  // Source File
+  SrcImg := SharedRessources.RequestSrcImg(self);
   try
-    ImgRes := SharedTasks.FImgRes;
-
-    if Context.Cancelled then
-      Exit;
-
-    // Destination Folder
-    DstFolder := SharedTasks.GetDstFolder(self);
-
-    // Source File
-    SrcImg := SharedTasks.GetSrcImg(self);
     SrcFilename := ImgRes.SrcFilenames[SrcFilenameIndex];
 
     if Context.Cancelled then
@@ -328,7 +333,7 @@ begin
     // Resampling...
     Print(Format('Resampling ''%s'' from %dx%d to %dx%d...', [
       ExtractFilename(SrcFilename), SrcSize.cx, SrcSize.cy, DstSize.cx, DstSize.cy]));
-    DstImg := SharedTasks.FImgRes.ResampleImg(SrcImg, DstSize);
+    DstImg := SharedRessources.FImgRes.ResampleImg(SrcImg, DstSize);
     ////////////////////////////////////////////////////////////////////////////
     if Context.Cancelled then
       Exit;
@@ -337,7 +342,7 @@ begin
     ////////////////////////////////////////////////////////////////////////////
     // Watermark
     if ImgRes.MrkFilename<>'' then begin
-      MrkImg := SharedTasks.GetMrkImg(self);
+      MrkImg := SharedRessources.GetMrkImg(self);
 
       // Watermark size in percent of the width or original size if MrkSize=0.0
       if ImgRes.MrkSize<>0.0 then begin
@@ -394,6 +399,7 @@ begin
   finally
     Writer.Free;
     DstImg.Free;
+    SharedRessources.ReleaseSrcImg(self)
   end;
 end;
 
@@ -402,13 +408,18 @@ begin
   result := PROGRESSSTEPSPERFILE; // Loading, Resampling, Watermarking, Saving
 end;
 
-{ TImgRes.TSharedTasks }
+{ TImgRes.TSharedRessources }
 
-constructor TImgRes.TSharedTasks.Create(AImgRes: TImgRes);
+constructor TImgRes.TSharedRessources.Create(AImgRes: TImgRes);
+var
+  i :integer;
 begin
   FImgRes := AImgRes;
   FSrcImgsSection := TCriticalSection.Create;
   SetLength(FSrcImgs, FImgRes.SrcFilenames.Count);
+  SetLength(FSrcImgsRefCount, FImgRes.SrcFilenames.Count);
+  for i:=0 to High(FSrcImgsRefCount) do
+    FSrcImgsRefCount[i] := Length(AImgRes.FParams.Sizes);
   FMrkImgsSection := TCriticalSection.Create;
   if FImgRes.FParams.MrkFilenameDependsOnSize then
     SetLength(FMrkImgs, Length(FImgRes.FParams.Sizes))
@@ -418,7 +429,7 @@ begin
   SetLength(FDstFolders, Length(FImgRes.FParams.Sizes));
 end;
 
-destructor TImgRes.TSharedTasks.Destroy;
+destructor TImgRes.TSharedRessources.Destroy;
 var
   i :integer;
 begin
@@ -432,7 +443,7 @@ begin
   inherited Destroy;
 end;
 
-function TImgRes.TSharedTasks.GetSrcImg(Task :TResampleTask): TBGRABitmap;
+function TImgRes.TSharedRessources.RequestSrcImg(Task :TResampleTask): TBGRABitmap;
 var
   SrcFilename :string;
 begin
@@ -442,6 +453,7 @@ begin
     if not Assigned(FSrcImgs[Task.SrcFilenameIndex]) then begin
       Task.Print(Format('Loading ''%s''...', [ExtractFilename(SrcFilename)]));
       FSrcImgs[Task.SrcFilenameIndex] := TBGRABitmap.Create(SrcFilename);
+      ;
     end;
     result := FSrcImgs[Task.SrcFilenameIndex];
   finally
@@ -449,7 +461,19 @@ begin
   end;
 end;
 
-function TImgRes.TSharedTasks.GetMrkImg(Task :TResampleTask): TBGRABitmap;
+procedure TImgRes.TSharedRessources.ReleaseSrcImg(Task: TResampleTask);
+begin
+  FSrcImgsSection.Enter;
+  try
+    dec(FSrcImgsRefCount[Task.SrcFilenameIndex]);
+    if FSrcImgsRefCount[Task.SrcFilenameIndex]<=0 then
+      FreeAndNil(FSrcImgs[Task.SrcFilenameIndex]);
+  finally
+    FSrcImgsSection.Leave;
+  end;
+end;
+
+function TImgRes.TSharedRessources.GetMrkImg(Task :TResampleTask): TBGRABitmap;
 var
   Filename :string;
   Index :integer;
@@ -474,7 +498,7 @@ begin
   end;
 end;
 
-function TImgRes.TSharedTasks.GetDstFolder(Task :TResampleTask): string;
+function TImgRes.TSharedRessources.GetDstFolder(Task :TResampleTask): string;
 var
   DstFolder :string;
   Index :integer;
@@ -579,7 +603,7 @@ end;
 
 function TImgRes.Execute :boolean;
 var
-  SharedTasks :TSharedTasks;
+  SharedRessources :TSharedRessources;
   Task :TResampleTask;
   Tasks :TTasks;
   Dispatcher :TDispatcher;
@@ -597,14 +621,15 @@ begin
       raise Exception.Create('Multiple sizes, placeholder %SIZE% not found in either folder or filename template.');
   end;
 
-  FCancel := false;
-  SharedTasks := TSharedTasks.Create(self);
-  Tasks := TTasks.Create;
-  Dispatcher := TDispatcher.Create;
+  FCancel           := false;
+  SharedRessources  := TSharedRessources.Create(self);
+  Tasks             := TTasks.Create;
+  Dispatcher        := TDispatcher.Create;
   try
     // Prepare the destination file renaming feature
     n := FParams.SrcFilenames.Count;
     m := Length(FParams.Sizes);
+
     // If the files list hasto be randomly remixed, its the right moment
     if FParams.Shake then begin
       if FParams.ShakeSeed=0 then Randomize else RandSeed := FParams.ShakeSeed;
@@ -616,7 +641,7 @@ begin
     for i:=0 to n-1 do
       for j:=0 to m-1 do begin
         Task := TResampleTask.Create;
-        Task.SharedTasks := SharedTasks;
+        Task.SharedRessources := SharedRessources;
         Task.SrcFilenameIndex := i;
         Task.SizeIndex := j;
         Tasks.Add(Task);
@@ -636,7 +661,7 @@ begin
   finally
     Dispatcher.Free;
     Tasks.Free;
-    SharedTasks.Free;
+    SharedRessources.Free;
   end;
 
 end;

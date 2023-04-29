@@ -3,13 +3,13 @@
   <ProjectSession>
     <PathDelim Value="\"/>
     <Version Value="12"/>
-    <BuildModes Active="Release"/>
-    <Units Count="116">
+    <BuildModes Active="Debug"/>
+    <Units Count="126">
       <Unit0>
         <Filename Value="imageresizegui.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="1"/>
-        <CursorPos X="19" Y="4"/>
+        <EditorIndex Value="3"/>
+        <CursorPos X="14" Y="4"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
       </Unit0>
@@ -19,10 +19,8 @@
         <ComponentName Value="MainDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="357"/>
-        <CursorPos X="18" Y="365"/>
+        <EditorIndex Value="4"/>
+        <CursorPos X="48" Y="6"/>
         <UsageCount Value="201"/>
         <Bookmarks Count="1">
           <Item0 X="27" Y="345"/>
@@ -36,27 +34,29 @@
         <ComponentName Value="AboutDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="4"/>
-        <TopLine Value="36"/>
-        <CursorPos X="36" Y="30"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="21"/>
+        <CursorPos X="67" Y="23"/>
         <UsageCount Value="203"/>
         <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit2>
       <Unit3>
         <Filename Value="..\src\imgres.pas"/>
         <IsPartOfProject Value="True"/>
-        <TopLine Value="460"/>
-        <CursorPos Y="463"/>
+        <CursorPos X="40" Y="26"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit3>
       <Unit4>
         <Filename Value="..\src\threading.dispatcher.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="43"/>
-        <CursorPos X="11" Y="9"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="398"/>
+        <CursorPos X="53" Y="414"/>
         <UsageCount Value="200"/>
+        <Loaded Value="True"/>
       </Unit4>
       <Unit5>
         <Filename Value="..\src\generics.queue.pas"/>
@@ -69,8 +69,8 @@
         <Filename Value="..\src\mrk.utils.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="7"/>
-        <TopLine Value="25"/>
-        <CursorPos X="66" Y="58"/>
+        <TopLine Value="28"/>
+        <CursorPos Y="52"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit6>
@@ -81,10 +81,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="6"/>
-        <TopLine Value="129"/>
-        <CursorPos X="72" Y="138"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit7>
       <Unit8>
         <Filename Value="..\src\graphics.utils.pas"/>
@@ -468,11 +467,10 @@
       <Unit60>
         <Filename Value="D:\Programme\Lazarus\lcl\helpintfs.pas"/>
         <UnitName Value="HelpIntfs"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="239"/>
         <CursorPos X="10" Y="254"/>
         <UsageCount Value="15"/>
-        <Loaded Value="True"/>
       </Unit60>
       <Unit61>
         <Filename Value="D:\Programme\Lazarus\fpc\3.0.4\source\packages\fcl-registry\src\winreg.inc"/>
@@ -504,9 +502,8 @@
       <Unit65>
         <Filename Value="D:\Programme\Lazarus\lcl\inipropstorage.pas"/>
         <UnitName Value="IniPropStorage"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="-1"/>
         <UsageCount Value="42"/>
-        <Loaded Value="True"/>
       </Unit65>
       <Unit66>
         <Filename Value="D:\Programme\Lazarus2.0.2\lcl\forms.pp"/>
@@ -562,10 +559,9 @@
       <Unit73>
         <Filename Value="..\..\GENERICS\generics.defaults.pas"/>
         <UnitName Value="Generics.Defaults"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="78"/>
-        <CursorPos X="19" Y="93"/>
-        <UsageCount Value="4"/>
+        <EditorIndex Value="2"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
       </Unit73>
       <Unit74>
         <Filename Value="..\..\ATOMEK.Controls\controls.segmentdisplay.pas"/>
@@ -577,11 +573,8 @@
       <Unit75>
         <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\bgrabitmaptypes.pas"/>
         <UnitName Value="BGRABitmapTypes"/>
-        <EditorIndex Value="9"/>
-        <TopLine Value="47"/>
-        <CursorPos X="18" Y="58"/>
+        <EditorIndex Value="-1"/>
         <UsageCount Value="38"/>
-        <Loaded Value="True"/>
       </Unit75>
       <Unit76>
         <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\bgrawinresource.pas"/>
@@ -641,7 +634,9 @@
         <Filename Value="..\..\GENERICS\generics.collections.pas"/>
         <UnitName Value="Generics.Collections"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="9"/>
+        <TopLine Value="1255"/>
+        <CursorPos Y="1275"/>
+        <UsageCount Value="10"/>
       </Unit84>
       <Unit85>
         <Filename Value="C:\Programme\D\Lazarus\lcl\lclmessageglue.pas"/>
@@ -777,11 +772,10 @@
       <Unit103>
         <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\bgratextfx.pas"/>
         <UnitName Value="BGRATextFX"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="47"/>
         <CursorPos X="5" Y="62"/>
         <UsageCount Value="41"/>
-        <Loaded Value="True"/>
       </Unit103>
       <Unit104>
         <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\bgrapixel.inc"/>
@@ -801,9 +795,9 @@
       <Unit106>
         <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\bgracustombitmap.inc"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="146"/>
-        <CursorPos X="16" Y="152"/>
-        <UsageCount Value="5"/>
+        <TopLine Value="204"/>
+        <CursorPos X="15" Y="216"/>
+        <UsageCount Value="10"/>
       </Unit106>
       <Unit107>
         <Filename Value="D:\Programme\Lazarus\fpc\3.2.2\source\packages\fcl-base\src\inifiles.pp"/>
@@ -847,9 +841,9 @@
         <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\bgradefaultbitmap.pas"/>
         <UnitName Value="BGRADefaultBitmap"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="457"/>
-        <CursorPos X="69" Y="468"/>
-        <UsageCount Value="4"/>
+        <TopLine Value="1996"/>
+        <CursorPos X="7" Y="2009"/>
+        <UsageCount Value="10"/>
       </Unit112>
       <Unit113>
         <Filename Value="C:\Users\Jan\AppData\Local\imageresize.3.0\favorite.was"/>
@@ -873,36 +867,192 @@
         <UsageCount Value="10"/>
         <DefaultSyntaxHighlighter Value="LFM"/>
       </Unit115>
+      <Unit116>
+        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\bgrareadavif.pas"/>
+        <UnitName Value="BGRAReadAvif"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+      </Unit116>
+      <Unit117>
+        <Filename Value="D:\lazarus\components\freetype\easylazfreetype.pas"/>
+        <UnitName Value="EasyLazFreeType"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="79"/>
+        <UsageCount Value="10"/>
+      </Unit117>
+      <Unit118>
+        <Filename Value="D:\lazarus\components\freetype\lazfreetype.pas"/>
+        <UnitName Value="LazFreeType"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="250"/>
+        <UsageCount Value="10"/>
+      </Unit118>
+      <Unit119>
+        <Filename Value="D:\lazarus\components\freetype\ttcalc.pas"/>
+        <UnitName Value="TTCalc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="181"/>
+        <UsageCount Value="10"/>
+      </Unit119>
+      <Unit120>
+        <Filename Value="D:\lazarus\components\freetype\ttcalc1.inc"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+      </Unit120>
+      <Unit121>
+        <Filename Value="D:\lazarus\components\freetype\tterror.pas"/>
+        <UnitName Value="TTError"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+      </Unit121>
+      <Unit122>
+        <Filename Value="D:\lazarus\components\freetype\ttinterp.pas"/>
+        <UnitName Value="TTInterp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="94"/>
+        <UsageCount Value="10"/>
+      </Unit122>
+      <Unit123>
+        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\libavif.pas"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+      </Unit123>
+      <Unit124>
+        <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\sysutils\sysinth.inc"/>
+        <EditorIndex Value="8"/>
+        <CursorPos X="3" Y="172"/>
+        <UsageCount Value="12"/>
+        <Loaded Value="True"/>
+      </Unit124>
+      <Unit125>
+        <Filename Value="C:\lazarus\lcl\forms.pp"/>
+        <UnitName Value="Forms"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="748"/>
+        <CursorPos X="24" Y="751"/>
+        <UsageCount Value="10"/>
+      </Unit125>
     </Units>
-    <JumpHistory Count="7" HistoryIndex="6">
+    <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="mrkeditdlg.pas"/>
-        <Caret Line="376" Column="33" TopLine="367"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="238" TopLine="211"/>
       </Position1>
       <Position2>
-        <Filename Value="mrkeditdlg.pas"/>
-        <Caret Line="383" Column="33" TopLine="374"/>
+        <Filename Value="..\src\imgres.pas"/>
       </Position2>
       <Position3>
-        <Filename Value="mrkeditdlg.pas"/>
-        <Caret Line="154" Column="37" TopLine="148"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="117" TopLine="75"/>
       </Position3>
       <Position4>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1196" Column="53" TopLine="1191"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="438" TopLine="423"/>
       </Position4>
       <Position5>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="386" TopLine="368"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="115" TopLine="90"/>
       </Position5>
       <Position6>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="388" Column="38" TopLine="367"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="438" TopLine="438"/>
       </Position6>
       <Position7>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="387" Column="3" TopLine="373"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="119" TopLine="90"/>
       </Position7>
+      <Position8>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="458" TopLine="458"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="119" TopLine="94"/>
+      </Position9>
+      <Position10>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="458" TopLine="455"/>
+      </Position10>
+      <Position11>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="128" TopLine="98"/>
+      </Position11>
+      <Position12>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="400" TopLine="367"/>
+      </Position12>
+      <Position13>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="128" TopLine="98"/>
+      </Position13>
+      <Position14>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="403" TopLine="357"/>
+      </Position14>
+      <Position15>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="110" TopLine="81"/>
+      </Position15>
+      <Position16>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="70" Column="3" TopLine="141"/>
+      </Position16>
+      <Position17>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="118" TopLine="80"/>
+      </Position17>
+      <Position18>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="479" Column="39" TopLine="442"/>
+      </Position18>
+      <Position19>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="452" Column="57" TopLine="428"/>
+      </Position19>
+      <Position20>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="467" TopLine="428"/>
+      </Position20>
+      <Position21>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="452" Column="46" TopLine="427"/>
+      </Position21>
+      <Position22>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="137" Column="5" TopLine="116"/>
+      </Position22>
+      <Position23>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="78" Column="5" TopLine="55"/>
+      </Position23>
+      <Position24>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="60" Column="3" TopLine="55"/>
+      </Position24>
+      <Position25>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="452" Column="7" TopLine="428"/>
+      </Position25>
+      <Position26>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="116" TopLine="88"/>
+      </Position26>
+      <Position27>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="469" TopLine="443"/>
+      </Position27>
+      <Position28>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="415" Column="3" TopLine="397"/>
+      </Position28>
+      <Position29>
+        <Filename Value="..\..\GENERICS\generics.defaults.pas"/>
+        <Caret Line="90" Column="99" TopLine="61"/>
+      </Position29>
+      <Position30>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="417" Column="28" TopLine="397"/>
+      </Position30>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>
@@ -919,6 +1069,20 @@
         <WatchKind Value="wpkWrite"/>
         <Source Value="D:\Programme\Lazarus\fpc\3.2.2\source\packages\fcl-registry\src\regini.inc"/>
         <Line Value="320"/>
+      </Item>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="mrkeditdlg.pas"/>
+        <Line Value="411"/>
+      </Item>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="mrkeditdlg.pas"/>
+        <Line Value="423"/>
       </Item>
     </BreakPoints>
     <Watches>

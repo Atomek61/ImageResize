@@ -15,7 +15,7 @@ object MainDialog: TMainDialog
   OnShow = FormShow
   Position = poDefaultPosOnly
   ShowHint = True
-  LCLVersion = '2.2.4.0'
+  LCLVersion = '2.2.6.0'
   object PanelControls: TPanel
     Left = 0
     Height = 511
@@ -1123,9 +1123,9 @@ object MainDialog: TMainDialog
         TabOrder = 0
       end
       object ButtonBrowseDstFolder: TBitBtn
-        Left = 296
+        Left = 339
         Height = 27
-        Top = 152
+        Top = 6
         Width = 27
         Action = ActionBrowseDstFolder
         Anchors = [akTop, akRight]
@@ -1174,6 +1174,15 @@ object MainDialog: TMainDialog
       ParentColor = False
       ParentFont = False
     end
+    object ProgressBar: TProgressBar
+      Left = 400
+      Height = 10
+      Top = 495
+      Width = 392
+      Anchors = [akRight, akBottom]
+      TabOrder = 6
+      Visible = False
+    end
   end
   object Splitter1: TSplitter
     Cursor = crVSplit
@@ -1184,15 +1193,6 @@ object MainDialog: TMainDialog
     Align = alBottom
     ResizeAnchor = akBottom
   end
-  object ProgressBar: TProgressBar
-    Left = 401
-    Height = 7
-    Top = 499
-    Width = 387
-    Anchors = [akRight, akBottom]
-    TabOrder = 2
-    Visible = False
-  end
   object MemoMessages: TMemo
     Left = 6
     Height = 192
@@ -1202,7 +1202,7 @@ object MainDialog: TMainDialog
     BorderSpacing.Around = 6
     ReadOnly = True
     ScrollBars = ssAutoVertical
-    TabOrder = 3
+    TabOrder = 2
     TabStop = False
   end
   object ActionList: TActionList
@@ -1394,7 +1394,7 @@ object MainDialog: TMainDialog
   end
   object ApplicationProperties1: TApplicationProperties
     OnException = ApplicationProperties1Exception
-    Left = 504
+    Left = 552
     Top = 544
   end
   object HTMLHelpDatabase: THTMLHelpDatabase
