@@ -1,0 +1,920 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: imgres.scptabort
+msgid "Abort"
+msgstr ""
+
+#: imgres.scptfatal
+msgid "Fatal"
+msgstr ""
+
+#: imgres.scpthint
+msgid "Hint"
+msgstr ""
+
+#: imgres.scptwarning
+msgid "Warning"
+msgstr ""
+
+#: imgres.serrformatnotsupportedfmt
+#, object-pascal-format
+msgid "Format %s not supported."
+msgstr ""
+
+#: imgres.serrinvalidindexdigitsfmt
+#, object-pascal-format
+msgid "Invalid INDEX digits number '%s'."
+msgstr ""
+
+#: imgres.serrinvalidindexparamcountfmt
+#, object-pascal-format
+msgid "Invalid INDEX parameter count '%s' (2 expected)."
+msgstr ""
+
+#: imgres.serrinvalidindexplaceholderfmt
+#, object-pascal-format
+msgid "Invalid INDEX placeholder parameters '%s'."
+msgstr ""
+
+#: imgres.serrinvalidindexstartfmt
+#, object-pascal-format
+msgid "Invalid INDEX start '%s'."
+msgstr ""
+
+#: imgres.serrinvalidjpgqualityfmt
+#, object-pascal-format
+msgid "Invalid jpg quality %d (1..100)."
+msgstr ""
+
+#: imgres.serrinvalidplaceholder
+msgid "Unknown or invalid placeholder."
+msgstr ""
+
+#: imgres.serrinvalidpngcompressionfmt
+#, object-pascal-format
+msgid "Invalid png compression %d (0..3)."
+msgstr ""
+
+#: imgres.serrinvalidrenamingparamfmt
+#, object-pascal-format
+msgid "Invalid renaming parameter '%s'."
+msgstr ""
+
+#: imgres.serrinvalidsizesfmt
+#, object-pascal-format
+msgid "Invalid sizes '%s'."
+msgstr ""
+
+#: imgres.serrinvalidthreadcount
+msgid "Invalid threadcount."
+msgstr ""
+
+#: imgres.serrmissingsizes
+msgid "Missing sizes."
+msgstr ""
+
+#: imgres.serrmultiplesizes
+msgid "Multiple sizes, placeholder %SIZE% not found in either folder or filename template."
+msgstr ""
+
+#: imgres.sinfresultfmt
+#, object-pascal-format
+msgid "Images: %d, Sizes: %d, Tasks: %d, Successful: %d, Failed: %d, Elapsed: %.2fs"
+msgstr ""
+
+#: imgres.smsgcreatingfolderfmt
+#, object-pascal-format
+msgid "Creating folder '%s'..."
+msgstr ""
+
+#: imgres.smsgloadingfmt
+#, object-pascal-format
+msgid "Loading '%s'..."
+msgstr ""
+
+#: imgres.smsgresamplingfmt
+#, object-pascal-format
+msgid "Resampling '%s' from %dx%d to %dx%d..."
+msgstr ""
+
+#: imgres.smsgsavingfmt
+#, object-pascal-format
+msgid "Saving '%s'..."
+msgstr ""
+
+#: imgres.smsgwatermarkingfmt
+#, object-pascal-format
+msgid "Watermarking '%s'..."
+msgstr ""
+
+#: imgres.swrnupsamplingfmt
+#, object-pascal-format
+msgid "Upsampling '%s'"
+msgstr ""
+
+#: maindlg.scptcancel
+msgctxt "maindlg.scptcancel"
+msgid "Cancel"
+msgstr ""
+
+#: maindlg.scptcoresfmt
+#, object-pascal-format
+msgid "%d Cores"
+msgstr ""
+
+#: maindlg.scptexecute
+msgid "Execute"
+msgstr ""
+
+#: maindlg.scptexecutea
+msgctxt "maindlg.scptexecutea"
+msgid "E&xecute"
+msgstr ""
+
+#: maindlg.scptfilenotfoundfmt
+#, object-pascal-format
+msgid "File '%s' not found."
+msgstr ""
+
+#: maindlg.scptinfofmt
+#, object-pascal-format
+msgid "ImageResize %s, Processor %s, %d Cores"
+msgstr ""
+
+#: maindlg.scptlastsettings
+msgid "<last settings>"
+msgstr ""
+
+#: maindlg.scptsizeclasslarge
+msgid "Large - Desktop size"
+msgstr ""
+
+#: maindlg.scptsizeclassmedium
+msgid "Medium - Document size"
+msgstr ""
+
+#: maindlg.scptsizeclasssmall
+msgid "Small - Thumbnail size"
+msgstr ""
+
+#: maindlg.scptsourcefilesfmt
+#, object-pascal-format
+msgid "%d source files"
+msgstr ""
+
+#: maindlg.scpttitleprefix
+msgid "Image Resize - "
+msgstr ""
+
+#: maindlg.scptunnamed
+msgid "<unnamed>"
+msgstr ""
+
+#: maindlg.serratfmt
+#, object-pascal-format
+msgid "Error at %.0f%% - %s"
+msgstr ""
+
+#: maindlg.serrcancelledatfmt
+#, object-pascal-format
+msgid "Cancelled at %.0f%%"
+msgstr ""
+
+#: maindlg.serrenterplaceholder
+msgid "Enter placeholder %SIZE% to either the destination folder or the file template."
+msgstr ""
+
+#: maindlg.serrinvalidjpgquality
+msgid "Invalid jpg quality."
+msgstr ""
+
+#: maindlg.serrinvalidmrkopacity
+msgid "Invalid watermark opacity."
+msgstr ""
+
+#: maindlg.serrinvalidmrksize
+msgid "Invalid watermark size."
+msgstr ""
+
+#: maindlg.serrinvalidmrkxbrd
+msgid "Invalid watermark x border."
+msgstr ""
+
+#: maindlg.serrinvalidmrkybrd
+msgid "Invalid watermark y border."
+msgstr ""
+
+#: maindlg.serrinvalidshakeseed
+msgid "Invalid Shake Seed."
+msgstr ""
+
+#: maindlg.serrinvalidsizes
+msgid "Invalid Sizes string."
+msgstr ""
+
+#: maindlg.serrmissingdestinationfolder
+msgid "Missing destination folder."
+msgstr ""
+
+#: maindlg.serrmissingsourcefilenames
+msgid "Missing source filenames."
+msgstr ""
+
+#: maindlg.serrmissingsourcefolder
+msgid "Missing source folder."
+msgstr ""
+
+#: maindlg.slocdirhelp
+msgid "hlp\\en"
+msgstr ""
+
+#: maindlg.slogcantload
+msgid "Cant load Image Resize Settings File"
+msgstr ""
+
+#: maindlg.slogerrorprefix
+msgid "Error - "
+msgstr ""
+
+#: maindlg.slogfilesavedtofmt
+#, object-pascal-format
+msgid "Settings saved to '%s'"
+msgstr ""
+
+#: maindlg.slogwarningversionfmt
+#, object-pascal-format
+msgid "Warning: Unexpected format %s (%s expected)."
+msgstr ""
+
+#: maindlg.stxtlicense
+msgid ""
+"ImageResize Copyright (c) 2023 Jan Schirrmacher, www.atomek.de\n"
+"\n"
+"Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy and merge copies of the Software, subject to the following conditions:\n"
+"\n"
+"The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n"
+"\n"
+"THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHOR OR COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
+msgstr ""
+
+#: maindlg.surlwebhelp
+msgid "http://www.atomek.de/imageresize/hlp32/gui/en"
+msgstr ""
+
+#: mrkeditdlg.scptdialogtitle
+msgid "Watermark Editor"
+msgstr ""
+
+#: mrkeditdlg.serrincompatiblefileversion
+#, object-pascal-format
+msgid "Incompatible file version %.2f, %.2f expected."
+msgstr ""
+
+#: mrkeditdlg.serrinvalidfiletypefmt
+#, object-pascal-format
+msgid "Invalid filetype, %s expected."
+msgstr ""
+
+#: mrkeditdlg.serrinvalidparams
+msgid "Invalid parameters"
+msgstr ""
+
+#: taboutdialog.button1.caption
+msgctxt "taboutdialog.button1.caption"
+msgid "Ok"
+msgstr ""
+
+#: taboutdialog.caption
+msgid "About ImageResize"
+msgstr ""
+
+#: taboutdialog.labelimgresguicpr.caption
+msgid "%IMGRESGUICPR%"
+msgstr ""
+
+#: taboutdialog.labelimgresstr.caption
+msgid "%IMGRESSTR%"
+msgstr ""
+
+#: taboutdialog.labelurl1.caption
+msgid "Build with Lazarus 2.2.6, using BGRABitmap 11.5.3"
+msgstr ""
+
+#: taboutdialog.labelurl2.caption
+msgid "License:"
+msgstr ""
+
+#: tmaindialog.actionabout.caption
+msgid "Abo&ut..."
+msgstr ""
+
+#: tmaindialog.actioneditwatermark.caption
+msgid "&Watermark..."
+msgstr ""
+
+#: tmaindialog.actioneditwatermark.hint
+msgid "Opens the internal Watermark Editor"
+msgstr ""
+
+#: tmaindialog.actionexecute.caption
+msgctxt "tmaindialog.actionexecute.caption"
+msgid "E&xecute"
+msgstr ""
+
+#: tmaindialog.actionexecute.hint
+msgctxt "tmaindialog.actionexecute.hint"
+msgid "Starts the resampling process"
+msgstr ""
+
+#: tmaindialog.actionhelp.caption
+msgid "&Help..."
+msgstr ""
+
+#: tmaindialog.actionnew.caption
+msgctxt "tmaindialog.actionnew.caption"
+msgid "&New"
+msgstr ""
+
+#: tmaindialog.actionnew.hint
+msgid "Reset all settings to default values."
+msgstr ""
+
+#: tmaindialog.actionopen.caption
+msgctxt "tmaindialog.actionopen.caption"
+msgid "&Open..."
+msgstr ""
+
+#: tmaindialog.actionopen.hint
+msgid "Load saved settings"
+msgstr ""
+
+#: tmaindialog.actionsave.caption
+msgctxt "tmaindialog.actionsave.caption"
+msgid "&Save"
+msgstr ""
+
+#: tmaindialog.actionsave.hint
+msgid "Save current settings to a file"
+msgstr ""
+
+#: tmaindialog.actionsaveas.caption
+msgctxt "tmaindialog.actionsaveas.caption"
+msgid "Save &as..."
+msgstr ""
+
+#: tmaindialog.actionsaveas.hint
+msgid "Save current settings to another place"
+msgstr ""
+
+#: tmaindialog.buttonexecute.caption
+msgctxt "tmaindialog.buttonexecute.caption"
+msgid "E&xecute"
+msgstr ""
+
+#: tmaindialog.buttonexecute.hint
+msgctxt "tmaindialog.buttonexecute.hint"
+msgid "Starts the resampling process"
+msgstr ""
+
+#: tmaindialog.caption
+msgid "ImageResize"
+msgstr ""
+
+#: tmaindialog.checkboxmrkenabled.caption
+msgctxt "tmaindialog.checkboxmrkenabled.caption"
+msgid "&Enabled"
+msgstr ""
+
+#: tmaindialog.checkboxrenenabled.caption
+msgctxt "tmaindialog.checkboxrenenabled.caption"
+msgid "&Enabled"
+msgstr ""
+
+#: tmaindialog.checkboxshake.caption
+msgid "&Enable"
+msgstr ""
+
+#: tmaindialog.checkboxshake.hint
+msgid "Check to let the mages be mixed (shaked)."
+msgstr ""
+
+#: tmaindialog.checkboxstoponerror.caption
+msgid "Stop on E&rror"
+msgstr ""
+
+#: tmaindialog.comboboxboost.hint
+msgid "The application can use a multithreaded pooling"
+msgstr ""
+
+#: tmaindialog.comboboxboost.text
+msgid "Single"
+msgstr ""
+
+#: tmaindialog.comboboxjpgquality.hint
+msgid ""
+"Enter a jpg compression quality from\n"
+"\n"
+"1 - high compression, poor quality, small image\n"
+"75 - good compression, good quality, medium size\n"
+"100 - low compression, highest quality, large file \n"
+"\n"
+"It makes not much sense to enter a higher rate, than\n"
+"the original file has."
+msgstr ""
+
+#: tmaindialog.comboboxjpgquality.text
+msgid "75"
+msgstr ""
+
+#: tmaindialog.comboboxpngcompression.hint
+msgid "Select a png lossless compression degree."
+msgstr ""
+
+#: tmaindialog.comboboxpngcompression.text
+msgctxt "tmaindialog.comboboxpngcompression.text"
+msgid "default"
+msgstr ""
+
+#: tmaindialog.comboboxshakeseed.hint
+msgid "Enter a number, ets say 1000, to create always the same shaked order or 0 for shaking always randomly."
+msgstr ""
+
+#: tmaindialog.comboboxshakeseed.text
+msgctxt "tmaindialog.comboboxshakeseed.text"
+msgid "<random>"
+msgstr ""
+
+#: tmaindialog.editdstfolder.hint
+msgid ""
+"Enter a destination folder of the resampled images.\n"
+"\n"
+"If multiple sizes are entered, insert a placeholder %SIZE%\n"
+"into the path where the program shall insert the current size ."
+msgstr ""
+
+#: tmaindialog.editmrkalpha.hint
+msgid ""
+"Choose the watermarks opacity.\n"
+"\n"
+"A strong watermark has 100%,\n"
+"a weak one has 10% opacity."
+msgstr ""
+
+#: tmaindialog.editmrkalpha.text
+msgid "50"
+msgstr ""
+
+#: tmaindialog.editmrkfilename.hint
+msgid ""
+"Select a png file with the desired watermark.\n"
+"\n"
+"A watermark is a little image, which usually\n"
+"appears in a corner of the image.\n"
+"\n"
+"Inkscape is a good tool for creating\n"
+"watermark files. Or use the inbuilt\n"
+"editor."
+msgstr ""
+
+#: tmaindialog.editmrksize.hint
+msgid "Size in percent of the watermark image in relation to the resampled image width."
+msgstr ""
+
+#: tmaindialog.editmrksize.text
+msgid "10"
+msgstr ""
+
+#: tmaindialog.editmrkx.hint
+msgid "Horizontal space of the watermark to the border in percent of the destination image width."
+msgstr ""
+
+#: tmaindialog.editmrkx.text
+msgctxt "tmaindialog.editmrkx.text"
+msgid "1"
+msgstr ""
+
+#: tmaindialog.editmrky.hint
+msgid "Vertical space of the watermark to the border in percent of the destination image height."
+msgstr ""
+
+#: tmaindialog.editmrky.text
+msgctxt "tmaindialog.editmrky.text"
+msgid "1"
+msgstr ""
+
+#: tmaindialog.editsizes.hint
+msgid ""
+"Enter a comma-separated list of image sizes.\n"
+"\n"
+"The size refers to the longer side of an image.\n"
+"\n"
+"You can build a list by clicking the suggested\n"
+"sizes from the button field."
+msgstr ""
+
+#: tmaindialog.editsrcfolder.hint
+msgctxt "tmaindialog.editsrcfolder.hint"
+msgid "Enter a source folder with your images."
+msgstr ""
+
+#: tmaindialog.editsrcmasks.hint
+msgctxt "tmaindialog.editsrcmasks.hint"
+msgid "Enter a source folder with your images."
+msgstr ""
+
+#: tmaindialog.editsrcmasks.text
+msgid "*.jpg;*.png"
+msgstr ""
+
+#: tmaindialog.groupboxdstfolder.caption
+msgid "&Destination Folder"
+msgstr ""
+
+#: tmaindialog.groupboximagefiles.caption
+msgid "&Images"
+msgstr ""
+
+#: tmaindialog.groupboxjpgoptions.caption
+msgid "JPEG Options"
+msgstr ""
+
+#: tmaindialog.groupboxmrkfilename.caption
+msgid "Filename"
+msgstr ""
+
+#: tmaindialog.groupboxmrklayout.caption
+msgid "Layout"
+msgstr ""
+
+#: tmaindialog.groupboxparams.caption
+msgid "&Parameters"
+msgstr ""
+
+#: tmaindialog.groupboxpngoptions.caption
+msgid "PNG Options"
+msgstr ""
+
+#: tmaindialog.groupboxrename.caption
+msgid "Strategy"
+msgstr ""
+
+#: tmaindialog.groupboxshaking.caption
+msgid "Shake"
+msgstr ""
+
+#: tmaindialog.label1.caption
+msgid "Source &Files:"
+msgstr ""
+
+#: tmaindialog.label10.caption
+msgctxt "tmaindialog.label10.caption"
+msgid "%"
+msgstr ""
+
+#: tmaindialog.label11.caption
+msgid "&Vertical:"
+msgstr ""
+
+#: tmaindialog.label12.caption
+msgctxt "tmaindialog.label12.caption"
+msgid "%"
+msgstr ""
+
+#: tmaindialog.label13.caption
+msgid "Opacit&y:"
+msgstr ""
+
+#: tmaindialog.label14.caption
+msgctxt "tmaindialog.label14.caption"
+msgid "%"
+msgstr ""
+
+#: tmaindialog.label15.caption
+msgid "Si&ze:"
+msgstr ""
+
+#: tmaindialog.label16.caption
+msgctxt "tmaindialog.label16.caption"
+msgid "%"
+msgstr ""
+
+#: tmaindialog.label18.caption
+msgid "File Wildcards:"
+msgstr ""
+
+#: tmaindialog.label19.caption
+msgid ""
+"ImageResize uses thread pooling to benefit\n"
+"the full computers power.\n"
+"\n"
+"The number of threads is limited to the\n"
+"available cores and the number of tasks.\n"
+"A task is a single resampling process."
+msgstr ""
+
+#: tmaindialog.label2.caption
+msgid "( may include %SIZE% )"
+msgstr ""
+
+#: tmaindialog.label20.caption
+msgid "Click or drag the watermark"
+msgstr ""
+
+#: tmaindialog.label22.caption
+msgid ""
+"Placeholders:\n"
+"%SIZE:n,d%\n"
+"  n - start number\n"
+"  d - number of digits"
+msgstr ""
+
+#: tmaindialog.label23.caption
+msgid ""
+"%SIZE%\n"
+"%FILENAME%\n"
+"%FILEEXT%"
+msgstr ""
+
+#: tmaindialog.label3.caption
+msgid "Si&zes:"
+msgstr ""
+
+#: tmaindialog.label4.caption
+msgid "Source Folder:"
+msgstr ""
+
+#: tmaindialog.label5.caption
+msgid "Quality (1..100):"
+msgstr ""
+
+#: tmaindialog.label6.caption
+msgid "&Compression:"
+msgstr ""
+
+#: tmaindialog.label8.caption
+msgid "&Threads:"
+msgstr ""
+
+#: tmaindialog.label9.caption
+msgid "&Horizontal:"
+msgstr ""
+
+#: tmaindialog.labelcores.caption
+msgid "Cores"
+msgstr ""
+
+#: tmaindialog.labeldstfolderrequired.caption
+msgctxt "tmaindialog.labeldstfolderrequired.caption"
+msgid "Ø"
+msgstr ""
+
+#: tmaindialog.labeldstfolderrequired.hint
+msgctxt "tmaindialog.labeldstfolderrequired.hint"
+msgid "Required"
+msgstr ""
+
+#: tmaindialog.labelshakeseed.caption
+msgid "Seed:"
+msgstr ""
+
+#: tmaindialog.labelsizesrequired.caption
+msgctxt "tmaindialog.labelsizesrequired.caption"
+msgid "Ø"
+msgstr ""
+
+#: tmaindialog.labelsizesrequired.hint
+msgctxt "tmaindialog.labelsizesrequired.hint"
+msgid "Required"
+msgstr ""
+
+#: tmaindialog.labelsrcfilenamesrequired.caption
+msgctxt "tmaindialog.labelsrcfilenamesrequired.caption"
+msgid "Ø"
+msgstr ""
+
+#: tmaindialog.labelsrcfilenamesrequired.hint
+msgctxt "tmaindialog.labelsrcfilenamesrequired.hint"
+msgid "Required"
+msgstr ""
+
+#: tmaindialog.memosrcfilenames.hint
+msgid ""
+"Enter a list of files with absolute pathes.\n"
+"\n"
+"Press Browse... and select multiple files while\n"
+"holding <STRG> or <SHIFT> and clicking. "
+msgstr ""
+
+#: tmaindialog.radiobuttonfilelist.caption
+msgid "List of Files"
+msgstr ""
+
+#: tmaindialog.radiobuttonpathmask.caption
+msgid "All Files in a Folder"
+msgstr ""
+
+#: tmaindialog.radiobuttonrenadvanced.caption
+msgid "&2 Advanced - all files in one folder"
+msgstr ""
+
+#: tmaindialog.radiobuttonrencustom.caption
+msgid "&3 Custom"
+msgstr ""
+
+#: tmaindialog.radiobuttonrensimple.caption
+msgid "&1 Simple - a folder for each size"
+msgstr ""
+
+#: tmaindialog.tabsheetmrk.caption
+msgid "Watermark"
+msgstr ""
+
+#: tmaindialog.tabsheetquality.caption
+msgid "Quality"
+msgstr ""
+
+#: tmaindialog.tabsheetrenaming.caption
+msgid "Renaming"
+msgstr ""
+
+#: tmaindialog.tabsheetressources.caption
+msgid "Boost"
+msgstr ""
+
+#: tmaindialog.tabsheetsizes.caption
+msgid "Sizes"
+msgstr ""
+
+#: tmaindialog.toolbar.caption
+msgctxt "tmaindialog.toolbar.caption"
+msgid "ToolBar"
+msgstr ""
+
+#: tmaindialog.toolbutton10.caption
+msgid "ToolButton10"
+msgstr ""
+
+#: tmaindialog.toolbutton5.caption
+msgid "ToolButton5"
+msgstr ""
+
+#: tmaindialog.toolbutton7.caption
+msgid "Help..."
+msgstr ""
+
+#: tmaindialog.toolbutton8.caption
+msgid "ToolButton8"
+msgstr ""
+
+#: tmrkeditdialog.actionfont.caption
+msgid "Font..."
+msgstr ""
+
+#: tmrkeditdialog.actionhelp.caption
+msgid "&Help"
+msgstr ""
+
+#: tmrkeditdialog.actioninsertcopyright.caption
+msgid "ActionInsertCopyright"
+msgstr ""
+
+#: tmrkeditdialog.actionnew.caption
+msgctxt "tmrkeditdialog.actionnew.caption"
+msgid "&New"
+msgstr ""
+
+#: tmrkeditdialog.actionnew.hint
+msgid "Set all settings to the default."
+msgstr ""
+
+#: tmrkeditdialog.actionnewdefault.caption
+msgid "Fa&vorite"
+msgstr ""
+
+#: tmrkeditdialog.actionnewdefault.hint
+msgid "Restores all settings to your favorite settings."
+msgstr ""
+
+#: tmrkeditdialog.actionok.caption
+msgctxt "tmrkeditdialog.actionok.caption"
+msgid "Ok"
+msgstr ""
+
+#: tmrkeditdialog.actionok.hint
+msgid ""
+"The Ok button becomes available if you\n"
+"save the watermark or load it from a file.\n"
+"\n"
+"This is, because the Image Resize processor\n"
+"always needs a .png file."
+msgstr ""
+
+#: tmrkeditdialog.actionopen.caption
+msgctxt "tmrkeditdialog.actionopen.caption"
+msgid "&Open..."
+msgstr ""
+
+#: tmrkeditdialog.actionopen.hint
+msgid ""
+"Open an existing .was file which contains\n"
+"Watermark settings.\n"
+msgstr ""
+
+#: tmrkeditdialog.actionsave.caption
+msgctxt "tmrkeditdialog.actionsave.caption"
+msgid "&Save"
+msgstr ""
+
+#: tmrkeditdialog.actionsave.hint
+msgctxt "tmrkeditdialog.actionsave.hint"
+msgid "Saves the current settings as a .was file and a .png watermark file"
+msgstr ""
+
+#: tmrkeditdialog.actionsaveas.caption
+msgctxt "tmrkeditdialog.actionsaveas.caption"
+msgid "Save &as..."
+msgstr ""
+
+#: tmrkeditdialog.actionsaveas.hint
+msgctxt "tmrkeditdialog.actionsaveas.hint"
+msgid "Saves the current settings as a .was file and a .png watermark file"
+msgstr ""
+
+#: tmrkeditdialog.actionsaveasfavorite.caption
+msgid "Set as &Favorite..."
+msgstr ""
+
+#: tmrkeditdialog.actionsaveasfavorite.hint
+msgid "Sets the current settings as your favorite settings."
+msgstr ""
+
+#: tmrkeditdialog.buttoncancel.caption
+msgctxt "tmrkeditdialog.buttoncancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tmrkeditdialog.caption
+msgid "Watermark Image Editor"
+msgstr ""
+
+#: tmrkeditdialog.checkboxoutline.caption
+msgid "Outline"
+msgstr ""
+
+#: tmrkeditdialog.checkboxshadow.caption
+msgid "Shadow"
+msgstr ""
+
+#: tmrkeditdialog.comboboxshadowquality.text
+msgid "Normal"
+msgstr ""
+
+#: tmrkeditdialog.label1.caption
+msgid "&Text:"
+msgstr ""
+
+#: tmrkeditdialog.label2.caption
+msgid "Font:"
+msgstr ""
+
+#: tmrkeditdialog.label3.caption
+msgctxt "tmrkeditdialog.label3.caption"
+msgid "Color:"
+msgstr ""
+
+#: tmrkeditdialog.label4.caption
+msgctxt "tmrkeditdialog.label4.caption"
+msgid "Color:"
+msgstr ""
+
+#: tmrkeditdialog.label5.caption
+msgctxt "tmrkeditdialog.label5.caption"
+msgid "Color:"
+msgstr ""
+
+#: tmrkeditdialog.label6.caption
+msgid "Blur:"
+msgstr ""
+
+#: tmrkeditdialog.label7.caption
+msgid "Quality:"
+msgstr ""
+
+#: tmrkeditdialog.savedialog.title
+msgid "Save Watermark Image"
+msgstr ""
+
+#: tmrkeditdialog.toolbar.caption
+msgctxt "tmrkeditdialog.toolbar.caption"
+msgid "ToolBar"
+msgstr ""
+
+#: tmrkeditdialog.toolbutton7.caption
+msgid "ToolButton7"
+msgstr ""
+
+#: tmrkeditdialog.toolbutton9.caption
+msgid "ToolButton9"
+msgstr ""
+
