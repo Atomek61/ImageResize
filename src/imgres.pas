@@ -23,7 +23,7 @@ uses
   threading.dispatcher;
 
 const
-  IMGRESVER = '2.7';
+  IMGRESVER = '2.8';
   IMGRESCPR = 'imgres V'+IMGRESVER+' © 2023 Jan Schirrmacher, www.atomek.de';
 
   PROGRESSSTEPSPERFILE = 4;
@@ -31,7 +31,6 @@ const
   IMGRESREGKEY = 'SOFTWARE\Atomek\Image Resize\';
 
 const
-//  DEFAULTSIZE            = 640;
   DEFAULTPNGCOMPRESSION    = 2;
   DEFAULTJPGQUALITY        = 75;
   DEFAULTMRKSIZE           = 20.0;
@@ -105,13 +104,14 @@ type
     TSharedRessources = class
     private
       FImgRes :TImgRes;
-      FSrcImgsSection :TCriticalSection;
+      FSrcImgsSections :array of TCriticalSection;
       FSrcImgs :array of TBGRABitmap;
       FSrcImgsRefCount :array of integer; // Increases on each use/unuse, when all Taskas are done - then the Imgage can be freed
       FMrkImgsSection :TCriticalSection;
       FMrkImgs :array of TBGRABitmap; // cached for each size
       FDstFoldersSection :TCriticalSection;
       FDstFolders :array of string;   // cached for each size
+      function GetSrcImgsSection(ImageIndex :integer) :TCriticalSection;
     public
       constructor Create(AImgRes :TImgRes);
       destructor Destroy; override;
@@ -199,7 +199,42 @@ uses
   generics.collections;
 
 const
-  PNGCOMPRS :array[0..3] of string = ('none', 'fastest', 'default', 'max');
+  SCptPNGCompNone    = 'none';
+  SCptPNGCompFastest = 'fastest';
+  SCptPNGCompDefault = 'default';
+  SCptPNGCompMax     = 'max';
+
+  SCptJpgQualityDefault = 'default';
+
+resourcestring
+  SCptHint    = 'Hint';
+  SCptWarning = 'Warning';
+  SCptAbort   = 'Abort';
+  SCptFatal   = 'Fatal';
+  SErrFormatNotSupportedFmt = 'Format %s not supported.';
+  SWrnUpsamplingFmt = 'Upsampling ''%s''';
+  SMsgResamplingFmt = 'Resampling ''%s'' from %dx%d to %dx%d...';
+  SMsgWatermarkingFmt = 'Watermarking ''%s''...';
+  SMsgSavingFmt = 'Saving ''%s''...';
+  SMsgLoadingFmt = 'Loading ''%s''...';
+  SMsgCreatingFolderFmt = 'Creating folder ''%s''...';
+  SErrInvalidThreadCount = 'Invalid threadcount.';
+  SErrMissingSizes = 'Missing sizes.';
+  SErrInvalidSizesFmt = 'Invalid sizes ''%s''.';
+  SErrMultipleSizes = 'Multiple sizes, placeholder %SIZE% not found in either folder or filename template.';
+  SInfResultFmt = 'Images: %d, Sizes: %d, Tasks: %d, Successful: %d, Failed: %d, Elapsed: %.2fs';
+  SErrInvalidPngCompressionFmt = 'Invalid png compression %d (0..3).';
+  SErrInvalidJpgQualityFmt = 'Invalid jpg quality %d (1..100).';
+  SErrInvalidRenamingParamFmt = 'Invalid renaming parameter ''%s''.';
+  SErrInvalidINDEXPlaceholderFmt = 'Invalid INDEX placeholder parameters ''%s''.';
+  SErrInvalidINDEXStartFmt = 'Invalid INDEX start ''%s''.';
+  SErrInvalidINDEXDigitsFmt = 'Invalid INDEX digits number ''%s''.';
+  SErrInvalidINDEXParamCountFmt = 'Invalid INDEX parameter count ''%s'' (2 expected).';
+  SErrInvalidPlaceholder = 'Unknown or invalid placeholder.';
+
+const
+  PNGCOMPRS :array[0..3] of string = (SCptPNGCompNone, SCptPNGCompFastest, SCptPNGCompDefault, SCptPNGCompMax);
+  LEVELSTRS :array[TLevel] of string = (SCptHint, '', SCptWarning, SCptAbort, SCptFatal);
 
 type
   TIntegerArrayHelper = specialize TArrayHelper<Integer>;
@@ -317,7 +352,7 @@ begin
       with TFPWriterPNG(Writer) do
         CompressionLevel := ZStream.TCompressionLevel(ImgRes.PngCompression);
     end else
-      raise Exception.CreateFmt('Format %s not supported.', [DstFileExt]);
+      raise Exception.CreateFmt(SErrFormatNotSupportedFmt, [DstFileExt]);
 
     // Calculate new size
     Size := ImgRes.FParams.Sizes[SizeIndex];
@@ -326,12 +361,12 @@ begin
 
     // Warning, if upsampling
     if (SrcSize.cx<DstSize.cx) or (DstSize.cy<DstSize.cy) then
-      Print(Format('Upsampling ''%s''', [
+      Print(Format(SWrnUpsamplingFmt, [
          ExtractFilename(SrcFilename)]), mlWarning);
 
     ////////////////////////////////////////////////////////////////////////////
     // Resampling...
-    Print(Format('Resampling ''%s'' from %dx%d to %dx%d...', [
+    Print(Format(SMsgResamplingFmt, [
       ExtractFilename(SrcFilename), SrcSize.cx, SrcSize.cy, DstSize.cx, DstSize.cy]));
     DstImg := SharedRessources.FImgRes.ResampleImg(SrcImg, DstSize);
     ////////////////////////////////////////////////////////////////////////////
@@ -356,8 +391,7 @@ begin
       MrkRect.Top := round((DstSize.cy - MrkRectSize.cy) * ImgRes.MrkY/100.0);
       MrkRect.Width := MrkRectSize.cx;
       MrkRect.Height := MrkRectSize.cy;
-      Print(Format('Watermarking ''%s''...', [
-        ExtractFilename(SrcFilename), SrcSize.cx, SrcSize.cy, DstSize.cx, DstSize.cy]));
+      Print(Format(SMsgWatermarkingFmt, [ExtractFilename(SrcFilename), SrcSize.cx, SrcSize.cy, DstSize.cx, DstSize.cy]));
       DstImg.StretchPutImage(MrkRect, MrkImg, dmLinearBlend, round(255*ImgRes.MrkAlpha/100.0));
     end;
     if Context.Cancelled then
@@ -391,7 +425,7 @@ begin
       DstFiletitleExt := ExtractFilename(SrcFilename);
 
     DstFilename := IncludeTrailingPathDelimiter(DstFolder) + DstFiletitleExt;
-    Print(Format('Saving ''%s''...' , [DstFilename]));
+    Print(Format(SMsgSavingFmt, [DstFilename]));
     DstImg.SaveToFile(DstFilename, Writer);
     Progress(1);
 
@@ -410,12 +444,21 @@ end;
 
 { TImgRes.TSharedRessources }
 
+function TImgRes.TSharedRessources.GetSrcImgsSection(ImageIndex: integer): TCriticalSection;
+begin
+  result := FSrcImgsSections[ImageIndex mod Length(FSrcImgsSections)];
+end;
+
 constructor TImgRes.TSharedRessources.Create(AImgRes: TImgRes);
 var
-  i :integer;
+  i, n :integer;
 begin
   FImgRes := AImgRes;
-  FSrcImgsSection := TCriticalSection.Create;
+  n := TThread.ProcessorCount;
+  if FImgRes.FParams.ThreadCount=1 then n := 1;
+  SetLength(FSrcImgsSections, n);
+  for i:=0 to High(FSrcImgsSections) do
+    FSrcImgsSections[i] := TCriticalSection.Create;
   SetLength(FSrcImgs, FImgRes.SrcFilenames.Count);
   SetLength(FSrcImgsRefCount, FImgRes.SrcFilenames.Count);
   for i:=0 to High(FSrcImgsRefCount) do
@@ -437,7 +480,8 @@ begin
     FSrcImgs[i].Free;
   for i:=0 to High(FMrkImgs) do
     FMrkImgs[i].Free;
-  FSrcImgsSection.Free;
+  for i:=0 to High(FSrcImgsSections) do
+    FSrcImgsSections[i].Free;
   FMrkImgsSection.Free;
   FDstFoldersSection.Free;
   inherited Destroy;
@@ -447,30 +491,36 @@ function TImgRes.TSharedRessources.RequestSrcImg(Task :TResampleTask): TBGRABitm
 var
   SrcFilename :string;
 begin
-  FSrcImgsSection.Enter;
+  GetSrcImgsSection(Task.SrcFilenameIndex).Enter;
   try
     SrcFilename := FImgRes.FParams.SrcFilenames[Task.SrcFilenameIndex];
     if not Assigned(FSrcImgs[Task.SrcFilenameIndex]) then begin
-      Task.Print(Format('Loading ''%s''...', [ExtractFilename(SrcFilename)]));
+      Task.Print(Format(SMsgLoadingFmt, [ExtractFilename(SrcFilename)]));
       FSrcImgs[Task.SrcFilenameIndex] := TBGRABitmap.Create(SrcFilename);
-      ;
     end;
     result := FSrcImgs[Task.SrcFilenameIndex];
   finally
-    FSrcImgsSection.Leave;
+    GetSrcImgsSection(Task.SrcFilenameIndex).Leave;
   end;
 end;
 
 procedure TImgRes.TSharedRessources.ReleaseSrcImg(Task: TResampleTask);
+var
+  Img :TObject;
 begin
-  FSrcImgsSection.Enter;
+  GetSrcImgsSection(Task.SrcFilenameIndex).Enter;
+  Img := nil;
   try
     dec(FSrcImgsRefCount[Task.SrcFilenameIndex]);
-    if FSrcImgsRefCount[Task.SrcFilenameIndex]<=0 then
-      FreeAndNil(FSrcImgs[Task.SrcFilenameIndex]);
+    if FSrcImgsRefCount[Task.SrcFilenameIndex]=0 then begin
+      Img := FSrcImgs[Task.SrcFilenameIndex];
+      FSrcImgs[Task.SrcFilenameIndex] := nil;
+    end;
   finally
-    FSrcImgsSection.Leave;
+    GetSrcImgsSection(Task.SrcFilenameIndex).Leave;
   end;
+  if Img<>nil then
+    Img.Free;
 end;
 
 function TImgRes.TSharedRessources.GetMrkImg(Task :TResampleTask): TBGRABitmap;
@@ -489,7 +539,7 @@ begin
         Filename := ReplaceStr(FImgRes.FParams.MrkFilename, '%SIZE%', IntToStr(FImgRes.FParams.Sizes[Index]))
       else
         Filename := FImgRes.FParams.MrkFilename;
-      Task.Print(Format('Loading ''%s''...', [ExtractFilename(Filename)]));
+      Task.Print(Format(SMsgLoadingFmt, [ExtractFilename(Filename)]));
       FMrkImgs[Index] := TBGRABitmap.Create(Filename);
     end;
     result := FMrkImgs[Index]
@@ -508,7 +558,7 @@ begin
     Index := Task.SizeIndex;
     if FDstFolders[Index]='' then begin
       DstFolder := ReplaceStr(FImgRes.FParams.DstFolder, '%SIZE%', IntToStr(FImgRes.FParams.Sizes[Index]));
-      Task.Print(Format('Creating folder ''%s''...', [DstFolder]));
+      Task.Print(Format(SMsgCreatingFolderFmt, [DstFolder]));
       ForceDirectories(DstFolder);
       FDstFolders[Index] := DstFolder;
     end;
@@ -535,11 +585,14 @@ begin
 end;
 
 procedure TImgRes.OnTaskPrint(Sender: TObject; WorkerId: integer; const Line: string; Level: TLevel);
-const
-  LEVELSTRS :array[TLevel] of string = ('Hint - ', '', 'Warning - ', 'Abort - ', 'Fatal - ');
+var
+  Prefix :string;
 begin
   if Assigned(FOnPrint) then begin
-    FOnPrint(self, Format('[%d] %s%s', [WorkerId+1, LEVELSTRS[Level], Line]));
+    Prefix := LEVELSTRS[Level];
+    if Prefix<>'' then
+      Prefix := Prefix + '  ';
+    FOnPrint(self, Format('[%d] %s%s', [WorkerId+1, Prefix, Line]));
   end;
 end;
 
@@ -556,7 +609,7 @@ procedure TImgRes.SetThreadCount(AValue: integer);
 begin
   if FParams.ThreadCount = AValue then Exit;
   if AValue<-1 then
-    raise Exception.Create('Invalid threadcount.');
+    raise Exception.Create(SErrInvalidThreadCount);
   FParams.ThreadCount := AValue;
 end;
 
@@ -611,14 +664,14 @@ var
 begin
   // Check main parameters
   if Length(FParams.Sizes)=0 then
-    raise Exception.Create('Missing sizes.');
+    raise Exception.Create(SErrMissingSizes);
   if FParams.SrcFilenames.Count=0 then
     Exit(true);
 
   // Check, if multiple sizes, then either %SIZE% must be in folder or in renamed filename
   if Length(FParams.Sizes)>1 then begin
     if not ((Pos('%SIZE%', FParams.DstFolder)>0) or (FParams.Ren.Enabled and (Pos('%3:s', FParams.Ren.FmtStr)>0))) then
-      raise Exception.Create('Multiple sizes, placeholder %SIZE% not found in either folder or filename template.');
+      raise Exception.Create(SErrMultipleSizes);
   end;
 
   FCancel           := false;
@@ -655,8 +708,7 @@ begin
     result := Dispatcher.Execute(Tasks);
 
     if Assigned(FOnPrint) then with Dispatcher.Stats do
-      FOnPrint(self, Format('Images: %d, Sizes: %d, Tasks:%d, Successful:%d, Failed:%d, Elapsed:%.2fs',
-        [n, m, TaskCount, Successful, Failed, Elapsed/1000.0]));
+      FOnPrint(self, Format(SInfResultFmt, [n, m, TaskCount, Successful, Failed, Elapsed/1000.0]));
 
   finally
     Dispatcher.Free;
@@ -686,13 +738,13 @@ end;
 class function TImgRes.PngCompressionToStr(const Value :integer) :string;
 begin
   if (Value<0) or (Value>High(PNGCOMPRS)) then
-    raise Exception.CreateFmt('Invalid png compression %d (0..3).', [Value]);
+    raise Exception.CreateFmt(SErrInvalidPngCompressionFmt, [Value]);
   result := PNGCOMPRS[Value];
 end;
 
 class function TImgRes.TryStrToJpgQuality(const Str :string; out Value :integer) :boolean;
 begin
-  if SameText(Trim(Str), 'default') then begin
+  if SameText(Trim(Str), SCptJpgQualityDefault) then begin
     Value := DEFAULTJPGQUALITY;
     result := true;
   end else
@@ -702,9 +754,9 @@ end;
 class function TImgRes.JpgQualityToStr(const Value :integer) :string;
 begin
   if (Value<1) or (Value>100) then
-    raise Exception.CreateFmt('Invalid jpg quality %d (1..100).', [Value]);
+    raise Exception.CreateFmt(SErrInvalidJpgQualityFmt, [Value]);
   if Value=DEFAULTJPGQUALITY then
-    result := 'default'
+    result := SCptJpgQualityDefault
   else
     result := IntToStr(Value);
 end;
@@ -736,7 +788,7 @@ var
 
 begin
   if not TryStrToPlaceholders(Str, '%', Placeholders) then
-    Exit(Err(Format('Invalid renaming parameter ''%s''.', [Str])));
+    Exit(Err(Format(SErrInvalidRenamingParamFmt, [Str])));
 
   Params.FmtStr := '';
   Params.Enabled := false;
@@ -757,18 +809,18 @@ begin
     if IsPlaceholder('INDEX', i) then begin
       // Parse Parameters
       if not TryParsePlaceholderParams(Placeholders[i], ':', Items) then
-        Exit(Err(Format('Invalid INDEX placeholder parameters ''%s''.', [Placeholders[i]])));
+        Exit(Err(Format(SErrInvalidINDEXPlaceholderFmt, [Placeholders[i]])));
       if (Length(Items)>0) then begin
         if not (TryStrToInt(Items[0], Params.IndexStart)) or (Params.IndexStart<0) then
-          Exit(Err(Format('Invalid INDEX start ''%s''.', [Items[0]])));
+          Exit(Err(Format(SErrInvalidINDEXStartFmt, [Items[0]])));
         if (Length(Items)>1) then begin
           // auto, 0, 1, ...
           if SameText(Items[1], 'AUTO') then
             Params.IndexDigits := -1
           else if not (TryStrToInt(Items[1], Params.IndexDigits)) or (Params.IndexDigits<0) then
-            Exit(Err(Format('Invalid INDEX digits number ''%s''.', [Items[1]])));
+            Exit(Err(Format(SErrInvalidINDEXDigitsFmt, [Items[1]])));
         end else if (Length(Items)>2) then
-          Exit(Err(Format('Invalid INDEX parameter count ''%s'' (2 expected).', [Placeholders[i]])));
+          Exit(Err(Format(SErrInvalidINDEXParamCountFmt, [Placeholders[i]])));
       end;
       Params.FmtStr := ReplaceStr(Params.FmtStr, '%'+Placeholders[i]+'%', '%2:s');
     end;
@@ -776,7 +828,7 @@ begin
       Params.FmtStr := ReplaceStr(Params.FmtStr, '%SIZE%', '%3:s');
     end;
     if ParamCount<Length(Placeholders) then
-      Exit(Err('Unknown or invalid placeholder.'));
+      Exit(Err(SErrInvalidPlaceholder));
     Params.Enabled := true;
   end;
   result := true;
@@ -798,7 +850,7 @@ end;
 procedure TImgRes.SetSizes(AValue :string);
 begin
   if not TrySizesStrToSizes(AValue, FParams.Sizes) then
-    raise Exception.Create(Format('Invalid sizes ''%s''.', [AValue]));
+    raise Exception.Create(Format(SErrInvalidSizesFmt, [AValue]));
 end;
 
 function TImgRes.GetSizes: string;
@@ -837,7 +889,7 @@ procedure TImgRes.SetJpgQuality(AValue: integer);
 begin
   if FParams.JpgQuality=AValue then Exit;
   if (AValue<1) or (AValue>100) then
-    raise Exception.CreateFmt('Invalid jpg quality %d (1..100).', [AValue]);
+    raise Exception.CreateFmt(SErrInvalidJpgQualityFmt, [AValue]);
   FParams.JpgQuality:=AValue;
 end;
 
@@ -845,7 +897,7 @@ procedure TImgRes.SetPngCompression(AValue: integer);
 begin
   if FParams.PngCompression=AValue then Exit;
   if (AValue<0) or (AValue>3) then
-    raise Exception.CreateFmt('Invalid png compression %d (0..3).', [AValue]);
+    raise Exception.CreateFmt(SErrInvalidPNGCompressionFmt, [AValue]);
   FParams.PngCompression:=AValue;
 end;
 

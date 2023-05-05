@@ -14,31 +14,33 @@ const
   IMGRESCLIVER = '3.0';
   IMGRESCLICPR = 'imgres CLI V'+IMGRESCLIVER+' for engine V'+IMGRESVER+' (c) 2023 Jan Schirrmacher, www.atomek.de';
 
-  INTROSTR = 'Free tool for jpg and png quality file resizing.';
-  USAGESTR = '  Usage: imgres filenames folder size {-option [param]}';
+  INTROSTR = 'Free tool for JPEG and PNG quality resampling.';
+  USAGESTR = '  Usage: imgres filename folder size {-option [param]}';
   HINTSSTR =
-    '  filenames         - Is a single JPEG or PNG file, a text filename preceeded by @ with a list of filenames'#10+
-    '                      or a wildcard with path/mask. Multiple masks are separated by semikolon.'#10+
-    '  folder            - Is the folder where to store the resulting resized files. The folder must contain'#10+
+    '  filename            Is a single JPEG or PNG file, a text filename preceeded by @ with a list of filenames'#10+
+    '                      or a wildcard with path/mask. Multiple masks are to be separated by semicolon.'#10+
+    '  folder              Is the folder where to store the resulting ressampled and resized files. The folder must contain'#10+
     '                      the placeholder ''%SIZE%'' when there are multiple sizes. Non-existing folders'#10+
     '                      will be created.'#10+
-    '  size              - Is a size in pixels or a comma-separated list of sizes, where the size refers to'#10+
+    '  size                Is a size in pixels or a comma-separated list of sizes, where the size refers to'#10+
     '                      the longer side of the image.'#10+
-    '  {-option [param]} - Is a list of pairs of option/parameter. Some options dont have a parameter.'#10#10+
+    '  {-option [param]}   Is a list of pairs of option/parameter. Some options dont have a parameter.'#10#10+
     'Options:'#10#10+
-    ' -j jpgquality     - a quality from 1 to 100 percent (default is 75)'#10+
-    ' -p pngcompression - one of none,fastest,default and max'#10+
-    ' -r rename         - rename files numbered, enter a template with place holders'#10+
-    '                     %SIZE% and %INDEX[:n[,d]]% with n=startindex, d=number of digits/auto'#10+
-    ' -w watermark      - a watermark file and optional a position and opacity, see example'#10+
-    ' -t threadcount    - number of threads to use, 0 is maximum'#10+
-    ' -x stoponerror    - stop on error flag'#10+
-    ' -s shake          - shakes the image list, makes sense together with -r.'#10+
-    '                     A random seed of 0 (assumed if ommited) means an unpredictable sequence.'#10+
-    '                     A fix value will shake a list always in the same manner, '#10+
-    '                     unless the number of files doesnt change.'#10+
-    ' -h help           - outputs this text'#10+
-    ' -q quit           - suppresses any message output'#10#10;
+    'short long            parameter   comment'#10+
+    '-----------------------------------------'#10+
+    '   -j -jpgquality     1..100      a quality from 1 to 100 percent (default is 75)'#10+
+    '   -p -pngcompression none|fastest|default|max'#10+
+    '   -r -rename         template    rename files numbered, enter a template with place holders'#10+
+    '                                  %SIZE% and %INDEX[:n[,d]]% with n=startindex, d=number of digits/auto'#10+
+    '   -w -watermark      file.png    a PNG watermark file and optional a position and opacity, see example'#10+
+    '   -s -shake          0..n        shakes the image list, makes sense together with -r.'#10+
+    '                                  A random seed of 0 (assumed if ommited) means an unpredictable sequence.'#10+
+    '                                  A fix value will shake a list always in the same manner, '#10+
+    '                                  unless the number of files doesnt change.'#10+
+    '   -t -threadcount    0..n        number of threads to use, 0 means maximum'#10+
+    '   -x -stoponerror                stop on error flag: 0-false, 1-true'#10+
+    '   -h -help                       outputs this text'#10+
+    '   -q -quit                       suppresses any message output'#10#10;
   EXAMPLESTR =
     'Examples:'#10#10+
     '  imgres myimage.png \Images\res640 640'#10+

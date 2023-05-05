@@ -5,7 +5,7 @@ unit aboutdlg;
 interface
 
 uses
-  Classes, SysUtils, {fileinfo, }Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls;
 
 type
 

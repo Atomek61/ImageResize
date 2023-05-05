@@ -4,9 +4,6 @@
     <Version Value="12"/>
     <PathDelim Value="\"/>
     <General>
-      <Flags>
-        <CompatibilityMode Value="True"/>
-      </Flags>
       <SessionStorage Value="InProjectDir"/>
       <Title Value="ImageResize"/>
       <Scaled Value="True"/>
@@ -14,31 +11,31 @@
       <UseXPManifest Value="True"/>
       <XPManifest>
         <DpiAware Value="True"/>
-        <TextName Value="Atomek.ImgResize.GUI"/>
-        <TextDesc Value="Resamples jpg and png images"/>
       </XPManifest>
       <Icon Value="0"/>
     </General>
+    <i18n>
+      <EnableI18N Value="True"/>
+      <OutDir Value="locale"/>
+    </i18n>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
-      <AutoIncrementBuild Value="True"/>
-      <MajorVersionNr Value="2"/>
-      <MinorVersionNr Value="5"/>
-      <BuildNr Value="27"/>
-      <StringTable CompanyName="Atomek" FileDescription="jpg and png image resampler" LegalCopyright="© 2020 by Jan Schirrmacher"/>
+      <MajorVersionNr Value="3"/>
+      <MinorVersionNr Value="2"/>
+      <StringTable FileDescription="Image Resampler" LegalCopyright="© 2023 Jan Schirrmacher, www.atomek.de"/>
     </VersionInfo>
-    <BuildModes Count="3">
-      <Item1 Name="Default" Default="True"/>
-      <Item2 Name="Debug">
+    <BuildModes>
+      <Item Name="Default" Default="True"/>
+      <Item Name="Debug">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="..\bin\imageresize.exe"/>
+            <Filename Value="..\bin\imageresize"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\src;..\..\GENERICS"/>
+            <OtherUnitFiles Value="..\src"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -57,7 +54,7 @@
           </CodeGeneration>
           <Linking>
             <Debugging>
-              <DebugInfoType Value="dsDwarf2Set"/>
+              <DebugInfoType Value="dsDwarf3"/>
               <TrashVariables Value="True"/>
               <UseExternalDbgSyms Value="True"/>
             </Debugging>
@@ -68,13 +65,13 @@
             </Options>
           </Linking>
         </CompilerOptions>
-      </Item2>
-      <Item3 Name="Release">
+      </Item>
+      <Item Name="Release">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="..\bin\imageresize.exe"/>
+            <Filename Value="..\bin\imageresize"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
@@ -100,7 +97,7 @@
             </Options>
           </Linking>
         </CompilerOptions>
-      </Item3>
+      </Item>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
@@ -109,81 +106,61 @@
     <RunParams>
       <FormatVersion Value="2"/>
     </RunParams>
-    <RequiredPackages Count="3">
-      <Item1>
-        <PackageName Value="BGLControls"/>
-      </Item1>
-      <Item2>
+    <RequiredPackages>
+      <Item>
         <PackageName Value="BGRABitmapPack"/>
-      </Item2>
-      <Item3>
+      </Item>
+      <Item>
         <PackageName Value="LCL"/>
-      </Item3>
+      </Item>
     </RequiredPackages>
-    <Units Count="10">
-      <Unit0>
+    <Units>
+      <Unit>
         <Filename Value="imageresizegui.lpr"/>
         <IsPartOfProject Value="True"/>
-      </Unit0>
-      <Unit1>
+      </Unit>
+      <Unit>
         <Filename Value="maindlg.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="MainDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-      </Unit1>
-      <Unit2>
+      </Unit>
+      <Unit>
         <Filename Value="aboutdlg.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="AboutDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-      </Unit2>
-      <Unit3>
-        <Filename Value="..\src\imgres.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit3>
-      <Unit4>
-        <Filename Value="..\src\threading.dispatcher.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit4>
-      <Unit5>
-        <Filename Value="..\src\generics.queue.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit5>
-      <Unit6>
-        <Filename Value="..\src\mrk.utils.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit6>
-      <Unit7>
+      </Unit>
+      <Unit>
         <Filename Value="mrkeditdlg.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="MrkEditDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-      </Unit7>
-      <Unit8>
-        <Filename Value="..\src\graphics.utils.pas"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\imgres.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit8>
-      <Unit9>
-        <Filename Value="..\src\utils.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit9>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="..\bin\imageresize.exe"/>
+      <Filename Value="imageresize"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\src;..\..\GENERICS"/>
+      <OtherUnitFiles Value="..\src"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>
+      <Debugging>
+        <DebugInfoType Value="dsDwarf3"/>
+      </Debugging>
       <Options>
         <Win32>
           <GraphicApplication Value="True"/>
@@ -192,16 +169,16 @@
     </Linking>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="3">
-      <Item1>
+    <Exceptions>
+      <Item>
         <Name Value="EAbort"/>
-      </Item1>
-      <Item2>
+      </Item>
+      <Item>
         <Name Value="ECodetoolError"/>
-      </Item2>
-      <Item3>
+      </Item>
+      <Item>
         <Name Value="EFOpenError"/>
-      </Item3>
+      </Item>
     </Exceptions>
   </Debugging>
 </CONFIG>

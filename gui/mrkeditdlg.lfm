@@ -2,15 +2,15 @@ object MrkEditDialog: TMrkEditDialog
   Left = 746
   Height = 387
   Top = 349
-  Width = 542
+  Width = 658
   HelpType = htKeyword
   HelpKeyword = 'HTML/index.html#mrkeditor'
   BorderIcons = [biSystemMenu]
   Caption = 'Watermark Image Editor'
   ClientHeight = 387
-  ClientWidth = 542
+  ClientWidth = 658
   Constraints.MinHeight = 387
-  Constraints.MinWidth = 542
+  Constraints.MinWidth = 658
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
@@ -18,22 +18,22 @@ object MrkEditDialog: TMrkEditDialog
   LCLVersion = '2.2.6.0'
   object PanelPreview: TPanel
     Left = 8
-    Height = 100
+    Height = 92
     Top = 56
-    Width = 526
+    Width = 642
     Align = alClient
     BorderSpacing.Around = 8
     BevelOuter = bvLowered
-    ClientHeight = 100
-    ClientWidth = 526
+    ClientHeight = 92
+    ClientWidth = 642
     Color = clWhite
     ParentColor = False
     TabOrder = 1
     object ImageLandscape: TImage
       Left = 1
-      Height = 98
+      Height = 90
       Top = 1
-      Width = 524
+      Width = 640
       Align = alClient
       Picture.Data = {
         0A544A706567496D616765FE5A0100FFD8FFE000104A46494600010101015E01
@@ -2818,9 +2818,9 @@ object MrkEditDialog: TMrkEditDialog
     end
     object PaintBoxPreview: TPaintBox
       Left = 1
-      Height = 98
+      Height = 90
       Top = 1
-      Width = 524
+      Width = 640
       Align = alClient
       OnPaint = PaintBoxPreviewPaint
     end
@@ -2846,10 +2846,10 @@ object MrkEditDialog: TMrkEditDialog
     Left = 0
     Height = 48
     Top = 0
-    Width = 542
+    Width = 658
     AutoSize = True
     ButtonHeight = 48
-    ButtonWidth = 56
+    ButtonWidth = 54
     Caption = 'ToolBar'
     EdgeBorders = []
     Images = ImageList24x24
@@ -2861,44 +2861,44 @@ object MrkEditDialog: TMrkEditDialog
       Action = ActionNew
     end
     object ToolButton2: TToolButton
-      Left = 57
+      Left = 55
       Top = 0
       Action = ActionOpen
     end
     object ToolButton3: TToolButton
-      Left = 169
+      Left = 163
       Top = 0
       Action = ActionSaveAs
     end
     object ToolButton5: TToolButton
-      Left = 312
+      Left = 280
       Top = 0
       Action = ActionSaveAsFavorite
     end
     object ToolButton4: TToolButton
-      Left = 233
+      Left = 226
       Top = 0
       Action = ActionNewDefault
     end
     object ToolButton6: TToolButton
-      Left = 113
+      Left = 109
       Top = 0
       Action = ActionSave
     end
     object ToolButton7: TToolButton
-      Left = 225
+      Left = 218
       Height = 48
       Top = 0
       Caption = 'ToolButton7'
       Style = tbsSeparator
     end
     object ToolButton8: TToolButton
-      Left = 420
+      Left = 380
       Top = 0
       Action = ActionHelp
     end
     object ToolButton9: TToolButton
-      Left = 412
+      Left = 372
       Height = 48
       Top = 0
       Caption = 'ToolButton9'
@@ -2907,26 +2907,26 @@ object MrkEditDialog: TMrkEditDialog
   end
   object PanelSettings: TPanel
     Left = 0
-    Height = 176
-    Top = 164
-    Width = 542
+    Height = 184
+    Top = 156
+    Width = 658
     Align = alBottom
     BevelOuter = bvNone
-    ClientHeight = 176
-    ClientWidth = 542
+    ClientHeight = 184
+    ClientWidth = 658
     TabOrder = 2
     object Bevel3: TBevel
-      Left = 17
+      Left = 16
       Height = 3
       Top = 112
-      Width = 305
+      Width = 294
       BorderSpacing.Left = 4
       BorderSpacing.Top = 32
       BorderSpacing.Right = 4
       Shape = bsTopLine
     end
     object Bevel2: TBevel
-      Left = 329
+      Left = 320
       Height = 118
       Top = 49
       Width = 9
@@ -2949,9 +2949,9 @@ object MrkEditDialog: TMrkEditDialog
       TabOrder = 5
     end
     object CheckBoxShadow: TCheckBox
-      Left = 353
+      Left = 352
       Height = 19
-      Top = 51
+      Top = 52
       Width = 62
       HelpType = htKeyword
       HelpKeyword = 'HTML/index.html#mrkshadow'
@@ -2962,19 +2962,19 @@ object MrkEditDialog: TMrkEditDialog
       TabOrder = 7
     end
     object Label5: TLabel
-      Left = 33
+      Left = 32
       Height = 15
-      Top = 147
+      Top = 148
       Width = 32
       Caption = 'Color:'
       FocusControl = ColorBoxOutlineColor
       ParentColor = False
     end
     object ColorBoxOutlineColor: TColorBox
-      Left = 73
+      Left = 112
       Height = 22
       Top = 144
-      Width = 120
+      Width = 159
       HelpType = htKeyword
       HelpKeyword = 'HTML/index.html#outlinecolor'
       DefaultColorColor = clNone
@@ -2989,14 +2989,14 @@ object MrkEditDialog: TMrkEditDialog
       Left = 9
       Height = 3
       Top = 40
-      Width = 521
+      Width = 639
       BorderSpacing.Left = 4
       BorderSpacing.Top = 32
       BorderSpacing.Right = 4
       Shape = bsTopLine
     end
     object ButtonInsertCopyright: TBitBtn
-      Left = 505
+      Left = 618
       Height = 25
       Top = 8
       Width = 25
@@ -3007,7 +3007,7 @@ object MrkEditDialog: TMrkEditDialog
       TabOrder = 1
     end
     object ButtonBrowseFont: TBitBtn
-      Left = 289
+      Left = 272
       Height = 25
       Top = 48
       Width = 25
@@ -3066,10 +3066,11 @@ object MrkEditDialog: TMrkEditDialog
         0000000000000000000000000000000000000000000000000000
       }
       OnClick = ButtonBrowseFontClick
+      Spacing = 0
       TabOrder = 3
     end
     object UpDownShadowBlur: TUpDown
-      Left = 512
+      Left = 620
       Height = 23
       Top = 109
       Width = 17
@@ -3080,26 +3081,26 @@ object MrkEditDialog: TMrkEditDialog
       TabOrder = 10
     end
     object EditShadowBlur: TEdit
-      Left = 408
+      Left = 474
       Height = 23
       Top = 109
-      Width = 104
+      Width = 146
       HelpType = htKeyword
       HelpKeyword = 'HTML/index.html#mrkblur'
       OnChange = EditChanged
       TabOrder = 9
     end
     object Label6: TLabel
-      Left = 352
+      Left = 365
       Height = 15
-      Top = 113
+      Top = 112
       Width = 24
       Caption = 'Blur:'
       FocusControl = EditShadowBlur
       ParentColor = False
     end
     object Label4: TLabel
-      Left = 352
+      Left = 365
       Height = 15
       Top = 79
       Width = 32
@@ -3108,10 +3109,10 @@ object MrkEditDialog: TMrkEditDialog
       ParentColor = False
     end
     object ColorBoxShadowColor: TColorBox
-      Left = 408
+      Left = 474
       Height = 22
       Top = 76
-      Width = 121
+      Width = 163
       HelpType = htKeyword
       HelpKeyword = 'HTML/index.html#mrkshadowcolor'
       DefaultColorColor = clNone
@@ -3132,10 +3133,10 @@ object MrkEditDialog: TMrkEditDialog
       ParentColor = False
     end
     object ColorBoxFontColor: TColorBox
-      Left = 73
+      Left = 112
       Height = 22
       Top = 80
-      Width = 120
+      Width = 160
       HelpType = htKeyword
       HelpKeyword = 'HTML/index.html#mrkcolor'
       DefaultColorColor = clNone
@@ -3147,10 +3148,10 @@ object MrkEditDialog: TMrkEditDialog
       TabOrder = 4
     end
     object EditFont: TEdit
-      Left = 73
+      Left = 112
       Height = 23
       Top = 49
-      Width = 213
+      Width = 159
       HelpType = htKeyword
       HelpKeyword = 'HTML/index.html#mrkfont'
       OnChange = EditChanged
@@ -3175,10 +3176,10 @@ object MrkEditDialog: TMrkEditDialog
       ParentColor = False
     end
     object EditText: TEdit
-      Left = 73
+      Left = 112
       Height = 23
       Top = 9
-      Width = 432
+      Width = 504
       HelpType = htKeyword
       HelpKeyword = 'HTML/index.html#mrktext'
       OnChange = EditChanged
@@ -3187,8 +3188,8 @@ object MrkEditDialog: TMrkEditDialog
     object Bevel4: TBevel
       Left = 4
       Height = 3
-      Top = 173
-      Width = 534
+      Top = 181
+      Width = 650
       Align = alBottom
       BorderSpacing.Left = 4
       BorderSpacing.Top = 32
@@ -3196,19 +3197,19 @@ object MrkEditDialog: TMrkEditDialog
       Shape = bsBottomLine
     end
     object Label7: TLabel
-      Left = 353
+      Left = 364
       Height = 15
-      Top = 148
+      Top = 149
       Width = 41
       Caption = 'Quality:'
       FocusControl = EditShadowBlur
       ParentColor = False
     end
     object ComboBoxShadowQuality: TComboBox
-      Left = 409
+      Left = 474
       Height = 23
       Top = 144
-      Width = 120
+      Width = 162
       HelpType = htKeyword
       HelpKeyword = 'HTML/index.html#mrkquality'
       ItemHeight = 15
@@ -3231,14 +3232,14 @@ object MrkEditDialog: TMrkEditDialog
     Left = 0
     Height = 47
     Top = 340
-    Width = 542
+    Width = 658
     Align = alBottom
     BevelOuter = bvNone
     ClientHeight = 47
-    ClientWidth = 542
+    ClientWidth = 658
     TabOrder = 3
     object ButtonOk: TBitBtn
-      Left = 337
+      Left = 462
       Height = 31
       Top = 8
       Width = 90
@@ -3250,10 +3251,10 @@ object MrkEditDialog: TMrkEditDialog
       TabOrder = 1
     end
     object ButtonCancel: TBitBtn
-      Left = 435
+      Left = 560
       Height = 31
       Top = 8
-      Width = 99
+      Width = 90
       Align = alRight
       Anchors = [akRight, akBottom]
       BorderSpacing.Around = 8
@@ -3267,7 +3268,7 @@ object MrkEditDialog: TMrkEditDialog
       TabOrder = 2
     end
     object ButtonSave: TBitBtn
-      Left = 239
+      Left = 364
       Height = 31
       Top = 8
       Width = 90
@@ -3341,7 +3342,7 @@ object MrkEditDialog: TMrkEditDialog
       OnExecute = ActionNewExecute
     end
     object ActionNewDefault: TAction
-      Caption = 'Load Fa&vorite'
+      Caption = 'Fa&vorite'
       Hint = 'Restores all settings to your favorite settings.'
       ImageIndex = 1
       OnExecute = ActionNewDefaultExecute
@@ -3365,7 +3366,7 @@ object MrkEditDialog: TMrkEditDialog
       OnExecute = ActionSaveAsExecute
     end
     object ActionSaveAsFavorite: TAction
-      Caption = 'Save as &Favorite...'
+      Caption = 'Set as &Favorite...'
       Hint = 'Sets the current settings as your favorite settings.'
       ImageIndex = 3
       OnExecute = ActionSaveAsFavoriteExecute

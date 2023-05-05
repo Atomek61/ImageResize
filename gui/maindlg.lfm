@@ -1,7 +1,7 @@
 object MainDialog: TMainDialog
-  Left = 464
+  Left = 746
   Height = 720
-  Top = 480
+  Top = 234
   Width = 800
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'ImageResize'
@@ -18,25 +18,23 @@ object MainDialog: TMainDialog
   LCLVersion = '2.2.6.0'
   object PanelControls: TPanel
     Left = 0
-    Height = 511
+    Height = 520
     Top = 0
     Width = 800
     Align = alClient
     BevelOuter = bvNone
-    ClientHeight = 511
+    ClientHeight = 520
     ClientWidth = 800
-    Constraints.MinHeight = 508
+    Constraints.MinHeight = 520
     Constraints.MinWidth = 800
     ParentColor = False
     TabOrder = 0
-    OnClick = PanelControlsClick
     OnResize = PanelControlsResize
     object ToolBar: TToolBar
-      Left = 8
+      Left = 0
       Height = 48
-      Top = 7
-      Width = 450
-      Align = alNone
+      Top = 0
+      Width = 800
       ButtonHeight = 48
       ButtonWidth = 56
       Caption = 'ToolBar'
@@ -101,12 +99,17 @@ object MainDialog: TMainDialog
         Caption = 'ToolButton10'
         Style = tbsSeparator
       end
+      object ToolButtonAbout: TToolButton
+        Left = 433
+        Top = 0
+        Action = ActionAbout
+      end
     end
     object ButtonExecute: TBitBtn
       Left = 664
       Height = 29
       Hint = 'Starts the resampling process'
-      Top = 457
+      Top = 466
       Width = 126
       Anchors = [akRight, akBottom]
       Caption = 'E&xecute'
@@ -192,34 +195,26 @@ object MainDialog: TMainDialog
       ImageIndex = 2
       OnClick = ButtonExecuteClick
       Spacing = 16
-      TabOrder = 2
-    end
-    object ButtonAbout: TBitBtn
-      Left = 691
-      Height = 27
-      Top = 8
-      Width = 99
-      Action = ActionAbout
-      Anchors = [akTop, akRight]
-      Images = ImageList20x20
-      ImageIndex = 3
       TabOrder = 1
     end
     object GroupBoxImageFiles: TGroupBox
       Left = 8
-      Height = 385
-      Top = 64
+      Height = 386
+      Top = 56
       Width = 377
       HelpType = htKeyword
       HelpKeyword = 'HTML/index.html#srcfolder'
       Anchors = [akTop, akLeft, akRight, akBottom]
-      Caption = '    Image &Files'
-      ClientHeight = 365
+      Caption = '&Images'
+      ClientHeight = 366
       ClientWidth = 373
-      TabOrder = 3
+      ParentBackground = False
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 2
       object NotebookFileSource: TNotebook
         Left = 0
-        Height = 326
+        Height = 327
         Top = 39
         Width = 373
         PageIndex = 0
@@ -229,53 +224,55 @@ object MainDialog: TMainDialog
           HelpType = htKeyword
           HelpKeyword = 'HTML/index.html#srcfolder'
           object MemoSrcFilenames: TMemo
-            Left = 4
-            Height = 269
+            Left = 8
+            Height = 268
             Hint = 'Enter a list of files with absolute pathes.'#13#10#13#10'Press Browse... and select multiple files while'#13#10'holding <STRG> or <SHIFT> and clicking. '
-            Top = 32
-            Width = 574
+            Top = 25
+            Width = 360
             Anchors = [akTop, akLeft, akRight, akBottom]
             OnChange = MemoSrcFilenamesChange
             ScrollBars = ssAutoVertical
-            TabOrder = 2
+            TabOrder = 0
             WordWrap = False
           end
           object Label1: TLabel
             Left = 8
             Height = 15
-            Top = 14
-            Width = 81
-            Caption = 'Source &File List:'
+            Top = 6
+            Width = 65
+            Caption = 'Source &Files:'
             FocusControl = MemoSrcFilenames
             ParentColor = False
           end
           object ButtonBrowseSrcFiles: TBitBtn
-            Left = 479
-            Height = 27
-            Top = 0
-            Width = 99
+            Left = 319
+            Height = 25
+            Top = 296
+            Width = 25
             Action = ActionBrowseFilenames
-            Anchors = [akTop, akRight]
+            Anchors = [akRight, akBottom]
             Images = ImageList20x20
             ImageIndex = 0
-            TabOrder = 0
+            Spacing = 0
+            TabOrder = 1
           end
           object ButtonClearSrcFiles: TBitBtn
-            Left = 378
-            Height = 27
-            Top = 0
-            Width = 99
+            Left = 343
+            Height = 25
+            Top = 296
+            Width = 25
             Action = ActionClearFilenames
-            Anchors = [akTop, akRight]
+            Anchors = [akRight, akBottom]
             Images = ImageList20x20
             ImageIndex = 1
-            TabOrder = 1
+            Spacing = 0
+            TabOrder = 2
           end
           object LabelSourceFileListMessage: TLabel
             Left = 4
             Height = 14
             Top = 302
-            Width = 574
+            Width = 308
             Alignment = taRightJustify
             Anchors = [akLeft, akRight, akBottom]
             AutoSize = False
@@ -284,20 +281,21 @@ object MainDialog: TMainDialog
         end
         object PagePathMask: TPage
           object ButtonBrowseSrcFolder: TBitBtn
-            Left = 335
-            Height = 27
-            Top = 30
-            Width = 27
+            Left = 341
+            Height = 25
+            Top = 24
+            Width = 25
             Action = ActionBrowseSrcFolder
             Anchors = [akTop, akRight]
             Images = ImageList20x20
             ImageIndex = 0
+            Spacing = 0
             TabOrder = 1
           end
           object Label4: TLabel
             Left = 8
             Height = 15
-            Top = 14
+            Top = 6
             Width = 75
             Caption = 'Source Folder:'
             FocusControl = EditSrcFolder
@@ -307,8 +305,8 @@ object MainDialog: TMainDialog
             Left = 8
             Height = 23
             Hint = 'Enter a source folder with your images.'
-            Top = 32
-            Width = 327
+            Top = 25
+            Width = 332
             Anchors = [akTop, akLeft, akRight]
             OnChange = EditSrcFolderChange
             TabOrder = 0
@@ -317,8 +315,8 @@ object MainDialog: TMainDialog
             Left = 8
             Height = 15
             Top = 69
-            Width = 66
-            Caption = 'File Selecto&r:'
+            Width = 76
+            Caption = 'File Wildcards:'
             FocusControl = EditSrcMasks
             ParentColor = False
           end
@@ -327,7 +325,7 @@ object MainDialog: TMainDialog
             Height = 23
             Hint = 'Enter a source folder with your images.'
             Top = 88
-            Width = 327
+            Width = 332
             Anchors = [akTop, akLeft, akRight]
             OnChange = EditDstFolderChange
             TabOrder = 2
@@ -351,8 +349,8 @@ object MainDialog: TMainDialog
         Left = 128
         Height = 19
         Top = 5
-        Width = 119
-        Caption = 'All Files of a Folder'
+        Width = 118
+        Caption = 'All Files in a Folder'
         OnChange = RadioButtonFilelistChange
         TabOrder = 1
       end
@@ -371,25 +369,25 @@ object MainDialog: TMainDialog
     object GroupBoxParams: TGroupBox
       Left = 395
       Height = 384
-      Top = 64
+      Top = 56
       Width = 398
       Anchors = [akTop, akRight]
-      Caption = '    &Parameters'
+      Caption = '&Parameters'
       ClientHeight = 364
       ClientWidth = 394
-      TabOrder = 4
+      TabOrder = 3
       object PageControlParams: TPageControl
         Left = 4
         Height = 360
         Top = 0
         Width = 386
-        ActivePage = TabSheetRenaming
+        ActivePage = TabSheetRessources
         Align = alClient
         BorderSpacing.Left = 4
         BorderSpacing.Right = 4
         BorderSpacing.Bottom = 4
         MultiLine = True
-        TabIndex = 2
+        TabIndex = 4
         TabOrder = 0
         Options = [nboMultiLine]
         object TabSheetSizes: TTabSheet
@@ -399,7 +397,7 @@ object MainDialog: TMainDialog
           ClientHeight = 332
           ClientWidth = 378
           object Label3: TLabel
-            Left = 23
+            Left = 8
             Height = 15
             Top = 17
             Width = 28
@@ -424,7 +422,7 @@ object MainDialog: TMainDialog
             Height = 23
             Hint = 'Enter a comma-separated list of image sizes.'#13#10#13#10'The size refers to the longer side of an image.'#13#10#13#10'You can build a list by clicking the suggested'#13#10'sizes from the button field.'
             Top = 36
-            Width = 338
+            Width = 339
             OnChange = EditSizesChange
             OnExit = EditSizesExit
             TabOrder = 0
@@ -451,10 +449,10 @@ object MainDialog: TMainDialog
             Left = 8
             Height = 65
             Top = 16
-            Width = 248
-            Caption = 'Jpg Options'
+            Width = 360
+            Caption = 'JPEG Options'
             ClientHeight = 45
-            ClientWidth = 244
+            ClientWidth = 356
             TabOrder = 0
             object Label5: TLabel
               Left = 13
@@ -466,7 +464,7 @@ object MainDialog: TMainDialog
               ParentColor = False
             end
             object ComboBoxJpgQuality: TComboBox
-              Left = 112
+              Left = 128
               Height = 23
               Hint = 'Enter a jpg compression quality from'#13#10#13#10'1 - high compression, poor quality, small image'#13#10'75 - good compression, good quality, medium size'#13#10'100 - low compression, highest quality, large file '#13#10#13#10'It makes not much sense to enter a higher rate, than'#13#10'the original file has.'
               Top = 5
@@ -491,10 +489,10 @@ object MainDialog: TMainDialog
             Left = 8
             Height = 65
             Top = 96
-            Width = 248
-            Caption = 'Png Options'
+            Width = 360
+            Caption = 'PNG Options'
             ClientHeight = 45
-            ClientWidth = 244
+            ClientWidth = 356
             TabOrder = 1
             object Label6: TLabel
               Left = 13
@@ -506,7 +504,7 @@ object MainDialog: TMainDialog
               ParentColor = False
             end
             object ComboBoxPngCompression: TComboBox
-              Left = 112
+              Left = 128
               Height = 23
               Hint = 'Select a png lossless compression degree.'
               Top = 4
@@ -531,7 +529,6 @@ object MainDialog: TMainDialog
           Caption = 'Renaming'
           ClientHeight = 332
           ClientWidth = 378
-          OnContextPopup = TabSheetRenamingContextPopup
           object CheckBoxRenEnabled: TCheckBox
             Left = 8
             Height = 19
@@ -542,13 +539,13 @@ object MainDialog: TMainDialog
             TabOrder = 0
           end
           object GroupBoxRename: TGroupBox
-            Left = 8
+            Left = 7
             Height = 208
-            Top = 31
-            Width = 249
+            Top = 30
+            Width = 363
             Caption = 'Strategy'
             ClientHeight = 188
-            ClientWidth = 245
+            ClientWidth = 359
             TabOrder = 1
             Visible = False
             object RadioButtonRenSimple: TRadioButton
@@ -618,15 +615,15 @@ object MainDialog: TMainDialog
             end
           end
           object GroupBoxShaking: TGroupBox
-            Left = 8
+            Left = 7
             Height = 79
             Top = 246
-            Width = 249
+            Width = 363
             HelpType = htKeyword
             HelpKeyword = 'HTML/index.html#shaking'
             Caption = 'Shake'
             ClientHeight = 59
-            ClientWidth = 245
+            ClientWidth = 359
             TabOrder = 2
             Visible = False
             object CheckBoxShake: TCheckBox
@@ -648,11 +645,11 @@ object MainDialog: TMainDialog
               ParentColor = False
             end
             object ComboBoxShakeSeed: TComboBox
-              Left = 72
+              Left = 88
               Height = 23
               Hint = 'Enter a number, ets say 1000, to create always the same shaked order or 0 for shaking always randomly.'
               Top = 28
-              Width = 104
+              Width = 152
               ItemHeight = 15
               ItemIndex = 0
               Items.Strings = (
@@ -671,16 +668,16 @@ object MainDialog: TMainDialog
           ClientWidth = 378
           object GroupBoxMrkLayout: TGroupBox
             Left = 5
-            Height = 256
-            Top = 72
+            Height = 243
+            Top = 87
             Width = 367
             Caption = 'Layout'
-            ClientHeight = 236
+            ClientHeight = 223
             ClientWidth = 363
             TabOrder = 2
             Visible = False
             object Label15: TLabel
-              Left = 8
+              Left = 16
               Height = 15
               Top = 3
               Width = 23
@@ -689,7 +686,7 @@ object MainDialog: TMainDialog
               ParentColor = False
             end
             object Label13: TLabel
-              Left = 8
+              Left = 16
               Height = 15
               Top = 35
               Width = 44
@@ -698,7 +695,7 @@ object MainDialog: TMainDialog
               ParentColor = False
             end
             object EditMrkAlpha: TEdit
-              Left = 64
+              Left = 104
               Height = 23
               Hint = 'Choose the watermarks opacity.'#13#10#13#10'A strong watermark has 100%,'#13#10'a weak one has 10% opacity.'
               Top = 32
@@ -708,7 +705,7 @@ object MainDialog: TMainDialog
               Text = '50'
             end
             object Label14: TLabel
-              Left = 116
+              Left = 156
               Height = 15
               Top = 35
               Width = 10
@@ -716,7 +713,7 @@ object MainDialog: TMainDialog
               ParentColor = False
             end
             object EditMrkSize: TEdit
-              Left = 64
+              Left = 104
               Height = 23
               Hint = 'Size in percent of the watermark image in relation to the resampled image width.'
               Top = 0
@@ -726,7 +723,7 @@ object MainDialog: TMainDialog
               Text = '10'
             end
             object Label16: TLabel
-              Left = 116
+              Left = 156
               Height = 15
               Top = 3
               Width = 10
@@ -734,7 +731,7 @@ object MainDialog: TMainDialog
               ParentColor = False
             end
             object UpDownMrkAlpha: TUpDown
-              Left = 98
+              Left = 138
               Height = 23
               Top = 32
               Width = 17
@@ -746,7 +743,7 @@ object MainDialog: TMainDialog
               Flat = True
             end
             object UpDownMrkSize: TUpDown
-              Left = 98
+              Left = 138
               Height = 23
               Top = 0
               Width = 17
@@ -758,7 +755,7 @@ object MainDialog: TMainDialog
               Flat = True
             end
             object Label9: TLabel
-              Left = 144
+              Left = 200
               Height = 15
               Top = 3
               Width = 58
@@ -767,7 +764,7 @@ object MainDialog: TMainDialog
               ParentColor = False
             end
             object EditMrkX: TEdit
-              Left = 210
+              Left = 288
               Height = 23
               Hint = 'Horizontal space of the watermark to the border in percent of the destination image width.'
               Top = 0
@@ -777,7 +774,7 @@ object MainDialog: TMainDialog
               Text = '1'
             end
             object Label10: TLabel
-              Left = 263
+              Left = 341
               Height = 15
               Top = 3
               Width = 10
@@ -785,7 +782,7 @@ object MainDialog: TMainDialog
               ParentColor = False
             end
             object Label11: TLabel
-              Left = 144
+              Left = 200
               Height = 15
               Top = 35
               Width = 41
@@ -794,7 +791,7 @@ object MainDialog: TMainDialog
               ParentColor = False
             end
             object EditMrkY: TEdit
-              Left = 210
+              Left = 288
               Height = 23
               Hint = 'Vertical space of the watermark to the border in percent of the destination image height.'
               Top = 32
@@ -804,7 +801,7 @@ object MainDialog: TMainDialog
               Text = '1'
             end
             object Label12: TLabel
-              Left = 263
+              Left = 341
               Height = 15
               Top = 35
               Width = 10
@@ -812,7 +809,7 @@ object MainDialog: TMainDialog
               ParentColor = False
             end
             object UpDownMrkX: TUpDown
-              Left = 244
+              Left = 322
               Height = 23
               Top = 0
               Width = 17
@@ -823,7 +820,7 @@ object MainDialog: TMainDialog
               Flat = True
             end
             object UpDownMrkY: TUpDown
-              Left = 244
+              Left = 322
               Height = 23
               Top = 32
               Width = 17
@@ -832,19 +829,6 @@ object MainDialog: TMainDialog
               Position = 1
               TabOrder = 7
               Flat = True
-            end
-            object Label20: TLabel
-              Left = 272
-              Height = 48
-              Top = 8
-              Width = 90
-              Alignment = taCenter
-              AutoSize = False
-              Caption = 'Click or drag'#13#10'the watermark'
-              Font.Color = clGrayText
-              Layout = tlCenter
-              ParentColor = False
-              ParentFont = False
             end
             object LabelMrkSpace: TLabel
               Left = 155
@@ -858,20 +842,20 @@ object MainDialog: TMainDialog
               ParentFont = False
             end
             object PanelPreview: TPanel
-              Left = 8
-              Height = 168
+              Left = 32
+              Height = 152
               Top = 64
-              Width = 346
+              Width = 298
               BevelOuter = bvLowered
-              ClientHeight = 168
-              ClientWidth = 346
+              ClientHeight = 152
+              ClientWidth = 298
               TabOrder = 8
               object PaintBoxMrkPreview: TPaintBox
                 Cursor = crNone
                 Left = 1
-                Height = 166
+                Height = 150
                 Top = 1
-                Width = 344
+                Width = 296
                 Align = alClient
                 OnMouseDown = PaintBoxMrkPreviewMouseDown
                 OnMouseLeave = PaintBoxMrkPreviewMouseLeave
@@ -880,59 +864,66 @@ object MainDialog: TMainDialog
                 OnMouseWheel = PaintBoxMrkPreviewMouseWheel
                 OnPaint = PaintBoxMrkPreviewPaint
               end
+              object Label20: TLabel
+                Left = 10
+                Height = 16
+                Top = 8
+                Width = 266
+                Alignment = taCenter
+                AutoSize = False
+                Caption = 'Click or drag the watermark'
+                Enabled = False
+                Font.Color = clGrayText
+                Layout = tlCenter
+                ParentColor = False
+                ParentFont = False
+              end
             end
           end
-          object PanelMrkSourceFile: TPanel
+          object CheckBoxMrkEnabled: TCheckBox
+            Left = 8
+            Height = 19
+            Top = 8
+            Width = 62
+            Caption = '&Enabled'
+            OnChange = CheckBoxMrkEnabledChange
+            TabOrder = 0
+          end
+          object GroupBoxMrkFilename: TGroupBox
             Left = 5
-            Height = 25
-            Top = 40
-            Width = 363
-            BevelOuter = bvNone
-            ClientHeight = 25
+            Height = 52
+            Top = 32
+            Width = 367
+            Caption = 'Filename'
+            ClientHeight = 32
             ClientWidth = 363
             TabOrder = 1
             Visible = False
-            object Label7: TLabel
-              Left = 0
-              Height = 25
-              Top = 0
-              Width = 51
-              Align = alLeft
-              BorderSpacing.Right = 6
-              Caption = 'Fi&lename:'
-              FocusControl = EditMrkFilename
-              Layout = tlCenter
-              ParentColor = False
-            end
             object EditMrkFilename: TEdit
-              Left = 57
-              Height = 25
+              Left = 8
+              Height = 23
               Hint = 'Select a png file with the desired watermark.'#13#10#13#10'A watermark is a little image, which usually'#13#10'appears in a corner of the image.'#13#10#13#10'Inkscape is a good tool for creating'#13#10'watermark files. Or use the inbuilt'#13#10'editor.'
-              Top = 0
-              Width = 225
-              Align = alClient
-              Anchors = [akTop, akLeft, akRight]
+              Top = 1
+              Width = 300
+              AutoSize = False
               TabOrder = 0
             end
             object ButtonBrowseMrkFilename: TBitBtn
-              Left = 282
+              Left = 309
               Height = 25
               Top = 0
-              Width = 27
+              Width = 25
               Action = ActionBrowseMrkFilename
-              Align = alRight
-              Anchors = [akTop, akRight]
               Images = ImageList20x20
               ImageIndex = 0
               Spacing = 0
               TabOrder = 1
             end
             object ButtonMrkEdit: TBitBtn
-              Left = 325
+              Left = 334
               Height = 25
               Top = 0
-              Width = 38
-              Align = alRight
+              Width = 25
               BorderSpacing.Left = 16
               Glyph.Data = {
                 36090000424D3609000000000000360000002800000018000000180000000100
@@ -1018,15 +1009,6 @@ object MainDialog: TMainDialog
               TabOrder = 2
             end
           end
-          object CheckBoxMrkEnabled: TCheckBox
-            Left = 8
-            Height = 19
-            Top = 8
-            Width = 62
-            Caption = '&Enabled'
-            OnChange = CheckBoxMrkEnabledChange
-            TabOrder = 0
-          end
         end
         object TabSheetRessources: TTabSheet
           HelpType = htKeyword
@@ -1091,15 +1073,15 @@ object MainDialog: TMainDialog
     object GroupBoxDstFolder: TGroupBox
       Left = 8
       Height = 58
-      Top = 449
+      Top = 452
       Width = 377
       HelpType = htKeyword
       HelpKeyword = 'HTML/index.html#dstfolder'
       Anchors = [akLeft, akRight, akBottom]
-      Caption = '    &Destination Folder'
+      Caption = '&Destination Folder'
       ClientHeight = 38
       ClientWidth = 373
-      TabOrder = 5
+      TabOrder = 4
       object Label2: TLabel
         Left = 176
         Height = 13
@@ -1117,16 +1099,16 @@ object MainDialog: TMainDialog
         Height = 23
         Hint = 'Enter a destination folder of the resampled images.'#13#10#13#10'If multiple sizes are entered, insert a placeholder %SIZE%'#13#10'into the path where the program shall insert the current size .'
         Top = 8
-        Width = 330
+        Width = 333
         Anchors = [akTop, akLeft, akRight]
         OnChange = EditDstFolderChange
         TabOrder = 0
       end
       object ButtonBrowseDstFolder: TBitBtn
-        Left = 339
-        Height = 27
-        Top = 6
-        Width = 27
+        Left = 342
+        Height = 25
+        Top = 7
+        Width = 25
         Action = ActionBrowseDstFolder
         Anchors = [akTop, akRight]
         Images = ImageList20x20
@@ -1136,40 +1118,35 @@ object MainDialog: TMainDialog
       end
     end
     object LabelDstFolderRequired: TLabel
-      Left = 0
-      Height = 16
+      Left = 16
+      Height = 17
       Hint = 'Required'
-      Top = 0
-      Width = 7
-      Caption = '*'
+      Top = 448
+      Width = 14
+      Caption = 'Ø'
+      Font.CharSet = SYMBOL_CHARSET
       Font.Color = clRed
-      Font.Name = 'Courier New'
-      Font.Style = [fsBold]
-      ParentColor = False
-      ParentFont = False
-    end
-    object LabelSrcFilenamesRequired: TLabel
-      Left = 4
-      Height = 16
-      Hint = 'Required'
-      Top = -16
-      Width = 7
-      Caption = '*'
-      Font.Color = clRed
-      Font.Name = 'Courier New'
+      Font.Height = -16
+      Font.Name = 'Wingdings'
+      Font.Pitch = fpVariable
+      Font.Quality = fqDraft
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
     end
     object LabelSizesRequired: TLabel
-      Left = 0
-      Height = 16
+      Left = 408
+      Height = 17
       Hint = 'Required'
-      Top = 0
-      Width = 7
-      Caption = '*'
+      Top = 64
+      Width = 14
+      Caption = 'Ø'
+      Font.CharSet = SYMBOL_CHARSET
       Font.Color = clRed
-      Font.Name = 'Courier New'
+      Font.Height = -16
+      Font.Name = 'Wingdings'
+      Font.Pitch = fpVariable
+      Font.Quality = fqDraft
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
@@ -1177,11 +1154,25 @@ object MainDialog: TMainDialog
     object ProgressBar: TProgressBar
       Left = 400
       Height = 10
-      Top = 495
+      Top = 504
       Width = 392
       Anchors = [akRight, akBottom]
-      TabOrder = 6
+      TabOrder = 5
       Visible = False
+    end
+    object LabelSrcFilenamesRequired: TLabel
+      Left = 16
+      Height = 17
+      Hint = 'Required'
+      Top = 63
+      Width = 14
+      Caption = 'Ø'
+      Font.Color = clRed
+      Font.Height = -16
+      Font.Name = 'Wingdings'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
     end
   end
   object Splitter1: TSplitter
@@ -1210,11 +1201,9 @@ object MainDialog: TMainDialog
     Left = 120
     Top = 600
     object ActionBrowseFilenames: TAction
-      Caption = '&Browse...'
       OnExecute = ActionBrowseFilenamesExecute
     end
     object ActionClearFilenames: TAction
-      Caption = 'Clear'
       OnExecute = ActionClearFilenamesExecute
     end
     object ActionBrowseSrcFolder: TAction
@@ -1225,6 +1214,7 @@ object MainDialog: TMainDialog
     end
     object ActionAbout: TAction
       Caption = 'Abo&ut...'
+      ImageIndex = 8
       OnExecute = ActionAboutExecute
     end
     object ActionBrowseMrkFilename: TAction
@@ -1270,6 +1260,7 @@ object MainDialog: TMainDialog
     end
     object ActionEditWatermark: TAction
       Caption = '&Watermark...'
+      Hint = 'Opens the internal Watermark Editor'
       ImageIndex = 7
       OnExecute = ActionEditWatermarkExecute
     end
@@ -1301,37 +1292,41 @@ object MainDialog: TMainDialog
     Left = 256
     Top = 520
     Bitmap = {
-      4C7A080000001800000018000000B70300000000000078DAED9ADD4B544118C6
-      B764630BED0B53092AB59290948234576D3335A22CD0C2523463CDCAAFA0B544
-      13A4BAB0482CA32FD1A490F4A23044A504152C312AD8E8A6C0A8A83F40BA0B22
-      82B799C31E1967F71CCFC7CCD1B579E061CFCE99F9BDE33BEFCCCE85369B9286
-      B26C5C3504EC79E49C493E6E371B4F66C831641EDDCE2A06FDC92C4F596CD779
-      7A8E846DB6911180F6F676A0DF793C5D52BB92B5CE1FF7C51A1D9D02AD9A9D3F
-      33EF982D7F9AE7FBD78F3C7FFCDCD6F606BC5E6F406BE4FBD5BF2CCCC6DFCDF1
-      FDE3E9951E3EAE13594AF336337FB97EACE0F3C88F95F317F959D8F9E1C53762
-      9B90102745F77F02DAC1C00FC4D56BC167CF5FDBDA6BCA6A7CB36C353E4B36CD
-      67CD26F93CD8329F171B8B277B9E0B7C567B9ECF7C21214B35E9D90366AC95AF
-      57822FF856F279D7BF55FCC1C14155B3E22BC5FBDFF8740CD6F9375B47E2FE26
-      EE6F42E2FE23F8822FEE3FE2FE23EE3F42424273A5D4473690CD9BCF2306CD67
-      1D23109F650C253EAB186A7C163166E39B8D31D7FC605DDF60DD5FC176BE0909
-      09B1D665E03706F793AD87AD678C9EFE46E6A3759C51B696F166D96A1C56EC40
-      3CD66CA5183CF6845573E7957B2B6AC78ADAB762EF5A71F6988961C5992E2414
-      1CFA5A1CBD1C3915D9859C886C67C4C5BC7164A0FC1BB91B799D097605F2DF00
-      6CD253C8DB0CB09329B617D9EDFB7BCA90BF10EF7E203B74F21F13E327E87CA3
-      EF51C83F893E253AF967911F22BF40CE50E8D347F09B19D7939DCA513D43B603
-      F919C1FE831CC3888DF3FE96AAA1930CD9644E707D5530CCCB00C1FE859CCB90
-      1D49ED876CC6F59244B027399C6FF1C8633EB706E1F94CE6674CF0FDF8A1BEB3
-      59FAFD12BFE873AFEFCDC580CD93CD2306CD66194389CD823F5FD90DEFBE819A
-      D5D84A6312CACF8316BE11B656BE51B616BE1ABBB2EF152415B861C30E27C4A6
-      EC828CCA5AA819FDA099AFC6CE6FE90047D80A70969443D1BD6E387AB3131273
-      8E406878049C793A6C8AEF197E0FCB56AE82E31D4FA0F04E176C4ACF848DCEDD
-      D2F3FE8B4D1019176F988FDB0F345C833857B6C45FB438046276A6C3F6DC02D8
-      5BD328BD0F5B1309653DCF75F3E576D7E97390E6AE8294E253D2FF77560F4CCC
-      1887D722FFC6035DF5497A5FED1548C8390C872EB548FC347725E45DBD0BA55D
-      FDD2FBF0D8CD70A2B3D7301FCF17AF6D55FF3824179682DDB1547266751D14DD
-      EF81B08828A87FFDD9301F3BA3E202AC5E1F03C76E3D84BA8949A87DF9110E36
-      5E97D61DB7E9DDBF819CD7741BA2B66C95D638C4BE04629DAEE9BCB0E06BB195
-      7CFCCCC30BE18EF10FADD28AE2
+      4C7A090000001800000018000000390400000000000078DAED9A5B48544118C7
+      B764C3C2ED46A908D56A6521290579592BB31B511674C132BC8466E52D682DD1
+      82A81E2A8A6E74458B42AA87A408930A4CE882DDC0E8A5602BA51E7A94C08720
+      22F89A3978649C3DE7742EDF1CDD9A3FFCD9B373CEFCBE39DF7C333B881E8F9E
+      1E2DF308D523C0E7B16366F9B4DD693C95A1C650797C3B560CFE132D4FCB70E7
+      79608C8C3D9EC78F011A1B1B81BF170C362BED7A363B7EFA2C5547472F98D5DF
+      F983F34ED9EAA7737E78FDA8E3A7D7972FBF82AEAE2E4D9BE487D5BF2ACAA6DF
+      9DF1C3E35995153EAD13557AE376327EB57EDCE08BC88F9BE397F9F9B7F3238A
+      6FC71E292941F2B77E00DE91C0D7E25AB5E4E3F313CEDC716423BE53B6111F93
+      CDF3B1D92C5F045BE58B625389640F7341BF8DAE87335F4ACA5585824BC089CD
+      F2AD4AF225DF4DBEE8FA778BDFD6D666682CBE5EBCFF8DCFC7C0CEBFD33A92E7
+      37797E9392E71FC9977C79FE91E71F79FE9192921A2A655FF7806AD17C113178
+      3E760C2D3E660C3D3E560C233E468CBFF19DC6186A7EA4CE6FA4AEAF48DBDFA4
+      A4A4B07508C4F5A1CFA9B6C2B6D2C7CAF376C663B69F5DB699FE4ED9461C2CB6
+      160F9BAD1743C49A706BECA272EF46EDB851FB6EAC5D37F61E2731DCD8D3A5A4
+      2243DD45FEB1C4D9C439C469C45E242EE53D2706CE3F896F124F71C0AE24FEAD
+      C166DD4B3CD7063B8363771197F6BF4F39F167E6DE57E2688BFC1B4CFF4E3EDF
+      E47B3CF177E699128BFC5DC4D7881F12E7EA3C738FE19F40AE272F97A3064476
+      34F15D86FD8B3811894DF3FE9AABA16D886C3627B4BE2A11F3729F61FF205E87
+      C88EE3D6C372E47A4967D82101FB5B0AF1937E9F89C0FD99CDCF13C90FE3C7F4
+      EFCDCAEF97FC451F7A7D395104D422D92262F06CCC187A6C0CFE7065EF7FD303
+      463662EBF549ADD80366F876D866F976D966F846ECAA7BCF20BDA014A6CD0F40
+      52D622C8ADAA83DA8E77A6F946ECFC934D10ED1B0781920A28BC7813369DBE0A
+      69791B2166522CEC6C6977C40FB6BF8531E3274071D36DD872BE19662C5C0AD3
+      038B95EB55FB8E405C728A6D3E6D5FBDFF1824E72C57F82346464162E64298B7
+      AE0056D41E50EEFB26C741F9AD0796F96A7BCE8EDDB0A0B41AB28AB62BFFDF59
+      73BF73503F3A17F9A7AE58AA4FD62BEB0E436ADE06587BF0A4C25F505A05EB8F
+      5E80B2E656E5FEA4A499B0F5EA1DDB7C3A5E3AB7D5ADCF21634B1978A3472B5E
+      5A530F85976E812F361E1A5E7CB4CDA7CEADDC0B13A726C2E6B3D7A0BE330475
+      4FDFC39A03C79579A76D56D7AF96D71F3907F1B3E728731CE51D0549819C81BC
+      60F0CDD84D3EBD1661794291FA17F4A9D89F49CEFC7DFCDF7E3E1727E68B6263
+      C5E829F21F64782D7A6D48FC3EFA3E98B90F154C4920DC6F1AB96911C846C93F
+      EDCBE785CB97A39C31FCB0B1B271ECBE43A86C96AFBBD0FF92CF09653375EB78
+      CEE95CEAE59FC6C2AA253E5FD87CCDF721F9A379C4A84F751E07BD8703BE4E3D
+      A2EF715A79C7624B89D51FB81B8AF0
     }
   end
   object SaveAsDialog: TSaveDialog
@@ -1394,20 +1389,20 @@ object MainDialog: TMainDialog
   end
   object ApplicationProperties1: TApplicationProperties
     OnException = ApplicationProperties1Exception
-    Left = 552
+    Left = 624
     Top = 544
   end
   object HTMLHelpDatabase: THTMLHelpDatabase
     BaseURL = 'file://hlp'
     AutoRegister = True
     KeywordPrefix = 'HTML/'
-    Left = 520
+    Left = 576
     Top = 8
   end
   object HTMLBrowserHelpViewer: THTMLBrowserHelpViewer
     BrowserParams = '%s'
     AutoRegister = True
-    Left = 576
+    Left = 632
     Top = 8
   end
   object BrowseSrcFolder: TSelectDirectoryDialog
@@ -1416,10 +1411,5 @@ object MainDialog: TMainDialog
     Options = [ofPathMustExist, ofEnableSizing]
     Left = 72
     Top = 592
-  end
-  object IniPropStorage1: TIniPropStorage
-    StoredValues = <>
-    Left = 472
-    Top = 8
   end
 end

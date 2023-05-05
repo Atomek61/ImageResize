@@ -9,12 +9,11 @@ unit mrkeditdlg;
 interface
 
 uses
-  Classes, SysUtils, Registry, Forms, Controls, Graphics, Dialogs, StdCtrls,
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
   ColorBox, ComCtrls, ExtCtrls, Buttons, ActnList, Menus, BGRABitmap,
   mrk.utils, IniFiles;
 
 const
-  DIALOGTITLE   = 'Watermark Editor';
   WAMSINIEXT    = '.was';
   WAMSINITYP    = 'WAMS';
   WAMSINIVER100 = 100;
@@ -136,6 +135,12 @@ uses
 const
   DLGREGKEY = 'MrkEditor';
 
+resourcestring
+  SCptDialogTitle = 'Watermark Editor';
+  SErrInvalidParams = 'Invalid parameters';
+  SErrInvalidFileTypeFmt = 'Invalid filetype, %s expected.';
+  SErrIncompatibleFileVersion = 'Incompatible file version %.2f, %.2f expected.';
+
 {$R *.lfm}
 
 { TMrkEditDialog }
@@ -152,7 +157,7 @@ end;
 
 procedure TMrkEditDialog.FormCreate(Sender: TObject);
 begin
-  Caption := DIALOGTITLE;
+  Caption := SCptDialogTitle;
   FMrkImage := nil;
   if not LoadFrom(WATERMARKLASTSETTINGS) then
     ActionNew.Execute;
@@ -235,7 +240,7 @@ end;
 procedure TMrkEditDialog.DialogToParams(out Params: TWatermarkParams);
 begin
   if not TryDialogToParams(Params) then
-    raise Exception.Create('Invalid parameters');
+    raise Exception.Create(SErrInvalidParams);
 end;
 
 procedure TMrkEditDialog.ParamsToDialog(const Params: TWatermarkParams);
@@ -282,7 +287,7 @@ var
   Filename :string;
 begin
   if not TryDialogToParams(Params) then
-    raise Exception.Create('Invalid parameter.');
+    raise Exception.Create(SErrInvalidParams);
   Ini := TIniFile.Create(GetSettingsFilename(WATERMARKFAVORITE, true));
   try
     Params.SaveToIni(Ini);
@@ -324,14 +329,14 @@ begin
     DialogToParams(Params);
     Ini := TIniFile.Create(OpenDialog.Filename);
     if Ini.ReadString('Common', 'Type', '')<>WAMSINITYP then
-      raise Exception.CreateFmt('Invalid filetype, %s expected.', [WAMSINITYP]);
+      raise Exception.CreateFmt(SErrInvalidFileTypeFmt, [WAMSINITYP]);
     Ver := Ini.ReadInteger('Common', 'Version', 0);
     if Ver<>WAMSINIVER then
-      raise Exception.CreateFmt('Incompatible file version %.2f, %.2f expected.', [Ver, WAMSINITYP]);
+      raise Exception.CreateFmt(SErrIncompatibleFileVersion, [Ver, WAMSINITYP]);
     PngFilename := Copy(OpenDialog.Filename, 1, Length(OpenDialog.Filename)-Length(WAMSINIEXT));
     Params.LoadFromIni(Ini);
     ParamsToDialog(Params);
-    Caption := DIALOGTITLE + ' - ' + ExtractFilename(OpenDialog.Filename);
+    Caption := SCptDialogTitle + ' - ' + ExtractFilename(OpenDialog.Filename);
     FDirty := false;
     if FileExists(PngFilename) then begin
       FMrkFilename := PngFilename;
@@ -416,7 +421,7 @@ begin
       Ini.WriteString('Common', 'Type', WAMSINITYP);
       Ini.WriteInteger('Common', 'Version', WAMSINIVER);
       Params.SaveToIni(Ini);
-      Caption := DIALOGTITLE + ' - ' + ExtractFilename(FMrkFilename);
+      Caption := SCptDialogTitle + ' - ' + ExtractFilename(FMrkFilename);
       FDirty := false;
     end;
   finally
@@ -428,7 +433,7 @@ end;
 procedure TMrkEditDialog.SetDirty;
 begin
   if not FDirty then begin
-    Caption := DIALOGTITLE + '*';
+    Caption := SCptDialogTitle + '*';
     FDirty := true;
     FMrkFilename := '';
     ActionOk.Enabled := false;
@@ -460,7 +465,7 @@ var
   Params :TWatermarkParams;
 begin
   if not TryDialogToParams(Params) then
-    raise Exception.Create('Invalid parameter.');
+    raise Exception.Create(SErrInvalidParams);
   Ini := TIniFile.Create(GetSettingsFilename(SettingsRole, true));
   try
     Params.SaveToIni(Ini);

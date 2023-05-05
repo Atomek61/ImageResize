@@ -3,12 +3,14 @@ program imageresizegui;
 {$mode objfpc}{$H+}
 
 uses
-  {$IFDEF UNIX}{$IFDEF UseCThreads}
+  {$IFDEF UNIX}
   cthreads,
-  {$ENDIF}{$ENDIF}
+  {$ENDIF}
+  {$IFDEF HASAMIGA}
+  athreads,
+  {$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, maindlg, aboutdlg, imgres, generics.queue, threading.dispatcher, utils
-  { you can add units after this }, mrkeditdlg;
+  Forms, maindlg, aboutdlg, mrkeditdlg, imgres;
 
 {$R *.res}
 

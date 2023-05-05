@@ -16,23 +16,21 @@ unit maindlg;
 interface
 
 uses
-  Classes, Types, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
+  LCLTranslator, Classes, Types, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
   ComCtrls, ActnList, ExtCtrls, imgres, aboutdlg, inifiles, strutils,
-  LMessages, LCLIntf, Buttons, ImgList, LCLType, LazHelpHTML, IniPropStorage,
-  BGRABitmap, BGRABitmapTypes, BGLVirtualScreen, Generics.Collections, WinDirs;
+  LMessages, LCLIntf, Buttons, ImgList, LCLType, LazHelpHTML,
+  BGRABitmap, BGRABitmapTypes, Generics.Collections, WinDirs,
+  mrkeditdlg;
 
 const
-  WEBHELPURL      = 'http://www.atomek.de/imageresize/hlp30/gui/';
 
-  IMGRESGUIVER    = '3.0';
+  IMGRESGUIVER    = '3.2';
   IMGRESGUICPR    = 'ImageResize V'+IMGRESGUIVER+' © 2023 Jan Schirrmacher, www.atomek.de';
 
   INITYPE         = 'IRS';
   INIVERSION200   = '200';
   INIVERSION210   = '210';
   INIVERSION      = '300';
-
-  GUIREGKEY       = IMGRESREGKEY+IMGRESGUIVER;
 
   COMMONSECTION   = 'Common';
   SETTINGSSECTION = 'Settings';
@@ -41,14 +39,6 @@ const
 
   LINESEP         = '|';
 
-  LICENSE =
-    'Image Resize Copyright (c) 2023 Jan Schirrmacher, www.atomek.de'#10#10+
-    'Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify and merge copies of the Software, subject to the following conditions:'#10#10+
-    'The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.'#10#10+
-    'THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.';
-  WEBURL = 'www.atomek.de/imageresize/index.html';
-
-
   LM_RUN          = LM_USER + 1;
 
   RENSIMPLETEMPLATE = 'img%INDEX:1,3%.%FILEEXT%';
@@ -56,8 +46,24 @@ const
 
   THUMBNAILIMGMAX = 240;
   DOCIMGMAX       = 960;
+  DEFAULTSIZE     = 640;
 
   SIZEBTNHINTFMT  = '%s - %dpx';
+
+resourcestring
+  SUrlWebHelp = 'http://www.atomek.de/imageresize/hlp32/gui/en';
+  SLocDirHelp = 'hlp\en';
+  STxtLicense =
+    'ImageResize Copyright (c) 2023 Jan Schirrmacher, www.atomek.de'#10#10+
+    'Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy and merge copies of the Software, subject to the following conditions:'#10#10+
+    'The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.'#10#10+
+    'THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHOR OR COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.';
+
+//Image Resize Copyright (c) 2023 Jan Schirrmacher, www.atomek.de
+//Hiermit wird jeder Person, die eine Kopie dieser Software und der dazugehörigen Dokumentationsdateien (die „Software“) erhält, kostenlos die Erlaubnis erteilt, uneingeschränkt mit der Software umzugehen, einschließlich, aber nicht beschränkt auf die Rechte zur Nutzung, Vervielfältigung und Zusammenführung von Kopien der Software, vorbehaltlich der folgenden Bedingungen:
+//Der obige Urheberrechtshinweis und dieser Genehmigungshinweis müssen in allen Kopien oder wesentlichen Teilen der Software enthalten sein.
+//DIE SOFTWARE WIRD OHNE MÄNGELGEWÄHR BEREITGESTELLT, OHNE AUSDRÜCKLICHE ODER STILLSCHWEIGENDE GEWÄHRLEISTUNG, EINSCHLIESSLICH, ABER NICHT BESCHRÄNKT AUF GEWÄHRLEISTUNGEN DER MARKTFÄHIGKEIT, EIGNUNG FÜR EINEN BESTIMMTEN ZWECK UND NICHTVERLETZUNG VON RECHTEN DRITTER. DER AUTOR ODER URHEBERRECHTSINHABER IST IN KEINEM FALL HAFTBAR FÜR ANSPRÜCHE, SCHÄDEN ODER SONSTIGE HAFTUNG, OB AUS VERTRAG, UNERLAUBTER HANDLUNG ODER ANDERWEITIG, DIE SICH AUS, AUS ODER IM ZUSAMMENHANG MIT DER SOFTWARE ODER DER NUTZUNG ODER ANDEREN HANDLUNGEN MIT DER SOFTWARE ERGEBEN.
+
 
 type
 
@@ -91,7 +97,6 @@ type
     ApplicationProperties1: TApplicationProperties;
     Bevel1: TBevel;
     BrowseSrcFolder: TSelectDirectoryDialog;
-    ButtonAbout: TBitBtn;
     ButtonBrowseMrkFilename: TBitBtn;
     ButtonBrowseSrcFolder: TBitBtn;
     ButtonClearSizes: TBitBtn;
@@ -119,6 +124,7 @@ type
     EditMrkY: TEdit;
     EditSizes: TEdit;
     EditDstFolder: TEdit;
+    GroupBoxMrkFilename: TGroupBox;
     GroupBoxShaking: TGroupBox;
     GroupBoxDstFolder: TGroupBox;
     GroupBoxParams: TGroupBox;
@@ -132,7 +138,6 @@ type
     ImageListMrkPositions: TImageList;
     ImageList20x20: TImageList;
     ImageList24x24: TImageList;
-    IniPropStorage1: TIniPropStorage;
     Label1: TLabel;
     Label10: TLabel;
     Label11: TLabel;
@@ -148,8 +153,8 @@ type
     Label22: TLabel;
     Label23: TLabel;
     Label4: TLabel;
+    LabelSrcFilenamesRequired: TLabel;
     LabelSourceFileListMessage: TLabel;
-    Label7: TLabel;
     Label9: TLabel;
     LabelCores: TLabel;
     Label3: TLabel;
@@ -158,7 +163,6 @@ type
     Label8: TLabel;
     LabelMrkSpace: TLabel;
     LabelSizesRequired: TLabel;
-    LabelSrcFilenamesRequired: TLabel;
     LabelDstFolderRequired: TLabel;
     Label2: TLabel;
     MemoMessages: TMemo;
@@ -171,7 +175,6 @@ type
     PagePathMask: TPage;
     PageControlParams: TPageControl;
     PaintBoxMrkPreview: TPaintBox;
-    PanelMrkSourceFile: TPanel;
     PanelControls: TPanel;
     PanelPreview: TPanel;
     ProgressBar: TProgressBar;
@@ -192,6 +195,7 @@ type
     ToolBarSizeButtons: TToolBar;
     ToolButton1: TToolButton;
     ToolButton10: TToolButton;
+    ToolButtonAbout: TToolButton;
     ToolButton2: TToolButton;
     ToolButton3: TToolButton;
     ToolButton4: TToolButton;
@@ -242,11 +246,8 @@ type
     procedure PaintBoxMrkPreviewMouseWheel(Sender: TObject; Shift: TShiftState;
       WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
     procedure PaintBoxMrkPreviewPaint(Sender: TObject);
-    procedure PanelControlsClick(Sender: TObject);
     procedure PanelControlsResize(Sender: TObject);
     procedure RadioButtonFilelistChange(Sender: TObject);
-    procedure TabSheetRenamingContextPopup(Sender: TObject; MousePos: TPoint;
-      var Handled: Boolean);
     procedure TimerProgressBarOffTimer(Sender: TObject);
 //    procedure CheckBoxMrkEnabledChange(Sender: TObject);
     procedure EditSizesExit(Sender: TObject);
@@ -273,14 +274,16 @@ type
     procedure Log(const Msg :string);
     function BoostStrToThreadCount(const Value :string) :integer;
     function ThreadCountToBoostStr(ThreadCount :integer) :string;
-    procedure UpdateSizes;
-    procedure UpdateControls;
+    procedure UpdateSizesControls;
+    procedure UpdateRequireLabels;
+    procedure UpdateSrcFilesRequireLabel;
+    procedure UpdateDstFolderRequireLabel;
+    procedure UpdateSizesRequireLabel;
     procedure LMRun(var Message: TLMessage); message LM_RUN;
     procedure SizeButtonClick(Sender :TObject);
     function MouseToSpace(X, Y :integer) :TSize;
     function MouseToMrkSpace(X, Y :integer; out Value :TSize) :boolean;
     function CalcMarkRect(out Rect :TRect) :boolean;
-    procedure CheckSrcRequired;
   public
 
   end;
@@ -291,22 +294,71 @@ var
 implementation
 
 uses
-  math, mrkeditdlg, helpintfs, Windows, FileUtil;
+  math, helpintfs, Windows, FileUtil;
+
+const
+  SCptRandom = '<random>';
+  SCptSizesDefault = 'default';
+  SCptSingleThread = 'single';
+  SCptMaximumThread = 'maximum';
+
+resourcestring
+  SCptUnnamed = '<unnamed>';
+  SErrInvalidShakeSeed = 'Invalid Shake Seed.';
+  SCptTitlePrefix = 'Image Resize - ';
+  SCptLastSettings = '<last settings>';
+  SCptCancel = 'Cancel';
+  SCptExecute = 'Execute';
+  SCptExecuteA = 'E&xecute';
+  SCptSizeClassSmall = 'Small - Thumbnail size';
+  SCptSizeClassMedium = 'Medium - Document size';
+  SCptSizeClassLarge = 'Large - Desktop size';
+  SCptCoresFmt = '%d Cores';
+  SCptInfoFmt = 'ImageResize %s, Processor %s, %d Cores';
+  SLogErrorPrefix = 'Error - ';
+  SLogCantLoad = 'Cant load Image Resize Settings File';
+  SLogWarningVersionFmt = 'Warning: Unexpected format %s (%s expected).';
+  SCptFileNotFoundFmt = 'File ''%s'' not found.';
+  SLogFileSavedToFmt = 'Settings saved to ''%s''';
+  SCptSourceFilesFmt = '%d source files';
+  SErrMissingSourceFilenames = 'Missing source filenames.';
+  SErrMissingSourceFolder = 'Missing source folder.';
+  SErrMissingDestinationFolder = 'Missing destination folder.';
+  SErrInvalidSizes = 'Invalid Sizes string.';
+  SErrInvalidJpgQuality = 'Invalid jpg quality.';
+  SErrInvalidMrkSize = 'Invalid watermark size.';
+  SErrInvalidMrkXBrd = 'Invalid watermark x border.';
+  SErrInvalidMrkYBrd = 'Invalid watermark y border.';
+  SErrInvalidMrkOpacity = 'Invalid watermark opacity.';
+  SErrEnterPlaceholder = 'Enter placeholder %SIZE% to either the destination folder or the file template.';
+  SErrAtFmt = 'Error at %.0f%% - %s';
+  SErrCancelledAtFmt = 'Cancelled at %.0f%%';
 
 {$R *.lfm}
 
+procedure SetRequiredState(Control :TLabel; Value :boolean);
+begin
+  if Value then begin
+    Control.Font.Color := clRed;
+    Control.Caption := 'Ø';
+  end else begin
+    Control.Font.Color := clNavy;
+    Control.Caption := 'ü';
+  end;
+end;
+
 function StrToShakeSeed(const Value :string) :integer;
 begin
-  if Value='<random>' then
+  if Value=SCptRandom then
     result := 0
   else
-    if not TryStrToInt(Value, result) then raise Exception.Create('Invalid Shake Seed.');
+    if not TryStrToInt(Value, result) then raise Exception.Create(SErrInvalidShakeSeed);
 end;
 
 function ShakeSeedToStr(Value :integer) :string;
 begin
   if Value<=0 then
-    result := '<random>'
+    result := SCptRandom
   else
     result := IntToStr(Value);
 end;
@@ -327,8 +379,10 @@ var
   Button :TToolButton;
   Cpt :string;
 begin
-  DefaultFormatSettings.DecimalSeparator := '.';
   AllowDropFiles := true;
+
+  if (SysLocale.PriLangId=7) and not Application.HasOption('E', 'EN') then
+    SetDefaultLang('de');
 
   // Create Size Buttons
   for i:=0 to High(DEFSIZES) do begin
@@ -336,16 +390,16 @@ begin
     Button.Parent := ToolBarSizeButtons;
     Button.Caption := IntToStr(DEFSIZES[i]);
     if DEFSIZES[i]<=THUMBNAILIMGMAX then
-      Cpt := 'Small - Thumbnail size'
+      Cpt := SCptSizeClassSmall
     else if DEFSIZES[i]<=DOCIMGMAX then
-      Cpt := 'Medium - Document size'
+      Cpt := SCptSizeClassMedium
     else
-      Cpt := 'Large - Desktop size';
+      Cpt := SCptSizeClassLarge;
 
     Button.Hint := Format(SIZEBTNHINTFMT, [Cpt, DEFSIZES[i]]);
-    if DEFSIZES[i]<300 then
+    if DEFSIZES[i]<=THUMBNAILIMGMAX then
         Button.ImageIndex := 5
-    else if DEFSIZES[i]<1000 then
+    else if DEFSIZES[i]<=DOCIMGMAX then
       Button.ImageIndex := 6
     else
       Button.ImageIndex := 7;
@@ -362,14 +416,14 @@ end;
 procedure TMainDialog.FormShow(Sender: TObject);
 var
   Params :TStringArray;
-  LocalHelpFolder :string;
+  LocHelpDir :string;
 begin
 
   if not LoadSettings then
     ActionNew.Execute;
-  UpdateControls;
+  UpdateRequireLabels;
   FAutoExit := Application.HasOption('X', 'AUTOEXIT');
-  Params := Application.GetNonOptions('AX', ['AUTOSTART', 'AUTOEXIT']);
+  Params := Application.GetNonOptions('AXE', ['AUTOSTART', 'AUTOEXIT', 'EN']);
   if Length(Params)=1 then
     LoadFromFile(Params[0]);
   if Application.HasOption('A', 'AUTOSTART') then
@@ -378,17 +432,19 @@ begin
   PageControlParams.ActivePageIndex := 0;
 
   // Show number of cores
-  LabelCores.Caption := Format('%d Cores', [TThread.ProcessorCount]);
+  LabelCores.Caption := Format(SCptCoresFmt, [TThread.ProcessorCount]);
 
   // Show initial message in Message log
-  Log(Format('ImageResize %s, resizer %s, %d cores', [IMGRESGUIVER, IMGRESVER, TThread.ProcessorCount]));
+  Log(Format(SCptInfoFmt, [IMGRESGUIVER, IMGRESVER, TThread.ProcessorCount]));
 
   // If no local help files, then use online help
-  LocalHelpFolder := IncludeTrailingPathDelimiter(ExtractFilePath(Application.ExeName))+'hlp';
-  if not FileExists(LocalHelpFolder+'\index.html') then
-    HTMLHelpDatabase.BaseURL := WEBHELPURL
+  LocHelpDir := IncludeTrailingPathDelimiter(ExtractFilePath(Application.ExeName))+SLocDirHelp;
+  if not DirectoryExists(LocHelpDir) then
+    HTMLHelpDatabase.BaseURL := SUrlWebHelp
   else
-    HTMLHelpDatabase.BaseURL := 'file://' + LocalHelpFolder;
+    HTMLHelpDatabase.BaseURL := 'file://'+LocHelpDir;
+  //with SysLocale do
+  //  MemoMessages.Lines.Add(Format('DefaultLCID=%d PriLangID=%d SubLangID=%d', [DefaultLCID, PriLangID, SubLangID]));
 end;
 
 procedure TMainDialog.LMRun(var Message: TLMessage);
@@ -398,11 +454,12 @@ begin
   if FAutoExit then begin
     Close;
   end;
+
 end;
 
 procedure TMainDialog.EditSrcFolderChange(Sender: TObject);
 begin
-   CheckSrcRequired;
+   UpdateSrcFilesRequireLabel;
 end;
 
 procedure TMainDialog.CheckBoxMrkEnabledChange(Sender: TObject);
@@ -410,14 +467,14 @@ var
   Vis :boolean;
 begin
   Vis := CheckBoxMrkEnabled.Checked;
-  PanelMrkSourceFile.Visible := Vis;
+  GroupBoxMrkFilename.Visible := Vis;
   GroupBoxMrkLayout.Visible := Vis;
 end;
 
 procedure TMainDialog.ApplicationProperties1Exception(Sender: TObject;
   E: Exception);
 begin
-  Log('Error - '+E.Message);
+  Log(SLogErrorPrefix+E.Message);
 end;
 
 procedure TMainDialog.ActionBrowseSrcFolderExecute(Sender: TObject);
@@ -445,7 +502,7 @@ end;
 
 procedure TMainDialog.EditSizesExit(Sender: TObject);
 begin
-  UpdateSizes;
+  UpdateSizesControls;
 end;
 
 function TMainDialog.GetSettingsFilename(CanCreate :boolean): string;
@@ -479,12 +536,12 @@ begin
     RadioButtonRenSimple.Checked := true;
     EditRenTemplate.Text := DEFAULT_RENFILETEMPLATE;
     CheckBoxShake.Checked := DEFAULT_SHAKE;
-    ComboBoxShakeSeed.Text := '<random>';
+    ComboBoxShakeSeed.Text := SCptRandom;
     CheckBoxMrkEnabled.Checked := false;
-    UpdateSizes;
-    UpdateControls;
+    UpdateSizesControls;
+    UpdateRequireLabels;
     PageControlParams.ActivePage := TabSheetSizes;
-    SetTitle('unnamed');
+    SetTitle(SCptUnnamed);
   finally
     ImgResizer.Free;
   end;
@@ -499,13 +556,13 @@ begin
     IniTyp := Ini.ReadString('Common', 'Type', 'unknown');
     result := IniTyp=INITYPE;
     if not result then begin
-       Log('Cant load Image Resize Settings File');
+       Log(SLogCantLoad);
        Exit;
     end;
     IniVer := Ini.ReadString('Common', 'Version', '000');
     result := (IniVer=INIVERSION) or (IniVer=INIVERSION200) or (IniVer=INIVERSION210);
     if not result then begin
-      Log(Format('Warning: Unexpected format %s (%s expected).', [IniVer, INIVERSION]));
+      Log(Format(SLogWarningVersionFmt, [IniVer, INIVERSION]));
       Exit;
     end;
     case ReadInteger(SETTINGSSECTION, 'SrcMode', NotebookFileSource.PageIndex) of
@@ -517,7 +574,7 @@ begin
     MemoSrcFilenames.Text := ReplaceStr(ReadString(SETTINGSSECTION, 'SrcFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, LINESEP)), LINESEP, #13#10);
     EditDstFolder.Text := ReadString(SETTINGSSECTION, 'DstFolder', EditDstFolder.Text);
     EditSizes.Text := ReadString(SETTINGSSECTION, 'Sizes', EditSizes.Text);
-    UpdateSizes;
+    UpdateSizesControls;
     ComboBoxJpgQuality.Text := ReadString(SETTINGSSECTION, 'JpgOptions.Quality', ComboBoxJpgQuality.Text);
     ComboBoxPngCompression.Text := ReadString(SETTINGSSECTION, 'PngOptions.Compression', ComboBoxPngCompression.Text);
     CheckBoxMrkEnabled.Checked := ReadBool(SETTINGSSECTION, 'MrkEnabled', CheckBoxMrkEnabled.Checked);
@@ -586,7 +643,7 @@ begin
     Ini.Free;
   end;
   if result then
-    SetTitle('last settings');
+    SetTitle(SCptLastSettings);
 end;
 
 procedure TMainDialog.SaveSettings;
@@ -606,7 +663,7 @@ var
   Ini :TIniFile;
 begin
   if not FileExists(Filename) then
-    raise Exception.CreateFmt('File ''%s'' not found.', [Filename]);
+    raise Exception.CreateFmt(SCptFileNotFoundFmt, [Filename]);
   Ini := TIniFile.Create(Filename);
   try
     result := LoadFromIni(Ini);
@@ -630,7 +687,7 @@ begin
     FIsSave := true;
     FIniFilename := Filename;
     SetTitle(''''+FIniFilename+'''');
-    Log(Format('Settings saved to ''%s''', [FIniFilename]));
+    Log(Format(SLogFileSavedToFmt, [FIniFilename]));
   finally
     Ini.Free;
   end;
@@ -667,8 +724,8 @@ begin
         end;
     end;
   end;
-  UpdateSizes;
-  UpdateControls;
+  UpdateSizesControls;
+  UpdateRequireLabels;
 end;
 
 procedure TMainDialog.FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -693,9 +750,9 @@ var
   s :string;
 begin
   s := LowerCase(Trim(Value));
-  if s='single' then
+  if s=SCptSingleThread then
     result := 1
-  else if s='maximum' then
+  else if s=SCptMaximumThread then
     result := 0
   else
     result := StrToInt(s);
@@ -705,15 +762,15 @@ function TMainDialog.ThreadCountToBoostStr(ThreadCount: integer): string;
 begin
   case ThreadCount of
   0:
-    result := 'maximum';
+    result := SCptMaximumThread;
   1:
-    result := 'single';
+    result := SCptSingleThread;
   else
     result := IntToStr(ThreadCount);
   end;
 end;
 
-procedure TMainDialog.UpdateSizes;
+procedure TMainDialog.UpdateSizesControls;
 var
   i :integer;
   SizeDict :TSizeDict;
@@ -733,11 +790,11 @@ begin
   end;
 end;
 
-procedure TMainDialog.UpdateControls;
+procedure TMainDialog.UpdateRequireLabels;
 begin
-  LabelSrcFilenamesRequired.Enabled := Length(MemoSrcFilenames.Text) = 0;
-  LabelDstFolderRequired.Enabled := Length(EditDstFolder.Text) = 0;
-  LabelSizesRequired.Enabled := Length(EditSizes.Text) = 0;
+  UpdateSrcFilesRequireLabel;
+  UpdateDstFolderRequireLabel;
+  UpdateSizesRequireLabel;
 end;
 
 procedure TMainDialog.ActionSaveExecute(Sender: TObject);
@@ -755,7 +812,7 @@ end;
 
 procedure TMainDialog.MemoSrcFilenamesChange(Sender: TObject);
 begin
-  CheckSrcRequired;
+  UpdateSrcFilesRequireLabel;
 end;
 
 function TMainDialog.MouseToSpace(X, Y: integer): TSize;
@@ -798,13 +855,20 @@ begin
   end;
 end;
 
-procedure TMainDialog.CheckSrcRequired;
+procedure TMainDialog.UpdateSrcFilesRequireLabel;
 begin
-  LabelSrcFilenamesRequired.Enabled :=
-     RadioButtonFilelist.Checked and (Length(MemoSrcFilenames.Text) = 0)
-  or RadioButtonPathMask.Checked and (Length(EditSrcFolder.text) = 0);
-  LabelSourceFileListMessage.Caption := Format('%d source files', [MemoSrcFilenames.Lines.Count]);
+  SetRequiredState(LabelSrcFilenamesRequired, RadioButtonFilelist.Checked and (Length(MemoSrcFilenames.Text) = 0) or RadioButtonPathMask.Checked and (Length(EditSrcFolder.text) = 0));
+  LabelSourceFileListMessage.Caption := Format(SCptSourceFilesFmt, [MemoSrcFilenames.Lines.Count]);
+end;
 
+procedure TMainDialog.UpdateDstFolderRequireLabel;
+begin
+  SetRequiredState(LabelDstFolderRequired, Length(EditDstFolder.Text) = 0);
+end;
+
+procedure TMainDialog.UpdateSizesRequireLabel;
+begin
+  SetRequiredState(LabelSizesRequired, Length(EditSizes.Text) = 0);
 end;
 
 procedure TMainDialog.PaintBoxMrkPreviewMouseLeave(Sender: TObject);
@@ -939,16 +1003,19 @@ begin
   Img.Free;
 end;
 
-procedure TMainDialog.PanelControlsClick(Sender: TObject);
-begin
-
-end;
-
 procedure TMainDialog.PanelControlsResize(Sender: TObject);
+
   procedure Place(Control :TControl; Target :TControl);
+  var
+    GroupBox :TGroupBox;
   begin
-    Control.Left := Target.Left+ 8;
+    Control.Left := Target.Left +8;
     Control.Top := Target.Top;
+    if Target is TGroupBox then begin
+      GroupBox := TGroupBox(Target);
+      if GroupBox.Caption[1] <> ' ' then
+        GroupBox.Caption := '      '+GroupBox.Caption;
+    end;
   end;
 
 begin
@@ -960,18 +1027,12 @@ end;
 procedure TMainDialog.RadioButtonFilelistChange(Sender: TObject);
 begin
   NotebookFileSource.PageIndex := (Sender as TRadioButton).Tag;
-  CheckSrcRequired;
-end;
-
-procedure TMainDialog.TabSheetRenamingContextPopup(Sender: TObject;
-  MousePos: TPoint; var Handled: Boolean);
-begin
-
+  UpdateSrcFilesRequireLabel;
 end;
 
 procedure TMainDialog.EditDstFolderChange(Sender: TObject);
 begin
- LabelDstFolderRequired.Enabled := Length(EditDstFolder.Text) = 0;
+  UpdateDstFolderRequireLabel;
 end;
 
 procedure TMainDialog.EditMrkSizeChange(Sender: TObject);
@@ -981,7 +1042,7 @@ end;
 
 procedure TMainDialog.EditSizesChange(Sender: TObject);
 begin
-  LabelSizesRequired.Enabled := Length(EditSizes.Text) = 0;
+  UpdateSizesRequireLabel;
 end;
 
 procedure TMainDialog.ActionSaveAsExecute(Sender: TObject);
@@ -1025,7 +1086,7 @@ end;
 
 procedure TMainDialog.ActionAboutExecute(Sender: TObject);
 begin
-  TAboutDialog.Execute(IMGRESGUICPR, 'Processor V'+IMGRESVER, LICENSE);
+  TAboutDialog.Execute(IMGRESGUICPR, 'Processor V'+IMGRESVER, STxtLicense);
 end;
 
 procedure TMainDialog.ActionClearFilenamesExecute(Sender: TObject);
@@ -1039,7 +1100,7 @@ begin
     SelText := ''
   else
     EditSizes.Text := '';
-  UpdateSizes;
+  UpdateSizesControls;
 end;
 
 procedure TMainDialog.ActionEditWatermarkExecute(Sender: TObject);
@@ -1060,7 +1121,7 @@ end;
 
 procedure TMainDialog.SetTitle(const Str: string);
 begin
-  Caption := 'Image Resize - '+Str;
+  Caption := SCptTitlePrefix+Str;
 end;
 
 procedure TMainDialog.OnPrint(Sender: TObject; const Line: string);
@@ -1093,8 +1154,8 @@ begin
     FCancelled := true;
   end else begin
     FProgress := 0;
-    ActionExecute.Caption := 'Cancel';
-    ButtonExecute.Caption := 'Cancel';
+    ActionExecute.Caption := SCptCancel;
+    ButtonExecute.Caption := SCptCancel;
     ActionExecute.ImageIndex := 5;
     ButtonExecute.ImageIndex := 1;
     ButtonExecute.Invalidate;
@@ -1113,34 +1174,34 @@ begin
         0:
           begin
             if (MemoSrcFilenames.Text='') then
-              raise Exception.Create('Missing source filenames.');
+              raise Exception.Create(SErrMissingSourceFilenames);
 
             SrcFilenames.Assign(MemoSrcFilenames.Lines);
           end;
         1:
           begin
             if (EditSrcFolder.Text='') or not DirectoryExists(EditSrcFolder.Text) then
-              raise Exception.Create('Missing source folder.');
+              raise Exception.Create(SErrMissingSourceFolder);
             FindAllFiles(SrcFilenames, EditSrcFolder.Text, EditSrcMasks.Text, false);
           end;
         end;
 
         // Destination folder
         if (EditDstFolder.Text='') then
-          raise Exception.Create('Missing destination folder.');
+          raise Exception.Create(SErrMissingDestinationFolder);
 
         // Sizes
         Sizes := nil;
-        if EditSizes.Text='default' then begin
+        if EditSizes.Text = SCptSizesDefault then begin
           SetLength(Sizes, 1);
-          Sizes[0] := 640;
+          Sizes[0] := DEFAULTSIZE;
         end else if not TrySizesStrToSizes(EditSizes.Text, Sizes) then
-          raise Exception.Create('Invalid Sizes string.');
+          raise Exception.Create(SErrInvalidSizes);
 
         // Quality
         FImgRes := TImgRes.Create;
         if not TImgRes.TryStrToJpgQuality(ComboBoxJpgQuality.Text, IntValue) then
-          raise Exception.Create('Invalid jpg quality.');
+          raise Exception.Create(SErrInvalidJpgQuality);
         FImgRes.JpgQuality := IntValue;
         FImgRes.PngCompression := ComboBoxPngCompression.ItemIndex;
 
@@ -1161,19 +1222,19 @@ begin
         FImgRes.MrkFilename := EditMrkFilename.Text;
 
         if not TryStrToFloat(EditMrkSize.Text, x) or (x<0.0) or (x>100.0) then
-          raise Exception.Create('Invalid watermark size.');
+          raise Exception.Create(SErrInvalidMrkSize);
         FImgRes.MrkSize := x;
 
         if not TryStrToFloat(EditMrkX.Text, p.x) or (p.x<0.0) or (p.x>100.0) then
-          raise Exception.Create('Invalid watermark x border.');
+          raise Exception.Create(SErrInvalidMrkXBrd);
         if not TryStrToFloat(EditMrkY.Text, p.y) or (p.y<0.0) or (p.y>100.0) then
-          raise Exception.Create('Invalid watermark y border.');
+          raise Exception.Create(SErrInvalidMrkYBrd);
 
         FImgRes.MrkX := StrToFloat(EditMrkX.Text);
         FImgRes.MrkY := StrToFloat(EditMrkY.Text);
 
         if not TryStrToFloat(EditMrkAlpha.Text, x) or (x<0.0) or (x>100.0) then
-          raise Exception.Create('Invalid watermark opacity.');
+          raise Exception.Create(SErrInvalidMrkOpacity);
         FImgRes.MrkAlpha := x;
 
         // Hook the processor
@@ -1185,7 +1246,7 @@ begin
         DstFolder := EditDstFolder.Text;
         if (Length(Sizes)>1) and (Pos('%SIZE%', DstFolder)=0)
          and not (FImgRes.RenEnabled and (Pos('%SIZE%', FImgRes.DstFiletemplate)>0)) then
-          raise Exception.Create('Enter playholder %SIZE% to either the destination folder or the file template.');
+          raise Exception.Create(SErrEnterPlaceholder);
 
         FImgRes.Sizes := SizesToSizesStr(Sizes);
         FImgRes.SrcFilenames := SrcFilenames;
@@ -1196,16 +1257,16 @@ begin
 
       except on E :Exception do
         begin
-          Log(Format('Error at %.0f%%: %s', [FProgress*100.0, E.Message]));
+          Log(Format(SErrAtFmt, [FProgress*100.0, E.Message]));
         end;
       end;
     finally
       SrcFilenames.Free;
       FImgRes.Free;
       FExecuting := false;
-      if FCancelled then Log(Format('Cancelled at %.0f%%', [FProgress*100.0]));
-      ActionExecute.Caption := 'E&xecute';
-      ButtonExecute.Caption := 'Execute';
+      if FCancelled then Log(Format(SErrCancelledAtFmt, [FProgress*100.0]));
+      ActionExecute.Caption := SCptExecuteA;
+      ButtonExecute.Caption := SCptExecute;
       ActionExecute.ImageIndex := 4;
       ButtonExecute.ImageIndex := 2;
       TimerProgressBarOff.Enabled := true;
