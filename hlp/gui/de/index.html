@@ -1,0 +1,484 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8"/>
+    <title>ImageResize Dokumentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>   
+    <link rel="stylesheet" href="../help.css"/>
+    <style>
+      br+img {margin-top: 0.3em}
+      .atop td {vertical-align: top;}
+      .atop tr td:nth-child(1)  {width: 7em; font-weight: bold; font-style: italic;}
+      .framed {border: 1px solid silver;}
+    </style>
+  </head>
+
+  <body>
+    <header style="background-image: url('../img/title.jpg');">
+    </header>
+  
+    <div class="contents">
+      <h1 id="overview">Übersicht</h1>
+      <p>
+        <i>ImageResize</i> 3.2 ist eine App zur Größenänderung von JPEG- und PNG-Bildern.
+        Es ist für die Erzeugung von Web-Gallerien gedacht und kann daher viele Bilder 
+        auf einmal verarbeiten.
+      </p>
+      
+      <h2 id="contents">Inhalt</h2>
+      <a href="#overview">Übersicht</a><br/>
+      <a href="#srcfilelist">Liste der Bilder</a><br/>
+      <a href="#dstfolder">Zielverzeichnis</a><br/>
+      <a href="#sizes">Zielgrößen</a><br/>
+      <a href="#quality">Qualität</a><br/>
+      <a href="#renaming">Umbenennen und mischen</a><br/>
+      <a href="#watermark">Wasserzeichen</a><br/>
+      <a href="#boost">Boost</a><br/>
+      <a href="#saving">Speichern und Öffnen</a><br/>
+      <a href="#commandline">Kommandozeilen-Parameter</a><br/>
+      <a href="#mrkeditor">Wasserzeichen-Editor</a><br/>
+      
+      <p>
+        Fähigkeiten  
+      </p>
+      <ul>
+        <li>Resampling (Verkleinerung) von Listen mit Bilddateien</li>
+        <li>Resampling jedes Bildes in mehrere Größen</li>
+        <li>Nutzt <i>Lanczos</i>-Filterung für gute Ergebnisse</li>
+        <li>Optionales Wasserzeichen</li>
+        <li>Unterstützt JPEG- und PNG-Formate</li>
+        <li>Kontrolle der Kompressionsqualität</li>
+        <li>GUI-, CLI- und API-Schnittstelle verfügbar</li>
+        <li>Systematische Dateiumbenennung</li>
+        <li>Optionales zufälliges Mischen der Liste</li>
+      </ul>
+      <p>
+        Unfähigkeiten
+      </p>
+      <ul>
+        <li>Bildverzerrung</li>
+        <li>Formatkonvertierung (JPEG bleibt JPEG und PNG bleibt PNG)</li>
+        <li>Vorschau</li>
+        <li>Meta-Information-Behandlung (EXIF)</li>
+      </ul>
+      
+      <h1 id="overview">Übersicht</h1>
+      <p>
+        Das Programm benötigt mindestens die folgenden 3 Angaben:
+      </p>
+      <ol>
+        <li>Eine Liste von Bilddateien oder ein Quellverzeichnis mit Dateifilter<br/><img src="img/minsrc.png"/></li>
+        <li>Ein Zielverzeichnis<br/><img src="img/mindst.png"/></li>
+        <li>Eine oder mehrere Zielgrößen<br/><img src="img/minsize.png"/></li>
+      </ol>
+      <p>
+        Drücken Sie am Ende <img class="btn" src="img/minexec.png"/> um das Resampling zu starten.
+      </p>
+      
+      <h1 id="srcfolder">Liste der Bilddateien</h1>
+      <p>
+        ImageResize kann mehrere Bilddateien resampeln. Die Liste besteht aus
+        Pfad/Dateiname und kann
+      </p>
+      <ol>
+        <li>manuell eingegeben werden</li>
+        <li>im Auswahldialog ausgewählt werden<img class="btn" src="../img/btnbrowse.png"/> mit &lt;STRG&gt; und &lt;UMSCHALT&gt;</li>
+        <li>durch Ziehen von Bilddateien aus dem Windows-Explorer ergänzt</li>
+        <li>durch Angabe eines Quellverzeichnisses mit Dateifilter angegeben werden</li>
+      </ol>
+      <p>
+        Die Liste kann JPEG- und PNG-Dateien enthalten. Die Dateinamen können beibehalten
+        oder <a href="#renaming">umbenannt</a> werden. Relative Pfade beziehen sich auf
+        das Arbeitsverzeichnis des Programmes.
+      </p>
+      <a class="chfot" href="#contents">Inhalt</a>
+      
+      <h1 id="dstfolder">Zielordner</h1>
+      <p>
+        Ein Zielordner muss angegeben werden. Sie können ihn direkt eintippen
+        oder mit der Schaltfläche <img class="btn" src="../img/btnbrowse.png"/> auswählen.
+      </p>
+      <p>
+        Wenn mehrere Zielgrößen angegeben werden, können entweder mit
+        <a href="#renaming">Umbenennen</a> von Dateien Zielkonflikte vermieden
+        werden, oder indem der Zielordner den Platzhalter <span class="plh">%SIZE%</span>
+        enthält.
+      </p>
+      <a class="chfot" href="#contents">Inhalt</a>
+      
+      <h1 id="sizes">Größen</h1>
+      <p>
+        Eine <i>Größe</i> in Pixeln bezieht sich auf die längere Seite eines Bildes.
+        Gewöhnlich ist die Größe der Originaldatei größer als die Zielgrößen.
+      </p>
+      <p>
+        ImageResize kann mehrere Größen für jedes Bild erzeugen. Geben Sie eine Liste von Größen ein,
+        die mit dem Komma getrennt sind, oder wählen Sie Größen aus den Vorschlägen aus.<br/>
+        <img src="img/multiplesizes.png"/>
+      </p>
+      <p>
+        Sie können alle Größen angeben, die größer als 0 sind. Die Vorschläge unter der Liste sind unverbindlich.
+      </p>
+      <p>
+        Sie können die Liste ändern, indem Sie die Löschen-Schaltfläche <img class="btn" src="../img/btnclearsizes.png"/>
+        klicken. Um eine einzelne Größe zu löschen, markieren Sie zuvor die Größe, oder sie klicken einen
+        bereits gewählten Vorschlag erneut.
+      </p>
+      <a class="chfot" href="#contents">Inhalt</a>
+      
+      <h1 id="quality">Qualität</h1>
+      <p>
+        Sie können den Kompressionsgrad für JPEG- und für PNG-Formate steuern,
+      </p>
+      <p>
+        Eine höhere Qualität resultiert in größeren Dateien. Bei JPEG ist 75 bis 95 Prozent
+        eine gute Wahl.<br/><img src="img/jpgqualities.png"/>
+      </p>
+      <p>
+        Bei PNG-Dateien sind 4 Kompressionsgrade möglich:
+        <ul>
+          <li><i>none</i> - keine Kompression</li>
+          <li><i>fastest</i> - schnellste (geringe) Kompression</li>
+          <li><i>default</i> - normale Kompression</li>
+          <li><i>maximum</i> - maximale Kompression (langsamer)</li>
+        </ul>
+        <img src="img/pngqualities.png"/>
+      </p>
+      <a class="chfot" href="#contents">Inhalt</a>
+      
+      <h1 id="renaming">Umbenennen und Mischen</h1>
+      <p>
+        Umbenennen der Zieldateien wird interessant, wenn Sie nicht
+        für jede Größe einen eigenen Ordner erzeugen möchten, sondern
+        alle Dateien in einen Ordner packen möchten. Dann müssen die
+        Zieldateien umbenannt werden, am besten, indem sie die Zielgrößen
+        zur Unterscheidung erhalten.
+      </p>
+      <p>
+        Checken Sie <i>Verwenden</i> und wählen Sie eine der möglichen Strategien:
+      </p>
+
+      <h2 id="rensimple">Strategie <b>"Einfach"</b></h2>
+      <p>
+        Die einfache Dateinamenvorlage erzeugt Namen wie diesen: <i>img085.jpg</i>.
+        Die Datei-Nummerierung beginnt bei 1 und enthält nicht die Größe (in Pixeln).
+        Dann ist es erforderlich für jede Größe einen eigenen Folder zu erzeugen. Dazu
+        fügen Sie in die Vorlage des Zielverzeichnisnamens den Platzhalter <span class="plh">%SIZE%</span> ein.
+      </p>
+      <p>
+        Die Dateinames-Vorlage im einfachen Falle ist <span class="plh">img%INDEX:1,3%.%FILEEXT%</span>.
+        Der INDEX ist die 0-basierte laufende Nummer der Quelldatei in der Liste. Die Zahlen
+        1 und 3 hinter dem Schlüsselwort INDEX bedeuten, dass der Index bei 1 beginnt und 3
+        Ziffern mit führenden Nullen enthalten wird.
+      </p>
+      
+      <h2 id="renadvanced">Strategie <b>"Fortgeschritten"</b></h2>
+      <p>
+        Die Dateinamen-Vorlage in diesem Falle ist z.B. <span class="plh">img%INDEX:1,3%_%SIZE%.%FILEEXT%</span>,
+        um alle Dateien im selben Verzeichnis zu erzeugen. Sie erzeugt einen Dateinamen wie 
+        <i>img085_1920.jpg</i>. Der Dateinamenskonflikt ist vermieden durch Verwendung des
+        <span class="plh">%SIZE%</span>-Platzhalters.
+      </p>
+      
+      <h2 id="rencustom">Strategie <b>"Benutzer"</b></h2>
+      <p>
+        Um das Programm einen geeigneten Dateinamen erzeugen zu lassen, können Sie hier
+        eine eigene Vorlage angeben. Die Vorlage enthält <i>Platzhalter</i> für
+        spezielle Werte, die wärend der Verarbeitung erzeugt und eingefügt werden.
+      </p>
+      <p>
+        Beispiele für gültige Vorlagen im Falle, wo die resultierenden Dateinamen
+        für verschiedene Größen im gemeinsamen Verzeichnis keinen Konflikt erzeugen,
+        könnten so aussehen:
+      </p>
+      <p><span class="plh">img%INDEX:1,3%_%SIZE%.%FILEEXT%</span></p>
+      <p><span class="plh">%FILENAME%_%SIZE%.%FILEEXT%</span></p>
+      
+      <h2>Verfügbare Platzhalter</h2>
+      <table class="partab">
+        <tr>
+          <td><span class="plh">%FILENAME%</span></td>
+          <td>Dies ist der originale Dateiname, ohne die Erweiterung.</td>
+        </tr>
+        <tr>
+          <td><span class="plh">%FILEEXT%</span></td>
+          <td>Die Erweiterung des Originalnamens ohne den Punkt<br/><br/>
+          Anmerkung: Sie können das Format der Zieldatei nicht ändern, indem Sie
+          die Erweiterung ändern. Dies könnte Bildbetrachter verwirren.  
+          </td>
+        </tr>
+        <tr>
+          <td><span class="plh">%INDEX:N,D%</span></td>
+          <td>
+            Der 0-basierte Index (laufende Nummer) der Datei in der Liste.
+            <i>N</i> ist ein Offset (Versatz). Normalerweise beginnen Listen
+            mit der Nummer 1, aber durch Angabe eines Versatzes können Sie vorhandene
+            Listen erweitern.s<br/><br/>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="plh">%SIZE%</span></td>
+          <td>Die Zielgröße in Pixeln der aktuellen Datei</td>
+        </tr>
+      </table>
+
+      <h2 id="shaking">Mischen</h2>
+      <p>
+        <i>Mischen</i> bedeutet, dass die Reihenfolge der Zieldateien zufällig ist. ImageResize wird dazu die Liste der Quelldateien vor der Verarbeitung mischen.
+      </p>
+      <p>
+        Der Parameter <i>Saat</i> kontrolliert die zufällige Abfolge. Eine Saat von 0 wird jedesmal, wenn die Verarbeitung gestartet wird eine eine andere Abfolge
+        erzeugen. Jeder andere aber konstante Wert wird die die Abfolge in der selben Art mischen, solange die Bildliste sich nicht ändert.
+      </p>
+      
+      <h1 id="watermark">Wasserzeichen</h1>
+      <p>
+        Ein Wasserzeichen ist ein halbdurchlässiges kleines Bild, dass z.B. ein Copyright dem Zielbild zufügt.
+        Das Bild muss im PNG-Format vorliegen und kann einen Alpha-Channel (Transparenz) haben. Wenn das
+        Bild gedruckt wird, kann eine zusätzliche Transparenz angegeben werden. 20 bis 30 Prozent ist gut
+        für eine schwach sichtbare Erscheinung, ab 50 Prozent wird das Wasserbild deutlich sichtbar.
+      </p>
+      
+      <h3 id="mrkenable">Verwenden</h3>
+      <p>
+        Hake diese Option ab, um das Wasserbild zu ermöglichen.
+      </p>
+      
+      <h3 id="mrkfilename">Dateiname</h3>
+      <p>
+        Gib einen Dateinamen einer PNG-Datei an, deren Bild in jedes Zielbild hineinskaliert wird.
+      </p>
+      <p>
+        Normalerweise genügt es für alle Zielgrößen eine gemeinsame Datei anzugeben, weil die Größe
+        für jedes Bild angepasst wird. Daher ist es ok ein Wasserzeichenbild mit hoher Auflösung einmalig
+        für alle zu erzeugen.
+      </p>
+      <p>
+        Es gibt jedoch einen Weg, für jede Zielgröße ein anderes Wasserbild zu verwenden. Geben Sie dazu
+        im Namen der Wasserbilddatei den Platzhalter <span class="plh">%SIZE%</span> an.
+        Sie müssen dann für jede Größe eine entsprechende Wasserbilddatei vorbereitet haben.
+      </p>
+      <p>
+        Sie können eine Wasserbilddatei mit jedem Programm erzeugen, das das PNG-Format unterstützt.
+        Ein aar Vorschläge sind:
+      </p>
+      <ul>
+        <li><a href="http://inkscape.org">Inkscape</a> - ein freier Vektorgraphik-Editor</li>
+        <li><a href="http://gimp.org">Gimp</a> - ein freies Rastergraphikprogramm</li>
+        <li><a href="http://greenfishsoftware.org">Greenfish Icon Editor</a> - ein graphischer Rasterbild-Editor</li>
+        <li>mit dem eingebauten <a href="#mrkeditor">Wasserzeichen-Editor</a></li>
+      </ul>      
+      <p>
+        Sie können dabei Transparenz verwenden, aber beachten Sie, dass ImageResize zusätzlich eine
+        Transparenz darüberlegen kann.
+      </p>
+      <p>
+        Ein Glüheffekt (Verwischen) um die Schrift des Wasserbildes verbessert den Kontrast auf
+        verschiedenen Hintergründen.<br/>
+        <img src="../img/watermark3.png"/>
+      </p>
+      
+      <h3 id="mrkopaque">Transparenz</h3>
+      <p>
+        Eine Transparenz von 0 Prozent lässt das Wasserbild verschwinden, 100 Prozent macht es voll deckend.
+        40 Prozent sind eine gute Wahl.
+      </p>
+      <table>
+        <tr><td>10%</td><td><img src="../img/opaque10.jpg"/></td>
+        <td>20%</td><td><img src="../img/opaque20.jpg"/></td></tr>
+        <tr><td>30%</td><td><img src="../img/opaque30.jpg"/></td>
+        <td>40%</td><td><img src="../img/opaque40.jpg"/></td></tr>
+        <tr><td>50%</td><td><img src="../img/opaque50.jpg"/></td>
+        <td>60%</td><td><img src="../img/opaque60.jpg"/></td></tr>
+        <tr><td>70%</td><td><img src="../img/opaque70.jpg"/></td>
+        <td>80%</td><td><img src="../img/opaque80.jpg"/></td></tr>
+        <tr><td>90%</td><td><img src="../img/opaque90.jpg"/></td>
+        <td>100%</td><td><img src="../img/opaque100.jpg"/></td></tr>
+      </table>
+      
+      <h3 id="mrkx">Horizontale Position</h3>
+      <p>
+        Die Position wird in Prozent des verfügbaren Raumes angegeben und von links oben gezählt.<br/>
+        0 Prozent ist linksbündig<br/>
+        50 Prozent ist mittig<br/>
+        100 Prozent ist rechtsbündig
+      </p>
+    
+      <h3 id="mrky">Vertikale Position</h3>
+      <p>
+        0 Prozent ist ganz oben<br/>
+        50 Prozent ist vertikal zentriert<br/>
+        100 Prozent in ganz unten
+      </p>
+      <a class="chfot" href="#contents">Inhalt</a>
+
+      <h1 id="boost">Boost</h1>
+      <h3 id="threads">Threads</h3>
+      <p>
+        ImageResize kann durch Multi-Threading die Rechenpower des Systems besser nutzen.<br/>
+        <i>Single</i> bedeutet das nur ein Kern genutzt wird. Sie können bis zur Gesamtzahl der
+        verfügbaren Kerne gehen (=<i>Maximum</i>). Dies kann die Verarbeitungsgeschwindigkeit verdoppeln.
+      </p>
+      <p>
+        In Systemen mit <i>Hyperthreading</i> ist die Zahl der virtuellen Kerne höher als die der physischen.
+        Wenn Sie 12 Kerne haben, von denen nur 6 physisch sind, bewirkt die Nutzung von 12 Threads
+        gegenüber 6 Threads nur eine Erhöhung der Rechengeschwindigkeit um etwa 8 Prozent.
+      </p>
+      <h3 id="stoponerr">Anhalten bei Fehlern </h3>
+      <p>
+        Diese Options signalisiert den Threads ein Beenden sobald es möglich ist. Das kann bei der 
+        Nutzung mehrerer Kerne etwas verzögert auftreten.
+      </p>
+      <a class="chfot" href="#contents">Inhalt</a>
+      
+      <h1 id="saving">Speichern und Öffnen von .irs Files</h1>
+      <p>
+        .irs-Dateien sind einfache textbasierte INI-Dateien. Sie enthalten alle Einstellungen, die Sie
+        im Dialog sehen, außer den Boost-Einstellungen.
+      </p>
+      <p>
+        Weil ImageResize außerdem im die letzten Einstellungen in einer veborgenen Datei sichert,
+        fragt es nicht, ob nach Änderungen der Einstellungen gespeichert werden soll.
+      </p>
+      <a class="chfot" href="#contents">Inhalt</a>
+      
+      <h1 id="commandline">Kommandozeilen-Parameter</h1>
+      <h3><i>filename.irs</i></h3>
+      <p>
+        Sie können ImageResize eine .irs-Datei beim Start laden lassen, indem Sie den Dateinamen als Kommandozeilen-Parameter übergeben.
+        Dadurch kann die Anwendung ImageResize auch in der Systemseuerung mit der Erweiterung .irs verknüpft werden.
+      </p>
+      <h3>-A  oder  -AUTOSTART</h3>
+      <p>
+        Lässt ImageResize die Ausführen-Schaltfläche automatisch beim Start betätigen.
+      </p>
+      <h3>-X  or  -AUTOEXIT</h3>
+      <p>
+        Bewirkt ein automatisches Schließen der Anwendung nach dem Ende der Verarbeitung.
+      </p>
+      <h3>-E oder -EN</h3>
+      <p>
+        Bewirkt, dass die englische Sprache für die Benutzeroberfläche verwendet wird.
+        Es existiert eine deutsche Übersetzung, die automatisch aktiviert wird,
+        wenn das System für Deutsch lokalisiert ist.
+      </p>
+      <a class="chfot" href="#contents">Inhalt</a>
+      
+      <h1 id="mrkeditor">Wasserzeichen-Editor</h1>
+      <p>
+        Mit <img class="btn" src="../img/btnwatermarkeditor.png"/> können Sie den eingebauten
+        Wasserzeichen-Editor öffnen. Dieser einfache Dialog lässt Sie einen Schriftzug mit ein paar 
+        nützlichen Dekorationen erzeugen.  
+      </p>
+      <p>
+        Die Vorschau zeigt Ihnen, wie das Wasserzeichen ungefähr aussehen wird,
+        allerdings ohne die zusätzliche Transparenz, die sie bei den Wasserzeichen-Einstellungen angebenen können.
+      </p>
+      <p>
+        Um einen Eindruck davon zu bekommen, wie ihr Wasserzeichen auf dunklem, bzw. hellem Hintergrund aussieht,
+        drücken Sie eine dieser Schaltflächen <img src='../img/whiteblackbkg.png'/>
+      </p>
+      <p>
+        <img style="max-width: 80%" src="img/watermarkeditor.png"/>
+      </p>
+      <table class="atop">
+        <tr><td><img class="btn" src="../img/btnnew.png"/></td>
+          <td>
+            Lädt die Voreinstellungen
+          </td>
+        </tr>
+        <tr><td><img class="btn" src="../img/btnbrowse.png"/></td>
+          <td>
+            Lädt eine zuvor gespeicherte .was-Datei mit Wasserzeichen-Einstellungen
+          </td>
+        </tr>
+        <tr><td><img class="btn" src="../img/btnsave.png"/></td>
+          <td>
+            Speichert die aktuellen Einstellungen in einer .was-Datei und das Wasserzeichen selbst als .png-Datei.
+            Diese Bilddatei wird von ImageResize benötgt, die .was-Datei wird zur späteren Änderung der 
+            Erscheinung benötigt.
+          </td>
+        </tr>
+        <tr><td><img class="btn" src="../img/bntnewfav.png"/></td>
+          <td>
+            Lädt die favorisierten Voreinstellungen - z.B. ihren persönlichen Copyright-Text.
+          </td>
+        </tr>
+        <tr><td><img class="btn" src="../img/btnsavefav.png"/></td>
+          <td>
+            Speichert die aktuellen Einstellungen und den Text als deinen Favoriten.
+          </td>
+        </tr>
+        <tr id="mrktext"><td>Text</td>
+          <td>
+            Gib hier die Textzeile ein, die im Wasserzeichen dargestellt werden soll. Das ©-Zeichen mit
+            &lt;ALT&gt; &lt;0&gt; &lt;1&gt; &lt;6&gt; &lt;9&gt; oder mit der 
+            <img class="btn" src="../img/btninsertcopyright.png"/>-Schaltfläche.
+          </td>
+        </tr>
+        <tr id="mrkfont"><td>Font</td>
+          <td>
+            Wähle einen Font mit der Größe in <i>Punkten</i>, einen Fontnamen in Anführungszeichen und optional die Stile <i>Italic</i> und
+            <i>Bold</i> oder wähle einen Font im Dialog <img class="btn" src="../img/btnfont.png"/> aus.
+            Die Qualität des Wasserzeichens hängt mit der Font-Größe zusammen. 12pt erzeugt ein grobpixeliges Wasserzeichen, 48pt eine
+            genauere Abbildung. Die Fontgröße hat keinen Einfluss auf die spätere Darstellung im Bild, da deren Größe bei den Wasserzeicheneinstellungen 
+            des Hauptfensters angegeben wird.
+          </td>
+        </tr>
+        <tr id="mrkcolor"><td>Font Farbe</td>
+          <td>
+            Wähle die Zeichenfarbe (Vordergrund) aus.
+          </td>
+        </tr>
+        <tr id="mrkoutline"><td>Umriss</td>
+          <td>
+            Die Schrift erhält einen feinen Umriss mit der gewählten Farbe. 
+          </td>
+        </tr>
+        <tr id="mrkoutlinecolor"><td>Umrissfarbe</td>
+          <td>
+            Farbe des feinen Umrisses.
+          </td>
+        </tr>
+        <tr id="mrkshadow"><td>Schatten</td>
+          <td>
+            Ermögliche einen verwischten Hintergrund der Schrift
+          </td>
+        </tr>
+        <tr id="mrkshadowcolor"><td>Schattenfarbe</td>
+          <td>
+            Wähle die Farbe des verwischten Hintergrundes aus
+          </td>
+        </tr>
+        <tr id="mrkblur"><td>Verwischen</td>
+          <td>
+            Wähle eine Breite des Schattens in Pixeln aus. Die effektive Breite hängt auch von der 
+            Schriftgröße ab.
+          </td>
+        </tr>
+        <tr id="mrkquality"><td>Qualität</td>
+          <td>
+            Kontrolliert die Art der Erscheinung des Schattens. Probiere die möglichen Eistellungen durch <i>Normal</i>, <i>Disk</i>, <i>Corona</i>, <i>Precise</i>, <i>Fast</i> und <i>Box</i>. <i>Precise</i> ist ein sehr dünner Schatten, wie ein Umriss.
+          </td>
+        </tr>
+        <tr><td>Ok</td>
+          <td>
+            Nachdem ein Wasserzeichen definiert wurde, muss es zunächst als PNG-Datei gespeichert werden, oder 
+            zuvor aus einer Datei geladen werden. Erst dann wird <b>Ok</b> verfügbar.
+          </td>
+        </tr>
+        <tr><td>Abbrechen</td>
+          <td>
+            Schließt den Dialog, ohne die Datei zu verwenden.
+          </td>
+        </tr>
+      </table>
+      <a class="chfot" href="#contents">Inhalt</a>
+    </div>
+
+    <footer>
+      © 2023 Jan Schirrmacher, www.atomek.de
+    </footer>
+  </body>
+</html>
