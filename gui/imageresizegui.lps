@@ -9,7 +9,7 @@
         <Filename Value="imageresizegui.lpr"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="44"/>
+        <UsageCount Value="46"/>
       </Unit>
       <Unit>
         <Filename Value="maindlg.pas"/>
@@ -17,10 +17,9 @@
         <ComponentName Value="MainDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="264"/>
-        <CursorPos Y="307"/>
-        <UsageCount Value="44"/>
+        <TopLine Value="285"/>
+        <CursorPos X="49" Y="269"/>
+        <UsageCount Value="46"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -33,7 +32,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="16"/>
         <CursorPos X="48" Y="14"/>
-        <UsageCount Value="44"/>
+        <UsageCount Value="46"/>
       </Unit>
       <Unit>
         <Filename Value="mrkeditdlg.pas"/>
@@ -43,15 +42,15 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="22"/>
-        <UsageCount Value="44"/>
+        <UsageCount Value="46"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\imgres.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="452"/>
-        <CursorPos X="3" Y="443"/>
-        <UsageCount Value="41"/>
+        <TopLine Value="657"/>
+        <CursorPos X="39" Y="687"/>
+        <UsageCount Value="43"/>
       </Unit>
       <Unit>
         <Filename Value="maindlg.lfm"/>
@@ -90,10 +89,12 @@
       </Unit>
       <Unit>
         <Filename Value="..\src\threading.dispatcher.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="391"/>
-        <CursorPos X="45" Y="408"/>
-        <UsageCount Value="16"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="27"/>
+        <CursorPos X="15" Y="50"/>
+        <UsageCount Value="17"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\sysutils\filutilh.inc"/>
@@ -116,11 +117,7 @@
         <UsageCount Value="11"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="25">
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="441" TopLine="410"/>
-      </Position>
+    <JumpHistory HistoryIndex="24">
       <Position>
         <Filename Value="maindlg.pas"/>
         <Caret Line="443" TopLine="408"/>

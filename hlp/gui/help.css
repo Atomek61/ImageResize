@@ -3,6 +3,7 @@
 :root {
   --bkghue: 216;
   --fgdhue: 204;
+  --title-color: hsl(270, 70%, 50%);
 }
 
 body {
@@ -38,7 +39,6 @@ footer {
 
 h1, h2, h3, h4, h5, h6 {
   padding: 0;
-  xmargin: 0.3em 0px 0px 0px;
   line-height: 1.3em;
 }
 
@@ -46,6 +46,38 @@ h1 {font-size: 24pt; border-top: 2px solid hsl(var(--fgdhue), 20%, 40%);}
 h2 {font-size: 20pt;}
 h3 {font-size: 16pt; font-weight: bold;}
 h4 {font-size: 14pt; font-style: italic;}
+
+.title-box {
+  font-family: "Arial";
+  position: absolute;
+  left: 40px;
+  top: 20px;
+  width: 300px;
+  height: 112px;
+  border: 4px solid var(--title-color); 
+  border-radius: 10px;
+  color: var(--title-color); 
+  background-color: hsla(270, 50%, 90%, 0.4); 
+  text-align: center;
+  box-shadow: 4px 3px 4px #555555 inset;
+}
+
+.title-box :nth-child(1) {
+  position: absolute;
+  width: 100%;
+  top: 8px;
+  font-size: 40pt;
+  font-weight: bolder;
+  text-shadow: 3px 2px 2px #444444;
+}
+
+.title-box :nth-child(2) {
+  position: absolute;
+  width: 100%;
+  top: 70px;
+  font-size: 14pt;
+  text-shadow: 2px 2px 2px #444444;
+}
 
 p {
   margin: 1em 0 1em 0;
