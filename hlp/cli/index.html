@@ -6,16 +6,23 @@
     <title>ImageResize Documentation</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>   
     <link rel="stylesheet" href="help.css"/>
+    <style>
+      .otab {text-align: left;}
+    </style>
   </head>
 
   <body>
     <header style="background-image: url('img/title.jpg');">
+      <div class="title-box">
+        <div>Atomek</div>
+        <div>imgres - command line tool</div>
+      </div>
     </header>
   
     <div class="contents">
       <h1 id="overview">Overview</h1>
       <p>
-        <i>imgres</i> 3.0 is a command line interface (CLI) for the bulk resizing
+        <i>imgres</i> 3.1 is a command line interface (CLI) for the bulk resizing
         and watermarking tool <i>ImageResize</i>. It converts (resamples)
         JPEG and PNG images.
       </p>
@@ -27,15 +34,7 @@
       </a>
       <h2 id="syntax">Syntax</h2>
       <p>
-        <b> imgres <i>filename folder size</i><br/>
-        [-j jpgquality]
-        [-p pngcompression]<br/>
-        [-w watermark]<br/>
-        [-t threadcount]<br/>
-        [-r rename]<br/>
-        [-s shake]<br/>
-        [-x]<br/>
-        [-h] [-q]</b>
+        imgres <i>filename folder size {options}</i><br/>
       </p>
 
       <h2 id="params">Parameters</h2>
@@ -85,6 +84,9 @@
             the dstfolder.
           </td>
         </tr>
+      </table>
+      <h2 id="params">Options</h2>
+      <table class="partab">
         <tr>
           <td>
             <i>-h</i><br/>
@@ -110,7 +112,7 @@
           </td>
           <td>
             A value between 1 and 100, where 1 is the lowest and 100 is
-            the highest quality. This partameter refers only to jpg files.
+            the highest quality. This partameter refers only to JPEG files.
           </td>
         </tr>
         <tr>
@@ -120,7 +122,7 @@
           </td>
           <td>
             One of the strings <i>none</i>,<i>fastest</i>,<i>default</i> and <i>max</i>.
-            The png format has a loss-less compression, so this parameter has
+            The PNG format has a loss-less compression, so this parameter has
             an impact to the compression/decompression effort, not to the
             image quality.
           </td>
@@ -132,7 +134,7 @@
           </td>
           <td>
             <p>
-              A watermark is a png image containing a copyright or what ever. The
+              A watermark is a PNG image containing a copyright or what ever. The
               watermark can be printed an any position. The position is in percent
               and refers to the images width resp. height. The <i>Size</i> is in
               percent of the images width.
@@ -215,10 +217,19 @@
           </td>
           <td>
             <p>
-              Mixes the renamed destination files randomly. To get the same (random) sequence of files, enter a <i>seed</i> not equal to zero. Multiple executions of the resampling processor will then result in the same order, as long as the number of files does not change.
+              Mixes (shakes) the renamed destination files randomly. To get the same
+              (random) sequence of files, enter a <i>seed</i> not equal to zero. Multiple
+              executions of the resampling processor will then result in the same order,
+              as long as the number of files does not change.
             </p>
             <p>
               A seed of 0 results in another sequence of files you press Execute.
+            </p>
+            <p>
+              If you want to mix the destination files, its recommended to insert
+              the %INDEX% placeholder at a first placeholder in the filename
+              template for renaming. The system uses a file attribute for sorting
+              (usually the name of the the file), when listing them.
             </p>
           </td>
         </tr>
@@ -241,21 +252,25 @@
         To resample multiple files in multiple resolutions, just enter multiple
         comma separated sizes without spaces.
       </p><p>
-        <span class="cmd">imgres @imglist.txt .\img%SIZE% 240,640,1280</span>
-      </p><p>
         Note: the placeholder %SIZE% in the destination path is required.
       </p><p>
-        <span class="cmd">imgres image.jpg img640 640 -w "watermark.png?60,2,98?20"</span>
+        <span class="cmd">imgres @imglist.txt .\img%SIZE% 240,640,1280</span>
       </p><p>
         This creates a 640px jpg with a 640*60%=384px size watermark at the
         left bottom corner. 2% for the left margin, 98% percent means 2% from
         the bottom border.
       </p><p>
-        <span class="cmd">imgres MyImages\*.jpg;*.png .\images 200,1920 -r "img%INDEX:1,3%_%SIZE%.%FILEEXT%"</span>
+        <span class="cmd">imgres image.jpg img640 640 -w "watermark.png?60,2,98?20"</span>
       </p><p>
-        This example demontrates how to create all resized image files to a single
+        This example demonstrates how to create all resized image files to a single
         folder. The trick is to build in the destination size into the filename
         that all filenames become unique.
+      </p><p>
+        <span class="cmd">imgres MyImages\*.jpg;*.png .\images 200,1920 -r "img%INDEX:1,3%_%SIZE%.%FILEEXT%"</span>
+      </p><p>
+        This example mixes the files randomly with a random seed of 1000.
+      </p><p>
+        <span class="cmd">imgres MyImages\*.jpg .\images 1920 -s 1000 -r "img%INDEX:1,3%.%FILEEXT%"</span>
       </p>
 
     </div>

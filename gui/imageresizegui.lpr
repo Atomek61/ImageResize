@@ -21,5 +21,5 @@ begin
   Application.Initialize;
   Application.CreateForm(TMainDialog, MainDialog);
   Application.Run;
-end.
+  end.
 

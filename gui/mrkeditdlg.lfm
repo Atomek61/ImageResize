@@ -3239,10 +3239,10 @@ object MrkEditDialog: TMrkEditDialog
     ClientWidth = 658
     TabOrder = 3
     object ButtonOk: TBitBtn
-      Left = 462
+      Left = 442
       Height = 31
       Top = 8
-      Width = 90
+      Width = 100
       Action = ActionOk
       Align = alRight
       Anchors = [akRight, akBottom]
@@ -3251,10 +3251,10 @@ object MrkEditDialog: TMrkEditDialog
       TabOrder = 1
     end
     object ButtonCancel: TBitBtn
-      Left = 560
+      Left = 550
       Height = 31
       Top = 8
-      Width = 90
+      Width = 100
       Align = alRight
       Anchors = [akRight, akBottom]
       BorderSpacing.Around = 8
@@ -3268,10 +3268,10 @@ object MrkEditDialog: TMrkEditDialog
       TabOrder = 2
     end
     object ButtonSave: TBitBtn
-      Left = 364
+      Left = 334
       Height = 31
       Top = 8
-      Width = 90
+      Width = 100
       Action = ActionSave
       Align = alRight
       Anchors = [akRight, akBottom]

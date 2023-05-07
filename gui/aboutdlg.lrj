@@ -1,8 +1,8 @@
 {"version":1,"strings":[
 {"hash":210059797,"name":"taboutdialog.caption","sourcebytes":[65,98,111,117,116,32,73,109,97,103,101,82,101,115,105,122,101],"value":"About ImageResize"},
 {"hash":1371,"name":"taboutdialog.button1.caption","sourcebytes":[79,107],"value":"Ok"},
-{"hash":42069413,"name":"taboutdialog.labelimgresguicpr.caption","sourcebytes":[37,73,77,71,82,69,83,71,85,73,67,80,82,37],"value":"%IMGRESGUICPR%"},
-{"hash":15211747,"name":"taboutdialog.labelurl1.caption","sourcebytes":[66,117,105,108,100,32,119,105,116,104,32,76,97,122,97,114,117,115,32,50,46,50,46,54,44,32,117,115,105,110,103,32,66,71,82,65,66,105,116,109,97,112,32,49,49,46,53,46,51],"value":"Build with Lazarus 2.2.6, using BGRABitmap 11.5.3"},
+{"hash":150568222,"name":"taboutdialog.labelimgresguicpr.caption","sourcebytes":[60,97,112,112,99,111,112,121,114,105,103,104,116,62],"value":"<appcopyright>"},
+{"hash":42941678,"name":"taboutdialog.labeldependencies.caption","sourcebytes":[60,100,101,112,101,110,100,101,110,99,105,101,115,62],"value":"<dependencies>"},
 {"hash":261905578,"name":"taboutdialog.labelurl2.caption","sourcebytes":[76,105,99,101,110,115,101,58],"value":"License:"},
-{"hash":109144197,"name":"taboutdialog.labelimgresstr.caption","sourcebytes":[37,73,77,71,82,69,83,83,84,82,37],"value":"%IMGRESSTR%"}
+{"hash":67508814,"name":"taboutdialog.labelimgresstr.caption","sourcebytes":[60,112,114,111,99,101,115,115,111,114,118,101,114,115,105,111,110,62],"value":"<processorversion>"}
 ]}

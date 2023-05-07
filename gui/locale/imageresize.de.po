@@ -16,6 +16,11 @@ msgstr ""
 msgid "Abort"
 msgstr "Abort"
 
+#: imgres.scptdependenciesfmt
+#, object-pascal-format
+msgid "Build with Lazarus %s and graphics library BGRABitmap %s"
+msgstr "Compiliert mit Lazarus %s und der Grafikbibliothek BGRABitmap %s"
+
 #: imgres.scptfatal
 msgid "Fatal"
 msgstr "Fatal"
@@ -55,8 +60,8 @@ msgstr "Ungültiger INDEX Start '%s'."
 
 #: imgres.serrinvalidjpgqualityfmt
 #, object-pascal-format
-msgid "Invalid jpg quality %d (1..100)."
-msgstr "Ungültige JPEG Qualität '%d' (1..100)."
+msgid "Invalid JPEG quality %d (1..100 expected)."
+msgstr "Ungültige JPEG Qualität '%d' (1..100 erwartet)."
 
 #: imgres.serrinvalidplaceholder
 msgid "Unknown or invalid placeholder."
@@ -64,8 +69,8 @@ msgstr "Unbekannter oder ungültiger Platzhalter."
 
 #: imgres.serrinvalidpngcompressionfmt
 #, object-pascal-format
-msgid "Invalid png compression %d (0..3)."
-msgstr "Ungültige PNG-Kompression %d (0..3)."
+msgid "Invalid png compression %d (0..3 expected)."
+msgstr "Ungültige PNG-Kompression %d (0..3 erwartet)."
 
 #: imgres.serrinvalidrenamingparamfmt
 #, object-pascal-format
@@ -86,8 +91,8 @@ msgid "Missing sizes."
 msgstr "Fehlende Größe."
 
 #: imgres.serrmultiplesizes
-msgid "Multiple sizes, placeholder %SIZE% not found in either folder or filename template."
-msgstr "Mehrfache Größe, Platzhalter %SIZE% nicht gefunden im Verzeichnisnamen oder in der Dateinamen-Vorlage."
+msgid "Multiple sizes but placeholder %SIZE% not found in either folder or filename template."
+msgstr "Mehrfache Größe, aber Platzhalter %SIZE% nicht gefunden im Verzeichnisnamen oder in der Dateinamen-Vorlage."
 
 #: imgres.sinfresultfmt
 #, object-pascal-format
@@ -104,6 +109,11 @@ msgstr "Erzeuge Verzeichnis '%s'..."
 msgid "Loading '%s'..."
 msgstr "Lade '%s'..."
 
+#: imgres.smsgloadmrkfilefmt
+#, object-pascal-format
+msgid "Loading Watermark '%s'..."
+msgstr "Lade Wasserzeichen '%s'..."
+
 #: imgres.smsgresamplingfmt
 #, object-pascal-format
 msgid "Resampling '%s' from %dx%d to %dx%d..."
@@ -113,6 +123,10 @@ msgstr "Resample '%s' von %dx%d zu %dx%d..."
 #, object-pascal-format
 msgid "Saving '%s'..."
 msgstr "Speichere '%s'..."
+
+#: imgres.smsgshakingfiles
+msgid "Shaking list of files..."
+msgstr "Mische die Dateiliste..."
 
 #: imgres.smsgwatermarkingfmt
 #, object-pascal-format
@@ -194,7 +208,7 @@ msgstr "Abgebrochen bei %.0f%%"
 
 #: maindlg.serrenterplaceholder
 msgid "Enter placeholder %SIZE% to either the destination folder or the file template."
-msgstr "Geben Size Platzhalter %SIZE% an im Verzeichnisnamen, bzw. im Dateinamen-Template."
+msgstr "Geben Sie den Platzhalter %SIZE% an im Verzeichnisnamen, bzw. im Dateinamen-Template."
 
 #: maindlg.serrinvalidjpgquality
 msgid "Invalid jpg quality."
@@ -277,8 +291,8 @@ msgstr ""
 "DIE SOFTWARE WIRD OHNE MÄNGELGEWÄHR BEREITGESTELLT, OHNE AUSDRÜCKLICHE ODER STILLSCHWEIGENDE GEWÄHRLEISTUNG, EINSCHLIESSLICH, ABER NICHT BESCHRÄNKT AUF GEWÄHRLEISTUNGEN DER MARKTFÄHIGKEIT, EIGNUNG FÜR EINEN BESTIMMTEN ZWECK UND NICHTVERLETZUNG VON RECHTEN DRITTER. DER AUTOR ODER URHEBERRECHTSINHABER IST IN KEINEM FALL HAFTBAR FÜR ANSPRÜCHE, SCHÄDEN ODER SONSTIGE HAFTUNG, OB AUS VERTRAG, UNERLAUBTER HANDLUNG ODER ANDERWEITIG, DIE SICH AUS, AUS ODER IM ZUSAMMENHANG MIT DER SOFTWARE ODER DER NUTZUNG ODER ANDEREN HANDLUNGEN MIT DER SOFTWARE ERGEBEN."
 
 #: maindlg.surlwebhelp
-msgid "http://www.atomek.de/imageresize/hlp32/gui/en"
-msgstr "http://www.atomek.de/imageresize/hlp32/gui/de"
+msgid "http://www.atomek.de/imageresize/hlp33/gui/en"
+msgstr "http://www.atomek.de/imageresize/hlp33/gui/de"
 
 #: mrkeditdlg.scptdialogtitle
 msgid "Watermark Editor"
@@ -307,17 +321,21 @@ msgstr "Ok"
 msgid "About ImageResize"
 msgstr "Über ImageResize"
 
+#: taboutdialog.labeldependencies.caption
+msgid "<dependencies>"
+msgstr ""
+
 #: taboutdialog.labelimgresguicpr.caption
-msgid "%IMGRESGUICPR%"
+#, fuzzy
+#| msgid "%IMGRESGUICPR%"
+msgid "<appcopyright>"
 msgstr "%IMGRESGUICPR%"
 
 #: taboutdialog.labelimgresstr.caption
-msgid "%IMGRESSTR%"
+#, fuzzy
+#| msgid "%IMGRESSTR%"
+msgid "<processorversion>"
 msgstr "%IMGRESSTR%"
-
-#: taboutdialog.labelurl1.caption
-msgid "Build with Lazarus 2.2.6, using BGRABitmap 11.5.3"
-msgstr "Compiliert mit Lazarus 2.2.6 und  BGRABitmap 11.5.3"
 
 #: taboutdialog.labelurl2.caption
 msgid "License:"
@@ -979,3 +997,4 @@ msgstr ""
 #: tmrkeditdialog.toolbutton9.caption
 msgid "ToolButton9"
 msgstr ""
+

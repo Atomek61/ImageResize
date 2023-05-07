@@ -5,6 +5,11 @@ msgstr "Content-Type: text/plain; charset=UTF-8"
 msgid "Abort"
 msgstr ""
 
+#: imgres.scptdependenciesfmt
+#, object-pascal-format
+msgid "Build with Lazarus %s and graphics library BGRABitmap %s"
+msgstr ""
+
 #: imgres.scptfatal
 msgid "Fatal"
 msgstr ""
@@ -44,7 +49,7 @@ msgstr ""
 
 #: imgres.serrinvalidjpgqualityfmt
 #, object-pascal-format
-msgid "Invalid jpg quality %d (1..100)."
+msgid "Invalid JPEG quality %d (1..100 expected)."
 msgstr ""
 
 #: imgres.serrinvalidplaceholder
@@ -53,7 +58,7 @@ msgstr ""
 
 #: imgres.serrinvalidpngcompressionfmt
 #, object-pascal-format
-msgid "Invalid png compression %d (0..3)."
+msgid "Invalid png compression %d (0..3 expected)."
 msgstr ""
 
 #: imgres.serrinvalidrenamingparamfmt
@@ -75,7 +80,7 @@ msgid "Missing sizes."
 msgstr ""
 
 #: imgres.serrmultiplesizes
-msgid "Multiple sizes, placeholder %SIZE% not found in either folder or filename template."
+msgid "Multiple sizes but placeholder %SIZE% not found in either folder or filename template."
 msgstr ""
 
 #: imgres.sinfresultfmt
@@ -93,6 +98,11 @@ msgstr ""
 msgid "Loading '%s'..."
 msgstr ""
 
+#: imgres.smsgloadmrkfilefmt
+#, object-pascal-format
+msgid "Loading Watermark '%s'..."
+msgstr ""
+
 #: imgres.smsgresamplingfmt
 #, object-pascal-format
 msgid "Resampling '%s' from %dx%d to %dx%d..."
@@ -101,6 +111,10 @@ msgstr ""
 #: imgres.smsgsavingfmt
 #, object-pascal-format
 msgid "Saving '%s'..."
+msgstr ""
+
+#: imgres.smsgshakingfiles
+msgid "Shaking list of files..."
 msgstr ""
 
 #: imgres.smsgwatermarkingfmt
@@ -259,7 +273,7 @@ msgid ""
 msgstr ""
 
 #: maindlg.surlwebhelp
-msgid "http://www.atomek.de/imageresize/hlp32/gui/en"
+msgid "http://www.atomek.de/imageresize/hlp33/gui/en"
 msgstr ""
 
 #: mrkeditdlg.scptdialogtitle
@@ -289,16 +303,16 @@ msgstr ""
 msgid "About ImageResize"
 msgstr ""
 
+#: taboutdialog.labeldependencies.caption
+msgid "<dependencies>"
+msgstr ""
+
 #: taboutdialog.labelimgresguicpr.caption
-msgid "%IMGRESGUICPR%"
+msgid "<appcopyright>"
 msgstr ""
 
 #: taboutdialog.labelimgresstr.caption
-msgid "%IMGRESSTR%"
-msgstr ""
-
-#: taboutdialog.labelurl1.caption
-msgid "Build with Lazarus 2.2.6, using BGRABitmap 11.5.3"
+msgid "<processorversion>"
 msgstr ""
 
 #: taboutdialog.labelurl2.caption

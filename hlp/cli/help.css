@@ -33,12 +33,11 @@ footer {
 
 .contents {
   padding: 1em 5% 1em 5%;
-  background-image: url("images/bkgshutter2.png");
+  background-image: url("img/bkgshutter2.png");
 }
 
 h1, h2, h3, h4, h5, h6 {
   padding: 0;
-  xmargin: 0.3em 0px 0px 0px;
   line-height: 1.3em;
 }
 
@@ -84,3 +83,36 @@ td {
   font: italic bold 14pt "Courier New";
   color: hsl(20, 20%, 80%);
 }
+
+.title-box {
+  font-family: "Arial";
+  position: absolute;
+  left: 40px;
+  top: 20px;
+  width: 300px;
+  height: 112px;
+  border: 4px solid silver; 
+  border-radius: 10px;
+  color: silver; 
+  background-color: hsla(270, 0%, 5%, 0.4); 
+  text-align: center;
+  box-shadow: 4px 3px 4px #555555 inset;
+}
+
+.title-box :nth-child(1) {
+  position: absolute;
+  width: 100%;
+  top: 8px;
+  font-size: 40pt;
+  font-weight: bolder;
+  text-shadow: 3px 2px 2px #444444;
+}
+
+.title-box :nth-child(2) {
+  position: absolute;
+  width: 100%;
+  top: 70px;
+  font-size: 14pt;
+  text-shadow: 2px 2px 2px #444444;
+}
+

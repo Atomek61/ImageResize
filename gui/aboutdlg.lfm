@@ -27,8 +27,8 @@ object AboutDialog: TAboutDialog
     Left = 112
     Height = 15
     Top = 16
-    Width = 102
-    Caption = '%IMGRESGUICPR%'
+    Width = 87
+    Caption = '<appcopyright>'
     ParentColor = False
   end
   object MemoLicense: TMemo
@@ -45,12 +45,12 @@ object AboutDialog: TAboutDialog
     ScrollBars = ssAutoBoth
     TabOrder = 1
   end
-  object LabelUrl1: TLabel
+  object LabelDependencies: TLabel
     Left = 112
     Height = 15
     Top = 80
-    Width = 261
-    Caption = 'Build with Lazarus 2.2.6, using BGRABitmap 11.5.3'
+    Width = 89
+    Caption = '<dependencies>'
     ParentColor = False
   end
   object ImageMainIcon: TImage
@@ -72,8 +72,8 @@ object AboutDialog: TAboutDialog
     Left = 112
     Height = 15
     Top = 40
-    Width = 80
-    Caption = '%IMGRESSTR%'
+    Width = 105
+    Caption = '<processorversion>'
     ParentColor = False
   end
 end

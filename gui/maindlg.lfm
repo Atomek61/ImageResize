@@ -203,7 +203,7 @@ object MainDialog: TMainDialog
       Top = 56
       Width = 377
       HelpType = htKeyword
-      HelpKeyword = 'HTML/index.html#srcfolder'
+      HelpKeyword = 'HTML/index.html#srcfilelist'
       Anchors = [akTop, akLeft, akRight, akBottom]
       Caption = '&Images'
       ClientHeight = 366
@@ -381,13 +381,13 @@ object MainDialog: TMainDialog
         Height = 360
         Top = 0
         Width = 386
-        ActivePage = TabSheetRessources
+        ActivePage = TabSheetRenaming
         Align = alClient
         BorderSpacing.Left = 4
         BorderSpacing.Right = 4
         BorderSpacing.Bottom = 4
         MultiLine = True
-        TabIndex = 4
+        TabIndex = 2
         TabOrder = 0
         Options = [nboMultiLine]
         object TabSheetSizes: TTabSheet
@@ -525,7 +525,7 @@ object MainDialog: TMainDialog
         end
         object TabSheetRenaming: TTabSheet
           HelpType = htKeyword
-          HelpKeyword = 'HTML/index.html#rename'
+          HelpKeyword = 'HTML/index.html#renaming'
           Caption = 'Renaming'
           ClientHeight = 332
           ClientWidth = 378
@@ -580,9 +580,9 @@ object MainDialog: TMainDialog
               ParentFont = False
             end
             object Label23: TLabel
-              Left = 152
+              Left = 160
               Height = 58
-              Top = 121
+              Top = 120
               Width = 88
               AutoSize = False
               Caption = '%SIZE%'#13#10'%FILENAME%'#13#10'%FILEEXT%'
@@ -604,7 +604,7 @@ object MainDialog: TMainDialog
               Left = 24
               Height = 23
               Top = 88
-              Width = 216
+              Width = 328
               ItemHeight = 15
               Items.Strings = (
                 'img%INDEX:1,3%.%FILEEXT%'

@@ -284,7 +284,6 @@ procedure TMrkEditDialog.ActionSaveAsFavoriteExecute(Sender: TObject);
 var
   Ini: TIniFile;
   Params :TWatermarkParams;
-  Filename :string;
 begin
   if not TryDialogToParams(Params) then
     raise Exception.Create(SErrInvalidParams);

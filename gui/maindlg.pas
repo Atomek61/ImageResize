@@ -16,7 +16,7 @@ unit maindlg;
 interface
 
 uses
-  LCLTranslator, Classes, Types, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
+  LazVersion, LCLTranslator, Classes, Types, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
   ComCtrls, ActnList, ExtCtrls, imgres, aboutdlg, inifiles, strutils,
   LMessages, LCLIntf, Buttons, ImgList, LCLType, LazHelpHTML,
   BGRABitmap, BGRABitmapTypes, Generics.Collections, WinDirs,
@@ -24,7 +24,7 @@ uses
 
 const
 
-  IMGRESGUIVER    = '3.2';
+  IMGRESGUIVER    = '3.3';
   IMGRESGUICPR    = 'ImageResize V'+IMGRESGUIVER+' © 2023 Jan Schirrmacher, www.atomek.de';
 
   INITYPE         = 'IRS';
@@ -51,7 +51,7 @@ const
   SIZEBTNHINTFMT  = '%s - %dpx';
 
 resourcestring
-  SUrlWebHelp = 'http://www.atomek.de/imageresize/hlp32/gui/en';
+  SUrlWebHelp = 'http://www.atomek.de/imageresize/hlp33/gui/en';
   SLocDirHelp = 'hlp\en';
   STxtLicense =
     'ImageResize Copyright (c) 2023 Jan Schirrmacher, www.atomek.de'#10#10+
@@ -1165,6 +1165,7 @@ begin
     MemoMessages.Lines.Clear;
     FExecuting := true;
     FCancelled := false;
+    Screen.Cursor := crHourGlass;
     Application.ProcessMessages;
     try
       SrcFilenames := TStringList.Create;
@@ -1270,6 +1271,7 @@ begin
       ActionExecute.ImageIndex := 4;
       ButtonExecute.ImageIndex := 2;
       TimerProgressBarOff.Enabled := true;
+      Screen.Cursor := crDefault;
     end;
   end;
 

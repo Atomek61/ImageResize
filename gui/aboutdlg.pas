@@ -16,7 +16,7 @@ type
     ImageMainIcon: TImage;
     LabelImgresGuiCpr: TLabel;
     LabelImgresStr: TLabel;
-    LabelUrl1: TLabel;
+    LabelDependencies: TLabel;
     LabelUrl2: TLabel;
     MemoLicense: TMemo;
     procedure Button1Click(Sender: TObject);
@@ -27,6 +27,9 @@ type
   end;
 
 implementation
+
+uses
+  imgres, LazVersion, BGRABitmapTypes;
 
 {$R *.lfm}
 
@@ -53,6 +56,8 @@ begin
   with AboutDialog do try
     LabelImgresGuiCpr.Caption := Text1;
     LabelImgresStr.Caption := Text2;
+    LabelDependencies.Caption := Format(SCptDependenciesFmt, [laz_version, IntToStr(BGRABitmapVersion)]);
+
     MemoLicense.Text := License;
     ImageMainIcon.Picture.Icon := Application.Icon;
     result := ShowModal = mrOk;

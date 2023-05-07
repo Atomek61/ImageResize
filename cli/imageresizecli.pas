@@ -11,7 +11,7 @@ uses
   { you can add units after this } fileutil, utils, imgres, generics.collections;
 
 const
-  IMGRESCLIVER = '3.0';
+  IMGRESCLIVER = '3.1';
   IMGRESCLICPR = 'imgres CLI V'+IMGRESCLIVER+' for engine V'+IMGRESVER+' (c) 2023 Jan Schirrmacher, www.atomek.de';
 
   INTROSTR = 'Free tool for JPEG and PNG quality resampling.';
@@ -60,7 +60,7 @@ const
   ERRINVALIDNUMBEROFPARAMS = 'Invalid number of parameters.';
   ERRINVALIDSRCFILENAME = 'Invalid parameter srcfilename.';
   ERRINVALIDDSTFOLDER = 'Invalid parameter dstfolder.';
-  ERRMISSINGSIZE = 'For multiple sizes dstfolder must contain placeholder ''%SIZE%''.';
+//  ERRMISSINGSIZE = 'For multiple sizes dstfolder must contain placeholder ''%SIZE%''.';
   ERRINVALIDSHAKESEED = 'Invalid shake seed value, 0..n expected.';
 
 type
@@ -275,10 +275,10 @@ begin
     Processor.Shake := Shake;
     Processor.ShakeSeed := ShakeSeed;
 
-    // Check if multiple sizes are given and placeholder %SIZE% is not set in DstFolder
-    if (Length(Sizes)>1) and not ((Pos('%SIZE%', DstFolder)>0)
-     or (Processor.RenEnabled and (Pos('%SIZE%', DstFileTemplate)>0))) then
-      raise Exception.Create(ERRMISSINGSIZE);
+    //// Check if multiple sizes are given and placeholder %SIZE% is not set in DstFolder
+    //if (Length(Sizes)>1) and not ((Pos('%SIZE%', DstFolder)>0)
+    // or (Processor.RenEnabled and (Pos('%SIZE%', DstFileTemplate)>0))) then
+    //  raise Exception.Create(ERRMISSINGSIZE);
 
     if not Quiet then
       Processor.OnPrint := @OnPrint;
