@@ -21,7 +21,8 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <MajorVersionNr Value="3"/>
-      <MinorVersionNr Value="2"/>
+      <MinorVersionNr Value="3"/>
+      <RevisionNr Value="3"/>
       <StringTable FileDescription="Image Resampler" LegalCopyright="© 2023 Jan Schirrmacher, www.atomek.de"/>
     </VersionInfo>
     <BuildModes>
@@ -113,6 +114,12 @@
     </RunParams>
     <RequiredPackages>
       <Item>
+        <PackageName Value="weblaz"/>
+      </Item>
+      <Item>
+        <PackageName Value="bgracontrols"/>
+      </Item>
+      <Item>
         <PackageName Value="BGRABitmapPack"/>
       </Item>
       <Item>
@@ -147,6 +154,10 @@
       </Unit>
       <Unit>
         <Filename Value="..\src\imgres.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\updateutils.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
     </Units>

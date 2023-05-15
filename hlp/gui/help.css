@@ -91,6 +91,8 @@ td {
   padding: 0.2em 0.4em 0.2em 0;
 }
 
+.flag {width: 40px;}
+
 .btn {position:relative; top: 4px; background-color: rgb(238, 238, 238); border-radius: 2px}
 
 .chfot {margin-bottom: 2em; margin-top: 1.5em;}

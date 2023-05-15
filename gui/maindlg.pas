@@ -16,15 +16,16 @@ unit maindlg;
 interface
 
 uses
-  LazVersion, LCLTranslator, Classes, Types, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ComCtrls, ActnList, ExtCtrls, imgres, aboutdlg, inifiles, strutils,
-  LMessages, LCLIntf, Buttons, ImgList, LCLType, LazHelpHTML,
-  BGRABitmap, BGRABitmapTypes, Generics.Collections, WinDirs,
-  mrkeditdlg;
+  LCLTranslator, Classes, Types, SysUtils, Forms, Controls,
+  Graphics, Dialogs, StdCtrls, ComCtrls, ActnList, ExtCtrls, imgres, aboutdlg,
+  inifiles, strutils, LMessages, LCLIntf, Buttons, ImgList, LCLType,
+  LazHelpHTML, BGRABitmap, BGRABitmapTypes,
+  Generics.Collections, mrkeditdlg, WinDirs;
 
 const
 
-  IMGRESGUIVER    = '3.3';
+  IMGRESGUIVER    = '3.3.3';
+  CHECKUPDATEURL  = 'https://www.atomek.de/imageresize/download/version.manifest';
   IMGRESGUICPR    = 'ImageResize V'+IMGRESGUIVER+' © 2023 Jan Schirrmacher, www.atomek.de';
 
   INITYPE         = 'IRS';
@@ -135,7 +136,6 @@ type
     GroupBoxPngOptions: TGroupBox;
     HTMLBrowserHelpViewer: THTMLBrowserHelpViewer;
     HTMLHelpDatabase: THTMLHelpDatabase;
-    ImageListMrkPositions: TImageList;
     ImageList20x20: TImageList;
     ImageList24x24: TImageList;
     Label1: TLabel;
@@ -398,11 +398,11 @@ begin
 
     Button.Hint := Format(SIZEBTNHINTFMT, [Cpt, DEFSIZES[i]]);
     if DEFSIZES[i]<=THUMBNAILIMGMAX then
-        Button.ImageIndex := 5
+        Button.ImageIndex := 11
     else if DEFSIZES[i]<=DOCIMGMAX then
-      Button.ImageIndex := 6
+      Button.ImageIndex := 9
     else
-      Button.ImageIndex := 7;
+      Button.ImageIndex := 10;
     Button.Style := tbsCheck;
     Button.Tag := DEFSIZES[i];
     Button.OnClick := @SizeButtonClick;
@@ -1152,8 +1152,10 @@ var
 begin
   if FExecuting then begin
     FCancelled := true;
+    ActionExecute.Enabled := false;
   end else begin
     FProgress := 0;
+    ActionExecute.Enabled := true;
     ActionExecute.Caption := SCptCancel;
     ButtonExecute.Caption := SCptCancel;
     ActionExecute.ImageIndex := 5;
@@ -1266,6 +1268,7 @@ begin
       FImgRes.Free;
       FExecuting := false;
       if FCancelled then Log(Format(SErrCancelledAtFmt, [FProgress*100.0]));
+      ActionExecute.Enabled := true;
       ActionExecute.Caption := SCptExecuteA;
       ButtonExecute.Caption := SCptExecute;
       ActionExecute.ImageIndex := 4;

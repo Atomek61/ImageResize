@@ -10,7 +10,7 @@ uses
   athreads,
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, maindlg, aboutdlg, mrkeditdlg, imgres;
+  Forms, maindlg, aboutdlg, mrkeditdlg, imgres, updateutils;
 
 {$R *.res}
 

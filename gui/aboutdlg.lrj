@@ -4,5 +4,6 @@
 {"hash":150568222,"name":"taboutdialog.labelimgresguicpr.caption","sourcebytes":[60,97,112,112,99,111,112,121,114,105,103,104,116,62],"value":"<appcopyright>"},
 {"hash":42941678,"name":"taboutdialog.labeldependencies.caption","sourcebytes":[60,100,101,112,101,110,100,101,110,99,105,101,115,62],"value":"<dependencies>"},
 {"hash":261905578,"name":"taboutdialog.labelurl2.caption","sourcebytes":[76,105,99,101,110,115,101,58],"value":"License:"},
-{"hash":67508814,"name":"taboutdialog.labelimgresstr.caption","sourcebytes":[60,112,114,111,99,101,115,115,111,114,118,101,114,115,105,111,110,62],"value":"<processorversion>"}
+{"hash":67508814,"name":"taboutdialog.labelimgresstr.caption","sourcebytes":[60,112,114,111,99,101,115,115,111,114,118,101,114,115,105,111,110,62],"value":"<processorversion>"},
+{"hash":151558993,"name":"taboutdialog.bitbtn1.caption","sourcebytes":[66,105,116,66,116,110,49],"value":"BitBtn1"}
 ]}

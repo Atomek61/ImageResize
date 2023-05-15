@@ -256,7 +256,7 @@ msgstr "hlp\\de"
 
 #: maindlg.slogcantload
 msgid "Cant load Image Resize Settings File"
-msgstr "Kann ImageResize-Einstellungsdatei nicht lesen."
+msgstr "Kann ImageResize-Einstellungsdatei nicht lesen"
 
 #: maindlg.slogerrorprefix
 msgid "Error - "
@@ -310,7 +310,11 @@ msgstr "Unerwarteter Dateityp, %s erwartet."
 
 #: mrkeditdlg.serrinvalidparams
 msgid "Invalid parameters"
-msgstr "Ungültige Parameter."
+msgstr "Ungültige Parameter"
+
+#: taboutdialog.bitbtn1.caption
+msgid "BitBtn1"
+msgstr ""
 
 #: taboutdialog.button1.caption
 msgctxt "taboutdialog.button1.caption"
@@ -323,33 +327,30 @@ msgstr "Über ImageResize"
 
 #: taboutdialog.labeldependencies.caption
 msgid "<dependencies>"
-msgstr ""
+msgstr "<dependencies>"
 
 #: taboutdialog.labelimgresguicpr.caption
-#, fuzzy
-#| msgid "%IMGRESGUICPR%"
 msgid "<appcopyright>"
-msgstr "%IMGRESGUICPR%"
+msgstr "<appcopyright>"
 
 #: taboutdialog.labelimgresstr.caption
-#, fuzzy
-#| msgid "%IMGRESSTR%"
 msgid "<processorversion>"
-msgstr "%IMGRESSTR%"
+msgstr "<processorversion>"
 
 #: taboutdialog.labelurl2.caption
 msgid "License:"
 msgstr "Lizenz:"
 
 #: tmaindialog.actionabout.caption
-msgid "Abo&ut..."
-msgstr "&Über..."
+msgid "Abo&ut"
+msgstr "&Über"
 
 #: tmaindialog.actioneditwatermark.caption
-msgid "&Watermark..."
-msgstr "&Wasserzeichen..."
+msgid "&Watermark"
+msgstr "&Wasserzeichen"
 
 #: tmaindialog.actioneditwatermark.hint
+msgctxt "tmaindialog.actioneditwatermark.hint"
 msgid "Opens the internal Watermark Editor"
 msgstr "Öffnet den eingebauten Wasserzeichen-Editor"
 
@@ -361,11 +362,12 @@ msgstr "Ausfüh&ren"
 #: tmaindialog.actionexecute.hint
 msgctxt "tmaindialog.actionexecute.hint"
 msgid "Starts the resampling process"
-msgstr "Startet das Resampling."
+msgstr "Startet das Resampling"
 
 #: tmaindialog.actionhelp.caption
-msgid "&Help..."
-msgstr "&Hilfe..."
+msgctxt "tmaindialog.actionhelp.caption"
+msgid "Help"
+msgstr "Hilfe"
 
 #: tmaindialog.actionnew.caption
 msgctxt "tmaindialog.actionnew.caption"
@@ -374,12 +376,12 @@ msgstr "&Neu"
 
 #: tmaindialog.actionnew.hint
 msgid "Reset all settings to default values."
-msgstr "Setze alle Einstellungen auf zurück auf Vorgabe."
+msgstr "Setze alle Einstellungen zurück auf Vorgabe."
 
 #: tmaindialog.actionopen.caption
 msgctxt "tmaindialog.actionopen.caption"
-msgid "&Open..."
-msgstr "&Öffnen..."
+msgid "&Open"
+msgstr "&Öffnen"
 
 #: tmaindialog.actionopen.hint
 msgid "Load saved settings"
@@ -396,12 +398,12 @@ msgstr "Sichert die aktuellen Einstellungen in einer Datei"
 
 #: tmaindialog.actionsaveas.caption
 msgctxt "tmaindialog.actionsaveas.caption"
-msgid "Save &as..."
-msgstr "Speichern &als..."
+msgid "Save &as"
+msgstr "Speichern &als"
 
 #: tmaindialog.actionsaveas.hint
 msgid "Save current settings to another place"
-msgstr "Speichert die aktuellen Einstellungen in einer anderen Datei..."
+msgstr "Speichert die aktuellen Einstellungen in einer anderen Datei"
 
 #: tmaindialog.buttonexecute.caption
 msgctxt "tmaindialog.buttonexecute.caption"
@@ -413,6 +415,11 @@ msgctxt "tmaindialog.buttonexecute.hint"
 msgid "Starts the resampling process"
 msgstr "Startet das Resampling"
 
+#: tmaindialog.buttonmrkedit.hint
+msgctxt "tmaindialog.buttonmrkedit.hint"
+msgid "Opens the internal Watermark Editor"
+msgstr "Öffnet den eingebauten Wasserzeichen-Editor"
+
 #: tmaindialog.caption
 msgid "ImageResize"
 msgstr "ImageResize"
@@ -420,16 +427,16 @@ msgstr "ImageResize"
 #: tmaindialog.checkboxmrkenabled.caption
 msgctxt "tmaindialog.checkboxmrkenabled.caption"
 msgid "&Enabled"
-msgstr "V&erwenden"
+msgstr "Anw&enden"
 
 #: tmaindialog.checkboxrenenabled.caption
 msgctxt "tmaindialog.checkboxrenenabled.caption"
 msgid "&Enabled"
-msgstr "V&erwenden"
+msgstr "Anw&enden"
 
 #: tmaindialog.checkboxshake.caption
 msgid "&Enable"
-msgstr "V&erwenden"
+msgstr "Anw&enden"
 
 #: tmaindialog.checkboxshake.hint
 msgid "Check to let the mages be mixed (shaked)."
@@ -558,6 +565,17 @@ msgctxt "tmaindialog.editmrky.text"
 msgid "1"
 msgstr "1"
 
+#: tmaindialog.editrentemplate.hint
+msgid ""
+"Enter a filename template containing placeholders for special values.\n"
+"This template will be expanded for each resampled image. Insert the\n"
+"%SIZE% placeholder to enable multiple sizes in a common folder."
+msgstr ""
+"Geben Sie eine Dateinamen-Vorlage ein, die Platzhalter für bestimmte\n"
+"Werte enthält. Die Vorlage wird für jede resampelte Datei evaluiert. Fügen\n"
+"Sie den %SIZE%-Platzhalter ein, um mehrere Größen eines Bildes in\n"
+"einem gemeinsamen Verzeichnis zu erzeugen."
+
 #: tmaindialog.editsizes.hint
 msgid ""
 "Enter a comma-separated list of image sizes.\n"
@@ -578,8 +596,8 @@ msgstr "Geben Sie das Verzeichnis mit ihren Bildern ein."
 
 #: tmaindialog.editsrcmasks.hint
 msgctxt "tmaindialog.editsrcmasks.hint"
-msgid "Enter a source folder with your images."
-msgstr "Geben Sie das Verzeichnis mit ihren Bildern ein."
+msgid "Semicolon separated list of wildcards - filename templates with ? and * placeholders"
+msgstr "Semikoloseparierte Liste von Wildcards - Dateinamen-Vorlagen, die ? und * enthalten können."
 
 #: tmaindialog.editsrcmasks.text
 msgid "*.jpg;*.png"
@@ -774,11 +792,11 @@ msgid ""
 "Enter a list of files with absolute pathes.\n"
 "\n"
 "Press Browse... and select multiple files while\n"
-"holding <STRG> or <SHIFT> and clicking. "
+"holding <CTRL> or <SHIFT> and clicking. "
 msgstr ""
 "Enthält eine Liste von Dateien mit absoluten Pfaden:\n"
 "Drücke Auswählen... und wähle mehrere Dateien aus\n"
-"mit <STRG> oder <UMSCHALT>."
+"mit <STRG> oder <UMSCHALT>. "
 
 #: tmaindialog.radiobuttonfilelist.caption
 msgid "List of Files"
@@ -825,29 +843,38 @@ msgctxt "tmaindialog.toolbar.caption"
 msgid "ToolBar"
 msgstr ""
 
+#: tmaindialog.toolbutton1.hint
+msgid "Reset all settings to default values"
+msgstr "Setze alle Einstellungen zurück auf die Voreinstellung"
+
 #: tmaindialog.toolbutton10.caption
 msgid "ToolButton10"
 msgstr ""
+
+#: tmaindialog.toolbutton3.hint
+msgid "Save current settings to another file"
+msgstr "Speichere die aktuellen Einstellungen in eine andere Datei"
 
 #: tmaindialog.toolbutton5.caption
 msgid "ToolButton5"
 msgstr ""
 
-#: tmaindialog.toolbutton7.caption
-msgid "Help..."
-msgstr "&Hilfe..."
-
 #: tmaindialog.toolbutton8.caption
 msgid "ToolButton8"
 msgstr ""
 
+#: tmaindialog.toolbuttonabout.hint
+msgid "License and Vendor Infos"
+msgstr "Lizenz und Hersteller-Infos"
+
 #: tmrkeditdialog.actionfont.caption
-msgid "Font..."
-msgstr "Font..."
+msgid "Font"
+msgstr "Schrift"
 
 #: tmrkeditdialog.actionhelp.caption
-msgid "&Help"
-msgstr "&Help"
+msgctxt "tmrkeditdialog.actionhelp.caption"
+msgid "Help"
+msgstr "Hilfe"
 
 #: tmrkeditdialog.actioninsertcopyright.caption
 msgid "ActionInsertCopyright"
@@ -892,7 +919,7 @@ msgstr ""
 
 #: tmrkeditdialog.actionopen.caption
 msgctxt "tmrkeditdialog.actionopen.caption"
-msgid "&Open..."
+msgid "&Open"
 msgstr "&Öffnen"
 
 #: tmrkeditdialog.actionopen.hint
@@ -913,8 +940,8 @@ msgstr "Die aktuellen Einstellungen als .was-Datei und das Wasserzeichen als .pn
 
 #: tmrkeditdialog.actionsaveas.caption
 msgctxt "tmrkeditdialog.actionsaveas.caption"
-msgid "Save &as..."
-msgstr "Speichern &als..."
+msgid "Save &as"
+msgstr "Speichern &als"
 
 #: tmrkeditdialog.actionsaveas.hint
 msgctxt "tmrkeditdialog.actionsaveas.hint"
@@ -922,7 +949,7 @@ msgid "Saves the current settings as a .was file and a .png watermark file"
 msgstr "Die aktuellen Einstellungen als andere .was-Datei und das Wasserzeichen als andere .png-Datei speichern."
 
 #: tmrkeditdialog.actionsaveasfavorite.caption
-msgid "Set as &Favorite..."
+msgid "Set as &Favorite"
 msgstr "Als &Favorit"
 
 #: tmrkeditdialog.actionsaveasfavorite.hint

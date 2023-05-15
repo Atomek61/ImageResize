@@ -294,6 +294,10 @@ msgstr ""
 msgid "Invalid parameters"
 msgstr ""
 
+#: taboutdialog.bitbtn1.caption
+msgid "BitBtn1"
+msgstr ""
+
 #: taboutdialog.button1.caption
 msgctxt "taboutdialog.button1.caption"
 msgid "Ok"
@@ -320,14 +324,15 @@ msgid "License:"
 msgstr ""
 
 #: tmaindialog.actionabout.caption
-msgid "Abo&ut..."
+msgid "Abo&ut"
 msgstr ""
 
 #: tmaindialog.actioneditwatermark.caption
-msgid "&Watermark..."
+msgid "&Watermark"
 msgstr ""
 
 #: tmaindialog.actioneditwatermark.hint
+msgctxt "tmaindialog.actioneditwatermark.hint"
 msgid "Opens the internal Watermark Editor"
 msgstr ""
 
@@ -342,7 +347,8 @@ msgid "Starts the resampling process"
 msgstr ""
 
 #: tmaindialog.actionhelp.caption
-msgid "&Help..."
+msgctxt "tmaindialog.actionhelp.caption"
+msgid "Help"
 msgstr ""
 
 #: tmaindialog.actionnew.caption
@@ -356,7 +362,7 @@ msgstr ""
 
 #: tmaindialog.actionopen.caption
 msgctxt "tmaindialog.actionopen.caption"
-msgid "&Open..."
+msgid "&Open"
 msgstr ""
 
 #: tmaindialog.actionopen.hint
@@ -374,7 +380,7 @@ msgstr ""
 
 #: tmaindialog.actionsaveas.caption
 msgctxt "tmaindialog.actionsaveas.caption"
-msgid "Save &as..."
+msgid "Save &as"
 msgstr ""
 
 #: tmaindialog.actionsaveas.hint
@@ -389,6 +395,11 @@ msgstr ""
 #: tmaindialog.buttonexecute.hint
 msgctxt "tmaindialog.buttonexecute.hint"
 msgid "Starts the resampling process"
+msgstr ""
+
+#: tmaindialog.buttonmrkedit.hint
+msgctxt "tmaindialog.buttonmrkedit.hint"
+msgid "Opens the internal Watermark Editor"
 msgstr ""
 
 #: tmaindialog.caption
@@ -517,6 +528,13 @@ msgctxt "tmaindialog.editmrky.text"
 msgid "1"
 msgstr ""
 
+#: tmaindialog.editrentemplate.hint
+msgid ""
+"Enter a filename template containing placeholders for special values.\n"
+"This template will be expanded for each resampled image. Insert the\n"
+"%SIZE% placeholder to enable multiple sizes in a common folder."
+msgstr ""
+
 #: tmaindialog.editsizes.hint
 msgid ""
 "Enter a comma-separated list of image sizes.\n"
@@ -534,7 +552,7 @@ msgstr ""
 
 #: tmaindialog.editsrcmasks.hint
 msgctxt "tmaindialog.editsrcmasks.hint"
-msgid "Enter a source folder with your images."
+msgid "Semicolon separated list of wildcards - filename templates with ? and * placeholders"
 msgstr ""
 
 #: tmaindialog.editsrcmasks.text
@@ -717,7 +735,7 @@ msgid ""
 "Enter a list of files with absolute pathes.\n"
 "\n"
 "Press Browse... and select multiple files while\n"
-"holding <STRG> or <SHIFT> and clicking. "
+"holding <CTRL> or <SHIFT> and clicking. "
 msgstr ""
 
 #: tmaindialog.radiobuttonfilelist.caption
@@ -765,28 +783,37 @@ msgctxt "tmaindialog.toolbar.caption"
 msgid "ToolBar"
 msgstr ""
 
+#: tmaindialog.toolbutton1.hint
+msgid "Reset all settings to default values"
+msgstr ""
+
 #: tmaindialog.toolbutton10.caption
 msgid "ToolButton10"
+msgstr ""
+
+#: tmaindialog.toolbutton3.hint
+msgid "Save current settings to another file"
 msgstr ""
 
 #: tmaindialog.toolbutton5.caption
 msgid "ToolButton5"
 msgstr ""
 
-#: tmaindialog.toolbutton7.caption
-msgid "Help..."
-msgstr ""
-
 #: tmaindialog.toolbutton8.caption
 msgid "ToolButton8"
 msgstr ""
 
+#: tmaindialog.toolbuttonabout.hint
+msgid "License and Vendor Infos"
+msgstr ""
+
 #: tmrkeditdialog.actionfont.caption
-msgid "Font..."
+msgid "Font"
 msgstr ""
 
 #: tmrkeditdialog.actionhelp.caption
-msgid "&Help"
+msgctxt "tmrkeditdialog.actionhelp.caption"
+msgid "Help"
 msgstr ""
 
 #: tmrkeditdialog.actioninsertcopyright.caption
@@ -826,7 +853,7 @@ msgstr ""
 
 #: tmrkeditdialog.actionopen.caption
 msgctxt "tmrkeditdialog.actionopen.caption"
-msgid "&Open..."
+msgid "&Open"
 msgstr ""
 
 #: tmrkeditdialog.actionopen.hint
@@ -847,7 +874,7 @@ msgstr ""
 
 #: tmrkeditdialog.actionsaveas.caption
 msgctxt "tmrkeditdialog.actionsaveas.caption"
-msgid "Save &as..."
+msgid "Save &as"
 msgstr ""
 
 #: tmrkeditdialog.actionsaveas.hint
@@ -856,7 +883,7 @@ msgid "Saves the current settings as a .was file and a .png watermark file"
 msgstr ""
 
 #: tmrkeditdialog.actionsaveasfavorite.caption
-msgid "Set as &Favorite..."
+msgid "Set as &Favorite"
 msgstr ""
 
 #: tmrkeditdialog.actionsaveasfavorite.hint

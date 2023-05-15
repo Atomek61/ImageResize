@@ -8,7 +8,6 @@
       <Unit0>
         <Filename Value="imageresizecli.pas"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
         <CursorPos X="18" Y="11"/>
         <UsageCount Value="194"/>
         <Loaded Value="True"/>
@@ -16,8 +15,10 @@
       <Unit1>
         <Filename Value="..\src\imgres.pas"/>
         <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <CursorPos X="19" Y="26"/>
+        <TopLine Value="579"/>
+        <CursorPos X="59" Y="588"/>
         <UsageCount Value="130"/>
         <Bookmarks Count="1">
           <Item0 X="3" Y="334"/>

@@ -5,20 +5,24 @@ unit aboutdlg;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls;
+  Classes, SysUtils, fphttpclient, Forms, Controls, Graphics, Dialogs, StdCtrls,
+  ExtCtrls, Buttons;
 
 type
 
   { TAboutDialog }
 
   TAboutDialog = class(TForm)
+    BitBtn1: TBitBtn;
     Button1: TButton;
+    FPHTTPClient: TFPHTTPClient;
     ImageMainIcon: TImage;
     LabelImgresGuiCpr: TLabel;
     LabelImgresStr: TLabel;
     LabelDependencies: TLabel;
     LabelUrl2: TLabel;
     MemoLicense: TMemo;
+    procedure BitBtn1Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
   private
 
@@ -29,7 +33,7 @@ type
 implementation
 
 uses
-  imgres, LazVersion, BGRABitmapTypes;
+  maindlg, imgres, LazVersion, BGRABitmapTypes, opensslsockets;
 
 {$R *.lfm}
 
@@ -38,6 +42,14 @@ uses
 procedure TAboutDialog.Button1Click(Sender: TObject);
 begin
   Close;
+end;
+
+procedure TAboutDialog.BitBtn1Click(Sender: TObject);
+var
+  str :AnsiString;
+begin
+  str := FPHTTPClient.Get(CHECKUPDATEURL);
+  MemoLicense.Text := str;
 end;
 
 class function TAboutDialog.Execute(const Text1, Text2, License: string): boolean;

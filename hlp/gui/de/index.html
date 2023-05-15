@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en">
+<html lang="de">
 
   <head>
     <meta charset="UTF-8"/>
@@ -23,16 +23,19 @@
     </header>
   
     <div class="contents">
+      <img class="flag" src="../img/de.png"/>
+      <a href="../en/index.html"><img class="flag" src="../img/en.png"/></a>
+
       <h1 id="overview">Übersicht</h1>
       <p>
         <i>ImageResize</i> 3.3 ist eine App zur Größenänderung von JPEG- und PNG-Bildern.
-        Es ist für die Erzeugung von Web-Gallerien gedacht und kann viele Bilder 
+        Sie ist für die Erzeugung von Web-Gallerien gedacht und kann viele Bilder 
         auf einmal verarbeiten.
       </p>
       
       <h2 id="contents">Inhalt</h2>
       <a href="#overview">Übersicht</a><br/>
-      <a href="#srcfilelist">Liste der Bilder</a><br/>
+      <a href="#srcfilelist">Liste der Bilddateien</a><br/>
       <a href="#dstfolder">Zielverzeichnis</a><br/>
       <a href="#sizes">Zielgrößen</a><br/>
       <a href="#quality">Qualität</a><br/>
@@ -58,7 +61,7 @@
         <li>Optionales zufälliges Mischen der Liste</li>
       </ul>
       <p>
-        Unfähigkeiten
+        Was es nicht kann
       </p>
       <ul>
         <li>Bildverzerrung</li>
@@ -106,7 +109,7 @@
       <p>
         Wenn mehrere Zielgrößen angegeben werden, können entweder mit
         <a href="#renaming">Umbenennen</a> von Dateien Zielkonflikte vermieden
-        werden, oder indem der Zielordner den Platzhalter <span class="plh">%SIZE%</span>
+        werden oder indem der Zielordner den Platzhalter <span class="plh">%SIZE%</span>
         enthält.
       </p>
       <a class="chfot" href="#contents">Inhalt</a>
@@ -114,7 +117,7 @@
       <h1 id="sizes">Größen</h1>
       <p>
         Eine <i>Größe</i> in Pixeln bezieht sich auf die längere Seite eines Bildes.
-        Gewöhnlich ist die Größe der Originaldatei größer als die Zielgrößen.
+        Gewöhnlich ist die Größe der Originaldatei größer als die des Zieles.
       </p>
       <p>
         ImageResize kann mehrere Größen für jedes Bild erzeugen. Geben Sie eine Liste von Größen ein,
@@ -133,7 +136,7 @@
       
       <h1 id="quality">Qualität</h1>
       <p>
-        Sie können den Kompressionsgrad für JPEG- und für PNG-Formate steuern,
+        Sie können den Kompressionsgrad für JPEG- und für PNG-Formate steuern.
       </p>
       <p>
         Eine höhere Qualität resultiert in größeren Dateien. Bei JPEG ist 75 bis 95 Prozent
@@ -145,7 +148,7 @@
           <li><i>none</i> - keine Kompression</li>
           <li><i>fastest</i> - schnellste (geringe) Kompression</li>
           <li><i>default</i> - normale Kompression</li>
-          <li><i>maximum</i> - maximale Kompression (langsamer)</li>
+          <li><i>maximum</i> - größte Kompression (langsamer)</li>
         </ul>
         <img src="img/pngqualities.png"/>
       </p>
@@ -160,7 +163,7 @@
         zur Unterscheidung erhalten.
       </p>
       <p>
-        Checken Sie <i>Verwenden</i> und wählen Sie eine der möglichen Strategien:
+        Checken Sie <i>Anwenden</i> und wählen Sie eine der möglichen Strategien:
       </p>
 
       <h2 id="rensimple">Strategie <b>"Einfach"</b></h2>
@@ -171,7 +174,7 @@
         fügen Sie in die Vorlage des Zielverzeichnisnamens den Platzhalter <span class="plh">%SIZE%</span> ein.
       </p>
       <p>
-        Die Dateinames-Vorlage im einfachen Falle ist <span class="plh">img%INDEX:1,3%.%FILEEXT%</span>.
+        Die Dateinamen-Vorlage im einfachen Falle ist <span class="plh">img%INDEX:1,3%.%FILEEXT%</span>.
         Der INDEX ist die 0-basierte laufende Nummer der Quelldatei in der Liste. Die Zahlen
         1 und 3 hinter dem Schlüsselwort INDEX bedeuten, dass der Index bei 1 beginnt und 3
         Ziffern mit führenden Nullen enthalten wird.
@@ -218,22 +221,27 @@
             Der 0-basierte Index (laufende Nummer) der Datei in der Liste.
             <i>N</i> ist ein Offset (Versatz). Normalerweise beginnen Listen
             mit der Nummer 1, aber durch Angabe eines Versatzes können Sie vorhandene
-            Listen erweitern.s<br/><br/>
+            Listen erweitern. D ist die Zahl der Stellen der resultierenden Zahl, die
+            dazu führende Nullen erhält. Dies bewirkt die korrekte lexikalische Ordnung
+            der Dateinamen.<br/><br/>
           </td>
         </tr>
         <tr>
           <td><span class="plh">%SIZE%</span></td>
-          <td>Die Zielgröße in Pixeln der aktuellen Datei</td>
+          <td>Die Zielgröße in Pixeln der aktuellen Datei.</td>
         </tr>
       </table>
 
       <h2 id="shaking">Mischen</h2>
       <p>
-        <i>Mischen</i> bedeutet, dass die Reihenfolge der Zieldateien zufällig ist. ImageResize wird dazu die Liste der Quelldateien vor der Verarbeitung mischen.
+        <i>Mischen</i> bedeutet, dass die Reihenfolge der Zieldateien zufällig ist.
+        ImageResize wird dazu die Liste der Quelldateien vor der Verarbeitung mischen.
       </p>
       <p>
-        Der Parameter <i>Saat</i> kontrolliert die zufällige Abfolge. Eine Saat von 0 wird jedesmal, wenn die Verarbeitung gestartet wird eine eine andere Abfolge
-        erzeugen. Jeder andere aber konstante Wert wird die die Abfolge in der selben Art mischen, solange die Bildliste sich nicht ändert.
+        Der Parameter <i>Saat</i> kontrolliert die zufällige Abfolge. Eine Saat von 0 wird
+        jedesmal, wenn die Verarbeitung gestartet wird eine eine andere Abfolge erzeugen.
+        Jeder andere konstante Wert wird die die Abfolge in der selben Art mischen,
+        solange die Bildliste sich nicht ändert.
       </p>
       
       <h1 id="watermark">Wasserzeichen</h1>
@@ -244,14 +252,14 @@
         für eine schwach sichtbare Erscheinung, ab 50 Prozent wird das Wasserbild deutlich sichtbar.
       </p>
       
-      <h3 id="mrkenable">Verwenden</h3>
+      <h3 id="mrkenable">Anwenden</h3>
       <p>
-        Hake diese Option ab, um das Wasserbild zu ermöglichen.
+        Checken Sie diese Option, um das Wasserbild zu ermöglichen.
       </p>
       
       <h3 id="mrkfilename">Dateiname</h3>
       <p>
-        Gib einen Dateinamen einer PNG-Datei an, deren Bild in jedes Zielbild hineinskaliert wird.
+        Geben Sie einen Dateinamen einer PNG-Datei an, deren Bild in jedes Zielbild hineinskaliert wird.
       </p>
       <p>
         Normalerweise genügt es für alle Zielgrößen eine gemeinsame Datei anzugeben, weil die Größe
@@ -264,8 +272,8 @@
         Sie müssen dann für jede Größe eine entsprechende Wasserbilddatei vorbereitet haben.
       </p>
       <p>
-        Sie können eine Wasserbilddatei mit jedem Programm erzeugen, das das PNG-Format unterstützt.
-        Ein aar Vorschläge sind:
+        Sie können eine Wasserbilddatei mit jedem Programm erzeugen welches das PNG-Format unterstützt.
+        Ein paar Vorschläge:
       </p>
       <ul>
         <li><a href="http://inkscape.org">Inkscape</a> - ein freier Vektorgraphik-Editor</li>
@@ -274,15 +282,9 @@
         <li>mit dem eingebauten <a href="#mrkeditor">Wasserzeichen-Editor</a></li>
       </ul>      
       <p>
-        Sie können dabei Transparenz verwenden, aber beachten Sie, dass ImageResize zusätzlich eine
+        Sie können dabei <i>Transparenz</i> verwenden, aber beachten Sie, dass ImageResize zusätzlich eine
         Transparenz darüberlegen kann.
       </p>
-      <p>
-        Ein Glüheffekt (Verwischen) um die Schrift des Wasserbildes verbessert den Kontrast auf
-        verschiedenen Hintergründen.<br/>
-        <img src="../img/watermark3.png"/>
-      </p>
-      
       <h3 id="mrkopaque">Transparenz</h3>
       <p>
         Eine Transparenz von 0 Prozent lässt das Wasserbild verschwinden, 100 Prozent macht es voll deckend.
@@ -322,7 +324,7 @@
       <p>
         ImageResize kann durch Multi-Threading die Rechenpower des Systems besser nutzen.<br/>
         <i>Single</i> bedeutet das nur ein Kern genutzt wird. Sie können bis zur Gesamtzahl der
-        verfügbaren Kerne gehen (=<i>Maximum</i>). Dies kann die Verarbeitungsgeschwindigkeit verdoppeln.
+        verfügbaren Kerne gehen (=<i>Maximum</i>). Dies kann die Verarbeitungsgeschwindigkeit mehr als verdoppeln.
       </p>
       <p>
         In Systemen mit <i>Hyperthreading</i> ist die Zahl der virtuellen Kerne höher als die der physischen.
@@ -406,25 +408,25 @@
         </tr>
         <tr><td><img class="btn" src="../img/bntnewfav.png"/></td>
           <td>
-            Lädt die favorisierten Voreinstellungen - z.B. ihren persönlichen Copyright-Text.
+            Lädt die favorisierten Voreinstellungen - z.B. Ihren persönlichen Copyright-Text.
           </td>
         </tr>
         <tr><td><img class="btn" src="../img/btnsavefav.png"/></td>
           <td>
-            Speichert die aktuellen Einstellungen und den Text als deinen Favoriten.
+            Speichert die aktuellen Einstellungen und den Text als Ihren Favoriten.
           </td>
         </tr>
         <tr id="mrktext"><td>Text</td>
           <td>
-            Gib hier die Textzeile ein, die im Wasserzeichen dargestellt werden soll. Das ©-Zeichen mit
+            Geben Sie hier die Textzeile ein, die im Wasserzeichen dargestellt werden soll. Das ©-Zeichen mit
             &lt;ALT&gt; &lt;0&gt; &lt;1&gt; &lt;6&gt; &lt;9&gt; oder mit der 
             <img class="btn" src="../img/btninsertcopyright.png"/>-Schaltfläche.
           </td>
         </tr>
         <tr id="mrkfont"><td>Font</td>
           <td>
-            Wähle einen Font mit der Größe in <i>Punkten</i>, einen Fontnamen in Anführungszeichen und optional die Stile <i>Italic</i> und
-            <i>Bold</i> oder wähle einen Font im Dialog <img class="btn" src="../img/btnfont.png"/> aus.
+            Wählen Sie einen Font mit der Größe in <i>Punkten</i>, einen Fontnamen in Anführungszeichen und optional die Stile <i>Italic</i> und
+            <i>Bold</i> oder wählen Sie einen Font im Dialog <img class="btn" src="../img/btnfont.png"/> aus.
             Die Qualität des Wasserzeichens hängt mit der Font-Größe zusammen. 12pt erzeugt ein grobpixeliges Wasserzeichen, 48pt eine
             genauere Abbildung. Die Fontgröße hat keinen Einfluss auf die spätere Darstellung im Bild, da deren Größe bei den Wasserzeicheneinstellungen 
             des Hauptfensters angegeben wird.
@@ -432,7 +434,7 @@
         </tr>
         <tr id="mrkcolor"><td>Font Farbe</td>
           <td>
-            Wähle die Zeichenfarbe (Vordergrund) aus.
+            Wählen Sie die Zeichenfarbe (Vordergrund) aus.
           </td>
         </tr>
         <tr id="mrkoutline"><td>Umriss</td>
@@ -447,23 +449,26 @@
         </tr>
         <tr id="mrkshadow"><td>Schatten</td>
           <td>
-            Ermögliche einen verwischten Hintergrund der Schrift
+            Ermöglicht einen verwischten Hintergrund der Schrift, der je nach Farbe leuchtet oder wie ein Schatten wirkt.
           </td>
         </tr>
         <tr id="mrkshadowcolor"><td>Schattenfarbe</td>
           <td>
-            Wähle die Farbe des verwischten Hintergrundes aus
+            Wählen Sie die Farbe des verwischten Hintergrundes aus.
           </td>
         </tr>
-        <tr id="mrkblur"><td>Verwischen</td>
+        <tr id="mrkblur"><td>Verwischen</td>          
           <td>
-            Wähle eine Breite des Schattens in Pixeln aus. Die effektive Breite hängt auch von der 
-            Schriftgröße ab.
+            Dies bewirkt einen Glanz oder Schatten um die Schrift herum, um den Kontrast des Wasserbildes zum 
+            Hintergrund zu verbessern. Wählen Sie eine Breite des Glanzes oder Schattens in Pixeln aus.
+            Die effektive Breite hängt auch von der Schriftgröße ab.
           </td>
         </tr>
         <tr id="mrkquality"><td>Qualität</td>
           <td>
-            Kontrolliert die Art der Erscheinung des Schattens. Probiere die möglichen Eistellungen durch <i>Normal</i>, <i>Disk</i>, <i>Corona</i>, <i>Precise</i>, <i>Fast</i> und <i>Box</i>. <i>Precise</i> ist ein sehr dünner Schatten, wie ein Umriss.
+            Kontrolliert die Art der Erscheinung des Schattens. Probieren Sie die möglichen Eistellungen durch
+            <i>Normal</i>, <i>Disk</i>, <i>Corona</i>, <i>Precise</i>, <i>Fast</i> und <i>Box</i>. <i>Precise</i>
+            ist ein sehr dünner Schatten, wie ein Umriss.
           </td>
         </tr>
         <tr><td>Ok</td>

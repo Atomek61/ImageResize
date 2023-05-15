@@ -602,17 +602,10 @@ begin
     end;
 
     // Create Destination Folders...
-    if ExeRes.IsMultipleDstFolderStrategy then begin
-      SetLength(ExeRes.DstFolders, m);
-      for i:=0 to m-1 do begin
-        x := ReplaceStr(FParams.DstFolder, '%SIZE%', IntToStr(FParams.Sizes[i]));
-        Print(Format(SMsgCreatingFolderFmt, [x]));
-        ForceDirectories(x);
-        ExeRes.DstFolders[i] := x;
-      end;
-    end else begin
-      SetLength(ExeRes.DstFolders, 1);
-      ExeRes.DstFolders[0] := FParams.DstFolder;
+    SetLength(ExeRes.DstFolders, m);
+    for i:=0 to m-1 do begin
+      x := ReplaceStr(FParams.DstFolder, '%SIZE%', IntToStr(FParams.Sizes[i]));
+      ExeRes.DstFolders[i] := x;
     end;
     for i:=0 to High(ExeRes.DstFolders) do begin
       Print(Format(SMsgCreatingFolderFmt, [ExeRes.DstFolders[i]]));

@@ -76,4 +76,22 @@ object AboutDialog: TAboutDialog
     Caption = '<processorversion>'
     ParentColor = False
   end
+  object BitBtn1: TBitBtn
+    Left = 600
+    Height = 30
+    Top = 56
+    Width = 75
+    Caption = 'BitBtn1'
+    OnClick = BitBtn1Click
+    TabOrder = 2
+  end
+  object FPHTTPClient: TFPHTTPClient
+    KeepConnection = False
+    IOTimeout = 0
+    ConnectTimeout = 3000
+    HTTPversion = '1.1'
+    AllowRedirect = False
+    Left = 720
+    Top = 64
+  end
 end
