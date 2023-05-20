@@ -1,13 +1,40 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8"
 
-#: imgres.scptabort
-msgid "Abort"
+#: aboutdlg.scptavailable
+msgid "Available"
 msgstr ""
 
-#: imgres.scptdependenciesfmt
+#: aboutdlg.serrappnotmatchingfmt
 #, object-pascal-format
-msgid "Build with Lazarus %s and graphics library BGRABitmap %s"
+msgid "Application '%s' not matching, '%s' expected."
+msgstr ""
+
+#: aboutdlg.serrupdatecheckfmt
+#, object-pascal-format
+msgid "Update check failed - %s"
+msgstr ""
+
+#: aboutdlg.smsgchecking
+msgid "Checking for update..."
+msgstr ""
+
+#: aboutdlg.smsgisuptodate
+msgid "There is no newer version available."
+msgstr ""
+
+#: aboutdlg.smsgupdateavailablefmt
+#, object-pascal-format
+msgid "Update available: Version %s from %s"
+msgstr ""
+
+#: datetimeutils.serrdatefmt
+#, object-pascal-format
+msgid "Cant '%s' convert to a date."
+msgstr ""
+
+#: imgres.scptabort
+msgid "Abort"
 msgstr ""
 
 #: imgres.scptfatal
@@ -137,7 +164,14 @@ msgstr ""
 msgid "%d Cores"
 msgstr ""
 
+#: maindlg.scptdependenciesfmt
+#, object-pascal-format
+msgctxt "maindlg.scptdependenciesfmt"
+msgid "Build with Lazarus %s and graphics library BGRABitmap %s"
+msgstr ""
+
 #: maindlg.scptexecute
+msgctxt "maindlg.scptexecute"
 msgid "Execute"
 msgstr ""
 
@@ -153,11 +187,15 @@ msgstr ""
 
 #: maindlg.scptinfofmt
 #, object-pascal-format
-msgid "ImageResize %s, Processor %s, %d Cores"
+msgid "%s %s %s, Processor %s, %d Cores"
 msgstr ""
 
 #: maindlg.scptlastsettings
 msgid "<last settings>"
+msgstr ""
+
+#: maindlg.scptprocessor
+msgid "Processor"
 msgstr ""
 
 #: maindlg.scptsizeclasslarge
@@ -178,7 +216,7 @@ msgid "%d source files"
 msgstr ""
 
 #: maindlg.scpttitleprefix
-msgid "Image Resize - "
+msgid "ImageResize - "
 msgstr ""
 
 #: maindlg.scptunnamed
@@ -273,7 +311,7 @@ msgid ""
 msgstr ""
 
 #: maindlg.surlwebhelp
-msgid "http://www.atomek.de/imageresize/hlp33/gui/en"
+msgid "http://www.atomek.de/imageresize/hlp34/gui/en"
 msgstr ""
 
 #: mrkeditdlg.scptdialogtitle
@@ -294,17 +332,52 @@ msgstr ""
 msgid "Invalid parameters"
 msgstr ""
 
-#: taboutdialog.bitbtn1.caption
-msgid "BitBtn1"
+#: taboutdialog.actioncheckupdate.caption
+msgctxt "taboutdialog.actioncheckupdate.caption"
+msgid "&Check"
 msgstr ""
 
-#: taboutdialog.button1.caption
-msgctxt "taboutdialog.button1.caption"
-msgid "Ok"
+#: taboutdialog.actiondownload.caption
+msgctxt "taboutdialog.actiondownload.caption"
+msgid "&Download"
+msgstr ""
+
+#: taboutdialog.actionlicense.caption
+msgctxt "taboutdialog.actionlicense.caption"
+msgid "&License"
+msgstr ""
+
+#: taboutdialog.actionupdate.caption
+msgctxt "taboutdialog.actionupdate.caption"
+msgid "&Update"
+msgstr ""
+
+#: taboutdialog.actionversions.caption
+msgid "&Versions"
+msgstr ""
+
+#: taboutdialog.buttonclose.caption
+msgctxt "taboutdialog.buttonclose.caption"
+msgid "Close"
 msgstr ""
 
 #: taboutdialog.caption
 msgid "About ImageResize"
+msgstr ""
+
+#: taboutdialog.labelappversion.caption
+msgid "<appversion>"
+msgstr ""
+
+#: taboutdialog.labelavailability.caption
+msgid "Press Check to check for available updates..."
+msgstr ""
+
+#: taboutdialog.labelavailability1.caption
+msgid ""
+"Click on the link below to download the latest version.\n"
+"Its recommended to uninstall the current installation, but\n"
+"you can install a second installation additionally."
 msgstr ""
 
 #: taboutdialog.labeldependencies.caption
@@ -315,20 +388,57 @@ msgstr ""
 msgid "<appcopyright>"
 msgstr ""
 
-#: taboutdialog.labelimgresstr.caption
+#: taboutdialog.labelimgresguicpr1.caption
+msgid "On ATOMEKs homepage:"
+msgstr ""
+
+#: taboutdialog.labelimgresguicpr2.caption
+msgid "On Github:"
+msgstr ""
+
+#: taboutdialog.labellinkgithub.caption
+msgid "https://github.com/Atomek61/ImageResize"
+msgstr ""
+
+#: taboutdialog.labellinkimageresizedownload.caption
+msgid "www.atomek.de/imageresize/download/InstallImageResize.zip"
+msgstr ""
+
+#: taboutdialog.labellinkimageresizehome.caption
+msgctxt "taboutdialog.labellinkimageresizehome.caption"
+msgid "www.atomek.de/imageresize/index.hml"
+msgstr ""
+
+#: taboutdialog.labelprocessorversion.caption
+msgctxt "taboutdialog.labelprocessorversion.caption"
 msgid "<processorversion>"
 msgstr ""
 
-#: taboutdialog.labelurl2.caption
-msgid "License:"
+#: taboutdialog.tabsheetlicense.caption
+msgctxt "taboutdialog.tabsheetlicense.caption"
+msgid "&License"
+msgstr ""
+
+#: taboutdialog.tabsheetupdate.caption
+msgctxt "taboutdialog.tabsheetupdate.caption"
+msgid "&Update"
+msgstr ""
+
+#: taboutdialog.tabsheetversion.caption
+msgid "&Version"
+msgstr ""
+
+#: taboutdialog.toolbar.caption
+msgctxt "taboutdialog.toolbar.caption"
+msgid "ToolBar"
 msgstr ""
 
 #: tmaindialog.actionabout.caption
-msgid "Abo&ut"
+msgid "Abou&t"
 msgstr ""
 
 #: tmaindialog.actioneditwatermark.caption
-msgid "&Watermark"
+msgid "Wat&ermark"
 msgstr ""
 
 #: tmaindialog.actioneditwatermark.hint
@@ -351,6 +461,10 @@ msgctxt "tmaindialog.actionhelp.caption"
 msgid "Help"
 msgstr ""
 
+#: tmaindialog.actionhelp.hint
+msgid "Opens the local or internet-based HTML help (F1)"
+msgstr ""
+
 #: tmaindialog.actionnew.caption
 msgctxt "tmaindialog.actionnew.caption"
 msgid "&New"
@@ -367,6 +481,52 @@ msgstr ""
 
 #: tmaindialog.actionopen.hint
 msgid "Load saved settings"
+msgstr ""
+
+#: tmaindialog.actionparamboost.caption
+msgctxt "tmaindialog.actionparamboost.caption"
+msgid "&Boost"
+msgstr ""
+
+#: tmaindialog.actionparamboost.hint
+msgid "Accelerate the resampling Process by Multithreading"
+msgstr ""
+
+#: tmaindialog.actionparamcompression.caption
+msgctxt "tmaindialog.actionparamcompression.caption"
+msgid "Com&pression"
+msgstr ""
+
+#: tmaindialog.actionparamcompression.hint
+msgctxt "tmaindialog.actionparamcompression.hint"
+msgid "Compression of the destination files"
+msgstr ""
+
+#: tmaindialog.actionparamrenaming.caption
+msgctxt "tmaindialog.actionparamrenaming.caption"
+msgid "&Renaming"
+msgstr ""
+
+#: tmaindialog.actionparamrenaming.hint
+msgid "Optional Renaming of the destination files"
+msgstr ""
+
+#: tmaindialog.actionparamsizes.caption
+msgctxt "tmaindialog.actionparamsizes.caption"
+msgid "Si&zes"
+msgstr ""
+
+#: tmaindialog.actionparamsizes.hint
+msgid "One or more Sizes of the resampled Images"
+msgstr ""
+
+#: tmaindialog.actionparamwatermark.caption
+msgctxt "tmaindialog.actionparamwatermark.caption"
+msgid "&Watermark"
+msgstr ""
+
+#: tmaindialog.actionparamwatermark.hint
+msgid "Optional Watermark printing"
 msgstr ""
 
 #: tmaindialog.actionsave.caption
@@ -387,9 +547,29 @@ msgstr ""
 msgid "Save current settings to another place"
 msgstr ""
 
+#: tmaindialog.buttonbrowsedstfolder.hint
+msgid "Select a destination folder"
+msgstr ""
+
+#: tmaindialog.buttonbrowsesrcfiles.hint
+msgid "Browse for one or more images"
+msgstr ""
+
+#: tmaindialog.buttonbrowsesrcfolder.hint
+msgid "Select a folder with images"
+msgstr ""
+
+#: tmaindialog.buttonclearsizes.hint
+msgid "Clear all sizes or the selected one"
+msgstr ""
+
+#: tmaindialog.buttonclearsrcfiles.hint
+msgid "Clear image list"
+msgstr ""
+
 #: tmaindialog.buttonexecute.caption
 msgctxt "tmaindialog.buttonexecute.caption"
-msgid "E&xecute"
+msgid "Execute"
 msgstr ""
 
 #: tmaindialog.buttonexecute.hint
@@ -408,24 +588,28 @@ msgstr ""
 
 #: tmaindialog.checkboxmrkenabled.caption
 msgctxt "tmaindialog.checkboxmrkenabled.caption"
-msgid "&Enabled"
+msgid "Enabled"
 msgstr ""
 
 #: tmaindialog.checkboxrenenabled.caption
 msgctxt "tmaindialog.checkboxrenenabled.caption"
-msgid "&Enabled"
+msgid "Enabled"
+msgstr ""
+
+#: tmaindialog.checkboxrenenabled.hint
+msgid "Enables destination image file renaming - choose a strategy."
 msgstr ""
 
 #: tmaindialog.checkboxshake.caption
-msgid "&Enable"
+msgid "Enable"
 msgstr ""
 
 #: tmaindialog.checkboxshake.hint
-msgid "Check to let the mages be mixed (shaked)."
+msgid "Enables the image file names to be mixed randomly (shaked)"
 msgstr ""
 
 #: tmaindialog.checkboxstoponerror.caption
-msgid "Stop on E&rror"
+msgid "Stop on Error"
 msgstr ""
 
 #: tmaindialog.comboboxboost.hint
@@ -453,7 +637,7 @@ msgid "75"
 msgstr ""
 
 #: tmaindialog.comboboxpngcompression.hint
-msgid "Select a png lossless compression degree."
+msgid "Select a PNG lossless compression degree."
 msgstr ""
 
 #: tmaindialog.comboboxpngcompression.text
@@ -462,7 +646,7 @@ msgid "default"
 msgstr ""
 
 #: tmaindialog.comboboxshakeseed.hint
-msgid "Enter a number, ets say 1000, to create always the same shaked order or 0 for shaking always randomly."
+msgid "Enter a number, lets say 1000, to create always the same shaked order or 0 for shaking always randomly."
 msgstr ""
 
 #: tmaindialog.comboboxshakeseed.text
@@ -473,7 +657,6 @@ msgstr ""
 #: tmaindialog.editdstfolder.hint
 msgid ""
 "Enter a destination folder of the resampled images.\n"
-"\n"
 "If multiple sizes are entered, insert a placeholder %SIZE%\n"
 "into the path where the program shall insert the current size ."
 msgstr ""
@@ -538,16 +721,14 @@ msgstr ""
 #: tmaindialog.editsizes.hint
 msgid ""
 "Enter a comma-separated list of image sizes.\n"
-"\n"
 "The size refers to the longer side of an image.\n"
-"\n"
 "You can build a list by clicking the suggested\n"
 "sizes from the button field."
 msgstr ""
 
 #: tmaindialog.editsrcfolder.hint
 msgctxt "tmaindialog.editsrcfolder.hint"
-msgid "Enter a source folder with your images."
+msgid "Enter a source folder with your images"
 msgstr ""
 
 #: tmaindialog.editsrcmasks.hint
@@ -560,15 +741,15 @@ msgid "*.jpg;*.png"
 msgstr ""
 
 #: tmaindialog.groupboxdstfolder.caption
-msgid "&Destination Folder"
+msgid "Destination Folder"
 msgstr ""
 
 #: tmaindialog.groupboximagefiles.caption
-msgid "&Images"
+msgid "Images"
 msgstr ""
 
 #: tmaindialog.groupboxjpgoptions.caption
-msgid "JPEG Options"
+msgid "JPEG"
 msgstr ""
 
 #: tmaindialog.groupboxmrkfilename.caption
@@ -580,11 +761,11 @@ msgid "Layout"
 msgstr ""
 
 #: tmaindialog.groupboxparams.caption
-msgid "&Parameters"
+msgid "Parameters"
 msgstr ""
 
 #: tmaindialog.groupboxpngoptions.caption
-msgid "PNG Options"
+msgid "PNG"
 msgstr ""
 
 #: tmaindialog.groupboxrename.caption
@@ -596,7 +777,7 @@ msgid "Shake"
 msgstr ""
 
 #: tmaindialog.label1.caption
-msgid "Source &Files:"
+msgid "Source Files:"
 msgstr ""
 
 #: tmaindialog.label10.caption
@@ -605,7 +786,7 @@ msgid "%"
 msgstr ""
 
 #: tmaindialog.label11.caption
-msgid "&Vertical:"
+msgid "Vertical:"
 msgstr ""
 
 #: tmaindialog.label12.caption
@@ -614,7 +795,7 @@ msgid "%"
 msgstr ""
 
 #: tmaindialog.label13.caption
-msgid "Opacit&y:"
+msgid "Opacity:"
 msgstr ""
 
 #: tmaindialog.label14.caption
@@ -623,7 +804,7 @@ msgid "%"
 msgstr ""
 
 #: tmaindialog.label15.caption
-msgid "Si&ze:"
+msgid "Size:"
 msgstr ""
 
 #: tmaindialog.label16.caption
@@ -653,23 +834,8 @@ msgstr ""
 msgid "Click or drag the watermark"
 msgstr ""
 
-#: tmaindialog.label22.caption
-msgid ""
-"Placeholders:\n"
-"%SIZE:n,d%\n"
-"  n - start number\n"
-"  d - number of digits"
-msgstr ""
-
-#: tmaindialog.label23.caption
-msgid ""
-"%SIZE%\n"
-"%FILENAME%\n"
-"%FILEEXT%"
-msgstr ""
-
 #: tmaindialog.label3.caption
-msgid "Si&zes:"
+msgid "Sizes:"
 msgstr ""
 
 #: tmaindialog.label4.caption
@@ -681,15 +847,15 @@ msgid "Quality (1..100):"
 msgstr ""
 
 #: tmaindialog.label6.caption
-msgid "&Compression:"
+msgid "Compression:"
 msgstr ""
 
 #: tmaindialog.label8.caption
-msgid "&Threads:"
+msgid "Threads:"
 msgstr ""
 
 #: tmaindialog.label9.caption
-msgid "&Horizontal:"
+msgid "Horizontal:"
 msgstr ""
 
 #: tmaindialog.labelcores.caption
@@ -704,6 +870,25 @@ msgstr ""
 #: tmaindialog.labeldstfolderrequired.hint
 msgctxt "tmaindialog.labeldstfolderrequired.hint"
 msgid "Required"
+msgstr ""
+
+#: tmaindialog.labelhintplaceholder1.caption
+msgid ""
+"%SIZE:n,d%\n"
+"  n - start number\n"
+"  d - number of digits"
+msgstr ""
+
+#: tmaindialog.labelhintplaceholder2.caption
+msgctxt "tmaindialog.labelhintplaceholder2.caption"
+msgid ""
+"%SIZE%\n"
+"%FILENAME%\n"
+"%FILEEXT%"
+msgstr ""
+
+#: tmaindialog.labelhintplaceholdertitle.caption
+msgid "Available Placeholders:"
 msgstr ""
 
 #: tmaindialog.labelshakeseed.caption
@@ -731,11 +916,11 @@ msgid "Required"
 msgstr ""
 
 #: tmaindialog.memosrcfilenames.hint
-msgid ""
-"Enter a list of files with absolute pathes.\n"
-"\n"
-"Press Browse... and select multiple files while\n"
-"holding <CTRL> or <SHIFT> and clicking. "
+msgid "Enter a list of files with absolute pathes."
+msgstr ""
+
+#: tmaindialog.opendialogsrcfilenames.title
+msgid "Select one or more Images"
 msgstr ""
 
 #: tmaindialog.radiobuttonfilelist.caption
@@ -747,40 +932,49 @@ msgid "All Files in a Folder"
 msgstr ""
 
 #: tmaindialog.radiobuttonrenadvanced.caption
-msgid "&2 Advanced - all files in one folder"
+msgid "2 Advanced - all files in one folder"
 msgstr ""
 
 #: tmaindialog.radiobuttonrencustom.caption
-msgid "&3 Custom"
+msgid "3 Custom"
 msgstr ""
 
 #: tmaindialog.radiobuttonrensimple.caption
-msgid "&1 Simple - a folder for each size"
+msgid "1 Simple - a folder for each size"
 msgstr ""
 
-#: tmaindialog.tabsheetmrk.caption
-msgid "Watermark"
-msgstr ""
-
-#: tmaindialog.tabsheetquality.caption
-msgid "Quality"
+#: tmaindialog.tabsheetcompression.caption
+msgctxt "tmaindialog.tabsheetcompression.caption"
+msgid "Compression"
 msgstr ""
 
 #: tmaindialog.tabsheetrenaming.caption
+msgctxt "tmaindialog.tabsheetrenaming.caption"
 msgid "Renaming"
 msgstr ""
 
 #: tmaindialog.tabsheetressources.caption
+msgctxt "tmaindialog.tabsheetressources.caption"
 msgid "Boost"
 msgstr ""
 
 #: tmaindialog.tabsheetsizes.caption
+msgctxt "tmaindialog.tabsheetsizes.caption"
 msgid "Sizes"
+msgstr ""
+
+#: tmaindialog.tabsheetwatermark.caption
+msgctxt "tmaindialog.tabsheetwatermark.caption"
+msgid "Watermark"
 msgstr ""
 
 #: tmaindialog.toolbar.caption
 msgctxt "tmaindialog.toolbar.caption"
 msgid "ToolBar"
+msgstr ""
+
+#: tmaindialog.toolbarparameters.caption
+msgid "ToolBarParameters"
 msgstr ""
 
 #: tmaindialog.toolbutton1.hint
@@ -826,7 +1020,7 @@ msgid "&New"
 msgstr ""
 
 #: tmrkeditdialog.actionnew.hint
-msgid "Set all settings to the default."
+msgid "Set all settings to the default"
 msgstr ""
 
 #: tmrkeditdialog.actionnewdefault.caption
@@ -834,7 +1028,7 @@ msgid "Fa&vorite"
 msgstr ""
 
 #: tmrkeditdialog.actionnewdefault.hint
-msgid "Restores all settings to your favorite settings."
+msgid "Restores all settings to your favorite settings"
 msgstr ""
 
 #: tmrkeditdialog.actionok.caption
@@ -844,11 +1038,11 @@ msgstr ""
 
 #: tmrkeditdialog.actionok.hint
 msgid ""
-"The Ok button becomes available if you\n"
+"The Ok button becomes available when you\n"
 "save the watermark or load it from a file.\n"
 "\n"
 "This is, because the Image Resize processor\n"
-"always needs a .png file."
+"always needs a PNG file"
 msgstr ""
 
 #: tmrkeditdialog.actionopen.caption
@@ -859,7 +1053,7 @@ msgstr ""
 #: tmrkeditdialog.actionopen.hint
 msgid ""
 "Open an existing .was file which contains\n"
-"Watermark settings.\n"
+"Watermark settings"
 msgstr ""
 
 #: tmrkeditdialog.actionsave.caption
@@ -869,7 +1063,7 @@ msgstr ""
 
 #: tmrkeditdialog.actionsave.hint
 msgctxt "tmrkeditdialog.actionsave.hint"
-msgid "Saves the current settings as a .was file and a .png watermark file"
+msgid "Save the current settings as a .was file and a PNG watermark file"
 msgstr ""
 
 #: tmrkeditdialog.actionsaveas.caption
@@ -879,7 +1073,7 @@ msgstr ""
 
 #: tmrkeditdialog.actionsaveas.hint
 msgctxt "tmrkeditdialog.actionsaveas.hint"
-msgid "Saves the current settings as a .was file and a .png watermark file"
+msgid "Save the current settings as a .was file and a PNG watermark file"
 msgstr ""
 
 #: tmrkeditdialog.actionsaveasfavorite.caption
@@ -887,12 +1081,22 @@ msgid "Set as &Favorite"
 msgstr ""
 
 #: tmrkeditdialog.actionsaveasfavorite.hint
-msgid "Sets the current settings as your favorite settings."
+msgid "Sets the current settings as your favorite settings"
 msgstr ""
 
 #: tmrkeditdialog.buttoncancel.caption
 msgctxt "tmrkeditdialog.buttoncancel.caption"
 msgid "Cancel"
+msgstr ""
+
+#: tmrkeditdialog.buttonsave.caption
+msgctxt "tmrkeditdialog.buttonsave.caption"
+msgid "&Save"
+msgstr ""
+
+#: tmrkeditdialog.buttonsave.hint
+msgctxt "tmrkeditdialog.buttonsave.hint"
+msgid "Saves the current settings as a .was file and a .png watermark file"
 msgstr ""
 
 #: tmrkeditdialog.caption
@@ -903,12 +1107,20 @@ msgstr ""
 msgid "Outline"
 msgstr ""
 
+#: tmrkeditdialog.checkboxoutline.hint
+msgid "Thin border around the text letters"
+msgstr ""
+
 #: tmrkeditdialog.checkboxshadow.caption
 msgid "Shadow"
 msgstr ""
 
 #: tmrkeditdialog.comboboxshadowquality.text
 msgid "Normal"
+msgstr ""
+
+#: tmrkeditdialog.editshadowblur.hint
+msgid "Width in pixels of the blur"
 msgstr ""
 
 #: tmrkeditdialog.label1.caption

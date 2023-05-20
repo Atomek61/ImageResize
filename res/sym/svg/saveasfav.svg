@@ -7,9 +7,9 @@
    viewBox="0 0 6.35 6.35"
    version="1.1"
    id="svg5526"
-   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
    sodipodi:docname="saveasfav.svg"
-   inkscape:export-filename="..\png24\save.png"
+   inkscape:export-filename="..\png24\saveasfav.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -30,12 +30,12 @@
      showgrid="true"
      showguides="true"
      inkscape:zoom="20.70196"
-     inkscape:cx="15.288407"
+     inkscape:cx="15.385017"
      inkscape:cy="26.374314"
      inkscape:window-width="2179"
      inkscape:window-height="1313"
-     inkscape:window-x="275"
-     inkscape:window-y="83"
+     inkscape:window-x="163"
+     inkscape:window-y="818"
      inkscape:window-maximized="0"
      inkscape:current-layer="svg5526"
      inkscape:lockguides="true">
@@ -111,6 +111,11 @@
        y2="6.314713"
        gradientUnits="userSpaceOnUse" />
   </defs>
+  <path
+     style="display:inline;fill:none;stroke:#2e3436;stroke-width:0.264583;stroke-linecap:square;stroke-linejoin:bevel;stroke-dashoffset:68.0315"
+     d="m 1.3229166,5.6885417 -0.66145826,-0.6614584 0,-4.36562496 H 5.6885416 V 5.6885417 Z"
+     id="path8505-1"
+     sodipodi:nodetypes="cccccc" />
   <g
      inkscape:label="Ebene 1"
      inkscape:groupmode="layer"

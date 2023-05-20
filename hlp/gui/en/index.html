@@ -28,7 +28,7 @@
 
       <h1 id="overview">Overview</h1>
       <p>
-        <i>ImageResize</i> 3.3 is an app for resizing and watermarking of
+        <i>ImageResize</i> 3.4 is an app for resizing and watermarking of
         JPEG and PNG images. Its for web image galleries and bulk processing.
       </p>
       
@@ -37,9 +37,9 @@
       <a href="#srcfilelist">Source List of Images</a><br/>
       <a href="#dstfolder">Destination Folder</a><br/>
       <a href="#sizes">Sizes</a><br/>
-      <a href="#quality">Quality</a><br/>
       <a href="#renaming">Renaming and Shaking</a><br/>
       <a href="#watermark">Watermark</a><br/>
+      <a href="#compression">Quality</a><br/>
       <a href="#boost">Boost</a><br/>
       <a href="#saving">Saving and Loading</a><br/>
       <a href="#commandline">Commandline Parameters</a><br/>
@@ -49,6 +49,7 @@
         Capabilities
       </p>
       <ul>
+        <li>Context-sensitive help system</li>
         <li>resampling (shrinking) of multiple image files</li>
         <li>resampling each image to multiple sizes</li>
         <li>using <i>Lanczos</i> filtering for good quality resampling</li>
@@ -81,6 +82,13 @@
       <p>
         Finally press <img class="btn" src="img/minexec.png"/> to start the resampling.
       </p>
+
+      <p class="hint-box">
+        <b>Context-sensitive help system</b><br/>
+        While the focus is on a control, you 
+        can press &lt;F1&gt; and your browser should show an HTML topic. Most controls have 
+        <i>hints</i> which will appear, when the mouse pointer reclines a moment over a control.
+      </p>
       
       <h1 id="srcfilelist">Source File List</h1>
       <p>
@@ -89,7 +97,7 @@
       </p>
       <ol>
         <li>manually, each line a path/filename</li>
-        <li>by browsing a folder with <img class="btn" src="../img/btnbrowse.png"/></li>
+        <li>by browsing a folder with <img class="btn" src="../img/open.png"/></li>
         <li>dragging files from the explorer into the application window</li>
         <li>by entering a source folder with an optional list of wildcards</li>
       </ol>
@@ -102,7 +110,7 @@
       <h1 id="dstfolder">Destination Folder</h1>
       <p>
         A destination folder is required. You can enter it manually or browse it
-        with <img class="btn" src="../img/btnbrowse.png"/>
+        with <img class="btn" src="../img/open.png"/>
       </p>
       <p>
         If you enter multiple destination sizes, you can enter the placeholder
@@ -128,34 +136,15 @@
       </p>
       <p>
         Change the list manually, by pressing the suggested size buttons or with
-        the clear button <img class="btn" src="../img/btnclearsizes.png"/>.
+        the clear button <img class="btn" src="../img/cancel.png"/>.
         To remove a single size, double-click the size and press the clear button,
         or press the associated suggestion button again.
       </p>
       <a class="chfot" href="#contents">Contents</a>
       
-      <h1 id="quality">Quality</h1>
-      <p>
-        You can control the degree of compression for the JPEG format and for
-        the PNG format.
-      </p>
-      <p>
-        For JPEG encoded files a better quality results in larger files and lower 
-        compression of the destination files. 75 to 90 percent are good choices.
-        <br/><img src="img/jpgqualities.png"/>
-      </p>
-      <p>
-        In the case of PNG files there are 4 compression degrees possible - 
-        <i>none, fastest, default</i> and <i>maximum</i>. The quality of the
-        resulting file is always the same, because PNG compression is lossless.
-        The drawback of a maximum compression is the decoders decompression effort.
-        <br/><img src="img/pngqualities.png"/>
-      </p>
-      <a class="chfot" href="#contents">Contents</a>
-      
       <h1 id="renaming">Renaming and Shaking</h1>
       <p>
-        Renaming of the destination image files becomes interesting, if its
+        Renaming of the destination image files becomes interesting if its
         not your strategy to create a folder for each destination image size,
         but to put all files (of different sizes) in one folder. In this case
         the multiple resolutions of a single source image must have different names.
@@ -201,18 +190,20 @@
         may look like this:
       </p>
       <p><span class="plh">img%INDEX:1,3%_%SIZE%.%FILEEXT%</span></p>
+      <p>Results in <span class="plh">img012_1920.jpg</span></p>
       <p><span class="plh">%FILENAME%_%SIZE%.%FILEEXT%</span></p>
+      <p>Results in <span class="plh">DSC3240_1920.jpg</span></p>
       
       <h2>Available Placeholders</h2>
       <table class="partab">
         <tr>
           <td><span class="plh">%FILENAME%</span></td>
           <td>This is the original filename without the path and without the
-          file extension</td>
+          file extension.</td>
         </tr>
         <tr>
           <td><span class="plh">%FILEEXT%</span></td>
-          <td>The original filenames extension without the dot<br/><br/>
+          <td>The original filenames extension without the dot.<br/><br/>
           Note: You cant change the image files format just by changing all
           filename extension to .jpg or so. This may confuse image viewers.
           Its mandatory to use the original filenames extension.
@@ -231,15 +222,23 @@
         </tr>
         <tr>
           <td><span class="plh">%SIZE%</span></td>
-          <td>The destination size in pixels of the current image</td>
+          <td>The destination size in pixels of the current image.</td>
         </tr>
       </table>
       <h2 id="shaking">Shaking</h2>
       <p>
-        <i>Shaking</i> means that the order of the destination files is mixed randomly. ImageResize will first build or take the source file list and will then shake the images.
+        <i>Shaking</i> means that the lexical order of the destination file names is mixed randomly.
       </p>
       <p>
-        The parameter <i>Seed</i> controls the random sequence. A seed of 0 will lead to another order each time you execute ImageResize. Any other, but constant value will initialize the random sequence in the same manner as long as the number of files does not change.
+        ImageResize mixes the order of the file list before it resamples the destination files.
+        This makes only sense, if the resulting filename contains the files index at the
+        beginning of the variable part of the filename to change the lexical order.
+        So its required to choose an appropriate filename template, like <span class="plh">img%INDEX:1,3%.%FILEEXT%</span>.
+      </p>
+      <p>
+        The parameter <i>Seed</i> controls the random sequence. A seed of 0 will lead to another
+        order each time you execute ImageResize. Any other but constant value will initialize
+        the random sequence in the same manner as long as the number of files does not change.
       </p>
       
       <h1 id="watermark">Watermark</h1>
@@ -266,20 +265,22 @@
       </p>
       <p>
         There is a way to assign a different watermark image for each size. For
-        this case, enter the placeholder <span class="plh">%SIZE%</span> into the watermark filename. You must have prepared a watermark file for each size.
+        this case, enter the placeholder <span class="plh">%SIZE%</span> into the watermark filename.
+        In this case, ImageResize expects a watermark image for each size matching the 
+        given template.
       </p>
       <p>
-        You can create a watermark image with every program that supports then
-        PNG image format. Some suggestions:
+        You can create a watermark image with eny program that supports then
+        PNG image format. Suggestions:
       </p>
       <ul>
         <li><a href="http://inkscape.org">Inkscape</a> - a free vector graphic editor</li>
         <li><a href="http://gimp.org">Gimp</a> - a free raster graphic editor</li>
         <li><a href="http://greenfishsoftware.org">Greenfish Icon Editor</a> - a raster images graphic editor</li>
-        <li>with the inbuilt <a href="#mrkeditor">Watermark Editor</a></li>
+        <li>the inbuilt <a href="#mrkeditor">Watermark Editor</a></li>
       </ul>      
       <p>
-        You can use transparency, but keep in mind, that ImageResize allows
+        You can use transparency, but keep in mind that ImageResize allows
         an overall opacity, so you dont have to consider the printing transparency.
       </p>
       <p>
@@ -326,6 +327,26 @@
       </p>
       <a class="chfot" href="#contents">Contents</a>
 
+      <h1 id="compression">Compression</h1>
+      <p>
+        You can control the degree of compression for the JPEG format and for
+        the PNG format.
+      </p>
+      <p>
+        For JPEG encoded files a higher quality results in larger files and lower 
+        compression of the destination files. 75 to 90 percent are good choices.
+        <br/><img src="img/jpgcompression.png"/>
+      </p>
+      <p>
+        In the case of PNG files there are 4 compression degrees possible - 
+        <i>none, fastest, default</i> and <i>maximum</i>. The quality of the
+        resulting file is always the same, because PNG compression is lossless.
+        The drawback of a maximum compression is the decoders decompression effort
+        but its usually faster to load a small file and decompress it.
+        <br/><img src="img/pngcompression.png"/>
+      </p>
+      <a class="chfot" href="#contents">Contents</a>
+      
       <h1 id="boost">Boost</h1>
       <h3 id="threads">Threads</h3>
       <p>
@@ -371,12 +392,26 @@
       <h3>-X  or  -AUTOEXIT</h3>
       <p>
         Lets ImageResize close after running the conversion process automatically.
+        This switch works only together with <b>-A</b>.
+      </p>
+      <h3>-E  or  -ENGLISH</h3>
+      <p>
+        Prevents from loading any localization and uses the original language.
+      </p>
+      <h3>Example</h3>
+      <p>
+        To let ImageResize automatically resample a list of files, first of all 
+        save appropriate settings to an .irs-file and start the program with this 
+        commandline parameters:
+      </p>
+      <p>
+        <span class="plh">C:\Programs\ImageResize\ImageResize.exe C:\mylist.irs -A -X</span>
       </p>
       <a class="chfot" href="#contents">Contents</a>
       
       <h1 id="mrkeditor">Watermark Editor</h1>
       <p>
-        With <img class="btn" src="../img/btnwatermarkeditor.png"/> you can open the
+        With <img class="btn" src="../img/editor.png"/> you can open the
         inbuilt watermark editor. This simple dialog lets you design a single
         text line with a glow effect and colors of your choice.
       </p>
@@ -390,27 +425,32 @@
         <img style="max-width: 80%" src="img/watermarkeditor.png"/>
       </p>
       <table class="atop">
-        <tr><td><img class="btn" src="../img/btnnew.png"/></td>
+        <tr><td><img class="btn" src="../img/new.png"/></td>
           <td>
             Loads default settings.
           </td>
         </tr>
-        <tr><td><img class="btn" src="../img/btnbrowse.png"/></td>
+        <tr><td><img class="btn" src="../img/open.png"/></td>
           <td>
             Loads a previous saved .was file with watermark settings.
           </td>
         </tr>
-        <tr><td><img class="btn" src="../img/btnsave.png"/></td>
+        <tr><td><img class="btn" src="../img/save.png"/></td>
           <td>
-            Save the current watermark settings as a .was file and an image as a .png image file. The image file is needed by ImageResize, the settings file is for editing and creating the image. 
+            Save the current watermark settings as a .was file and an image as a PNG image file. The image file is needed by ImageResize, the settings file is for editing and creating the image. 
           </td>
         </tr>
-        <tr><td><img class="btn" src="../img/bntnewfav.png"/></td>
+        <tr><td><img class="btn" src="../img/saveas.png"/></td>
+          <td>
+            Save .was and PNG file to another folder or with another name. 
+          </td>
+        </tr>
+        <tr><td><img class="btn" src="../img/loadfav.png"/></td>
           <td>
             Load your favorite settings.
           </td>
         </tr>
-        <tr><td><img class="btn" src="../img/btnsavefav.png"/></td>
+        <tr><td><img class="btn" src="../img/saveasfav.png"/></td>
           <td>
             Save the current settings as your favorite, which can be loaded later.
           </td>
@@ -419,13 +459,13 @@
           <td>
             Enter a line of text to this field. Enter the © character with
             &lt;ALT&gt; &lt;0&gt; &lt;1&gt; &lt;6&gt; &lt;9&gt; or with the
-            <img class="btn" src="../img/btninsertcopyright.png"/> button.
+            <img class="btn" src="../img/copyright.png"/> button.
           </td>
         </tr>
         <tr id="mrkfont"><td>Font</td>
           <td>
             Select a font with size in <i>Points</i>, a name in quotes and optionally the styles <i>italic</i> and
-            <i>bold</i> or select a font with the dialog <img class="btn" src="../img/btnfont.png"/>.
+            <i>bold</i> or select a font with the dialog <img class="btn" src="../img/font.png"/>.
             The quality of the watermark image depends on the font height. 12pt results in visible pixels, 48pt results in a smooth watermark font.
           </td>
         </tr>

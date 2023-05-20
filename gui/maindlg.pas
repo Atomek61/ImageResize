@@ -20,13 +20,21 @@ uses
   Graphics, Dialogs, StdCtrls, ComCtrls, ActnList, ExtCtrls, imgres, aboutdlg,
   inifiles, strutils, LMessages, LCLIntf, Buttons, ImgList, LCLType,
   LazHelpHTML, BGRABitmap, BGRABitmapTypes,
-  Generics.Collections, mrkeditdlg, WinDirs;
+  Generics.Collections, mrkeditdlg, WinDirs, updateutils;
 
 const
+  GUIVER_APP      = 'ImageResize';
+  GUIVER_VERSION  = '3.4';
+  GUIVER_DATE     = '2023-05-18';
 
-  IMGRESGUIVER    = '3.3.3';
-  CHECKUPDATEURL  = 'https://www.atomek.de/imageresize/download/version.manifest';
-  IMGRESGUICPR    = 'ImageResize V'+IMGRESGUIVER+' © 2023 Jan Schirrmacher, www.atomek.de';
+  GUIVER          :TVersionManifest = (App: GUIVER_APP; Version: GUIVER_VERSION; Date: GUIVER_DATE);
+
+  APPWEBURL       = 'www.atomek.de/imageresize/index.html';
+  APPDOWNLOADURL  = 'www.atomek.de/imageresize/download/InstallImageResize.zip';
+  APPGITHUBURL    = 'https://github.com/Atomek61/ImageResize';
+  GUIVERURL       = 'https://www.atomek.de/imageresize/download/version.manifest';
+
+  IMGRESGUICPR    = 'ImageResize ' + GUIVER_VERSION + ' © 2023 Jan Schirrmacher, www.atomek.de';
 
   INITYPE         = 'IRS';
   INIVERSION200   = '200';
@@ -35,6 +43,7 @@ const
 
   COMMONSECTION   = 'Common';
   SETTINGSSECTION = 'Settings';
+  DIALOGSECTION   = 'Dialog';
 
   MRKRECTRATIO    = 3.0;
 
@@ -42,7 +51,7 @@ const
 
   LM_RUN          = LM_USER + 1;
 
-  RENSIMPLETEMPLATE = 'img%INDEX:1,3%.%FILEEXT%';
+  RENSIMPLETEMPLATE   = 'img%INDEX:1,3%.%FILEEXT%';
   RENADVANCEDTEMPLATE = 'img%INDEX:1,3%_%SIZE%.%FILEEXT%';
 
   THUMBNAILIMGMAX = 240;
@@ -52,7 +61,8 @@ const
   SIZEBTNHINTFMT  = '%s - %dpx';
 
 resourcestring
-  SUrlWebHelp = 'http://www.atomek.de/imageresize/hlp33/gui/en';
+  SCptDependenciesFmt = 'Build with Lazarus %s and graphics library BGRABitmap %s';
+  SUrlWebHelp = 'http://www.atomek.de/imageresize/hlp34/gui/en';
   SLocDirHelp = 'hlp\en';
   STxtLicense =
     'ImageResize Copyright (c) 2023 Jan Schirrmacher, www.atomek.de'#10#10+
@@ -80,6 +90,11 @@ type
   end;
 
   TMainDialog = class(TForm)
+    ActionParamBoost: TAction;
+    ActionParamWatermark: TAction;
+    ActionParamRenaming: TAction;
+    ActionParamSizes: TAction;
+    ActionParamCompression: TAction;
     ActionBrowseSrcFolder: TAction;
     ActionEditWatermark: TAction;
     ActionHelp: TAction;
@@ -125,9 +140,9 @@ type
     EditMrkY: TEdit;
     EditSizes: TEdit;
     EditDstFolder: TEdit;
+    GroupBoxDstFolder: TGroupBox;
     GroupBoxMrkFilename: TGroupBox;
     GroupBoxShaking: TGroupBox;
-    GroupBoxDstFolder: TGroupBox;
     GroupBoxParams: TGroupBox;
     GroupBoxImageFiles: TGroupBox;
     GroupBoxRename: TGroupBox;
@@ -137,7 +152,7 @@ type
     HTMLBrowserHelpViewer: THTMLBrowserHelpViewer;
     HTMLHelpDatabase: THTMLHelpDatabase;
     ImageList20x20: TImageList;
-    ImageList24x24: TImageList;
+    ImageList32x32: TImageList;
     Label1: TLabel;
     Label10: TLabel;
     Label11: TLabel;
@@ -146,12 +161,13 @@ type
     Label14: TLabel;
     Label15: TLabel;
     Label16: TLabel;
+    LabelHintPlaceholder1: TLabel;
     LabelShakeSeed: TLabel;
     Label18: TLabel;
     Label19: TLabel;
     Label20: TLabel;
-    Label22: TLabel;
-    Label23: TLabel;
+    LabelHintPlaceholderTitle: TLabel;
+    LabelHintPlaceholder2: TLabel;
     Label4: TLabel;
     LabelSrcFilenamesRequired: TLabel;
     LabelSourceFileListMessage: TLabel;
@@ -186,15 +202,21 @@ type
     SaveAsDialog: TSaveDialog;
     Splitter1: TSplitter;
     TabSheetRenaming: TTabSheet;
-    TabSheetMrk: TTabSheet;
+    TabSheetWatermark: TTabSheet;
     TabSheetRessources: TTabSheet;
     TabSheetSizes: TTabSheet;
-    TabSheetQuality: TTabSheet;
+    TabSheetCompression: TTabSheet;
     TimerProgressBarOff: TTimer;
     ToolBar: TToolBar;
+    ToolBarParameters: TToolBar;
     ToolBarSizeButtons: TToolBar;
     ToolButton1: TToolButton;
     ToolButton10: TToolButton;
+    ToolButtonBoost: TToolButton;
+    ToolButtonWatermark: TToolButton;
+    ToolButtonRenaming: TToolButton;
+    ToolButtonQuality: TToolButton;
+    ToolButtonSizes: TToolButton;
     ToolButtonAbout: TToolButton;
     ToolButton2: TToolButton;
     ToolButton3: TToolButton;
@@ -208,7 +230,7 @@ type
     UpDownMrkSize: TUpDown;
     UpDownMrkX: TUpDown;
     UpDownMrkY: TUpDown;
-    procedure CheckBoxMrkEnabledChange(Sender: TObject);
+    procedure ButtonParamClick(Sender :TObject);
     procedure EditSrcFolderChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -227,7 +249,6 @@ type
     procedure ActionOpenExecute(Sender: TObject);
     procedure ActionSaveAsExecute(Sender: TObject);
     procedure ActionSaveExecute(Sender: TObject);
-    procedure CheckBoxRenEnabledClick(Sender: TObject);
     procedure EditRenTemplateEnter(Sender: TObject);
     procedure ButtonExecuteClick(Sender: TObject);
     procedure EditDstFolderChange(Sender: TObject);
@@ -249,7 +270,6 @@ type
     procedure PanelControlsResize(Sender: TObject);
     procedure RadioButtonFilelistChange(Sender: TObject);
     procedure TimerProgressBarOffTimer(Sender: TObject);
-//    procedure CheckBoxMrkEnabledChange(Sender: TObject);
     procedure EditSizesExit(Sender: TObject);
   private
     FAutoExit :boolean;
@@ -297,42 +317,43 @@ uses
   math, helpintfs, Windows, FileUtil;
 
 const
-  SCptRandom = '<random>';
-  SCptSizesDefault = 'default';
-  SCptSingleThread = 'single';
+  SCptRandom        = '<random>';
+  SCptSizesDefault  = 'default';
+  SCptSingleThread  = 'single';
   SCptMaximumThread = 'maximum';
 
 resourcestring
-  SCptUnnamed = '<unnamed>';
-  SErrInvalidShakeSeed = 'Invalid Shake Seed.';
-  SCptTitlePrefix = 'Image Resize - ';
-  SCptLastSettings = '<last settings>';
-  SCptCancel = 'Cancel';
-  SCptExecute = 'Execute';
-  SCptExecuteA = 'E&xecute';
-  SCptSizeClassSmall = 'Small - Thumbnail size';
-  SCptSizeClassMedium = 'Medium - Document size';
-  SCptSizeClassLarge = 'Large - Desktop size';
-  SCptCoresFmt = '%d Cores';
-  SCptInfoFmt = 'ImageResize %s, Processor %s, %d Cores';
-  SLogErrorPrefix = 'Error - ';
-  SLogCantLoad = 'Cant load Image Resize Settings File';
-  SLogWarningVersionFmt = 'Warning: Unexpected format %s (%s expected).';
-  SCptFileNotFoundFmt = 'File ''%s'' not found.';
-  SLogFileSavedToFmt = 'Settings saved to ''%s''';
-  SCptSourceFilesFmt = '%d source files';
+  SCptProcessor             = 'Processor';
+  SCptUnnamed               = '<unnamed>';
+  SErrInvalidShakeSeed      = 'Invalid Shake Seed.';
+  SCptTitlePrefix           = 'ImageResize - ';
+  SCptLastSettings          = '<last settings>';
+  SCptCancel                = 'Cancel';
+  SCptExecute               = 'Execute';
+  SCptExecuteA              = 'E&xecute';
+  SCptSizeClassSmall        = 'Small - Thumbnail size';
+  SCptSizeClassMedium       = 'Medium - Document size';
+  SCptSizeClassLarge        = 'Large - Desktop size';
+  SCptCoresFmt              = '%d Cores';
+  SCptInfoFmt               = '%s %s %s, Processor %s, %d Cores';
+  SLogErrorPrefix           = 'Error - ';
+  SLogCantLoad              = 'Cant load Image Resize Settings File';
+  SLogWarningVersionFmt     = 'Warning: Unexpected format %s (%s expected).';
+  SCptFileNotFoundFmt       = 'File ''%s'' not found.';
+  SLogFileSavedToFmt        = 'Settings saved to ''%s''';
+  SCptSourceFilesFmt        = '%d source files';
   SErrMissingSourceFilenames = 'Missing source filenames.';
-  SErrMissingSourceFolder = 'Missing source folder.';
+  SErrMissingSourceFolder   = 'Missing source folder.';
   SErrMissingDestinationFolder = 'Missing destination folder.';
-  SErrInvalidSizes = 'Invalid Sizes string.';
-  SErrInvalidJpgQuality = 'Invalid jpg quality.';
-  SErrInvalidMrkSize = 'Invalid watermark size.';
-  SErrInvalidMrkXBrd = 'Invalid watermark x border.';
-  SErrInvalidMrkYBrd = 'Invalid watermark y border.';
-  SErrInvalidMrkOpacity = 'Invalid watermark opacity.';
-  SErrEnterPlaceholder = 'Enter placeholder %SIZE% to either the destination folder or the file template.';
-  SErrAtFmt = 'Error at %.0f%% - %s';
-  SErrCancelledAtFmt = 'Cancelled at %.0f%%';
+  SErrInvalidSizes          = 'Invalid Sizes string.';
+  SErrInvalidJpgQuality     = 'Invalid jpg quality.';
+  SErrInvalidMrkSize        = 'Invalid watermark size.';
+  SErrInvalidMrkXBrd        = 'Invalid watermark x border.';
+  SErrInvalidMrkYBrd        = 'Invalid watermark y border.';
+  SErrInvalidMrkOpacity     = 'Invalid watermark opacity.';
+  SErrEnterPlaceholder      = 'Enter placeholder %SIZE% to either the destination folder or the file template.';
+  SErrAtFmt                 = 'Error at %.0f%% - %s';
+  SErrCancelledAtFmt        = 'Cancelled at %.0f%%';
 
 {$R *.lfm}
 
@@ -363,6 +384,28 @@ begin
     result := IntToStr(Value);
 end;
 
+function IsSwitch(const ShortForm :Char; const LongForm :string) :boolean;
+var
+  Param :string;
+  i :integer;
+begin
+  for i:=1 to ParamCount do begin
+    if ParamStr(i)[1] = '-' then begin
+      Param := Copy(ParamStr(i), 2, Length(ParamStr(i))-1);
+      if (Param=LongForm) or (Length(Param)=1) and (Param=ShortForm) then
+        Exit(true);
+    end;
+  end;
+  result := false;
+end;
+
+function GetNonSwitch :string;
+begin
+  if (ParamCount=0) or (ParamStr(1)[1]='-') then
+    Exit('');
+  result := ParamStr(1).DeQuotedString('"');
+end;
+
 { TPos }
 
 constructor TPos.Create(ax, ay: single);
@@ -381,7 +424,7 @@ var
 begin
   AllowDropFiles := true;
 
-  if (SysLocale.PriLangId=7) and not Application.HasOption('E', 'EN') then
+  if (SysLocale.PriLangId=7) and not IsSwitch('E', 'ENGLISH') then
     SetDefaultLang('de');
 
   // Create Size Buttons
@@ -398,44 +441,44 @@ begin
 
     Button.Hint := Format(SIZEBTNHINTFMT, [Cpt, DEFSIZES[i]]);
     if DEFSIZES[i]<=THUMBNAILIMGMAX then
-        Button.ImageIndex := 11
+        Button.ImageIndex := 14
     else if DEFSIZES[i]<=DOCIMGMAX then
-      Button.ImageIndex := 9
+      Button.ImageIndex := 15
     else
-      Button.ImageIndex := 10;
+      Button.ImageIndex := 16;
     Button.Style := tbsCheck;
     Button.Tag := DEFSIZES[i];
     Button.OnClick := @SizeButtonClick;
     Button.Visible := true;
   end;
-  ToolBarSizeButtons.ButtonWidth := ToolBarSizeButtons.Width div 4;
-  ToolBarSizeButtons.ButtonHeight := ToolBarSizeButtons.Height div 4;
+  ToolBarSizeButtons.ButtonWidth := ToolBarSizeButtons.ClientWidth div 4 - 1;
+  ToolBarSizeButtons.ButtonHeight := ToolBarSizeButtons.ClientHeight div 4;
+  RadioButtonRenSimple.Hint := RENSIMPLETEMPLATE;
+  RadioButtonRenAdvanced.Hint := RENADVANCEDTEMPLATE;
 
 end;
 
 procedure TMainDialog.FormShow(Sender: TObject);
 var
-  Params :TStringArray;
+  Filename :string;
   LocHelpDir :string;
 begin
 
   if not LoadSettings then
     ActionNew.Execute;
   UpdateRequireLabels;
-  FAutoExit := Application.HasOption('X', 'AUTOEXIT');
-  Params := Application.GetNonOptions('AXE', ['AUTOSTART', 'AUTOEXIT', 'EN']);
-  if Length(Params)=1 then
-    LoadFromFile(Params[0]);
-  if Application.HasOption('A', 'AUTOSTART') then
+  FAutoExit := IsSwitch('X', 'AUTOEXIT');
+  Filename := GetNonSwitch;
+  if Filename<>'' then
+    LoadFromFile(Filename);
+  if IsSwitch('A', 'AUTOSTART') then
     PostMessage(Handle, LM_RUN, 0, 0);
-
-  PageControlParams.ActivePageIndex := 0;
 
   // Show number of cores
   LabelCores.Caption := Format(SCptCoresFmt, [TThread.ProcessorCount]);
 
   // Show initial message in Message log
-  Log(Format(SCptInfoFmt, [IMGRESGUIVER, IMGRESVER, TThread.ProcessorCount]));
+  Log(Format(SCptInfoFmt, [GUIVER_APP, GUIVER_VERSION, GUIVER_DATE, IMGRESVER, TThread.ProcessorCount]));
 
   // If no local help files, then use online help
   LocHelpDir := IncludeTrailingPathDelimiter(ExtractFilePath(Application.ExeName))+SLocDirHelp;
@@ -443,18 +486,19 @@ begin
     HTMLHelpDatabase.BaseURL := SUrlWebHelp
   else
     HTMLHelpDatabase.BaseURL := 'file://'+LocHelpDir;
+
   //with SysLocale do
   //  MemoMessages.Lines.Add(Format('DefaultLCID=%d PriLangID=%d SubLangID=%d', [DefaultLCID, PriLangID, SubLangID]));
+
+  ActionParamSizes.Execute;
 end;
 
 procedure TMainDialog.LMRun(var Message: TLMessage);
 begin
   ActionExecute.Execute;
   Application.ProcessMessages;
-  if FAutoExit then begin
+  if FAutoExit then
     Close;
-  end;
-
 end;
 
 procedure TMainDialog.EditSrcFolderChange(Sender: TObject);
@@ -462,13 +506,13 @@ begin
    UpdateSrcFilesRequireLabel;
 end;
 
-procedure TMainDialog.CheckBoxMrkEnabledChange(Sender: TObject);
+procedure TMainDialog.ButtonParamClick(Sender: TObject);
 var
-  Vis :boolean;
+  TabIndex :integer;
 begin
-  Vis := CheckBoxMrkEnabled.Checked;
-  GroupBoxMrkFilename.Visible := Vis;
-  GroupBoxMrkLayout.Visible := Vis;
+  TabIndex := TAction(Sender).Tag;
+  PageControlParams.TabIndex := TabIndex;
+//  ToolBarParameters.Buttons[TabIndex].Down := true;
 end;
 
 procedure TMainDialog.ApplicationProperties1Exception(Sender: TObject;
@@ -486,15 +530,6 @@ begin
 
 end;
 
-procedure TMainDialog.CheckBoxRenEnabledClick(Sender: TObject);
-var
-  Vis :boolean;
-begin
-  Vis := CheckBoxRenEnabled.Checked;
-  GroupBoxRename.Visible := Vis;
-  GroupBoxShaking.Visible := Vis;
-end;
-
 procedure TMainDialog.EditRenTemplateEnter(Sender: TObject);
 begin
   RadioButtonRenCustom.Checked := true;
@@ -507,7 +542,7 @@ end;
 
 function TMainDialog.GetSettingsFilename(CanCreate :boolean): string;
 begin
-  result := IncludeTrailingPathDelimiter(GetWindowsSpecialDir(FOLDERID_LocalAppData, CanCreate))+ChangeFileExt(ExtractFileName(Application.ExeName), '.'+IMGRESGUIVER)+'\settings.ini';
+  result := IncludeTrailingPathDelimiter(GetWindowsSpecialDir(FOLDERID_LocalAppData, CanCreate))+ChangeFileExt(ExtractFileName(Application.ExeName), '.'+GUIVER_VERSION)+'\settings.ini';
 end;
 
 procedure TMainDialog.ActionNewExecute(Sender: TObject);
@@ -540,7 +575,7 @@ begin
     CheckBoxMrkEnabled.Checked := false;
     UpdateSizesControls;
     UpdateRequireLabels;
-    PageControlParams.ActivePage := TabSheetSizes;
+    ActionParamSizes.Execute;
     SetTitle(SCptUnnamed);
   finally
     ImgResizer.Free;
@@ -583,7 +618,6 @@ begin
     UpDownMrkX.Position := ReadInteger(SETTINGSSECTION, 'MrkX', UpDownMrkX.Position);
     UpDownMrkY.Position := ReadInteger(SETTINGSSECTION, 'MrkY', UpDownMrkY.Position);
     UpDownMrkAlpha.Position := ReadInteger(SETTINGSSECTION, 'MrkAlpha', UpDownMrkAlpha.Position);
-    ComboBoxBoost.Text := ReadString(SETTINGSSECTION, 'ThreadCount', ComboBoxBoost.Text);
     CheckBoxStopOnError.Checked := ReadBool(SETTINGSSECTION, 'StopOnError', CheckBoxStopOnError.Checked);
     CheckBoxRenEnabled.Checked := ReadBool(SETTINGSSECTION, 'RenEnabled', CheckBoxRenEnabled.Checked);
     RadioButtonRenSimple.Checked := ReadBool(SETTINGSSECTION, 'RenSimple', RadioButtonRenSimple.Checked);
@@ -617,7 +651,6 @@ begin
     WriteString(SETTINGSSECTION, 'MrkX', EditMrkX.Text);
     WriteString(SETTINGSSECTION, 'MrkY', EditMrkY.Text);
     WriteString(SETTINGSSECTION, 'MrkAlpha', EditMrkAlpha.Text);
-    WriteString(SETTINGSSECTION, 'ThreadCount', ComboBoxBoost.Text);
     WriteBool(SETTINGSSECTION, 'StopOnError', CheckBoxStopOnError.Checked);
     WriteBool(SETTINGSSECTION, 'RenEnabled', CheckBoxRenEnabled.Checked);
     WriteBool(SETTINGSSECTION, 'RenSimple', RadioButtonRenSimple.Checked);
@@ -633,11 +666,18 @@ function TMainDialog.LoadSettings: boolean;
 var
   Ini :TIniFile;
   Filename :string;
+  AHeight :integer;
 begin
   Filename := GetSettingsFilename(false);
   if not FileExists(Filename) then Exit(false);
   Ini := TIniFile.Create(Filename);
   try
+    Width := Ini.ReadInteger(DIALOGSECTION, 'Width', Width);
+    Height := Ini.ReadInteger(DIALOGSECTION, 'Height', Height);
+    AHeight := Ini.ReadInteger(DIALOGSECTION, 'PanelControls.Height', PanelControls.Height);
+    if AHeight+PanelControls.Top + 16 < ClientHeight then
+      PanelControls.Height := AHeight;
+    ComboBoxBoost.Text := Ini.ReadString(DIALOGSECTION, 'ThreadCount', ComboBoxBoost.Text);
     result := LoadFromIni(Ini);
   finally
     Ini.Free;
@@ -652,6 +692,10 @@ var
 begin
   Ini := TIniFile.Create(GetSettingsFilename(true));
   try
+    Ini.WriteInteger(DIALOGSECTION, 'Width', Width);
+    Ini.WriteInteger(DIALOGSECTION, 'Height', Height);
+    Ini.WriteInteger(DIALOGSECTION, 'PanelControls.Height', PanelControls.Height);
+    Ini.WriteString(DIALOGSECTION, 'ThreadCount', ComboBoxBoost.Text);
     SaveToIni(Ini);
   finally
     Ini.Free;
@@ -1086,7 +1130,7 @@ end;
 
 procedure TMainDialog.ActionAboutExecute(Sender: TObject);
 begin
-  TAboutDialog.Execute(IMGRESGUICPR, 'Processor V'+IMGRESVER, STxtLicense);
+  TAboutDialog.Execute(IMGRESGUICPR, SCptProcessor + ' ' +IMGRESVER, STxtLicense);
 end;
 
 procedure TMainDialog.ActionClearFilenamesExecute(Sender: TObject);
@@ -1110,7 +1154,7 @@ begin
   if TMrkEditDialog.GetFilename(MrkFilename) then begin
     EditMrkFilename.Text := MrkFilename;
     EditMrkFilename.SelStart := Length(EditMrkFilename.Text);
-    PageControlParams.ActivePage := TabSheetMrk;
+    PageControlParams.ActivePage := TabSheetWatermark;
   end;
 end;
 
@@ -1158,7 +1202,7 @@ begin
     ActionExecute.Enabled := true;
     ActionExecute.Caption := SCptCancel;
     ButtonExecute.Caption := SCptCancel;
-    ActionExecute.ImageIndex := 5;
+    ActionExecute.ImageIndex := 6;
     ButtonExecute.ImageIndex := 1;
     ButtonExecute.Invalidate;
     ProgressBar.Position := 0;
@@ -1271,7 +1315,7 @@ begin
       ActionExecute.Enabled := true;
       ActionExecute.Caption := SCptExecuteA;
       ButtonExecute.Caption := SCptExecute;
-      ActionExecute.ImageIndex := 4;
+      ActionExecute.ImageIndex := 5;
       ButtonExecute.ImageIndex := 2;
       TimerProgressBarOff.Enabled := true;
       Screen.Cursor := crDefault;

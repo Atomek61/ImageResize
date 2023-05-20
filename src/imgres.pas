@@ -26,8 +26,6 @@ const
   IMGRESVER = '3.0';
   IMGRESCPR = 'imgres V'+IMGRESVER+' © 2023 Jan Schirrmacher, www.atomek.de';
 
-  IMGRESREGKEY = 'SOFTWARE\Atomek\Image Resize\';
-
   DEFAULTPNGCOMPRESSION    = 2;
   DEFAULTJPGQUALITY        = 75;
   DEFAULTMRKSIZE           = 20.0;
@@ -44,15 +42,7 @@ const
   DEFAULT_SHAKE            = false;
   DEFAULT_SHAKESEED        = 0;
 
-  //// Watermark sources
-  //msDisabled  = 0;
-  //msFile      = 1;
-  //msImage     = 2;
-  //
   DEFSIZES :array[0..15] of integer = (32, 48, 64, 120, 240, 360, 480, 640, 800, 960, 1280, 1600, 1920, 2560, 3840, 4096);
-
-resourcestring
-  SCptDependenciesFmt = 'Build with Lazarus %s and graphics library BGRABitmap %s';
 
 type
 

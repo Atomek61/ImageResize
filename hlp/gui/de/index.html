@@ -28,7 +28,7 @@
 
       <h1 id="overview">Übersicht</h1>
       <p>
-        <i>ImageResize</i> 3.3 ist eine App zur Größenänderung von JPEG- und PNG-Bildern.
+        <i>ImageResize</i> 3.4 ist eine App zur Größenänderung von JPEG- und PNG-Bildern.
         Sie ist für die Erzeugung von Web-Gallerien gedacht und kann viele Bilder 
         auf einmal verarbeiten.
       </p>
@@ -38,9 +38,9 @@
       <a href="#srcfilelist">Liste der Bilddateien</a><br/>
       <a href="#dstfolder">Zielverzeichnis</a><br/>
       <a href="#sizes">Zielgrößen</a><br/>
-      <a href="#quality">Qualität</a><br/>
       <a href="#renaming">Umbenennen und mischen</a><br/>
       <a href="#watermark">Wasserzeichen</a><br/>
+      <a href="#compression">Kompression</a><br/>
       <a href="#boost">Boost</a><br/>
       <a href="#saving">Speichern und Öffnen</a><br/>
       <a href="#commandline">Kommandozeilen-Parameter</a><br/>
@@ -50,6 +50,7 @@
         Fähigkeiten  
       </p>
       <ul>
+        <li>Kontextsensitives Hilfesystem</li>
         <li>Resampling (Verkleinerung) von Listen mit Bilddateien</li>
         <li>Resampling jedes Bildes in mehrere Größen</li>
         <li>Nutzt <i>Lanczos</i>-Filterung für gute Ergebnisse</li>
@@ -61,7 +62,7 @@
         <li>Optionales zufälliges Mischen der Liste</li>
       </ul>
       <p>
-        Was es nicht kann
+        Was sie nicht kann
       </p>
       <ul>
         <li>Bildverzerrung</li>
@@ -85,13 +86,13 @@
       
       <h1 id="srcfilelist">Liste der Bilddateien</h1>
       <p>
-        ImageResize kann mehrere Bilddateien resampeln. Die Liste besteht aus
+        ImageResize kann viele Bilddateien resampeln. Die Liste besteht aus
         Pfad/Dateiname und kann
       </p>
       <ol>
         <li>manuell eingegeben werden</li>
-        <li>im Auswahldialog ausgewählt werden<img class="btn" src="../img/btnbrowse.png"/> mit &lt;STRG&gt; und &lt;UMSCHALT&gt;</li>
-        <li>durch Ziehen von Bilddateien aus dem Windows-Explorer ergänzt</li>
+        <li>im Auswahldialog ausgewählt werden<img class="btn" src="../img/open.png"/> mit &lt;STRG&gt; und &lt;UMSCHALT&gt;</li>
+        <li>durch Ziehen von Bilddateien aus dem Windows-Explorer ergänzt werden</li>
         <li>durch Angabe eines Quellverzeichnisses mit Dateifilter angegeben werden</li>
       </ol>
       <p>
@@ -104,13 +105,13 @@
       <h1 id="dstfolder">Zielordner</h1>
       <p>
         Ein Zielordner muss angegeben werden. Sie können ihn direkt eintippen
-        oder mit der Schaltfläche <img class="btn" src="../img/btnbrowse.png"/> auswählen.
+        oder mit der Schaltfläche <img class="btn" src="../img/open.png"/> auswählen.
       </p>
       <p>
-        Wenn mehrere Zielgrößen angegeben werden, können entweder mit
-        <a href="#renaming">Umbenennen</a> von Dateien Zielkonflikte vermieden
-        werden oder indem der Zielordner den Platzhalter <span class="plh">%SIZE%</span>
-        enthält.
+        Um Konflikte der Zielnamen zu vermeiden, wenn mehrere Zielgrößen angegeben werden,
+        können Sie entweder mit <a href="#renaming">Umbenennen</a> verschiedene Dateinamen erzeugen,
+        oder indem jede Größe einen eigenen Zielordner enthält. Dazu muss der Name des Zielordners 
+        den Platzhalter <span class="plh">%SIZE%</span> enthalten.
       </p>
       <a class="chfot" href="#contents">Inhalt</a>
       
@@ -128,29 +129,9 @@
         Sie können alle Größen angeben, die größer als 0 sind. Die Vorschläge unter der Liste sind unverbindlich.
       </p>
       <p>
-        Sie können die Liste ändern, indem Sie die Löschen-Schaltfläche <img class="btn" src="../img/btnclearsizes.png"/>
+        Sie können die Liste ändern, indem Sie die Löschen-Schaltfläche <img class="btn" src="../img/cancel.png"/>
         klicken. Um eine einzelne Größe zu löschen, markieren Sie zuvor die Größe, oder sie klicken einen
         bereits gewählten Vorschlag erneut.
-      </p>
-      <a class="chfot" href="#contents">Inhalt</a>
-      
-      <h1 id="quality">Qualität</h1>
-      <p>
-        Sie können den Kompressionsgrad für JPEG- und für PNG-Formate steuern.
-      </p>
-      <p>
-        Eine höhere Qualität resultiert in größeren Dateien. Bei JPEG ist 75 bis 95 Prozent
-        eine gute Wahl.<br/><img src="img/jpgqualities.png"/>
-      </p>
-      <p>
-        Bei PNG-Dateien sind 4 Kompressionsgrade möglich:
-        <ul>
-          <li><i>none</i> - keine Kompression</li>
-          <li><i>fastest</i> - schnellste (geringe) Kompression</li>
-          <li><i>default</i> - normale Kompression</li>
-          <li><i>maximum</i> - größte Kompression (langsamer)</li>
-        </ul>
-        <img src="img/pngqualities.png"/>
       </p>
       <a class="chfot" href="#contents">Inhalt</a>
       
@@ -160,10 +141,10 @@
         für jede Größe einen eigenen Ordner erzeugen möchten, sondern
         alle Dateien in einen Ordner packen möchten. Dann müssen die
         Zieldateien umbenannt werden, am besten, indem sie die Zielgrößen
-        zur Unterscheidung erhalten.
+        zur Unterscheidung enthalten.
       </p>
       <p>
-        Checken Sie <i>Anwenden</i> und wählen Sie eine der möglichen Strategien:
+        Klicken Sie <i>Anwenden</i> und wählen Sie eine der möglichen Strategien:
       </p>
 
       <h2 id="rensimple">Strategie <b>"Einfach"</b></h2>
@@ -200,7 +181,9 @@
         könnten so aussehen:
       </p>
       <p><span class="plh">img%INDEX:1,3%_%SIZE%.%FILEEXT%</span></p>
+      <p>ergibt z.B. <span class="plh">img012_1920.jpg</span></p>
       <p><span class="plh">%FILENAME%_%SIZE%.%FILEEXT%</span></p>
+      <p>ergibt.z.B. <span class="plh">DSC3240_1920.jpg</span></p>
       
       <h2>Verfügbare Platzhalter</h2>
       <table class="partab">
@@ -210,20 +193,20 @@
         </tr>
         <tr>
           <td><span class="plh">%FILEEXT%</span></td>
-          <td>Die Erweiterung des Originalnamens ohne den Punkt<br/><br/>
-          Anmerkung: Sie können das Format der Zieldatei nicht ändern, indem Sie
+          <td>Die Erweiterung des Originalnamens ohne den Punkt.<br/><br/>
+          Sie können das Format der Zieldatei nicht ändern, indem Sie
           die Erweiterung ändern. Dies könnte Bildbetrachter verwirren.  
           </td>
         </tr>
         <tr>
           <td><span class="plh">%INDEX:N,D%</span></td>
           <td>
-            Der 0-basierte Index (laufende Nummer) der Datei in der Liste.
+            Der 0-basierte Index (laufende Nummer) der Datei in der Liste.<br/><br/>
             <i>N</i> ist ein Offset (Versatz). Normalerweise beginnen Listen
             mit der Nummer 1, aber durch Angabe eines Versatzes können Sie vorhandene
             Listen erweitern. D ist die Zahl der Stellen der resultierenden Zahl, die
-            dazu führende Nullen erhält. Dies bewirkt die korrekte lexikalische Ordnung
-            der Dateinamen.<br/><br/>
+            ggf. führende Nullen erhält. Dadurch wird die korrekte lexikalische Ordnung
+            der Dateinamen ermöglicht.<br/><br/>
           </td>
         </tr>
         <tr>
@@ -234,14 +217,19 @@
 
       <h2 id="shaking">Mischen</h2>
       <p>
-        <i>Mischen</i> bedeutet, dass die Reihenfolge der Zieldateien zufällig ist.
-        ImageResize wird dazu die Liste der Quelldateien vor der Verarbeitung mischen.
+        <i>Mischen</i> bedeutet, dass die lexikalische Reihenfolge der Zieldateinamen zufällig ist.
+      </p>
+      <p>
+        ImageResize mischt zunächst die Reihenfolge der Bilder bevor es die resampelten Bilder erzeugt.
+        Das hat nur Sinn, wenn dabei die Zieldateinamen den Index des Bildes am Beginn des variablen 
+        Teiles des Namens enthält, damit die lexikalische Reihenfolge aufsteigend ist.
+        Eine geeignete Vorlage für den Zielnamen ist z.B. <span class="plh">img%INDEX:1,3%.%FILEEXT%</span>.
       </p>
       <p>
         Der Parameter <i>Saat</i> kontrolliert die zufällige Abfolge. Eine Saat von 0 wird
-        jedesmal, wenn die Verarbeitung gestartet wird eine eine andere Abfolge erzeugen.
+        jedesmal, wenn die Verarbeitung gestartet wird, eine andere Abfolge erzeugen.
         Jeder andere konstante Wert wird die die Abfolge in der selben Art mischen,
-        solange die Bildliste sich nicht ändert.
+        solange die Länge der Bildliste sich nicht ändert.
       </p>
       
       <h1 id="watermark">Wasserzeichen</h1>
@@ -254,7 +242,7 @@
       
       <h3 id="mrkenable">Anwenden</h3>
       <p>
-        Checken Sie diese Option, um das Wasserbild zu ermöglichen.
+        Wählen Sie diese Option, um das Wasserbild zu aktivieren.
       </p>
       
       <h3 id="mrkfilename">Dateiname</h3>
@@ -269,7 +257,8 @@
       <p>
         Es gibt jedoch einen Weg, für jede Zielgröße ein anderes Wasserbild zu verwenden. Geben Sie dazu
         im Namen der Wasserbilddatei den Platzhalter <span class="plh">%SIZE%</span> an.
-        Sie müssen dann für jede Größe eine entsprechende Wasserbilddatei vorbereitet haben.
+        ImageResize erwartet in diesem Falle ein Wasserbild für jede Größe, deren Name 
+        der Vorlage entspricht, also die Größe enthält.
       </p>
       <p>
         Sie können eine Wasserbilddatei mit jedem Programm erzeugen welches das PNG-Format unterstützt.
@@ -319,17 +308,41 @@
       </p>
       <a class="chfot" href="#contents">Inhalt</a>
 
+      <h1 id="compression">Kompression</h1>
+      <p>
+        Sie können den Kompressionsgrad für JPEG- und für PNG-Formate steuern.
+      </p>
+      <p>
+        JPEG hat ein verlustbehaftetes Verfahren. Eine höhere Qualität resultiert
+        in größeren Dateien. Bei JPEG ist 75 bis 95 Prozent eine gute Wahl.<br/>
+        <img src="img/jpgcompression.png"/>
+      </p>
+      <p>
+        Das PNG-Format ist verlustfrei, ergibt aber bei Naturbildern geringe Kompression,
+        daher ist es hauptsächlich bei künstlichen Bildern sinnvoll.
+        Es sind 4 Kompressionsgrade möglich:
+        <ul>
+          <li><i>none</i> - keine Kompression</li>
+          <li><i>fastest</i> - schnellste (geringe) Kompression</li>
+          <li><i>default</i> - normale Kompression</li>
+          <li><i>maximum</i> - größte Kompression (langsamer)</li>
+        </ul>
+        <img src="img/pngcompression.png"/>
+      </p>
+      <a class="chfot" href="#contents">Inhalt</a>
+      
       <h1 id="boost">Boost</h1>
       <h3 id="threads">Threads</h3>
       <p>
         ImageResize kann durch Multi-Threading die Rechenpower des Systems besser nutzen.<br/>
-        <i>Single</i> bedeutet das nur ein Kern genutzt wird. Sie können bis zur Gesamtzahl der
-        verfügbaren Kerne gehen (=<i>Maximum</i>). Dies kann die Verarbeitungsgeschwindigkeit mehr als verdoppeln.
+        <i>Single</i> bedeutet, dass nur ein Kern genutzt wird - die Verarbeitung wird entsprechend langsam.
+        Sie können bis zur Gesamtzahl der verfügbaren Kerne gehen (=<i>Maximum</i>).
+        Dies kann die Verarbeitungsgeschwindigkeit mehr als verdoppeln.
       </p>
       <p>
         In Systemen mit <i>Hyperthreading</i> ist die Zahl der virtuellen Kerne höher als die der physischen.
         Wenn Sie 12 Kerne haben, von denen nur 6 physisch sind, bewirkt die Nutzung von 12 Threads
-        gegenüber 6 Threads nur eine Erhöhung der Rechengeschwindigkeit um etwa 8 Prozent.
+        gegenüber 6 Threads nur eine Erhöhung der Verarbeitungsgeschwindigkeit um etwa 8 Prozent.
       </p>
       <h3 id="stoponerr">Anhalten bei Fehlern </h3>
       <p>
@@ -359,21 +372,28 @@
       <p>
         Lässt ImageResize die Ausführen-Schaltfläche automatisch beim Start betätigen.
       </p>
-      <h3>-X  or  -AUTOEXIT</h3>
+      <h3>-X  oder  -AUTOEXIT</h3>
       <p>
         Bewirkt ein automatisches Schließen der Anwendung nach dem Ende der Verarbeitung.
       </p>
-      <h3>-E oder -EN</h3>
+      <h3>-E  oder  -ENGLISH</h3>
       <p>
-        Bewirkt, dass die englische Sprache für die Benutzeroberfläche verwendet wird.
+        Bewirkt, dass die englische Sprache für die Benutzeroberfläche erzwungen wird.
         Es existiert eine deutsche Übersetzung, die automatisch aktiviert wird,
         wenn das System für Deutsch lokalisiert ist.
+      </p>
+      <p>
+        Um ImageResize automatisch eine Liste von Bildern resampeln zu lassen, speichern Sie 
+        zunächst eine geeignete .irs-Date und starten dann das Programm mit diesen Kommandozeilenparametern:
+      </p>
+      <p>
+        <span class="plh">C:\Programme\ImageResize\ImageResize.exe C:\mylist.irs -A -X</span>
       </p>
       <a class="chfot" href="#contents">Inhalt</a>
       
       <h1 id="mrkeditor">Wasserzeichen-Editor</h1>
       <p>
-        Mit <img class="btn" src="../img/btnwatermarkeditor.png"/> können Sie den eingebauten
+        Mit <img class="btn" src="../img/editor.png"/> können Sie den eingebauten
         Wasserzeichen-Editor öffnen. Dieser einfache Dialog lässt Sie einen Schriftzug mit ein paar 
         nützlichen Dekorationen erzeugen.  
       </p>
@@ -389,29 +409,34 @@
         <img style="max-width: 80%" src="img/watermarkeditor.png"/>
       </p>
       <table class="atop">
-        <tr><td><img class="btn" src="../img/btnnew.png"/></td>
+        <tr><td><img class="btn" src="../img/new.png"/></td>
           <td>
             Lädt die Voreinstellungen
           </td>
         </tr>
-        <tr><td><img class="btn" src="../img/btnbrowse.png"/></td>
+        <tr><td><img class="btn" src="../img/open.png"/></td>
           <td>
             Lädt eine zuvor gespeicherte .was-Datei mit Wasserzeichen-Einstellungen
           </td>
         </tr>
-        <tr><td><img class="btn" src="../img/btnsave.png"/></td>
+        <tr><td><img class="btn" src="../img/save.png"/></td>
           <td>
             Speichert die aktuellen Einstellungen in einer .was-Datei und das Wasserzeichen selbst als .png-Datei.
             Diese Bilddatei wird von ImageResize benötgt, die .was-Datei wird zur späteren Änderung der 
             Erscheinung benötigt.
           </td>
         </tr>
-        <tr><td><img class="btn" src="../img/bntnewfav.png"/></td>
+        <tr><td><img class="btn" src="../img/saveas.png"/></td>
+          <td>
+            Speichert .was- und PNG-Datei unter einem anderen Namen.
+          </td>
+        </tr>
+        <tr><td><img class="btn" src="../img/loadfav.png"/></td>
           <td>
             Lädt die favorisierten Voreinstellungen - z.B. Ihren persönlichen Copyright-Text.
           </td>
         </tr>
-        <tr><td><img class="btn" src="../img/btnsavefav.png"/></td>
+        <tr><td><img class="btn" src="../img/saveasfav.png"/></td>
           <td>
             Speichert die aktuellen Einstellungen und den Text als Ihren Favoriten.
           </td>
@@ -420,13 +445,13 @@
           <td>
             Geben Sie hier die Textzeile ein, die im Wasserzeichen dargestellt werden soll. Das ©-Zeichen mit
             &lt;ALT&gt; &lt;0&gt; &lt;1&gt; &lt;6&gt; &lt;9&gt; oder mit der 
-            <img class="btn" src="../img/btninsertcopyright.png"/>-Schaltfläche.
+            <img class="btn" src="../img/copyright.png"/>-Schaltfläche.
           </td>
         </tr>
         <tr id="mrkfont"><td>Font</td>
           <td>
             Wählen Sie einen Font mit der Größe in <i>Punkten</i>, einen Fontnamen in Anführungszeichen und optional die Stile <i>Italic</i> und
-            <i>Bold</i> oder wählen Sie einen Font im Dialog <img class="btn" src="../img/btnfont.png"/> aus.
+            <i>Bold</i> oder wählen Sie einen Font im Dialog <img class="btn" src="../img/font.png"/> aus.
             Die Qualität des Wasserzeichens hängt mit der Font-Größe zusammen. 12pt erzeugt ein grobpixeliges Wasserzeichen, 48pt eine
             genauere Abbildung. Die Fontgröße hat keinen Einfluss auf die spätere Darstellung im Bild, da deren Größe bei den Wasserzeicheneinstellungen 
             des Hauptfensters angegeben wird.
@@ -452,7 +477,7 @@
             Ermöglicht einen verwischten Hintergrund der Schrift, der je nach Farbe leuchtet oder wie ein Schatten wirkt.
           </td>
         </tr>
-        <tr id="mrkshadowcolor"><td>Schattenfarbe</td>
+        <tr id="mrkshadowcolor"><td>Schatten Farbe</td>
           <td>
             Wählen Sie die Farbe des verwischten Hintergrundes aus.
           </td>

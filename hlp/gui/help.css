@@ -93,7 +93,7 @@ td {
 
 .flag {width: 40px;}
 
-.btn {position:relative; top: 4px; background-color: rgb(238, 238, 238); border-radius: 2px}
+.btn {position:relative; top: 4px; background-color: #E0E0E0; border-radius: 2px}
 
 .chfot {margin-bottom: 2em; margin-top: 1.5em;}
 
@@ -117,4 +117,11 @@ td {
 .plh {
   font: italic 14pt "Courier New";
   color: rgb(162, 188, 238);
+}
+
+.hint-box {
+  background-color: hsl(240, 50%, 90%);
+  color:hsl(240, 40%, 20%);
+  padding: 0.5em;
+  border-left: 2mm solid hsl(240, 40%, 50%);
 }

@@ -21,8 +21,7 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <MajorVersionNr Value="3"/>
-      <MinorVersionNr Value="3"/>
-      <RevisionNr Value="3"/>
+      <MinorVersionNr Value="4"/>
       <StringTable FileDescription="Image Resampler" LegalCopyright="© 2023 Jan Schirrmacher, www.atomek.de"/>
     </VersionInfo>
     <BuildModes>
@@ -114,6 +113,9 @@
     </RunParams>
     <RequiredPackages>
       <Item>
+        <PackageName Value="LazControls"/>
+      </Item>
+      <Item>
         <PackageName Value="weblaz"/>
       </Item>
       <Item>
@@ -158,6 +160,10 @@
       </Unit>
       <Unit>
         <Filename Value="..\src\updateutils.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\datetimeutils.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
     </Units>

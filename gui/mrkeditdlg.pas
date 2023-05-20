@@ -56,7 +56,7 @@ type
     FontDialog: TFontDialog;
     ImageLandscape: TImage;
     ImageList20x20: TImageList;
-    ImageList24x24: TImageList;
+    ImageList32x32: TImageList;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
@@ -85,6 +85,7 @@ type
     UpDownShadowBlur: TUpDown;
     procedure ActionHelpExecute(Sender: TObject);
     procedure ButtonCancelClick(Sender: TObject);
+    procedure ButtonSaveClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormDestroy(Sender: TObject);
@@ -132,9 +133,6 @@ implementation
 uses
   imgres, graphics.utils, maindlg, windirs, helpintfs;
 
-const
-  DLGREGKEY = 'MrkEditor';
-
 resourcestring
   SCptDialogTitle = 'Watermark Editor';
   SErrInvalidParams = 'Invalid parameters';
@@ -148,6 +146,11 @@ resourcestring
 procedure TMrkEditDialog.ButtonCancelClick(Sender: TObject);
 begin
 
+end;
+
+procedure TMrkEditDialog.ButtonSaveClick(Sender: TObject);
+begin
+  ActionSave.Execute;
 end;
 
 procedure TMrkEditDialog.ActionHelpExecute(Sender: TObject);
@@ -176,7 +179,7 @@ end;
 
 function TMrkEditDialog.GetSettingsFilename(const Title :string; CanCreate :boolean): string;
 begin
-  result := IncludeTrailingPathDelimiter(GetWindowsSpecialDir(FOLDERID_LocalAppData, CanCreate))+ChangeFileExt(ExtractFileName(Application.ExeName), '.'+IMGRESGUIVER)+'\'+Title+'.was';
+  result := IncludeTrailingPathDelimiter(GetWindowsSpecialDir(FOLDERID_LocalAppData, CanCreate))+ChangeFileExt(ExtractFileName(Application.ExeName), '.'+GUIVER_VERSION)+'\'+Title+'.was';
 end;
 
 procedure TMrkEditDialog.PaintBoxPreviewPaint(Sender: TObject);

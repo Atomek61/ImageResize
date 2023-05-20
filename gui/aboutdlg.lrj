@@ -1,9 +1,24 @@
 {"version":1,"strings":[
 {"hash":210059797,"name":"taboutdialog.caption","sourcebytes":[65,98,111,117,116,32,73,109,97,103,101,82,101,115,105,122,101],"value":"About ImageResize"},
-{"hash":1371,"name":"taboutdialog.button1.caption","sourcebytes":[79,107],"value":"Ok"},
+{"hash":4863637,"name":"taboutdialog.buttonclose.caption","sourcebytes":[67,108,111,115,101],"value":"Close"},
 {"hash":150568222,"name":"taboutdialog.labelimgresguicpr.caption","sourcebytes":[60,97,112,112,99,111,112,121,114,105,103,104,116,62],"value":"<appcopyright>"},
+{"hash":49923877,"name":"taboutdialog.tabsheetlicense.caption","sourcebytes":[38,76,105,99,101,110,115,101],"value":"&License"},
+{"hash":214540014,"name":"taboutdialog.tabsheetversion.caption","sourcebytes":[38,86,101,114,115,105,111,110],"value":"&Version"},
+{"hash":67508814,"name":"taboutdialog.labelprocessorversion.caption","sourcebytes":[60,112,114,111,99,101,115,115,111,114,118,101,114,115,105,111,110,62],"value":"<processorversion>"},
 {"hash":42941678,"name":"taboutdialog.labeldependencies.caption","sourcebytes":[60,100,101,112,101,110,100,101,110,99,105,101,115,62],"value":"<dependencies>"},
-{"hash":261905578,"name":"taboutdialog.labelurl2.caption","sourcebytes":[76,105,99,101,110,115,101,58],"value":"License:"},
-{"hash":67508814,"name":"taboutdialog.labelimgresstr.caption","sourcebytes":[60,112,114,111,99,101,115,115,111,114,118,101,114,115,105,111,110,62],"value":"<processorversion>"},
-{"hash":151558993,"name":"taboutdialog.bitbtn1.caption","sourcebytes":[66,105,116,66,116,110,49],"value":"BitBtn1"}
+{"hash":145855454,"name":"taboutdialog.labelappversion.caption","sourcebytes":[60,97,112,112,118,101,114,115,105,111,110,62],"value":"<appversion>"},
+{"hash":197568645,"name":"taboutdialog.tabsheetupdate.caption","sourcebytes":[38,85,112,100,97,116,101],"value":"&Update"},
+{"hash":30096414,"name":"taboutdialog.labelavailability.caption","sourcebytes":[80,114,101,115,115,32,67,104,101,99,107,32,116,111,32,99,104,101,99,107,32,102,111,114,32,97,118,97,105,108,97,98,108,101,32,117,112,100,97,116,101,115,46,46,46],"value":"Press Check to check for available updates..."},
+{"hash":233179134,"name":"taboutdialog.labelavailability1.caption","sourcebytes":[67,108,105,99,107,32,111,110,32,116,104,101,32,108,105,110,107,32,98,101,108,111,119,32,116,111,32,100,111,119,110,108,111,97,100,32,116,104,101,32,108,97,116,101,115,116,32,118,101,114,115,105,111,110,46,13,10,73,116,115,32,114,101,99,111,109,109,101,110,100,101,100,32,116,111,32,117,110,105,110,115,116,97,108,108,32,116,104,101,32,99,117,114,114,101,110,116,32,105,110,115,116,97,108,108,97,116,105,111,110,44,32,98,117,116,13,10,121,111,117,32,99,97,110,32,105,110,115,116,97,108,108,32,97,32,115,101,99,111,110,100,32,105,110,115,116,97,108,108,97,116,105,111,110,32,97,100,100,105,116,105,111,110,97,108,108,121,46],"value":"Click on the link below to download the latest version.\r\nIts recommended to uninstall the current installation, but\r\nyou can install a second installation additionally."},
+{"hash":29036304,"name":"taboutdialog.labellinkimageresizedownload.caption","sourcebytes":[119,119,119,46,97,116,111,109,101,107,46,100,101,47,105,109,97,103,101,114,101,115,105,122,101,47,100,111,119,110,108,111,97,100,47,73,110,115,116,97,108,108,73,109,97,103,101,82,101,115,105,122,101,46,122,105,112],"value":"www.atomek.de/imageresize/download/InstallImageResize.zip"},
+{"hash":106108012,"name":"taboutdialog.labellinkimageresizehome.caption","sourcebytes":[119,119,119,46,97,116,111,109,101,107,46,100,101,47,105,109,97,103,101,114,101,115,105,122,101,47,105,110,100,101,120,46,104,109,108],"value":"www.atomek.de/imageresize/index.hml"},
+{"hash":191236306,"name":"taboutdialog.toolbar.caption","sourcebytes":[84,111,111,108,66,97,114],"value":"ToolBar"},
+{"hash":716661,"name":"taboutdialog.labellinkgithub.caption","sourcebytes":[104,116,116,112,115,58,47,47,103,105,116,104,117,98,46,99,111,109,47,65,116,111,109,101,107,54,49,47,73,109,97,103,101,82,101,115,105,122,101],"value":"https://github.com/Atomek61/ImageResize"},
+{"hash":161843130,"name":"taboutdialog.labelimgresguicpr1.caption","sourcebytes":[79,110,32,65,84,79,77,69,75,115,32,104,111,109,101,112,97,103,101,58],"value":"On ATOMEKs homepage:"},
+{"hash":235903770,"name":"taboutdialog.labelimgresguicpr2.caption","sourcebytes":[79,110,32,71,105,116,104,117,98,58],"value":"On Github:"},
+{"hash":49923877,"name":"taboutdialog.actionlicense.caption","sourcebytes":[38,76,105,99,101,110,115,101],"value":"&License"},
+{"hash":211414931,"name":"taboutdialog.actionversions.caption","sourcebytes":[38,86,101,114,115,105,111,110,115],"value":"&Versions"},
+{"hash":197568645,"name":"taboutdialog.actionupdate.caption","sourcebytes":[38,85,112,100,97,116,101],"value":"&Update"},
+{"hash":44690331,"name":"taboutdialog.actioncheckupdate.caption","sourcebytes":[38,67,104,101,99,107],"value":"&Check"},
+{"hash":115679172,"name":"taboutdialog.actiondownload.caption","sourcebytes":[38,68,111,119,110,108,111,97,100],"value":"&Download"}
 ]}

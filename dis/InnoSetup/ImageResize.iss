@@ -1,5 +1,5 @@
 ﻿#define PROGNAME "ImageResize"
-#define PROGVER "3.3.3"
+#define PROGVER "3.4"
 
 #define PROGEXE "ImageResize.exe"
 
@@ -23,7 +23,7 @@ WizardImageFile=res\welcome.bmp
 OutputBaseFilename=Install{#PROGNAME}
 
 [Messages]
-WelcomeLabel2=This will install [name/ver] on your computer.%n%n[name] is a jpg and png image resampling tool.%n- Available as GUI app or%n- as commandline interface
+WelcomeLabel2=This will install [name/ver] on your computer.%n%n[name] is a JPEG and PNG image resampling tool.%n- Available as GUI app or%n- as commandline interface
 
 [Tasks]
 Name: desktopicon; Description: "Create a desktop icon for the Windows application";
