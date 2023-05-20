@@ -1,1 +1,0 @@
-D:/Mf/DEV/Lazarus/ImageResize/gui/locale/lclstrconsts.de.po
