@@ -40,6 +40,7 @@
       <a href="#renaming">Renaming and Shaking</a><br/>
       <a href="#watermark">Watermark</a><br/>
       <a href="#compression">Quality</a><br/>
+      <a href="#tagging">Tagging and Copyright</a><br/>
       <a href="#boost">Boost</a><br/>
       <a href="#saving">Saving and Loading</a><br/>
       <a href="#commandline">Commandline Parameters</a><br/>
@@ -59,6 +60,7 @@
         <li>GUI, CLI and API interfaces available</li>
         <li>systematic file renaming</li>
         <li>optional random file sequence shaking</li>
+        <li>Limited EXIF tagging (description and copyright)</li>
       </ul>
       <p>
         Incapabilites
@@ -67,7 +69,7 @@
         <li>stretching</li>
         <li>format conversion (JPEG remains JPEG and PNG remains PNG)</li>
         <li>preview</li>
-        <li>meta information handling (EXIF)</li>
+        <li>complete meta information handling (EXIF)</li>
       </ul>
       
       <h1 id="overview">Overview</h1>
@@ -347,6 +349,40 @@
       </p>
       <a class="chfot" href="#contents">Contents</a>
       
+      <h1 id="tagging">Tagging</h1>
+
+      <h2>Copy Tags</h2>
+      <p>
+        Tagging is a technique to attach meta information to a JPEG file. Modern 
+        Cameras and programs do support the EXIF format for this. ImageResize 
+        is made for creating web galleries and only a few tags are supported:
+      </p>
+      <table class="simple-table">
+        <tr><td>Description</td><td>A short text describing the contents</td></tr>
+        <tr><td>Timestamp</td><td>The point of time, when the photo was taken</td></tr>
+        <tr><td>Copyright</td><td>A standard copyright note</td></tr>
+      </table>
+      <p>
+        The resampled images will receive a copy of these tags, assuming they are 
+        available in your source files. You can tag your source files with any 
+        good image editor, like RawTherapee or Lightroom or Photoshop.
+      </p>
+      <p>
+        PNG files cannot be tagged with ImageResize.
+      </p>
+
+      <h2>Override Copyright</h2>
+      <p>
+        Enable this option to attach the same copyright note to all created
+        images. This is an easy way to deal with a mass of files and to avoid tagging 
+        all source files. The copyright note is attached with the EXIF format and 
+        is enabled for JPEG files only.
+      </p>
+      <p>
+        The standard copyright note consists of the ©-Symbol, the year and the 
+        name of the owner or company.
+      </p>
+
       <h1 id="boost">Boost</h1>
       <h3 id="threads">Threads</h3>
       <p>

@@ -49,6 +49,10 @@ msgstr ""
 msgid "Warning"
 msgstr ""
 
+#: imgres.serrcopyright
+msgid "Cant transfer copyright AND override - check Tagging options."
+msgstr ""
+
 #: imgres.serrformatnotsupportedfmt
 #, object-pascal-format
 msgid "Format %s not supported."
@@ -149,6 +153,11 @@ msgstr ""
 msgid "Watermarking '%s'..."
 msgstr ""
 
+#: imgres.swrnnoexiffmt
+#, object-pascal-format
+msgid "No EXIF data found in '%s'"
+msgstr ""
+
 #: imgres.swrnupsamplingfmt
 #, object-pascal-format
 msgid "Upsampling '%s'"
@@ -167,7 +176,7 @@ msgstr ""
 #: maindlg.scptdependenciesfmt
 #, object-pascal-format
 msgctxt "maindlg.scptdependenciesfmt"
-msgid "Build with Lazarus %s and graphics library BGRABitmap %s"
+msgid "Build with Lazarus %s, BGRABitmap %s, dExif"
 msgstr ""
 
 #: maindlg.scptexecute
@@ -237,6 +246,10 @@ msgstr ""
 msgid "Enter placeholder %SIZE% to either the destination folder or the file template."
 msgstr ""
 
+#: maindlg.serrinvalidcopyright
+msgid "Invalid copyright."
+msgstr ""
+
 #: maindlg.serrinvalidjpgquality
 msgid "Invalid jpg quality."
 msgstr ""
@@ -277,6 +290,10 @@ msgstr ""
 msgid "Missing source folder."
 msgstr ""
 
+#: maindlg.serrnotags
+msgid "Select a tag to copy or disable copying of tags."
+msgstr ""
+
 #: maindlg.slocdirhelp
 msgid "hlp\\en"
 msgstr ""
@@ -311,7 +328,7 @@ msgid ""
 msgstr ""
 
 #: maindlg.surlwebhelp
-msgid "http://www.atomek.de/imageresize/hlp34/gui/en"
+msgid "http://www.atomek.de/imageresize/hlp35/gui/en"
 msgstr ""
 
 #: mrkeditdlg.scptdialogtitle
@@ -465,6 +482,10 @@ msgstr ""
 msgid "Opens the local or internet-based HTML help (F1)"
 msgstr ""
 
+#: tmaindialog.actionlistcreator.caption
+msgid "Create List"
+msgstr ""
+
 #: tmaindialog.actionnew.caption
 msgctxt "tmaindialog.actionnew.caption"
 msgid "&New"
@@ -518,6 +539,15 @@ msgstr ""
 
 #: tmaindialog.actionparamsizes.hint
 msgid "One or more Sizes of the resampled Images"
+msgstr ""
+
+#: tmaindialog.actionparamtagging.caption
+msgctxt "tmaindialog.actionparamtagging.caption"
+msgid "&Tagging"
+msgstr ""
+
+#: tmaindialog.actionparamtagging.hint
+msgid "Enables copying of certain EXIF tags or tags a copyright note."
 msgstr ""
 
 #: tmaindialog.actionparamwatermark.caption
@@ -586,6 +616,11 @@ msgstr ""
 msgid "ImageResize"
 msgstr ""
 
+#: tmaindialog.checkboxcopyrightenabled.caption
+msgctxt "tmaindialog.checkboxcopyrightenabled.caption"
+msgid "Enabled"
+msgstr ""
+
 #: tmaindialog.checkboxmrkenabled.caption
 msgctxt "tmaindialog.checkboxmrkenabled.caption"
 msgid "Enabled"
@@ -610,6 +645,23 @@ msgstr ""
 
 #: tmaindialog.checkboxstoponerror.caption
 msgid "Stop on Error"
+msgstr ""
+
+#: tmaindialog.checkboxtagcopyright.caption
+msgid "Copyright"
+msgstr ""
+
+#: tmaindialog.checkboxtagdescription.caption
+msgid "Description"
+msgstr ""
+
+#: tmaindialog.checkboxtagsenabled.caption
+msgctxt "tmaindialog.checkboxtagsenabled.caption"
+msgid "Enabled"
+msgstr ""
+
+#: tmaindialog.checkboxtagtimestamp.caption
+msgid "Timestamp"
 msgstr ""
 
 #: tmaindialog.comboboxboost.hint
@@ -740,6 +792,19 @@ msgstr ""
 msgid "*.jpg;*.png"
 msgstr ""
 
+#: tmaindialog.groupbox1.caption
+msgid "Override Copyright"
+msgstr ""
+
+#: tmaindialog.groupbox1.hint
+msgid ""
+"To assign a common copyright note as EXIF tag, select this\n"
+"option and enter a text like © 2023 Mogli Maisenkeyser\n"
+"This option is available only for JPEG files.\n"
+"You can either transfer an existing copyright tag, or assign\n"
+"a common one, but not both."
+msgstr ""
+
 #: tmaindialog.groupboxdstfolder.caption
 msgid "Destination Folder"
 msgstr ""
@@ -774,6 +839,18 @@ msgstr ""
 
 #: tmaindialog.groupboxshaking.caption
 msgid "Shake"
+msgstr ""
+
+#: tmaindialog.groupboxtags.caption
+msgid "Copy Tags"
+msgstr ""
+
+#: tmaindialog.groupboxtags.hint
+msgid ""
+"Define which EXIF tags are to be copied from the origin to the resampled images.\n"
+"This option is valid only for JPEG files.\n"
+"To change the EXIF tags of your source images, you can change them in the\n"
+"Windows Explorer or with a photo editor like RawTherapee."
 msgstr ""
 
 #: tmaindialog.label1.caption
@@ -848,6 +925,10 @@ msgstr ""
 
 #: tmaindialog.label6.caption
 msgid "Compression:"
+msgstr ""
+
+#: tmaindialog.label7.caption
+msgid "Copyright Text:"
 msgstr ""
 
 #: tmaindialog.label8.caption
@@ -943,6 +1024,11 @@ msgstr ""
 msgid "1 Simple - a folder for each size"
 msgstr ""
 
+#: tmaindialog.tabsheetboost.caption
+msgctxt "tmaindialog.tabsheetboost.caption"
+msgid "Boost"
+msgstr ""
+
 #: tmaindialog.tabsheetcompression.caption
 msgctxt "tmaindialog.tabsheetcompression.caption"
 msgid "Compression"
@@ -953,14 +1039,13 @@ msgctxt "tmaindialog.tabsheetrenaming.caption"
 msgid "Renaming"
 msgstr ""
 
-#: tmaindialog.tabsheetressources.caption
-msgctxt "tmaindialog.tabsheetressources.caption"
-msgid "Boost"
-msgstr ""
-
 #: tmaindialog.tabsheetsizes.caption
 msgctxt "tmaindialog.tabsheetsizes.caption"
 msgid "Sizes"
+msgstr ""
+
+#: tmaindialog.tabsheettagging.caption
+msgid "Tagging"
 msgstr ""
 
 #: tmaindialog.tabsheetwatermark.caption

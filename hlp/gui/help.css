@@ -106,6 +106,14 @@ td {
   margin: 0 0 1em 0;
 }
 
+.simple-table {border-collapse: collapse;}
+.simple-table td{
+  padding: 0.5em;
+}
+.simple-table td, .simple-table th {
+  border: 2px solid  hsl(var(--fgdhue), 50%, 40%);
+}
+
 .cmd {
   margin: 1em;
   padding: 2px 4px 2px 4px;

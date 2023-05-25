@@ -1,0 +1,8 @@
+object ListCreatorDialog: TListCreatorDialog
+  Left = 918
+  Height = 550
+  Top = 316
+  Width = 857
+  Caption = 'ListCreatorDialog'
+  LCLVersion = '2.2.6.0'
+end

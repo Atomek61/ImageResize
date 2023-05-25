@@ -24,8 +24,8 @@ uses
 
 const
   GUIVER_APP      = 'ImageResize';
-  GUIVER_VERSION  = '3.4';
-  GUIVER_DATE     = '2023-05-18';
+  GUIVER_VERSION  = '3.5';
+  GUIVER_DATE     = '2023-06-04';
 
   GUIVER          :TVersionManifest = (App: GUIVER_APP; Version: GUIVER_VERSION; Date: GUIVER_DATE);
 
@@ -61,8 +61,8 @@ const
   SIZEBTNHINTFMT  = '%s - %dpx';
 
 resourcestring
-  SCptDependenciesFmt = 'Build with Lazarus %s and graphics library BGRABitmap %s';
-  SUrlWebHelp = 'http://www.atomek.de/imageresize/hlp34/gui/en';
+  SCptDependenciesFmt = 'Build with Lazarus %s, BGRABitmap %s, dExif';
+  SUrlWebHelp = 'http://www.atomek.de/imageresize/hlp35/gui/en';
   SLocDirHelp = 'hlp\en';
   STxtLicense =
     'ImageResize Copyright (c) 2023 Jan Schirrmacher, www.atomek.de'#10#10+
@@ -90,6 +90,9 @@ type
   end;
 
   TMainDialog = class(TForm)
+    ActionListCreator: TAction;
+    ActionInsertCopyright: TAction;
+    ActionParamTagging: TAction;
     ActionParamBoost: TAction;
     ActionParamWatermark: TAction;
     ActionParamRenaming: TAction;
@@ -119,14 +122,21 @@ type
     ButtonBrowseDstFolder: TBitBtn;
     ButtonClearSrcFiles: TBitBtn;
     ButtonBrowseSrcFiles: TBitBtn;
+    ButtonInsertCopyright: TBitBtn;
     ButtonMrkEdit: TBitBtn;
     ButtonExecute: TBitBtn;
     BrowseDstFolder: TSelectDirectoryDialog;
+    CheckBoxCopyrightEnabled: TCheckBox;
+    CheckBoxTagTimestamp: TCheckBox;
+    CheckBoxTagCopyright: TCheckBox;
+    CheckBoxTagsEnabled: TCheckBox;
+    CheckBoxTagDescription: TCheckBox;
     CheckBoxRenEnabled: TCheckBox;
     CheckBoxMrkEnabled: TCheckBox;
     CheckBoxShake: TCheckBox;
     CheckBoxStopOnError: TCheckBox;
     ComboBoxShakeSeed: TComboBox;
+    EditCopyright: TEdit;
     EditSrcFolder: TEdit;
     EditSrcMasks: TEdit;
     EditRenTemplate: TComboBox;
@@ -140,6 +150,8 @@ type
     EditMrkY: TEdit;
     EditSizes: TEdit;
     EditDstFolder: TEdit;
+    GroupBox1: TGroupBox;
+    GroupBoxTags: TGroupBox;
     GroupBoxDstFolder: TGroupBox;
     GroupBoxMrkFilename: TGroupBox;
     GroupBoxShaking: TGroupBox;
@@ -161,6 +173,7 @@ type
     Label14: TLabel;
     Label15: TLabel;
     Label16: TLabel;
+    Label7: TLabel;
     LabelHintPlaceholder1: TLabel;
     LabelShakeSeed: TLabel;
     Label18: TLabel;
@@ -201,9 +214,10 @@ type
     RadioButtonRenAdvanced: TRadioButton;
     SaveAsDialog: TSaveDialog;
     Splitter1: TSplitter;
+    TabSheetTagging: TTabSheet;
     TabSheetRenaming: TTabSheet;
     TabSheetWatermark: TTabSheet;
-    TabSheetRessources: TTabSheet;
+    TabSheetBoost: TTabSheet;
     TabSheetSizes: TTabSheet;
     TabSheetCompression: TTabSheet;
     TimerProgressBarOff: TTimer;
@@ -212,6 +226,8 @@ type
     ToolBarSizeButtons: TToolBar;
     ToolButton1: TToolButton;
     ToolButton10: TToolButton;
+    ToolButton11: TToolButton;
+    ToolButtonTagging: TToolButton;
     ToolButtonBoost: TToolButton;
     ToolButtonWatermark: TToolButton;
     ToolButtonRenaming: TToolButton;
@@ -230,7 +246,10 @@ type
     UpDownMrkSize: TUpDown;
     UpDownMrkX: TUpDown;
     UpDownMrkY: TUpDown;
+    procedure ActionInsertCopyrightExecute(Sender: TObject);
     procedure ButtonParamClick(Sender :TObject);
+    procedure CheckBoxCopyrightEnabledChange(Sender: TObject);
+    procedure CheckBoxTagCopyrightChange(Sender: TObject);
     procedure EditSrcFolderChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -314,7 +333,7 @@ var
 implementation
 
 uses
-  math, helpintfs, Windows, FileUtil;
+  math, helpintfs, Windows, FileUtil, exifutils;
 
 const
   SCptRandom        = '<random>';
@@ -354,6 +373,9 @@ resourcestring
   SErrEnterPlaceholder      = 'Enter placeholder %SIZE% to either the destination folder or the file template.';
   SErrAtFmt                 = 'Error at %.0f%% - %s';
   SErrCancelledAtFmt        = 'Cancelled at %.0f%%';
+  SErrNoTags                = 'Select a tag to copy or disable copying of tags.';
+  SErrInvalidCopyright      = 'Invalid copyright.';
+
 
 {$R *.lfm}
 
@@ -441,11 +463,11 @@ begin
 
     Button.Hint := Format(SIZEBTNHINTFMT, [Cpt, DEFSIZES[i]]);
     if DEFSIZES[i]<=THUMBNAILIMGMAX then
-        Button.ImageIndex := 14
+        Button.ImageIndex := 9
     else if DEFSIZES[i]<=DOCIMGMAX then
-      Button.ImageIndex := 15
+      Button.ImageIndex := 10
     else
-      Button.ImageIndex := 16;
+      Button.ImageIndex := 11;
     Button.Style := tbsCheck;
     Button.Tag := DEFSIZES[i];
     Button.OnClick := @SizeButtonClick;
@@ -515,6 +537,23 @@ begin
 //  ToolBarParameters.Buttons[TabIndex].Down := true;
 end;
 
+procedure TMainDialog.CheckBoxCopyrightEnabledChange(Sender: TObject);
+begin
+  if CheckBoxCopyrightEnabled.Checked then
+    CheckBoxTagCopyright.Checked := false;
+end;
+
+procedure TMainDialog.CheckBoxTagCopyrightChange(Sender: TObject);
+begin
+  if CheckBoxTagCopyright.Checked then
+    CheckBoxCopyrightEnabled.Checked := false;
+end;
+
+procedure TMainDialog.ActionInsertCopyrightExecute(Sender: TObject);
+begin
+  EditCopyright.SelText := '©';
+end;
+
 procedure TMainDialog.ApplicationProperties1Exception(Sender: TObject;
   E: Exception);
 begin
@@ -573,6 +612,12 @@ begin
     CheckBoxShake.Checked := DEFAULT_SHAKE;
     ComboBoxShakeSeed.Text := SCptRandom;
     CheckBoxMrkEnabled.Checked := false;
+    CheckBoxTagsEnabled.Checked := false;
+    CheckBoxTagDescription.Checked := false;
+    CheckBoxTagTimestamp.Checked := false;
+    CheckBoxTagCopyright.Checked := false;
+    CheckBoxCopyrightEnabled.Checked := false;
+    EditCopyright.Text := '';
     UpdateSizesControls;
     UpdateRequireLabels;
     ActionParamSizes.Execute;
@@ -626,6 +671,13 @@ begin
     EditRenTemplate.Text := ReadString(SETTINGSSECTION, 'RenTemplate', EditRenTemplate.Text);
     CheckBoxShake.Checked := ReadBool(SETTINGSSECTION, 'Shake', CheckBoxShake.Checked);
     ComboBoxShakeSeed.Text := ShakeSeedToStr(ReadInteger(SETTINGSSECTION, 'ShakeSeed', 0));
+    CheckBoxTagsEnabled.Checked := ReadBool(SETTINGSSECTION, 'TagsEnabled', false);
+    CheckBoxTagDescription.Checked := ReadBool(SETTINGSSECTION, 'TagDescription', false);
+    CheckBoxTagTimestamp.Checked := ReadBool(SETTINGSSECTION, 'TagTimestamp', false);
+    CheckBoxTagCopyright.Checked := ReadBool(SETTINGSSECTION, 'TagCopyright', false);
+    CheckBoxCopyrightEnabled.Checked := ReadBool(SETTINGSSECTION, 'CopyrightEnabled', false);
+
+    EditCopyright.Text := ReadString(SETTINGSSECTION, 'Copyright', '');
   end;
 end;
 
@@ -659,6 +711,12 @@ begin
     WriteString(SETTINGSSECTION, 'RenTemplate', EditRenTemplate.Text);
     WriteBool(SETTINGSSECTION, 'Shake', CheckBoxShake.Checked);
     WriteInteger(SETTINGSSECTION, 'ShakeSeed', StrToShakeSeed(ComboBoxShakeSeed.Text));
+    WriteBool(SETTINGSSECTION, 'TagsEnabled', CheckBoxTagsEnabled.Checked);
+    WriteBool(SETTINGSSECTION, 'TagDescription', CheckBoxTagDescription.Checked);
+    WriteBool(SETTINGSSECTION, 'TagTimestamp', CheckBoxTagTimestamp.Checked);
+    WriteBool(SETTINGSSECTION, 'TagCopyright', CheckBoxTagCopyright.Checked);
+    WriteBool(SETTINGSSECTION, 'CopyrightEnabled', CheckBoxCopyrightEnabled.Checked);
+    WriteString(SETTINGSSECTION, 'Copyright', EditCopyright.Text);
   end;
 end;
 
@@ -756,7 +814,7 @@ begin
       EditSizes.Text := SizeStr
     else
       EditSizes.Text := EditSizes.Text + ', ' + SizeStr;
-  end else begin
+    end else begin
     if TrySizesStrToSizes(EditSizes.Text, Sizes) then begin
       for i:=0 to High(Sizes) do
         if Sizes[i]=Button.Tag then begin
@@ -1193,6 +1251,7 @@ var
   DstFolder :string;
   IntValue :integer;
   SrcFilenames :TStringList;
+  Tags :TTags;
 begin
   if FExecuting then begin
     FCancelled := true;
@@ -1203,7 +1262,7 @@ begin
     ActionExecute.Caption := SCptCancel;
     ButtonExecute.Caption := SCptCancel;
     ActionExecute.ImageIndex := 6;
-    ButtonExecute.ImageIndex := 1;
+    ButtonExecute.ImageIndex := 8;
     ButtonExecute.Invalidate;
     ProgressBar.Position := 0;
     ProgressBar.Visible := true;
@@ -1283,6 +1342,23 @@ begin
         if not TryStrToFloat(EditMrkAlpha.Text, x) or (x<0.0) or (x>100.0) then
           raise Exception.Create(SErrInvalidMrkOpacity);
         FImgRes.MrkAlpha := x;
+
+        // Tagging
+        Tags := [];
+        if CheckBoxTagsEnabled.Checked then begin
+          if CheckBoxTagDescription.Checked then Include(Tags, ttDescription);
+          if CheckBoxTagTimestamp.Checked then Include(Tags, ttTimestamp);
+          if CheckBoxTagCopyright.Checked then Include(Tags, ttCopyright);
+          if Tags = [] then
+            raise Exception.Create(SErrNoTags);
+          FImgRes.Tags := Tags;
+        end;
+        FImgRes.Copyright := '';
+        if CheckBoxCopyrightEnabled.Checked then begin
+          if EditCopyright.Text = '' then
+            raise Exception.Create(SErrInvalidCopyright);
+          FImgRes.Copyright := EditCopyright.Text;
+        end;
 
         // Hook the processor
         FImgRes.OnPrint := @OnPrint;

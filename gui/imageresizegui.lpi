@@ -21,7 +21,7 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <MajorVersionNr Value="3"/>
-      <MinorVersionNr Value="4"/>
+      <MinorVersionNr Value="5"/>
       <StringTable FileDescription="Image Resampler" LegalCopyright="© 2023 Jan Schirrmacher, www.atomek.de"/>
     </VersionInfo>
     <BuildModes>
@@ -113,6 +113,9 @@
     </RunParams>
     <RequiredPackages>
       <Item>
+        <PackageName Value="dexif_package"/>
+      </Item>
+      <Item>
         <PackageName Value="LazControls"/>
       </Item>
       <Item>
@@ -165,6 +168,12 @@
       <Unit>
         <Filename Value="..\src\datetimeutils.pas"/>
         <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="listcreator.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="ListCreatorDialog"/>
+        <ResourceBaseClass Value="Form"/>
       </Unit>
     </Units>
   </ProjectOptions>

@@ -20,11 +20,11 @@ interface
 
 uses
   Classes, SysUtils, StrUtils, Types, BGRABitmap, BGRABitmapTypes,
-  threading.dispatcher;
+  threading.dispatcher, exifutils;
 
 const
-  IMGRESVER = '3.0';
-  IMGRESCPR = 'imgres V'+IMGRESVER+' © 2023 Jan Schirrmacher, www.atomek.de';
+  IMGRESVER = '3.1';
+  IMGRESCPR = 'imgres '+IMGRESVER+' © 2023 Jan Schirrmacher, www.atomek.de';
 
   DEFAULTPNGCOMPRESSION    = 2;
   DEFAULTJPGQUALITY        = 75;
@@ -41,6 +41,8 @@ const
   DEFAULT_RENINDEXDIGITS   = 3;
   DEFAULT_SHAKE            = false;
   DEFAULT_SHAKESEED        = 0;
+  DEFAULT_TAGS             = [];
+  DEFAULT_COPYRIGHT        = '';
 
   DEFSIZES :array[0..15] of integer = (32, 48, 64, 120, 240, 360, 480, 640, 800, 960, 1280, 1600, 1920, 2560, 3840, 4096);
 
@@ -83,6 +85,8 @@ type
       Ren :TRenameParams;
       Shake :boolean;
       ShakeSeed :integer;
+      Tags :TTags;
+      Copyright :string;
     end;
 
   private type
@@ -166,6 +170,8 @@ type
     property RenEnabled :boolean read FParams.Ren.Enabled;
     property Shake :boolean read FParams.Shake write FParams.Shake;
     property ShakeSeed :integer read FParams.ShakeSeed write SetShakeSeed;
+    property Tags :TTags read FParams.Tags write FParams.Tags;
+    property Copyright :string read FParams.Copyright write FParams.Copyright;
     property OnPrint :TPrintEvent read FOnPrint write FOnPrint;
     property OnProgress :TProgressEvent read FOnProgress write FOnProgress;
   end;
@@ -193,6 +199,7 @@ resourcestring
   SCptAbort   = 'Abort';
   SCptFatal   = 'Fatal';
   SErrFormatNotSupportedFmt = 'Format %s not supported.';
+  SWrnNoExifFmt = 'No EXIF data found in ''%s''';
   SWrnUpsamplingFmt = 'Upsampling ''%s''';
   SMsgResamplingFmt = 'Resampling ''%s'' from %dx%d to %dx%d...';
   SMsgWatermarkingFmt = 'Watermarking ''%s''...';
@@ -205,6 +212,7 @@ resourcestring
   SErrMissingSizes = 'Missing sizes.';
   SErrInvalidSizesFmt = 'Invalid sizes ''%s''.';
   SErrMultipleSizes = 'Multiple sizes but placeholder %SIZE% not found in either folder or filename template.';
+  SErrCopyright = 'Cant transfer copyright AND override - check Tagging options.';
   SErrInvalidPngCompressionFmt = 'Invalid png compression %d (0..3 expected).';
   SErrInvalidJpgQualityFmt = 'Invalid JPEG quality %d (1..100 expected).';
   SErrInvalidRenamingParamFmt = 'Invalid renaming parameter ''%s''.';
@@ -262,6 +270,26 @@ begin
     result := result + ', ' + IntToStr(Sizes[i]);
 end;
 
+function ExtractExt(const Filename :string) :string;
+begin
+  result := ExtractFileExt(Filename);
+  if (Length(result)>0) then
+    result := Copy(result, 2, Length(result)-1);
+end;
+
+function IsJPEG(const Filename :string) :boolean;
+var
+  Ext :string;
+begin
+  Ext := UpperCase(ExtractFileExt(Filename));
+  result := (Ext = '.JPG') or (Ext = '.JPEG');
+end;
+
+function IsPNG(const Filename :string) :boolean;
+begin
+  result := UpperCase(ExtractFileExt(Filename)) = '.PNG'
+end;
+
 { TImgRes.TExecutionRessources }
 
 destructor TImgRes.TExecutionRessources.Destroy;
@@ -280,7 +308,6 @@ var
   SrcImg :TBGRABitmap;
   DstFolder :string;
   DstFileExt :string;
-  DstFileExtU :string;
   DstFiletitle :string;
   DstFiletitleExt :string;
   DstFilename :string;
@@ -295,6 +322,8 @@ var
   IndexStr :string; // Index to display
   SizeStr :string;
   i, n, m :integer;
+  MetaData :TMetaData;
+  Tags :TTags;
 begin
 
   SrcImg := nil;
@@ -311,6 +340,22 @@ begin
     Print(Format(SMsgLoadingFmt, [SrcFilename]));
     SrcImg := TBGRABitmap.Create(SrcFilename);
 
+    // If Tags transfer required, load EXIF tags
+    MetaData.Clear;
+    Tags := [];
+    if IsJPEG(SrcFilename) then begin
+      if ImgRes.FParams.Tags<>[] then begin
+        if ReadMetaData(SrcFilename, MetaData) then begin
+          Tags := ImgRes.FParams.Tags;
+        end else
+          Print(Format(SWrnNoExifFmt, [ExtractFilename(SrcFilename)]), mlWarning);
+      end;
+      if ImgRes.FParams.Copyright<>'' then begin
+        include(Tags, ttCopyright);
+        MetaData.Copyright := ImgRes.FParams.Copyright;
+      end;
+    end;
+
     if Context.Cancelled then Exit;
     Progress(1);
 
@@ -322,17 +367,15 @@ begin
 
       try
         // Create Writer depending on file extension
-        DstFileExt := ExtractFileExt(SrcFilename);
-        if Length(DstFileExt)>0 then DstFileExt := Copy(DstFileExt, 2, Length(DstFileExt)-1);
-        DstFileExtU := UpperCase(DstFileExt);
-        if (DstFileExtU = 'JPG') or (DstFileExtU = 'JPEG') then begin
+        DstFileExt := ExtractExt(SrcFilename);
+        if IsJPEG(SrcFilename) then begin
 
           // Jpg-options
           Writer := TFPWriterJPEG.Create;
           with TFPWriterJPEG(Writer) do
             CompressionQuality := TFPJPEGCompressionQuality(ImgRes.JpgQuality);
 
-        end else if DstFileExtU = 'PNG' then begin
+        end else if IsPNG(SrcFilename) then begin
 
           // Png-options
           Writer := TFPWriterPNG.Create;
@@ -412,10 +455,16 @@ begin
         end else
           DstFiletitleExt := ExtractFilename(SrcFilename);
 
+        // Save
         DstFolder := ExeRes.DstFolders[i mod Length(ExeRes.DstFolders)];
         DstFilename := IncludeTrailingPathDelimiter(DstFolder) + DstFiletitleExt;
         Print(Format(SMsgSavingFmt, [DstFilename]));
         DstImg.SaveToFile(DstFilename, Writer);
+
+        // EXIF
+        if Tags<>[] then begin
+          WriteMetaData(DstFilename, MetaData, Tags);
+        end;
 
         Progress(1);
 
@@ -456,6 +505,8 @@ begin
   FParams.Ren.IndexDigits := DEFAULT_RENINDEXDIGITS;
   FParams.Shake           := DEFAULT_SHAKE;
   FParams.ShakeSeed       := DEFAULT_SHAKESEED;
+  FParams.Tags            := DEFAULT_TAGS;
+  FParams.Copyright       := DEFAULT_COPYRIGHT;
 end;
 
 destructor TImgRes.Destroy;
@@ -558,6 +609,10 @@ begin
         raise Exception.Create(SErrMultipleSizes);
     end else
       ExeRes.IsMultipleDstFolderStrategy := false;
+
+    // EXIF - check if not Copyright shall be transfered AND Copyright has to be overridden
+    if (ttCopyright in FParams.Tags) AND (FParams.Copyright<>'') then
+      raise Exception.Create(SErrCopyright);
 
     // If the files list has to be randomly remixed, its the right moment
     SetLength(ExeRes.SrcFilenames, n);

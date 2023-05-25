@@ -11,7 +11,7 @@ uses
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, lazcontrols, maindlg, aboutdlg, mrkeditdlg, imgres, updateutils,
-  datetimeutils;
+  datetimeutils, listcreator;
 
 {$R *.res}
 
@@ -21,6 +21,7 @@ begin
   Application.Scaled:=True;
   Application.Initialize;
   Application.CreateForm(TMainDialog, MainDialog);
+  Application.CreateForm(TListCreatorDialog, ListCreatorDialog);
   Application.Run;
   end.
 

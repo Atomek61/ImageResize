@@ -9,7 +9,7 @@
    id="svg5526"
    inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
    sodipodi:docname="editor.svg"
-   inkscape:export-filename="..\png32\watermark.png"
+   inkscape:export-filename="..\png32\watermarkeditor.png"
    inkscape:export-xdpi="128"
    inkscape:export-ydpi="128"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -29,9 +29,9 @@
      inkscape:document-units="px"
      showgrid="true"
      showguides="true"
-     inkscape:zoom="29.276992"
-     inkscape:cx="4.9526946"
-     inkscape:cy="11.237493"
+     inkscape:zoom="58.553984"
+     inkscape:cx="16.813544"
+     inkscape:cy="13.560136"
      inkscape:window-width="2560"
      inkscape:window-height="1417"
      inkscape:window-x="-8"
@@ -150,6 +150,14 @@
      id="layer1"
      transform="matrix(1.2698412,0,0,1.2698412,-3.5865737,0.54316723)">
     <rect
+       style="fill:#4d4d4d;stroke-width:0.10418;stroke-linejoin:round;stroke-dasharray:none"
+       id="rect2608"
+       width="4.4797268"
+       height="3.2295706"
+       x="3.136966"
+       y="0.50987303"
+       ry="3.6334875e-08" />
+    <rect
        style="fill:#ccdbf7;stroke-width:0.198663;fill-opacity:1"
        id="rect4338"
        width="4.1671877"
@@ -163,13 +171,6 @@
        height="0.62507814"
        x="5.3247395"
        y="2.7146227" />
-    <rect
-       style="fill:none;fill-opacity:0.55;stroke-width:0.208359;stroke:#4d4d4d;stroke-opacity:1"
-       id="rect3348"
-       width="4.3755474"
-       height="3.1253908"
-       x="3.136966"
-       y="0.50987303" />
     <g
        id="g3105"
        transform="matrix(-1,0,0,1,10.432357,0.02549654)">
