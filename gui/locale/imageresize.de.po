@@ -44,6 +44,36 @@ msgstr "Update verfügbar: Version %s von %s"
 msgid "Cant '%s' convert to a date."
 msgstr "Kann '%s' nicht in ein Datum umwandeln."
 
+#: filestags.serrfilenametagnotfoundfmt
+#, object-pascal-format
+msgctxt "filestags.serrfilenametagnotfoundfmt"
+msgid "First column must be named 'Filename' in '%s'."
+msgstr ""
+
+#: filestags.serrfmtmissingfilenamefmt
+#, object-pascal-format
+msgctxt "filestags.serrfmtmissingfilenamefmt"
+msgid "Missing filename in '%0:s' line %1:d"
+msgstr ""
+
+#: filestags.serrfmtmorevaluesthantagsfmt
+#, object-pascal-format
+msgctxt "filestags.serrfmtmorevaluesthantagsfmt"
+msgid "More values than tags in '%s'."
+msgstr ""
+
+#: filestags.serrnodictforfilefoundfmt
+#, object-pascal-format
+msgctxt "filestags.serrnodictforfilefoundfmt"
+msgid "No tags defined for '%s'."
+msgstr ""
+
+#: filestags.serrnotagforkeyfmt
+#, object-pascal-format
+msgctxt "filestags.serrnotagforkeyfmt"
+msgid "No tag '%1:s' found for '%0:s',"
+msgstr ""
+
 #: imgres.scptabort
 msgid "Abort"
 msgstr "Abbruch"
@@ -59,10 +89,6 @@ msgstr "Hinweis"
 #: imgres.scptwarning
 msgid "Warning"
 msgstr "Warnung"
-
-#: imgres.serrcopyright
-msgid "Cant transfer copyright AND override - check Tagging options."
-msgstr "Kann nicht Copyright kopieren UND überschreiben - überprüfen Sie die  Tagging-Optionen."
 
 #: imgres.serrformatnotsupportedfmt
 #, object-pascal-format
@@ -145,6 +171,10 @@ msgstr "Lade '%s'..."
 msgid "Loading Watermark '%s'..."
 msgstr "Lade Wasserzeichen '%s'..."
 
+#: imgres.smsgloadtags
+msgid "Loading tags..."
+msgstr ""
+
 #: imgres.smsgresamplingfmt
 #, object-pascal-format
 msgid "Resampling '%s' from %dx%d to %dx%d..."
@@ -163,11 +193,6 @@ msgstr "Mische die Dateiliste..."
 #, object-pascal-format
 msgid "Watermarking '%s'..."
 msgstr "Drucke Wasserzeichen '%s'..."
-
-#: imgres.swrnnoexiffmt
-#, object-pascal-format
-msgid "No EXIF data found in '%s'"
-msgstr "Keine EXIF -Daten gefunden in '%s'."
 
 #: imgres.swrnupsamplingfmt
 #, object-pascal-format
@@ -361,7 +386,7 @@ msgstr "Inkompatible Dateiversion %.2f (%.2f erwartet)."
 #: mrkeditdlg.serrinvalidfiletypefmt
 #, object-pascal-format
 msgid "Invalid filetype, %s expected."
-msgstr "Unerwarteter Dateityp, %s erwartet."
+msgstr "Unerwarteter Dateityp (%s erwartet)."
 
 #: mrkeditdlg.serrinvalidparams
 msgid "Invalid parameters"
@@ -416,8 +441,8 @@ msgid ""
 msgstr ""
 "Klicken Sie auf das Link unten, um die aktuelle Version\n"
 "herunterzuladen. Es wird empfohlen die laufende Anwendung\n"
-"zu beenden und zu deinstallieren. Sie können die aktuelle\n"
-"Version auch parallel installieren."
+"zu beenden und zu deinstallieren. Sie können eine andere\n"
+"Version auch zusätzlich installieren."
 
 #: taboutdialog.labeldependencies.caption
 msgid "<dependencies>"
@@ -472,6 +497,15 @@ msgctxt "taboutdialog.toolbar.caption"
 msgid "ToolBar"
 msgstr ""
 
+#: threading.dispatcher.scptcancelled
+msgid "Cancelled"
+msgstr "Abgebrochen"
+
+#: threading.dispatcher.scptok
+msgctxt "threading.dispatcher.scptok"
+msgid "Ok"
+msgstr "Ok"
+
 #: tmaindialog.actionabout.caption
 msgid "Abou&t"
 msgstr "&Über"
@@ -506,7 +540,7 @@ msgstr "Öffent die lokale oder die Internet-basierte HTML-Hilfe (F1)"
 
 #: tmaindialog.actionlistcreator.caption
 msgid "Create List"
-msgstr ""
+msgstr "Erzeuge Liste"
 
 #: tmaindialog.actionnew.caption
 msgctxt "tmaindialog.actionnew.caption"
@@ -515,7 +549,7 @@ msgstr "&Neu"
 
 #: tmaindialog.actionnew.hint
 msgid "Reset all settings to default values."
-msgstr "Setze alle Einstellungen zurück auf Vorgabe."
+msgstr "Setzt alle Einstellungen zurück auf Vorgabe."
 
 #: tmaindialog.actionopen.caption
 msgctxt "tmaindialog.actionopen.caption"
@@ -524,7 +558,7 @@ msgstr "&Öffnen"
 
 #: tmaindialog.actionopen.hint
 msgid "Load saved settings"
-msgstr "Lade gespeicherte Einstellungen"
+msgstr "Lädt gespeicherte Einstellungen"
 
 #: tmaindialog.actionparamboost.caption
 msgctxt "tmaindialog.actionparamboost.caption"
@@ -579,7 +613,7 @@ msgstr "&Wasserzeichen"
 
 #: tmaindialog.actionparamwatermark.hint
 msgid "Optional Watermark printing"
-msgstr "Optionales drucken eines Wasserzeichens"
+msgstr "Optionales Drucken eines Wasserzeichens"
 
 #: tmaindialog.actionsave.caption
 msgctxt "tmaindialog.actionsave.caption"
@@ -601,15 +635,15 @@ msgstr "Speichert die aktuellen Einstellungen in einer anderen Datei"
 
 #: tmaindialog.buttonbrowsedstfolder.hint
 msgid "Select a destination folder"
-msgstr "Wähle ein Zielverzeichnis"
+msgstr "Wählen Sie ein Zielverzeichnis"
 
 #: tmaindialog.buttonbrowsesrcfiles.hint
 msgid "Browse for one or more images"
-msgstr "Wähle ein oder mehrere Bilder aus"
+msgstr "Wählen Sie ein oder mehrere Bilder aus"
 
 #: tmaindialog.buttonbrowsesrcfolder.hint
 msgid "Select a folder with images"
-msgstr "Wähle einen Ordner mit Bildern"
+msgstr "Wählen Sie einen Ordner mit Bildern"
 
 #: tmaindialog.buttonclearsizes.hint
 msgid "Clear all sizes or the selected one"
@@ -617,7 +651,7 @@ msgstr "Löscht alle Größen oder nur die markierte"
 
 #: tmaindialog.buttonclearsrcfiles.hint
 msgid "Clear image list"
-msgstr "Lösche die Liste der Bilder"
+msgstr "Löscht die Liste der Bilder"
 
 #: tmaindialog.buttonexecute.caption
 msgctxt "tmaindialog.buttonexecute.caption"
@@ -655,7 +689,7 @@ msgstr "Anwenden"
 
 #: tmaindialog.checkboxrenenabled.hint
 msgid "Enables destination image file renaming - choose a strategy."
-msgstr "Ermöglicht die Umbenennung der Zieldateien - wähle eine Strategiev"
+msgstr "Ermöglicht die Umbenennung der Zieldateien - wählen Sie eine Strategie"
 
 #: tmaindialog.checkboxshake.caption
 msgid "Enable"
@@ -728,7 +762,7 @@ msgstr "standard"
 
 #: tmaindialog.comboboxshakeseed.hint
 msgid "Enter a number, lets say 1000, to create always the same shaked order or 0 for shaking always randomly."
-msgstr "Gib eine Zahl an, z.B. 1000, um immer die gleiche Ordnung nach dem Mischen zu erreichen, oder 0 um immer anders zu mischen."
+msgstr "Geben Sie eine Zahl an, z.B. 1000, um immer die gleiche Ordnung nach dem Mischen zu erreichen, oder 0 um immer anders zu mischen."
 
 #: tmaindialog.comboboxshakeseed.text
 msgctxt "tmaindialog.comboboxshakeseed.text"
@@ -752,7 +786,7 @@ msgid ""
 "A strong watermark has 100%,\n"
 "a weak one has 10% opacity."
 msgstr ""
-"Wähle die Transparenz für das Wasserzeichen.\n"
+"Wählen Sie die Transparenz für das Wasserzeichen.\n"
 "\n"
 "Ein stark deckendes hat 100%,\n"
 "ein schwach durchscheinendes 10% Transparenz."
@@ -772,13 +806,13 @@ msgid ""
 "watermark files. Or use the inbuilt\n"
 "editor."
 msgstr ""
-"Wähle eine PNG-Datei mit deinem Wasserzeichen aus.\n"
+"Wählen Sie eine PNG-Datei mit deinem Wasserzeichen aus.\n"
 "\n"
 "Ein Wasserzeichen ist ein kleines Bild,\n"
 "das in einer Ecke des Bildes erscheint\n"
 "und den Urheber kennzeichnet.\n"
 "\n"
-"Du kannst den eingebauten Editor\n"
+"Sie können den eingebauten Editor\n"
 "oder InkScape zur Erstellung nutzen."
 
 #: tmaindialog.editmrksize.hint
@@ -826,7 +860,7 @@ msgid ""
 "sizes from the button field."
 msgstr ""
 "Enthält eine kommaseparierte Liste von Bildgrößen.\n"
-"Sie können die Liste erstellen, indem sie auf die vorgeschlagenen Größen klicken.\n"
+"Sie können die Liste erstellen, indem Sie auf die vorgeschlagenen Größen klicken.\n"
 "Die Größe bezieht sich auf die längere Seite des Bildes."
 
 #: tmaindialog.editsrcfolder.hint
@@ -979,7 +1013,7 @@ msgstr "(kann %SIZE% enthalten)"
 
 #: tmaindialog.label20.caption
 msgid "Click or drag the watermark"
-msgstr "Klicke oder ziehe das Wasserzeichen"
+msgstr "Klicken oder ziehen Sie das Wasserzeichen"
 
 #: tmaindialog.label3.caption
 msgid "Sizes:"
@@ -1076,7 +1110,7 @@ msgstr "Erforderlich"
 msgid "Enter a list of files with absolute pathes."
 msgstr ""
 "Enthält eine Liste von Dateien mit absoluten Pfaden:\n"
-"Drücke Auswählen... und wähle mehrere Dateien aus\n"
+"Drücken Sie Auswählen... und wählen Sie mehrere Dateien aus\n"
 "mit <STRG> oder <UMSCHALT>. "
 
 #: tmaindialog.opendialogsrcfilenames.title
@@ -1338,5 +1372,30 @@ msgstr ""
 
 #: tmrkeditdialog.toolbutton9.caption
 msgid "ToolButton9"
+msgstr ""
+
+#: twebcreatordialog.button1.caption
+msgctxt "twebcreatordialog.button1.caption"
+msgid "Button1"
+msgstr ""
+
+#: twebcreatordialog.button2.caption
+msgctxt "twebcreatordialog.button2.caption"
+msgid "Button2"
+msgstr ""
+
+#: twebcreatordialog.button3.caption
+msgctxt "twebcreatordialog.button3.caption"
+msgid "Button3"
+msgstr ""
+
+#: twebcreatordialog.caption
+msgctxt "twebcreatordialog.caption"
+msgid "WebCreatorDialog"
+msgstr ""
+
+#: twebcreatordialog.label1.caption
+msgctxt "twebcreatordialog.label1.caption"
+msgid "Steps:"
 msgstr ""
 

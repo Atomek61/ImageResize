@@ -107,7 +107,7 @@
         <PackageName Value="BGRABitmapPack"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="5">
+    <Units Count="8">
       <Unit0>
         <Filename Value="imageresizecli.pas"/>
         <IsPartOfProject Value="True"/>
@@ -128,6 +128,19 @@
         <Filename Value="..\src\threading.dispatcher.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit4>
+      <Unit5>
+        <Filename Value="..\src\exifutils.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="EXIFUtils"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\src\filestags.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\src\exiftags.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit7>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

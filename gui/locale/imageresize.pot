@@ -33,6 +33,36 @@ msgstr ""
 msgid "Cant '%s' convert to a date."
 msgstr ""
 
+#: filestags.serrfilenametagnotfoundfmt
+#, object-pascal-format
+msgctxt "filestags.serrfilenametagnotfoundfmt"
+msgid "First column must be named 'Filename' in '%s'."
+msgstr ""
+
+#: filestags.serrfmtmissingfilenamefmt
+#, object-pascal-format
+msgctxt "filestags.serrfmtmissingfilenamefmt"
+msgid "Missing filename in '%0:s' line %1:d"
+msgstr ""
+
+#: filestags.serrfmtmorevaluesthantagsfmt
+#, object-pascal-format
+msgctxt "filestags.serrfmtmorevaluesthantagsfmt"
+msgid "More values than tags in '%s'."
+msgstr ""
+
+#: filestags.serrnodictforfilefoundfmt
+#, object-pascal-format
+msgctxt "filestags.serrnodictforfilefoundfmt"
+msgid "No tags defined for '%s'."
+msgstr ""
+
+#: filestags.serrnotagforkeyfmt
+#, object-pascal-format
+msgctxt "filestags.serrnotagforkeyfmt"
+msgid "No tag '%1:s' found for '%0:s',"
+msgstr ""
+
 #: imgres.scptabort
 msgid "Abort"
 msgstr ""
@@ -47,10 +77,6 @@ msgstr ""
 
 #: imgres.scptwarning
 msgid "Warning"
-msgstr ""
-
-#: imgres.serrcopyright
-msgid "Cant transfer copyright AND override - check Tagging options."
 msgstr ""
 
 #: imgres.serrformatnotsupportedfmt
@@ -134,6 +160,10 @@ msgstr ""
 msgid "Loading Watermark '%s'..."
 msgstr ""
 
+#: imgres.smsgloadtags
+msgid "Loading tags..."
+msgstr ""
+
 #: imgres.smsgresamplingfmt
 #, object-pascal-format
 msgid "Resampling '%s' from %dx%d to %dx%d..."
@@ -151,11 +181,6 @@ msgstr ""
 #: imgres.smsgwatermarkingfmt
 #, object-pascal-format
 msgid "Watermarking '%s'..."
-msgstr ""
-
-#: imgres.swrnnoexiffmt
-#, object-pascal-format
-msgid "No EXIF data found in '%s'"
 msgstr ""
 
 #: imgres.swrnupsamplingfmt
@@ -448,6 +473,15 @@ msgstr ""
 #: taboutdialog.toolbar.caption
 msgctxt "taboutdialog.toolbar.caption"
 msgid "ToolBar"
+msgstr ""
+
+#: threading.dispatcher.scptcancelled
+msgid "Cancelled"
+msgstr ""
+
+#: threading.dispatcher.scptok
+msgctxt "threading.dispatcher.scptok"
+msgid "Ok"
 msgstr ""
 
 #: tmaindialog.actionabout.caption
@@ -1254,5 +1288,30 @@ msgstr ""
 
 #: tmrkeditdialog.toolbutton9.caption
 msgid "ToolButton9"
+msgstr ""
+
+#: twebcreatordialog.button1.caption
+msgctxt "twebcreatordialog.button1.caption"
+msgid "Button1"
+msgstr ""
+
+#: twebcreatordialog.button2.caption
+msgctxt "twebcreatordialog.button2.caption"
+msgid "Button2"
+msgstr ""
+
+#: twebcreatordialog.button3.caption
+msgctxt "twebcreatordialog.button3.caption"
+msgid "Button3"
+msgstr ""
+
+#: twebcreatordialog.caption
+msgctxt "twebcreatordialog.caption"
+msgid "WebCreatorDialog"
+msgstr ""
+
+#: twebcreatordialog.label1.caption
+msgctxt "twebcreatordialog.label1.caption"
+msgid "Steps:"
 msgstr ""
 

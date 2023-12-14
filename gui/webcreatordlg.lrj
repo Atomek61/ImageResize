@@ -1,0 +1,7 @@
+{"version":1,"strings":[
+{"hash":203501911,"name":"twebcreatordialog.caption","sourcebytes":[87,101,98,67,114,101,97,116,111,114,68,105,97,108,111,103],"value":"WebCreatorDialog"},
+{"hash":164345425,"name":"twebcreatordialog.button1.caption","sourcebytes":[66,117,116,116,111,110,49],"value":"Button1"},
+{"hash":164345426,"name":"twebcreatordialog.button2.caption","sourcebytes":[66,117,116,116,111,110,50],"value":"Button2"},
+{"hash":164345427,"name":"twebcreatordialog.button3.caption","sourcebytes":[66,117,116,116,111,110,51],"value":"Button3"},
+{"hash":95078250,"name":"twebcreatordialog.label1.caption","sourcebytes":[83,116,101,112,115,58],"value":"Steps:"}
+]}

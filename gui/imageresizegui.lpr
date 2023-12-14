@@ -11,7 +11,8 @@ uses
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, lazcontrols, maindlg, aboutdlg, mrkeditdlg, imgres, updateutils,
-  datetimeutils, listcreator;
+  datetimeutils, threading.dispatcher, webcreatordlg, imggallery,
+  filestags, EXIFUtils;
 
 {$R *.res}
 
@@ -21,7 +22,7 @@ begin
   Application.Scaled:=True;
   Application.Initialize;
   Application.CreateForm(TMainDialog, MainDialog);
-  Application.CreateForm(TListCreatorDialog, ListCreatorDialog);
+  Application.CreateForm(TWebCreatorDialog, WebCreatorDialog);
   Application.Run;
-  end.
+end.
 

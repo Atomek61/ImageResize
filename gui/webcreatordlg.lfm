@@ -1,0 +1,112 @@
+object WebCreatorDialog: TWebCreatorDialog
+  Left = 972
+  Height = 327
+  Top = 543
+  Width = 563
+  Caption = 'WebCreatorDialog'
+  ClientHeight = 327
+  ClientWidth = 563
+  Color = clSilver
+  OnCreate = FormCreate
+  LCLVersion = '2.2.6.0'
+  object Panel1: TPanel
+    Left = 0
+    Height = 43
+    Top = 284
+    Width = 563
+    Align = alBottom
+    BevelOuter = bvNone
+    ClientHeight = 43
+    ClientWidth = 563
+    Color = clHighlight
+    ParentColor = False
+    TabOrder = 0
+    object Button1: TButton
+      Left = 8
+      Height = 29
+      Top = 8
+      Width = 81
+      Align = alLeft
+      BorderSpacing.Left = 8
+      BorderSpacing.Top = 6
+      BorderSpacing.Bottom = 6
+      Caption = 'Button1'
+      TabOrder = 0
+    end
+    object Bevel1: TBevel
+      Left = 0
+      Height = 2
+      Top = 0
+      Width = 563
+      Align = alTop
+      Shape = bsTopLine
+    end
+    object Button2: TButton
+      Left = 385
+      Height = 29
+      Top = 8
+      Width = 81
+      Align = alRight
+      BorderSpacing.Top = 6
+      BorderSpacing.Right = 8
+      BorderSpacing.Bottom = 6
+      Caption = 'Button2'
+      TabOrder = 1
+    end
+    object Button3: TButton
+      Left = 474
+      Height = 29
+      Top = 8
+      Width = 81
+      Align = alRight
+      BorderSpacing.Top = 6
+      BorderSpacing.Right = 8
+      BorderSpacing.Bottom = 6
+      Caption = 'Button3'
+      TabOrder = 2
+    end
+  end
+  object Panel2: TPanel
+    Left = 0
+    Height = 284
+    Top = 0
+    Width = 170
+    Align = alLeft
+    BevelOuter = bvNone
+    ClientHeight = 284
+    ClientWidth = 170
+    Color = clSkyBlue
+    ParentColor = False
+    TabOrder = 1
+    object Label1: TLabel
+      Left = 8
+      Height = 15
+      Top = 6
+      Width = 162
+      Align = alTop
+      BorderSpacing.Left = 8
+      BorderSpacing.Top = 6
+      Caption = 'Steps:'
+      ParentColor = False
+    end
+    object ListView1: TListView
+      Left = 4
+      Height = 255
+      Top = 25
+      Width = 162
+      Align = alClient
+      BorderSpacing.Around = 4
+      BorderStyle = bsNone
+      Columns = <>
+      Items.LazData = {
+        8900000005000000FFFFFFFFFFFFFFFFFFFFFFFF000000000400000054797065
+        FFFFFFFFFFFFFFFFFFFFFFFF00000000070000004F7074696F6E73FFFFFFFFFF
+        FFFFFFFFFFFFFF0000000006000000436F6C6F7273FFFFFFFFFFFFFFFFFFFFFF
+        FF0000000006000000546172676574FFFFFFFFFFFFFFFFFFFFFFFF0000000006
+        000000437265617465
+      }
+      TabOrder = 0
+      ViewStyle = vsReport
+    end
+  end
+end

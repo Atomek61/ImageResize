@@ -9,9 +9,9 @@
    id="svg5526"
    inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
    sodipodi:docname="watermark.svg"
-   inkscape:export-filename="..\png24\watermark.png"
-   inkscape:export-xdpi="96"
-   inkscape:export-ydpi="96"
+   inkscape:export-filename="..\png20\watermarkeditor.png"
+   inkscape:export-xdpi="80"
+   inkscape:export-ydpi="80"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -28,15 +28,15 @@
      inkscape:document-units="px"
      showgrid="true"
      showguides="true"
-     inkscape:zoom="29.276992"
-     inkscape:cx="2.8008342"
-     inkscape:cy="11.237493"
+     inkscape:zoom="14.638496"
+     inkscape:cx="9.2564154"
+     inkscape:cy="17.214883"
      inkscape:window-width="2560"
      inkscape:window-height="1417"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="layer3"
      inkscape:lockguides="true">
     <inkscape:grid
        type="xygrid"
@@ -102,34 +102,22 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="matrix(1.2698412,0,0,1.2698412,-3.5865737,0.54316723)">
-    <rect
-       style="fill:#4d4d4d;stroke-width:0.10418;stroke-linejoin:round"
-       id="rect2895"
-       width="4.4797268"
-       height="3.2295706"
-       x="3.136966"
-       y="0.50987303"
-       ry="3.6334875e-08" />
-    <rect
-       style="fill:#ccdbf7;stroke-width:0.198663;fill-opacity:1"
-       id="rect4338"
-       width="4.1671877"
-       height="2.9170313"
-       x="3.2411456"
-       y="0.61405271" />
-    <rect
-       style="fill:#0080ff;stroke-width:0.197667;fill-opacity:0.55000001"
-       id="rect4655"
-       width="1.8752345"
-       height="0.62507814"
-       x="5.3247395"
-       y="2.6976466" />
+    <path
+       id="path798"
+       style="fill:#c87137;stroke-width:0.343388;stroke-linejoin:round"
+       d="M 6.1056823,-0.26527236 C 5.6636142,-0.3762065 5.2146811,-0.10000766 5.0963096,0.36002943 5.028037,0.62619812 5.0839773,0.91030623 5.2473293,1.1270175 5.4191529,1.6569894 4.9893465,1.8768046 4.9099569,2.3033148 L 4.1297441,2.085612 3.7059468,3.0556965 6.6312693,3.8719487 6.7300307,2.8111696 5.9498177,2.5934669 C 6.0858507,2.1827622 5.8191705,1.7686064 6.2224367,1.3991016 6.4679562,1.2964776 6.6528155,1.0795593 6.7214889,0.81350331 6.8417392,0.34616421 6.5754125,-0.1342034 6.1266322,-0.25942644 c -0.00702,-0.001948 -0.013933,-0.004092 -0.020945,-0.00585 z" />
+    <circle
+       style="fill:#f4e3d7;stroke-width:0.208359;stroke-linejoin:round"
+       id="path1168"
+       cx="5.6372786"
+       cy="0.50987303"
+       r="0.20835939" />
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="Dots"
-     style="display:none"
+     style="display:inline"
      transform="matrix(0.12500001,0,0,0.125,2.1166663,2.1166668)"
      sodipodi:insensitive="true">
     <rect

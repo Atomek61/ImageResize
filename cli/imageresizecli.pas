@@ -7,7 +7,7 @@ uses
   {$IFDEF UNIX}{$IFDEF UseCThreads}
   cthreads,
   {$ENDIF}{$ENDIF}
-  Classes, Types, SysUtils, CustApp, interfaces, exifutils,
+  Classes, Types, SysUtils, CustApp, interfaces, filestags, exifutils,
   { you can add units after this } fileutil, utils, imgres, generics.collections;
 
 const
@@ -38,9 +38,9 @@ const
     '                                  A random seed of 0 (assumed if ommited) means an unpredictable sequence.'#10+
     '                                  A fix value will shake a list always in the same manner, '#10+
     '                                  unless the number of files doesnt change.'#10+
-    '   -e -exif           flags       Transfers certain EXIF metadata into the resized files.'#10+
-    '                                  flags is the sum of 1 (Description), 2 (Timestamp) and 4 (Copyright)'#10+
-    '   -c -copyright      "text"      Writes (overrides) the EXIF copyright tag.'+#10+
+    '   -e -exif           taglist     Transfers certain EXIF metadata into the resized files.'#10+
+    '                                  taglist is a list of special tagnames: "Description,Timestamp,Copyright"'#10+
+    '   -c -copyright      "text"      Writes (overrides) the EXIF or .tags copyright tag.'+#10+
     '   -t -threadcount    0..n        Number of threads to use, 0 means maximum.'#10+
     '   -x -stoponerror                Stop on error. flag: 0-false, 1-true'#10+
     '   -h -help                       Outputs this text.'#10+
@@ -119,8 +119,7 @@ var
   Path, Mask :string;
   Shake :boolean;
   ShakeSeed :integer;
-  TagsMask :integer;
-  Tags :TTags;
+  TagIDs :TIDArray;
   Copyright :string;
 
   function IncludeTrailingPathDelimiterEx(const Path :string) :string;
@@ -196,14 +195,11 @@ begin
     end;
 
     // EXIF transfer
-    Tags := [];
+    TagIDs := nil;
     Param := GetOptionValue('e', 'exif');
     if Param<>'' then begin
-      if not TryStrToInt(Param, TagsMask) or (TagsMask<=0) then
-        raise Exception.CreateFmt('Invalid tags ''%s'', 1..n expected.', [Param]);
-      if (TagsMask and 1)<>0 then include(Tags, ttDescription);
-      if (TagsMask and 2)<>0 then include(Tags, ttTimestamp);
-      if (TagsMask and 4)<>0 then include(Tags, ttCopyright);
+      if not StrToStringArray(Param, ',', TagIDs) or (Length(TagIDs)=0) then
+        raise Exception.CreateFmt('Invalid tags ''%s'', list of special tags expected ("Description,Timestamp,Copyright").', [Param]);
       inc(OptionCount, 2);
     end;
 
@@ -304,7 +300,7 @@ begin
     Processor.DstFiletemplate := DstFileTemplate;
     Processor.Shake := Shake;
     Processor.ShakeSeed := ShakeSeed;
-    Processor.Tags := Tags;
+    Processor.TagIDs := TagIDs;
     Processor.Copyright := Copyright;
 
     //// Check if multiple sizes are given and placeholder %SIZE% is not set in DstFolder

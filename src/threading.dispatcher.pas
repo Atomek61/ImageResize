@@ -18,6 +18,10 @@ interface
 uses
   Classes, SysUtils, generics.collections, generics.queue, SyncObjs;
 
+resourcestring
+  SCptOk = 'Ok';
+  SCptCancelled = 'Cancelled';
+
 type
 
   TDispatcher = class;
@@ -297,9 +301,9 @@ begin
   while not Terminated do begin
     try
       if FTask.Execute(FContext) then
-        ExitMessage := TExitMessage.Create(FTask, 'Ok', mlNormal)
+        ExitMessage := TExitMessage.Create(FTask, SCptOk, mlNormal)
       else
-        ExitMessage := TExitMessage.Create(FTask, 'Cancelled', mlCancelled);
+        ExitMessage := TExitMessage.Create(FTask, SCptCancelled, mlCancelled);
     except on E :Exception do
       ExitMessage := TExitMessage.Create(FTask, E.Message, mlFatal);
     end;

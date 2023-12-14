@@ -247,6 +247,7 @@ type
     UpDownMrkX: TUpDown;
     UpDownMrkY: TUpDown;
     procedure ActionInsertCopyrightExecute(Sender: TObject);
+    procedure ActionListCreatorExecute(Sender: TObject);
     procedure ButtonParamClick(Sender :TObject);
     procedure CheckBoxCopyrightEnabledChange(Sender: TObject);
     procedure CheckBoxTagCopyrightChange(Sender: TObject);
@@ -286,6 +287,7 @@ type
     procedure PaintBoxMrkPreviewMouseWheel(Sender: TObject; Shift: TShiftState;
       WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
     procedure PaintBoxMrkPreviewPaint(Sender: TObject);
+    procedure PanelControlsClick(Sender: TObject);
     procedure PanelControlsResize(Sender: TObject);
     procedure RadioButtonFilelistChange(Sender: TObject);
     procedure TimerProgressBarOffTimer(Sender: TObject);
@@ -333,7 +335,7 @@ var
 implementation
 
 uses
-  math, helpintfs, Windows, FileUtil, exifutils;
+  math, helpintfs, Windows, FileUtil, filestags, webcreatordlg;
 
 const
   SCptRandom        = '<random>';
@@ -443,9 +445,9 @@ var
   i :integer;
   Button :TToolButton;
   Cpt :string;
+  s :TStringList;
 begin
   AllowDropFiles := true;
-
   if (SysLocale.PriLangId=7) and not IsSwitch('E', 'ENGLISH') then
     SetDefaultLang('de');
 
@@ -463,11 +465,11 @@ begin
 
     Button.Hint := Format(SIZEBTNHINTFMT, [Cpt, DEFSIZES[i]]);
     if DEFSIZES[i]<=THUMBNAILIMGMAX then
-        Button.ImageIndex := 9
+        Button.ImageIndex := 10
     else if DEFSIZES[i]<=DOCIMGMAX then
-      Button.ImageIndex := 10
+      Button.ImageIndex := 11
     else
-      Button.ImageIndex := 11;
+      Button.ImageIndex := 12;
     Button.Style := tbsCheck;
     Button.Tag := DEFSIZES[i];
     Button.OnClick := @SizeButtonClick;
@@ -552,6 +554,12 @@ end;
 procedure TMainDialog.ActionInsertCopyrightExecute(Sender: TObject);
 begin
   EditCopyright.SelText := '©';
+end;
+
+procedure TMainDialog.ActionListCreatorExecute(Sender: TObject);
+begin
+  WebCreatorDialog := TWebCreatorDialog.Create(self);
+  WebCreatorDialog.ShowModal;
 end;
 
 procedure TMainDialog.ApplicationProperties1Exception(Sender: TObject;
@@ -1105,6 +1113,11 @@ begin
   Img.Free;
 end;
 
+procedure TMainDialog.PanelControlsClick(Sender: TObject);
+begin
+
+end;
+
 procedure TMainDialog.PanelControlsResize(Sender: TObject);
 
   procedure Place(Control :TControl; Target :TControl);
@@ -1251,7 +1264,7 @@ var
   DstFolder :string;
   IntValue :integer;
   SrcFilenames :TStringList;
-  Tags :TTags;
+  TagIDs :TIDArray;
 begin
   if FExecuting then begin
     FCancelled := true;
@@ -1261,8 +1274,8 @@ begin
     ActionExecute.Enabled := true;
     ActionExecute.Caption := SCptCancel;
     ButtonExecute.Caption := SCptCancel;
-    ActionExecute.ImageIndex := 6;
-    ButtonExecute.ImageIndex := 8;
+    ActionExecute.ImageIndex := 7;
+    ButtonExecute.ImageIndex := 1;
     ButtonExecute.Invalidate;
     ProgressBar.Position := 0;
     ProgressBar.Visible := true;
@@ -1344,14 +1357,14 @@ begin
         FImgRes.MrkAlpha := x;
 
         // Tagging
-        Tags := [];
+        SetLength(TagIDs, 0);
         if CheckBoxTagsEnabled.Checked then begin
-          if CheckBoxTagDescription.Checked then Include(Tags, ttDescription);
-          if CheckBoxTagTimestamp.Checked then Include(Tags, ttTimestamp);
-          if CheckBoxTagCopyright.Checked then Include(Tags, ttCopyright);
-          if Tags = [] then
+          if CheckBoxTagDescription.Checked then TagIDs.Add(TAGKEY_DESCRIPTION);
+          if CheckBoxTagTimestamp.Checked then TagIDs.Add(TAGKEY_TIMESTAMP);
+          if CheckBoxTagCopyright.Checked then TagIDs.Add(TAGKEY_COPYRIGHT);
+          if Length(TagIDs)=0 then
             raise Exception.Create(SErrNoTags);
-          FImgRes.Tags := Tags;
+          FImgRes.TagIDs := TagIDs;
         end;
         FImgRes.Copyright := '';
         if CheckBoxCopyrightEnabled.Checked then begin
@@ -1391,7 +1404,7 @@ begin
       ActionExecute.Enabled := true;
       ActionExecute.Caption := SCptExecuteA;
       ButtonExecute.Caption := SCptExecute;
-      ActionExecute.ImageIndex := 5;
+      ActionExecute.ImageIndex := 6;
       ButtonExecute.ImageIndex := 2;
       TimerProgressBarOff.Enabled := true;
       Screen.Cursor := crDefault;
