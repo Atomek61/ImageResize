@@ -44,36 +44,6 @@ msgstr "Update verfügbar: Version %s von %s"
 msgid "Cant '%s' convert to a date."
 msgstr "Kann '%s' nicht in ein Datum umwandeln."
 
-#: filestags.serrfilenametagnotfoundfmt
-#, object-pascal-format
-msgctxt "filestags.serrfilenametagnotfoundfmt"
-msgid "First column must be named 'Filename' in '%s'."
-msgstr ""
-
-#: filestags.serrfmtmissingfilenamefmt
-#, object-pascal-format
-msgctxt "filestags.serrfmtmissingfilenamefmt"
-msgid "Missing filename in '%0:s' line %1:d"
-msgstr ""
-
-#: filestags.serrfmtmorevaluesthantagsfmt
-#, object-pascal-format
-msgctxt "filestags.serrfmtmorevaluesthantagsfmt"
-msgid "More values than tags in '%s'."
-msgstr ""
-
-#: filestags.serrnodictforfilefoundfmt
-#, object-pascal-format
-msgctxt "filestags.serrnodictforfilefoundfmt"
-msgid "No tags defined for '%s'."
-msgstr ""
-
-#: filestags.serrnotagforkeyfmt
-#, object-pascal-format
-msgctxt "filestags.serrnotagforkeyfmt"
-msgid "No tag '%1:s' found for '%0:s',"
-msgstr ""
-
 #: imgres.scptabort
 msgid "Abort"
 msgstr "Abbruch"
@@ -166,13 +136,18 @@ msgstr "Erzeuge Verzeichnis '%s'..."
 msgid "Loading '%s'..."
 msgstr "Lade '%s'..."
 
+#: imgres.smsgloadingtags
+msgid "Loading .tags..."
+msgstr ""
+
 #: imgres.smsgloadmrkfilefmt
 #, object-pascal-format
 msgid "Loading Watermark '%s'..."
 msgstr "Lade Wasserzeichen '%s'..."
 
-#: imgres.smsgloadtags
-msgid "Loading tags..."
+#: imgres.smsgreadingexiffmt
+#, object-pascal-format
+msgid "Reading EXIF in '%s'..."
 msgstr ""
 
 #: imgres.smsgresamplingfmt
@@ -193,6 +168,16 @@ msgstr "Mische die Dateiliste..."
 #, object-pascal-format
 msgid "Watermarking '%s'..."
 msgstr "Drucke Wasserzeichen '%s'..."
+
+#: imgres.smsgwritingexiffmt
+#, object-pascal-format
+msgid "Writing EXIF to '%s'..."
+msgstr ""
+
+#: imgres.smsgwritingtagsreportfmt
+#, object-pascal-format
+msgid "Writing Tags Report to '%s'..."
+msgstr ""
 
 #: imgres.swrnupsamplingfmt
 #, object-pascal-format
@@ -497,6 +482,36 @@ msgctxt "taboutdialog.toolbar.caption"
 msgid "ToolBar"
 msgstr ""
 
+#: tags.serrfilenametagnotfoundfmt
+#, object-pascal-format
+msgctxt "tags.serrfilenametagnotfoundfmt"
+msgid "First column must be named 'Filename' in '%s'."
+msgstr ""
+
+#: tags.serrfmtmissingfilenamefmt
+#, object-pascal-format
+msgctxt "tags.serrfmtmissingfilenamefmt"
+msgid "Missing filename in '%0:s' line %1:d"
+msgstr ""
+
+#: tags.serrfmtmorevaluesthantagsfmt
+#, object-pascal-format
+msgctxt "tags.serrfmtmorevaluesthantagsfmt"
+msgid "More values than tags in '%s'."
+msgstr ""
+
+#: tags.serrnodictforfilefoundfmt
+#, object-pascal-format
+msgctxt "tags.serrnodictforfilefoundfmt"
+msgid "No tags defined for '%s'."
+msgstr ""
+
+#: tags.serrnotagforkeyfmt
+#, object-pascal-format
+msgctxt "tags.serrnotagforkeyfmt"
+msgid "No tag '%1:s' found for '%0:s',"
+msgstr ""
+
 #: threading.dispatcher.scptcancelled
 msgid "Cancelled"
 msgstr "Abgebrochen"
@@ -716,6 +731,12 @@ msgctxt "tmaindialog.checkboxtagsenabled.caption"
 msgid "Enabled"
 msgstr "Anwenden"
 
+#: tmaindialog.checkboxtagsreportenabled.caption
+#, fuzzy
+msgctxt "tmaindialog.checkboxtagsreportenabled.caption"
+msgid "Enabled"
+msgstr "Anwenden"
+
 #: tmaindialog.checkboxtagtimestamp.caption
 msgid "Timestamp"
 msgstr "Zeitstempel"
@@ -770,6 +791,7 @@ msgid "<random>"
 msgstr "<Zufall>"
 
 #: tmaindialog.editdstfolder.hint
+msgctxt "tmaindialog.editdstfolder.hint"
 msgid ""
 "Enter a destination folder of the resampled images.\n"
 "If multiple sizes are entered, insert a placeholder %SIZE%\n"
@@ -877,24 +899,27 @@ msgstr "Semikoloseparierte Liste von Wildcards - Dateinamen-Vorlagen, die ? und 
 msgid "*.jpg;*.png"
 msgstr "*.jpg;*.png"
 
-#: tmaindialog.groupbox1.caption
-msgid "Override Copyright"
-msgstr "Überschreibe Copyright"
-
-#: tmaindialog.groupbox1.hint
+#: tmaindialog.edittagsreportfilename.hint
+#, fuzzy
+msgctxt "tmaindialog.edittagsreportfilename.hint"
 msgid ""
-"To assign a common copyright note as EXIF tag, select this\n"
-"option and enter a text like © 2023 Mogli Maisenkeyser\n"
-"This option is available only for JPEG files.\n"
-"You can either transfer an existing copyright tag, or assign\n"
-"a common one, but not both."
+"Enter a destination folder of the resampled images.\n"
+"If multiple sizes are entered, insert a placeholder %SIZE%\n"
+"into the path where the program shall insert the current size ."
 msgstr ""
-"Wählen Sie diese Option, um eine gemeinsame Copyright-Notiz\n"
-"als EXIF-Metainformation an die erzeugten Dateien anzuhängen.\n"
-"Z.B.: © 2023 Mogli Maisenkeyser\n"
-"Die Option ist nur bei JPEG-Dateien möglich.\n"
-"Sie können entweder ein bestehendes Copyright übertragen,\n"
-"oder ein neues gemeinsames überschreiben, aber nicht beides."
+"Geben Sie ein Zielverzeichnis für die resampelten Bilder an.\n"
+"Wenn mehrere Zielgrößen angegeben wurden, muss der Verzeichnisname den Platzhalter %SIZE% enthalten.\n"
+"Dort baut das Programm die Größe im Namen ein."
+
+#: tmaindialog.groupbox2.caption
+msgid "Tags Report"
+msgstr ""
+
+#: tmaindialog.groupbox2.hint
+msgid ""
+"A Tags Report is a list of filenames and tags, which may be usefull for creating\n"
+"a slideshow."
+msgstr ""
 
 #: tmaindialog.groupboxdstfolder.caption
 msgid "Destination Folder"
@@ -915,6 +940,29 @@ msgstr "Dateiname"
 #: tmaindialog.groupboxmrklayout.caption
 msgid "Layout"
 msgstr "Layout"
+
+#: tmaindialog.groupboxoverwritecopyright.caption
+#, fuzzy
+msgctxt "tmaindialog.groupboxoverwritecopyright.caption"
+msgid "Override Copyright"
+msgstr "Überschreibe Copyright"
+
+#: tmaindialog.groupboxoverwritecopyright.hint
+#, fuzzy
+msgctxt "tmaindialog.groupboxoverwritecopyright.hint"
+msgid ""
+"To assign a common copyright note as EXIF tag, select this\n"
+"option and enter a text like © 2023 Mogli Maisenkeyser\n"
+"This option is available only for JPEG files.\n"
+"You can either transfer an existing copyright tag, or assign\n"
+"a common one, but not both."
+msgstr ""
+"Wählen Sie diese Option, um eine gemeinsame Copyright-Notiz\n"
+"als EXIF-Metainformation an die erzeugten Dateien anzuhängen.\n"
+"Z.B.: © 2023 Mogli Maisenkeyser\n"
+"Die Option ist nur bei JPEG-Dateien möglich.\n"
+"Sie können entweder ein bestehendes Copyright übertragen,\n"
+"oder ein neues gemeinsames überschreiben, aber nicht beides."
 
 #: tmaindialog.groupboxparams.caption
 msgid "Parameters"
@@ -1136,6 +1184,10 @@ msgstr "3 Benutzer"
 #: tmaindialog.radiobuttonrensimple.caption
 msgid "1 Simple - a folder for each size"
 msgstr "1 Einfach - ein Verzeichnis für jede Größe"
+
+#: tmaindialog.saveasdialogtagsreport.title
+msgid "Tags Report speichern als"
+msgstr ""
 
 #: tmaindialog.tabsheetboost.caption
 msgctxt "tmaindialog.tabsheetboost.caption"

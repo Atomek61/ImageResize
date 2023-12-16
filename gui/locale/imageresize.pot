@@ -33,36 +33,6 @@ msgstr ""
 msgid "Cant '%s' convert to a date."
 msgstr ""
 
-#: filestags.serrfilenametagnotfoundfmt
-#, object-pascal-format
-msgctxt "filestags.serrfilenametagnotfoundfmt"
-msgid "First column must be named 'Filename' in '%s'."
-msgstr ""
-
-#: filestags.serrfmtmissingfilenamefmt
-#, object-pascal-format
-msgctxt "filestags.serrfmtmissingfilenamefmt"
-msgid "Missing filename in '%0:s' line %1:d"
-msgstr ""
-
-#: filestags.serrfmtmorevaluesthantagsfmt
-#, object-pascal-format
-msgctxt "filestags.serrfmtmorevaluesthantagsfmt"
-msgid "More values than tags in '%s'."
-msgstr ""
-
-#: filestags.serrnodictforfilefoundfmt
-#, object-pascal-format
-msgctxt "filestags.serrnodictforfilefoundfmt"
-msgid "No tags defined for '%s'."
-msgstr ""
-
-#: filestags.serrnotagforkeyfmt
-#, object-pascal-format
-msgctxt "filestags.serrnotagforkeyfmt"
-msgid "No tag '%1:s' found for '%0:s',"
-msgstr ""
-
 #: imgres.scptabort
 msgid "Abort"
 msgstr ""
@@ -155,13 +125,18 @@ msgstr ""
 msgid "Loading '%s'..."
 msgstr ""
 
+#: imgres.smsgloadingtags
+msgid "Loading .tags..."
+msgstr ""
+
 #: imgres.smsgloadmrkfilefmt
 #, object-pascal-format
 msgid "Loading Watermark '%s'..."
 msgstr ""
 
-#: imgres.smsgloadtags
-msgid "Loading tags..."
+#: imgres.smsgreadingexiffmt
+#, object-pascal-format
+msgid "Reading EXIF in '%s'..."
 msgstr ""
 
 #: imgres.smsgresamplingfmt
@@ -181,6 +156,16 @@ msgstr ""
 #: imgres.smsgwatermarkingfmt
 #, object-pascal-format
 msgid "Watermarking '%s'..."
+msgstr ""
+
+#: imgres.smsgwritingexiffmt
+#, object-pascal-format
+msgid "Writing EXIF to '%s'..."
+msgstr ""
+
+#: imgres.smsgwritingtagsreportfmt
+#, object-pascal-format
+msgid "Writing Tags Report to '%s'..."
 msgstr ""
 
 #: imgres.swrnupsamplingfmt
@@ -475,6 +460,36 @@ msgctxt "taboutdialog.toolbar.caption"
 msgid "ToolBar"
 msgstr ""
 
+#: tags.serrfilenametagnotfoundfmt
+#, object-pascal-format
+msgctxt "tags.serrfilenametagnotfoundfmt"
+msgid "First column must be named 'Filename' in '%s'."
+msgstr ""
+
+#: tags.serrfmtmissingfilenamefmt
+#, object-pascal-format
+msgctxt "tags.serrfmtmissingfilenamefmt"
+msgid "Missing filename in '%0:s' line %1:d"
+msgstr ""
+
+#: tags.serrfmtmorevaluesthantagsfmt
+#, object-pascal-format
+msgctxt "tags.serrfmtmorevaluesthantagsfmt"
+msgid "More values than tags in '%s'."
+msgstr ""
+
+#: tags.serrnodictforfilefoundfmt
+#, object-pascal-format
+msgctxt "tags.serrnodictforfilefoundfmt"
+msgid "No tags defined for '%s'."
+msgstr ""
+
+#: tags.serrnotagforkeyfmt
+#, object-pascal-format
+msgctxt "tags.serrnotagforkeyfmt"
+msgid "No tag '%1:s' found for '%0:s',"
+msgstr ""
+
 #: threading.dispatcher.scptcancelled
 msgid "Cancelled"
 msgstr ""
@@ -694,6 +709,11 @@ msgctxt "tmaindialog.checkboxtagsenabled.caption"
 msgid "Enabled"
 msgstr ""
 
+#: tmaindialog.checkboxtagsreportenabled.caption
+msgctxt "tmaindialog.checkboxtagsreportenabled.caption"
+msgid "Enabled"
+msgstr ""
+
 #: tmaindialog.checkboxtagtimestamp.caption
 msgid "Timestamp"
 msgstr ""
@@ -741,6 +761,7 @@ msgid "<random>"
 msgstr ""
 
 #: tmaindialog.editdstfolder.hint
+msgctxt "tmaindialog.editdstfolder.hint"
 msgid ""
 "Enter a destination folder of the resampled images.\n"
 "If multiple sizes are entered, insert a placeholder %SIZE%\n"
@@ -826,17 +847,22 @@ msgstr ""
 msgid "*.jpg;*.png"
 msgstr ""
 
-#: tmaindialog.groupbox1.caption
-msgid "Override Copyright"
+#: tmaindialog.edittagsreportfilename.hint
+msgctxt "tmaindialog.edittagsreportfilename.hint"
+msgid ""
+"Enter a destination folder of the resampled images.\n"
+"If multiple sizes are entered, insert a placeholder %SIZE%\n"
+"into the path where the program shall insert the current size ."
 msgstr ""
 
-#: tmaindialog.groupbox1.hint
+#: tmaindialog.groupbox2.caption
+msgid "Tags Report"
+msgstr ""
+
+#: tmaindialog.groupbox2.hint
 msgid ""
-"To assign a common copyright note as EXIF tag, select this\n"
-"option and enter a text like © 2023 Mogli Maisenkeyser\n"
-"This option is available only for JPEG files.\n"
-"You can either transfer an existing copyright tag, or assign\n"
-"a common one, but not both."
+"A Tags Report is a list of filenames and tags, which may be usefull for creating\n"
+"a slideshow."
 msgstr ""
 
 #: tmaindialog.groupboxdstfolder.caption
@@ -857,6 +883,21 @@ msgstr ""
 
 #: tmaindialog.groupboxmrklayout.caption
 msgid "Layout"
+msgstr ""
+
+#: tmaindialog.groupboxoverwritecopyright.caption
+msgctxt "tmaindialog.groupboxoverwritecopyright.caption"
+msgid "Override Copyright"
+msgstr ""
+
+#: tmaindialog.groupboxoverwritecopyright.hint
+msgctxt "tmaindialog.groupboxoverwritecopyright.hint"
+msgid ""
+"To assign a common copyright note as EXIF tag, select this\n"
+"option and enter a text like © 2023 Mogli Maisenkeyser\n"
+"This option is available only for JPEG files.\n"
+"You can either transfer an existing copyright tag, or assign\n"
+"a common one, but not both."
 msgstr ""
 
 #: tmaindialog.groupboxparams.caption
@@ -1056,6 +1097,10 @@ msgstr ""
 
 #: tmaindialog.radiobuttonrensimple.caption
 msgid "1 Simple - a folder for each size"
+msgstr ""
+
+#: tmaindialog.saveasdialogtagsreport.title
+msgid "Tags Report speichern als"
 msgstr ""
 
 #: tmaindialog.tabsheetboost.caption

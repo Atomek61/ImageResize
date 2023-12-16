@@ -90,6 +90,7 @@ type
   end;
 
   TMainDialog = class(TForm)
+    ActionBrowseTagsReportFolder: TAction;
     ActionListCreator: TAction;
     ActionInsertCopyright: TAction;
     ActionParamTagging: TAction;
@@ -116,6 +117,7 @@ type
     ApplicationProperties1: TApplicationProperties;
     Bevel1: TBevel;
     BrowseSrcFolder: TSelectDirectoryDialog;
+    ButtonBrowseDstFolder1: TBitBtn;
     ButtonBrowseMrkFilename: TBitBtn;
     ButtonBrowseSrcFolder: TBitBtn;
     ButtonClearSizes: TBitBtn;
@@ -127,6 +129,7 @@ type
     ButtonExecute: TBitBtn;
     BrowseDstFolder: TSelectDirectoryDialog;
     CheckBoxCopyrightEnabled: TCheckBox;
+    CheckBoxTagsReportEnabled: TCheckBox;
     CheckBoxTagTimestamp: TCheckBox;
     CheckBoxTagCopyright: TCheckBox;
     CheckBoxTagsEnabled: TCheckBox;
@@ -137,6 +140,7 @@ type
     CheckBoxStopOnError: TCheckBox;
     ComboBoxShakeSeed: TComboBox;
     EditCopyright: TEdit;
+    EditTagsReportFilename: TEdit;
     EditSrcFolder: TEdit;
     EditSrcMasks: TEdit;
     EditRenTemplate: TComboBox;
@@ -150,7 +154,8 @@ type
     EditMrkY: TEdit;
     EditSizes: TEdit;
     EditDstFolder: TEdit;
-    GroupBox1: TGroupBox;
+    GroupBoxOverwriteCopyright: TGroupBox;
+    GroupBox2: TGroupBox;
     GroupBoxTags: TGroupBox;
     GroupBoxDstFolder: TGroupBox;
     GroupBoxMrkFilename: TGroupBox;
@@ -213,6 +218,7 @@ type
     RadioButtonRenCustom: TRadioButton;
     RadioButtonRenAdvanced: TRadioButton;
     SaveAsDialog: TSaveDialog;
+    SaveAsDialogTagsReport: TSaveDialog;
     Splitter1: TSplitter;
     TabSheetTagging: TTabSheet;
     TabSheetRenaming: TTabSheet;
@@ -246,6 +252,7 @@ type
     UpDownMrkSize: TUpDown;
     UpDownMrkX: TUpDown;
     UpDownMrkY: TUpDown;
+    procedure ActionBrowseTagsReportFolderExecute(Sender: TObject);
     procedure ActionInsertCopyrightExecute(Sender: TObject);
     procedure ActionListCreatorExecute(Sender: TObject);
     procedure ButtonParamClick(Sender :TObject);
@@ -296,7 +303,6 @@ type
     FAutoExit :boolean;
     FIsSave :boolean;
     FIniFilename :string;
-    FImgRes :TImgRes;
     FCancelled :boolean;
     FExecuting :boolean;
     FProgress :single;
@@ -556,6 +562,14 @@ begin
   EditCopyright.SelText := '©';
 end;
 
+procedure TMainDialog.ActionBrowseTagsReportFolderExecute(Sender: TObject);
+begin
+  SaveAsDialogTagsReport.Filename := EditTagsReportFilename.Text;
+  if SaveAsDialogTagsReport.Execute then begin
+    EditTagsReportFilename.Text := SaveAsDialogTagsReport.Filename;
+  end;
+end;
+
 procedure TMainDialog.ActionListCreatorExecute(Sender: TObject);
 begin
   WebCreatorDialog := TWebCreatorDialog.Create(self);
@@ -626,6 +640,8 @@ begin
     CheckBoxTagCopyright.Checked := false;
     CheckBoxCopyrightEnabled.Checked := false;
     EditCopyright.Text := '';
+    CheckBoxTagsReportEnabled.Checked := false;
+    EditTagsReportFilename.Text := '';
     UpdateSizesControls;
     UpdateRequireLabels;
     ActionParamSizes.Execute;
@@ -684,8 +700,9 @@ begin
     CheckBoxTagTimestamp.Checked := ReadBool(SETTINGSSECTION, 'TagTimestamp', false);
     CheckBoxTagCopyright.Checked := ReadBool(SETTINGSSECTION, 'TagCopyright', false);
     CheckBoxCopyrightEnabled.Checked := ReadBool(SETTINGSSECTION, 'CopyrightEnabled', false);
-
     EditCopyright.Text := ReadString(SETTINGSSECTION, 'Copyright', '');
+    CheckBoxTagsReportEnabled.Checked := ReadBool(SETTINGSSECTION, 'TagsReportEnabled', false);
+    EditTagsReportFilename.Text := ReadString(SETTINGSSECTION, 'TagsReportFilename', EditTagsReportFilename.Text);
   end;
 end;
 
@@ -725,6 +742,10 @@ begin
     WriteBool(SETTINGSSECTION, 'TagCopyright', CheckBoxTagCopyright.Checked);
     WriteBool(SETTINGSSECTION, 'CopyrightEnabled', CheckBoxCopyrightEnabled.Checked);
     WriteString(SETTINGSSECTION, 'Copyright', EditCopyright.Text);
+    WriteBool(SETTINGSSECTION, 'TagsReportEnabled', CheckBoxCopyrightEnabled.Checked);
+    WriteString(SETTINGSSECTION, 'Copyright', EditCopyright.Text);
+    WriteBool(SETTINGSSECTION, 'TagsReportEnabled', CheckBoxTagsReportEnabled.Checked);
+    WriteString(SETTINGSSECTION, 'TagsReportFilename', EditTagsReportFilename.Text);
   end;
 end;
 
@@ -1265,6 +1286,7 @@ var
   IntValue :integer;
   SrcFilenames :TStringList;
   TagIDs :TIDArray;
+  ImgRes :TImgRes;
 begin
   if FExecuting then begin
     FCancelled := true;
@@ -1285,6 +1307,7 @@ begin
     FCancelled := false;
     Screen.Cursor := crHourGlass;
     Application.ProcessMessages;
+    ImgRes := nil;
     try
       SrcFilenames := TStringList.Create;
       try
@@ -1318,43 +1341,43 @@ begin
           raise Exception.Create(SErrInvalidSizes);
 
         // Quality
-        FImgRes := TImgRes.Create;
+        ImgRes := TImgRes.Create;
         if not TImgRes.TryStrToJpgQuality(ComboBoxJpgQuality.Text, IntValue) then
           raise Exception.Create(SErrInvalidJpgQuality);
-        FImgRes.JpgQuality := IntValue;
-        FImgRes.PngCompression := ComboBoxPngCompression.ItemIndex;
+        ImgRes.JpgQuality := IntValue;
+        ImgRes.PngCompression := ComboBoxPngCompression.ItemIndex;
 
         // Rename
         if CheckBoxRenEnabled.Checked then begin
           if RadioButtonRenSimple.Checked then
-            FImgRes.DstFiletemplate := RENSIMPLETEMPLATE
+            ImgRes.DstFiletemplate := RENSIMPLETEMPLATE
           else if RadioButtonRenAdvanced.Checked then
-            FImgRes.DstFiletemplate := RENADVANCEDTEMPLATE
+            ImgRes.DstFiletemplate := RENADVANCEDTEMPLATE
           else
-            FImgRes.DstFiletemplate := EditRenTemplate.Text;
+            ImgRes.DstFiletemplate := EditRenTemplate.Text;
         end else
-          FImgRes.DstFiletemplate := '';
-        FImgRes.Shake := CheckBoxShake.Checked;
-        FImgRes.ShakeSeed := StrToShakeSeed(ComboBoxShakeSeed.Text);
+          ImgRes.DstFiletemplate := '';
+        ImgRes.Shake := CheckBoxShake.Checked;
+        ImgRes.ShakeSeed := StrToShakeSeed(ComboBoxShakeSeed.Text);
 
         // Watermark
-        FImgRes.MrkFilename := EditMrkFilename.Text;
+        ImgRes.MrkFilename := EditMrkFilename.Text;
 
         if not TryStrToFloat(EditMrkSize.Text, x) or (x<0.0) or (x>100.0) then
           raise Exception.Create(SErrInvalidMrkSize);
-        FImgRes.MrkSize := x;
+        ImgRes.MrkSize := x;
 
         if not TryStrToFloat(EditMrkX.Text, p.x) or (p.x<0.0) or (p.x>100.0) then
           raise Exception.Create(SErrInvalidMrkXBrd);
         if not TryStrToFloat(EditMrkY.Text, p.y) or (p.y<0.0) or (p.y>100.0) then
           raise Exception.Create(SErrInvalidMrkYBrd);
 
-        FImgRes.MrkX := StrToFloat(EditMrkX.Text);
-        FImgRes.MrkY := StrToFloat(EditMrkY.Text);
+        ImgRes.MrkX := StrToFloat(EditMrkX.Text);
+        ImgRes.MrkY := StrToFloat(EditMrkY.Text);
 
         if not TryStrToFloat(EditMrkAlpha.Text, x) or (x<0.0) or (x>100.0) then
           raise Exception.Create(SErrInvalidMrkOpacity);
-        FImgRes.MrkAlpha := x;
+        ImgRes.MrkAlpha := x;
 
         // Tagging
         SetLength(TagIDs, 0);
@@ -1364,32 +1387,32 @@ begin
           if CheckBoxTagCopyright.Checked then TagIDs.Add(TAGKEY_COPYRIGHT);
           if Length(TagIDs)=0 then
             raise Exception.Create(SErrNoTags);
-          FImgRes.TagIDs := TagIDs;
+          ImgRes.TagIDs := TagIDs;
         end;
-        FImgRes.Copyright := '';
+        ImgRes.Copyright := '';
         if CheckBoxCopyrightEnabled.Checked then begin
           if EditCopyright.Text = '' then
             raise Exception.Create(SErrInvalidCopyright);
-          FImgRes.Copyright := EditCopyright.Text;
+          ImgRes.Copyright := EditCopyright.Text;
         end;
 
         // Hook the processor
-        FImgRes.OnPrint := @OnPrint;
-        FImgRes.OnProgress := @OnProgress;
+        ImgRes.OnPrint := @OnPrint;
+        ImgRes.OnProgress := @OnProgress;
 
-        // warn, if %SIZE% placeholder is not containes either in
+        // warn, if %SIZE% placeholder is not contained either in
         // DstFolder nor in FileTemplate
         DstFolder := EditDstFolder.Text;
         if (Length(Sizes)>1) and (Pos('%SIZE%', DstFolder)=0)
-         and not (FImgRes.RenEnabled and (Pos('%SIZE%', FImgRes.DstFiletemplate)>0)) then
+         and not (ImgRes.RenEnabled and (Pos('%SIZE%', ImgRes.DstFiletemplate)>0)) then
           raise Exception.Create(SErrEnterPlaceholder);
 
-        FImgRes.Sizes := SizesToSizesStr(Sizes);
-        FImgRes.SrcFilenames := SrcFilenames;
-        FImgRes.DstFolder := DstFolder;
-        FImgRes.ThreadCount := BoostStrToThreadCount(ComboBoxBoost.Text);
-        FImgRes.StopOnError := CheckBoxStopOnError.Checked;
-        FImgRes.Execute;
+        ImgRes.Sizes := SizesToSizesStr(Sizes);
+        ImgRes.SrcFilenames := SrcFilenames;
+        ImgRes.DstFolder := DstFolder;
+        ImgRes.ThreadCount := BoostStrToThreadCount(ComboBoxBoost.Text);
+        ImgRes.StopOnError := CheckBoxStopOnError.Checked;
+        ImgRes.Execute;
 
       except on E :Exception do
         begin
@@ -1398,7 +1421,7 @@ begin
       end;
     finally
       SrcFilenames.Free;
-      FImgRes.Free;
+      ImgRes.Free;
       FExecuting := false;
       if FCancelled then Log(Format(SErrCancelledAtFmt, [FProgress*100.0]));
       ActionExecute.Enabled := true;

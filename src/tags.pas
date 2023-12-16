@@ -1,4 +1,4 @@
-unit filestags;
+unit tags;
 
 {$mode Delphi}
 {$modeswitch typehelpers}
@@ -6,12 +6,12 @@ unit filestags;
 
 // An TFilesTags dictionary contains a dictionary of tags for a list of files.
 //
-// With Add not only a file is added, it is checked, if an .imgtags file exists
+// With "Add" not only a file is added, it is checked, if an .tags file exists
 // in its directory, and if exists, loads it with its tags for all listed files.
 //
 // To add tags from EXIF information, handle them later.
 //
-// An .imgtags file is an CSV file containing tags for files in that directory.
+// An .tags file is an CSV file containing tags for files in that directory.
 // The first line is a header defining the tags. The first tag is always
 // 'Filename'. The other tags are optional. The Filename is without the path.
 // Values may be enquoted by double quotes. The existance and the order of the
@@ -33,7 +33,7 @@ uses
   Classes, SysUtils, generics.collections;
 
 const
-  TAGS_FILETITLE      = '.tags';
+  TAGS_FILETITLE = '.tags';
 
   TAGKEY_FILENAME     :string =  'Filename';
   TAGKEY_FILETITLE    :string =  'Filetitle';
@@ -53,8 +53,8 @@ type
     function Contains(const ID :string) :boolean;
   end;
 
-  TTagsDictionary = TDictionary<string, string>;
-  TFilesTagsDictionary = TObjectDictionary<string, TTagsDictionary>; // Directory/.imgtags
+  TTags = TDictionary<string, string>;
+  TFilesTagsDictionary = TObjectDictionary<string, TTags>; // Directory/.tags
   TTagsFileDictionary = TDictionary<string, string>;
 
   { TFilesTags }
@@ -75,12 +75,12 @@ type
     class var FormatSettings :TFormatSettings;
     constructor Create;
     destructor Destroy; override;
-    function Add(const Filename :string) :TTagsDictionary; overload;
+    function Add(const Filename :string) :TTags; overload;
     procedure Add(Filenames :TStrings); overload;
     procedure AddOrSetValue(const Filename, Key, Value :string); overload;
-    procedure Add(const Filename :string; TagsDict :TTagsDictionary); overload;
-    procedure Merge(const Filename :string; TagsDict :TTagsDictionary); // Adds Tags, if not exist
-    function TryTagsOf(const Filename :string; out Tags :TTagsDictionary) :boolean;
+    procedure Add(const Filename :string; TagsDict :TTags); overload;
+    procedure Merge(const Filename :string; TagsDict :TTags); // Adds Tags, if not exist
+    function TryTagsOf(const Filename :string; out Tags :TTags) :boolean;
     procedure SaveToFile(const LstFilename :string; FileFormat :TFileFormat);
     property Filenames[Index :integer] :string read GetFilename;
     property FilenameCount :integer read GetFilenameCount;
@@ -173,7 +173,7 @@ end;
 
 function TFilesTags.GetTag(const Filename, Key : string): string;
 var
-  TagsDict :TTagsDictionary;
+  TagsDict :TTags;
 begin
   if not TryGetValue(Filename, TagsDict) then
     raise Exception.CreateFmt(SErrNoDictForFileFoundFmt, [Filename]);
@@ -188,7 +188,7 @@ end;
 
 //function TFilesTags.GetCommonMetaData(const Filename: string): TCommonTags;
 //var
-//  TagsDict :TTagsDictionary;
+//  TagsDict :TTags;
 //  Key :string;
 //  Value :string;
 //begin
@@ -217,12 +217,12 @@ end;
 // Checks for a file, if a Tag-Dictionary exists, if not one is created and
 // checked, if a file named .tmgtags exists in its directory. If so, all the
 // tags are loaded for all files, mentioned in the imgtags file.
-function TFilesTags.Add(const Filename: string) :TTagsDictionary;
+function TFilesTags.Add(const Filename: string) :TTags;
 var
   Path :string;
   Filetitle :string;
   FilenameTag :string;
-  TagsDict :TTagsDictionary;
+  TagsDict :TTags;
   ImgtagsFilename :string;
   Table :TStringlist;
   ColKeys :TStringArray;
@@ -232,7 +232,7 @@ var
   procedure AddNew(const Filename :string);
   begin
     FFilenames.Add(Filename);
-    Add(Filename, TTagsDictionary.Create);
+    Add(Filename, TTags.Create);
   end;
 
 begin
@@ -262,7 +262,7 @@ begin
           raise Exception.CreateFmt(SErrFilenameTagNotFoundFmt, [ImgtagsFilename]);
         for i:=1 to table.Count-1 do begin
           // Für jede Zeile wird ein Dict angelegt
-          TagsDict := TTagsDictionary.Create;
+          TagsDict := TTags.Create;
           try
             Row := Table[i].Split(',', '"', '"');
             RemoveQuotes(Row);
@@ -306,20 +306,20 @@ end;
 
 procedure TFilesTags.AddOrSetValue(const Filename, Key, Value: string);
 var
-  Dict :TTagsDictionary;
+  Dict :TTags;
 begin
   Dict := self[Filename];
   Dict.AddOrSetValue(Key, Value);
 end;
 
-procedure TFilesTags.Add(const Filename: string; TagsDict: TTagsDictionary);
+procedure TFilesTags.Add(const Filename: string; TagsDict: TTags);
 begin
   inherited Add(Filename, TagsDict);
 end;
 
-procedure TFilesTags.Merge(const Filename: string; TagsDict: TTagsDictionary);
+procedure TFilesTags.Merge(const Filename: string; TagsDict: TTags);
 var
-  Tags :TTagsDictionary;
+  Tags :TTags;
   Pair :TPair<string, string>;
 begin
   if not TryGetValue(Filename, Tags) then
@@ -330,7 +330,7 @@ begin
         Tags.Add(Pair);
 end;
 
-function TFilesTags.TryTagsOf(const Filename: string; out Tags: TTagsDictionary): boolean;
+function TFilesTags.TryTagsOf(const Filename: string; out Tags: TTags): boolean;
 begin
   result := TryGetValue(Filename, Tags);
 end;
@@ -340,8 +340,8 @@ var
   s :TStringList;
   Filename :string;
   Line :string;
-  TagsDict :TTagsDictionary;
-  FilePair :TPair<string, TTagsDictionary>;
+  TagsDict :TTags;
+  FilePair :TPair<string, TTags>;
   Pair :TPair<string, string>;
   i,j :integer;
   Value :string;

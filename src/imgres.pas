@@ -13,14 +13,14 @@ unit imgres;
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-{$mode objfpc}{$H+}
+{$mode Delphi}
 {$modeSwitch advancedRecords}
 
 interface
 
 uses
   Classes, SysUtils, StrUtils, Types, BGRABitmap, BGRABitmapTypes,
-  threading.dispatcher, filestags;
+  threading.dispatcher, tags;
 
 const
   IMGRESVER = '3.2';
@@ -43,6 +43,7 @@ const
   DEFAULT_SHAKESEED        = 0;
   DEFAULT_FILETAGS         = nil;
   DEFAULT_COPYRIGHT        = '';
+  DEFAULT_TAGSREPORT       = 'imagelist.trp';
 
   DEFSIZES :array[0..15] of integer = (32, 48, 64, 120, 240, 360, 480, 640, 800, 960, 1280, 1600, 1920, 2560, 3840, 4096);
 
@@ -68,6 +69,8 @@ type
       IndexStart :integer;
     end;
 
+    { TParams }
+
     TParams = record
       SrcFilenames :TStringList;
       DstFolder :string;
@@ -87,6 +90,8 @@ type
       ShakeSeed :integer;
       TagIDs :TStringArray; // 'Copyright',
       Copyright :string; // If <>'', set it independent from ttCopyright and Exif
+      TagsReportFilename :string;
+      function Tagging :boolean;
     end;
 
   private type
@@ -114,9 +119,10 @@ type
       function GetTaskSteps :integer; override;
     public
       ImgRes :TImgRes;
-      ExeParams :TExecutionRessources;
+      ExeRes :TExecutionRessources;
       SrcFilename :string;
       SrcFileIndex :integer;
+      Tags :TTags;
     end;
 
   private
@@ -174,6 +180,7 @@ type
     property ShakeSeed :integer read FParams.ShakeSeed write SetShakeSeed;
     property TagIDs :TStringArray read FParams.TagIDs write FParams.TagIDs;
     property Copyright :string read FParams.Copyright write FParams.Copyright;
+    property TagsReportFilename :string read FParams.TagsReportFilename write FParams.TagsReportFilename;
     property OnPrint :TPrintEvent read FOnPrint write FOnPrint;
     property OnProgress :TProgressEvent read FOnProgress write FOnProgress;
   end;
@@ -207,10 +214,13 @@ resourcestring
   SMsgWatermarkingFmt = 'Watermarking ''%s''...';
   SMsgSavingFmt = 'Saving ''%s''...';
   SMsgLoadingFmt = 'Loading ''%s''...';
+  SMsgLoadingTags = 'Loading .tags...';
+  SMsgWritingTagsReportFmt = 'Writing Tags Report to ''%s''...';
+  SMsgReadingExifFmt = 'Reading EXIF in ''%s''...';
   SMsgCreatingFolderFmt = 'Creating folder ''%s''...';
   SMsgShakingFiles = 'Shaking list of files...';
   SMsgLoadMrkFileFmt = 'Loading Watermark ''%s''...';
-  SMsgLoadTags = 'Loading tags...';
+  SMsgWritingExifFmt = 'Writing EXIF to ''%s''...';
   SErrInvalidThreadCount = 'Invalid threadcount.';
   SErrMissingSizes = 'Missing sizes.';
   SErrInvalidSizesFmt = 'Invalid sizes ''%s''.';
@@ -231,7 +241,7 @@ const
   LEVELSTRS :array[TLevel] of string = (SCptHint, '', SCptWarning, SCptAbort, SCptFatal);
 
 type
-  TIntegerArrayHelper = specialize TArrayHelper<Integer>;
+  TIntegerArrayHelper = TArrayHelper<Integer>;
 
 function TrySizesStrToSizes(const Str :string; out Values :TSizes) :boolean;
 var
@@ -293,6 +303,13 @@ begin
   result := UpperCase(ExtractFileExt(Filename)) = '.PNG'
 end;
 
+{ TImgRes.TParams }
+
+function TImgRes.TParams.Tagging: boolean;
+begin
+  result := (Length(TagIds)>0) or (Length(Copyright)>0);
+end;
+
 { TImgRes.TExecutionRessources }
 
 constructor TImgRes.TExecutionRessources.Create;
@@ -331,8 +348,9 @@ var
   IndexStr :string; // Index to display
   SizeStr :string;
   i, n, m :integer;
-  Tags :TTagsDictionary;
   TagIDs :TIDArray;
+  ExifTags :TTags;
+  Pair :TPair<string, string>;
 begin
 
   result := false;
@@ -345,26 +363,26 @@ begin
   try
     if Context.Cancelled then Exit;
 
+    if ImgRes.FParams.Tagging and IsJPEG(SrcFilename) then begin
+      // Load additional tags from EXIF, but dont overwrite
+      Print(Format(SMsgReadingExifFmt, [SrcFilename]));
+      TagIDs := Copy(ImgRes.FParams.TagIDs);
+      ExifTags := TTags.Create;
+      try
+        ReadExifTags(SrcFilename, ExifTags, TagIDs);
+        for Pair in ExifTags do
+          if not Tags.ContainsKey(Pair.Key) then
+            Tags.Add(Pair);
+      finally
+        ExifTags.Free;
+      end;
+      if ImgRes.FParams.Copyright<>'' then
+        Tags.AddOrSetValue(TAGKEY_COPYRIGHT, ImgRes.FParams.Copyright);
+    end;
+
     // Load source file...
     Print(Format(SMsgLoadingFmt, [SrcFilename]));
-
-    //// Load Tags (EXIF and from .tags)
-    //if (Length(ImgRes.FParams.TagIDs)>0) then begin
-    //  ExeParams.FilesTags.Add(SrcFilename);
-    //end;
-    //
     SrcImg := TBGRABitmap.Create(SrcFilename);
-
-    //// If Tags transfer required...
-    //if IsJPEG(SrcFilename) then begin
-    //  if Length(ImgRes.FParams.TagIDs)>0 then begin
-    //    ReadExifTags(SrcFilename, ExifTags, TagIDsFoundInEXIF);
-    //  end;
-    //  if ImgRes.FParams.Copyright<>'' then begin
-    //    TagIDs.Add(TAGKEY_COPYRIGHT);
-    //    ExeParams.FilesTags.Add(SrcFilename, TAGKEY_COPYRIGHT, ImgRes.FParams.Copyright);
-    //  end;
-    //end;
 
     if Context.Cancelled then Exit;
     Progress(1);
@@ -418,7 +436,7 @@ begin
         ////////////////////////////////////////////////////////////////////////////
         // Watermark
         if ImgRes.MrkFilename<>'' then begin
-          MrkImg := ExeParams.MrkImages[i mod Length(ExeParams.MrkImages)];
+          MrkImg := ExeRes.MrkImages[i mod Length(ExeRes.MrkImages)];
 
           // Watermark size in percent of the width or original size if MrkSize=0.0
           if ImgRes.MrkSize<>0.0 then begin
@@ -466,7 +484,7 @@ begin
           DstFiletitleExt := ExtractFilename(SrcFilename);
 
         // Save
-        DstFolder := ExeParams.DstFolders[i mod Length(ExeParams.DstFolders)];
+        DstFolder := ExeRes.DstFolders[i mod Length(ExeRes.DstFolders)];
         DstFilename := IncludeTrailingPathDelimiter(DstFolder) + DstFiletitleExt;
         Print(Format(SMsgSavingFmt, [DstFilename]));
         DstImg.SaveToFile(DstFilename, Writer);
@@ -477,10 +495,8 @@ begin
       end;
 
       // EXIF
-      TagIDs := Copy(ImgRes.FParams.TagIDs);
-      if ImgRes.FParams.Copyright<>'' then
-        TagIDs.Add(TAGKEY_COPYRIGHT);
-      if IsJPEG(SrcFilename) and (Length(TagIDs)>0) and ExeParams.FilesTags.TryGetValue(SrcFilename, Tags) then begin
+      if ImgRes.FParams.Tagging and IsJPEG(DstFilename) then begin
+        Print(Format(SMsgWritingExifFmt, [DstFilename]));
         WriteExifTags(DstFilename, Tags, TagIDs);
       end;
 
@@ -593,15 +609,12 @@ end;
 
 function TImgRes.Execute :boolean;
 var
-  ExeParams :TExecutionRessources;
+  ExeRes :TExecutionRessources;
   Task :TResampleTask;
   Tasks :TTasks;
   Dispatcher :TDispatcher;
   i, j, n, m :integer;
   x :string;
-  SrcFilename :string;
-  ExifTags :TTagsDictionary;
-  ExifTagIDs :TIDArray;
 begin
   // Check main parameters
   if Length(FParams.Sizes)=0 then
@@ -609,106 +622,97 @@ begin
   if FParams.SrcFilenames.Count=0 then
     Exit(true);
 
-  FCancel           := false;
-  ExeParams         := TExecutionRessources.Create;
-  Tasks             := TTasks.Create;
-  Dispatcher        := TDispatcher.Create;
+  FCancel     := false;
+  ExeRes      := TExecutionRessources.Create;
+  Tasks       := TTasks.Create;
+  Dispatcher  := TDispatcher.Create;
   try
     // Prepare the destination file renaming feature
     n := FParams.SrcFilenames.Count;
     m := Length(FParams.Sizes);
 
     // Check, if multiple sizes, then either %SIZE% must be in folder or in renamed filename
-    ExeParams.IsDstFileRenamingStrategy := FParams.Ren.Enabled and (Pos('%3:s', FParams.Ren.FmtStr)>0);
+    ExeRes.IsDstFileRenamingStrategy := FParams.Ren.Enabled and (Pos('%3:s', FParams.Ren.FmtStr)>0);
     if Length(FParams.Sizes)>1 then begin
-      ExeParams.IsMultipleDstFolderStrategy := Pos('%SIZE%', FParams.DstFolder)>0;
-      if not ExeParams.IsMultipleDstFolderStrategy and not ExeParams.IsDstFileRenamingStrategy then
+      ExeRes.IsMultipleDstFolderStrategy := Pos('%SIZE%', FParams.DstFolder)>0;
+      if not ExeRes.IsMultipleDstFolderStrategy and not ExeRes.IsDstFileRenamingStrategy then
         raise Exception.Create(SErrMultipleSizes);
     end else
-      ExeParams.IsMultipleDstFolderStrategy := false;
+      ExeRes.IsMultipleDstFolderStrategy := false;
 
     // Load Tags
-    if Length(FParams.TagIDs)>0 then begin
-      Print(SMsgLoadTags);
-      // Pass I - Load from .tags
-      ExeParams.FilesTags.Add(FParams.SrcFilenames);
-      // Pass II - Load additional tags from EXIF, but dont overwrite
-      ExifTags := TTagsDictionary.Create;
-      try
-        for SrcFilename in FParams.SrcFilenames do begin
-          ExifTags.Clear;
-          ReadExifTags(SrcFilename, ExifTags, ExifTagIDs);
-          ExeParams.FilesTags.Merge(SrcFilename, ExifTags);
-          // Add Copyright, if to be overriden
-          if FParams.Copyright<>'' then
-            ExeParams.FilesTags.AddOrSetValue(SrcFilename, TAGKEY_COPYRIGHT, FParams.Copyright);
-        end;
-      finally
-        ExifTags.Free;
-      end;
+    if FParams.Tagging then begin
+      Print(SMsgLoadingTags);
+      ExeRes.FilesTags.Add(FParams.SrcFilenames);
     end;
-//    ExeParams.FilesTags.SaveToFile('C:\TEMP\test.csv', ffCSV);
 
     // If the files list has to be randomly remixed, its the right moment
-    SetLength(ExeParams.SrcFilenames, n);
-    for i:=0 to n-1 do ExeParams.SrcFilenames[i] := FParams.SrcFilenames[i];
+    SetLength(ExeRes.SrcFilenames, n);
+    for i:=0 to n-1 do ExeRes.SrcFilenames[i] := FParams.SrcFilenames[i];
     if FParams.Shake then begin
       Print(SMsgShakingFiles);
       if FParams.ShakeSeed=0 then Randomize else RandSeed := FParams.ShakeSeed;
       for i:=0 to n-1 do begin
         j := Random(n);
-        x := ExeParams.SrcFilenames[i];
-        ExeParams.SrcFilenames[i] := ExeParams.SrcFilenames[j];
-        ExeParams.SrcFilenames[j] := x;
+        x := ExeRes.SrcFilenames[i];
+        ExeRes.SrcFilenames[i] := ExeRes.SrcFilenames[j];
+        ExeRes.SrcFilenames[j] := x;
       end;
     end;
 
     // Load MrkImages...
     if FParams.MrkFilename='' then begin
-      SetLength(ExeParams.MrkImages, 0);
+      SetLength(ExeRes.MrkImages, 0);
     end else begin
       if FParams.MrkFilenameDependsOnSize then begin
-        SetLength(ExeParams.MrkImages, m);
+        SetLength(ExeRes.MrkImages, m);
         for i:=0 to m-1 do begin
           x := ReplaceStr(FParams.MrkFilename, '%SIZE%', IntToStr(FParams.Sizes[i]));
           Print(Format(SMsgLoadMrkFileFmt, [ExtractFilename(x)]));
-          ExeParams.MrkImages[i] := TBGRABitmap.Create(x);
+          ExeRes.MrkImages[i] := TBGRABitmap.Create(x);
         end;
       end else begin
-        SetLength(ExeParams.MrkImages, 1);
+        SetLength(ExeRes.MrkImages, 1);
         Print(Format(SMsgLoadMrkFileFmt, [ExtractFilename(FParams.MrkFilename)]));
-        ExeParams.MrkImages[0] := TBGRABitmap.Create(FParams.MrkFilename);
+        ExeRes.MrkImages[0] := TBGRABitmap.Create(FParams.MrkFilename);
       end;
     end;
 
     // Create Destination Folders...
-    SetLength(ExeParams.DstFolders, m);
+    SetLength(ExeRes.DstFolders, m);
     for i:=0 to m-1 do begin
       x := ReplaceStr(FParams.DstFolder, '%SIZE%', IntToStr(FParams.Sizes[i]));
-      ExeParams.DstFolders[i] := x;
+      ExeRes.DstFolders[i] := x;
     end;
-    for i:=0 to High(ExeParams.DstFolders) do begin
-      Print(Format(SMsgCreatingFolderFmt, [ExeParams.DstFolders[i]]));
-      ForceDirectories(ExeParams.DstFolders[i]);
+    for i:=0 to High(ExeRes.DstFolders) do begin
+      Print(Format(SMsgCreatingFolderFmt, [ExeRes.DstFolders[i]]));
+      ForceDirectories(ExeRes.DstFolders[i]);
     end;
 
-    // For each SrcFilename create a task
+    // For each SrcFilename create a task and prepare the tasks parameters
     Tasks.Capacity := n;
     for i:=0 to n-1 do begin
       Task := TResampleTask.Create;
       Task.ImgRes := self;
-      Task.ExeParams := ExeParams;
-      Task.SrcFilename := ExeParams.SrcFilenames[i];
+      Task.ExeRes := ExeRes;
+      Task.SrcFilename := ExeRes.SrcFilenames[i];
       Task.SrcFileIndex := i;
+      if FParams.Tagging then
+        ExeRes.FilesTags.TryGetValue(Task.SrcFilename, Task.Tags);
       Tasks.Add(Task);
     end;
 
-    Dispatcher.OnPrint := @OnTaskPrint;
-    Dispatcher.OnProgress := @OnTaskProgress;
+    Dispatcher.OnPrint := OnTaskPrint;
+    Dispatcher.OnProgress := OnTaskProgress;
     Dispatcher.MaxWorkerCount := ThreadCount;
     Dispatcher.StopOnError := StopOnError;
 
     result := Dispatcher.Execute(Tasks);
+
+    if FParams.Tagging then begin
+      Print(Format(SMsgWritingTagsReportFmt, [FParams.TagsReportFilename]));
+      ExeRes.FilesTags.SaveToFile(FParams.TagsReportFilename, ffCSV);
+    end;
 
     if Assigned(FOnPrint) then with Dispatcher.Stats do
       FOnPrint(self, Format(SInfResultFmt, [n, m, TaskCount, Successful, Failed, Elapsed/1000.0]));
@@ -716,7 +720,7 @@ begin
   finally
     Dispatcher.Free;
     Tasks.Free;
-    ExeParams.Free;
+    ExeRes.Free;
   end;
 
 end;

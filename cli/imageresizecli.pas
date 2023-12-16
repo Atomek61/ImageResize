@@ -7,7 +7,7 @@ uses
   {$IFDEF UNIX}{$IFDEF UseCThreads}
   cthreads,
   {$ENDIF}{$ENDIF}
-  Classes, Types, SysUtils, CustApp, interfaces, filestags, exifutils,
+  Classes, Types, SysUtils, CustApp, interfaces, exifutils, tags,
   { you can add units after this } fileutil, utils, imgres, generics.collections;
 
 const
@@ -41,6 +41,7 @@ const
     '   -e -exif           taglist     Transfers certain EXIF metadata into the resized files.'#10+
     '                                  taglist is a list of special tagnames: "Description,Timestamp,Copyright"'#10+
     '   -c -copyright      "text"      Writes (overrides) the EXIF or .tags copyright tag.'+#10+
+    '   -l -listing        file.trp    Writes a list of filenames and tags.'+#10+
     '   -t -threadcount    0..n        Number of threads to use, 0 means maximum.'#10+
     '   -x -stoponerror                Stop on error. flag: 0-false, 1-true'#10+
     '   -h -help                       Outputs this text.'#10+
@@ -121,6 +122,7 @@ var
   ShakeSeed :integer;
   TagIDs :TIDArray;
   Copyright :string;
+  TagsReportFilename :string;
 
   function IncludeTrailingPathDelimiterEx(const Path :string) :string;
   begin
@@ -209,6 +211,14 @@ begin
       Copyright := Param;
       inc(OptionCount, 2);
     end;
+
+    // TagsReport for slideshow
+    Param := GetOptionValue('l', 'listing');
+    if Param<>'' then begin
+      TagsReportFilename := Param;
+      inc(OptionCount, 2);
+    end else
+      TagsReportFilename := '';
 
     // Threading control
     Param := GetOptionValue('t', 'threadcount');
@@ -302,6 +312,7 @@ begin
     Processor.ShakeSeed := ShakeSeed;
     Processor.TagIDs := TagIDs;
     Processor.Copyright := Copyright;
+    Processor.TagsReportFilename := TagsReportFilename;
 
     //// Check if multiple sizes are given and placeholder %SIZE% is not set in DstFolder
     //if (Length(Sizes)>1) and not ((Pos('%SIZE%', DstFolder)>0)
