@@ -9,7 +9,7 @@ unit mrkeditdlg;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
+  windows, Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
   ColorBox, ComCtrls, ExtCtrls, Buttons, ActnList, Menus, BGRABitmap,
   mrk.utils, IniFiles;
 
@@ -99,6 +99,7 @@ type
     procedure ActionFontExecute(Sender: TObject);
     procedure ButtonBrowseFontClick(Sender: TObject);
     procedure ButtonInsertCopyrightClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
     procedure PaintBoxPreviewPaint(Sender: TObject);
     procedure ShapeBlackMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
@@ -137,11 +138,34 @@ resourcestring
   SCptDialogTitle = 'Watermark Editor';
   SErrInvalidParams = 'Invalid parameters';
   SErrInvalidFileTypeFmt = 'Invalid filetype, %s expected.';
-  SErrIncompatibleFileVersion = 'Incompatible file version %.2f, %.2f expected.';
+  SErrIncompatibleFileVersionFmt = 'Incompatible file version %.2f (%.2f expected).';
 
 {$R *.lfm}
 
 { TMrkEditDialog }
+
+procedure TMrkEditDialog.FormCreate(Sender: TObject);
+begin
+  Caption := SCptDialogTitle;
+  FMrkImage := nil;
+end;
+
+procedure TMrkEditDialog.FormShow(Sender: TObject);
+begin
+  if not LoadFrom(WATERMARKLASTSETTINGS) then
+    ActionNew.Execute;
+end;
+
+procedure TMrkEditDialog.FormClose(Sender: TObject;
+  var CloseAction: TCloseAction);
+begin
+  SaveTo(WATERMARKLASTSETTINGS);
+end;
+
+procedure TMrkEditDialog.FormDestroy(Sender: TObject);
+begin
+  FMrkImage.Free;
+end;
 
 procedure TMrkEditDialog.ButtonCancelClick(Sender: TObject);
 begin
@@ -156,25 +180,6 @@ end;
 procedure TMrkEditDialog.ActionHelpExecute(Sender: TObject);
 begin
   ShowHelpOrErrorForKeyword('','HTML/index.html#mrkeditor');
-end;
-
-procedure TMrkEditDialog.FormCreate(Sender: TObject);
-begin
-  Caption := SCptDialogTitle;
-  FMrkImage := nil;
-  if not LoadFrom(WATERMARKLASTSETTINGS) then
-    ActionNew.Execute;
-end;
-
-procedure TMrkEditDialog.FormClose(Sender: TObject;
-  var CloseAction: TCloseAction);
-begin
-  SaveTo(WATERMARKLASTSETTINGS);
-end;
-
-procedure TMrkEditDialog.FormDestroy(Sender: TObject);
-begin
-  FMrkImage.Free;
 end;
 
 function TMrkEditDialog.GetSettingsFilename(const Title :string; CanCreate :boolean): string;
@@ -334,7 +339,7 @@ begin
       raise Exception.CreateFmt(SErrInvalidFileTypeFmt, [WAMSINITYP]);
     Ver := Ini.ReadInteger('Common', 'Version', 0);
     if Ver<>WAMSINIVER then
-      raise Exception.CreateFmt(SErrIncompatibleFileVersion, [Ver, WAMSINITYP]);
+      raise Exception.CreateFmt(SErrIncompatibleFileVersionFmt, [Ver/100.0, WAMSINIVER/100.0]);
     PngFilename := Copy(OpenDialog.Filename, 1, Length(OpenDialog.Filename)-Length(WAMSINIEXT));
     Params.LoadFromIni(Ini);
     ParamsToDialog(Params);

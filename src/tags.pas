@@ -6,26 +6,32 @@ unit tags;
 
 // An TFilesTags dictionary contains a dictionary of tags for a list of files.
 //
-// With "Add" not only a file is added, it is checked, if an .tags file exists
-// in its directory, and if exists, loads it with its tags for all listed files.
+// First of all, add a list of full qualified filenames. For each of them,
+// a tags dictionary will be created.
+//
+// Now you can load .tags files with LoadTagsFiles.This will search for .tags-
+// files in each directory where files are originated.
+//
+// .tags file format
+//
+//   Filename, Title, Copyright, MyTag
+//   DSC02405.jpg, Die Hinfahrt im Stau, , myfavorite
+//   DSC02407.jpg, "Ich verliere sie, die Hose", (c) 2023 Mogli Maisenkaiser
+//   DSC02410.jpg, Mona Lisa,*
+//
+// - The file is UTF-8 encoded, with BOM
+// - The first column is always "Filename"
+// - Only the file title is to be stored
+// - The order of rows has no meaning
+// - The headers tagIds are free, only Filename is mandatory
+// - The column order is free, only Filename is always first
+// - There may be less fields in a row than in the header, but not more
+// - Fields with a comma, must be enquoted with double quote "
+// - A field may contain *, this repeats the last field
+// - To use an empty Asterisk, enquote it "*"
 //
 // To add tags from EXIF information, handle them later.
 //
-// An .tags file is an CSV file containing tags for files in that directory.
-// The first line is a header defining the tags. The first tag is always
-// 'Filename'. The other tags are optional. The Filename is without the path.
-// Values may be enquoted by double quotes. The existance and the order of the
-// tag-keys is free.
-// The value for the filename is mandatory, the other values may be ommited.
-// I.e. you can have 4 tag-keys in the header but less in the line with the
-// values.
-//
-// Example:
-//
-//   Filename, Description, Copyright
-//   DSC02405.jpg, Die Hinfahrt im Stau
-//   DSC02407.jpg, "Ich verliere sie, die Hose"
-//   DSC02410.jpg, Mona Lisa, (c) 2023 Mogli Maisenkaiser
 
 interface
 
@@ -33,22 +39,21 @@ uses
   Classes, SysUtils, generics.collections;
 
 const
-  TAGS_FILETITLE = '.tags';
+  TAGS_FILETITLE      = '.tags';
 
-  TAGKEY_FILENAME     :string =  'Filename';
-  TAGKEY_FILETITLE    :string =  'Filetitle';
-  TAGKEY_DESCRIPTION  :string =  'Description';
-  TAGKEY_TIMESTAMP    :string =  'Timestamp';
-  TAGKEY_COPYRIGHT    :string =  'Copyright';
+  TAGID_FILENAME     =  'Filename';
+  TAGID_FILETITLE    =  'Filetitle';
 
-//  COMMON_TAGKEYS      :array[0..2] of string = ('Description', 'Timestamp', 'Copyright');
+  TAGID_TITLE        =  'Title';
+  TAGID_TIMESTAMP    =  'Timestamp';
+  TAGID_COPYRIGHT    =  'Copyright';
 
 type
-  TIDArray = TStringArray;
+  TTagIDs = TStringArray;
 
-  { TIDArrayHelper }
+  { TTagIDsHelper }
 
-  TIDArrayHelper = type helper for TIDArray
+  TTagIDsHelper = type helper for TTagIDs
     procedure Add(const ID :string);
     function Contains(const ID :string) :boolean;
   end;
@@ -56,45 +61,35 @@ type
   TTags = TDictionary<string, string>;
   TFilesTagsDictionary = TObjectDictionary<string, TTags>; // Directory/.tags
   TTagsFileDictionary = TDictionary<string, string>;
+  TFilenameTags = TPair<string, TTags>;
+  TUniqueStrings = THashSet<string>;
 
   { TFilesTags }
 
   TFilesTags = class(TFilesTagsDictionary)
   public type
-    TFileFormat = (ffCompact, ffCSV);
+    TSaveOption = (soCompact, soRelative);
+    TSaveOptions = set of TSaveOption;
   private
-    FFilenames :TStringList;
-    FTagIDs :TStringList;
-    FTagsFiles :TTagsFileDictionary;
-    function GetFilename(Index : integer): string;
-    function GetFilenameCount: integer;
-    function GetTagID(Index : integer): string;
-    function GetTagIDCount: integer;
-    function GetTag(const Filename, Key : string): string;
+    FFilenames :TStringList; // Contains the Filenames in the order they where added
   public
-    class var FormatSettings :TFormatSettings;
-    constructor Create;
+    constructor Create; override;
     destructor Destroy; override;
-    function Add(const Filename :string) :TTags; overload;
+    procedure Add(const Filename :string); overload;
     procedure Add(Filenames :TStrings); overload;
-    procedure AddOrSetValue(const Filename, Key, Value :string); overload;
-    procedure Add(const Filename :string; TagsDict :TTags); overload;
-    procedure Merge(const Filename :string; TagsDict :TTags); // Adds Tags, if not exist
-    function TryTagsOf(const Filename :string; out Tags :TTags) :boolean;
-    procedure SaveToFile(const LstFilename :string; FileFormat :TFileFormat);
-    property Filenames[Index :integer] :string read GetFilename;
-    property FilenameCount :integer read GetFilenameCount;
-    property TagIDs[Index :integer] :string read GetTagID;
-    property TagIDCount :integer read GetTagIDCount;
-    property Tag[const Filename, Key :string] :string read GetTag;
+    procedure LoadTagsFiles;
+    procedure SaveToFile(const LstFilename :string; const TagIDs :TTagIDs; Options :TSaveOptions = []);
+    function TagIDs :TTagIDs;
   end;
 
 resourcestring
-  SErrFilenameTagNotFoundFmt    = 'First column must be named ''Filename'' in ''%s''.';
-  SErrFmtMoreValuesThanTagsFmt  = 'More values than tags in ''%s''.';
-  SErrFmtMissingFilenameFmt     = 'Missing filename in ''%0:s'' line %1:d';
-  SErrNoDictForFileFoundFmt     = 'No tags defined for ''%s''.';
-  SErrNoTagForKeyFmt            = 'No tag ''%1:s'' found for ''%0:s'',';
+  SErrInvalidTagsFileFmt  = 'Invalid .tags file ''%s'' - %s.';
+  SErrInvalidLineFmt      = 'Invalid .tags file ''%s'' line %d - %s.';
+  SErrEmpty               = 'file is empty';
+  SErrFilenameNotFound    = 'tag ''Filename'' not in first column';
+  SErrMoreValuesThanTags  = 'more values than tags';
+  SErrMissingFilename     = 'missing filename';
+  SErrAsterisk            = 'first row cannot contain a *';
 
 implementation
 
@@ -131,16 +126,16 @@ begin
   result := Value;
 end;
 
-{ TIDArrayHelper }
+{ TTagIDsHelper }
 
-procedure TIDArrayHelper.Add(const ID: string);
+procedure TTagIDsHelper.Add(const ID: string);
 begin
   if Contains(ID) then Exit;
   SetLength(self, Length(self)+1);
   self[High(self)] := ID;
 end;
 
-function TIDArrayHelper.Contains(const ID: string): boolean;
+function TTagIDsHelper.Contains(const ID: string): boolean;
 var
   i :integer;
 begin
@@ -155,233 +150,210 @@ constructor TFilesTags.Create;
 begin
   inherited;
   FFilenames := TStringList.Create;
-  FFilenames.Sorted := true;
-  FFilenames.Duplicates := dupError;
-  FTagIDs := TStringList.Create;
-  FTagIDs.Sorted := true;
-  FTagIDs.Duplicates := dupIgnore;
-  FTagsFiles := TTagsFileDictionary.Create;
 end;
 
 destructor TFilesTags.Destroy;
 begin
   FFilenames.Free;
-  FTagsFiles.Free;
-  FTagIDs.Free;
-  inherited Destroy;
+  inherited;
 end;
 
-function TFilesTags.GetTag(const Filename, Key : string): string;
-var
-  TagsDict :TTags;
+procedure TFilesTags.Add(const Filename: string);
 begin
-  if not TryGetValue(Filename, TagsDict) then
-    raise Exception.CreateFmt(SErrNoDictForFileFoundFmt, [Filename]);
-  if not TagsDict.TryGetValue(Key, result) then
-    raise Exception.CreateFmt(SErrNoTagForKeyFmt, [Filename, Key]);
-end;
-
-function TFilesTags.GetFilename(Index : integer): string;
-begin
-  result := FFilenames[Index];
-end;
-
-//function TFilesTags.GetCommonMetaData(const Filename: string): TCommonTags;
-//var
-//  TagsDict :TTags;
-//  Key :string;
-//  Value :string;
-//begin
-//  result.Clear;
-//  if TryTagsOf(Filename, TagsDict) then begin
-//    for Key in COMMON_TAGKEYS do
-//      if TagsDict.TryGetValue(Key, Value) then result.Description := Value;
-//  end;
-//end;
-//
-function TFilesTags.GetFilenameCount: integer;
-begin
-  result := FFilenames.Count;
-end;
-
-function TFilesTags.GetTagID(Index: integer): string;
-begin
-  result := FTagIDs[Index];
-end;
-
-function TFilesTags.GetTagIDCount: integer;
-begin
-  result := FTagIDs.Count;
-end;
-
-// Checks for a file, if a Tag-Dictionary exists, if not one is created and
-// checked, if a file named .tmgtags exists in its directory. If so, all the
-// tags are loaded for all files, mentioned in the imgtags file.
-function TFilesTags.Add(const Filename: string) :TTags;
-var
-  Path :string;
-  Filetitle :string;
-  FilenameTag :string;
-  TagsDict :TTags;
-  ImgtagsFilename :string;
-  Table :TStringlist;
-  ColKeys :TStringArray;
-  Row :TStringArray;
-  i, j :integer;
-
-  procedure AddNew(const Filename :string);
-  begin
-    FFilenames.Add(Filename);
-    Add(Filename, TTags.Create);
-  end;
-
-begin
-  result := nil;
-  Table := nil;
-
-  Path := ExtractFilepath(Filename);
-  ImgtagsFilename := Path + TAGS_FILETITLE;
-
-  // Check, if .tags file is to be evaluated...
-  if not ContainsKey(Filename) then begin
-    if FTagsFiles.ContainsKey(ImgtagsFilename) then begin
-      // .tags file already evaluated but File was not described there
-      AddNew(Filename);
-    end else if FileExists(ImgtagsFilename) then begin
-      // Parse .tags file and load all TagsDicts for the files described in it
-      FTagsFiles.Add(ImgtagsFilename, '');
-      Table := TStringList.Create;
-      try
-        Table.LoadFromFile(ImgtagsFilename);
-        // Die erste Zeile enthält die Spaltennamen. Die erste Spalte muss
-        // 'Filename' sein und die Dateititel enthalten
-        ColKeys := Table[0].Split(',');
-        RemoveQuotes(ColKeys);
-        FilenameTag := Trim(ColKeys[0]);
-        if not SameText(FilenameTag, TAGKEY_FILENAME) then
-          raise Exception.CreateFmt(SErrFilenameTagNotFoundFmt, [ImgtagsFilename]);
-        for i:=1 to table.Count-1 do begin
-          // Für jede Zeile wird ein Dict angelegt
-          TagsDict := TTags.Create;
-          try
-            Row := Table[i].Split(',', '"', '"');
-            RemoveQuotes(Row);
-            if Length(Row)>Length(ColKeys) then
-              raise Exception.CreateFmt(SErrFmtMoreValuesThanTagsFmt, [ImgtagsFilename]);
-            if (Length(Row)<1) then
-              raise Exception.CreateFmt(SErrFmtMissingFilenameFmt, [ImgtagsFilename, i+1]);
-            Filetitle := Trim(Row[0]);
-            if Length(Filetitle)=0 then
-              raise Exception.CreateFmt(SErrFmtMissingFilenameFmt, [ImgtagsFilename, i+1]);
-            for j:=1 to High(ColKeys) do begin
-              if j>=Length(Row) then break;
-              TagsDict.Add(ColKeys[j], Row[j]);
-              FTagIDs.Add(ColKeys[j]);
-            end;
-          except
-            TagsDict.Free;
-            raise;
-          end;
-          Add(Path+Filetitle, TagsDict);
-          FFilenames.Add(Path+Filetitle);
-        end;
-      finally
-        Table.Free
-      end;
-      // Now, check again if the file has TagsDict - if not, add an empty TagsDict
-      if not ContainsKey(Filename) then begin
-        AddNew(Filename);
-      end;
-    end;
-  end;
+  inherited Add(Filename, TTags.Create);
+  FFilenames.Add(Filename);
 end;
 
 procedure TFilesTags.Add(Filenames: TStrings);
 var
-  i :integer;
-begin
-  for i:=0 to Filenames.Count-1 do
-    Add(Filenames[i]);
-end;
-
-procedure TFilesTags.AddOrSetValue(const Filename, Key, Value: string);
-var
-  Dict :TTags;
-begin
-  Dict := self[Filename];
-  Dict.AddOrSetValue(Key, Value);
-end;
-
-procedure TFilesTags.Add(const Filename: string; TagsDict: TTags);
-begin
-  inherited Add(Filename, TagsDict);
-end;
-
-procedure TFilesTags.Merge(const Filename: string; TagsDict: TTags);
-var
-  Tags :TTags;
-  Pair :TPair<string, string>;
-begin
-  if not TryGetValue(Filename, Tags) then
-    Add(Filename, TagsDict)
-  else
-    for Pair in TagsDict do
-      if not Tags.ContainsKey(Pair.Key) then
-        Tags.Add(Pair);
-end;
-
-function TFilesTags.TryTagsOf(const Filename: string; out Tags: TTags): boolean;
-begin
-  result := TryGetValue(Filename, Tags);
-end;
-
-procedure TFilesTags.SaveToFile(const LstFilename: string; FileFormat :TFileFormat);
-var
-  s :TStringList;
   Filename :string;
-  Line :string;
-  TagsDict :TTags;
-  FilePair :TPair<string, TTags>;
-  Pair :TPair<string, string>;
-  i,j :integer;
-  Value :string;
 begin
-  s := TStringList.Create;
-  case FileFormat of
-  ffCompact:
-    for FilePair in self do begin
-      Line := ExtractFilename(FilePair.Key)+': ';
-      for Pair in FilePair.Value do
-        Line := Line + Pair.Key + '=' + Pair.Value+', ';
-      s.Add(Line);
-    end;
-  ffCSV:
-    begin
-      Line := 'Filename';
-      for i:=0 to FTagIDs.Count-1 do
-        Line := Line + ',' + FTagIDs[i];
-      s.Add(Line);
-      for i:=0 to FFilenames.Count-1 do begin
-        Line := QuotedIfComma(FFilenames[i]);
-        TagsDict := self[Filenames[i]];
-        for j:=0 to FTagIDs.Count-1 do begin
-          if TagsDict.TryGetValue(FTagIDs[j], Value) then
-            Line := Line + ',' + QuotedIfComma(Value)
-          else
-            Line := Line + ','
+  for Filename in Filenames do
+    Add(Filename);
+end;
+
+procedure TFilesTags.LoadTagsFiles;
+var
+  TagsFileSet :TUniqueStrings;
+  TagIDSet :TUniqueStrings;
+  FilenameTags :TFilenameTags;
+  Path, Filetitle, Filename :string;
+  TagsFilename :string;
+  TagsFile :TStringList;
+  ColKeys :TStringArray;
+  Row :TStringArray;
+  Tags :TTags;
+  LastTags :TTags;
+  FilenameTag :string;
+  i, j :integer;
+  Value :string;
+  UnusedRow :boolean;
+  UnusedTags :TTags;
+
+  procedure RaiseInvalid(const Reason :string; Line :integer=-1);
+  begin
+    if Line=-1 then
+      raise Exception.CreateFmt(SErrInvalidTagsFileFmt, [TagsFilename, Reason])
+    else
+      raise Exception.CreateFmt(SErrInvalidLineFmt, [TagsFilename, Line+1, Reason]);
+  end;
+
+  procedure AddTagID(const TagID :string);
+  begin
+    if TagIDSet.Contains(TagId) then Exit;
+    TagIdSet.Add(TagID);
+  end;
+
+begin
+  TagsFileSet := TUniqueStrings.Create;
+  TagIDSet := TUniqueStrings.Create;
+  UnusedTags := TTags.Create;
+  try
+    for FilenameTags in self do begin
+      Path := IncludeTrailingPathDelimiter(ExtractFilePath(FilenameTags.Key));
+      Filetitle := ExtractFilename(FilenameTags.Key);
+      TagsFilename := Path + TAGS_FILETITLE;
+      if not TagsFileSet.Contains(TagsFilename) and FileExists(TagsFilename) then begin
+        TagsFile := TStringList.Create;
+        try
+          LastTags := nil;
+          TagsFileSet.Add(TagsFilename);
+          TagsFile.LoadFromFile(TagsFilename, TEncoding.UTF8);
+          if TagsFile.Count=0 then RaiseInvalid(SErrEmpty);
+          // Handle header line: Filename, Tag1, Tag2, ...
+          ColKeys := TagsFile[0].Split(',');
+          if (Length(ColKeys)=0) then RaiseInvalid(SErrEmpty);
+          RemoveQuotes(ColKeys);
+          FilenameTag := Trim(ColKeys[0]);
+          if not SameText(FilenameTag, TAGID_FILENAME) then RaiseInvalid(SErrFilenameNotFound, 0);
+          for i:=1 to TagsFile.Count-1 do begin
+            Row := TagsFile[i].Split(',', '"', '"');
+            if (Length(Row)<1) then
+              RaiseInvalid(SErrMissingFilename, i);
+            if Length(Row)>Length(ColKeys) then
+              RaiseInvalid(SErrMoreValuesThanTags, i);
+            Filetitle := RemoveQuotes(Row[0]);
+            Filename := Path + Filetitle;
+            // All rows are beeing evaluated
+            UnusedRow := not TryGetValue(Filename, Tags);
+            if UnusedRow then Tags := UnusedTags;
+//              WriteLn(Format('Loading for %s', [Filename]));
+            for j:=1 to High(ColKeys) do begin
+              if j>=Length(Row) then break;
+              if Trim(Row[j])='*' then begin
+                if not Assigned(LastTags) then RaiseInvalid(SErrAsterisk);
+                Value := LastTags[ColKeys[j]];
+              end else
+                Value := Row[j];
+              Tags.AddOrSetValue(ColKeys[j], RemoveQuotes(Value));
+            end;
+            LastTags := Tags;
+          end;
+        finally
+          TagsFile.Free;
         end;
-        s.Add(Line);
       end;
     end;
+  finally
+    TagsFileSet.Free;
+    TagIDSet.Free;
+    UnusedTags.Free;
   end;
-  s.SaveToFile(LstFilename);
-  s.Free;
 end;
 
-initialization
+procedure TFilesTags.SaveToFile(const LstFilename: string; const TagIDs :TTagIDs; Options :TSaveOptions);
+var
+  s :TStringList;
+  Line :string;
+  Filename :string;
+  Tags :TTags;
+  Pair :TPair<string, string>;
+  i :integer;
+  BasePath :string;
+
+  function GetField(const TagID :string) :string;
+  begin
+    if Tags.TryGetValue(TagID, result) then
+      result := QuotedIfComma(result)
+    else
+      result := '';
+  end;
+
 begin
-  GetLocaleFormatSettings($0409, TFilesTags.FormatSettings);
+  if soRelative in Options then
+    BasePath := ExtractFilePath(LstFilename)
+  else
+    BasePath := '';
+  s := TStringList.Create;
+  try
+    s.WriteBOM := true;
+    if soCompact in Options then begin
+      for Filename in FFilenames do begin
+        Tags := self[Filename];
+        Line := ExtractFilename(Filename)+': ';
+        for Pair in Tags do
+          Line := Line + Pair.Key + '=' + Pair.Value+', ';
+        s.Add(Line);
+      end;
+    end else begin
+      begin
+        Line := TAGID_FILENAME;
+        for i:=0 to High(TagIDs) do
+          Line := Line + ', ' + TagIDs[i];
+        s.Add(Line);
+        for Filename in FFilenames do begin
+          Tags := self[Filename];
+          if soRelative in Options then
+            Line := ExtractRelativePath(BasePath, Filename)
+          else
+            Line := Filename;
+          Line := QuotedIfComma(Line);
+          for i:=0 to High(TagIDs) do
+            Line := Line + ',' + GetField(TagIDs[i]);
+          s.Add(Line);
+        end;
+      end;
+    end;
+    s.SaveToFile(LstFilename, TEncoding.UTF8);
+  finally
+    s.Free;
+  end;
 end;
 
+function TFilesTags.TagIDs: TTagIDs;
+var
+  i :TFilenameTags;
+  j :TPair<string, string>;
+begin
+  result := nil;
+  for i in self do begin
+    for j in i.value do
+      result.Add(j.Key);
+  end;
+end;
+
+//procedure test;
+//var
+//  ft :TFilesTags;
+//begin
+//  ft := TFilesTags.Create;
+//  ft.Add('D:\Mf\Dev\Lazarus\ImageResize\tst\srcB\src1\DSC04236.jpg');
+//  ft.Add('D:\Mf\Dev\Lazarus\ImageResize\tst\srcB\src1\DSC04242.jpg');
+//  ft.Add('D:\Mf\Dev\Lazarus\ImageResize\tst\srcB\src2\DSC04288.jpg');
+//  ft.Add('D:\Mf\Dev\Lazarus\ImageResize\tst\srcB\src2\DSC04262.jpg');
+//  ft.Add('D:\Mf\Dev\Lazarus\ImageResize\tst\srcB\src2\src3\DSC04293.jpg');
+//  ft.Add('D:\Mf\Dev\Lazarus\ImageResize\tst\srcB\src2\src3\DSC04314.jpg');
+//  try
+//    ft.LoadTagsFiles;
+//    ft.SaveToFile('D:\Mf\Dev\Lazarus\ImageResize\tst\srcB\.filestags', [soRelative]);
+//  except on E :Exception do
+//    begin
+//      WriteLn(E.Message);
+//    end;
+//  end;
+//end;
+//
+//initialization
+//  test;
 end.
 

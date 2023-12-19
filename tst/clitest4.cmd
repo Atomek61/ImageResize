@@ -1,1 +1,1 @@
-..\bin\imgres @org\imglist.txt .\test4_%%SIZE%% 24,3840 -w "watermarks\wwwatomekde.png?40,90,10?50"
+..\bin\imgres @srcA\imglist.txt .\tst4_%%SIZE%% 24,3840 -w "watermarks\wwwatomekde.png?40,90,10?50"

@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, StrUtils, Types, Generics.Collections;
 
 function StrToIntegerArray(const Str :string; Separator :char; out Values :TIntegerDynArray) :boolean;
-function StrToStringArray(const Str :string; Separator :char; out Values :TStringArray) :boolean;
+function StrToStringArray(const Str :string; Separator :char = ',') :TStringArray;
 function StrToSingleArray(const Str :string; Separator :char; out Values :TSingleDynArray; const FormatSettings :TFormatSettings) :boolean;
 function RemoveQuotes(const Str :string) :string;
 function TryStrToPlaceholders(const Str :string; Del :char; out Placeholders :TStringArray) :boolean;
@@ -22,7 +22,7 @@ implementation
 type
   TStringArrayHelper = specialize TArrayHelper<string>;
 
-
+// Absolute path begins with a backslash or the second char is :
 function IsPathAbsolute(const Path :string) :boolean;
 begin
    result := (Length(Path)>0) and IsPathDelimiter(Path, 1) or (Length(Path)>1) and (Path[2]=':');
@@ -51,24 +51,23 @@ begin
   result := true;
 end;
 
-function StrToStringArray(const Str :string; Separator :char; out Values :TStringArray) :boolean;
+function StrToStringArray(const Str :string; Separator :char) :TStringArray;
 var
   i, p, n :integer;
   x :string;
 begin
-  SetLength(Values, 0);
+  result := nil;
   p := 1;
   n := 0;
   for i:=1 to Length(Str)+1 do begin
     if (i>Length(Str)) or (Str[i]=Separator) then begin
       x := Trim(Copy(Str, p, i-p));
-      SetLength(Values, n+1);
-      Values[n] := x;
+      SetLength(result, n+1);
+      result[n] := x;
       p := i+1;
       inc(n);
     end;
   end;
-  result := true;
 end;
 
 function StrToSingleArray(const Str :string; Separator :char; out Values :TSingleDynArray; const FormatSettings :TFormatSettings) :boolean;
@@ -115,10 +114,10 @@ function TryParsePlaceholderParams(const Str :string; Del: char; out Params :TSt
 var
   p :integer;
 begin
-  SetLength(Params, 0);
+  Params := nil;
   p := Pos(Del, Str);
-  if p=0 then Exit(true);
-  result := StrToStringArray(Copy(Str, p+1, Length(Str)-p), ',', Params);
+  Params := StrToStringArray(Copy(Str, p+1, Length(Str)-p), ',');
+  result := true;
 end;
 
 function RemoveQuotes(const Str :string) :string;

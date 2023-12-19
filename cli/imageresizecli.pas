@@ -20,7 +20,7 @@ const
   HINTSSTR =
     '  filename            Is a single JPEG or PNG file, a text filename preceeded by @ with a list of filenames'#10+
     '                      or a wildcard with path/mask. Multiple masks are to be separated by semicolon.'#10+
-    '  folder              Is the folder where to store the resulting resampled and resized files. The folder must contain'#10+
+    '  folder              Where to store the resulting resampled and resized files. The folder must contain'#10+
     '                      the placeholder ''%SIZE%'' when there are multiple sizes. Non-existing folders'#10+
     '                      will be created.'#10+
     '  size                Is a size in pixels or a comma-separated list of sizes, where the size refers to'#10+
@@ -29,23 +29,29 @@ const
     'Options:'#10#10+
     'short long            parameter   comment'#10+
     '-----------------------------------------'#10+
-    '   -j -jpgquality     1..100      A quality from 1 to 100 percent (default is 75)'#10+
-    '   -p -pngcompression none|fastest|default|max'#10+
-    '   -r -rename         template    Rename files by a template with placeholders.'#10+
-    '                                  %SIZE% and %INDEX[:n[,d]]% with n=startindex, d=number of digits/auto'#10+
-    '   -w -watermark      file.png    A PNG watermark file and optional a position and opacity, see example.'#10+
-    '   -s -shake          0..n        shakes the image list, makes sense together with -r.'#10+
-    '                                  A random seed of 0 (assumed if ommited) means an unpredictable sequence.'#10+
-    '                                  A fix value will shake a list always in the same manner, '#10+
-    '                                  unless the number of files doesnt change.'#10+
-    '   -e -exif           taglist     Transfers certain EXIF metadata into the resized files.'#10+
-    '                                  taglist is a list of special tagnames: "Description,Timestamp,Copyright"'#10+
-    '   -c -copyright      "text"      Writes (overrides) the EXIF or .tags copyright tag.'+#10+
-    '   -l -listing        file.trp    Writes a list of filenames and tags.'+#10+
-    '   -t -threadcount    0..n        Number of threads to use, 0 means maximum.'#10+
-    '   -x -stoponerror                Stop on error. flag: 0-false, 1-true'#10+
-    '   -h -help                       Outputs this text.'#10+
-    '   -q -quit                       Suppresses any message output.'#10#10;
+    '   -j -jpgquality     1..100     A quality from 1 to 100 percent (default is 75)'#10+
+    '   -p -pngcompression degree     none|fastest|default|max'#10+
+    '   -f -filter         filter     Box, Linear, HalfCosine, Cosine, Bicubic, Mitchell, Spline,'#10+
+    '                                 Lanczos2, Lanczos3, Lanczos4, BestQuality'#10+
+    '                                 Default is Lanczos2.'#10+
+    '   -r -rename         template   Rename files by a template with placeholders.'#10+
+    '                                 SIZE% and %INDEX[:n[,d]]% with n=startindex, d=number of digits/auto'#10+
+    '   -w -watermark      file.png   A PNG watermark file and optional a position and opacity, see example.'#10+
+    '   -s -shake          0..n       shakes the image list, makes sense together with -r.'#10+
+    '                                 A random seed of 0 (assumed if ommited) means an unpredictable sequence.'#10+
+    '                                 A fix value will shake a list always in the same manner, '#10+
+    '                                 unless the number of files doesnt change.'#10+
+    '   -m -meta           sources    EXIF | TAGS | EXIF,TAGS'#10+
+    '                                 EXIF loads tags from origin files, TAGS from .tags files'#10+
+    '   -e -exif           taglist    writes certain metadata into the resized files.'#10+
+    '                                 taglist is a list of special tagnames: "Description,Timestamp,Copyright"'#10+
+    '                                 if no meta sources is defined, EXIF is assumed.'#10+
+    '   -c -copyright      "text"     Writes (overrides) the EXIF or .tags copyright tag.'+#10+
+    '   -l -listing        file.csv   Exports a CSV list of filenames and tags.'+#10+
+    '   -t -threadcount    0..n       Number of threads to use, 0 means maximum.'#10+
+    '   -x -stoponerror               Stop on error. flag: 0-false, 1-true'#10+
+    '   -h -help                      Outputs this text.'#10+
+    '   -q -quit                      Suppresses any message output.'#10;
 
   EXAMPLESTR =
     'Examples:'#10#10+
@@ -53,15 +59,15 @@ const
     '    resamples a single png image with the default quality.'#10#10+
 
     '  imgres ..\theimage.jpg C:\TEMP\res%SIZE% 480,640,800 -j 50'#10+
-    '    resamples a single jpg with 3 different resolutions and stores them to different folders with 50% quality'#10#10+
+    '    resamples a single jpg with 3 resolutions and stores them to different folders at 50% quality'#10#10+
 
     '  imgres @mylist.txt img%SIZE% 640,1920 -j 1 -p max -q'#10+
-    '    resamples a list of files which path/name is stored in a file with smallest file sizes in quiet mode.'#10#10+
+    '    resamples a list of files which path/name is stored in a file, with smallest file sizes in quiet mode.'#10#10+
 
     '  imgres myimages\*.jpg;*.png \MyImages 640 -w "mywatermark.png?10,1,98?50"'#10+
     '    adds a watermark of 10% width, 1% from the left, 2% from the bottom, with 50% opacity.'#10#10+
 
-    '  imgres DSC4205.jpg C:\TEMP 640 -c "© 2023 by me"'#10+
+    '  imgres DSC4205.jpg C:\TEMP 640 -c "(c) 1941 ACME"'#10+
     '    inserts an EXIF copyright note'#10#10+
 
     '  More info at www.atomek.de/imageresize/cli/index.html';
@@ -97,19 +103,20 @@ end;
 
 procedure TImageResizeCli.DoRun;
 var
+  i :integer;
   OptionCount :integer;
   Param :string;
   Sizes :TSizes;
   Quiet :boolean;
   JpgQuality :integer;
   PngCompression :integer;
-  Processor :TImgRes;
+  Filter :string;
+  Processor :TProcessor;
   DstFolder :string;
   DstFileTemplate :string;
   SrcFolder :string;
   SrcFilename :string;
   SrcFilenames :TStringList;
-  i :integer;
   Items :TStringDynArray;
   FloatParams :TSingleDynArray;
   MrkFilename :string;
@@ -118,9 +125,12 @@ var
   ThreadCount :integer;
   StopOnError :boolean;
   Path, Mask :string;
+  Masks :TStringArray;
+  Item :string;
   Shake :boolean;
   ShakeSeed :integer;
-  TagIDs :TIDArray;
+  TagsSources :TTagsSources;
+  TagIDs :TTagIDs;
   Copyright :string;
   TagsReportFilename :string;
 
@@ -148,7 +158,7 @@ begin
     inc(OptionCount);
 
   SrcFilenames := nil;
-  Processor := TImgRes.Create;
+  Processor := TProcessor.Create;
   try
 
     // JpgQuality
@@ -163,11 +173,19 @@ begin
     // PngCompression
     Param := GetOptionValue('p', 'pngcompression');
     if Param<>'' then begin
-      if not TImgRes.TryStrToPngCompression(Param, PngCompression) then
+      if not TProcessor.TryStrToPngCompression(Param, PngCompression) then
         raise Exception.CreateFmt('Invalid pngcompression ''%s'', none, fastes, default or max expected.', [Param]);
       inc(OptionCount, 2);
     end else
       PngCompression := Processor.PngCompression;
+
+    // Filter
+    Param := GetOptionValue('f', 'filter');
+    if Param<>'' then begin
+      Filter := Param;
+      inc(OptionCount, 2);
+    end else
+      Filter := Processor.Filter;
 
     // Watermark "C:\Folder\mark%SIZE%.png:-1.0,-1.0:50.0"
     MrkFilename := '';
@@ -178,7 +196,8 @@ begin
     Param := GetOptionValue('w', 'watermark');
     if Param<>'' then begin
       inc(OptionCount, 2);
-      if not StrToStringArray(Param, '?', Items) or (Length(Items)<1) or (Length(Items)>3) then
+      Items := StrToStringArray(Param, '?');
+      if (Length(Items)<1) or (Length(Items)>3) then
         raise Exception.CreateFmt('Invalid number of watermark parameters ''%s''.', [Param]);
       MrkFilename := Items[0];
       if Length(Items)>1 then begin
@@ -196,21 +215,32 @@ begin
       end;
     end;
 
-    // EXIF transfer
-    TagIDs := nil;
-    Param := GetOptionValue('e', 'exif');
+    // Tagging
+    TagsSources := [];
+    Param := GetOptionValue('m', 'meta');
     if Param<>'' then begin
-      if not StrToStringArray(Param, ',', TagIDs) or (Length(TagIDs)=0) then
-        raise Exception.CreateFmt('Invalid tags ''%s'', list of special tags expected ("Description,Timestamp,Copyright").', [Param]);
+      if not TProcessor.TryStrToTagsSources(Param, TagsSources) or (TagsSources=[]) then
+        raise Exception.CreateFmt('Invalid tags sources ''%s'', keyword list of "EXIF" and/or "TAGS" expected.', [Param]);
       inc(OptionCount, 2);
     end;
 
-    // EXIF Copyright
+    // EXIF Tags
+    TagIDs := nil;
+    Param := GetOptionValue('e', 'exif');
+    if Param<>'' then begin
+      TagIDs := StrToStringArray(Param, ',');
+      if (Length(TagIDs)=0) or not allSupported(TagIDs) then
+        raise Exception.CreateFmt('Invalid tags ''%s'', list of special tags expected - Title, Timestamp and Copyright.', [Param]);
+      inc(OptionCount, 2);
+    end;
+
+    // Copyright overwriting
     Param := GetOptionValue('c', 'copyright');
     if Param<>'' then begin
       Copyright := Param;
       inc(OptionCount, 2);
-    end;
+    end else
+      Copyright := '';
 
     // TagsReport for slideshow
     Param := GetOptionValue('l', 'listing');
@@ -281,7 +311,7 @@ begin
     if SrcFilename[1]='@' then begin
       // Build srcfile list with
       SrcFilename := Copy(SrcFilename, 2, Length(SrcFilename)-1);
-      SrcFolder := IncludeTrailingPathDelimiterEx(ExtractFilePath(SrcFilename));
+      SrcFolder := IncludeTrailingPathDelimiterEx(ExpandFilename(ExtractFilePath(SrcFilename)));
       SrcFilenames.LoadFromFile(SrcFilename);
       for i:=0 to SrcFilenames.Count-1 do
         if not IsPathAbsolute(SrcFilenames[i]) then
@@ -289,7 +319,9 @@ begin
     end else if IsWildcard(SrcFilename) then begin
       Path := ExtractFilePath(SrcFilename);
       Mask := ExtractFilename(SrcFilename);
-      FindAllFiles(SrcFilenames, Path, Mask, false);
+      Masks := Mask.Split(';', '"', '"');
+      for Item in Masks do
+        FindAllFiles(SrcFilenames, Path, Item, false);
     end else begin
       SrcFilenames.Add(SrcFilename);
     end;
@@ -300,6 +332,7 @@ begin
     Processor.Sizes := SizesToSizesStr(Sizes);
     Processor.JpgQuality := JpgQuality;
     Processor.PngCompression := PngCompression;
+    Processor.Filter := Filter;
     Processor.MrkFilename := MrkFilename;
     Processor.MrkSize := MrkSize;
     Processor.MrkX := MrkX;
@@ -310,14 +343,10 @@ begin
     Processor.DstFiletemplate := DstFileTemplate;
     Processor.Shake := Shake;
     Processor.ShakeSeed := ShakeSeed;
+    Processor.TagsSources := TagsSources;
     Processor.TagIDs := TagIDs;
     Processor.Copyright := Copyright;
     Processor.TagsReportFilename := TagsReportFilename;
-
-    //// Check if multiple sizes are given and placeholder %SIZE% is not set in DstFolder
-    //if (Length(Sizes)>1) and not ((Pos('%SIZE%', DstFolder)>0)
-    // or (Processor.RenEnabled and (Pos('%SIZE%', DstFileTemplate)>0))) then
-    //  raise Exception.Create(ERRMISSINGSIZE);
 
     if not Quiet then
       Processor.OnPrint := @OnPrint;

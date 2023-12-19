@@ -1,1 +1,1 @@
-..\bin\imgres @org\imglist.txt .\test7\img%SIZE% 120,240 -e "Description,Copyright" 
+..\bin\imgres srcA\img3.jpg ".\tst7\img%%SIZE%%" 1080 -e "Title,Copyright" 

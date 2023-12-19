@@ -108,7 +108,7 @@ object AboutDialog: TAboutDialog
       object ButtonCheckUpdate: TBitBtn
         Left = 600
         Height = 64
-        Top = 16
+        Top = 72
         Width = 80
         Action = ActionCheckUpdate
         Anchors = [akTop, akRight]
@@ -121,12 +121,16 @@ object AboutDialog: TAboutDialog
         Left = 16
         Height = 32
         Top = 24
-        Width = 424
+        Width = 664
         Anchors = [akTop, akLeft, akRight]
         AutoSize = False
-        Caption = 'Press Check to check for available updates...'
-        Font.Color = clBtnShadow
-        Font.Height = -16
+        Caption = 'Press "Check" to look for an available update...'
+        Font.CharSet = ANSI_CHARSET
+        Font.Color = 10526880
+        Font.Height = -19
+        Font.Pitch = fpVariable
+        Font.Quality = fqDraft
+        Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
       end
@@ -170,7 +174,7 @@ object AboutDialog: TAboutDialog
       object LabelLatest: TLabel
         Left = 464
         Height = 128
-        Top = 32
+        Top = 72
         Width = 128
         Anchors = [akTop, akLeft, akRight]
         AutoSize = False

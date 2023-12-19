@@ -1,1 +1,1 @@
-..\bin\imgres @org\imglist.txt .\test1_%%SIZE%% 120,240
+..\bin\imgres srcA\imglist.txt .\tst1_%%SIZE%% 120,1000

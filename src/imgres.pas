@@ -6,7 +6,10 @@ unit imgres;
 //
 //  See https://github.com/Atomek61/ImageResize.git for licensing
 //
-//  imgres.pas is the processing core of both, the CLI and the GUI applications.
+//  imgres.pas has the processing core of both, the CLI and the GUI
+//  applications. The core is called the "Processor".
+//
+//  The Processor can spawn a Task for each image to be processed.
 //
 //  It bases heavily on the BGRABitmap library and Atomeks threading.dispatcher
 //  library.
@@ -22,12 +25,17 @@ uses
   Classes, SysUtils, StrUtils, Types, BGRABitmap, BGRABitmapTypes,
   threading.dispatcher, tags;
 
+type
+  TTagsSource = (tsEXIF, tsTagsFiles); // Tags from EXIF and/or .tags files
+  TTagsSources = set of TTagsSource;
+
 const
   IMGRESVER = '3.2';
   IMGRESCPR = 'imgres '+IMGRESVER+' © 2023 Jan Schirrmacher, www.atomek.de';
 
   DEFAULTPNGCOMPRESSION    = 2;
   DEFAULTJPGQUALITY        = 75;
+  DEFAULT_FILTER           = rfLanczos2;
   DEFAULTMRKSIZE           = 20.0;
   DEFAULTMRKX              = 98.0;
   DEFAULTMRKY              = 98.0;
@@ -44,6 +52,7 @@ const
   DEFAULT_FILETAGS         = nil;
   DEFAULT_COPYRIGHT        = '';
   DEFAULT_TAGSREPORT       = 'imagelist.trp';
+  DEFAULT_TAGSOURCES       :TTagsSources = [];
 
   DEFSIZES :array[0..15] of integer = (32, 48, 64, 120, 240, 360, 480, 640, 800, 960, 1280, 1600, 1920, 2560, 3840, 4096);
 
@@ -57,9 +66,9 @@ type
   //////////////////////////////////////////////////////////////////////////////
   // Main class: resamples a list a images to a list of sizes
 
-  { TImgRes }
+  { TProcessor }
 
-  TImgRes = class
+  TProcessor = class
   public type
 
     TRenameParams = record
@@ -69,71 +78,69 @@ type
       IndexStart :integer;
     end;
 
-    { TParams }
-
-    TParams = record
-      SrcFilenames :TStringList;
-      DstFolder :string;
-      Sizes :TSizes;
-      JpgQuality :integer;
-      PngCompression :integer;
-      MrkFilename :string;
-      MrkFilenameDependsOnSize :boolean; // if MrkFilename contains %SIZE%
-      MrkSize :single;
-      MrkX :single;
-      MrkY :single;
-      MrkAlpha :single;
-      ThreadCount :integer;
-      StopOnError :boolean;
-      Ren :TRenameParams;
-      Shake :boolean;
-      ShakeSeed :integer;
-      TagIDs :TStringArray; // 'Copyright',
-      Copyright :string; // If <>'', set it independent from ttCopyright and Exif
-      TagsReportFilename :string;
-      function Tagging :boolean;
-    end;
-
   private type
 
     // Needed while processing
 
     { TExecutionRessources }
 
-    TExecutionRessources = class
+    TExecutionRessources = class // Temporary process global ressources while processing
       IsMultipleDstFolderStrategy :boolean;
       IsDstFileRenamingStrategy :boolean;
       SrcFilenames :array of string;    // After Shaking
       MrkImages :array of TBGRABitmap;  // Empty, One or for each Size
       DstFolders :array of string;      // One or for each Size
-      FilesTags :TFilesTags;
+      FilesTags :TFilesTags;            // A database of all tags of all files
       constructor Create;
       destructor Destroy; override;
     end;
 
     { TResampleTask }
 
-    TResampleTask = class(TCustomTask)
+    TResampleTask = class(TCustomTask) // Each image is a task
     protected
       function Execute(Context :TContext) :boolean; override;
       function GetTaskSteps :integer; override;
     public
-      ImgRes :TImgRes;
-      ExeRes :TExecutionRessources;
+      Processor :TProcessor;
+      ProcRes :TExecutionRessources;
       SrcFilename :string;
       SrcFileIndex :integer;
       Tags :TTags;
     end;
 
+  private // Processing Params
+    FSrcFilenames    :TStrings;
+    FDstFolder       :string;
+    FSizes           :TSizes;
+    FJpgQuality      :integer;
+    FPngCompression  :integer;
+    FFilter          :TResampleFilter;
+    FMrkFilename     :string;
+    FMrkFilenameDependsOnSize :boolean; // if MrkFilename contains %SIZE%
+    FMrkSize         :single;
+    FMrkX            :single;
+    FMrkY            :single;
+    FMrkAlpha        :single;
+    FThreadCount     :integer;
+    FStopOnError     :boolean;
+    FRen             :TRenameParams;
+    FShake           :boolean;
+    FShakeSeed       :integer;
+    FTagsSources     :TTagsSources;
+    FTagIDs          :TTagIDs; // 'Copyright',
+    FCopyright       :string;
+    FTagsReportFilename :string;
   private
-    FParams :TParams;
     FCancel :boolean;
     FOnPrint :TPrintEvent;
     FOnProgress :TProgressEvent;
     function GetDstFiletemplate: string;
+    function GetFilter: string;
     function GetSizes: string;
     function GetSrcFilenames: TStrings;
     procedure SetDstFiletemplate(AValue: string);
+    procedure SetFilter(AValue: string);
     procedure SetMrkFilename(AValue: string);
     procedure SetSizes(AValue: string);
     procedure SetJpgQuality(AValue: integer);
@@ -145,7 +152,7 @@ type
     procedure SetSrcFilenames(AValue: TStrings);
     procedure SetThreadCount(AValue: integer);
     procedure SetShakeSeed(AValue :integer);
-    function ResampleImg(Img :TBgraBitmap; const Size :TSize) :TBgraBitmap;
+    function ResampleImg(Img :TBgraBitmap; const Size :TSize; const Filter :TResampleFilter) :TBgraBitmap;
     class function CalcResamplingSize(const Size :TSize; LongWidth :integer) :TSize;
     procedure OnTaskPrint(Sender :TObject; WorkerId: integer; const Line :string; Level :TLevel);
     procedure OnTaskProgress(Sender :TObject; Progress :single);
@@ -162,25 +169,29 @@ type
     class function JpgQualityToStr(const Value :integer) :string;
     class function TryStrToRenameParams(const Str :string; out Params :TRenameParams; out ErrStr :string) :boolean;
     class function RenameParamsToStr(const Params :TRenameParams) :string;
+    class function TryStrToTagsSources(const Str :string; out Value :TTagsSources) :boolean;
+
     property SrcFilenames :TStrings read GetSrcFilenames write SetSrcFilenames;
-    property DstFolder :string read FParams.DstFolder write FParams.DstFolder;
+    property DstFolder :string read FDstFolder write FDstFolder;
     property DstFiletemplate :string read GetDstFiletemplate write SetDstFiletemplate;
     property Sizes :string read GetSizes write SetSizes;
-    property JpgQuality :integer read FParams.JpgQuality write SetJpgQuality;
-    property PngCompression :integer read FParams.PngCompression write SetPngCompression;
-    property MrkFilename :string read FParams.MrkFilename write SetMrkFilename; // if msFile
-    property MrkSize :single read FParams.MrkSize write SetMrkSize;
-    property MrkX :single read FParams.MrkX write SetMrkX;
-    property MrkY :single read FParams.MrkY write SetMrkY;
-    property MrkAlpha :single read FParams.MrkAlpha write SetMrkAlpha;
-    property ThreadCount :integer read FParams.ThreadCount write SetThreadCount;
-    property StopOnError :boolean read FParams.StopOnError write FParams.StopOnError;
-    property RenEnabled :boolean read FParams.Ren.Enabled;
-    property Shake :boolean read FParams.Shake write FParams.Shake;
-    property ShakeSeed :integer read FParams.ShakeSeed write SetShakeSeed;
-    property TagIDs :TStringArray read FParams.TagIDs write FParams.TagIDs;
-    property Copyright :string read FParams.Copyright write FParams.Copyright;
-    property TagsReportFilename :string read FParams.TagsReportFilename write FParams.TagsReportFilename;
+    property JpgQuality :integer read FJpgQuality write SetJpgQuality;
+    property PngCompression :integer read FPngCompression write SetPngCompression;
+    property Filter :string read GetFilter write SetFilter;
+    property MrkFilename :string read FMrkFilename write SetMrkFilename; // if msFile
+    property MrkSize :single read FMrkSize write SetMrkSize;
+    property MrkX :single read FMrkX write SetMrkX;
+    property MrkY :single read FMrkY write SetMrkY;
+    property MrkAlpha :single read FMrkAlpha write SetMrkAlpha;
+    property ThreadCount :integer read FThreadCount write SetThreadCount;
+    property StopOnError :boolean read FStopOnError write FStopOnError;
+    property RenEnabled :boolean read FRen.Enabled;
+    property Shake :boolean read FShake write FShake;
+    property ShakeSeed :integer read FShakeSeed write SetShakeSeed;
+    property TagsSources :TTagsSources read FTagsSources write FTagsSources;
+    property TagIDs :TStringArray read FTagIDs write FTagIDs;
+    property Copyright :string read FCopyright write FCopyright;
+    property TagsReportFilename :string read FTagsReportFilename write FTagsReportFilename;
     property OnPrint :TPrintEvent read FOnPrint write FOnPrint;
     property OnProgress :TProgressEvent read FOnProgress write FOnProgress;
   end;
@@ -208,7 +219,6 @@ resourcestring
   SCptAbort   = 'Abort';
   SCptFatal   = 'Fatal';
   SErrFormatNotSupportedFmt = 'Format %s not supported.';
-  //SWrnNoExifFmt = 'No EXIF data found in ''%s''';
   SWrnUpsamplingFmt = 'Upsampling ''%s''';
   SMsgResamplingFmt = 'Resampling ''%s'' from %dx%d to %dx%d...';
   SMsgWatermarkingFmt = 'Watermarking ''%s''...';
@@ -216,7 +226,7 @@ resourcestring
   SMsgLoadingFmt = 'Loading ''%s''...';
   SMsgLoadingTags = 'Loading .tags...';
   SMsgWritingTagsReportFmt = 'Writing Tags Report to ''%s''...';
-  SMsgReadingExifFmt = 'Reading EXIF in ''%s''...';
+  SMsgReadingExifFmt = 'Reading EXIF from ''%s''...';
   SMsgCreatingFolderFmt = 'Creating folder ''%s''...';
   SMsgShakingFiles = 'Shaking list of files...';
   SMsgLoadMrkFileFmt = 'Loading Watermark ''%s''...';
@@ -225,7 +235,6 @@ resourcestring
   SErrMissingSizes = 'Missing sizes.';
   SErrInvalidSizesFmt = 'Invalid sizes ''%s''.';
   SErrMultipleSizes = 'Multiple sizes but placeholder %SIZE% not found in either folder or filename template.';
-  //SErrCopyright = 'Cant transfer copyright AND override - check Tagging options.';
   SErrInvalidPngCompressionFmt = 'Invalid png compression %d (0..3 expected).';
   SErrInvalidJpgQualityFmt = 'Invalid JPEG quality %d (1..100 expected).';
   SErrInvalidRenamingParamFmt = 'Invalid renaming parameter ''%s''.';
@@ -234,7 +243,8 @@ resourcestring
   SErrInvalidINDEXDigitsFmt = 'Invalid INDEX digits number ''%s''.';
   SErrInvalidINDEXParamCountFmt = 'Invalid INDEX parameter count ''%s'' (2 expected).';
   SErrInvalidPlaceholder = 'Unknown or invalid placeholder.';
-  SInfResultFmt = 'Images: %d, Sizes: %d, Tasks: %d, Successful: %d, Failed: %d, Elapsed: %.2fs';
+  SInfResultFmt = 'Images: %d, Filter: %s, Sizes: %d, Tasks: %d, Successful: %d, Failed: %d, Elapsed: %.2fs';
+  SErrInvalifFilterFmt = 'Invalid filter ''%s''.';
 
 const
   PNGCOMPRS :array[0..3] of string = (SCptPNGCompNone, SCptPNGCompFastest, SCptPNGCompDefault, SCptPNGCompMax);
@@ -303,21 +313,14 @@ begin
   result := UpperCase(ExtractFileExt(Filename)) = '.PNG'
 end;
 
-{ TImgRes.TParams }
+{ TProcessor.TExecutionRessources }
 
-function TImgRes.TParams.Tagging: boolean;
-begin
-  result := (Length(TagIds)>0) or (Length(Copyright)>0);
-end;
-
-{ TImgRes.TExecutionRessources }
-
-constructor TImgRes.TExecutionRessources.Create;
+constructor TProcessor.TExecutionRessources.Create;
 begin
   FilesTags := TFilesTags.Create;
 end;
 
-destructor TImgRes.TExecutionRessources.Destroy;
+destructor TProcessor.TExecutionRessources.Destroy;
 var
   i :integer;
 begin
@@ -327,9 +330,9 @@ begin
   inherited;
 end;
 
-{ TImgRes.TResampleTask }
+{ TProcessor.TResampleTask }
 
-function TImgRes.TResampleTask.Execute(Context: TContext): boolean;
+function TProcessor.TResampleTask.Execute(Context: TContext): boolean;
 var
   SrcImg :TBGRABitmap;
   DstFolder :string;
@@ -348,9 +351,9 @@ var
   IndexStr :string; // Index to display
   SizeStr :string;
   i, n, m :integer;
-  TagIDs :TIDArray;
   ExifTags :TTags;
-  Pair :TPair<string, string>;
+  ExifTagIds :TTagIDs;
+  TagID :string;
 begin
 
   result := false;
@@ -363,23 +366,6 @@ begin
   try
     if Context.Cancelled then Exit;
 
-    if ImgRes.FParams.Tagging and IsJPEG(SrcFilename) then begin
-      // Load additional tags from EXIF, but dont overwrite
-      Print(Format(SMsgReadingExifFmt, [SrcFilename]));
-      TagIDs := Copy(ImgRes.FParams.TagIDs);
-      ExifTags := TTags.Create;
-      try
-        ReadExifTags(SrcFilename, ExifTags, TagIDs);
-        for Pair in ExifTags do
-          if not Tags.ContainsKey(Pair.Key) then
-            Tags.Add(Pair);
-      finally
-        ExifTags.Free;
-      end;
-      if ImgRes.FParams.Copyright<>'' then
-        Tags.AddOrSetValue(TAGKEY_COPYRIGHT, ImgRes.FParams.Copyright);
-    end;
-
     // Load source file...
     Print(Format(SMsgLoadingFmt, [SrcFilename]));
     SrcImg := TBGRABitmap.Create(SrcFilename);
@@ -387,7 +373,24 @@ begin
     if Context.Cancelled then Exit;
     Progress(1);
 
-    m := Length(ImgRes.FParams.Sizes);
+    if (tsEXIF in Processor.FTagsSources) and IsJPEG(SrcFilename) then begin
+      // Load EXIF
+      Print(Format(SMsgReadingExifFmt, [SrcFilename]));
+      ExifTags := TTags.Create;
+      try
+        ReadExifTags(SrcFilename, ExifTags, ExifTagIds);
+        for TagId in ExifTagIds do
+          if not Tags.ContainsKey(TagId) then
+            Tags.AddOrSetValue(TagId, ExifTags[TagId]);
+      finally
+        ExifTags.Free;
+      end;
+    end;
+
+    if Processor.FCopyright<>'' then
+      Tags.AddOrSetValue(TAGID_COPYRIGHT, Processor.FCopyright);
+
+    m := Length(Processor.FSizes);
     for i:=0 to m-1 do begin
 
       Writer := nil;
@@ -401,20 +404,20 @@ begin
           // Jpg-options
           Writer := TFPWriterJPEG.Create;
           with TFPWriterJPEG(Writer) do
-            CompressionQuality := TFPJPEGCompressionQuality(ImgRes.JpgQuality);
+            CompressionQuality := TFPJPEGCompressionQuality(Processor.JpgQuality);
 
         end else if IsPNG(SrcFilename) then begin
 
           // Png-options
           Writer := TFPWriterPNG.Create;
           with TFPWriterPNG(Writer) do
-            CompressionLevel := ZStream.TCompressionLevel(ImgRes.PngCompression);
+            CompressionLevel := ZStream.TCompressionLevel(Processor.PngCompression);
 
         end else
           raise Exception.CreateFmt(SErrFormatNotSupportedFmt, [DstFileExt]);
 
         // Calculate new size
-        Size := ImgRes.FParams.Sizes[i];
+        Size := Processor.FSizes[i];
         SrcSize := TSize.Create(SrcImg.Width, SrcImg.Height);
         DstSize := CalcResamplingSize(SrcSize, Size);
 
@@ -427,7 +430,7 @@ begin
         // Resampling...
         Print(Format(SMsgResamplingFmt, [
           ExtractFilename(SrcFilename), SrcSize.cx, SrcSize.cy, DstSize.cx, DstSize.cy]));
-        DstImg := ImgRes.ResampleImg(SrcImg, DstSize);
+        DstImg := Processor.ResampleImg(SrcImg, DstSize, Processor.FFilter);
 
         ////////////////////////////////////////////////////////////////////////////
         Progress(1);
@@ -435,31 +438,31 @@ begin
 
         ////////////////////////////////////////////////////////////////////////////
         // Watermark
-        if ImgRes.MrkFilename<>'' then begin
-          MrkImg := ExeRes.MrkImages[i mod Length(ExeRes.MrkImages)];
+        if Processor.MrkFilename<>'' then begin
+          MrkImg := ProcRes.MrkImages[i mod Length(ProcRes.MrkImages)];
 
           // Watermark size in percent of the width or original size if MrkSize=0.0
-          if ImgRes.MrkSize<>0.0 then begin
-            MrkRectSize.cx := round(DstSize.cx*ImgRes.MrkSize/100.0);
-            MrkRectSize.cy := round(DstSize.cx*ImgRes.MrkSize/100.0 * MrkImg.Height/MrkImg.Width);
+          if Processor.MrkSize<>0.0 then begin
+            MrkRectSize.cx := round(DstSize.cx*Processor.MrkSize/100.0);
+            MrkRectSize.cy := round(DstSize.cx*Processor.MrkSize/100.0 * MrkImg.Height/MrkImg.Width);
           end else begin
             MrkRectSize.cx := MrkImg.Width;
             MrkRectSize.cy := MrkImg.Height;
           end;
-          MrkRect.Left := round((DstSize.cx - MrkRectSize.cx) * ImgRes.MrkX/100.0);
-          MrkRect.Top := round((DstSize.cy - MrkRectSize.cy) * ImgRes.MrkY/100.0);
+          MrkRect.Left := round((DstSize.cx - MrkRectSize.cx) * Processor.MrkX/100.0);
+          MrkRect.Top := round((DstSize.cy - MrkRectSize.cy) * Processor.MrkY/100.0);
           MrkRect.Width := MrkRectSize.cx;
           MrkRect.Height := MrkRectSize.cy;
           Print(Format(SMsgWatermarkingFmt, [ExtractFilename(SrcFilename), SrcSize.cx, SrcSize.cy, DstSize.cx, DstSize.cy]));
-          DstImg.StretchPutImage(MrkRect, MrkImg, dmLinearBlend, round(255*ImgRes.MrkAlpha/100.0));
+          DstImg.StretchPutImage(MrkRect, MrkImg, dmLinearBlend, round(255*Processor.MrkAlpha/100.0));
         end;
 
+        ////////////////////////////////////////////////////////////////////////////
         Progress(1);
         if Context.Cancelled then Exit;
-        ////////////////////////////////////////////////////////////////////////////
 
         // Saving...
-        if ImgRes.FParams.Ren.Enabled then begin
+        if Processor.FRen.Enabled then begin
           // Specialize the prepared template
           // %FILENAME%
           DstFiletitle := ExtractFilename(SrcFilename);
@@ -467,24 +470,24 @@ begin
             DstFiletitle := Copy(DstFiletitle, 1, Length(DstFiletitle)-Length(DstFileExt)-1);
           // %FILEEXT% - has been extracted previously
           // %INDEX%
-          if ImgRes.FParams.Ren.IndexDigits = 0 then
+          if Processor.FRen.IndexDigits = 0 then
             IndexStr := IntToStr(SrcFileIndex)
           else begin
-            if ImgRes.FParams.Ren.IndexDigits = -1 then
-              n := round(log10(ImgRes.FParams.SrcFilenames.Count))+1
+            if Processor.FRen.IndexDigits = -1 then
+              n := round(log10(Processor.FSrcFilenames.Count))+1
             else
-              n := ImgRes.FParams.Ren.IndexDigits;
-            IndexStr := Format('%*.*d', [n, n, SrcFileIndex+ImgRes.FParams.Ren.IndexStart]);
+              n := Processor.FRen.IndexDigits;
+            IndexStr := Format('%*.*d', [n, n, SrcFileIndex+Processor.FRen.IndexStart]);
           end;
           // %SIZE%
           SizeStr := IntToStr(Size);
-          DstFiletitleExt := Format(ImgRes.FParams.Ren.FmtStr,
+          DstFiletitleExt := Format(Processor.FRen.FmtStr,
             [DstFiletitle, DstFileExt, IndexStr, SizeStr]);
         end else
           DstFiletitleExt := ExtractFilename(SrcFilename);
 
         // Save
-        DstFolder := ExeRes.DstFolders[i mod Length(ExeRes.DstFolders)];
+        DstFolder := ProcRes.DstFolders[i mod Length(ProcRes.DstFolders)];
         DstFilename := IncludeTrailingPathDelimiter(DstFolder) + DstFiletitleExt;
         Print(Format(SMsgSavingFmt, [DstFilename]));
         DstImg.SaveToFile(DstFilename, Writer);
@@ -495,9 +498,9 @@ begin
       end;
 
       // EXIF
-      if ImgRes.FParams.Tagging and IsJPEG(DstFilename) then begin
+      if (Length(Processor.FTagIds)>0) and IsJPEG(DstFilename) then begin
         Print(Format(SMsgWritingExifFmt, [DstFilename]));
-        WriteExifTags(DstFilename, Tags, TagIDs);
+        WriteExifTags(DstFilename, Tags, Processor.FTagIds);
       end;
 
       Progress(1);
@@ -509,43 +512,46 @@ begin
   end;
 end;
 
-function TImgRes.TResampleTask.GetTaskSteps: integer;
+function TProcessor.TResampleTask.GetTaskSteps: integer;
 begin
-  result := 1 + 3*Length(ImgRes.FParams.Sizes);
+  result := 1 + 3*Length(Processor.FSizes);
 end;
 
-{ TImgRes }
+{ TProcessor }
 
-constructor TImgRes.Create;
+constructor TProcessor.Create;
 begin
-  FParams.SrcFilenames    := TStringList.Create;
-  SetLength(FParams.Sizes, 0);
-  FParams.JpgQuality      := DEFAULTJPGQUALITY;
-  FParams.PngCompression  := DEFAULTPNGCOMPRESSION;
-  FParams.MrkFilename     := '';
-  FParams.MrkSize         := DEFAULTMRKSIZE;
-  FParams.MrkX            := DEFAULTMRKX;
-  FParams.MrkY            := DEFAULTMRKY;
-  FParams.MrkAlpha        := DEFAULTMRKALPHA;
-  FParams.ThreadCount     := DEFAULT_THREADCOUNT;
-  FParams.StopOnError     := DEFAULT_STOPONERROR;
-  FParams.Ren.Enabled     := DEFAULT_RENENABLED;
-  FParams.Ren.FmtStr      := DEFAULT_RENFMTSTR;
-  FParams.Ren.IndexStart  := DEFAULT_RENINDEXSTART;
-  FParams.Ren.IndexDigits := DEFAULT_RENINDEXDIGITS;
-  FParams.Shake           := DEFAULT_SHAKE;
-  FParams.ShakeSeed       := DEFAULT_SHAKESEED;
-  SetLength(FParams.TagIDs, 0);
-  FParams.Copyright       := DEFAULT_COPYRIGHT;
+  FSrcFilenames     := TStringList.Create;
+  FSizes            := nil;
+  FJpgQuality       := DEFAULTJPGQUALITY;
+  FPngCompression   := DEFAULTPNGCOMPRESSION;
+  FFilter           := DEFAULT_FILTER;
+  FMrkFilename      := '';
+  FMrkSize          := DEFAULTMRKSIZE;
+  FMrkX             := DEFAULTMRKX;
+  FMrkY             := DEFAULTMRKY;
+  FMrkAlpha         := DEFAULTMRKALPHA;
+  FThreadCount      := DEFAULT_THREADCOUNT;
+  FStopOnError      := DEFAULT_STOPONERROR;
+  FRen.Enabled      := DEFAULT_RENENABLED;
+  FRen.FmtStr       := DEFAULT_RENFMTSTR;
+  FRen.IndexStart   := DEFAULT_RENINDEXSTART;
+  FRen.IndexDigits  := DEFAULT_RENINDEXDIGITS;
+  FShake            := DEFAULT_SHAKE;
+  FShakeSeed        := DEFAULT_SHAKESEED;
+  FTagsSources      := DEFAULT_TAGSOURCES;
+  FTagIDs           := nil;
+  FCopyright        := DEFAULT_COPYRIGHT;
+  FTagsReportFilename := '';
 end;
 
-destructor TImgRes.Destroy;
+destructor TProcessor.Destroy;
 begin
-  FParams.SrcFilenames.Free;
+  FSrcFilenames.Free;
   inherited Destroy;
 end;
 
-class function TImgRes.CalcResamplingSize(const Size :TSize; LongWidth :integer) :TSize;
+class function TProcessor.CalcResamplingSize(const Size :TSize; LongWidth :integer) :TSize;
 var
   f :single;
 begin
@@ -559,14 +565,14 @@ begin
   end;
 end;
 
-procedure TImgRes.Print(const Line: string; Level: TLevel);
+procedure TProcessor.Print(const Line: string; Level: TLevel);
 begin
   if Assigned(FOnPrint) then begin
     OnTaskPrint(self, -1, Line, Level);
   end;
 end;
 
-procedure TImgRes.OnTaskPrint(Sender: TObject; WorkerId: integer; const Line: string; Level: TLevel);
+procedure TProcessor.OnTaskPrint(Sender: TObject; WorkerId: integer; const Line: string; Level: TLevel);
 var
   Prefix :string;
 begin
@@ -578,7 +584,7 @@ begin
   end;
 end;
 
-procedure TImgRes.OnTaskProgress(Sender: TObject; Progress: single);
+procedure TProcessor.OnTaskProgress(Sender: TObject; Progress: single);
 begin
   if Assigned(FOnProgress) then begin
     FOnProgress(self, Progress);
@@ -587,29 +593,29 @@ begin
   end;
 end;
 
-procedure TImgRes.SetThreadCount(AValue: integer);
+procedure TProcessor.SetThreadCount(AValue: integer);
 begin
-  if FParams.ThreadCount = AValue then Exit;
+  if FThreadCount = AValue then Exit;
   if AValue<-1 then
     raise Exception.Create(SErrInvalidThreadCount);
-  FParams.ThreadCount := AValue;
+  FThreadCount := AValue;
 end;
 
-procedure TImgRes.SetShakeSeed(AValue: integer);
+procedure TProcessor.SetShakeSeed(AValue: integer);
 begin
   if AValue<0 then AValue := 0;
-  FParams.ShakeSeed := AValue;
+  FShakeSeed := AValue;
 end;
 
-function TImgRes.ResampleImg(Img :TBgraBitmap; const Size :TSize) :TBgraBitmap;
+function TProcessor.ResampleImg(Img :TBgraBitmap; const Size :TSize; const Filter :TResampleFilter) :TBgraBitmap;
 begin
-  Img.ResampleFilter := rfLanczos2;
+  Img.ResampleFilter := Filter;
   result := Img.Resample(Size.cx, Size.cy) as TBGRABitmap;
 end;
 
-function TImgRes.Execute :boolean;
+function TProcessor.Execute :boolean;
 var
-  ExeRes :TExecutionRessources;
+  exer :TExecutionRessources;
   Task :TResampleTask;
   Tasks :TTasks;
   Dispatcher :TDispatcher;
@@ -617,88 +623,106 @@ var
   x :string;
 begin
   // Check main parameters
-  if Length(FParams.Sizes)=0 then
-    raise Exception.Create(SErrMissingSizes);
-  if FParams.SrcFilenames.Count=0 then
+  if FSrcFilenames.Count=0 then
     Exit(true);
 
+  if Length(FSizes)=0 then
+    raise Exception.Create(SErrMissingSizes);
+
   FCancel     := false;
-  ExeRes      := TExecutionRessources.Create;
+  exer        := TExecutionRessources.Create;
   Tasks       := TTasks.Create;
   Dispatcher  := TDispatcher.Create;
   try
-    // Prepare the destination file renaming feature
-    n := FParams.SrcFilenames.Count;
-    m := Length(FParams.Sizes);
 
-    // Check, if multiple sizes, then either %SIZE% must be in folder or in renamed filename
-    ExeRes.IsDstFileRenamingStrategy := FParams.Ren.Enabled and (Pos('%3:s', FParams.Ren.FmtStr)>0);
-    if Length(FParams.Sizes)>1 then begin
-      ExeRes.IsMultipleDstFolderStrategy := Pos('%SIZE%', FParams.DstFolder)>0;
-      if not ExeRes.IsMultipleDstFolderStrategy and not ExeRes.IsDstFileRenamingStrategy then
-        raise Exception.Create(SErrMultipleSizes);
-    end else
-      ExeRes.IsMultipleDstFolderStrategy := false;
+    n := FSrcFilenames.Count;
+    SetLength(exer.SrcFilenames, n);
+    for i:=0 to n-1 do
+      exer.SrcFilenames[i] := ExpandFilename(FSrcFilenames[i]);
 
-    // Load Tags
-    if FParams.Tagging then begin
-      Print(SMsgLoadingTags);
-      ExeRes.FilesTags.Add(FParams.SrcFilenames);
-    end;
-
-    // If the files list has to be randomly remixed, its the right moment
-    SetLength(ExeRes.SrcFilenames, n);
-    for i:=0 to n-1 do ExeRes.SrcFilenames[i] := FParams.SrcFilenames[i];
-    if FParams.Shake then begin
+    // If the files list has to be shaked
+    if FShake then begin
       Print(SMsgShakingFiles);
-      if FParams.ShakeSeed=0 then Randomize else RandSeed := FParams.ShakeSeed;
+      if FShakeSeed=0 then Randomize else RandSeed := FShakeSeed;
       for i:=0 to n-1 do begin
         j := Random(n);
-        x := ExeRes.SrcFilenames[i];
-        ExeRes.SrcFilenames[i] := ExeRes.SrcFilenames[j];
-        ExeRes.SrcFilenames[j] := x;
+        x := exer.SrcFilenames[i];
+        exer.SrcFilenames[i] := exer.SrcFilenames[j];
+        exer.SrcFilenames[j] := x;
       end;
     end;
 
+    // Check, if the TagsSources are consistent with the other options
+    if (FTagsSources=[]) and ((Length(FTagIds)>0) or (FTagsReportFilename<>'')) then
+      include(FTagsSources, tsEXIF);
+
+    // A Copyright overwrite implicitely requires tagging
+    if (FCopyright<>'') and not FTagIDs.contains(TAGID_COPYRIGHT) then
+      FTagIDs.Add(TAGID_COPYRIGHT);
+
+    // If required, prepare the tags database
+    if (FTagsSources<>[]) or (Length(FTagIds)>0) then begin
+      for i:=0 to n-1 do
+        exer.FilesTags.add(exer.SrcFilenames[i]);
+
+      // Load Tags
+      if tsTagsFiles in FTagsSources then begin
+        Print(SMsgLoadingTags);
+        exer.FilesTags.LoadTagsFiles;
+      end;
+    end;
+
+    // Prepare the destination file renaming feature
+    m := Length(FSizes);
+
+    // Check, if multiple sizes, then either %SIZE% must be in folder or in renamed filename
+    exer.IsDstFileRenamingStrategy := FRen.Enabled and (Pos('%3:s', FRen.FmtStr)>0);
+    if Length(FSizes)>1 then begin
+      exer.IsMultipleDstFolderStrategy := Pos('%SIZE%', FDstFolder)>0;
+      if not exer.IsMultipleDstFolderStrategy and not exer.IsDstFileRenamingStrategy then
+        raise Exception.Create(SErrMultipleSizes);
+    end else
+      exer.IsMultipleDstFolderStrategy := false;
+
     // Load MrkImages...
-    if FParams.MrkFilename='' then begin
-      SetLength(ExeRes.MrkImages, 0);
+    if FMrkFilename='' then begin
+      SetLength(exer.MrkImages, 0);
     end else begin
-      if FParams.MrkFilenameDependsOnSize then begin
-        SetLength(ExeRes.MrkImages, m);
+      if FMrkFilenameDependsOnSize then begin
+        SetLength(exer.MrkImages, m);
         for i:=0 to m-1 do begin
-          x := ReplaceStr(FParams.MrkFilename, '%SIZE%', IntToStr(FParams.Sizes[i]));
+          x := ReplaceStr(FMrkFilename, '%SIZE%', IntToStr(FSizes[i]));
           Print(Format(SMsgLoadMrkFileFmt, [ExtractFilename(x)]));
-          ExeRes.MrkImages[i] := TBGRABitmap.Create(x);
+          exer.MrkImages[i] := TBGRABitmap.Create(x);
         end;
       end else begin
-        SetLength(ExeRes.MrkImages, 1);
-        Print(Format(SMsgLoadMrkFileFmt, [ExtractFilename(FParams.MrkFilename)]));
-        ExeRes.MrkImages[0] := TBGRABitmap.Create(FParams.MrkFilename);
+        SetLength(exer.MrkImages, 1);
+        Print(Format(SMsgLoadMrkFileFmt, [ExtractFilename(FMrkFilename)]));
+        exer.MrkImages[0] := TBGRABitmap.Create(FMrkFilename);
       end;
     end;
 
     // Create Destination Folders...
-    SetLength(ExeRes.DstFolders, m);
+    SetLength(exer.DstFolders, m);
     for i:=0 to m-1 do begin
-      x := ReplaceStr(FParams.DstFolder, '%SIZE%', IntToStr(FParams.Sizes[i]));
-      ExeRes.DstFolders[i] := x;
+      x := ExpandFilename(ReplaceStr(FDstFolder, '%SIZE%', IntToStr(FSizes[i])));
+      exer.DstFolders[i] := x;
     end;
-    for i:=0 to High(ExeRes.DstFolders) do begin
-      Print(Format(SMsgCreatingFolderFmt, [ExeRes.DstFolders[i]]));
-      ForceDirectories(ExeRes.DstFolders[i]);
+    for i:=0 to High(exer.DstFolders) do begin
+      Print(Format(SMsgCreatingFolderFmt, [exer.DstFolders[i]]));
+      ForceDirectories(exer.DstFolders[i]);
     end;
 
     // For each SrcFilename create a task and prepare the tasks parameters
     Tasks.Capacity := n;
     for i:=0 to n-1 do begin
       Task := TResampleTask.Create;
-      Task.ImgRes := self;
-      Task.ExeRes := ExeRes;
-      Task.SrcFilename := ExeRes.SrcFilenames[i];
+      Task.Processor := self;
+      Task.ProcRes := exer;
+      Task.SrcFilename := exer.SrcFilenames[i];
       Task.SrcFileIndex := i;
-      if FParams.Tagging then
-        ExeRes.FilesTags.TryGetValue(Task.SrcFilename, Task.Tags);
+      if Assigned(exer.FilesTags) then
+        exer.FilesTags.TryGetValue(Task.SrcFilename, Task.Tags);
       Tasks.Add(Task);
     end;
 
@@ -709,28 +733,28 @@ begin
 
     result := Dispatcher.Execute(Tasks);
 
-    if FParams.Tagging then begin
-      Print(Format(SMsgWritingTagsReportFmt, [FParams.TagsReportFilename]));
-      ExeRes.FilesTags.SaveToFile(FParams.TagsReportFilename, ffCSV);
+    if FTagsReportFilename<>'' then begin
+      Print(Format(SMsgWritingTagsReportFmt, [FTagsReportFilename]));
+      exer.FilesTags.SaveToFile(FTagsReportFilename, exer.FilesTags.TagIds, [soRelative]);
     end;
 
     if Assigned(FOnPrint) then with Dispatcher.Stats do
-      FOnPrint(self, Format(SInfResultFmt, [n, m, TaskCount, Successful, Failed, Elapsed/1000.0]));
+      FOnPrint(self, Format(SInfResultFmt, [n, Filter, m, TaskCount, Successful, Failed, Elapsed/1000.0]));
 
   finally
     Dispatcher.Free;
     Tasks.Free;
-    ExeRes.Free;
+    exer.Free;
   end;
 
 end;
 
-procedure TImgRes.Cancel;
+procedure TProcessor.Cancel;
 begin
   FCancel := true;
 end;
 
-class function TImgRes.TryStrToPngCompression(const Str: string; out Value: integer): boolean;
+class function TProcessor.TryStrToPngCompression(const Str: string; out Value: integer): boolean;
 var
   i :integer;
 begin
@@ -742,14 +766,14 @@ begin
   result := false;
 end;
 
-class function TImgRes.PngCompressionToStr(const Value :integer) :string;
+class function TProcessor.PngCompressionToStr(const Value :integer) :string;
 begin
   if (Value<0) or (Value>High(PNGCOMPRS)) then
     raise Exception.CreateFmt(SErrInvalidPngCompressionFmt, [Value]);
   result := PNGCOMPRS[Value];
 end;
 
-class function TImgRes.TryStrToJpgQuality(const Str :string; out Value :integer) :boolean;
+class function TProcessor.TryStrToJpgQuality(const Str :string; out Value :integer) :boolean;
 begin
   if SameText(Trim(Str), SCptJpgQualityDefault) then begin
     Value := DEFAULTJPGQUALITY;
@@ -758,7 +782,7 @@ begin
     result := TryStrToInt(Str, Value) and (Value>=1) and (Value<=100);
 end;
 
-class function TImgRes.JpgQualityToStr(const Value :integer) :string;
+class function TProcessor.JpgQualityToStr(const Value :integer) :string;
 begin
   if (Value<1) or (Value>100) then
     raise Exception.CreateFmt(SErrInvalidJpgQualityFmt, [Value]);
@@ -768,7 +792,7 @@ begin
     result := IntToStr(Value);
 end;
 
-class function TImgRes.TryStrToRenameParams(const Str: string; out Params: TRenameParams; out ErrStr: string): boolean;
+class function TProcessor.TryStrToRenameParams(const Str: string; out Params: TRenameParams; out ErrStr: string): boolean;
 var
   Placeholders :TStringArray;
   Items :TStringArray;
@@ -841,7 +865,7 @@ begin
   result := true;
 end;
 
-class function TImgRes.RenameParamsToStr(const Params: TRenameParams): string;
+class function TProcessor.RenameParamsToStr(const Params: TRenameParams): string;
 begin
   if Params.Enabled then begin
     result := Format(Params.FmtStr, [
@@ -854,94 +878,125 @@ begin
     result := '';
 end;
 
-procedure TImgRes.SetSizes(AValue :string);
+class function TProcessor.TryStrToTagsSources(const Str :string; out Value :TTagsSources) :boolean;
+var
+  Item :string;
+  Items :TStringArray;
 begin
-  if not TrySizesStrToSizes(AValue, FParams.Sizes) then
+  Value := [];
+  Items := StrToStringArray(Str, ',');
+  for Item in Items do
+    if SameText(Item, 'EXIF') then include(Value, tsEXIF)
+    else if SameText(Item, 'TAGS') then include(Value, tsTagsFiles)
+    else Exit(false);
+  result := true;
+end;
+
+procedure TProcessor.SetSizes(AValue :string);
+begin
+  if not TrySizesStrToSizes(AValue, FSizes) then
     raise Exception.Create(Format(SErrInvalidSizesFmt, [AValue]));
 end;
 
-function TImgRes.GetSizes: string;
+function TProcessor.GetSizes: string;
 begin
-  result := SizesToSizesStr(FParams.Sizes);
+  result := SizesToSizesStr(FSizes);
 end;
 
-function TImgRes.GetDstFiletemplate: string;
+function TProcessor.GetDstFiletemplate: string;
 begin
-  result := RenameParamsToStr(FParams.Ren);
+  result := RenameParamsToStr(FRen);
 end;
 
-function TImgRes.GetSrcFilenames: TStrings;
+function TProcessor.GetFilter: string;
 begin
-  result := FParams.SrcFilenames;
+  result := ResampleFilterStr[FFilter];
 end;
 
-procedure TImgRes.SetDstFiletemplate(AValue: string);
+function TProcessor.GetSrcFilenames: TStrings;
+begin
+  result := FSrcFilenames;
+end;
+
+procedure TProcessor.SetDstFiletemplate(AValue: string);
 var
   ErrMsg :string;
   Params :TRenameParams;
 begin
   if not TryStrToRenameParams(AValue, Params, ErrMsg) then
     raise Exception.Create(ErrMsg);
-  FParams.Ren := Params;
+  FRen := Params;
 end;
 
-procedure TImgRes.SetMrkFilename(AValue: string);
+procedure TProcessor.SetFilter(AValue: string);
+var
+  f :TResampleFilter;
 begin
-  if AValue=FParams.MrkFilename then Exit;
-  FParams.MrkFilename := AValue;
-  FParams.MrkFilenameDependsOnSize := Pos('%SIZE%', AValue)>0;
+  for f := low(TResampleFilter) to high(TResampleFilter) do
+    if CompareText(AValue, ResampleFilterStr[f])=0 then begin
+      FFilter := f;
+      Exit;
+    end;
+  raise Exception.CreateFmt(SErrInvalifFilterFmt, [AValue]);
 end;
 
-procedure TImgRes.SetJpgQuality(AValue: integer);
+procedure TProcessor.SetMrkFilename(AValue: string);
 begin
-  if FParams.JpgQuality=AValue then Exit;
+  if AValue=FMrkFilename then Exit;
+  FMrkFilename := AValue;
+  FMrkFilenameDependsOnSize := Pos('%SIZE%', AValue)>0;
+end;
+
+procedure TProcessor.SetJpgQuality(AValue: integer);
+begin
+  if FJpgQuality=AValue then Exit;
   if (AValue<1) or (AValue>100) then
     raise Exception.CreateFmt(SErrInvalidJpgQualityFmt, [AValue]);
-  FParams.JpgQuality:=AValue;
+  FJpgQuality:=AValue;
 end;
 
-procedure TImgRes.SetPngCompression(AValue: integer);
+procedure TProcessor.SetPngCompression(AValue: integer);
 begin
-  if FParams.PngCompression=AValue then Exit;
+  if FPngCompression=AValue then Exit;
   if (AValue<0) or (AValue>3) then
     raise Exception.CreateFmt(SErrInvalidPNGCompressionFmt, [AValue]);
-  FParams.PngCompression:=AValue;
+  FPngCompression:=AValue;
 end;
 
-procedure TImgRes.SetMrkSize(AValue: single);
+procedure TProcessor.SetMrkSize(AValue: single);
 begin
-  if FParams.MrkSize=AValue then Exit;
+  if FMrkSize=AValue then Exit;
   if AValue<0.0 then AValue := 0.0;
   if AValue>100.0 then AValue := 100.0;
-  FParams.MrkSize:=AValue;
+  FMrkSize:=AValue;
 end;
 
-procedure TImgRes.SetMrkX(AValue: single);
+procedure TProcessor.SetMrkX(AValue: single);
 begin
-  if FParams.MrkX=AValue then Exit;
-  FParams.MrkX:=AValue;
+  if FMrkX=AValue then Exit;
+  FMrkX:=AValue;
 end;
 
-procedure TImgRes.SetMrkY(AValue: single);
+procedure TProcessor.SetMrkY(AValue: single);
 begin
-  if FParams.MrkY=AValue then Exit;
-  FParams.MrkY:=AValue;
+  if FMrkY=AValue then Exit;
+  FMrkY:=AValue;
 end;
 
-procedure TImgRes.SetMrkAlpha(AValue: single);
+procedure TProcessor.SetMrkAlpha(AValue: single);
 begin
-  if FParams.MrkAlpha=AValue then Exit;
+  if FMrkAlpha=AValue then Exit;
   if AValue<0.0 then AValue := 0.0;
   if AValue>100.0 then AValue := 100.0;
-  FParams.MrkAlpha:=AValue;
+  FMrkAlpha:=AValue;
 end;
 
-procedure TImgRes.SetSrcFilenames(AValue: TStrings);
+procedure TProcessor.SetSrcFilenames(AValue: TStrings);
 begin
-  FParams.SrcFilenames.Assign(AValue);
+  FSrcFilenames.Assign(AValue);
 end;
 
-class function TImgRes.GetVersion: string;
+class function TProcessor.GetVersion: string;
 begin
   result := IMGRESVER;
 end;

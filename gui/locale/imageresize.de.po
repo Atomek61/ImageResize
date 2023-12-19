@@ -44,6 +44,16 @@ msgstr "Update verfügbar: Version %s von %s"
 msgid "Cant '%s' convert to a date."
 msgstr "Kann '%s' nicht in ein Datum umwandeln."
 
+#: datetimeutils.serrinvaliddatetimefmt
+#, object-pascal-format
+msgid "Invalid datetime '%s'."
+msgstr "Ungültige Zeitangabe '%s'."
+
+#: datetimeutils.serrinvaliddatetimeformatfmt
+#, object-pascal-format
+msgid "Invalid format for datetime '%s'."
+msgstr "Ungültiges Fomat für Datum/Zeit '%s'."
+
 #: imgres.scptabort
 msgid "Abort"
 msgstr "Abbruch"
@@ -138,7 +148,7 @@ msgstr "Lade '%s'..."
 
 #: imgres.smsgloadingtags
 msgid "Loading .tags..."
-msgstr ""
+msgstr "Lade .tags..."
 
 #: imgres.smsgloadmrkfilefmt
 #, object-pascal-format
@@ -147,8 +157,8 @@ msgstr "Lade Wasserzeichen '%s'..."
 
 #: imgres.smsgreadingexiffmt
 #, object-pascal-format
-msgid "Reading EXIF in '%s'..."
-msgstr ""
+msgid "Reading EXIF from '%s'..."
+msgstr "Lese EXIF aus '%s'..."
 
 #: imgres.smsgresamplingfmt
 #, object-pascal-format
@@ -172,12 +182,12 @@ msgstr "Drucke Wasserzeichen '%s'..."
 #: imgres.smsgwritingexiffmt
 #, object-pascal-format
 msgid "Writing EXIF to '%s'..."
-msgstr ""
+msgstr "Schreibe EXIF nach '%s'..."
 
 #: imgres.smsgwritingtagsreportfmt
 #, object-pascal-format
 msgid "Writing Tags Report to '%s'..."
-msgstr ""
+msgstr "Schreibe Tags Report nach '%s'..."
 
 #: imgres.swrnupsamplingfmt
 #, object-pascal-format
@@ -197,8 +207,8 @@ msgstr "%d Kerne"
 #: maindlg.scptdependenciesfmt
 #, object-pascal-format
 msgctxt "maindlg.scptdependenciesfmt"
-msgid "Build with Lazarus %s, BGRABitmap %s, dExif"
-msgstr "Compiliert mit Lazarus %s, BGRABitmap %s, dExif"
+msgid "Build with Lazarus %s, BGRABitmap %s, dExif %s"
+msgstr "Compiliert mit Lazarus %s, BGRABitmap %s, dExif %s"
 
 #: maindlg.scptexecute
 msgctxt "maindlg.scptexecute"
@@ -267,10 +277,6 @@ msgstr "Abgebrochen bei %.0f%%"
 msgid "Enter placeholder %SIZE% to either the destination folder or the file template."
 msgstr "Geben Sie den Platzhalter %SIZE% an im Verzeichnisnamen, bzw. im Dateinamen-Template."
 
-#: maindlg.serrinvalidcopyright
-msgid "Invalid copyright."
-msgstr "Ungültiges Copyright."
-
 #: maindlg.serrinvalidjpgquality
 msgid "Invalid jpg quality."
 msgstr "Ungültige jpg-Qualität."
@@ -311,9 +317,9 @@ msgstr "Fehlende Quelldateinamen."
 msgid "Missing source folder."
 msgstr "Fehlendes Quellverzeichnis."
 
-#: maindlg.serrnotags
-msgid "Select a tag to copy or disable copying of tags."
-msgstr "Wählen Sie ein zu kopierendes Tag (Metainformation) oder wählen Sie die Option zum Kopieren ab."
+#: maindlg.serrmissingtagsreport
+msgid "Missing filename for tags reporting."
+msgstr "Fehlender Dateiname for Tags Report."
 
 #: maindlg.slocdirhelp
 msgid "hlp\\en"
@@ -363,9 +369,10 @@ msgstr "http://www.atomek.de/imageresize/hlp35/gui/de"
 msgid "Watermark Editor"
 msgstr "Wasserzeichen-Editor"
 
-#: mrkeditdlg.serrincompatiblefileversion
+#: mrkeditdlg.serrincompatiblefileversionfmt
 #, object-pascal-format
-msgid "Incompatible file version %.2f, %.2f expected."
+msgctxt "mrkeditdlg.serrincompatiblefileversionfmt"
+msgid "Incompatible file version %.2f (%.2f expected)."
 msgstr "Inkompatible Dateiversion %.2f (%.2f erwartet)."
 
 #: mrkeditdlg.serrinvalidfiletypefmt
@@ -415,8 +422,8 @@ msgid "<appversion>"
 msgstr "<appversion>"
 
 #: taboutdialog.labelavailability.caption
-msgid "Press Check to check for available updates..."
-msgstr "Drücken Sie Prüfen um ein verfügbares Update zu ermitteln..."
+msgid "Press \"Check\" to look for an available update..."
+msgstr "Drücken Sie \"Prüfen\", um ein verfügbares Update zu suchen..."
 
 #: taboutdialog.labelavailability1.caption
 msgid ""
@@ -439,7 +446,7 @@ msgstr "<appcopyright>"
 
 #: taboutdialog.labelimgresguicpr1.caption
 msgid "On ATOMEKs homepage:"
-msgstr "Auf ATOMEKs Homepage"
+msgstr "Auf ATOMEKs Homepage:"
 
 #: taboutdialog.labelimgresguicpr2.caption
 msgid "On Github:"
@@ -482,35 +489,35 @@ msgctxt "taboutdialog.toolbar.caption"
 msgid "ToolBar"
 msgstr ""
 
-#: tags.serrfilenametagnotfoundfmt
-#, object-pascal-format
-msgctxt "tags.serrfilenametagnotfoundfmt"
-msgid "First column must be named 'Filename' in '%s'."
+#: tags.serrasterisk
+msgid "first row cannot contain a *"
+msgstr "erste Zeile darf nicht den * enthalten"
+
+#: tags.serrempty
+msgid "file is empty"
+msgstr "leere Datei"
+
+#: tags.serrfilenamenotfound
+msgid "tag 'Filename' not in first column"
 msgstr ""
 
-#: tags.serrfmtmissingfilenamefmt
+#: tags.serrinvalidlinefmt
 #, object-pascal-format
-msgctxt "tags.serrfmtmissingfilenamefmt"
-msgid "Missing filename in '%0:s' line %1:d"
-msgstr ""
+msgid "Invalid .tags file '%s' line %d - %s."
+msgstr "Ungültige .tags-Datei '%s' Zeile %d - %s."
 
-#: tags.serrfmtmorevaluesthantagsfmt
+#: tags.serrinvalidtagsfilefmt
 #, object-pascal-format
-msgctxt "tags.serrfmtmorevaluesthantagsfmt"
-msgid "More values than tags in '%s'."
-msgstr ""
+msgid "Invalid .tags file '%s' - %s."
+msgstr "Ungültige .tags-Datei '%s' - %s."
 
-#: tags.serrnodictforfilefoundfmt
-#, object-pascal-format
-msgctxt "tags.serrnodictforfilefoundfmt"
-msgid "No tags defined for '%s'."
-msgstr ""
+#: tags.serrmissingfilename
+msgid "missing filename"
+msgstr "fehlender Dateiname"
 
-#: tags.serrnotagforkeyfmt
-#, object-pascal-format
-msgctxt "tags.serrnotagforkeyfmt"
-msgid "No tag '%1:s' found for '%0:s',"
-msgstr ""
+#: tags.serrmorevaluesthantags
+msgid "more values than tags"
+msgstr "mehr Werte als Tags"
 
 #: threading.dispatcher.scptcancelled
 msgid "Cancelled"
@@ -687,11 +694,6 @@ msgstr "Öffnet den eingebauten Wasserzeichen-Editor"
 msgid "ImageResize"
 msgstr "ImageResize"
 
-#: tmaindialog.checkboxcopyrightenabled.caption
-msgctxt "tmaindialog.checkboxcopyrightenabled.caption"
-msgid "Enabled"
-msgstr "Anwenden"
-
 #: tmaindialog.checkboxmrkenabled.caption
 msgctxt "tmaindialog.checkboxmrkenabled.caption"
 msgid "Enabled"
@@ -704,7 +706,7 @@ msgstr "Anwenden"
 
 #: tmaindialog.checkboxrenenabled.hint
 msgid "Enables destination image file renaming - choose a strategy."
-msgstr "Ermöglicht die Umbenennung der Zieldateien - wählen Sie eine Strategie"
+msgstr "Ermöglicht die Umbenennung der Zieldateien - wähle eine Strategie."
 
 #: tmaindialog.checkboxshake.caption
 msgid "Enable"
@@ -722,24 +724,26 @@ msgstr "Anhalten bei Fehler"
 msgid "Copyright"
 msgstr "Copyright"
 
-#: tmaindialog.checkboxtagdescription.caption
-msgid "Description"
-msgstr "Beschreibung"
-
-#: tmaindialog.checkboxtagsenabled.caption
-msgctxt "tmaindialog.checkboxtagsenabled.caption"
-msgid "Enabled"
-msgstr "Anwenden"
-
 #: tmaindialog.checkboxtagsreportenabled.caption
-#, fuzzy
 msgctxt "tmaindialog.checkboxtagsreportenabled.caption"
-msgid "Enabled"
-msgstr "Anwenden"
+msgid "Create"
+msgstr "Erzeugen"
+
+#: tmaindialog.checkboxtagssourceexif.caption
+msgid "Use origins EXIF meta information"
+msgstr "Verwende die originalen EXIF Metainformationen"
+
+#: tmaindialog.checkboxtagssourcetagsfiles.caption
+msgid "Search for .tags files in each origins folder"
+msgstr "Suche nach .tags-Dateien in den Ursprungsverzeichnissen"
 
 #: tmaindialog.checkboxtagtimestamp.caption
 msgid "Timestamp"
 msgstr "Zeitstempel"
+
+#: tmaindialog.checkboxtagtitle.caption
+msgid "Title"
+msgstr "Titel"
 
 #: tmaindialog.comboboxboost.hint
 msgid "The application can use a multithreaded pooling"
@@ -893,14 +897,13 @@ msgstr "Geben Sie das Verzeichnis mit ihren Bildern ein"
 #: tmaindialog.editsrcmasks.hint
 msgctxt "tmaindialog.editsrcmasks.hint"
 msgid "Semicolon separated list of wildcards - filename templates with ? and * placeholders"
-msgstr "Semikoloseparierte Liste von Wildcards - Dateinamen-Vorlagen, die ? und * enthalten können."
+msgstr "Durch Semikolon getrennte Liste von Wildcards - Dateinamen-Corlagen mir ? und * Platzhaltern"
 
 #: tmaindialog.editsrcmasks.text
 msgid "*.jpg;*.png"
 msgstr "*.jpg;*.png"
 
 #: tmaindialog.edittagsreportfilename.hint
-#, fuzzy
 msgctxt "tmaindialog.edittagsreportfilename.hint"
 msgid ""
 "Enter a destination folder of the resampled images.\n"
@@ -911,19 +914,28 @@ msgstr ""
 "Wenn mehrere Zielgrößen angegeben wurden, muss der Verzeichnisname den Platzhalter %SIZE% enthalten.\n"
 "Dort baut das Programm die Größe im Namen ein."
 
-#: tmaindialog.groupbox2.caption
-msgid "Tags Report"
-msgstr ""
-
-#: tmaindialog.groupbox2.hint
-msgid ""
-"A Tags Report is a list of filenames and tags, which may be usefull for creating\n"
-"a slideshow."
-msgstr ""
-
 #: tmaindialog.groupboxdstfolder.caption
 msgid "Destination Folder"
 msgstr "Zielverzeichnis"
+
+#: tmaindialog.groupboxexiftagging.caption
+msgid "EXIF Tagging"
+msgstr "EXIF Tagging"
+
+#: tmaindialog.groupboxexiftagging.hint
+msgctxt "tmaindialog.groupboxexiftagging.hint"
+msgid ""
+"Define which EXIF tags are to be copied from the origin to the resampled images.\n"
+"This option is valid only for JPEG files.\n"
+"To change the EXIF tags of your source images, you can change them in the\n"
+"Windows Explorer or with a photo editor like RawTherapee."
+msgstr ""
+"Legen Sie fest, welche EXIF-Metainformationen vom Original in die resampelten\n"
+"Bilder kopiert werden sollen. Diese Option ist nur bei JPEG-Dateien möglich.\n"
+"Um die EXIF-Metainformationen Ihrer Originaldateien zu bearbeiten, können\n"
+"Sie sie mit dem Windows-Explorer (Eigenschaften - Details) bearbeiten, oder\n"
+"Sie verwenden ein gängiges Bildbearbeitungsprogramm, wie RawTherapee,\n"
+"Lightroom oder Photoshop."
 
 #: tmaindialog.groupboximagefiles.caption
 msgid "Images"
@@ -941,29 +953,6 @@ msgstr "Dateiname"
 msgid "Layout"
 msgstr "Layout"
 
-#: tmaindialog.groupboxoverwritecopyright.caption
-#, fuzzy
-msgctxt "tmaindialog.groupboxoverwritecopyright.caption"
-msgid "Override Copyright"
-msgstr "Überschreibe Copyright"
-
-#: tmaindialog.groupboxoverwritecopyright.hint
-#, fuzzy
-msgctxt "tmaindialog.groupboxoverwritecopyright.hint"
-msgid ""
-"To assign a common copyright note as EXIF tag, select this\n"
-"option and enter a text like © 2023 Mogli Maisenkeyser\n"
-"This option is available only for JPEG files.\n"
-"You can either transfer an existing copyright tag, or assign\n"
-"a common one, but not both."
-msgstr ""
-"Wählen Sie diese Option, um eine gemeinsame Copyright-Notiz\n"
-"als EXIF-Metainformation an die erzeugten Dateien anzuhängen.\n"
-"Z.B.: © 2023 Mogli Maisenkeyser\n"
-"Die Option ist nur bei JPEG-Dateien möglich.\n"
-"Sie können entweder ein bestehendes Copyright übertragen,\n"
-"oder ein neues gemeinsames überschreiben, aber nicht beides."
-
 #: tmaindialog.groupboxparams.caption
 msgid "Parameters"
 msgstr "Parameter"
@@ -980,23 +969,32 @@ msgstr "Strategie"
 msgid "Shake"
 msgstr "Mischen"
 
-#: tmaindialog.groupboxtags.caption
-msgid "Copy Tags"
-msgstr "Kopiere Metainformationen"
+#: tmaindialog.groupboxtagsreport.caption
+msgctxt "tmaindialog.groupboxtagsreport.caption"
+msgid "Tags Report"
+msgstr "Tags Report"
 
-#: tmaindialog.groupboxtags.hint
+#: tmaindialog.groupboxtagsreport.hint
+msgctxt "tmaindialog.groupboxtagsreport.hint"
 msgid ""
-"Define which EXIF tags are to be copied from the origin to the resampled images.\n"
-"This option is valid only for JPEG files.\n"
-"To change the EXIF tags of your source images, you can change them in the\n"
-"Windows Explorer or with a photo editor like RawTherapee."
+"A Tags Report is a list of filenames and tags, which may be usefull for creating\n"
+"a slideshow."
 msgstr ""
-"Legen Sie fest, welche EXIF-Metainformationen vom Original in die resampelten\n"
-"Bilder kopiert werden sollen. Diese Option ist nur bei JPEG-Dateien möglich.\n"
-"Um die EXIF-Metainformationen Ihrer Originaldateien zu bearbeiten, können\n"
-"Sie sie mit dem Windows-Explorer (Eigenschaften - Details) bearbeiten, oder\n"
-"Sie verwenden ein gängiges Bildbearbeitungsprogramm, wie RawTherapee,\n"
-"Lightroom oder Photoshop."
+"Ein Tags Report ist eine Liste von Dateinamen und Tags, welche\n"
+"nützlich für die Erzeugung einer Slideshow sein können."
+
+#: tmaindialog.groupboxtagssource.caption
+msgid "Tags Source"
+msgstr "Tags Quellen"
+
+#: tmaindialog.groupboxtagssource.hint
+msgid ""
+"Tags can be read from the original files EXIF of from .tags files in each origins folder.\n"
+"The latter ones do override the origins EXIF source."
+msgstr ""
+"Tags können aus den EXIF Metainformationen der originalen Bilddateien übertragen werden\n"
+"oder sie werden aus .tags-Dateien aus den Ursprungsverzeichnissen geladen.\n"
+"Letztere überschreiben ggf. die ursprünglichen EXIF-Tags."
 
 #: tmaindialog.label1.caption
 msgid "Source Files:"
@@ -1033,6 +1031,10 @@ msgstr "Größe:"
 msgctxt "tmaindialog.label16.caption"
 msgid "%"
 msgstr "%"
+
+#: tmaindialog.label17.caption
+msgid "(EXIF ImageDescription)"
+msgstr "(EXIF ImageDescription)"
 
 #: tmaindialog.label18.caption
 msgid "File Wildcards:"
@@ -1080,8 +1082,8 @@ msgid "Compression:"
 msgstr "Kompression:"
 
 #: tmaindialog.label7.caption
-msgid "Copyright Text:"
-msgstr "Copyright-Text:"
+msgid "Overwrite with this:"
+msgstr "Überschreibe mit diesem:"
 
 #: tmaindialog.label8.caption
 msgid "Threads:"
@@ -1093,7 +1095,7 @@ msgstr "Horizontal:"
 
 #: tmaindialog.labelcores.caption
 msgid "Cores"
-msgstr "Kerne:"
+msgstr "Cores"
 
 #: tmaindialog.labeldstfolderrequired.caption
 msgctxt "tmaindialog.labeldstfolderrequired.caption"
@@ -1156,10 +1158,7 @@ msgstr "Erforderlich"
 
 #: tmaindialog.memosrcfilenames.hint
 msgid "Enter a list of files with absolute pathes."
-msgstr ""
-"Enthält eine Liste von Dateien mit absoluten Pfaden:\n"
-"Drücken Sie Auswählen... und wählen Sie mehrere Dateien aus\n"
-"mit <STRG> oder <UMSCHALT>. "
+msgstr "Enter a list of files with absolute pathes."
 
 #: tmaindialog.opendialogsrcfilenames.title
 msgid "Select one or more Images"
@@ -1186,8 +1185,8 @@ msgid "1 Simple - a folder for each size"
 msgstr "1 Einfach - ein Verzeichnis für jede Größe"
 
 #: tmaindialog.saveasdialogtagsreport.title
-msgid "Tags Report speichern als"
-msgstr ""
+msgid "Save Tags Report as"
+msgstr "Tags Report speichern als"
 
 #: tmaindialog.tabsheetboost.caption
 msgctxt "tmaindialog.tabsheetboost.caption"
@@ -1294,11 +1293,10 @@ msgid ""
 "This is, because the Image Resize processor\n"
 "always needs a PNG file"
 msgstr ""
-"Die Ok-Schaltfläche wird verfügbar nachdem Sie\n"
-"das Wasserzeichen speichern oder es aus einer\n"
-"Datei laden.\n"
-"Der Prozessor benötigt immer das Wasserzeichen\n"
-"als gespeicherte Datei."
+"Die Ok-Schaltfläche wird verfügbar, wenn Sie\n"
+" das Wasserzeichen aus einer Datei laden, oder in einer speichern.\n"
+"\n"
+"Das ist so, weil der ImageResize-Prozessor immer eine PNG-Datei benötigt."
 
 #: tmrkeditdialog.actionopen.caption
 msgctxt "tmrkeditdialog.actionopen.caption"
@@ -1449,5 +1447,4 @@ msgstr ""
 #: twebcreatordialog.label1.caption
 msgctxt "twebcreatordialog.label1.caption"
 msgid "Steps:"
-msgstr ""
-
+msgstr "Schritte:"

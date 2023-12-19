@@ -1,1 +1,1 @@
-..\bin\imgres @org\imglist.txt .\test2_%%SIZE%% 640,800 -j 10 -p max
+..\bin\imgres @srcA\imglist.txt .\tst2_%%SIZE%% 640,800 -j 10 -p max

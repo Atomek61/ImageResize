@@ -1,5 +1,5 @@
 @if [%1]==[] goto usage
-..\bin\ImageResize.exe test%1.irs -A -X
+..\bin\ImageResize.exe guitest%1.irs -A -X
 @goto ok
 :usage
 @echo usage: guitest n

@@ -33,6 +33,16 @@ msgstr ""
 msgid "Cant '%s' convert to a date."
 msgstr ""
 
+#: datetimeutils.serrinvaliddatetimefmt
+#, object-pascal-format
+msgid "Invalid datetime '%s'."
+msgstr ""
+
+#: datetimeutils.serrinvaliddatetimeformatfmt
+#, object-pascal-format
+msgid "Invalid format for datetime '%s'."
+msgstr ""
+
 #: imgres.scptabort
 msgid "Abort"
 msgstr ""
@@ -136,7 +146,7 @@ msgstr ""
 
 #: imgres.smsgreadingexiffmt
 #, object-pascal-format
-msgid "Reading EXIF in '%s'..."
+msgid "Reading EXIF from '%s'..."
 msgstr ""
 
 #: imgres.smsgresamplingfmt
@@ -186,7 +196,7 @@ msgstr ""
 #: maindlg.scptdependenciesfmt
 #, object-pascal-format
 msgctxt "maindlg.scptdependenciesfmt"
-msgid "Build with Lazarus %s, BGRABitmap %s, dExif"
+msgid "Build with Lazarus %s, BGRABitmap %s, dExif %s"
 msgstr ""
 
 #: maindlg.scptexecute
@@ -256,10 +266,6 @@ msgstr ""
 msgid "Enter placeholder %SIZE% to either the destination folder or the file template."
 msgstr ""
 
-#: maindlg.serrinvalidcopyright
-msgid "Invalid copyright."
-msgstr ""
-
 #: maindlg.serrinvalidjpgquality
 msgid "Invalid jpg quality."
 msgstr ""
@@ -300,8 +306,8 @@ msgstr ""
 msgid "Missing source folder."
 msgstr ""
 
-#: maindlg.serrnotags
-msgid "Select a tag to copy or disable copying of tags."
+#: maindlg.serrmissingtagsreport
+msgid "Missing filename for tags reporting."
 msgstr ""
 
 #: maindlg.slocdirhelp
@@ -345,9 +351,10 @@ msgstr ""
 msgid "Watermark Editor"
 msgstr ""
 
-#: mrkeditdlg.serrincompatiblefileversion
+#: mrkeditdlg.serrincompatiblefileversionfmt
 #, object-pascal-format
-msgid "Incompatible file version %.2f, %.2f expected."
+msgctxt "mrkeditdlg.serrincompatiblefileversionfmt"
+msgid "Incompatible file version %.2f (%.2f expected)."
 msgstr ""
 
 #: mrkeditdlg.serrinvalidfiletypefmt
@@ -397,7 +404,7 @@ msgid "<appversion>"
 msgstr ""
 
 #: taboutdialog.labelavailability.caption
-msgid "Press Check to check for available updates..."
+msgid "Press \"Check\" to look for an available update..."
 msgstr ""
 
 #: taboutdialog.labelavailability1.caption
@@ -460,34 +467,34 @@ msgctxt "taboutdialog.toolbar.caption"
 msgid "ToolBar"
 msgstr ""
 
-#: tags.serrfilenametagnotfoundfmt
-#, object-pascal-format
-msgctxt "tags.serrfilenametagnotfoundfmt"
-msgid "First column must be named 'Filename' in '%s'."
+#: tags.serrasterisk
+msgid "first row cannot contain a *"
 msgstr ""
 
-#: tags.serrfmtmissingfilenamefmt
-#, object-pascal-format
-msgctxt "tags.serrfmtmissingfilenamefmt"
-msgid "Missing filename in '%0:s' line %1:d"
+#: tags.serrempty
+msgid "file is empty"
 msgstr ""
 
-#: tags.serrfmtmorevaluesthantagsfmt
-#, object-pascal-format
-msgctxt "tags.serrfmtmorevaluesthantagsfmt"
-msgid "More values than tags in '%s'."
+#: tags.serrfilenamenotfound
+msgid "tag 'Filename' not in first column"
 msgstr ""
 
-#: tags.serrnodictforfilefoundfmt
+#: tags.serrinvalidlinefmt
 #, object-pascal-format
-msgctxt "tags.serrnodictforfilefoundfmt"
-msgid "No tags defined for '%s'."
+msgid "Invalid .tags file '%s' line %d - %s."
 msgstr ""
 
-#: tags.serrnotagforkeyfmt
+#: tags.serrinvalidtagsfilefmt
 #, object-pascal-format
-msgctxt "tags.serrnotagforkeyfmt"
-msgid "No tag '%1:s' found for '%0:s',"
+msgid "Invalid .tags file '%s' - %s."
+msgstr ""
+
+#: tags.serrmissingfilename
+msgid "missing filename"
+msgstr ""
+
+#: tags.serrmorevaluesthantags
+msgid "more values than tags"
 msgstr ""
 
 #: threading.dispatcher.scptcancelled
@@ -665,11 +672,6 @@ msgstr ""
 msgid "ImageResize"
 msgstr ""
 
-#: tmaindialog.checkboxcopyrightenabled.caption
-msgctxt "tmaindialog.checkboxcopyrightenabled.caption"
-msgid "Enabled"
-msgstr ""
-
 #: tmaindialog.checkboxmrkenabled.caption
 msgctxt "tmaindialog.checkboxmrkenabled.caption"
 msgid "Enabled"
@@ -700,22 +702,25 @@ msgstr ""
 msgid "Copyright"
 msgstr ""
 
-#: tmaindialog.checkboxtagdescription.caption
-msgid "Description"
-msgstr ""
-
-#: tmaindialog.checkboxtagsenabled.caption
-msgctxt "tmaindialog.checkboxtagsenabled.caption"
-msgid "Enabled"
-msgstr ""
-
 #: tmaindialog.checkboxtagsreportenabled.caption
 msgctxt "tmaindialog.checkboxtagsreportenabled.caption"
-msgid "Enabled"
+msgid "Create"
+msgstr ""
+
+#: tmaindialog.checkboxtagssourceexif.caption
+msgid "Use origins EXIF meta information"
+msgstr ""
+
+#: tmaindialog.checkboxtagssourcetagsfiles.caption
+msgid "Search for .tags files in each origins folder"
 msgstr ""
 
 #: tmaindialog.checkboxtagtimestamp.caption
 msgid "Timestamp"
+msgstr ""
+
+#: tmaindialog.checkboxtagtitle.caption
+msgid "Title"
 msgstr ""
 
 #: tmaindialog.comboboxboost.hint
@@ -855,18 +860,21 @@ msgid ""
 "into the path where the program shall insert the current size ."
 msgstr ""
 
-#: tmaindialog.groupbox2.caption
-msgid "Tags Report"
-msgstr ""
-
-#: tmaindialog.groupbox2.hint
-msgid ""
-"A Tags Report is a list of filenames and tags, which may be usefull for creating\n"
-"a slideshow."
-msgstr ""
-
 #: tmaindialog.groupboxdstfolder.caption
 msgid "Destination Folder"
+msgstr ""
+
+#: tmaindialog.groupboxexiftagging.caption
+msgid "EXIF Tagging"
+msgstr ""
+
+#: tmaindialog.groupboxexiftagging.hint
+msgctxt "tmaindialog.groupboxexiftagging.hint"
+msgid ""
+"Define which EXIF tags are to be copied from the origin to the resampled images.\n"
+"This option is valid only for JPEG files.\n"
+"To change the EXIF tags of your source images, you can change them in the\n"
+"Windows Explorer or with a photo editor like RawTherapee."
 msgstr ""
 
 #: tmaindialog.groupboximagefiles.caption
@@ -885,21 +893,6 @@ msgstr ""
 msgid "Layout"
 msgstr ""
 
-#: tmaindialog.groupboxoverwritecopyright.caption
-msgctxt "tmaindialog.groupboxoverwritecopyright.caption"
-msgid "Override Copyright"
-msgstr ""
-
-#: tmaindialog.groupboxoverwritecopyright.hint
-msgctxt "tmaindialog.groupboxoverwritecopyright.hint"
-msgid ""
-"To assign a common copyright note as EXIF tag, select this\n"
-"option and enter a text like © 2023 Mogli Maisenkeyser\n"
-"This option is available only for JPEG files.\n"
-"You can either transfer an existing copyright tag, or assign\n"
-"a common one, but not both."
-msgstr ""
-
 #: tmaindialog.groupboxparams.caption
 msgid "Parameters"
 msgstr ""
@@ -916,16 +909,26 @@ msgstr ""
 msgid "Shake"
 msgstr ""
 
-#: tmaindialog.groupboxtags.caption
-msgid "Copy Tags"
+#: tmaindialog.groupboxtagsreport.caption
+msgctxt "tmaindialog.groupboxtagsreport.caption"
+msgid "Tags Report"
 msgstr ""
 
-#: tmaindialog.groupboxtags.hint
+#: tmaindialog.groupboxtagsreport.hint
+msgctxt "tmaindialog.groupboxtagsreport.hint"
 msgid ""
-"Define which EXIF tags are to be copied from the origin to the resampled images.\n"
-"This option is valid only for JPEG files.\n"
-"To change the EXIF tags of your source images, you can change them in the\n"
-"Windows Explorer or with a photo editor like RawTherapee."
+"A Tags Report is a list of filenames and tags, which may be usefull for creating\n"
+"a slideshow."
+msgstr ""
+
+#: tmaindialog.groupboxtagssource.caption
+msgid "Tags Source"
+msgstr ""
+
+#: tmaindialog.groupboxtagssource.hint
+msgid ""
+"Tags can be read from the original files EXIF of from .tags files in each origins folder.\n"
+"The latter ones do override the origins EXIF source."
 msgstr ""
 
 #: tmaindialog.label1.caption
@@ -962,6 +965,10 @@ msgstr ""
 #: tmaindialog.label16.caption
 msgctxt "tmaindialog.label16.caption"
 msgid "%"
+msgstr ""
+
+#: tmaindialog.label17.caption
+msgid "(EXIF ImageDescription)"
 msgstr ""
 
 #: tmaindialog.label18.caption
@@ -1003,7 +1010,7 @@ msgid "Compression:"
 msgstr ""
 
 #: tmaindialog.label7.caption
-msgid "Copyright Text:"
+msgid "Overwrite with this:"
 msgstr ""
 
 #: tmaindialog.label8.caption
@@ -1100,7 +1107,7 @@ msgid "1 Simple - a folder for each size"
 msgstr ""
 
 #: tmaindialog.saveasdialogtagsreport.title
-msgid "Tags Report speichern als"
+msgid "Save Tags Report as"
 msgstr ""
 
 #: tmaindialog.tabsheetboost.caption

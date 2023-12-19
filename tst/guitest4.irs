@@ -1,0 +1,35 @@
+[Common]
+Type=IRS
+Version=300
+
+[Settings]
+SrcMode=0
+SrcFolder=
+SrcMasks=*.jpg; *.png
+DstFolder=tst4_%SIZE%
+SrcFilenames=srcA\img1.png|srcA\img2.jpg|srcA\img3.jpg|srcA\img4.png|
+Sizes=10, 3840
+JpgOptions.Quality=default
+PngOptions.Compression=default
+MrkEnabled=1
+MrkFilename=watermarks\testtesttest.png
+MrkSize=40
+MrkX=10
+MrkY=10
+MrkAlpha=50
+StopOnError=0
+RenEnabled=0
+RenSimple=1
+RenAdvanced=0
+RenCustom=0
+RenTemplate=img%INDEX:1,3%.%FILEEXT%
+Shake=0
+ShakeSeed=0
+TagsEnabled=0
+TagTitle=0
+TagTimestamp=0
+TagCopyright=0
+CopyrightEnabled=0
+Copyright=
+TagsReportEnabled=0
+TagsReportFilename=

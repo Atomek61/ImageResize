@@ -6,17 +6,35 @@ unit EXIFUtils;
 interface
 
 uses
-  Classes, SysUtils, tags, Generics.Collections;
+  Classes, SysUtils, tags, datetimeutils;
 
-function ReadExifTags(const Filename :string; Tags :TTags; out TagIDs :TIDArray) :boolean;
-procedure WriteExifTags(const Filename :string; Tags :TTags; const TagIDs :TIDArray);
+function ReadExifTags(const Filename :string; Tags :TTags; out TagIDs :TTagIDs) :boolean;
+procedure WriteExifTags(const Filename :string; Tags :TTags; const TagIDs :TTagIDs);
+function allSupported(const TagIDs :TTagIDs) :boolean;
 
 implementation
 
 uses
   dMetadata;
 
-function ReadExifTags(const Filename :string; Tags :TTags; out TagIDs :TIDArray) :boolean;
+const
+  TAGIDS_SUPPORTED   :array[0..2] of string = (TAGID_TITLE, TAGID_TIMESTAMP, TAGID_COPYRIGHT);
+
+function allSupported(const TagIDs :TTagIDs) :boolean;
+var
+  i, j :integer;
+begin
+  result := true;
+  for i:=0 to High(TagIDs) do begin
+    for j:=0 to High(TAGIDS_SUPPORTED) do begin
+      result := TAGIDS_SUPPORTED[j] = TagIDs[i];
+      if result then break;
+    end;
+    if not result then Exit(false);
+  end;
+end;
+
+function ReadExifTags(const Filename :string; Tags :TTags; out TagIDs :TTagIDs) :boolean;
 var
   ImgData :TImgData;
   Timestamp :TDateTime;
@@ -24,29 +42,29 @@ var
 begin
   result := false;
   ImgData := TImgData.Create;
-  SetLength(TagIDs, 0);
+  TagIDs := nil;
   try
     ImgData.ProcessFile(Filename);
     if ImgData.HasMetaData then begin
-      // Description
+      // Title
       Value := ImgData.ExifObj.ImageDescription;
       if Value<>'' then begin
-        TagIDs.Add(TAGKEY_DESCRIPTION);
-        Tags.AddOrSetValue(TAGKEY_DESCRIPTION, Value);
+        TagIDs.Add(TAGID_TITLE);
+        Tags.AddOrSetValue(TAGID_TITLE, Value);
       end;
 
       // Timestamp
       Timestamp := ImgData.ExifObj.DateTimeOriginal;
       if Timestamp<>0.0 then begin
-        TagIDs.Add(TAGKEY_TIMESTAMP);
-        Tags.AddOrSetValue(TAGKEY_TIMESTAMP, FormatDateTime('YYYY-MM-DD HH:NN:SS', Timestamp, TFilesTags.FormatSettings));
+        TagIDs.Add(TAGID_TIMESTAMP);
+        Tags.AddOrSetValue(TAGID_TIMESTAMP, datetimeutils.DateTimeToStr(Timestamp));
       end;
 
       // Copyright
       Value := ImgData.ExifObj.Copyright;
       if Value<>'' then begin
-        TagIDs.Add(TAGKEY_COPYRIGHT);
-        Tags.AddOrSetValue(TAGKEY_COPYRIGHT, Value);
+        TagIDs.Add(TAGID_COPYRIGHT);
+        Tags.AddOrSetValue(TAGID_COPYRIGHT, Value);
       end;
 
       result := Length(TagIDs)>0;
@@ -56,7 +74,7 @@ begin
   end;
 end;
 
-procedure WriteExifTags(const Filename :string; Tags :TTags; const TagIDs :TIDArray);
+procedure WriteExifTags(const Filename :string; Tags :TTags; const TagIDs :TTagIDs);
 var
   ImgData :TImgData;
   Value :string;
@@ -65,11 +83,11 @@ begin
   ImgData := TImgData.Create;
   try
     ImgData.CreateExifObj;
-    if TagIDs.Contains(TAGKEY_DESCRIPTION) and Tags.TryGetValue(TAGKEY_DESCRIPTION, Value) then
+    if TagIDs.Contains(TAGID_TITLE) and Tags.TryGetValue(TAGID_TITLE, Value) then
       ImgData.ExifObj.ImageDescription := Value;
-    if TagIDs.Contains(TAGKEY_TIMESTAMP) and Tags.TryGetValue(TAGKEY_TIMESTAMP, Value) then
-      ImgData.ExifObj.DateTimeOriginal := StrToDateTime(Value);
-    if TagIDs.Contains(TAGKEY_COPYRIGHT) and Tags.TryGetValue(TAGKEY_COPYRIGHT, Value) then
+    if TagIDs.Contains(TAGID_TIMESTAMP) and Tags.TryGetValue(TAGID_TIMESTAMP, Value) then
+      ImgData.ExifObj.DateTimeOriginal := datetimeutils.StrToDateTime(Value);
+    if TagIDs.Contains(TAGID_COPYRIGHT) and Tags.TryGetValue(TAGID_COPYRIGHT, Value) then
       ImgData.ExifObj.Copyright := Value;
     ImgData.WriteEXIFJpeg(Filename);
   finally

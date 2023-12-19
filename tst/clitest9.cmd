@@ -1,0 +1,1 @@
+FOR %%G IN (Box,Linear,HalfCosine,Cosine,Bicubic,Mitchell,Spline,Lanczos2,Lanczos3,Lanczos4,BestQuality) DO (call clitestfilter %%G)

@@ -15,7 +15,7 @@
   </head>
 
   <body>
-    <header style="background-image: url('../img/title.jpg');">
+    <header style="background-image: url('../../images/title.jpg');">
       <div class="title-box">
         <div>Atomek</div>
         <div>ImageResize</div>
@@ -28,7 +28,7 @@
 
       <h1 id="overview">Übersicht</h1>
       <p>
-        <i>ImageResize</i> 3.4 ist eine App zur Größenänderung von JPEG- und PNG-Bildern.
+        <i>ImageResize</i> 3.5 ist eine App zur Größenänderung von JPEG- und PNG-Bildern.
         Sie ist für die Erzeugung von Web-Gallerien gedacht und kann viele Bilder 
         auf einmal verarbeiten.
       </p>
@@ -41,7 +41,8 @@
       <a href="#renaming">Umbenennen und mischen</a><br/>
       <a href="#watermark">Wasserzeichen</a><br/>
       <a href="#compression">Kompression</a><br/>
-      <a href="#boost">Boost</a><br/>
+      <a href="#tagging">Taggen</a><br/>
+      <a href="#boost">Beschleunigte Verarbeitung</a><br/>
       <a href="#saving">Speichern und Öffnen</a><br/>
       <a href="#commandline">Kommandozeilen-Parameter</a><br/>
       <a href="#mrkeditor">Wasserzeichen-Editor</a><br/>
@@ -55,6 +56,7 @@
         <li>Resampling jedes Bildes in mehrere Größen</li>
         <li>Nutzt <i>Lanczos</i>-Filterung für gute Ergebnisse</li>
         <li>Optionales Wasserzeichen</li>
+        <li>EXIF Tags (Titel, Timestamp, Copyright)</li>
         <li>Unterstützt JPEG- und PNG-Formate</li>
         <li>Kontrolle der Kompressionsqualität</li>
         <li>GUI-, CLI- und API-Schnittstelle verfügbar</li>
@@ -68,7 +70,7 @@
         <li>Bildverzerrung</li>
         <li>Formatkonvertierung (JPEG bleibt JPEG und PNG bleibt PNG)</li>
         <li>Vorschau</li>
-        <li>Bewahren von Meta-Informationen (EXIF)</li>
+        <li>Alle EXIF tags übertragen</li>
       </ul>
       
       <h1 id="overview">Übersicht</h1>
@@ -94,11 +96,13 @@
         <li>im Auswahldialog ausgewählt werden<img class="btn" src="../img/open.png"/> mit &lt;STRG&gt; und &lt;UMSCHALT&gt;</li>
         <li>durch Ziehen von Bilddateien aus dem Windows-Explorer ergänzt werden</li>
         <li>durch Angabe eines Quellverzeichnisses mit Dateifilter angegeben werden</li>
+        <li>relative Pfadangaben beinhalten</li>
       </ol>
       <p>
         Die Liste kann JPEG- und PNG-Dateien enthalten. Die Dateinamen können beibehalten
         oder <a href="#renaming">umbenannt</a> werden. Relative Pfade beziehen sich auf
-        das Arbeitsverzeichnis des Programmes.
+        das Arbeitsverzeichnis des Programmes, welches nach dem Laden oder Speichern einer
+        Projektdatei (.irs) der Pfad zu dieser ist.
       </p>
       <a class="chfot" href="#contents">Inhalt</a>
       
@@ -227,8 +231,8 @@
       </p>
       <p>
         Der Parameter <i>Saat</i> kontrolliert die zufällige Abfolge. Eine Saat von 0 wird
-        jedesmal, wenn die Verarbeitung gestartet wird, eine andere Abfolge erzeugen.
-        Jeder andere konstante Wert wird die die Abfolge in der selben Art mischen,
+        jedesmal eine andere Abfolge erzeugen, wenn die Verarbeitung gestartet wird.
+        Jeder andere konstante Wert wird die Abfolge in der selben Art mischen,
         solange die Länge der Bildliste sich nicht ändert.
       </p>
       
@@ -255,8 +259,8 @@
         für alle zu erzeugen.
       </p>
       <p>
-        Es gibt jedoch einen Weg, für jede Zielgröße ein anderes Wasserbild zu verwenden. Geben Sie dazu
-        im Namen der Wasserbilddatei den Platzhalter <span class="plh">%SIZE%</span> an.
+        Um für jede Zielgröße ein anderes Wasserbild festzulegen, müssen Sie
+        im Namen der Wasserbilddatei den Platzhalter <span class="plh">%SIZE%</span> angeben.
         ImageResize erwartet in diesem Falle ein Wasserbild für jede Größe, deren Name 
         der Vorlage entspricht, also die Größe enthält.
       </p>
@@ -295,16 +299,12 @@
       <h3 id="mrkx">Horizontale Position</h3>
       <p>
         Die Position wird in Prozent des verfügbaren Raumes angegeben und von links oben gezählt.<br/>
-        0 Prozent ist linksbündig<br/>
-        50 Prozent ist mittig<br/>
-        100 Prozent ist rechtsbündig
+        0 Prozent ist linksbündig, 50 Prozent ist mittig und 100 Prozent ist rechtsbündig.
       </p>
     
       <h3 id="mrky">Vertikale Position</h3>
       <p>
-        0 Prozent ist ganz oben<br/>
-        50 Prozent ist vertikal zentriert<br/>
-        100 Prozent in ganz unten
+        0 Prozent ist ganz oben, 50 Prozent ist vertikal zentriert, 100 Prozent ist ganz unten.
       </p>
       <a class="chfot" href="#contents">Inhalt</a>
 
@@ -331,13 +331,147 @@
       </p>
       <a class="chfot" href="#contents">Inhalt</a>
       
-      <h1 id="boost">Boost</h1>
+      <h1 id="tagging">Taggen</h1>
+      <p>
+        Sie können gewisse Meta-Informationen ihrer Bilder in die erzeugten Bilder schreiben. Normalerweise werden
+        solche Metainformationen bei Fotos (z.B. JPEG) im EXIF-Format innerhalb der Datei gespeichert.
+        Die meisten Fotoapparate legen damit viele technische Informationen in den erzeugten JPEG-Dateien ab.
+      </p>
+      <p>
+        Taggen (engl. "anhängen") bedeutet, dass Sie den mit ImageResize erzeugten Bildern bestimmte dieser
+        Informationen mitgeben. Es wird aus zwei Gründen von ImageResize unterstützt:
+      </p>
+      <ul>
+        <li>Zum Erhalt Ihres Copyrights bei der Weitergabe von Bildern</li>
+        <li>Als Grundlage für eine <i>Slideshow</i> (automatisierter Bildbetrachter)</li>
+      </ul>
+      <p>
+        Dazu werden die folgenden Metainformationen (<i>Tags</i>) unterstützt:
+      </p>
+      <ul>
+        <li>
+          <h4>Titel</h4>
+          <p>
+            Eine kurze Beschreibung des Bildinhaltes, so wie er von einem Anzeigeprogramm wiedergegeben würde.
+            Der Titel ist als EXIF Tag <i>ImageDescription</i> abgelegt.
+          </p>
+        </li>
+        <li>
+          <h4>Zeitstempel</h4>
+          <p>
+            Das Aufnahmedatum eines Fotos.
+          </p>
+        </li>
+        <li>
+          <h4>Copyright</h4>
+          <p>
+            Die Copyright-Note besteht mindestens aus den Teilen <i>Copyright-Zeichen</i> © od. (c), dem <i>Jahr</i> und dem <i>Urheber</i>.
+          </p>
+        </li>
+      </ul>
+      <p>
+        Im Parameter-Dialog <i>Taggen</i> können Sie auswählen, welche der genannten Tags in die Zielbilder übernommen werden sollen.
+        Dabei können die Copyright-Einträge für alle Bilder mit einer neuen Zeichenkette überschrieben werden.
+      </p>
+      
+      <h2>Vorbereitung zum Taggen ihrer Bilder</h2>
+      <p>
+        Um die erzeugten Kopien zu taggen gibt es 2 Möglichkeiten:
+      </p>
+      <h3>1. Die Originaldateien mit EXIF-Metainformationen erweitern</h3>
+      <p>
+        Das geht nur bei JPEG-, nicht aber bei PNG-Bildern. Sie können dazu externe Programme verwenden:
+      </p>
+      <ul>
+        <li>Mit dem Eigenschaften-Dialog im Windows-Explorer. Im Reiter "Details" können sie die Tags <i>Titel</i>,
+          <i>Erfassungsdatum</i> und <i>Copyright</i> in den Originalen ändern.</li>
+        <li>Verwendung eines Programmes eines Drittanbieters - z.B. ExifTool oder RawTherapee</li>
+      </ul>
+      <h3>2. Vorbereiten der Tags in .tags-Dateien</h3>
+      <p>
+        Mit einem beliebigem einfachen Textbearbeitungsprogramm, wie dem Windows-Editor (notepad.exe), schreiben Sie eine Liste der Tags und
+        speichern die Datei UTF-8-kodiert im Verzeichnis mit den Originaldateien unter dem Namen ".tags". Wenn Sie mehrere Verzeichnisse
+        mit Bildern haben, legen Sie in jedes Verzeichnis eine .tags-Datei.
+      </p>
+      <p>
+        Eine .tags-Datei ist eine CSV-Datei (kommaseparierte Liste) mit UTF-8-Kodierung. Die Titelzeile enthält die Namen der Spalten
+        (Filename, Title, Timestamp, Copyright). Darunter existiert für jedes Bild eine Zeile mit den Feldern entsprechend der Header-Zeile.
+      </p>
+      <pre class="code">
+Filename, Title, Copyright
+DSC04262.jpg, Labore Sanitas, (c) 2023 ATOMEK
+DSC04264.jpg, Leuchtturm am Hafen, (c) 2023 ATOMEK
+DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
+      <p>
+        Sie können beliebige Spaltenüberschriften verwenden, aber es werden nur die folgenden von ImageResize verwendet:
+        Filename, Title, Timestamp und Copyright.
+      </p>
+      <p>
+        Die erste Spalte muss "Filename" heißen und enthält den Namen der Datei ohne den Pfad.
+        Die Reihenfolge der anderen Spalten und die Reihenfolge der Zeilen sind unbedeutend.
+        Wenn ein Feld Kommata oder führende Leerzeichen enthalten soll, setzen Sie das Feld in doppelte Anführungszeichen.
+      </p>
+      <p>
+        Wenn Sie mehrere .tags-Dateien in verschiedenen Verzeichnissen anlegen, müssen diese nicht gleich strukturiert sein.
+        Sie können unterschiedliche Spaltennamen haben.
+      </p>
+ 
+      <h2>Erzeugen einer Liste aller Tags (TagsReport)</h2>
+      <p>
+        Im Parameter-Dialog <i>Taggen</i> können Sie ImageResize anweisen eine UTF-8 kodierte Textdatei mit einer Liste der bekannten
+        Tags zu erzeugen. Voraussetzung ist das Taggen. Dann werden die .tags-Dateien gelesen, ggf. durch EXIF-Metadaten vervollständigt
+        und abschließend als eine große Tabelle gespeichert.
+      </p>
+      <p>
+        Eine solche Datei mit der kann für einen Slideshow-Generator die Grundage bilden.
+        Das nächste Release von ImageResize wird einen HTML-Slideshow-Generator als Werkzeug beinhalten.
+      </p>
+      <p>
+        Wenn ein Feld den Asterisk enthält (als einziges Zeichen), wird der Feldwert von der vorherigen Zeile übernommen.
+      </p>
+
+      <h2>Tagging Dialog</h2>
+      <img src="img/tagging-sources.png"/>
+      <p>
+        Sie können die Quellen der Tags explizit angeben. Damit haben sie mehr Kontroller darüber, wo die Tags herkommen.
+        Normalerweise erkennt das Programm selbst, welche Quelle erforderlich ist. Wenn sie keine Quelle angeben, wird EXIF angenommen,
+        sofern Sie Tags ausgewählt habe.
+      </p>
+      <p>
+        Wenn Sie .tags-Dateien zu den Original-Dateien gespeichert haben und diese, z.B. für den Tags Report verwenden möchten,
+        müssen Sie die die Checkbox "Suche nach .tags-Dateien" klicken.
+      </p>
+      <img src="img/tagging-exif.png"/>
+      <p>
+        Hier wählen Sie aus, welche Tags in die erzeugten Bilder als EXIF-Tags übernommen werden sollen. Der Bildtitel wird im
+        EXIF-Feld "ImageDescription" abgelegt. Sie können das Copyright-Tag für alle erzeugten Bilder überschreiben.
+      </p>
+      <p>
+        Wenn Sie als Quelle sowohl EXIF als auch .tags-Dateien angegeben haben, haben die .tags-Dateien Vorrang. Die EXIF-Metainformationen
+        der Originaldateien werden dann nur verwendet, wenn die .tags-Dateien für die betreffende Datei keine Felder definiert haben.
+      </p>
+
+      <img src="img/tagging-tagsreport.png"/>
+      <p>
+        Zum Abschluss der Erzeugung der Bilddateien kann eine Liste aller ermittelten Tags gespeichert werden. Die Datei wird
+        UTF-8-kodiert als CSV-Datei gespeichert. Beispiel:
+      </p>
+      <pre class="code">
+Filename, Title, Copyright
+DSC04262.jpg, Labore Sanitas, (c) 2023 ATOMEK
+C:\Bilder\DSC04264.jpg, Leuchtturm am Hafen, (c) 2023 ATOMEK
+C:\Bilder\DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
+      <p>
+        Die erzeugte Datei soll eines Tages als Grundlage für den Slideshow-Nachbrenner dienen.
+      </p>
+
+      <h1 id="boost">Beschleunigte Verarbeitung</h1>
       <h3 id="threads">Threads</h3>
       <p>
         ImageResize kann durch Multi-Threading die Rechenpower des Systems besser nutzen.<br/>
         <i>Single</i> bedeutet, dass nur ein Kern genutzt wird - die Verarbeitung wird entsprechend langsam.
         Sie können bis zur Gesamtzahl der verfügbaren Kerne gehen (=<i>Maximum</i>).
-        Dies kann die Verarbeitungsgeschwindigkeit mehr als verdoppeln.
+        Dies kann die Verarbeitungsgeschwindigkeit vervielfachen, z.B. 5-fach bei 12 Hyperthreads statt nur einem.
       </p>
       <p>
         In Systemen mit <i>Hyperthreading</i> ist die Zahl der virtuellen Kerne höher als die der physischen.
@@ -363,25 +497,34 @@
       <a class="chfot" href="#contents">Inhalt</a>
       
       <h1 id="commandline">Kommandozeilen-Parameter</h1>
+      <p>
+        Diese beziehen sich auf die graphische Anwendung ImageResize.exe. Es gibt auch das Kommandozeilenprogramm
+        <a href="../../cli/index.html">imgres.exe</a> mit wesentlich mehr Optionen.
+      </p>
+
       <h3><i>filename.irs</i></h3>
       <p>
         Sie können ImageResize eine .irs-Datei beim Start laden lassen, indem Sie den Dateinamen als Kommandozeilen-Parameter übergeben.
         Dadurch kann die Anwendung ImageResize auch in der Systemsteuerung mit der Erweiterung .irs verknüpft werden.
       </p>
+
       <h3>-A  oder  -AUTOSTART</h3>
       <p>
         Lässt ImageResize die Ausführen-Schaltfläche automatisch beim Start betätigen.
       </p>
+
       <h3>-X  oder  -AUTOEXIT</h3>
       <p>
         Bewirkt ein automatisches Schließen der Anwendung nach dem Ende der Verarbeitung.
       </p>
-      <h3>-E  oder  -ENGLISH</h3>
+
+      <h3>-L EN oder  -LANGUAGE EN</h3>
       <p>
-        Bewirkt, dass die englische Sprache für die Benutzeroberfläche erzwungen wird.
-        Es existiert eine deutsche Übersetzung, die automatisch aktiviert wird,
-        wenn das System für Deutsch lokalisiert ist.
+        Die Anwendung ist für die englische Sprache entwickelt, aber es gibt eine deutsche
+        Lokalisierung, die automatisch auf deutschen Systemen angezeigt wird.
+        Mit diesem Schalter, kann dieses Verhalten verhindert werden.
       </p>
+
       <p>
         Um ImageResize automatisch eine Liste von Bildern resampeln zu lassen, speichern Sie 
         zunächst eine geeignete .irs-Date und starten dann das Programm mit diesen Kommandozeilenparametern:

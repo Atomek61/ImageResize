@@ -14,6 +14,7 @@ object MrkEditDialog: TMrkEditDialog
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnShow = FormShow
   ShowHint = True
   LCLVersion = '2.2.6.0'
   object PanelPreview: TPanel

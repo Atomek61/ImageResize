@@ -63,7 +63,7 @@ implementation
 
 uses
   maindlg, imgres, LazVersion, BGRABitmapTypes, opensslsockets, Updateutils,
-  lclintf;
+  lclintf, dGlobal;
 
 resourcestring
   SCptAvailable           = 'Available';
@@ -145,7 +145,7 @@ begin
     LabelImgresGuiCpr.Caption := Text1;
     LabelAppVersion.Caption := GUIVER_APP + ' ' + GUIVER_VERSION;
     LabelProcessorVersion.Caption := Text2;
-    LabelDependencies.Caption := Format(SCptDependenciesFmt, [laz_version, IntToStr(BGRABitmapVersion)]);
+    LabelDependencies.Caption := Format(SCptDependenciesFmt, [laz_version, IntToStr(BGRABitmapVersion), dGlobal.dExifVersion]);
     MemoLicense.Text := License;
     ImageMainIcon.Picture.Icon := Application.Icon;
     result := ShowModal = mrOk;
