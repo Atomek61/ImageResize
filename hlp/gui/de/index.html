@@ -11,6 +11,10 @@
       .atop td {vertical-align: top;}
       .atop tr td:nth-child(1)  {width: 7em; font-weight: bold; font-style: italic;}
       .framed {border: 1px solid silver;}
+      .filter  {display: flex; flex-wrap: wrap; font-size: 10pt;}
+      .filter-box { margin-bottom: 1em;}
+      .upsampling .filter-box {width: 80px;}
+      .downsampling .filter-box {width: 240px;}
     </style>
   </head>
 
@@ -40,7 +44,7 @@
       <a href="#sizes">Zielgrößen</a><br/>
       <a href="#renaming">Umbenennen und mischen</a><br/>
       <a href="#watermark">Wasserzeichen</a><br/>
-      <a href="#compression">Kompression</a><br/>
+      <a href="#quality">Qualität</a><br/>
       <a href="#tagging">Taggen</a><br/>
       <a href="#boost">Beschleunigte Verarbeitung</a><br/>
       <a href="#saving">Speichern und Öffnen</a><br/>
@@ -308,9 +312,11 @@
       </p>
       <a class="chfot" href="#contents">Inhalt</a>
 
-      <h1 id="compression">Kompression</h1>
+      <h1 id="quality">Qualität</h1>
       <p>
-        Sie können den Kompressionsgrad für JPEG- und für PNG-Formate steuern.
+        Die Qualität des Ergebnisses hängt von diesen Eistellungen ab.
+        Sie können den Kompressionsgrad für JPEG- und für PNG-Formate und
+        den Resampling-Algorithmus steuern.
       </p>
       <p>
         JPEG hat ein verlustbehaftetes Verfahren. Eine höhere Qualität resultiert
@@ -329,6 +335,105 @@
         </ul>
         <img src="img/pngcompression.png"/>
       </p>
+      <p>
+        Es stehen 11 Resampling-Algorithmen zur Verfügung. Ein elfter -<i>BestQuality</i>- wird durch
+        den Mitchell oder den Spline realisiert. Ausser dem einfachen <i>Stretch</i> sind die Algorithmen Interpolationen.
+        Je nach Skalierung wirken Sie sich unterschiedlich aus.
+      </p>
+      <h2>Wirkung der Algorithmen beim hochskalieren</h2>
+      <div class="filter upsampling">
+        <div class="filter-box">
+          Stretch<br/>
+          <img src="../img/testimage2_Stretch_48.png"/>
+        </div>
+        <div class="filter-box">
+          Box<br/>
+          <img src="../img/testimage2_Box_48.png"/>
+        </div>
+        <div class="filter-box">
+          Linear<br/>
+          <img src="../img/testimage2_Linear_48.png"/>
+        </div>
+        <div class="filter-box">
+          Half Cosine<br/>
+          <img src="../img/testimage2_HalfCosine_48.png"/>
+        </div>
+        <div class="filter-box">
+          Cosine<br/>
+          <img src="../img/testimage2_Cosine_48.png"/>
+        </div>
+        <div class="filter-box">
+          Bicubic<br/>
+          <img src="../img/testimage2_Bicubic_48.png"/>
+        </div>
+        <div class="filter-box">
+          Mitchell<br/>
+          <img src="../img/testimage2_Mitchell_48.png"/>
+        </div>
+        <div class="filter-box">
+          Spline<br/>
+          <img src="../img/testimage2_Spline_48.png"/>
+        </div>
+        <div class="filter-box">
+          Lanczos 2<br/>
+          <img src="../img/testimage2_Lanczos2_48.png"/>
+        </div>
+        <div class="filter-box">
+          Lanczos 3<br/>
+          <img src="../img/testimage2_Lanczos3_48.png"/>
+        </div>
+        <div class="filter-box">
+          Lanczos 4<br/>
+          <img src="../img/testimage2_Lanczos4_48.png"/>
+        </div>
+      </div>
+      <h2>Wirkung der Algorithmen beim herunterskalieren</h2>
+      <div class="filter downsampling">
+        <div class="filter-box">
+          Stretch<br/>
+          <img src="../img/testimage1_Stretch_96.png"/>
+        </div>
+        <div class="filter-box">
+          Box<br/>
+          <img src="../img/testimage1_Box_96.png"/>
+        </div>
+        <div class="filter-box">
+          Linear<br/>
+          <img src="../img/testimage1_Linear_96.png"/>
+        </div>
+        <div class="filter-box">
+          Half Cosine<br/>
+          <img src="../img/testimage1_HalfCosine_96.png"/>
+        </div>
+        <div class="filter-box">
+          Cosine<br/>
+          <img src="../img/testimage1_Cosine_96.png"/>
+        </div>
+        <div class="filter-box">
+          Bicubic<br/>
+          <img src="../img/testimage1_Bicubic_96.png"/>
+        </div>
+        <div class="filter-box">
+          Mitchell<br/>
+          <img src="../img/testimage1_Mitchell_96.png"/>
+        </div>
+        <div class="filter-box">
+          Spline<br/>
+          <img src="../img/testimage1_Spline_96.png"/>
+        </div>
+        <div class="filter-box">
+          Lanczos 2<br/>
+          <img src="../img/testimage1_Lanczos2_96.png"/>
+        </div>
+        <div class="filter-box">
+          Lanczos 3<br/>
+          <img src="../img/testimage1_Lanczos3_96.png"/>
+        </div>
+        <div class="filter-box">
+          Lanczos 4<br/>
+          <img src="../img/testimage1_Lanczos4_96.png"/>
+        </div>
+      </div>
       <a class="chfot" href="#contents">Inhalt</a>
       
       <h1 id="tagging">Taggen</h1>

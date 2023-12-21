@@ -98,7 +98,7 @@ type
     ActionParamWatermark: TAction;
     ActionParamRenaming: TAction;
     ActionParamSizes: TAction;
-    ActionParamCompression: TAction;
+    ActionParamQuality: TAction;
     ActionBrowseSrcFolder: TAction;
     ActionEditWatermark: TAction;
     ActionHelp: TAction;
@@ -140,6 +140,7 @@ type
     CheckBoxMrkEnabled: TCheckBox;
     CheckBoxShake: TCheckBox;
     CheckBoxStopOnError: TCheckBox;
+    ComboBoxResampling: TComboBox;
     ComboBoxShakeSeed: TComboBox;
     EditCopyright: TEdit;
     EditTagsReportFilename: TEdit;
@@ -156,6 +157,7 @@ type
     EditMrkY: TEdit;
     EditSizes: TEdit;
     EditDstFolder: TEdit;
+    GroupBoxResampling: TGroupBox;
     GroupBoxTagsReport: TGroupBox;
     GroupBoxTagsSource: TGroupBox;
     GroupBoxEXIFTagging: TGroupBox;
@@ -181,6 +183,7 @@ type
     Label15: TLabel;
     Label16: TLabel;
     Label17: TLabel;
+    Label21: TLabel;
     Label7: TLabel;
     LabelHintPlaceholder1: TLabel;
     LabelShakeSeed: TLabel;
@@ -228,7 +231,7 @@ type
     TabSheetWatermark: TTabSheet;
     TabSheetBoost: TTabSheet;
     TabSheetSizes: TTabSheet;
-    TabSheetCompression: TTabSheet;
+    TabSheetQuality: TTabSheet;
     TimerProgressBarOff: TTimer;
     ToolBar: TToolBar;
     ToolBarParameters: TToolBar;
@@ -473,6 +476,7 @@ var
   Button :TToolButton;
   Cpt :string;
   LangCode :string;
+  Resampling :TResampling;
 begin
   AllowDropFiles := true;
   if (SysLocale.PriLangId=7) and not (IsSwitch('L', 'LANGUAGE', LangCode) and SameText(LangCode, 'en')) then
@@ -506,6 +510,8 @@ begin
   ToolBarSizeButtons.ButtonHeight := ToolBarSizeButtons.ClientHeight div 4;
   RadioButtonRenSimple.Hint := RENSIMPLETEMPLATE;
   RadioButtonRenAdvanced.Hint := RENADVANCEDTEMPLATE;
+  for Resampling in TResampling do
+    ComboBoxResampling.Items.Add(RESAMPLING_STRINGS[Resampling]);
 
 end;
 
@@ -639,6 +645,7 @@ begin
     RadioButtonFileList.Checked         := true;
     ComboBoxJpgQuality.Text             := ImgResizer.JpgQualityToStr(ImgResizer.JpgQuality);
     ComboBoxPngCompression.Text         := TProcessor.PngCompressionToStr(ImgResizer.PngCompression);
+    ComboBoxResampling.Text             := RESAMPLING_STRINGS[DEFAULT_RESAMPLING];
     EditMrkFilename.Text                := '';
     UpDownMrkSize.Position              := round(ImgResizer.MrkSize);
     UpDownMrkX.Position                 := round(ImgResizer.MrkX);
@@ -700,6 +707,7 @@ begin
     UpdateSizesControls;
     ComboBoxJpgQuality.Text               := ReadString(SETTINGSSECTION, 'JpgOptions.Quality', ComboBoxJpgQuality.Text);
     ComboBoxPngCompression.Text           := ReadString(SETTINGSSECTION, 'PngOptions.Compression', ComboBoxPngCompression.Text);
+    ComboBoxResampling.Text               := ReadString(SETTINGSSECTION, 'Resampling', RESAMPLING_STRINGS[DEFAULT_RESAMPLING]);
     CheckBoxMrkEnabled.Checked            := ReadBool(SETTINGSSECTION, 'MrkEnabled', CheckBoxMrkEnabled.Checked);
     EditMrkFilename.Text                  := ReadString(SETTINGSSECTION, 'MrkFilename', EditMrkFilename.Text);
     UpDownMrkSize.Position                := ReadInteger(SETTINGSSECTION, 'MrkSize', UpDownMrkSize.Position);
@@ -741,6 +749,7 @@ begin
     WriteString(SETTINGSSECTION, 'Sizes', EditSizes.Text);
     WriteString(SETTINGSSECTION, 'JpgOptions.Quality', ComboBoxJpgQuality.Text);
     WriteString(SETTINGSSECTION, 'PngOptions.Compression', ComboBoxPngCompression.Text);
+    WriteString(SETTINGSSECTION, 'Resampling', ComboBoxResampling.Text);
     WriteBool(SETTINGSSECTION, 'MrkEnabled', CheckBoxMrkEnabled.Checked);
     WriteString(SETTINGSSECTION, 'MrkFilename', EditMrkFilename.Text);
     WriteString(SETTINGSSECTION, 'MrkSize', EditMrkSize.Text);
@@ -771,6 +780,7 @@ var
   Ini :TIniFile;
   Filename :string;
   AHeight :integer;
+  Path :string;
 begin
   Filename := GetSettingsFilename(false);
   if not FileExists(Filename) then Exit(false);
@@ -782,6 +792,9 @@ begin
     if AHeight+PanelControls.Top + 16 < ClientHeight then
       PanelControls.Height := AHeight;
     ComboBoxBoost.Text := Ini.ReadString(DIALOGSECTION, 'ThreadCount', ComboBoxBoost.Text);
+    Path := Ini.ReadString(DIALOGSECTION, 'CurrentDirectory', GetCurrentDir);
+    if DirectoryExists(Path) then
+      SetCurrentDir(Path);
     result := LoadFromIni(Ini);
   finally
     Ini.Free;
@@ -800,6 +813,7 @@ begin
     Ini.WriteInteger(DIALOGSECTION, 'Height', Height);
     Ini.WriteInteger(DIALOGSECTION, 'PanelControls.Height', PanelControls.Height);
     Ini.WriteString(DIALOGSECTION, 'ThreadCount', ComboBoxBoost.Text);
+    Ini.WriteString(DIALOGSECTION, 'CurrentDirectory', GetCurrentDir);
     SaveToIni(Ini);
   finally
     Ini.Free;
@@ -1364,6 +1378,7 @@ begin
           raise Exception.Create(SErrInvalidJpgQuality);
         Processor.JpgQuality := IntValue;
         Processor.PngCompression := ComboBoxPngCompression.ItemIndex;
+        Processor.Resampling := TResampling(ComboBoxResampling.ItemIndex);
 
         // Rename
         if CheckBoxRenEnabled.Checked then begin
@@ -1413,7 +1428,6 @@ begin
           Processor.TagsReportFilename := EditTagsReportFilename.Text;
         end else
           Processor.TagsReportFilename := '';
-
 
         // Hook the processor
         Processor.OnPrint := @OnPrint;

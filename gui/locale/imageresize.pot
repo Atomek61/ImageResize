@@ -103,6 +103,11 @@ msgstr ""
 msgid "Invalid renaming parameter '%s'."
 msgstr ""
 
+#: imgres.serrinvalidresamplingfmt
+#, object-pascal-format
+msgid "Invalid resampling value '%s'."
+msgstr ""
+
 #: imgres.serrinvalidsizesfmt
 #, object-pascal-format
 msgid "Invalid sizes '%s'."
@@ -122,7 +127,7 @@ msgstr ""
 
 #: imgres.sinfresultfmt
 #, object-pascal-format
-msgid "Images: %d, Sizes: %d, Tasks: %d, Successful: %d, Failed: %d, Elapsed: %.2fs"
+msgid "Images: %d, Filter: %s, Sizes: %d, Tasks: %d, Successful: %d, Failed: %d, Elapsed: %.2fs"
 msgstr ""
 
 #: imgres.smsgcreatingfolderfmt
@@ -569,14 +574,12 @@ msgstr ""
 msgid "Accelerate the resampling Process by Multithreading"
 msgstr ""
 
-#: tmaindialog.actionparamcompression.caption
-msgctxt "tmaindialog.actionparamcompression.caption"
-msgid "Com&pression"
+#: tmaindialog.actionparamquality.caption
+msgid "&Quality"
 msgstr ""
 
-#: tmaindialog.actionparamcompression.hint
-msgctxt "tmaindialog.actionparamcompression.hint"
-msgid "Compression of the destination files"
+#: tmaindialog.actionparamquality.hint
+msgid "Compression and filtering quality"
 msgstr ""
 
 #: tmaindialog.actionparamrenaming.caption
@@ -756,6 +759,16 @@ msgctxt "tmaindialog.comboboxpngcompression.text"
 msgid "default"
 msgstr ""
 
+#: tmaindialog.comboboxresampling.hint
+msgctxt "tmaindialog.comboboxresampling.hint"
+msgid ""
+"The image quality and the processing\n"
+"speed depend on the algorithm of\n"
+"resampling. Lanczos2 is the default for\n"
+"a good speed and quality.\n"
+"2 means the Lanczos algorithms radius."
+msgstr ""
+
 #: tmaindialog.comboboxshakeseed.hint
 msgid "Enter a number, lets say 1000, to create always the same shaked order or 0 for shaking always randomly."
 msgstr ""
@@ -905,6 +918,11 @@ msgstr ""
 msgid "Strategy"
 msgstr ""
 
+#: tmaindialog.groupboxresampling.caption
+msgctxt "tmaindialog.groupboxresampling.caption"
+msgid "Resampling"
+msgstr ""
+
 #: tmaindialog.groupboxshaking.caption
 msgid "Shake"
 msgstr ""
@@ -991,6 +1009,10 @@ msgstr ""
 
 #: tmaindialog.label20.caption
 msgid "Click or drag the watermark"
+msgstr ""
+
+#: tmaindialog.label21.caption
+msgid " Algorithm:"
 msgstr ""
 
 #: tmaindialog.label3.caption
@@ -1115,9 +1137,8 @@ msgctxt "tmaindialog.tabsheetboost.caption"
 msgid "Boost"
 msgstr ""
 
-#: tmaindialog.tabsheetcompression.caption
-msgctxt "tmaindialog.tabsheetcompression.caption"
-msgid "Compression"
+#: tmaindialog.tabsheetquality.caption
+msgid "Quality"
 msgstr ""
 
 #: tmaindialog.tabsheetrenaming.caption

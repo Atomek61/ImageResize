@@ -114,6 +114,11 @@ msgstr "Ungültige PNG-Kompression %d (0..3 erwartet)."
 msgid "Invalid renaming parameter '%s'."
 msgstr "Ungültiger Umbennennungs-Parameter '%s'."
 
+#: imgres.serrinvalidresamplingfmt
+#, object-pascal-format
+msgid "Invalid resampling value '%s'."
+msgstr ""
+
 #: imgres.serrinvalidsizesfmt
 #, object-pascal-format
 msgid "Invalid sizes '%s'."
@@ -133,8 +138,8 @@ msgstr "Mehrfache Größe, aber Platzhalter %SIZE% nicht gefunden im Verzeichnis
 
 #: imgres.sinfresultfmt
 #, object-pascal-format
-msgid "Images: %d, Sizes: %d, Tasks: %d, Successful: %d, Failed: %d, Elapsed: %.2fs"
-msgstr "Bilder: %d, Größen: %d, Tasks: %d, Erfolgreich: %d, Fehlerhaft: %d, Vergangen: %.2fs"
+msgid "Images: %d, Filter: %s, Sizes: %d, Tasks: %d, Successful: %d, Failed: %d, Elapsed: %.2fs"
+msgstr "Bilder: %d, Filter: %s, Größen: %d, Tasks: %d, Erfolgreich: %d, Fehlerhaft: %d, Vergangen: %.2fs"
 
 #: imgres.smsgcreatingfolderfmt
 #, object-pascal-format
@@ -499,7 +504,7 @@ msgstr "leere Datei"
 
 #: tags.serrfilenamenotfound
 msgid "tag 'Filename' not in first column"
-msgstr ""
+msgstr "in der ersten Zeile muss das Tag 'Filename' stehen"
 
 #: tags.serrinvalidlinefmt
 #, object-pascal-format
@@ -591,15 +596,13 @@ msgstr "&Boost"
 msgid "Accelerate the resampling Process by Multithreading"
 msgstr "Beschleunigt den Resampling-Prozess durch Multithreading"
 
-#: tmaindialog.actionparamcompression.caption
-msgctxt "tmaindialog.actionparamcompression.caption"
-msgid "Com&pression"
-msgstr "&Kompression"
+#: tmaindialog.actionparamquality.caption
+msgid "&Quality"
+msgstr "&Qualität"
 
-#: tmaindialog.actionparamcompression.hint
-msgctxt "tmaindialog.actionparamcompression.hint"
-msgid "Compression of the destination files"
-msgstr "Komprimiert die Zieldateien"
+#: tmaindialog.actionparamquality.hint
+msgid "Compression and filtering quality"
+msgstr "Kompressions- und Resampling-Qualität"
 
 #: tmaindialog.actionparamrenaming.caption
 msgctxt "tmaindialog.actionparamrenaming.caption"
@@ -785,6 +788,22 @@ msgctxt "tmaindialog.comboboxpngcompression.text"
 msgid "default"
 msgstr "standard"
 
+#: tmaindialog.comboboxresampling.hint
+#, fuzzy
+msgctxt "tmaindialog.comboboxresampling.hint"
+msgid ""
+"The image quality and the processing\n"
+"speed depend on the algorithm of\n"
+"resampling. Lanczos2 is the default for\n"
+"a good speed and quality.\n"
+"2 means the Lanczos algorithms radius."
+msgstr ""
+"Die Qualität der Bilder und die Ausführungs-\n"
+"Geschwindigkeit hängen vom Algorithmus\n"
+"des Resamplings ab. Lanczos2 ist die Voreinstellung\n"
+"für gute Geschwindigkeit und Qualität.\n"
+"2 ist der Radius des Lanczos-Algorithmus."
+
 #: tmaindialog.comboboxshakeseed.hint
 msgid "Enter a number, lets say 1000, to create always the same shaked order or 0 for shaking always randomly."
 msgstr "Geben Sie eine Zahl an, z.B. 1000, um immer die gleiche Ordnung nach dem Mischen zu erreichen, oder 0 um immer anders zu mischen."
@@ -965,6 +984,12 @@ msgstr "PNG"
 msgid "Strategy"
 msgstr "Strategie"
 
+#: tmaindialog.groupboxresampling.caption
+#, fuzzy
+msgctxt "tmaindialog.groupboxresampling.caption"
+msgid "Resampling"
+msgstr "Resampling"
+
 #: tmaindialog.groupboxshaking.caption
 msgid "Shake"
 msgstr "Mischen"
@@ -1064,6 +1089,10 @@ msgstr "(kann %SIZE% enthalten)"
 #: tmaindialog.label20.caption
 msgid "Click or drag the watermark"
 msgstr "Klicken oder ziehen Sie das Wasserzeichen"
+
+#: tmaindialog.label21.caption
+msgid " Algorithm:"
+msgstr "Algorithmus:"
 
 #: tmaindialog.label3.caption
 msgid "Sizes:"
@@ -1193,10 +1222,9 @@ msgctxt "tmaindialog.tabsheetboost.caption"
 msgid "Boost"
 msgstr "Boost"
 
-#: tmaindialog.tabsheetcompression.caption
-msgctxt "tmaindialog.tabsheetcompression.caption"
-msgid "Compression"
-msgstr "Kompression"
+#: tmaindialog.tabsheetquality.caption
+msgid "Quality"
+msgstr ""
 
 #: tmaindialog.tabsheetrenaming.caption
 msgctxt "tmaindialog.tabsheetrenaming.caption"
@@ -1448,3 +1476,4 @@ msgstr ""
 msgctxt "twebcreatordialog.label1.caption"
 msgid "Steps:"
 msgstr "Schritte:"
+

@@ -29,13 +29,24 @@ type
   TTagsSource = (tsEXIF, tsTagsFiles); // Tags from EXIF and/or .tags files
   TTagsSources = set of TTagsSource;
 
+  TResampling = (rsStretch, rsBox, rsLinear, rsHalfCosine, rsCosine, rsBicubic,
+    rsMitchell, rsSpline, rsLanczos2, rsLanczos3, rsLanczos4, rsBestQuality);
+
+const
+  RESAMPLING_STRINGS :array[TResampling] of string = (
+    'Stretch', 'Box', 'Linear', 'Half Cosine', 'Cosine', 'Bicubic',
+    'Mitchell', 'Spline', 'Lanczos 2', 'Lanczos 3', 'Lanczos 4', 'Best Quality');
+  RESAMPLING_NAMES :array[TResampling] of string = (
+    'Stretch', 'Box', 'Linear', 'HalfCosine', 'Cosine', 'Bicubic',
+    'Mitchell', 'Spline', 'Lanczos2', 'Lanczos3', 'Lanczos4', 'BestQuality');
+
 const
   IMGRESVER = '3.2';
   IMGRESCPR = 'imgres '+IMGRESVER+' © 2023 Jan Schirrmacher, www.atomek.de';
 
   DEFAULTPNGCOMPRESSION    = 2;
   DEFAULTJPGQUALITY        = 75;
-  DEFAULT_FILTER           = rfLanczos2;
+  DEFAULT_RESAMPLING       = rsLanczos2;
   DEFAULTMRKSIZE           = 20.0;
   DEFAULTMRKX              = 98.0;
   DEFAULTMRKY              = 98.0;
@@ -115,7 +126,8 @@ type
     FSizes           :TSizes;
     FJpgQuality      :integer;
     FPngCompression  :integer;
-    FFilter          :TResampleFilter;
+    FResampleMode    :TResampleMode;
+    FResampleFilter  :TResampleFilter;
     FMrkFilename     :string;
     FMrkFilenameDependsOnSize :boolean; // if MrkFilename contains %SIZE%
     FMrkSize         :single;
@@ -136,11 +148,11 @@ type
     FOnPrint :TPrintEvent;
     FOnProgress :TProgressEvent;
     function GetDstFiletemplate: string;
-    function GetFilter: string;
+    function GetResampling: TResampling;
     function GetSizes: string;
     function GetSrcFilenames: TStrings;
     procedure SetDstFiletemplate(AValue: string);
-    procedure SetFilter(AValue: string);
+    procedure SetResampling(AValue: TResampling);
     procedure SetMrkFilename(AValue: string);
     procedure SetSizes(AValue: string);
     procedure SetJpgQuality(AValue: integer);
@@ -152,7 +164,7 @@ type
     procedure SetSrcFilenames(AValue: TStrings);
     procedure SetThreadCount(AValue: integer);
     procedure SetShakeSeed(AValue :integer);
-    function ResampleImg(Img :TBgraBitmap; const Size :TSize; const Filter :TResampleFilter) :TBgraBitmap;
+    function ResampleImg(Img :TBgraBitmap; const Size :TSize) :TBgraBitmap;
     class function CalcResamplingSize(const Size :TSize; LongWidth :integer) :TSize;
     procedure OnTaskPrint(Sender :TObject; WorkerId: integer; const Line :string; Level :TLevel);
     procedure OnTaskProgress(Sender :TObject; Progress :single);
@@ -170,6 +182,8 @@ type
     class function TryStrToRenameParams(const Str :string; out Params :TRenameParams; out ErrStr :string) :boolean;
     class function RenameParamsToStr(const Params :TRenameParams) :string;
     class function TryStrToTagsSources(const Str :string; out Value :TTagsSources) :boolean;
+    class function TryStrToResampling(const Str :string; out Value :TResampling) :boolean;
+    class function StrToResampling(const Str :string) :TResampling;
 
     property SrcFilenames :TStrings read GetSrcFilenames write SetSrcFilenames;
     property DstFolder :string read FDstFolder write FDstFolder;
@@ -177,7 +191,7 @@ type
     property Sizes :string read GetSizes write SetSizes;
     property JpgQuality :integer read FJpgQuality write SetJpgQuality;
     property PngCompression :integer read FPngCompression write SetPngCompression;
-    property Filter :string read GetFilter write SetFilter;
+    property Resampling :TResampling read GetResampling write SetResampling;
     property MrkFilename :string read FMrkFilename write SetMrkFilename; // if msFile
     property MrkSize :single read FMrkSize write SetMrkSize;
     property MrkX :single read FMrkX write SetMrkX;
@@ -244,8 +258,7 @@ resourcestring
   SErrInvalidINDEXParamCountFmt = 'Invalid INDEX parameter count ''%s'' (2 expected).';
   SErrInvalidPlaceholder = 'Unknown or invalid placeholder.';
   SInfResultFmt = 'Images: %d, Filter: %s, Sizes: %d, Tasks: %d, Successful: %d, Failed: %d, Elapsed: %.2fs';
-  SErrInvalifFilterFmt = 'Invalid filter ''%s''.';
-
+  SErrInvalidResamplingFmt = 'Invalid resampling value ''%s''.';
 const
   PNGCOMPRS :array[0..3] of string = (SCptPNGCompNone, SCptPNGCompFastest, SCptPNGCompDefault, SCptPNGCompMax);
   LEVELSTRS :array[TLevel] of string = (SCptHint, '', SCptWarning, SCptAbort, SCptFatal);
@@ -354,6 +367,8 @@ var
   ExifTags :TTags;
   ExifTagIds :TTagIDs;
   TagID :string;
+  ResampleMode :TResampleMode;
+  ResampleFilter :TResampleFilter;
 begin
 
   result := false;
@@ -430,7 +445,7 @@ begin
         // Resampling...
         Print(Format(SMsgResamplingFmt, [
           ExtractFilename(SrcFilename), SrcSize.cx, SrcSize.cy, DstSize.cx, DstSize.cy]));
-        DstImg := Processor.ResampleImg(SrcImg, DstSize, Processor.FFilter);
+        DstImg := Processor.ResampleImg(SrcImg, DstSize);
 
         ////////////////////////////////////////////////////////////////////////////
         Progress(1);
@@ -482,7 +497,7 @@ begin
           // %SIZE%
           SizeStr := IntToStr(Size);
           DstFiletitleExt := Format(Processor.FRen.FmtStr,
-            [DstFiletitle, DstFileExt, IndexStr, SizeStr]);
+            [DstFiletitle, DstFileExt, IndexStr, SizeStr, RESAMPLING_NAMES[Processor.Resampling]]);
         end else
           DstFiletitleExt := ExtractFilename(SrcFilename);
 
@@ -525,7 +540,7 @@ begin
   FSizes            := nil;
   FJpgQuality       := DEFAULTJPGQUALITY;
   FPngCompression   := DEFAULTPNGCOMPRESSION;
-  FFilter           := DEFAULT_FILTER;
+  Resampling        := DEFAULT_RESAMPLING;
   FMrkFilename      := '';
   FMrkSize          := DEFAULTMRKSIZE;
   FMrkX             := DEFAULTMRKX;
@@ -607,10 +622,10 @@ begin
   FShakeSeed := AValue;
 end;
 
-function TProcessor.ResampleImg(Img :TBgraBitmap; const Size :TSize; const Filter :TResampleFilter) :TBgraBitmap;
+function TProcessor.ResampleImg(Img :TBgraBitmap; const Size :TSize) :TBgraBitmap;
 begin
-  Img.ResampleFilter := Filter;
-  result := Img.Resample(Size.cx, Size.cy) as TBGRABitmap;
+  Img.ResampleFilter := FResampleFilter;
+  result := Img.Resample(Size.cx, Size.cy, FResampleMode) as TBGRABitmap;
 end;
 
 function TProcessor.Execute :boolean;
@@ -739,7 +754,7 @@ begin
     end;
 
     if Assigned(FOnPrint) then with Dispatcher.Stats do
-      FOnPrint(self, Format(SInfResultFmt, [n, Filter, m, TaskCount, Successful, Failed, Elapsed/1000.0]));
+      FOnPrint(self, Format(SInfResultFmt, [n, RESAMPLING_STRINGS[Resampling], m, TaskCount, Successful, Failed, Elapsed/1000.0]));
 
   finally
     Dispatcher.Free;
@@ -831,12 +846,10 @@ begin
     // %0:s        %1:s       %2:s         %3:s
     // Default: img%2:s.%1:s
     Params.FmtStr := Str;
-    if IsPlaceholder('FILEEXT', i) then begin
+    if IsPlaceholder('FILEEXT', i) then
       Params.FmtStr := ReplaceStr(Params.FmtStr, '%FILEEXT%', '%1:s');
-    end;
-    if IsPlaceholder('FILENAME', i) then begin
+    if IsPlaceholder('FILENAME', i) then
       Params.FmtStr := ReplaceStr(Params.FmtStr, '%FILENAME%', '%0:s');
-    end;
     if IsPlaceholder('INDEX', i) then begin
       // Parse Parameters
       if not TryParsePlaceholderParams(Placeholders[i], ':', Items) then
@@ -855,9 +868,10 @@ begin
       end;
       Params.FmtStr := ReplaceStr(Params.FmtStr, '%'+Placeholders[i]+'%', '%2:s');
     end;
-    if IsPlaceholder('SIZE', i) then begin
+    if IsPlaceholder('SIZE', i) then
       Params.FmtStr := ReplaceStr(Params.FmtStr, '%SIZE%', '%3:s');
-    end;
+    if IsPlaceholder('FILTER', i) then
+      Params.FmtStr := ReplaceStr(Params.FmtStr, '%FILTER%', '%4:s');
     if ParamCount<Length(Placeholders) then
       Exit(Err(SErrInvalidPlaceholder));
     Params.Enabled := true;
@@ -871,8 +885,9 @@ begin
     result := Format(Params.FmtStr, [
       '%FILENAME%', // 0
       '%FILEEXT%',  // 1
-      '%'+Format('INDEX:%d,%d', [Params.IndexStart, Params.IndexDigits])+'%',
-      '%SIZE%'
+      '%'+Format('INDEX:%d,%d', [Params.IndexStart, Params.IndexDigits])+'%', // 2
+      '%SIZE%',     // 3
+      '%FILTER%'    // 4
     ]);
   end else
     result := '';
@@ -892,6 +907,24 @@ begin
   result := true;
 end;
 
+class function TProcessor.TryStrToResampling(const Str: string; out Value: TResampling): boolean;
+var
+  i :TResampling;
+begin
+  for i:=Low(TResampling) to High(TResampling) do
+    if SameText(Str, RESAMPLING_STRINGS[i]) then begin
+      Value := i;
+      Exit(true);
+    end;
+  result := false;
+end;
+
+class function TProcessor.StrToResampling(const Str: string): TResampling;
+begin
+  if not TryStrToResampling(Str, result) then
+    raise Exception.CreateFmt(SErrInvalidResamplingFmt, [Str]);
+end;
+
 procedure TProcessor.SetSizes(AValue :string);
 begin
   if not TrySizesStrToSizes(AValue, FSizes) then
@@ -908,9 +941,12 @@ begin
   result := RenameParamsToStr(FRen);
 end;
 
-function TProcessor.GetFilter: string;
+function TProcessor.GetResampling: TResampling;
 begin
-  result := ResampleFilterStr[FFilter];
+  if FResampleMode = rmSimpleStretch then
+    result := rsStretch
+  else
+    result := TResampling(integer(FResampleFilter)+1);
 end;
 
 function TProcessor.GetSrcFilenames: TStrings;
@@ -928,16 +964,15 @@ begin
   FRen := Params;
 end;
 
-procedure TProcessor.SetFilter(AValue: string);
-var
-  f :TResampleFilter;
+procedure TProcessor.SetResampling(AValue: TResampling);
 begin
-  for f := low(TResampleFilter) to high(TResampleFilter) do
-    if CompareText(AValue, ResampleFilterStr[f])=0 then begin
-      FFilter := f;
-      Exit;
-    end;
-  raise Exception.CreateFmt(SErrInvalifFilterFmt, [AValue]);
+  if AValue=rsStretch then begin
+    FResampleMode := rmSimpleStretch;
+    FResampleFilter := rfLanczos2;
+  end else begin
+    FResampleMode := rmFineResample;
+    FResampleFilter := TResampleFilter(integer(AValue)-1);
+  end;
 end;
 
 procedure TProcessor.SetMrkFilename(AValue: string);

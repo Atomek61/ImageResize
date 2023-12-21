@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="128"
+   height="128"
+   viewBox="0 0 128 128.00001"
+   version="1.1"
+   id="svg138"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   sodipodi:docname="testimage2.svg"
+   inkscape:export-filename="..\tst\srcE\testimage2.png"
+   inkscape:export-xdpi="3"
+   inkscape:export-ydpi="3"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview140"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     showgrid="true"
+     showguides="true"
+     inkscape:lockguides="true"
+     inkscape:zoom="5.17549"
+     inkscape:cx="75.451793"
+     inkscape:cy="68.012884"
+     inkscape:window-width="2560"
+     inkscape:window-height="1417"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid259"
+       empspacing="4"
+       originx="0"
+       originy="0" />
+    <inkscape:grid
+       type="xygrid"
+       id="grid261"
+       spacingy="16.000001"
+       spacingx="16.000001"
+       color="#e5001f"
+       opacity="0.14901961"
+       originx="0"
+       originy="0" />
+    <sodipodi:guide
+       position="-68,64.000005"
+       orientation="0,-1"
+       id="guide263"
+       inkscape:locked="true" />
+    <sodipodi:guide
+       position="64.000007,63.999998"
+       orientation="1,0"
+       id="guide315"
+       inkscape:locked="true" />
+  </sodipodi:namedview>
+  <defs
+     id="defs135" />
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#ff0000;stroke-linecap:round;stroke-linejoin:round"
+       id="rect1881"
+       width="32"
+       height="32"
+       x="0"
+       y="0" />
+    <rect
+       style="fill:#ffdd55;stroke-linecap:round;stroke-linejoin:round"
+       id="rect1881-6"
+       width="32"
+       height="32"
+       x="32.000004"
+       y="2e-06" />
+    <rect
+       style="fill:#ffccaa;stroke-linecap:round;stroke-linejoin:round"
+       id="rect1881-3"
+       width="32"
+       height="32"
+       x="0"
+       y="32.000004" />
+    <rect
+       style="fill:#0066ff;stroke-linecap:round;stroke-linejoin:round"
+       id="rect1881-6-0"
+       width="32"
+       height="32"
+       x="32.000004"
+       y="32.000004" />
+    <rect
+       style="fill:#00ffff;stroke-linecap:round;stroke-linejoin:round"
+       id="rect1881-5"
+       width="32"
+       height="32"
+       x="64.000008"
+       y="0" />
+    <rect
+       style="fill:#0000ff;stroke-linecap:round;stroke-linejoin:round"
+       id="rect1881-6-3"
+       width="32"
+       height="32"
+       x="96.000008"
+       y="1.9073486e-06" />
+    <rect
+       style="fill:#999999;stroke-linecap:round;stroke-linejoin:round"
+       id="rect1881-3-9"
+       width="32"
+       height="32"
+       x="64.000008"
+       y="32.000004" />
+    <rect
+       style="fill:#ff00ff;stroke-linecap:round;stroke-linejoin:round"
+       id="rect1881-6-0-0"
+       width="32"
+       height="32"
+       x="96.000008"
+       y="32.000004" />
+    <rect
+       style="fill:#808000;stroke-linecap:round;stroke-linejoin:round"
+       id="rect1881-55"
+       width="32"
+       height="32"
+       x="0"
+       y="64.000008" />
+    <rect
+       style="fill:#008080;stroke-linecap:round;stroke-linejoin:round"
+       id="rect1881-6-5"
+       width="32"
+       height="32"
+       x="32.000004"
+       y="64.000008" />
+    <rect
+       style="fill:#00aad4;stroke-linecap:round;stroke-linejoin:round"
+       id="rect1881-3-2"
+       width="32"
+       height="32"
+       x="0"
+       y="96.000008" />
+    <rect
+       style="fill:#cc6666;stroke-linecap:round;stroke-linejoin:round"
+       id="rect1881-6-0-1"
+       width="32"
+       height="32"
+       x="32.000004"
+       y="96.000008" />
+    <rect
+       style="fill:#800000;stroke-linecap:round;stroke-linejoin:round"
+       id="rect1881-5-5"
+       width="32"
+       height="32"
+       x="64.000008"
+       y="64.000008" />
+    <rect
+       style="fill:#338000;stroke-linecap:round;stroke-linejoin:round"
+       id="rect1881-6-3-9"
+       width="32"
+       height="32"
+       x="96.000008"
+       y="64.000008" />
+    <rect
+       style="fill:#ccff33;stroke-linecap:round;stroke-linejoin:round"
+       id="rect1881-3-9-1"
+       width="32"
+       height="32"
+       x="64.000008"
+       y="96.000008" />
+    <rect
+       style="fill:#6633cc;stroke-linecap:round;stroke-linejoin:round"
+       id="rect1881-6-0-0-0"
+       width="32"
+       height="32"
+       x="96.000008"
+       y="96.000008" />
+  </g>
+</svg>

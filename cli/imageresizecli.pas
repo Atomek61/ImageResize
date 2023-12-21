@@ -30,8 +30,8 @@ const
     'short long            parameter   comment'#10+
     '-----------------------------------------'#10+
     '   -j -jpgquality     1..100     A quality from 1 to 100 percent (default is 75)'#10+
-    '   -p -pngcompression degree     none|fastest|default|max'#10+
-    '   -f -filter         filter     Box, Linear, HalfCosine, Cosine, Bicubic, Mitchell, Spline,'#10+
+    '   -p -pngcompression degree     None|Fastest|Default|max'#10+
+    '   -f -filter         filter     None, Box, Linear, HalfCosine, Cosine, Bicubic, Mitchell, Spline,'#10+
     '                                 Lanczos2, Lanczos3, Lanczos4, BestQuality'#10+
     '                                 Default is Lanczos2.'#10+
     '   -r -rename         template   Rename files by a template with placeholders.'#10+
@@ -44,7 +44,7 @@ const
     '   -m -meta           sources    EXIF | TAGS | EXIF,TAGS'#10+
     '                                 EXIF loads tags from origin files, TAGS from .tags files'#10+
     '   -e -exif           taglist    writes certain metadata into the resized files.'#10+
-    '                                 taglist is a list of special tagnames: "Description,Timestamp,Copyright"'#10+
+    '                                 taglist is a list of special tagnames: "Title,Timestamp,Copyright"'#10+
     '                                 if no meta sources is defined, EXIF is assumed.'#10+
     '   -c -copyright      "text"     Writes (overrides) the EXIF or .tags copyright tag.'+#10+
     '   -l -listing        file.csv   Exports a CSV list of filenames and tags.'+#10+
@@ -110,8 +110,7 @@ var
   Quiet :boolean;
   JpgQuality :integer;
   PngCompression :integer;
-  Filter :string;
-  Processor :TProcessor;
+  Resampling :TResampling;
   DstFolder :string;
   DstFileTemplate :string;
   SrcFolder :string;
@@ -133,6 +132,7 @@ var
   TagIDs :TTagIDs;
   Copyright :string;
   TagsReportFilename :string;
+  Processor :TProcessor;
 
   function IncludeTrailingPathDelimiterEx(const Path :string) :string;
   begin
@@ -182,10 +182,10 @@ begin
     // Filter
     Param := GetOptionValue('f', 'filter');
     if Param<>'' then begin
-      Filter := Param;
+      Resampling := TProcessor.StrToResampling(Param);
       inc(OptionCount, 2);
     end else
-      Filter := Processor.Filter;
+      Resampling := Processor.Resampling;
 
     // Watermark "C:\Folder\mark%SIZE%.png:-1.0,-1.0:50.0"
     MrkFilename := '';
@@ -332,7 +332,7 @@ begin
     Processor.Sizes := SizesToSizesStr(Sizes);
     Processor.JpgQuality := JpgQuality;
     Processor.PngCompression := PngCompression;
-    Processor.Filter := Filter;
+    Processor.Resampling := Resampling;
     Processor.MrkFilename := MrkFilename;
     Processor.MrkSize := MrkSize;
     Processor.MrkX := MrkX;
