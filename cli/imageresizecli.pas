@@ -77,6 +77,7 @@ const
   ERRINVALIDDSTFOLDER = 'Invalid parameter dstfolder.';
 //  ERRMISSINGSIZE = 'For multiple sizes dstfolder must contain placeholder ''%SIZE%''.';
   ERRINVALIDSHAKESEED = 'Invalid shake seed value, 0..n expected.';
+  ERRNOSRCFILES = 'No source files found.';
 
 type
 
@@ -123,9 +124,9 @@ var
   MrkAlpha :single;
   ThreadCount :integer;
   StopOnError :boolean;
-  Path, Mask :string;
+  Path, MaskStr :string;
   Masks :TStringArray;
-  Item :string;
+  Mask :string;
   Shake :boolean;
   ShakeSeed :integer;
   TagsSources :TTagsSources;
@@ -318,13 +319,15 @@ begin
           SrcFilenames[i] := SrcFolder + SrcFilenames[i];
     end else if IsWildcard(SrcFilename) then begin
       Path := ExtractFilePath(SrcFilename);
-      Mask := ExtractFilename(SrcFilename);
-      Masks := Mask.Split(';', '"', '"');
-      for Item in Masks do
-        FindAllFiles(SrcFilenames, Path, Item, false);
+      MaskStr := ExtractFilename(SrcFilename);
+      Masks := MaskStr.Split(';', '"', '"');
+      for Mask in Masks do
+        FindAllFiles(SrcFilenames, Path, Mask, false);
     end else begin
       SrcFilenames.Add(SrcFilename);
     end;
+    if SrcFilenames.Count=0 then
+      raise Exception.Create(ERRNOSRCFILES);
 
     // Prepare the processor
     Processor.SrcFilenames := SrcFilenames;

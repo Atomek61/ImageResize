@@ -11,11 +11,22 @@
       .atop td {vertical-align: top;}
       .atop tr td:nth-child(1)  {width: 7em; font-weight: bold; font-style: italic;}
       .framed {border: 1px solid silver;}
-      .filter  {display: flex; flex-wrap: wrap; font-size: 14pt;}
-      .filter-box { margin-bottom: 1em;}
-      .upsampling .filter-box {width: 520px;}
-      .downsampling .filter-box {width: 520px;}
-      .filter-box i:nth-child(1) {background-color: rgb(169, 76, 76); Color: white; padding: 0 1em 0 1em;}
+
+      .filter {display: flex; flex-wrap: wrap;}
+      .filter div {width: 160px;}
+      .filter .filter-box { margin-bottom: 1em; padding-top: 0.5em;}
+
+      .filter-box i:nth-child(1) {
+        background: linear-gradient(15deg, rgb(128, 63, 63) 0%, rgb(52, 52, 113) 100%);
+        padding: 0 0.5em 0 0.5em;
+        color: rgb(226, 226, 76);
+        font-weight: bold;
+        font-size: 16pt;
+        border-radius: 4px;
+      }
+
+      .resampling .filter-box { margin-bottom: 1em; border-top: 2px solid silver; padding-top: 0.5em;}
+
     </style>
   </head>
 
@@ -194,7 +205,7 @@
       <p><span class="plh">%FILENAME%_%SIZE%.%FILEEXT%</span></p>
       <p>ergibt.z.B. <span class="plh">DSC3240_1920.jpg</span></p>
       
-      <h2>Verfügbare Platzhalter</h2>
+      <h2 id="placeholders">Verfügbare Platzhalter</h2>
       <table class="partab">
         <tr>
           <td><span class="plh">%FILENAME%</span></td>
@@ -221,6 +232,10 @@
         <tr>
           <td><span class="plh">%SIZE%</span></td>
           <td>Die Zielgröße in Pixeln der aktuellen Datei.</td>
+        </tr>
+        <tr>
+          <td><span class="plh">%FILTER%</span></td>
+          <td>Der Name des aktuell gewählten Filters der Interpolation.</td>
         </tr>
       </table>
 
@@ -315,47 +330,103 @@
 
       <h1 id="quality">Qualität</h1>
       <p>
-        Die Qualität des Ergebnisses hängt von diesen Eistellungen ab.
+        Die Qualität des Ergebnisses hängt von diesen Einstellungen ab.
         Sie können den Kompressionsgrad für JPEG- und für PNG-Formate und
         den Resampling-Algorithmus steuern.
       </p>
+
+      <h2>JPEG Qualität</h2>
       <p>
         JPEG hat ein verlustbehaftetes Verfahren. Eine höhere Qualität resultiert
         in größeren Dateien. Bei JPEG ist 75 bis 95 Prozent eine gute Wahl.<br/>
-        <img src="img/jpgcompression.png"/>
+        <img src="img/quality-JPEG.png"/>
       </p>
+
+      <h2>PNG Qualität</h2>
       <p>
-        Das PNG-Format ist verlustfrei, ergibt aber bei Naturbildern geringe Kompression,
-        daher ist es hauptsächlich bei künstlichen Bildern sinnvoll.
+        Das PNG-Format komprimiert verlustfrei, ergibt aber bei Naturbildern
+        eine geringe Kompression, daher ist es hauptsächlich bei künstlichen Bildern sinnvoll.
         Es sind 4 Kompressionsgrade möglich:
         <ul>
           <li><i>none</i> - keine Kompression</li>
-          <li><i>fastest</i> - schnellste (geringe) Kompression</li>
+          <li><i>fastest</i> - geringe und schnellste Kompression</li>
           <li><i>default</i> - normale Kompression</li>
-          <li><i>maximum</i> - größte Kompression (langsamer)</li>
+          <li><i>maximum</i> - größte und langsamste Kompression</li>
         </ul>
-        <img src="img/pngcompression.png"/>
+        <img src="img/quality-PNG.png"/>
       </p>
+
+      <h2>Qualität des Resampling</h2>
       <p>
-        Es stehen 11 Resampling-Algorithmen zur Verfügung. Ein elfter -<i>BestQuality</i>- wird durch
-        den Mitchell oder den Spline realisiert. Ausser dem einfachen <i>Stretch</i> sind die Algorithmen Interpolationen.
+        Es stehen 11 Resampling-Algorithmen zur Verfügung.
+        Ausser dem einfachen <i>Stretch</i> sind die Algorithmen Interpolationen.
         Je nach Skalierung wirken Sie sich unterschiedlich aus.
       </p>
-      <h2>Wirkung der Algorithmen beim Hochskalieren</h2>
+      <img src="img/quality-resampling.png"/>
+
+      <h2>Wirkung der Algorithmen</h2>
+      <div class="filter">
+        <div class="filter-box">
+          <i>Stretch</i><br/>
+          <img src="../img/img_Stretch_16.png"/>
+        </div>
+        <div class="filter-box">
+          <i>Box</i><br/>
+          <img src="../img/img_Box_16.png"/>
+        </div>
+        <div class="filter-box">
+          <i>Linear</i><br/>
+          <img src="../img/img_Linear_16.png"/>
+        </div>
+        <div class="filter-box">
+          <i>Half Cosine</i><br/>
+          <img src="../img/img_HalfCosine_16.png"/>
+        </div>
+        <div class="filter-box">
+          <i>Cosine</i><br/>
+          <img src="../img/img_Cosine_16.png"/>
+        </div>
+        <div class="filter-box">
+          <i>Bicubic</i><br/>
+          <img src="../img/img_Bicubic_16.png"/>
+        </div>
+        <div class="filter-box">
+          <i>Mitchell</i><br/>
+          <img src="../img/img_Mitchell_16.png"/>
+        </div>
+        <div class="filter-box">
+          <i>Spline</i><br/>
+          <img src="../img/img_Spline_16.png"/>
+        </div>
+        <div class="filter-box">
+          <i>Lanczos 2</i><br/>
+          <img src="../img/img_Lanczos2_16.png"/>
+        </div>
+        <div class="filter-box">
+          <i>Lanczos 3</i><br/>
+          <img src="../img/img_Lanczos3_16.png"/>
+        </div>
+        <div class="filter-box">
+          <i>Lanczos 4</i><br/>
+          <img src="../img/img_Lanczos4_16.png"/>
+        </div>
+      </div>
+
+      <h2>Wirkung beim Hochskalieren</h2>
       <div class="filter-box">
         (Ohne Bild) <i>Best Quality</i> verwendet abhängig vom Herauf- oder Herunterskalieren <i>Spline</i> bzw. <i>Mitchell</i><br/>
       </div>
-      <div class="filter upsampling">
+      <div class="resampling">
         <div class="filter-box">
           <i>Stretch</i> ist kein Filter, sondern ein Strecken der Pixel ohne Interpolation<br/>
           <img src="../img/img_Stretch_256.png"/>
         </div>
         <div class="filter-box">
-          <i>Box</i>Equivalent zum <i>Stretch</i> mit hoher Qualität und Pixelzentrierten Koordinaten<br/>
+          <i>Box</i>Equivalent zum <i>Stretch</i> mit hoher Qualität und pixelzentrierten Koordinaten<br/>
           <img src="../img/img_Box_256.png"/>
         </div>
         <div class="filter-box">
-          <i>Linear</i> Lineare Interpolation ergibt langsamen Übergang zwischen den Pixeln<br/>
+          <i>Linear</i> Lineare Interpolation ergibt einen Übergang zwischen den Pixeln<br/>
           <img src="../img/img_Linear_256.png"/>
         </div>
         <div class="filter-box">
@@ -363,7 +434,7 @@
           <img src="../img/img_HalfCosine_256.png"/>
         </div>
         <div class="filter-box">
-          <i>Cosine</i> Cosinus-artiger Interpolation ergibt schnellen Übergang zwischen den Pixeln <br/>
+          <i>Cosine</i> Cosinus-artiger Interpolation ergibt einen schnelleren Übergang zwischen den Pixeln <br/>
           <img src="../img/img_Cosine_256.png"/>
         </div>
         <div class="filter-box">
@@ -387,22 +458,22 @@
           <img src="../img/img_Lanczos3_256.png"/>
         </div>
         <div class="filter-box">
-          <i>Lanczos 3</i> Lanczos-Filter mit Radius 4, hoher Kontrast<br/>
+          <i>Lanczos 4</i> Lanczos-Filter mit Radius 4, hoher Kontrast<br/>
           <img src="../img/img_Lanczos4_256.png"/>
         </div>
       </div>
-      <h2>Wirkung der Algorithmen beim Herunterskalieren</h2>
-      <div class="filter upsampling">
-        <div class="filter-box">
+      <h2>Wirkung beim Herunterskalieren</h2>
+      <div class="resampling">
+          <div class="filter-box">
           <i>Stretch</i> ist kein Filter, sondern ein Strecken der Pixel ohne Interpolation<br/>
           <img src="../img/img_Stretch_64.png"/>
         </div>
         <div class="filter-box">
-          <i>Box</i>Equivalent zum <i>Stretch</i> mit hoher Qualität und Pixelzentrierten Koordinaten<br/>
+          <i>Box</i>Equivalent zum <i>Stretch</i> mit hoher Qualität und pixelzentrierten Koordinaten<br/>
           <img src="../img/img_Box_64.png"/>
         </div>
         <div class="filter-box">
-          <i>Linear</i> Lineare Interpolation ergibt langsamen Übergang zwischen den Pixeln<br/>
+          <i>Linear</i> Lineare Interpolation ergibt einen Übergang zwischen den Pixeln<br/>
           <img src="../img/img_Linear_64.png"/>
         </div>
         <div class="filter-box">
@@ -410,7 +481,7 @@
           <img src="../img/img_HalfCosine_64.png"/>
         </div>
         <div class="filter-box">
-          <i>Cosine</i> Cosinus-artiger Interpolation ergibt schnellen Übergang zwischen den Pixeln <br/>
+          <i>Cosine</i> Cosinus-artiger Interpolation ergibt einen schnelleren Übergang zwischen den Pixeln <br/>
           <img src="../img/img_Cosine_64.png"/>
         </div>
         <div class="filter-box">
@@ -434,7 +505,7 @@
           <img src="../img/img_Lanczos3_64.png"/>
         </div>
         <div class="filter-box">
-          <i>Lanczos 3</i> Lanczos-Filter mit Radius 4, hoher Kontrast<br/>
+          <i>Lanczos 4</i> Lanczos-Filter mit Radius 4, hoher Kontrast<br/>
           <img src="../img/img_Lanczos4_64.png"/>
         </div>
       </div>

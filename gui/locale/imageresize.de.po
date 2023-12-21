@@ -117,7 +117,7 @@ msgstr "Ungültiger Umbennennungs-Parameter '%s'."
 #: imgres.serrinvalidresamplingfmt
 #, object-pascal-format
 msgid "Invalid resampling value '%s'."
-msgstr ""
+msgstr "Ungültiger Resampling-Wert '%s'."
 
 #: imgres.serrinvalidsizesfmt
 #, object-pascal-format
@@ -789,7 +789,6 @@ msgid "default"
 msgstr "standard"
 
 #: tmaindialog.comboboxresampling.hint
-#, fuzzy
 msgctxt "tmaindialog.comboboxresampling.hint"
 msgid ""
 "The image quality and the processing\n"
@@ -985,7 +984,6 @@ msgid "Strategy"
 msgstr "Strategie"
 
 #: tmaindialog.groupboxresampling.caption
-#, fuzzy
 msgctxt "tmaindialog.groupboxresampling.caption"
 msgid "Resampling"
 msgstr "Resampling"
@@ -1224,7 +1222,7 @@ msgstr "Boost"
 
 #: tmaindialog.tabsheetquality.caption
 msgid "Quality"
-msgstr ""
+msgstr "Qualität"
 
 #: tmaindialog.tabsheetrenaming.caption
 msgctxt "tmaindialog.tabsheetrenaming.caption"
@@ -1476,4 +1474,3 @@ msgstr ""
 msgctxt "twebcreatordialog.label1.caption"
 msgid "Steps:"
 msgstr "Schritte:"
-

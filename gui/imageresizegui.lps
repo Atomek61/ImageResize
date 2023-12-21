@@ -80,7 +80,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="13" Y="11"/>
-        <UsageCount Value="198"/>
+        <UsageCount Value="199"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\threading.dispatcher.pas"/>
@@ -88,14 +88,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="114"/>
         <CursorPos X="3" Y="135"/>
-        <UsageCount Value="190"/>
+        <UsageCount Value="191"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\imggallery.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos Y="5"/>
-        <UsageCount Value="190"/>
+        <UsageCount Value="191"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\tags.pas"/>
@@ -103,7 +103,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="188"/>
         <CursorPos X="47" Y="232"/>
-        <UsageCount Value="93"/>
+        <UsageCount Value="94"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\exifutils.pas"/>
@@ -112,7 +112,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="55"/>
         <CursorPos Y="84"/>
-        <UsageCount Value="98"/>
+        <UsageCount Value="99"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\filestags.pas"/>
@@ -563,7 +563,7 @@
         <UnitName Value="BGRABitmapTypes"/>
         <EditorIndex Value="2"/>
         <TopLine Value="460"/>
-        <UsageCount Value="14"/>
+        <UsageCount Value="15"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -575,18 +575,6 @@
       </Unit>
     </Units>
     <JumpHistory HistoryIndex="29">
-      <Position>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="433" Column="75" TopLine="389"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="155" TopLine="129"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="612" Column="3" TopLine="609"/>
-      </Position>
       <Position>
         <Filename Value="..\src\imgres.pas"/>
         <Caret Line="610" TopLine="609"/>
@@ -693,6 +681,18 @@
       <Position>
         <Filename Value="..\src\imgres.pas"/>
       </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="482" TopLine="475"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="483" TopLine="476"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="482" TopLine="475"/>
+      </Position>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>
@@ -708,26 +708,25 @@
       <List Name="LaunchingApplication" Type="File" Count="1">
         <Item1 Value="C:\WINDOWS\system32\cmd.exe /C ${TargetCmdLine}"/>
       </List>
-      <List Name="CommandLineParameters" Count="18">
-        <Item2 Value="-L EN"/>
-        <Item3 Value="-L ENGLISH"/>
-        <Item4 Value="/ENGLISH"/>
-        <Item5 Value="-ENGLISH"/>
-        <Item6 Value="C:\MyPhotos\imresize.irs -A"/>
-        <Item7 Value="C:\MyPhotos\imresize.irs -X"/>
-        <Item8 Value="C:\MyPhotos\imresize.irs -A -X"/>
-        <Item9 Value="C:\MyPhotos\imresize.irs"/>
-        <Item10 Value="&quot;C:\MyPhotos\imresize.irs&quot;"/>
-        <Item11 Value="&quot;C:\MyPhotos\imageresize.irs&quot;"/>
-        <Item12 Value="-E"/>
-        <Item13 Value="-AUTOSTART"/>
-        <Item14 Value="-EN"/>
-        <Item15 Value="AUTOSTART"/>
-        <Item16 Value="EN"/>
-        <Item17 Value="/E"/>
-        <Item18 Value="E"/>
+      <List Name="CommandLineParameters" Count="17">
+        <Item1 Value="-L EN"/>
+        <Item2 Value="-L ENGLISH"/>
+        <Item3 Value="/ENGLISH"/>
+        <Item4 Value="-ENGLISH"/>
+        <Item5 Value="C:\MyPhotos\imresize.irs -A"/>
+        <Item6 Value="C:\MyPhotos\imresize.irs -X"/>
+        <Item7 Value="C:\MyPhotos\imresize.irs -A -X"/>
+        <Item8 Value="C:\MyPhotos\imresize.irs"/>
+        <Item9 Value="&quot;C:\MyPhotos\imresize.irs&quot;"/>
+        <Item10 Value="&quot;C:\MyPhotos\imageresize.irs&quot;"/>
+        <Item11 Value="-E"/>
+        <Item12 Value="-AUTOSTART"/>
+        <Item13 Value="-EN"/>
+        <Item14 Value="AUTOSTART"/>
+        <Item15 Value="EN"/>
+        <Item16 Value="/E"/>
+        <Item17 Value="E"/>
       </List>
-      <List Name="WorkingDirectory" Type="File" Count="1"/>
     </HistoryLists>
   </ProjectSession>
   <Debugging>
@@ -738,13 +737,6 @@
         <WatchKind Value="wpkWrite"/>
         <Source Value="..\src\filestags.pas"/>
         <Line Value="377"/>
-      </Item>
-      <Item>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="maindlg.pas"/>
-        <Line Value="482"/>
       </Item>
     </BreakPoints>
   </Debugging>

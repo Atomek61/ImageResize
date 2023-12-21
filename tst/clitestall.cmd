@@ -5,3 +5,4 @@ call clitest4.cmd
 call clitest5.cmd
 call clitest6.cmd
 call clitest7.cmd
+call clitest8.cmd

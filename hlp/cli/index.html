@@ -47,8 +47,8 @@ Options:
 short long            parameter   comment
 -----------------------------------------
     -j -jpgquality     1..100     A quality from 1 to 100 percent (default is 75)
-    -p -pngcompression degree     none|fastest|default|max
-    -f -filter         filter     Box, Linear, HalfCosine, Cosine, Bicubic, Mitchell, Spline,
+    -p -pngcompression degree     None|Fastest|Default|max
+    -f -filter         filter     Stretch, Box, Linear, HalfCosine, Cosine, Bicubic, Mitchell, Spline,
                                   Lanczos2, Lanczos3, Lanczos4, BestQuality
                                   Default is Lanczos2.
     -r -rename         template   Rename files by a template with placeholders.
@@ -61,7 +61,7 @@ short long            parameter   comment
     -m -meta           sources    EXIF | TAGS | EXIF,TAGS
                                   EXIF loads tags from origin files, TAGS from .tags files
     -e -exif           taglist    writes certain metadata into the resized files.
-                                  taglist is a list of special tagnames: "Description,Timestamp,Copyright"
+                                  taglist is a list of special tagnames: "Title,Timestamp,Copyright"
                                   if no meta sources is defined, EXIF is assumed.
     -c -copyright      "text"     Writes (overrides) the EXIF or .tags copyright tag.
     -l -listing        file.csv   Exports a CSV list of filenames and tags.
@@ -76,7 +76,7 @@ Examples:
     resamples a single png image with the default quality.
 
   imgres ..\theimage.jpg C:\TEMP\res%SIZE% 480,640,800 -j 50
-    resamples a single jpg with 3 different resolutions and stores them to different folders with 50% quality
+    resamples a single jpg with 3 resolutions and stores them to different folders at 50% quality
 
   imgres @mylist.txt img%SIZE% 640,1920 -j 1 -p max -q
     resamples a list of files which path/name is stored in a file, with smallest file sizes in quiet mode.
@@ -88,7 +88,7 @@ Examples:
     inserts an EXIF copyright note
 
   More info at www.atomek.de/imageresize/cli/index.html
-                              </pre>
+                                      </pre>
 
       <h2 id="syntax">Syntax</h2>
       <p>
@@ -163,6 +163,17 @@ Examples:
             Quiet mode, supresses any console output.
           </td>
         </tr>
+        <tr id="filter">
+          <td>
+            <i>-f&nbsp;name</i><br/>
+            <i>-filter&nbsp;name</i>
+          </td>
+          <td><i>Stretch</i>, <i>Box</i>, <i>Linear</i>, <i>HalfCosine</i>, <i>Cosine</i>, <i>Bicubic</i>, <i>Mitchell</i>, <i>Spline</i>,
+            <i>Lanczos2</i>, <i>Lanczos3</i>, <i>Lanczos4</i>, <i>BestQuality</i><br/>
+            The interpolation algorithm wich is applied while resampling. Default is <i>Lanczos2</i>. <i>Best Quality</i> means, that
+            depending on upsampling or downsampling either <i>Spline</i> or <i>Mitchell</i> is selected automatically.
+          </td>
+        </tr>
         <tr>
           <td>
             <i>-j&nbsp;value</i><br/>
@@ -171,16 +182,6 @@ Examples:
           <td>
             A value between 1 and 100, where 1 is the lowest and 100 is
             the highest quality. This partameter refers only to JPEG files.
-          </td>
-        </tr>
-        <tr id="filter">
-          <td>
-            <i>-f&nbsp;name</i><br/>
-            <i>-filter&nbsp;name</i>
-          </td>
-          <td><i>Box</i>, <i>Linear</i>, <i>HalfCosine</i>, <i>Cosine</i>, <i>Bicubic</i>, <i>Mitchell</i>, <i>Spline</i>,
-            <i>Lanczos2</i>, <i>Lanczos3</i>, <i>Lanczos4</i>, <i>BestQuality</i><br/>
-            The algorithm wich is applied while resampling. Default is <i>Lanczos2</i>
           </td>
         </tr>
         <tr>
@@ -235,8 +236,7 @@ Examples:
               n - number of threads to use. n is automatically limited to either
               the number of available processors or the number of tasks.
             </p><p>
-              A "task" is a resampling request. If you have 4 source files and
-              2 destination sizes, you will get 8 tasks.
+              A "task" is a resampling request. For each source file a task is launched.
             </p>
           </td>
         </tr>
@@ -274,7 +274,8 @@ Examples:
               <span class="plh">%INDEX:1,auto%</span>.<br/>
               Destination file renaming with the <span class="plh">%SIZE%</span>
               -placeholder enables you to create all resized images into the
-              same folder without any naming conflict.
+              same folder without any naming conflict.<br/>
+              See <a href="../gui/en/index.html#placeholders">available placeholders</a>.              
             </p>
           </td>
         </tr>
