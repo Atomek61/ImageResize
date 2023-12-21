@@ -182,7 +182,7 @@ begin
     // Filter
     Param := GetOptionValue('f', 'filter');
     if Param<>'' then begin
-      Resampling := TProcessor.StrToResampling(Param);
+      Resampling := TProcessor.NameToResampling(Param);
       inc(OptionCount, 2);
     end else
       Resampling := Processor.Resampling;

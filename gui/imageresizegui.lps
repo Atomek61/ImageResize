@@ -18,8 +18,9 @@
         <ComponentName Value="MainDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <TopLine Value="688"/>
-        <CursorPos Y="711"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="475"/>
+        <CursorPos Y="482"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -79,7 +80,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="13" Y="11"/>
-        <UsageCount Value="195"/>
+        <UsageCount Value="198"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\threading.dispatcher.pas"/>
@@ -87,14 +88,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="114"/>
         <CursorPos X="3" Y="135"/>
-        <UsageCount Value="187"/>
+        <UsageCount Value="190"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\imggallery.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos Y="5"/>
-        <UsageCount Value="187"/>
+        <UsageCount Value="190"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\tags.pas"/>
@@ -102,7 +103,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="188"/>
         <CursorPos X="47" Y="232"/>
-        <UsageCount Value="90"/>
+        <UsageCount Value="93"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\exifutils.pas"/>
@@ -111,7 +112,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="55"/>
         <CursorPos Y="84"/>
-        <UsageCount Value="95"/>
+        <UsageCount Value="98"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\filestags.pas"/>
@@ -255,7 +256,7 @@
         <UsageCount Value="8"/>
       </Unit>
       <Unit>
-        <Filename Value="..\..\..\..\Homepage\domain.atomek\imageresize\download\version.manifest"/>
+        <Filename Value="D:\Homepage\domain.atomek\imageresize\download\version.manifest"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="99" Y="3"/>
         <UsageCount Value="5"/>
@@ -560,10 +561,9 @@
       <Unit>
         <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\bgrabitmaptypes.pas"/>
         <UnitName Value="BGRABitmapTypes"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
         <TopLine Value="460"/>
-        <UsageCount Value="12"/>
+        <UsageCount Value="14"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -708,25 +708,26 @@
       <List Name="LaunchingApplication" Type="File" Count="1">
         <Item1 Value="C:\WINDOWS\system32\cmd.exe /C ${TargetCmdLine}"/>
       </List>
-      <List Name="CommandLineParameters" Count="17">
-        <Item1 Value="-L EN"/>
-        <Item2 Value="-L ENGLISH"/>
-        <Item3 Value="/ENGLISH"/>
-        <Item4 Value="-ENGLISH"/>
-        <Item5 Value="C:\MyPhotos\imresize.irs -A"/>
-        <Item6 Value="C:\MyPhotos\imresize.irs -X"/>
-        <Item7 Value="C:\MyPhotos\imresize.irs -A -X"/>
-        <Item8 Value="C:\MyPhotos\imresize.irs"/>
-        <Item9 Value="&quot;C:\MyPhotos\imresize.irs&quot;"/>
-        <Item10 Value="&quot;C:\MyPhotos\imageresize.irs&quot;"/>
-        <Item11 Value="-E"/>
-        <Item12 Value="-AUTOSTART"/>
-        <Item13 Value="-EN"/>
-        <Item14 Value="AUTOSTART"/>
-        <Item15 Value="EN"/>
-        <Item16 Value="/E"/>
-        <Item17 Value="E"/>
+      <List Name="CommandLineParameters" Count="18">
+        <Item2 Value="-L EN"/>
+        <Item3 Value="-L ENGLISH"/>
+        <Item4 Value="/ENGLISH"/>
+        <Item5 Value="-ENGLISH"/>
+        <Item6 Value="C:\MyPhotos\imresize.irs -A"/>
+        <Item7 Value="C:\MyPhotos\imresize.irs -X"/>
+        <Item8 Value="C:\MyPhotos\imresize.irs -A -X"/>
+        <Item9 Value="C:\MyPhotos\imresize.irs"/>
+        <Item10 Value="&quot;C:\MyPhotos\imresize.irs&quot;"/>
+        <Item11 Value="&quot;C:\MyPhotos\imageresize.irs&quot;"/>
+        <Item12 Value="-E"/>
+        <Item13 Value="-AUTOSTART"/>
+        <Item14 Value="-EN"/>
+        <Item15 Value="AUTOSTART"/>
+        <Item16 Value="EN"/>
+        <Item17 Value="/E"/>
+        <Item18 Value="E"/>
       </List>
+      <List Name="WorkingDirectory" Type="File" Count="1"/>
     </HistoryLists>
   </ProjectSession>
   <Debugging>
@@ -737,6 +738,13 @@
         <WatchKind Value="wpkWrite"/>
         <Source Value="..\src\filestags.pas"/>
         <Line Value="377"/>
+      </Item>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="maindlg.pas"/>
+        <Line Value="482"/>
       </Item>
     </BreakPoints>
   </Debugging>

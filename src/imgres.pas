@@ -184,6 +184,8 @@ type
     class function TryStrToTagsSources(const Str :string; out Value :TTagsSources) :boolean;
     class function TryStrToResampling(const Str :string; out Value :TResampling) :boolean;
     class function StrToResampling(const Str :string) :TResampling;
+    class function TryNameToResampling(const Str :string; out Value :TResampling) :boolean;
+    class function NameToResampling(const Str :string) :TResampling;
 
     property SrcFilenames :TStrings read GetSrcFilenames write SetSrcFilenames;
     property DstFolder :string read FDstFolder write FDstFolder;
@@ -367,8 +369,6 @@ var
   ExifTags :TTags;
   ExifTagIds :TTagIDs;
   TagID :string;
-  ResampleMode :TResampleMode;
-  ResampleFilter :TResampleFilter;
 begin
 
   result := false;
@@ -922,6 +922,24 @@ end;
 class function TProcessor.StrToResampling(const Str: string): TResampling;
 begin
   if not TryStrToResampling(Str, result) then
+    raise Exception.CreateFmt(SErrInvalidResamplingFmt, [Str]);
+end;
+
+class function TProcessor.TryNameToResampling(const Str :string; out Value :TResampling) :boolean;
+var
+  i :TResampling;
+begin
+  for i:=Low(TResampling) to High(TResampling) do
+    if SameText(Str, RESAMPLING_NAMES[i]) then begin
+      Value := i;
+      Exit(true);
+    end;
+  result := false;
+end;
+
+class function TProcessor.NameToResampling(const Str :string) :TResampling;
+begin
+  if not TryNameToResampling(Str, result) then
     raise Exception.CreateFmt(SErrInvalidResamplingFmt, [Str]);
 end;
 

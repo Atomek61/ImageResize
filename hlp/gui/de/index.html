@@ -11,10 +11,11 @@
       .atop td {vertical-align: top;}
       .atop tr td:nth-child(1)  {width: 7em; font-weight: bold; font-style: italic;}
       .framed {border: 1px solid silver;}
-      .filter  {display: flex; flex-wrap: wrap; font-size: 10pt;}
+      .filter  {display: flex; flex-wrap: wrap; font-size: 14pt;}
       .filter-box { margin-bottom: 1em;}
-      .upsampling .filter-box {width: 80px;}
-      .downsampling .filter-box {width: 240px;}
+      .upsampling .filter-box {width: 520px;}
+      .downsampling .filter-box {width: 520px;}
+      .filter-box i:nth-child(1) {background-color: rgb(169, 76, 76); Color: white; padding: 0 1em 0 1em;}
     </style>
   </head>
 
@@ -340,98 +341,101 @@
         den Mitchell oder den Spline realisiert. Ausser dem einfachen <i>Stretch</i> sind die Algorithmen Interpolationen.
         Je nach Skalierung wirken Sie sich unterschiedlich aus.
       </p>
-      <h2>Wirkung der Algorithmen beim hochskalieren</h2>
+      <h2>Wirkung der Algorithmen beim Hochskalieren</h2>
+      <div class="filter-box">
+        (Ohne Bild) <i>Best Quality</i> verwendet abhängig vom Herauf- oder Herunterskalieren <i>Spline</i> bzw. <i>Mitchell</i><br/>
+      </div>
       <div class="filter upsampling">
         <div class="filter-box">
-          Stretch<br/>
-          <img src="../img/testimage2_Stretch_48.png"/>
+          <i>Stretch</i> ist kein Filter, sondern ein Strecken der Pixel ohne Interpolation<br/>
+          <img src="../img/img_Stretch_256.png"/>
         </div>
         <div class="filter-box">
-          Box<br/>
-          <img src="../img/testimage2_Box_48.png"/>
+          <i>Box</i>Equivalent zum <i>Stretch</i> mit hoher Qualität und Pixelzentrierten Koordinaten<br/>
+          <img src="../img/img_Box_256.png"/>
         </div>
         <div class="filter-box">
-          Linear<br/>
-          <img src="../img/testimage2_Linear_48.png"/>
+          <i>Linear</i> Lineare Interpolation ergibt langsamen Übergang zwischen den Pixeln<br/>
+          <img src="../img/img_Linear_256.png"/>
         </div>
         <div class="filter-box">
-          Half Cosine<br/>
-          <img src="../img/testimage2_HalfCosine_48.png"/>
+          <i>Half Cosine</i> Mischung aus <i>Linear</i> und <i>Cosine</i> ergibt einen mittleren Übergang zwischen den Pixeln<br/>
+          <img src="../img/img_HalfCosine_256.png"/>
         </div>
         <div class="filter-box">
-          Cosine<br/>
-          <img src="../img/testimage2_Cosine_48.png"/>
+          <i>Cosine</i> Cosinus-artiger Interpolation ergibt schnellen Übergang zwischen den Pixeln <br/>
+          <img src="../img/img_Cosine_256.png"/>
         </div>
         <div class="filter-box">
-          Bicubic<br/>
-          <img src="../img/testimage2_Bicubic_48.png"/>
+          <i>Bicubic</i> Simpler bi-kubischer filter (verschwommen)<br/>
+          <img src="../img/img_Bicubic_256.png"/>
         </div>
         <div class="filter-box">
-          Mitchell<br/>
-          <img src="../img/testimage2_Mitchell_48.png"/>
+          <i>Mitchell</i> Der Mitchell-Filter ist eine gute Interpolation fürs Herunterskalieren.<br/>
+          <img src="../img/img_Mitchell_256.png"/>
         </div>
         <div class="filter-box">
-          Spline<br/>
-          <img src="../img/testimage2_Spline_48.png"/>
+          <i>Spline</i> Guter Filter für das Heraufskalieren<br/>
+          <img src="../img/img_Spline_256.png"/>
         </div>
         <div class="filter-box">
-          Lanczos 2<br/>
-          <img src="../img/testimage2_Lanczos2_48.png"/>
+          <i>Lanczos 2</i> Lanczos-Filter mit Radius 2 und Unschärfe-Korrektur<br/>
+          <img src="../img/img_Lanczos2_256.png"/>
         </div>
         <div class="filter-box">
-          Lanczos 3<br/>
-          <img src="../img/testimage2_Lanczos3_48.png"/>
+          <i>Lanczos 3</i> Lanczos-Filter mit Radius 3, hoher Kontrast<br/>
+          <img src="../img/img_Lanczos3_256.png"/>
         </div>
         <div class="filter-box">
-          Lanczos 4<br/>
-          <img src="../img/testimage2_Lanczos4_48.png"/>
+          <i>Lanczos 3</i> Lanczos-Filter mit Radius 4, hoher Kontrast<br/>
+          <img src="../img/img_Lanczos4_256.png"/>
         </div>
       </div>
-      <h2>Wirkung der Algorithmen beim herunterskalieren</h2>
-      <div class="filter downsampling">
+      <h2>Wirkung der Algorithmen beim Herunterskalieren</h2>
+      <div class="filter upsampling">
         <div class="filter-box">
-          Stretch<br/>
-          <img src="../img/testimage1_Stretch_96.png"/>
+          <i>Stretch</i> ist kein Filter, sondern ein Strecken der Pixel ohne Interpolation<br/>
+          <img src="../img/img_Stretch_64.png"/>
         </div>
         <div class="filter-box">
-          Box<br/>
-          <img src="../img/testimage1_Box_96.png"/>
+          <i>Box</i>Equivalent zum <i>Stretch</i> mit hoher Qualität und Pixelzentrierten Koordinaten<br/>
+          <img src="../img/img_Box_64.png"/>
         </div>
         <div class="filter-box">
-          Linear<br/>
-          <img src="../img/testimage1_Linear_96.png"/>
+          <i>Linear</i> Lineare Interpolation ergibt langsamen Übergang zwischen den Pixeln<br/>
+          <img src="../img/img_Linear_64.png"/>
         </div>
         <div class="filter-box">
-          Half Cosine<br/>
-          <img src="../img/testimage1_HalfCosine_96.png"/>
+          <i>Half Cosine</i> Mischung aus <i>Linear</i> und <i>Cosine</i> ergibt einen mittleren Übergang zwischen den Pixeln<br/>
+          <img src="../img/img_HalfCosine_64.png"/>
         </div>
         <div class="filter-box">
-          Cosine<br/>
-          <img src="../img/testimage1_Cosine_96.png"/>
+          <i>Cosine</i> Cosinus-artiger Interpolation ergibt schnellen Übergang zwischen den Pixeln <br/>
+          <img src="../img/img_Cosine_64.png"/>
         </div>
         <div class="filter-box">
-          Bicubic<br/>
-          <img src="../img/testimage1_Bicubic_96.png"/>
+          <i>Bicubic</i> Simpler bi-kubischer filter (verschwommen)<br/>
+          <img src="../img/img_Bicubic_64.png"/>
         </div>
         <div class="filter-box">
-          Mitchell<br/>
-          <img src="../img/testimage1_Mitchell_96.png"/>
+          <i>Mitchell</i> Der Mitchell-Filter ist eine gute Interpolation fürs Herunterskalieren.<br/>
+          <img src="../img/img_Mitchell_64.png"/>
         </div>
         <div class="filter-box">
-          Spline<br/>
-          <img src="../img/testimage1_Spline_96.png"/>
+          <i>Spline</i> Guter Filter für das Heraufskalieren<br/>
+          <img src="../img/img_Spline_64.png"/>
         </div>
         <div class="filter-box">
-          Lanczos 2<br/>
-          <img src="../img/testimage1_Lanczos2_96.png"/>
+          <i>Lanczos 2</i> Lanczos-Filter mit Radius 2 und Unschärfe-Korrektur<br/>
+          <img src="../img/img_Lanczos2_64.png"/>
         </div>
         <div class="filter-box">
-          Lanczos 3<br/>
-          <img src="../img/testimage1_Lanczos3_96.png"/>
+          <i>Lanczos 3</i> Lanczos-Filter mit Radius 3, hoher Kontrast<br/>
+          <img src="../img/img_Lanczos3_64.png"/>
         </div>
         <div class="filter-box">
-          Lanczos 4<br/>
-          <img src="../img/testimage1_Lanczos4_96.png"/>
+          <i>Lanczos 3</i> Lanczos-Filter mit Radius 4, hoher Kontrast<br/>
+          <img src="../img/img_Lanczos4_64.png"/>
         </div>
       </div>
       <a class="chfot" href="#contents">Inhalt</a>
