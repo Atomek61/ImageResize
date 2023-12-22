@@ -19,7 +19,7 @@ uses
   LCLTranslator, Classes, Types, SysUtils, Forms, Controls,
   Graphics, Dialogs, StdCtrls, ComCtrls, ActnList, ExtCtrls, imgres, aboutdlg,
   inifiles, strutils, LMessages, LCLIntf, Buttons, ImgList, LCLType,
-  LazHelpHTML, BGRABitmap, BGRABitmapTypes, BGRAImageList,
+  LazHelpHTML, BGRABitmap, BGRABitmapTypes, BGRAImageList, BGRASVGImageList,
   Generics.Collections, mrkeditdlg, WinDirs, updateutils;
 
 const
@@ -116,6 +116,8 @@ type
     ActionList: TActionList;
     ApplicationProperties1: TApplicationProperties;
     Bevel1: TBevel;
+    BGRASVGImageList20: TBGRASVGImageList;
+    BGRASVGImageList32: TBGRASVGImageList;
     BrowseSrcFolder: TSelectDirectoryDialog;
     ButtonBrowseDstFolder1: TBitBtn;
     ButtonBrowseMrkFilename: TBitBtn;
@@ -496,11 +498,11 @@ begin
 
     Button.Hint := Format(SIZEBTNHINTFMT, [Cpt, DEFSIZES[i]]);
     if DEFSIZES[i]<=THUMBNAILIMGMAX then
-        Button.ImageIndex := 10
+        Button.ImageIndex := 8
     else if DEFSIZES[i]<=DOCIMGMAX then
-      Button.ImageIndex := 11
+      Button.ImageIndex := 9
     else
-      Button.ImageIndex := 12;
+      Button.ImageIndex := 10;
     Button.Style := tbsCheck;
     Button.Tag := DEFSIZES[i];
     Button.OnClick := @SizeButtonClick;
