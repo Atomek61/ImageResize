@@ -19,7 +19,7 @@ uses
   LCLTranslator, Classes, Types, SysUtils, Forms, Controls,
   Graphics, Dialogs, StdCtrls, ComCtrls, ActnList, ExtCtrls, imgres, aboutdlg,
   inifiles, strutils, LMessages, LCLIntf, Buttons, ImgList, LCLType,
-  LazHelpHTML, BGRABitmap, BGRABitmapTypes,
+  LazHelpHTML, BGRABitmap, BGRABitmapTypes, BGRAImageList,
   Generics.Collections, mrkeditdlg, WinDirs, updateutils;
 
 const
