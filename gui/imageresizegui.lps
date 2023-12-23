@@ -20,8 +20,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="577"/>
-        <CursorPos X="16" Y="580"/>
+        <TopLine Value="610"/>
+        <CursorPos Y="617"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -91,14 +91,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="114"/>
         <CursorPos X="3" Y="135"/>
-        <UsageCount Value="198"/>
+        <UsageCount Value="200"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\imggallery.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos Y="5"/>
-        <UsageCount Value="198"/>
+        <UsageCount Value="200"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\tags.pas"/>
@@ -106,7 +106,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="188"/>
         <CursorPos X="47" Y="232"/>
-        <UsageCount Value="101"/>
+        <UsageCount Value="103"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\exifutils.pas"/>
@@ -115,7 +115,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="55"/>
         <CursorPos Y="84"/>
-        <UsageCount Value="106"/>
+        <UsageCount Value="108"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\filestags.pas"/>
@@ -566,7 +566,7 @@
         <UnitName Value="BGRABitmapTypes"/>
         <EditorIndex Value="3"/>
         <TopLine Value="460"/>
-        <UsageCount Value="19"/>
+        <UsageCount Value="20"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -579,123 +579,124 @@
     </Units>
     <JumpHistory HistoryIndex="29">
       <Position>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="429" Column="75" TopLine="385"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="481" Column="31" TopLine="458"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="136" Column="5" TopLine="110"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="82" Column="34" TopLine="55"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="84" Column="13" TopLine="55"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="496" Column="58" TopLine="452"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="549" Column="14" TopLine="504"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="45" Column="32" TopLine="28"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="67" Column="59" TopLine="29"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="482" Column="34" TopLine="472"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\imgres.pas"/>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="585" TopLine="583"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="482" TopLine="475"/>
+        <Caret Line="612" TopLine="583"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="483" TopLine="476"/>
+        <Caret Line="580" TopLine="578"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="482" TopLine="475"/>
+        <Caret Line="579" TopLine="577"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="483" TopLine="476"/>
+        <Caret Line="580" TopLine="578"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="482" TopLine="475"/>
+        <Caret Line="641" Column="34" TopLine="639"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="486" Column="20" TopLine="476"/>
+        <Caret Line="584" TopLine="582"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="487" Column="20" TopLine="477"/>
+        <Caret Line="583" TopLine="581"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="592" Column="3" TopLine="589"/>
+        <Caret Line="1281" Column="3" TopLine="1279"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="579" Column="3" TopLine="577"/>
+        <Caret Line="613" TopLine="592"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="587" Column="20" TopLine="577"/>
+        <Caret Line="620" Column="69" TopLine="592"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="505" Column="30" TopLine="468"/>
+        <Caret Line="604" Column="3" TopLine="592"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="504" Column="30" TopLine="467"/>
+        <Caret Line="1275" TopLine="1273"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="503" Column="30" TopLine="466"/>
+        <Caret Line="1274" TopLine="1272"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="1178" Column="3" TopLine="1136"/>
+        <Caret Line="659" TopLine="657"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="597" Column="3" TopLine="576"/>
+        <Caret Line="618" Column="3" TopLine="616"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="579" Column="16" TopLine="576"/>
+        <Caret Line="662" TopLine="657"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="580" Column="16" TopLine="577"/>
+        <Caret Line="665" TopLine="663"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="581" Column="16" TopLine="578"/>
+        <Caret Line="625" Column="3" TopLine="623"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="580" Column="16" TopLine="577"/>
+        <Caret Line="665" TopLine="663"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="627" Column="82" TopLine="623"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="667" TopLine="665"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="666" TopLine="664"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1295" TopLine="1293"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1294" TopLine="1292"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1280" TopLine="1278"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="613" TopLine="611"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1280" TopLine="1278"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="618" TopLine="611"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="617" TopLine="610"/>
       </Position>
     </JumpHistory>
     <RunParams>

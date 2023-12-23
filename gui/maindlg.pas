@@ -90,32 +90,23 @@ type
   end;
 
   TMainDialog = class(TForm)
-    ActionBrowseTagsReportFolder: TAction;
     ActionListCreator: TAction;
-    ActionInsertCopyright: TAction;
     ActionParamTagging: TAction;
     ActionParamBoost: TAction;
     ActionParamWatermark: TAction;
     ActionParamRenaming: TAction;
     ActionParamSizes: TAction;
     ActionParamQuality: TAction;
-    ActionBrowseSrcFolder: TAction;
     ActionEditWatermark: TAction;
     ActionHelp: TAction;
     ActionSave: TAction;
     ActionSaveAs: TAction;
     ActionOpen: TAction;
     ActionNew: TAction;
-    ActionClearSizes: TAction;
-    ActionBrowseMrkFilename: TAction;
     ActionAbout: TAction;
-    ActionBrowseDstFolder: TAction;
-    ActionBrowseFilenames: TAction;
-    ActionClearFilenames: TAction;
     ActionExecute: TAction;
-    ActionList: TActionList;
+    MainActionList: TActionList;
     ApplicationProperties1: TApplicationProperties;
-    BCButton1: TBCButton;
     Bevel1: TBevel;
     BrowseSrcFolder: TSelectDirectoryDialog;
     ButtonBrowseDstFolder1: TBitBtn;
@@ -262,8 +253,15 @@ type
     procedure ActionBrowseTagsReportFolderExecute(Sender: TObject);
     procedure ActionInsertCopyrightExecute(Sender: TObject);
     procedure ActionListCreatorExecute(Sender: TObject);
+    procedure ButtonBrowseDstFolder1Click(Sender: TObject);
     procedure ButtonBrowseDstFolderClick(Sender: TObject);
+    procedure ButtonBrowseMrkFilenameClick(Sender: TObject);
+    procedure ButtonBrowseSrcFilesClick(Sender: TObject);
+    procedure ButtonBrowseSrcFolderClick(Sender: TObject);
     procedure ButtonClearCopyrightClick(Sender: TObject);
+    procedure ButtonClearSizesClick(Sender: TObject);
+    procedure ButtonClearSrcFilesClick(Sender: TObject);
+    procedure ButtonInsertCopyrightClick(Sender: TObject);
     procedure ButtonInsertSIZEClick(Sender: TObject);
     procedure ButtonParamClick(Sender :TObject);
     procedure EditSrcFolderChange(Sender: TObject);
@@ -576,15 +574,10 @@ end;
 
 procedure TMainDialog.ActionInsertCopyrightExecute(Sender: TObject);
 begin
-  EditCopyright.SelText := '© ';
 end;
 
 procedure TMainDialog.ActionBrowseTagsReportFolderExecute(Sender: TObject);
 begin
-  SaveAsDialogTagsReport.Filename := EditTagsReportFilename.Text;
-  if SaveAsDialogTagsReport.Execute then begin
-    EditTagsReportFilename.Text := SaveAsDialogTagsReport.Filename;
-  end;
 end;
 
 procedure TMainDialog.ActionListCreatorExecute(Sender: TObject);
@@ -593,14 +586,71 @@ begin
   WebCreatorDialog.ShowModal;
 end;
 
-procedure TMainDialog.ButtonBrowseDstFolderClick(Sender: TObject);
+procedure TMainDialog.ButtonBrowseDstFolder1Click(Sender: TObject);
 begin
-  ActionBrowseDstFolder.Execute;
+  SaveAsDialogTagsReport.Filename := EditTagsReportFilename.Text;
+  if SaveAsDialogTagsReport.Execute then
+    EditTagsReportFilename.Text := SaveAsDialogTagsReport.Filename;
+end;
+
+procedure TMainDialog.ButtonBrowseDstFolderClick(Sender: TObject);
+var
+  s :string;
+  f :string;
+begin
+  s := EditDstFolder.Text;
+  f := '';
+  if Pos('%SIZE%', s)>0 then
+    f := ExtractFilename(s);
+  BrowseDstFolder.Filename := LeftStr(s, Length(s)-Length(f));
+  if BrowseDstFolder.Execute then
+    EditDstFolder.Text := IncludeTrailingPathDelimiter(BrowseDstFolder.FileName)+f;
+end;
+
+procedure TMainDialog.ButtonBrowseMrkFilenameClick(Sender: TObject);
+begin
+  OpenDialogMrkFilename.Filename := EditMrkFilename.Text;
+  if OpenDialogMrkFilename.Execute then begin
+    EditMrkFilename.Text := OpenDialogMrkFilename.Filename;
+    EditMrkFilename.SelStart := Length(EditMrkFilename.Text);
+  end;
+end;
+
+procedure TMainDialog.ButtonBrowseSrcFilesClick(Sender: TObject);
+begin
+  if OpenDialogSrcFilenames.Execute then
+    MemoSrcFilenames.Lines.AddStrings(OpenDialogSrcFilenames.Files);
+end;
+
+procedure TMainDialog.ButtonBrowseSrcFolderClick(Sender: TObject);
+begin
+  BrowseSrcFolder.Filename := EditSrcFolder.Text;
+  if BrowseSrcFolder.Execute then
+    EditSrcFolder.Text := IncludeTrailingPathDelimiter(BrowseSrcFolder.FileName);
 end;
 
 procedure TMainDialog.ButtonClearCopyrightClick(Sender: TObject);
 begin
   EditCopyRight.Text := '';
+end;
+
+procedure TMainDialog.ButtonClearSizesClick(Sender: TObject);
+begin
+  with EditSizes do if (SelLength>0) and (SelLength<Length(Text)) then
+    SelText := ''
+  else
+    EditSizes.Text := '';
+  UpdateSizesControls;
+end;
+
+procedure TMainDialog.ButtonClearSrcFilesClick(Sender: TObject);
+begin
+  MemoSrcFilenames.Lines.Clear;
+end;
+
+procedure TMainDialog.ButtonInsertCopyrightClick(Sender: TObject);
+begin
+  EditCopyright.SelText := '© ';
 end;
 
 procedure TMainDialog.ButtonInsertSIZEClick(Sender: TObject);
@@ -616,10 +666,6 @@ end;
 
 procedure TMainDialog.ActionBrowseSrcFolderExecute(Sender: TObject);
 begin
-  BrowseSrcFolder.Filename := EditDstFolder.Text;
-  if BrowseSrcFolder.Execute then begin
-    EditSrcFolder.Text := IncludeTrailingPathDelimiter(BrowseSrcFolder.FileName);
-  end;
 end;
 
 procedure TMainDialog.EditRenTemplateEnter(Sender: TObject);
@@ -1231,33 +1277,19 @@ end;
 
 procedure TMainDialog.ActionBrowseFilenamesExecute(Sender: TObject);
 begin
-  if OpenDialogSrcFilenames.Execute then begin
-    MemoSrcFilenames.Lines.AddStrings(OpenDialogSrcFilenames.Files);
-  end;
 end;
 
 procedure TMainDialog.ActionBrowseMrkFilenameExecute(Sender: TObject);
 begin
-  OpenDialogMrkFilename.Filename := EditMrkFilename.Text;
-  if OpenDialogMrkFilename.Execute then begin
-    EditMrkFilename.Text := OpenDialogMrkFilename.Filename;
-    EditMrkFilename.SelStart := Length(EditMrkFilename.Text);
-  end;
+end;
+
+procedure TMainDialog.ActionClearFilenamesExecute(Sender: TObject);
+begin
+
 end;
 
 procedure TMainDialog.ActionBrowseDstFolderExecute(Sender: TObject);
-var
-  s :string;
-  f :string;
 begin
-  s := EditDstFolder.Text;
-  f := '';
-  if Pos('%SIZE%', s)>0 then
-    f := ExtractFilename(s);
-  BrowseDstFolder.Filename := LeftStr(s, Length(s)-Length(f));
-  if BrowseDstFolder.Execute then begin
-    EditDstFolder.Text := IncludeTrailingPathDelimiter(BrowseDstFolder.FileName)+f;
-  end;
 end;
 
 procedure TMainDialog.ActionAboutExecute(Sender: TObject);
@@ -1265,18 +1297,8 @@ begin
   TAboutDialog.Execute(IMGRESGUICPR, SCptProcessor + ' ' +IMGRESVER, STxtLicense);
 end;
 
-procedure TMainDialog.ActionClearFilenamesExecute(Sender: TObject);
-begin
-  MemoSrcFilenames.Lines.Clear;
-end;
-
 procedure TMainDialog.ActionClearSizesExecute(Sender: TObject);
 begin
-  with EditSizes do if (SelLength>0) and (SelLength<Length(Text)) then
-    SelText := ''
-  else
-    EditSizes.Text := '';
-  UpdateSizesControls;
 end;
 
 procedure TMainDialog.ActionEditWatermarkExecute(Sender: TObject);

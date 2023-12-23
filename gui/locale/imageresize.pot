@@ -636,11 +636,6 @@ msgstr ""
 msgid "Save current settings to another place"
 msgstr ""
 
-#: tmaindialog.bcbutton1.caption
-msgctxt "tmaindialog.bcbutton1.caption"
-msgid "Execute"
-msgstr ""
-
 #: tmaindialog.buttonbrowsesrcfiles.hint
 msgid "Browse for one or more images"
 msgstr ""

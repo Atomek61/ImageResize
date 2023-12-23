@@ -658,12 +658,6 @@ msgstr "Speichern &als"
 msgid "Save current settings to another place"
 msgstr "Speichert die aktuellen Einstellungen in einer anderen Datei"
 
-#: tmaindialog.bcbutton1.caption
-#, fuzzy
-msgctxt "tmaindialog.bcbutton1.caption"
-msgid "Execute"
-msgstr "Ausfüh&ren"
-
 #: tmaindialog.buttonbrowsesrcfiles.hint
 msgid "Browse for one or more images"
 msgstr "Wählen Sie ein oder mehrere Bilder aus"
