@@ -636,8 +636,9 @@ msgstr ""
 msgid "Save current settings to another place"
 msgstr ""
 
-#: tmaindialog.buttonbrowsedstfolder.hint
-msgid "Select a destination folder"
+#: tmaindialog.bcbutton1.caption
+msgctxt "tmaindialog.bcbutton1.caption"
+msgid "Execute"
 msgstr ""
 
 #: tmaindialog.buttonbrowsesrcfiles.hint

@@ -16,10 +16,10 @@ unit maindlg;
 interface
 
 uses
-  LCLTranslator, Classes, Types, SysUtils, Forms, Controls,
-  Graphics, Dialogs, StdCtrls, ComCtrls, ActnList, ExtCtrls, imgres, aboutdlg,
-  inifiles, strutils, LMessages, LCLIntf, Buttons, ImgList, LCLType,
-  LazHelpHTML, BGRABitmap, BGRABitmapTypes, BGRAImageList, BGRASVGImageList,
+  LCLTranslator, Classes, Types, SysUtils, Forms, Controls, Graphics, Dialogs,
+  StdCtrls, ComCtrls, ActnList, ExtCtrls, imgres, aboutdlg, inifiles, strutils,
+  LMessages, LCLIntf, Buttons, ImgList, LCLType, LazHelpHTML, BGRABitmap,
+  BGRABitmapTypes, BGRAImageList, BGRASVGImageList, BCButton, BCSVGButton,
   Generics.Collections, mrkeditdlg, WinDirs, updateutils;
 
 const
@@ -115,9 +115,8 @@ type
     ActionExecute: TAction;
     ActionList: TActionList;
     ApplicationProperties1: TApplicationProperties;
+    BCButton1: TBCButton;
     Bevel1: TBevel;
-    BGRASVGImageList20: TBGRASVGImageList;
-    BGRASVGImageList32: TBGRASVGImageList;
     BrowseSrcFolder: TSelectDirectoryDialog;
     ButtonBrowseDstFolder1: TBitBtn;
     ButtonBrowseMrkFilename: TBitBtn;
@@ -263,6 +262,7 @@ type
     procedure ActionBrowseTagsReportFolderExecute(Sender: TObject);
     procedure ActionInsertCopyrightExecute(Sender: TObject);
     procedure ActionListCreatorExecute(Sender: TObject);
+    procedure ButtonBrowseDstFolderClick(Sender: TObject);
     procedure ButtonClearCopyrightClick(Sender: TObject);
     procedure ButtonInsertSIZEClick(Sender: TObject);
     procedure ButtonParamClick(Sender :TObject);
@@ -591,6 +591,11 @@ procedure TMainDialog.ActionListCreatorExecute(Sender: TObject);
 begin
   WebCreatorDialog := TWebCreatorDialog.Create(self);
   WebCreatorDialog.ShowModal;
+end;
+
+procedure TMainDialog.ButtonBrowseDstFolderClick(Sender: TObject);
+begin
+  ActionBrowseDstFolder.Execute;
 end;
 
 procedure TMainDialog.ButtonClearCopyrightClick(Sender: TObject);
