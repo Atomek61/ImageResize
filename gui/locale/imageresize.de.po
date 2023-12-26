@@ -204,11 +204,6 @@ msgctxt "maindlg.scptcancel"
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: maindlg.scptcoresfmt
-#, object-pascal-format
-msgid "%d Cores"
-msgstr "%d Kerne"
-
 #: maindlg.scptdependenciesfmt
 #, object-pascal-format
 msgctxt "maindlg.scptdependenciesfmt"
@@ -235,7 +230,8 @@ msgstr "Datei '%s' nicht gefunden."
 msgid "%s %s %s, Processor %s, %d Cores"
 msgstr "%s %s %s, Prozessor %s, %d Kerne"
 
-#: maindlg.scptlastsettings
+#: maindlg.scptlastproject
+msgctxt "maindlg.scptlastproject"
 msgid "<last settings>"
 msgstr "<letzte Einstellungen>"
 
@@ -330,23 +326,44 @@ msgstr "Fehlender Dateiname for Tags Report."
 msgid "hlp\\en"
 msgstr "hlp\\de"
 
-#: maindlg.slogcantload
-msgid "Cant load Image Resize Settings File"
-msgstr "Kann ImageResize-Einstellungsdatei nicht lesen"
+#: maindlg.slogcantloadproject
+msgctxt "maindlg.slogcantloadproject"
+msgid "Cant load ImageResize project File"
+msgstr "Kann ImageResize-Projekt nicht laden."
+
+#: maindlg.slogcantloadsettings
+msgid "Cant load ImageResize settings File"
+msgstr "Kann die ImageResize-Einstellungen nicht laden."
 
 #: maindlg.slogerrorprefix
 msgid "Error - "
 msgstr "Fehler - "
 
-#: maindlg.slogfilesavedtofmt
+#: maindlg.slogwarningprojectversionfmt
 #, object-pascal-format
-msgid "Settings saved to '%s'"
-msgstr "Einstellungen gespeichert unter '%s'"
+msgid "Warning: Unexpected project format %s (%s expected)."
+msgstr "Warnung: Unerwartetes Projekt-Format %s (%s erwartet)."
 
-#: maindlg.slogwarningversionfmt
+#: maindlg.slogwarningsettingversionfmt
 #, object-pascal-format
-msgid "Warning: Unexpected format %s (%s expected)."
-msgstr "Warnung: Unerwartetes Format %s (%s erwartet)."
+msgid "Warning: Unexpected settings format %s (%s expected)."
+msgstr "Warnung: Unerwartetes Einstellungen-Format %s (%s erwartet)."
+
+#: maindlg.smsgcurrentdirfmt
+#, object-pascal-format
+msgid "Current directory: %s"
+msgstr "Aktuelles Verzeichnis: %s"
+
+#: maindlg.smsgprojectloadedfromfmt
+#, object-pascal-format
+msgid "Project '%s' loaded."
+msgstr "Projekt '%s' geladen."
+
+#: maindlg.smsgprojectsavedtofmt
+#, object-pascal-format
+msgctxt "maindlg.smsgprojectsavedtofmt"
+msgid "Project saved to '%s'"
+msgstr "Projekt gespeichert als '%s'"
 
 #: maindlg.stxtlicense
 msgid ""
@@ -388,6 +405,17 @@ msgstr "Unerwarteter Dateityp (%s erwartet)."
 #: mrkeditdlg.serrinvalidparams
 msgid "Invalid parameters"
 msgstr "Ungültige Parameter"
+
+#: settingsdlg.scptcoresfmt
+#, object-pascal-format
+msgctxt "settingsdlg.scptcoresfmt"
+msgid "for %d Cores"
+msgstr "für %d Kerne"
+
+#: settingsdlg.serrinvalidcoresusedfmt
+#, object-pascal-format
+msgid "Invalid number of threads '%s'."
+msgstr "Ungültige Zahl von Threads '%s'."
 
 #: taboutdialog.actioncheckupdate.caption
 msgctxt "taboutdialog.actioncheckupdate.caption"
@@ -489,11 +517,6 @@ msgstr "&Update"
 msgid "&Version"
 msgstr "&Version"
 
-#: taboutdialog.toolbar.caption
-msgctxt "taboutdialog.toolbar.caption"
-msgid "ToolBar"
-msgstr ""
-
 #: tags.serrasterisk
 msgid "first row cannot contain a *"
 msgstr "erste Zeile darf nicht den * enthalten"
@@ -534,11 +557,16 @@ msgid "Ok"
 msgstr "Ok"
 
 #: tmaindialog.actionabout.caption
-msgid "Abou&t"
+#, fuzzy
+#| msgid "Abou&t"
+msgid "A&bout"
 msgstr "&Über"
 
 #: tmaindialog.actioneditwatermark.caption
-msgid "Wat&ermark"
+#, fuzzy
+#| msgid "Wat&ermark"
+msgctxt "tmaindialog.actioneditwatermark.caption"
+msgid "Water&mark..."
 msgstr "Wass&erzeichen"
 
 #: tmaindialog.actioneditwatermark.hint
@@ -547,8 +575,10 @@ msgid "Opens the internal Watermark Editor"
 msgstr "Öffnet den eingebauten Wasserzeichen-Editor"
 
 #: tmaindialog.actionexecute.caption
+#, fuzzy
+#| msgid "E&xecute"
 msgctxt "tmaindialog.actionexecute.caption"
-msgid "E&xecute"
+msgid "&Execute"
 msgstr "Ausfüh&ren"
 
 #: tmaindialog.actionexecute.hint
@@ -557,8 +587,10 @@ msgid "Starts the resampling process"
 msgstr "Startet das Resampling"
 
 #: tmaindialog.actionhelp.caption
+#, fuzzy
+#| msgid "Help"
 msgctxt "tmaindialog.actionhelp.caption"
-msgid "Help"
+msgid "&Help"
 msgstr "Hilfe"
 
 #: tmaindialog.actionhelp.hint
@@ -586,15 +618,6 @@ msgstr "&Öffnen"
 #: tmaindialog.actionopen.hint
 msgid "Load saved settings"
 msgstr "Lädt gespeicherte Einstellungen"
-
-#: tmaindialog.actionparamboost.caption
-msgctxt "tmaindialog.actionparamboost.caption"
-msgid "&Boost"
-msgstr "&Boost"
-
-#: tmaindialog.actionparamboost.hint
-msgid "Accelerate the resampling Process by Multithreading"
-msgstr "Beschleunigt den Resampling-Prozess durch Multithreading"
 
 #: tmaindialog.actionparamquality.caption
 msgid "&Quality"
@@ -658,6 +681,25 @@ msgstr "Speichern &als"
 msgid "Save current settings to another place"
 msgstr "Speichert die aktuellen Einstellungen in einer anderen Datei"
 
+#: tmaindialog.actionsettings.caption
+#, fuzzy
+#| msgid "Settings"
+msgctxt "tmaindialog.actionsettings.caption"
+msgid "Settin&gs..."
+msgstr "Einstellungen"
+
+#: tmaindialog.actionsrcfilenames.caption
+#, fuzzy
+#| msgid "Filenames"
+msgid "&List of Files"
+msgstr "Dateiliste"
+
+#: tmaindialog.actionsrcfolder.caption
+#, fuzzy
+#| msgid "Folder"
+msgid "&Folder"
+msgstr "Ordner"
+
 #: tmaindialog.buttonbrowsesrcfiles.hint
 msgid "Browse for one or more images"
 msgstr "Wählen Sie ein oder mehrere Bilder aus"
@@ -673,16 +715,6 @@ msgstr "Löscht alle Größen oder nur die markierte"
 #: tmaindialog.buttonclearsrcfiles.hint
 msgid "Clear image list"
 msgstr "Löscht die Liste der Bilder"
-
-#: tmaindialog.buttonexecute.caption
-msgctxt "tmaindialog.buttonexecute.caption"
-msgid "Execute"
-msgstr "Ausfüh&ren"
-
-#: tmaindialog.buttonexecute.hint
-msgctxt "tmaindialog.buttonexecute.hint"
-msgid "Starts the resampling process"
-msgstr "Startet das Resampling"
 
 #: tmaindialog.buttonmrkedit.hint
 msgctxt "tmaindialog.buttonmrkedit.hint"
@@ -715,10 +747,6 @@ msgstr "Anwenden"
 msgid "Enables the image file names to be mixed randomly (shaked)"
 msgstr "Vermischt die Bilder zufällig"
 
-#: tmaindialog.checkboxstoponerror.caption
-msgid "Stop on Error"
-msgstr "Anhalten bei Fehler"
-
 #: tmaindialog.checkboxtagcopyright.caption
 msgid "Copyright"
 msgstr "Copyright"
@@ -743,14 +771,6 @@ msgstr "Zeitstempel"
 #: tmaindialog.checkboxtagtitle.caption
 msgid "Title"
 msgstr "Titel"
-
-#: tmaindialog.comboboxboost.hint
-msgid "The application can use a multithreaded pooling"
-msgstr "Die Anwendung kann einen Multithreading-Pool verwenden"
-
-#: tmaindialog.comboboxboost.text
-msgid "Single"
-msgstr "Single"
 
 #: tmaindialog.comboboxjpgquality.hint
 msgid ""
@@ -928,10 +948,6 @@ msgstr ""
 "Wenn mehrere Zielgrößen angegeben wurden, muss der Verzeichnisname den Platzhalter %SIZE% enthalten.\n"
 "Dort baut das Programm die Größe im Namen ein."
 
-#: tmaindialog.groupboxdstfolder.caption
-msgid "Destination Folder"
-msgstr "Zielverzeichnis"
-
 #: tmaindialog.groupboxexiftagging.caption
 msgid "EXIF Tagging"
 msgstr "EXIF Tagging"
@@ -951,10 +967,6 @@ msgstr ""
 "Sie verwenden ein gängiges Bildbearbeitungsprogramm, wie RawTherapee,\n"
 "Lightroom oder Photoshop."
 
-#: tmaindialog.groupboximagefiles.caption
-msgid "Images"
-msgstr "Bilder"
-
 #: tmaindialog.groupboxjpgoptions.caption
 msgid "JPEG"
 msgstr "JPEG"
@@ -966,10 +978,6 @@ msgstr "Dateiname"
 #: tmaindialog.groupboxmrklayout.caption
 msgid "Layout"
 msgstr "Layout"
-
-#: tmaindialog.groupboxparams.caption
-msgid "Parameters"
-msgstr "Parameter"
 
 #: tmaindialog.groupboxpngoptions.caption
 msgid "PNG"
@@ -1056,29 +1064,10 @@ msgid "(EXIF ImageDescription)"
 msgstr "(EXIF ImageDescription)"
 
 #: tmaindialog.label18.caption
-msgid "File Wildcards:"
+#, fuzzy
+#| msgid "File Wildcards:"
+msgid "File Selection:"
 msgstr "Dateiauswahl:"
-
-#: tmaindialog.label19.caption
-msgid ""
-"ImageResize uses thread pooling to benefit\n"
-"the full computers power.\n"
-"\n"
-"The number of threads is limited to the\n"
-"available cores and the number of tasks.\n"
-"A task is a single resampling process."
-msgstr ""
-"ImageResize nutzt Thread-Pooling um die\n"
-"volle Rechenpower auszuschöpfen.\n"
-"\n"
-"Die Zahl der Threads ist begrenzt durch\n"
-"die Zahl der Rechenkerne und die Zahl\n"
-"der Tasks. Ein Task ist das resampeln eines\n"
-"einzelnen Bildes."
-
-#: tmaindialog.label2.caption
-msgid "( may include %SIZE% )"
-msgstr "(kann %SIZE% enthalten)"
 
 #: tmaindialog.label20.caption
 msgid "Click or drag the watermark"
@@ -1108,27 +1097,9 @@ msgstr "Kompression:"
 msgid "Overwrite with this:"
 msgstr "Überschreibe mit diesem:"
 
-#: tmaindialog.label8.caption
-msgid "Threads:"
-msgstr "Threads:"
-
 #: tmaindialog.label9.caption
 msgid "Horizontal:"
 msgstr "Horizontal:"
-
-#: tmaindialog.labelcores.caption
-msgid "Cores"
-msgstr "Cores"
-
-#: tmaindialog.labeldstfolderrequired.caption
-msgctxt "tmaindialog.labeldstfolderrequired.caption"
-msgid "Ø"
-msgstr "Ø"
-
-#: tmaindialog.labeldstfolderrequired.hint
-msgctxt "tmaindialog.labeldstfolderrequired.hint"
-msgid "Required"
-msgstr "Erforderlich"
 
 #: tmaindialog.labelhintplaceholder1.caption
 msgid ""
@@ -1159,25 +1130,19 @@ msgstr "Verfügbare Platzhalter:"
 msgid "Seed:"
 msgstr "Saat:"
 
-#: tmaindialog.labelsizesrequired.caption
-msgctxt "tmaindialog.labelsizesrequired.caption"
-msgid "Ø"
-msgstr "Ø"
+#: tmaindialog.labelstep1.caption
+msgid "Source Images"
+msgstr "Quelldateien"
 
-#: tmaindialog.labelsizesrequired.hint
-msgctxt "tmaindialog.labelsizesrequired.hint"
-msgid "Required"
-msgstr "Erforderlich"
+#: tmaindialog.labelstep2.caption
+msgid "Sizes and Parameters"
+msgstr "Größen und Einstellungen"
 
-#: tmaindialog.labelsrcfilenamesrequired.caption
-msgctxt "tmaindialog.labelsrcfilenamesrequired.caption"
-msgid "Ø"
-msgstr "Ø"
-
-#: tmaindialog.labelsrcfilenamesrequired.hint
-msgctxt "tmaindialog.labelsrcfilenamesrequired.hint"
-msgid "Required"
-msgstr "Erforderlich"
+#: tmaindialog.labelstep3.caption
+#, fuzzy
+#| msgid "Destination Folder"
+msgid "&Destination Folder"
+msgstr "Zielordner"
 
 #: tmaindialog.memosrcfilenames.hint
 msgid "Enter a list of files with absolute pathes."
@@ -1186,14 +1151,6 @@ msgstr "Enter a list of files with absolute pathes."
 #: tmaindialog.opendialogsrcfilenames.title
 msgid "Select one or more Images"
 msgstr "Wählen Sie eine oder mehrere Dateien"
-
-#: tmaindialog.radiobuttonfilelist.caption
-msgid "List of Files"
-msgstr "Dateiliste"
-
-#: tmaindialog.radiobuttonpathmask.caption
-msgid "All Files in a Folder"
-msgstr "Alle im Verzeichnis"
 
 #: tmaindialog.radiobuttonrenadvanced.caption
 msgid "2 Advanced - all files in one folder"
@@ -1211,11 +1168,6 @@ msgstr "1 Einfach - ein Verzeichnis für jede Größe"
 msgid "Save Tags Report as"
 msgstr "Tags Report speichern als"
 
-#: tmaindialog.tabsheetboost.caption
-msgctxt "tmaindialog.tabsheetboost.caption"
-msgid "Boost"
-msgstr "Boost"
-
 #: tmaindialog.tabsheetquality.caption
 msgid "Quality"
 msgstr "Qualität"
@@ -1230,6 +1182,14 @@ msgctxt "tmaindialog.tabsheetsizes.caption"
 msgid "Sizes"
 msgstr "Größen"
 
+#: tmaindialog.tabsheetsrcfilenames.caption
+msgid "TabSheetSrcFilenames"
+msgstr ""
+
+#: tmaindialog.tabsheetsrcfolder.caption
+msgid "TabSheetSrcFolder"
+msgstr ""
+
 #: tmaindialog.tabsheettagging.caption
 msgid "Tagging"
 msgstr "Taggen"
@@ -1239,26 +1199,13 @@ msgctxt "tmaindialog.tabsheetwatermark.caption"
 msgid "Watermark"
 msgstr "Wasserzeichen"
 
-#: tmaindialog.toolbar.caption
-msgctxt "tmaindialog.toolbar.caption"
-msgid "ToolBar"
+#: tmaindialog.toolbarsrc.caption
+msgid "ToolBarSrc"
 msgstr ""
-
-#: tmaindialog.toolbarparameters.caption
-msgid "ToolBarParameters"
-msgstr ""
-
-#: tmaindialog.toolbutton1.hint
-msgid "Reset all settings to default values"
-msgstr "Setzt alle Einstellungen zurück auf die Voreinstellung"
 
 #: tmaindialog.toolbutton10.caption
 msgid "ToolButton10"
 msgstr ""
-
-#: tmaindialog.toolbutton3.hint
-msgid "Save current settings to another file"
-msgstr "Speichert die aktuellen Einstellungen in eine andere Datei"
 
 #: tmaindialog.toolbutton5.caption
 msgid "ToolButton5"
@@ -1271,6 +1218,16 @@ msgstr ""
 #: tmaindialog.toolbuttonabout.hint
 msgid "License and Vendor Infos"
 msgstr "Lizenz und Hersteller-Infos"
+
+#: tmaindialog.toolbuttonnew.hint
+msgctxt "tmaindialog.toolbuttonnew.hint"
+msgid "Reset all settings to default values"
+msgstr "Setzt alle Einstellungen zurück auf die Voreinstellung"
+
+#: tmaindialog.toolbuttonsaveas.hint
+msgctxt "tmaindialog.toolbuttonsaveas.hint"
+msgid "Save current settings to another file"
+msgstr "Speichert die aktuellen Einstellungen in einer anderen Datei"
 
 #: tmrkeditdialog.actionfont.caption
 msgid "Font"
@@ -1445,6 +1402,61 @@ msgstr ""
 #: tmrkeditdialog.toolbutton9.caption
 msgid "ToolButton9"
 msgstr ""
+
+#: tsettingsdialog.buttoncancel.caption
+msgctxt "tsettingsdialog.buttoncancel.caption"
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: tsettingsdialog.buttonok.caption
+msgctxt "tsettingsdialog.buttonok.caption"
+msgid "Ok"
+msgstr "Ok"
+
+#: tsettingsdialog.caption
+msgctxt "tsettingsdialog.caption"
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: tsettingsdialog.checkboxstoponerror.caption
+msgctxt "tsettingsdialog.checkboxstoponerror.caption"
+msgid "Stop on Error"
+msgstr "Anhalten bei Fehler"
+
+#: tsettingsdialog.comboboxthreadsused.hint
+msgctxt "tsettingsdialog.comboboxthreadsused.hint"
+msgid "The application can use a multithreaded pooling"
+msgstr "Die Anwendung kann einen Thread-Pool nutzen"
+
+#: tsettingsdialog.comboboxthreadsused.text
+msgctxt "tsettingsdialog.comboboxthreadsused.text"
+msgid "Single"
+msgstr "Single"
+
+#: tsettingsdialog.label19.caption
+msgctxt "tsettingsdialog.label19.caption"
+msgid ""
+"ImageResize uses thread pooling to benefit\n"
+"the full computers power.\n"
+"\n"
+"The number of threads should be limited\n"
+"to the available number of cores."
+msgstr ""
+"ImageResize nutzt Thread-Pooling um die\n"
+"volle Rechenpower auszuschöpfen.\n"
+"\n"
+"Die Zahl der Threads sollte auf die Zahl\n"
+"der verfügbaren Kerne begrenzt bleiben."
+
+#: tsettingsdialog.label8.caption
+msgctxt "tsettingsdialog.label8.caption"
+msgid "Threads:"
+msgstr "Threads:"
+
+#: tsettingsdialog.labelcores.caption
+msgctxt "tsettingsdialog.labelcores.caption"
+msgid "Cores"
+msgstr "Kerne"
 
 #: twebcreatordialog.button1.caption
 msgctxt "twebcreatordialog.button1.caption"

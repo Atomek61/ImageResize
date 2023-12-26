@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="128"
+   height="128"
+   viewBox="0 0 128 128.00001"
+   version="1.1"
+   id="svg138"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   sodipodi:docname="watermark.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview140"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     showgrid="true"
+     showguides="true"
+     inkscape:lockguides="true"
+     inkscape:zoom="5.17549"
+     inkscape:cx="58.545181"
+     inkscape:cy="87.624554"
+     inkscape:window-width="1548"
+     inkscape:window-height="1230"
+     inkscape:window-x="52"
+     inkscape:window-y="52"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer3">
+    <inkscape:grid
+       type="xygrid"
+       id="grid259"
+       empspacing="4"
+       originx="0"
+       originy="0" />
+    <inkscape:grid
+       type="xygrid"
+       id="grid261"
+       spacingy="16.000001"
+       spacingx="16.000001"
+       color="#e5001f"
+       opacity="0.14901961"
+       originx="0"
+       originy="0" />
+    <sodipodi:guide
+       position="-68,64.000005"
+       orientation="0,-1"
+       id="guide263"
+       inkscape:locked="true" />
+    <sodipodi:guide
+       position="64.000007,63.999998"
+       orientation="1,0"
+       id="guide315"
+       inkscape:locked="true" />
+  </sodipodi:namedview>
+  <defs
+     id="defs135" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Dots"
+     style="display:inline">
+    <g
+       id="g12512"
+       transform="rotate(15,89.19147,97.191508)">
+      <path
+         style="fill:#c17d11;fill-opacity:1;stroke-linecap:round;stroke-linejoin:round"
+         d="m 24,112.00001 h 80 L 100,84 l -28,-5e-6 c -4,-12 0,-35.999992 0,-35.999992 C 72,48.000003 84,40 84,32 84,24 80.000005,16.000001 64,16 c -16.000005,-10e-7 -20.000002,8.000004 -20,16.000002 2e-6,7.999998 12,16.000001 12,16.000001 0,0 4,23.999992 0,35.999997 H 28 l -4,28.00001"
+         id="path12350"
+         sodipodi:nodetypes="ccccczzzcccc" />
+      <ellipse
+         style="fill:#ffffff;fill-opacity:1;stroke-linecap:round;stroke-linejoin:round"
+         id="path12404"
+         cx="56"
+         cy="28.000002"
+         rx="4"
+         ry="4.000001" />
+    </g>
+  </g>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1" />
+</svg>

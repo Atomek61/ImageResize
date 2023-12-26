@@ -12,7 +12,7 @@ uses
   Interfaces, // this includes the LCL widgetset
   Forms, lazcontrols, maindlg, aboutdlg, mrkeditdlg, imgres, updateutils,
   datetimeutils, threading.dispatcher, webcreatordlg, imggallery,
-  EXIFUtils, tags;
+  EXIFUtils, tags, settingsdlg, settings;
 
 {$R *.res}
 
@@ -23,6 +23,7 @@ begin
   Application.Initialize;
   Application.CreateForm(TMainDialog, MainDialog);
   Application.CreateForm(TWebCreatorDialog, WebCreatorDialog);
+  Application.CreateForm(TSettingsDialog, SettingsDialog);
   Application.Run;
 end.
 

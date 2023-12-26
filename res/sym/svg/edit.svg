@@ -30,14 +30,14 @@
      showgrid="true"
      showguides="true"
      inkscape:zoom="41.40392"
-     inkscape:cx="5.7361718"
+     inkscape:cx="2.5480679"
      inkscape:cy="11.037602"
      inkscape:window-width="2560"
      inkscape:window-height="1417"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g1547"
+     inkscape:current-layer="g6190"
      inkscape:lockguides="true">
     <inkscape:grid
        type="xygrid"
@@ -105,15 +105,15 @@
        inkscape:collect="always"
        id="linearGradient6096">
       <stop
-         style="stop-color:#2c89a0;stop-opacity:1"
+         style="stop-color:#aa0000;stop-opacity:1"
          offset="0"
          id="stop6092" />
       <stop
-         style="stop-color:#afdde9;stop-opacity:1"
+         style="stop-color:#ffaaaa;stop-opacity:1"
          offset="0.49999973"
          id="stop6100" />
       <stop
-         style="stop-color:#2c89a0;stop-opacity:1"
+         style="stop-color:#c83737;stop-opacity:1"
          offset="1"
          id="stop6094" />
     </linearGradient>

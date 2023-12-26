@@ -3,7 +3,7 @@ Type=IRS
 Version=300
 
 [Settings]
-SrcMode=0
+Source=Filenames
 SrcFolder=
 SrcMasks=*.jpg; *.png
 DstFolder=tst8
@@ -11,13 +11,13 @@ SrcFilenames=srcB\src1\DSC04236.jpg|srcB\src1\DSC04242.jpg|srcB\src1\DSC04258.jp
 Sizes=120, 240
 JpgOptions.Quality=default
 PngOptions.Compression=default
+Resampling=Lanczos 2
 MrkEnabled=0
 MrkFilename=
 MrkSize=20
 MrkX=98
 MrkY=98
 MrkAlpha=50
-StopOnError=0
 RenEnabled=1
 RenSimple=0
 RenAdvanced=1

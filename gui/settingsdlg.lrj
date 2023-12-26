@@ -1,0 +1,11 @@
+{"version":1,"strings":[
+{"hash":213582195,"name":"tsettingsdialog.caption","sourcebytes":[83,101,116,116,105,110,103,115],"value":"Settings"},
+{"hash":1371,"name":"tsettingsdialog.buttonok.caption","sourcebytes":[79,107],"value":"Ok"},
+{"hash":77089212,"name":"tsettingsdialog.buttoncancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":115819950,"name":"tsettingsdialog.label19.caption","sourcebytes":[73,109,97,103,101,82,101,115,105,122,101,32,117,115,101,115,32,116,104,114,101,97,100,32,112,111,111,108,105,110,103,32,116,111,32,98,101,110,101,102,105,116,13,10,116,104,101,32,102,117,108,108,32,99,111,109,112,117,116,101,114,115,32,112,111,119,101,114,46,13,10,13,10,84,104,101,32,110,117,109,98,101,114,32,111,102,32,116,104,114,101,97,100,115,32,115,104,111,117,108,100,32,98,101,32,108,105,109,105,116,101,100,13,10,116,111,32,116,104,101,32,97,118,97,105,108,97,98,108,101,32,110,117,109,98,101,114,32,111,102,32,99,111,114,101,115,46],"value":"ImageResize uses thread pooling to benefit\r\nthe full computers power.\r\n\r\nThe number of threads should be limited\r\nto the available number of cores."},
+{"hash":184205426,"name":"tsettingsdialog.checkboxstoponerror.caption","sourcebytes":[83,116,111,112,32,111,110,32,69,114,114,111,114],"value":"Stop on Error"},
+{"hash":260800202,"name":"tsettingsdialog.label8.caption","sourcebytes":[84,104,114,101,97,100,115,58],"value":"Threads:"},
+{"hash":84998007,"name":"tsettingsdialog.comboboxthreadsused.hint","sourcebytes":[84,104,101,32,97,112,112,108,105,99,97,116,105,111,110,32,99,97,110,32,117,115,101,32,97,32,109,117,108,116,105,116,104,114,101,97,100,101,100,32,112,111,111,108,105,110,103],"value":"The application can use a multithreaded pooling"},
+{"hash":94391845,"name":"tsettingsdialog.comboboxthreadsused.text","sourcebytes":[83,105,110,103,108,101],"value":"Single"},
+{"hash":4876483,"name":"tsettingsdialog.labelcores.caption","sourcebytes":[67,111,114,101,115],"value":"Cores"}
+]}

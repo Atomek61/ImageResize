@@ -17,6 +17,20 @@
     <i18n>
       <EnableI18N Value="True"/>
       <OutDir Value="locale"/>
+      <ExcludedIdentifiers Count="12">
+        <Item1 Value="tmaindialog.toolbar.caption"/>
+        <Item2 Value="tmaindialog.toolbarparameters.caption"/>
+        <Item3 Value="toolbutton10"/>
+        <Item4 Value="taboutdialog.toolbar.caption"/>
+        <Item5 Value="toolbutton5"/>
+        <Item6 Value="toolbutton8"/>
+        <Item7 Value="toolbarparameters"/>
+        <Item8 Value="toolbutton7"/>
+        <Item9 Value="toobutton9"/>
+        <Item10 Value="button1"/>
+        <Item11 Value="button2"/>
+        <Item12 Value="button3"/>
+      </ExcludedIdentifiers>
     </i18n>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
@@ -192,6 +206,17 @@
         <Filename Value="..\src\exifutils.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="EXIFUtils"/>
+      </Unit>
+      <Unit>
+        <Filename Value="settingsdlg.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="SettingsDialog"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="settings.pas"/>
+        <IsPartOfProject Value="True"/>
       </Unit>
     </Units>
   </ProjectOptions>

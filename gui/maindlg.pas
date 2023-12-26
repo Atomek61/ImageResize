@@ -19,8 +19,8 @@ uses
   LCLTranslator, Classes, Types, SysUtils, Forms, Controls, Graphics, Dialogs,
   StdCtrls, ComCtrls, ActnList, ExtCtrls, imgres, aboutdlg, inifiles, strutils,
   LMessages, LCLIntf, Buttons, ImgList, LCLType, LazHelpHTML, BGRABitmap,
-  BGRABitmapTypes, BGRAImageList, BGRASVGImageList, BCButton, BCSVGButton,
-  Generics.Collections, mrkeditdlg, WinDirs, updateutils;
+  BGRABitmapTypes, BGRASpeedButton, Generics.Collections,
+  mrkeditdlg, WinDirs, updateutils, settings;
 
 const
   GUIVER_APP      = 'ImageResize';
@@ -36,11 +36,16 @@ const
 
   IMGRESGUICPR    = 'ImageResize ' + GUIVER_VERSION + ' © 2023 Jan Schirrmacher, www.atomek.de';
 
-  INITYPE         = 'IRS';
-  INIVERSION200   = '200';
-  INIVERSION210   = '210';
-  INIVERSION      = '300';
+  PRJTYPE         = 'IRS';
+  PRJVERSION200   = '200';
+  PRJVERSION210   = '210';
+  PRJVERSION      = '300';
 
+  SETTYPE         = 'IST';
+  SETVERSION      = '100';
+
+  LASTPROJECT_FILENAME = 'lastproject.irs';
+  SETTINGS_FILENAME = 'settings.ini';
   COMMONSECTION   = 'Common';
   SETTINGSSECTION = 'Settings';
   DIALOGSECTION   = 'Dialog';
@@ -59,6 +64,7 @@ const
   DEFAULTSIZE     = 640;
 
   SIZEBTNHINTFMT  = '%s - %dpx';
+  REQUIREDSTEP_COLORS :array[boolean] of TColor = ($00955215, $00DA49A0);
 
 resourcestring
   SCptDependenciesFmt = 'Build with Lazarus %s, BGRABitmap %s, dExif %s';
@@ -90,9 +96,11 @@ type
   end;
 
   TMainDialog = class(TForm)
+    ActionSettings: TAction;
+    ActionSrcFolder: TAction;
+    ActionSrcFilenames: TAction;
     ActionListCreator: TAction;
     ActionParamTagging: TAction;
-    ActionParamBoost: TAction;
     ActionParamWatermark: TAction;
     ActionParamRenaming: TAction;
     ActionParamSizes: TAction;
@@ -105,9 +113,12 @@ type
     ActionNew: TAction;
     ActionAbout: TAction;
     ActionExecute: TAction;
+    ButtonExecute: TBGRASpeedButton;
+    LabelStep1: TLabel;
+    LabelStep2: TLabel;
+    LabelStep3: TLabel;
     MainActionList: TActionList;
     ApplicationProperties1: TApplicationProperties;
-    Bevel1: TBevel;
     BrowseSrcFolder: TSelectDirectoryDialog;
     ButtonBrowseDstFolder1: TBitBtn;
     ButtonBrowseMrkFilename: TBitBtn;
@@ -120,7 +131,6 @@ type
     ButtonInsertSIZE: TBitBtn;
     ButtonInsertCopyright: TBitBtn;
     ButtonMrkEdit: TBitBtn;
-    ButtonExecute: TBitBtn;
     BrowseDstFolder: TSelectDirectoryDialog;
     CheckBoxTagsSourceTagsFiles: TCheckBox;
     CheckBoxTagsReportEnabled: TCheckBox;
@@ -131,7 +141,6 @@ type
     CheckBoxRenEnabled: TCheckBox;
     CheckBoxMrkEnabled: TCheckBox;
     CheckBoxShake: TCheckBox;
-    CheckBoxStopOnError: TCheckBox;
     ComboBoxResampling: TComboBox;
     ComboBoxShakeSeed: TComboBox;
     EditCopyright: TEdit;
@@ -139,7 +148,6 @@ type
     EditSrcFolder: TEdit;
     EditSrcMasks: TEdit;
     EditRenTemplate: TComboBox;
-    ComboBoxBoost: TComboBox;
     ComboBoxJpgQuality: TComboBox;
     ComboBoxPngCompression: TComboBox;
     EditMrkAlpha: TEdit;
@@ -153,11 +161,8 @@ type
     GroupBoxTagsReport: TGroupBox;
     GroupBoxTagsSource: TGroupBox;
     GroupBoxEXIFTagging: TGroupBox;
-    GroupBoxDstFolder: TGroupBox;
     GroupBoxMrkFilename: TGroupBox;
     GroupBoxShaking: TGroupBox;
-    GroupBoxParams: TGroupBox;
-    GroupBoxImageFiles: TGroupBox;
     GroupBoxRename: TGroupBox;
     GroupBoxMrkLayout: TGroupBox;
     GroupBoxJpgOptions: TGroupBox;
@@ -180,79 +185,77 @@ type
     LabelHintPlaceholder1: TLabel;
     LabelShakeSeed: TLabel;
     Label18: TLabel;
-    Label19: TLabel;
     Label20: TLabel;
     LabelHintPlaceholderTitle: TLabel;
     LabelHintPlaceholder2: TLabel;
     Label4: TLabel;
-    LabelSrcFilenamesRequired: TLabel;
     LabelSourceFileListMessage: TLabel;
     Label9: TLabel;
-    LabelCores: TLabel;
     Label3: TLabel;
     Label5: TLabel;
     Label6: TLabel;
-    Label8: TLabel;
     LabelMrkSpace: TLabel;
-    LabelSizesRequired: TLabel;
-    LabelDstFolderRequired: TLabel;
-    Label2: TLabel;
     MemoMessages: TMemo;
     MemoSrcFilenames: TMemo;
-    NotebookFileSource: TNotebook;
     OpenDialog: TOpenDialog;
     OpenDialogSrcFilenames: TOpenDialog;
     OpenDialogMrkFilename: TOpenDialog;
-    PageFilelist: TPage;
-    PagePathMask: TPage;
+    PageControlSrc: TPageControl;
     PageControlParams: TPageControl;
+    PaintBoxStep1: TPaintBox;
     PaintBoxMrkPreview: TPaintBox;
+    PaintBoxStep2: TPaintBox;
+    PaintBoxStep3: TPaintBox;
+    PanelDestination: TPanel;
+    PanelParams: TPanel;
+    PanelSource: TPanel;
     PanelControls: TPanel;
     PanelPreview: TPanel;
     ProgressBar: TProgressBar;
-    RadioButtonFilelist: TRadioButton;
-    RadioButtonPathMask: TRadioButton;
     RadioButtonRenSimple: TRadioButton;
     RadioButtonRenCustom: TRadioButton;
     RadioButtonRenAdvanced: TRadioButton;
     SaveAsDialog: TSaveDialog;
     SaveAsDialogTagsReport: TSaveDialog;
-    Splitter1: TSplitter;
+    TabSheetSrcFilenames: TTabSheet;
+    TabSheetSrcFolder: TTabSheet;
     TabSheetTagging: TTabSheet;
     TabSheetRenaming: TTabSheet;
     TabSheetWatermark: TTabSheet;
-    TabSheetBoost: TTabSheet;
     TabSheetSizes: TTabSheet;
     TabSheetQuality: TTabSheet;
     TimerProgressBarOff: TTimer;
     ToolBar: TToolBar;
+    ToolBarSrc: TToolBar;
     ToolBarParameters: TToolBar;
     ToolBarSizeButtons: TToolBar;
-    ToolButton1: TToolButton;
+    ToolButtonNew: TToolButton;
     ToolButton10: TToolButton;
-    ToolButton11: TToolButton;
+    ToolButtonListing: TToolButton;
+    ToolButtonSrcFilenames: TToolButton;
+    ToolButtonSrcFolder: TToolButton;
+    ToolButtonSettings: TToolButton;
     ToolButtonTagging: TToolButton;
-    ToolButtonBoost: TToolButton;
     ToolButtonWatermark: TToolButton;
     ToolButtonRenaming: TToolButton;
     ToolButtonQuality: TToolButton;
     ToolButtonSizes: TToolButton;
     ToolButtonAbout: TToolButton;
-    ToolButton2: TToolButton;
-    ToolButton3: TToolButton;
-    ToolButton4: TToolButton;
+    ToolButtonOpen: TToolButton;
+    ToolButtonSaveAs: TToolButton;
+    ToolButtonSave: TToolButton;
     ToolButton5: TToolButton;
-    ToolButton6: TToolButton;
-    ToolButton7: TToolButton;
+    ToolButtonExecute: TToolButton;
+    ToolButtonHelp: TToolButton;
     ToolButton8: TToolButton;
-    ToolButton9: TToolButton;
+    ToolButtonEditor: TToolButton;
     UpDownMrkAlpha: TUpDown;
     UpDownMrkSize: TUpDown;
     UpDownMrkX: TUpDown;
     UpDownMrkY: TUpDown;
-    procedure ActionBrowseTagsReportFolderExecute(Sender: TObject);
-    procedure ActionInsertCopyrightExecute(Sender: TObject);
     procedure ActionListCreatorExecute(Sender: TObject);
+    procedure ActionSettingsExecute(Sender: TObject);
+    procedure ActionSrcFilenamesExecute(Sender: TObject);
     procedure ButtonBrowseDstFolder1Click(Sender: TObject);
     procedure ButtonBrowseDstFolderClick(Sender: TObject);
     procedure ButtonBrowseMrkFilenameClick(Sender: TObject);
@@ -266,15 +269,11 @@ type
     procedure ButtonParamClick(Sender :TObject);
     procedure EditSrcFolderChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+//    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure ActionAboutExecute(Sender: TObject);
-    procedure ActionBrowseSrcFolderExecute(Sender: TObject);
-    procedure ActionBrowseDstFolderExecute(Sender: TObject);
-    procedure ActionBrowseFilenamesExecute(Sender: TObject);
-    procedure ActionBrowseMrkFilenameExecute(Sender: TObject);
-    procedure ActionClearFilenamesExecute(Sender: TObject);
-    procedure ActionClearSizesExecute(Sender: TObject);
     procedure ActionEditWatermarkExecute(Sender: TObject);
     procedure ActionExecuteExecute(Sender: TObject);
     procedure ActionHelpExecute(Sender: TObject);
@@ -283,7 +282,6 @@ type
     procedure ActionSaveAsExecute(Sender: TObject);
     procedure ActionSaveExecute(Sender: TObject);
     procedure EditRenTemplateEnter(Sender: TObject);
-    procedure ButtonExecuteClick(Sender: TObject);
     procedure EditDstFolderChange(Sender: TObject);
     procedure EditMrkSizeChange(Sender: TObject);
     procedure EditSizesChange(Sender: TObject);
@@ -300,45 +298,49 @@ type
     procedure PaintBoxMrkPreviewMouseWheel(Sender: TObject; Shift: TShiftState;
       WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
     procedure PaintBoxMrkPreviewPaint(Sender: TObject);
-    procedure PanelControlsClick(Sender: TObject);
-    procedure PanelControlsResize(Sender: TObject);
-    procedure RadioButtonFilelistChange(Sender: TObject);
+    procedure PaintBoxStep1Paint(Sender: TObject);
     procedure TimerProgressBarOffTimer(Sender: TObject);
     procedure EditSizesExit(Sender: TObject);
   private
+    FProjectFilename :string;
     FAutoExit :boolean;
     FIsSave :boolean;
-    FIniFilename :string;
+    //FIniFilename :string;
     FCancelled :boolean;
     FExecuting :boolean;
     FProgress :single;
     FMrkDragging :boolean;
     FMrkOffset :TSize; // while dragging
-    function GetSettingsFilename(CanCreate :boolean) :string;
+    FRequiredSteps :array[1..3] of boolean;
+    FProcessingSettings :TProcessingSettings;
+    procedure ChangeCurrentDir(const Path :string);
+    function GetAppDataFilename(const Filetitle :string; CanCreate :boolean) :string;
     procedure SetTitle(const Str :string);
     procedure OnPrint(Sender :TObject; const Line :string);
     procedure OnProgress(Sender :TObject; Progress :single);
-    function LoadFromIni(Ini :TCustomIniFile) :boolean;
-    procedure SaveToIni(Ini :TCustomIniFile);
     function LoadSettings :boolean;
     procedure SaveSettings;
-    function LoadFromFile(const Filename :string) :boolean;
-    procedure SaveToFile(const Filename :string);
+    function LoadProjectFromIni(Ini :TCustomIniFile) :boolean;
+    procedure SaveProjectToIni(Ini :TCustomIniFile);
+    function LoadLastProject :boolean;
+    procedure SaveLastProject;
+    function LoadProjectFromFile(const Filename :string) :boolean;
+    procedure SaveProjectToFile(const Filename :string);
     procedure Log(const Msg :string);
     function BoostStrToThreadCount(const Value :string) :integer;
     function ThreadCountToBoostStr(ThreadCount :integer) :string;
-    procedure UpdateSizesControls;
-    procedure UpdateRequireLabels;
-    procedure UpdateSrcFilesRequireLabel;
-    procedure UpdateDstFolderRequireLabel;
-    procedure UpdateSizesRequireLabel;
+    function GetRequiredSteps(Index : integer) :boolean;
+    procedure SetRequiredSteps(Index : integer; AValue: boolean);
+    procedure DoRequiredStepsChanged(Index :integer);
+    procedure RequiredStepsUpdate;
+    procedure UpdateRequiredStep(Index :integer);
     procedure LMRun(var Message: TLMessage); message LM_RUN;
     procedure SizeButtonClick(Sender :TObject);
     function MouseToSpace(X, Y :integer) :TSize;
     function MouseToMrkSpace(X, Y :integer; out Value :TSize) :boolean;
     function CalcMarkRect(out Rect :TRect) :boolean;
   public
-
+    property RequiredSteps[Index :integer] :boolean read GetRequiredSteps write SetRequiredSteps;
   end;
 
 var
@@ -347,7 +349,7 @@ var
 implementation
 
 uses
-  math, helpintfs, Windows, FileUtil, tags, webcreatordlg;
+  math, helpintfs, Windows, FileUtil, tags, webcreatordlg, settingsdlg;
 
 const
   SCptRandom        = '<random>';
@@ -360,20 +362,22 @@ resourcestring
   SCptUnnamed               = '<unnamed>';
   SErrInvalidShakeSeed      = 'Invalid Shake Seed.';
   SCptTitlePrefix           = 'ImageResize - ';
-  SCptLastSettings          = '<last settings>';
+  SCptLastProject       = '<last settings>';
   SCptCancel                = 'Cancel';
   SCptExecute               = 'Execute';
   SCptExecuteA              = 'E&xecute';
   SCptSizeClassSmall        = 'Small - Thumbnail size';
   SCptSizeClassMedium       = 'Medium - Document size';
   SCptSizeClassLarge        = 'Large - Desktop size';
-  SCptCoresFmt              = '%d Cores';
   SCptInfoFmt               = '%s %s %s, Processor %s, %d Cores';
   SLogErrorPrefix           = 'Error - ';
-  SLogCantLoad              = 'Cant load Image Resize Settings File';
-  SLogWarningVersionFmt     = 'Warning: Unexpected format %s (%s expected).';
+  SLogCantLoadProject       = 'Cant load ImageResize project File';
+  SLogCantLoadSettings      = 'Cant load ImageResize settings File';
+  SLogWarningSettingVersionFmt     = 'Warning: Unexpected settings format %s (%s expected).';
+  SLogWarningProjectVersionFmt     = 'Warning: Unexpected project format %s (%s expected).';
   SCptFileNotFoundFmt       = 'File ''%s'' not found.';
-  SLogFileSavedToFmt        = 'Settings saved to ''%s''';
+  SMsgProjectSavedToFmt     = 'Project saved to ''%s''';
+  SMsgProjectLoadedFromFmt  = 'Project ''%s'' loaded.';
   SCptSourceFilesFmt        = '%d source files';
   SErrMissingSourceFilenames = 'Missing source filenames.';
   SErrMissingSourceFolder   = 'Missing source folder.';
@@ -390,18 +394,36 @@ resourcestring
   //SErrNoTags                = 'Select a tag to copy or disable copying of tags.';
   //SErrInvalidCopyright      = 'Invalid copyright.';
   SErrMissingTagsReport     = 'Missing filename for tags reporting.';
+  SMsgCurrentDirFmt         = 'Current directory: %s';
 
 
 {$R *.lfm}
 
+//procedure IncGroupedAction(ActionList :TActionList; AGroupIndex :integer);
+//var
+//  i, n :integer;
+//  FindNext :boolean;
+//begin
+//  n := 0;
+//  FindNext := false:
+//  for i:=0 to ActionList.ActionCount-1 do begin
+//    if (ActionList.Actions[i] is TAction) then with TAction(ActionList.Actions[i]) do if AGroupIndex = GroupIndex then begin
+//
+//      inc(n);
+//      if Checked then begin
+//        FindNext := true;
+//      end;
+//    end;
+//  end;
+//
+//end;
+//
 procedure SetRequiredState(Control :TLabel; Value :boolean);
 begin
   if Value then begin
     Control.Font.Color := clRed;
-    Control.Caption := 'Ø';
   end else begin
-    Control.Font.Color := clNavy;
-    Control.Caption := 'ü';
+    Control.Font.Color := clGreen;
   end;
 end;
 
@@ -478,9 +500,13 @@ var
   LangCode :string;
   Resampling :TResampling;
 begin
-  AllowDropFiles := true;
-  if (SysLocale.PriLangId=7) and not (IsSwitch('L', 'LANGUAGE', LangCode) and SameText(LangCode, 'en')) then
+  if (SysLocale.PriLangId=7) and not (IsSwitch('L', '', LangCode) and SameText(LangCode, 'en')) then
     SetDefaultLang('de');
+
+  AllowDropFiles := true;
+
+  FProcessingSettings := TProcessingSettings.Create;
+  FProcessingSettings.Defaults;
 
   // Create Size Buttons
   for i:=0 to High(DEFSIZES) do begin
@@ -521,21 +547,20 @@ var
   LocHelpDir :string;
 begin
 
-  if not LoadSettings then
+  // Show initial message in Message log
+  Log(Format(SCptInfoFmt, [GUIVER_APP, GUIVER_VERSION, GUIVER_DATE, IMGRESVER, TThread.ProcessorCount]));
+
+  LoadSettings;
+  if not LoadLastProject then
     ActionNew.Execute;
-  UpdateRequireLabels;
+  RequiredStepsUpdate;
+
   FAutoExit := IsSwitch('X', 'AUTOEXIT');
   Filename := GetNonSwitch;
   if Filename<>'' then
-    LoadFromFile(Filename);
+    LoadProjectFromFile(Filename);
   if IsSwitch('A', 'AUTOSTART') then
     PostMessage(Handle, LM_RUN, 0, 0);
-
-  // Show number of cores
-  LabelCores.Caption := Format(SCptCoresFmt, [TThread.ProcessorCount]);
-
-  // Show initial message in Message log
-  Log(Format(SCptInfoFmt, [GUIVER_APP, GUIVER_VERSION, GUIVER_DATE, IMGRESVER, TThread.ProcessorCount]));
 
   // If no local help files, then use online help
   LocHelpDir := IncludeTrailingPathDelimiter(ExtractFilePath(Application.ExeName))+SLocDirHelp;
@@ -558,32 +583,59 @@ begin
     Close;
 end;
 
+procedure TMainDialog.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  SaveLastProject;
+  SaveSettings;
+end;
+
+procedure TMainDialog.FormDestroy(Sender: TObject);
+begin
+  FProcessingSettings.Free;
+end;
+
+//procedure TMainDialog.FormKeyDown(Sender: TObject; var Key: Word;
+//  Shift: TShiftState);
+//begin
+//  if (Key=VK_TAB) and (Shift=[ssCtrl]) then begin
+//    if PanelSource.Focused then
+//      IncGroupedAction(MainActionList, 1);
+//  end;
+//end;
+//
 procedure TMainDialog.EditSrcFolderChange(Sender: TObject);
 begin
-   UpdateSrcFilesRequireLabel;
+  UpdateRequiredStep(1);
 end;
 
 procedure TMainDialog.ButtonParamClick(Sender: TObject);
-var
-  TabIndex :integer;
 begin
-  TabIndex := TAction(Sender).Tag;
-  PageControlParams.TabIndex := TabIndex;
-//  ToolBarParameters.Buttons[TabIndex].Down := true;
-end;
-
-procedure TMainDialog.ActionInsertCopyrightExecute(Sender: TObject);
-begin
-end;
-
-procedure TMainDialog.ActionBrowseTagsReportFolderExecute(Sender: TObject);
-begin
+  with Sender as TAction do begin
+    Checked := true;
+    PageControlParams.TabIndex := Tag;
+  end;
 end;
 
 procedure TMainDialog.ActionListCreatorExecute(Sender: TObject);
 begin
   WebCreatorDialog := TWebCreatorDialog.Create(self);
   WebCreatorDialog.ShowModal;
+end;
+
+procedure TMainDialog.ActionSettingsExecute(Sender: TObject);
+begin
+  SettingsDialog.SetProcessingSettings(FProcessingSettings);
+  if SettingsDialog.ShowModal = mrOk then
+    SettingsDialog.GetProcessingSettings(FProcessingSettings);
+end;
+
+procedure TMainDialog.ActionSrcFilenamesExecute(Sender: TObject);
+begin
+  with Sender as TAction do begin
+    Checked := true;
+    PageControlSrc.TabIndex := Tag;
+    UpdateRequiredStep(1);
+  end;
 end;
 
 procedure TMainDialog.ButtonBrowseDstFolder1Click(Sender: TObject);
@@ -640,7 +692,7 @@ begin
     SelText := ''
   else
     EditSizes.Text := '';
-  UpdateSizesControls;
+  UpdateRequiredStep(2);
 end;
 
 procedure TMainDialog.ButtonClearSrcFilesClick(Sender: TObject);
@@ -664,10 +716,6 @@ begin
   Log(SLogErrorPrefix+E.Message);
 end;
 
-procedure TMainDialog.ActionBrowseSrcFolderExecute(Sender: TObject);
-begin
-end;
-
 procedure TMainDialog.EditRenTemplateEnter(Sender: TObject);
 begin
   RadioButtonRenCustom.Checked := true;
@@ -675,12 +723,112 @@ end;
 
 procedure TMainDialog.EditSizesExit(Sender: TObject);
 begin
-  UpdateSizesControls;
+  UpdateRequiredStep(2);
 end;
 
-function TMainDialog.GetSettingsFilename(CanCreate :boolean): string;
+procedure TMainDialog.ChangeCurrentDir(const Path: string);
 begin
-  result := IncludeTrailingPathDelimiter(GetWindowsSpecialDir(FOLDERID_LocalAppData, CanCreate))+ChangeFileExt(ExtractFileName(Application.ExeName), '.'+GUIVER_VERSION)+'\settings.ini';
+  SetCurrentDir(Path);
+  Log(Format(SMsgCurrentDirFmt, [Path]));
+end;
+
+function TMainDialog.GetAppDataFilename(const Filetitle :string; CanCreate :boolean): string;
+var
+  Path, AppPath :string;
+begin
+  Path := IncludeTrailingPathDelimiter(GetWindowsSpecialDir(FOLDERID_LocalAppData, CanCreate));
+  AppPath := IncludeTrailingPathDelimiter(Path+ChangeFileExt(ExtractFileName(Application.ExeName), '.'+GUIVER_VERSION));
+  result := AppPath+Filetitle;
+end;
+
+function TMainDialog.GetRequiredSteps(Index: integer): boolean;
+begin
+  result := FRequiredSteps[Index];
+end;
+
+procedure TMainDialog.SetRequiredSteps(Index : integer; AValue: boolean);
+begin
+  if FRequiredSteps[Index]<>AValue then begin
+    FRequiredSteps[Index] := AValue;
+    DoRequiredStepsChanged(Index);
+  end;
+end;
+
+procedure TMainDialog.DoRequiredStepsChanged(Index: integer);
+var
+  Required :boolean;
+begin
+  case Index of
+  1: PaintBoxStep1.Invalidate;
+  2: PaintBoxStep2.Invalidate;
+  3: PaintBoxStep3.Invalidate;
+  end;
+  for Required in FRequiredSteps do
+    if Required then begin
+      ActionExecute.Enabled := false;
+      Exit;
+    end;
+  ActionExecute.Enabled := true;
+end;
+
+procedure TMainDialog.SaveSettings;
+var
+  Ini :TCustomIniFile;
+begin
+  Ini := TIniFile.Create(GetAppDataFilename(SETTINGS_FILENAME, true));
+  with Ini do try
+    WriteString(COMMONSECTION, 'Type', SETTYPE);
+    WriteString(COMMONSECTION, 'Version', SETVERSION);
+    Ini.WriteInteger(DIALOGSECTION, 'Width', Width);
+    Ini.WriteInteger(DIALOGSECTION, 'Height', Height);
+    Ini.WriteInteger(DIALOGSECTION, 'PanelControls.Height', PanelControls.Height);
+    Ini.WriteString(DIALOGSECTION, 'CurrentDirectory', GetCurrentDir);
+    EraseSection(SETTINGSSECTION);
+    WriteBool(SETTINGSSECTION, 'StopOnError', FProcessingSettings.StopOnError);
+    WriteInteger(SETTINGSSECTION, 'ThreadsUsed', FProcessingSettings.ThreadsUsed);
+  finally
+    Free;
+  end;
+end;
+
+function TMainDialog.LoadSettings :boolean;
+var
+  Filename :string;
+  Ini :TCustomIniFile;
+  IniVer :string;
+  IniTyp :string;
+  AHeight :integer;
+  Path :string;
+begin
+  Filename := GetAppDataFilename(SETTINGS_FILENAME, false);
+  if not FileExists(Filename) then Exit(false);
+  Ini := TIniFile.Create(Filename);
+  with Ini do try
+    IniTyp := Ini.ReadString('Common', 'Type', 'unknown');
+    result := IniTyp=SETTYPE;
+    if not result then begin
+       Log(SLogCantLoadSettings);
+       Exit;
+    end;
+    IniVer := Ini.ReadString('Common', 'Version', '000');
+    result := IniVer=SETVERSION;
+    if not result then begin
+      Log(Format(SLogWarningSettingVersionFmt, [IniVer, SETVERSION]));
+      Exit;
+    end;
+    Width := Ini.ReadInteger(DIALOGSECTION, 'Width', Width);
+    Height := Ini.ReadInteger(DIALOGSECTION, 'Height', Height);
+    AHeight := Ini.ReadInteger(DIALOGSECTION, 'PanelControls.Height', PanelControls.Height);
+    if AHeight+PanelControls.Top + 16 < ClientHeight then
+      PanelControls.Height := AHeight;
+    Path := Ini.ReadString(DIALOGSECTION, 'CurrentDirectory', GetCurrentDir);
+    if DirectoryExists(Path) then
+      ChangeCurrentDir(Path);
+    FProcessingSettings.StopOnError := ReadBool(SETTINGSSECTION, 'StopOnError', FProcessingSettings.StopOnError);
+    FProcessingSettings.ThreadsUsed := ReadInteger(SETTINGSSECTION, 'ThreadsUsed', FProcessingSettings.ThreadsUsed);
+  finally
+    Free;
+  end;
 end;
 
 procedure TMainDialog.ActionNewExecute(Sender: TObject);
@@ -691,11 +839,11 @@ begin
   ImgResizer := TProcessor.Create;
   try
     MemoSrcFilenames.Lines.Clear;
+    ActionSrcFilenames.Checked          := true;
     EditSrcFolder.Text                  := '';
     EditSrcMasks.Text                   := '*.jpg; *.png';
     EditDstFolder.Text                  := '';
     EditSizes.Text                      := '';
-    RadioButtonFileList.Checked         := true;
     ComboBoxJpgQuality.Text             := ImgResizer.JpgQualityToStr(ImgResizer.JpgQuality);
     ComboBoxPngCompression.Text         := TProcessor.PngCompressionToStr(ImgResizer.PngCompression);
     ComboBoxResampling.Text             := RESAMPLING_STRINGS[DEFAULT_RESAMPLING];
@@ -705,7 +853,6 @@ begin
     UpDownMrkY.Position                 := round(ImgResizer.MrkY);
     UpDownMrkAlpha.Position             := round(ImgResizer.MrkAlpha);
     FIsSave                             := false;
-    FIniFilename                        := '';
     CheckBoxRenEnabled.Checked          := ImgResizer.RenEnabled;
     RadioButtonRenSimple.Checked        := true;
     EditRenTemplate.Text                := DEFAULT_RENFILETEMPLATE;
@@ -721,43 +868,48 @@ begin
     CheckBoxTagsReportEnabled.Checked   := false;
     EditTagsReportFilename.Text         := '';
 
-    UpdateSizesControls;
-    UpdateRequireLabels;
+    ActionSrcFilenames.Execute;
     ActionParamSizes.Execute;
+
+    RequiredStepsUpdate;
     SetTitle(SCptUnnamed);
+    FProjectFilename := '';
+    FIsSave := false;
   finally
     ImgResizer.Free;
   end;
 end;
 
-function TMainDialog.LoadFromIni(Ini :TCustomIniFile) :boolean;
+function TMainDialog.LoadProjectFromIni(Ini :TCustomIniFile) :boolean;
 var
   IniVer :string;
   IniTyp :string;
 begin
   with Ini do begin
     IniTyp := Ini.ReadString('Common', 'Type', 'unknown');
-    result := IniTyp=INITYPE;
+    result := IniTyp=PRJTYPE;
     if not result then begin
-       Log(SLogCantLoad);
+       Log(SLogCantLoadProject);
        Exit;
     end;
     IniVer := Ini.ReadString('Common', 'Version', '000');
-    result := (IniVer=INIVERSION) or (IniVer=INIVERSION200) or (IniVer=INIVERSION210);
+    result := (IniVer=PRJVERSION) or (IniVer=PRJVERSION200) or (IniVer=PRJVERSION210);
     if not result then begin
-      Log(Format(SLogWarningVersionFmt, [IniVer, INIVERSION]));
+      Log(Format(SLogWarningProjectVersionFmt, [IniVer, PRJVERSION]));
       Exit;
     end;
-    case ReadInteger(SETTINGSSECTION, 'SrcMode', NotebookFileSource.PageIndex) of
-    0: RadioButtonFileList.Checked := true;
-    1: RadioButtonPathMask.Checked := true;
-    end;
+
+    if SameText(ReadString(SETTINGSSECTION, 'Source', 'Filenames'), 'Filenames') then
+      ActionSrcFilenames.Execute
+    else
+      ActionSrcFolder.Execute;
+
     EditSrcFolder.Text                    := ReadString(SETTINGSSECTION, 'SrcFolder', EditSrcFolder.Text);
     EditSrcMasks.Text                     := ReadString(SETTINGSSECTION, 'SrcMasks', EditSrcMasks.Text);
     MemoSrcFilenames.Text                 := ReplaceStr(ReadString(SETTINGSSECTION, 'SrcFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, LINESEP)), LINESEP, #13#10);
     EditDstFolder.Text                    := ReadString(SETTINGSSECTION, 'DstFolder', EditDstFolder.Text);
     EditSizes.Text                        := ReadString(SETTINGSSECTION, 'Sizes', EditSizes.Text);
-    UpdateSizesControls;
+    RequiredStepsUpdate;
     ComboBoxJpgQuality.Text               := ReadString(SETTINGSSECTION, 'JpgOptions.Quality', ComboBoxJpgQuality.Text);
     ComboBoxPngCompression.Text           := ReadString(SETTINGSSECTION, 'PngOptions.Compression', ComboBoxPngCompression.Text);
     ComboBoxResampling.Text               := ReadString(SETTINGSSECTION, 'Resampling', RESAMPLING_STRINGS[DEFAULT_RESAMPLING]);
@@ -767,7 +919,6 @@ begin
     UpDownMrkX.Position                   := ReadInteger(SETTINGSSECTION, 'MrkX', UpDownMrkX.Position);
     UpDownMrkY.Position                   := ReadInteger(SETTINGSSECTION, 'MrkY', UpDownMrkY.Position);
     UpDownMrkAlpha.Position               := ReadInteger(SETTINGSSECTION, 'MrkAlpha', UpDownMrkAlpha.Position);
-    CheckBoxStopOnError.Checked           := ReadBool(SETTINGSSECTION, 'StopOnError', CheckBoxStopOnError.Checked);
     CheckBoxRenEnabled.Checked            := ReadBool(SETTINGSSECTION, 'RenEnabled', CheckBoxRenEnabled.Checked);
     RadioButtonRenSimple.Checked          := ReadBool(SETTINGSSECTION, 'RenSimple', RadioButtonRenSimple.Checked);
     RadioButtonRenAdvanced.Checked        := ReadBool(SETTINGSSECTION, 'RenAdvanced', RadioButtonRenAdvanced.Checked);
@@ -783,17 +934,21 @@ begin
     EditCopyright.Text                    := ReadString(SETTINGSSECTION, 'Copyright', EditCopyright.Text);
     CheckBoxTagsReportEnabled.Checked     := ReadBool(SETTINGSSECTION, 'TagsReportEnabled', CheckBoxTagsReportEnabled.Checked);
     EditTagsReportFilename.Text           := ReadString(SETTINGSSECTION, 'TagsReportFilename', EditTagsReportFilename.Text);
+    ActionParamSizes.Execute;
   end;
 end;
 
-procedure TMainDialog.SaveToIni(Ini :TCustomIniFile);
+const
+  SRCMODES :array[boolean] of string = ('Folder', 'Filenames');
+
+procedure TMainDialog.SaveProjectToIni(Ini :TCustomIniFile);
 begin
   // Navigate to proper "directory":
   with Ini do begin
-    WriteString(COMMONSECTION, 'Type', INITYPE);
-    WriteString(COMMONSECTION, 'Version', INIVERSION);
+    WriteString(COMMONSECTION, 'Type', PRJTYPE);
+    WriteString(COMMONSECTION, 'Version', PRJVERSION);
     EraseSection(SETTINGSSECTION);
-    WriteInteger(SETTINGSSECTION, 'SrcMode', NotebookFileSource.PageIndex);
+    WriteString(SETTINGSSECTION, 'Source', SRCMODES[ActionSrcFilenames.Checked]);
     WriteString(SETTINGSSECTION, 'SrcFolder', EditSrcFolder.Text);
     WriteString(SETTINGSSECTION, 'SrcMasks', EditSrcMasks.Text);
     WriteString(SETTINGSSECTION, 'DstFolder', EditDstFolder.Text);
@@ -809,7 +964,6 @@ begin
     WriteString(SETTINGSSECTION, 'MrkX', EditMrkX.Text);
     WriteString(SETTINGSSECTION, 'MrkY', EditMrkY.Text);
     WriteString(SETTINGSSECTION, 'MrkAlpha', EditMrkAlpha.Text);
-    WriteBool(SETTINGSSECTION, 'StopOnError', CheckBoxStopOnError.Checked);
     WriteBool(SETTINGSSECTION, 'RenEnabled', CheckBoxRenEnabled.Checked);
     WriteBool(SETTINGSSECTION, 'RenSimple', RadioButtonRenSimple.Checked);
     WriteBool(SETTINGSSECTION, 'RenAdvanced', RadioButtonRenAdvanced.Checked);
@@ -828,52 +982,36 @@ begin
   end;
 end;
 
-function TMainDialog.LoadSettings: boolean;
+function TMainDialog.LoadLastProject: boolean;
 var
   Ini :TIniFile;
   Filename :string;
-  AHeight :integer;
-  Path :string;
 begin
-  Filename := GetSettingsFilename(false);
+  Filename := GetAppDataFilename(LASTPROJECT_FILENAME, false);
   if not FileExists(Filename) then Exit(false);
   Ini := TIniFile.Create(Filename);
   try
-    Width := Ini.ReadInteger(DIALOGSECTION, 'Width', Width);
-    Height := Ini.ReadInteger(DIALOGSECTION, 'Height', Height);
-    AHeight := Ini.ReadInteger(DIALOGSECTION, 'PanelControls.Height', PanelControls.Height);
-    if AHeight+PanelControls.Top + 16 < ClientHeight then
-      PanelControls.Height := AHeight;
-    ComboBoxBoost.Text := Ini.ReadString(DIALOGSECTION, 'ThreadCount', ComboBoxBoost.Text);
-    Path := Ini.ReadString(DIALOGSECTION, 'CurrentDirectory', GetCurrentDir);
-    if DirectoryExists(Path) then
-      SetCurrentDir(Path);
-    result := LoadFromIni(Ini);
+    result := LoadProjectFromIni(Ini);
   finally
     Ini.Free;
   end;
   if result then
-    SetTitle(SCptLastSettings);
+    SetTitle(SCptLastProject);
 end;
 
-procedure TMainDialog.SaveSettings;
+procedure TMainDialog.SaveLastProject;
 var
   Ini :TIniFile;
 begin
-  Ini := TIniFile.Create(GetSettingsFilename(true));
+  Ini := TIniFile.Create(GetAppDataFilename(LASTPROJECT_FILENAME, true));
   try
-    Ini.WriteInteger(DIALOGSECTION, 'Width', Width);
-    Ini.WriteInteger(DIALOGSECTION, 'Height', Height);
-    Ini.WriteInteger(DIALOGSECTION, 'PanelControls.Height', PanelControls.Height);
-    Ini.WriteString(DIALOGSECTION, 'ThreadCount', ComboBoxBoost.Text);
-    Ini.WriteString(DIALOGSECTION, 'CurrentDirectory', GetCurrentDir);
-    SaveToIni(Ini);
+    SaveProjectToIni(Ini);
   finally
     Ini.Free;
   end;
 end;
 
-function TMainDialog.LoadFromFile(const Filename: string) :boolean;
+function TMainDialog.LoadProjectFromFile(const Filename: string) :boolean;
 var
   Ini :TIniFile;
 begin
@@ -881,30 +1019,31 @@ begin
     raise Exception.CreateFmt(SCptFileNotFoundFmt, [Filename]);
   Ini := TIniFile.Create(Filename);
   try
-    result := LoadFromIni(Ini);
+    result := LoadProjectFromIni(Ini);
     if result then begin
       FIsSave := true;
-      FIniFilename := Filename;
+      FProjectFilename := Filename;
       SetTitle(''''+Filename+'''');
-      SetCurrentDir(ExtractFilePath(Filename));
+      Log(Format(SMsgProjectLoadedFromFmt, [Filename]));
+      ChangeCurrentDir(ExtractFilePath(Filename));
     end;
   finally
      Ini.Free;
   end;
 end;
 
-procedure TMainDialog.SaveToFile(const Filename: string);
+procedure TMainDialog.SaveProjectToFile(const Filename: string);
 var
   Ini :TIniFile;
 begin
   Ini := TIniFile.Create(Filename);
   try
-    SaveToIni(Ini);
+    SaveProjectToIni(Ini);
+    FProjectFilename := Filename;
     FIsSave := true;
-    FIniFilename := Filename;
-    SetTitle(''''+FIniFilename+'''');
-    SetCurrentDir(ExtractFilePath(Filename));
-    Log(Format(SLogFileSavedToFmt, [FIniFilename]));
+    SetTitle(''''+Filename+'''');
+    ChangeCurrentDir(ExtractFilePath(Filename));
+    Log(Format(SMsgProjectSavedToFmt, [Filename]));
   finally
     Ini.Free;
   end;
@@ -941,19 +1080,13 @@ begin
         end;
     end;
   end;
-  UpdateSizesControls;
-  UpdateRequireLabels;
-end;
-
-procedure TMainDialog.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-begin
-  SaveSettings;
+  RequiredStepsUpdate;
 end;
 
 procedure TMainDialog.ActionOpenExecute(Sender: TObject);
 begin
   if OpenDialog.Execute then begin
-    LoadFromFile(OpenDialog.Filename);
+    LoadProjectFromFile(OpenDialog.Filename);
   end;
 end;
 
@@ -987,49 +1120,17 @@ begin
   end;
 end;
 
-procedure TMainDialog.UpdateSizesControls;
-var
-  i :integer;
-  SizeDict :TSizeDict;
-  Sizes :TSizes;
-begin
-  if TrySizesStrToSizes(EditSizes.Text, Sizes) then begin
-    EditSizes.Text := SizesToSizesStr(Sizes);
-    SizeDict := TSizeDict.Create;
-    try
-      for i:=0 to High(Sizes) do
-        SizeDict.Add(Sizes[i], i);
-      with ToolBarSizeButtons do for i:=0 to ButtonCount-1 do
-        Buttons[i].Down := SizeDict.ContainsKey(Buttons[i].Tag);
-    finally
-      SizeDict.Free;
-    end;
-  end;
-end;
-
-procedure TMainDialog.UpdateRequireLabels;
-begin
-  UpdateSrcFilesRequireLabel;
-  UpdateDstFolderRequireLabel;
-  UpdateSizesRequireLabel;
-end;
-
 procedure TMainDialog.ActionSaveExecute(Sender: TObject);
 begin
   if not FIsSave then
     ActionSaveAs.Execute
   else
-    SaveToFile(FIniFilename);
-end;
-
-procedure TMainDialog.ButtonExecuteClick(Sender: TObject);
-begin
-  ActionExecute.Execute;
+    SaveProjectToFile(FProjectFilename);
 end;
 
 procedure TMainDialog.MemoSrcFilenamesChange(Sender: TObject);
 begin
-  UpdateSrcFilesRequireLabel;
+  UpdateRequiredStep(1);
 end;
 
 function TMainDialog.MouseToSpace(X, Y: integer): TSize;
@@ -1072,20 +1173,48 @@ begin
   end;
 end;
 
-procedure TMainDialog.UpdateSrcFilesRequireLabel;
+procedure TMainDialog.RequiredStepsUpdate;
+var
+  i :integer;
 begin
-  SetRequiredState(LabelSrcFilenamesRequired, RadioButtonFilelist.Checked and (Length(MemoSrcFilenames.Text) = 0) or RadioButtonPathMask.Checked and (Length(EditSrcFolder.text) = 0));
-  LabelSourceFileListMessage.Caption := Format(SCptSourceFilesFmt, [MemoSrcFilenames.Lines.Count]);
+  for i:=1 to 3 do
+    UpdateRequiredStep(i);
 end;
 
-procedure TMainDialog.UpdateDstFolderRequireLabel;
+procedure TMainDialog.UpdateRequiredStep(Index :integer);
+var
+  Required :boolean;
+  i :integer;
+  SizeDict :TSizeDict;
+  Sizes :TSizes;
 begin
-  SetRequiredState(LabelDstFolderRequired, Length(EditDstFolder.Text) = 0);
-end;
-
-procedure TMainDialog.UpdateSizesRequireLabel;
-begin
-  SetRequiredState(LabelSizesRequired, Length(EditSizes.Text) = 0);
+  case Index of
+  1:
+    begin
+      Required := (ActionSrcFilenames.Checked and (Length(MemoSrcFilenames.Text) = 0)) or (ActionSrcFolder.Checked and (Length(EditSrcFolder.Text) = 0));
+      RequiredSteps[1] := Required;
+      LabelSourceFileListMessage.Caption := Format(SCptSourceFilesFmt, [MemoSrcFilenames.Lines.Count]);
+    end;
+  2:
+    begin
+      if TrySizesStrToSizes(EditSizes.Text, Sizes) then begin
+        EditSizes.Text := SizesToSizesStr(Sizes);
+        SizeDict := TSizeDict.Create;
+        try
+          for i:=0 to High(Sizes) do
+            SizeDict.Add(Sizes[i], i);
+          with ToolBarSizeButtons do for i:=0 to ButtonCount-1 do
+            Buttons[i].Down := SizeDict.ContainsKey(Buttons[i].Tag);
+        finally
+          SizeDict.Free;
+        end;
+        RequiredSteps[2] := Length(Sizes)=0;
+      end else
+        RequiredSteps[2] := true;
+    end;
+  3:
+    RequiredSteps[3] :=  Length(EditDstFolder.Text) = 0;
+  end;
 end;
 
 procedure TMainDialog.PaintBoxMrkPreviewMouseLeave(Sender: TObject);
@@ -1220,41 +1349,17 @@ begin
   Img.Free;
 end;
 
-procedure TMainDialog.PanelControlsClick(Sender: TObject);
+procedure TMainDialog.PaintBoxStep1Paint(Sender: TObject);
+var
+  PaintBox :TPaintBox;
 begin
-
-end;
-
-procedure TMainDialog.PanelControlsResize(Sender: TObject);
-
-  procedure Place(Control :TControl; Target :TControl);
-  var
-    GroupBox :TGroupBox;
-  begin
-    Control.Left := Target.Left +8;
-    Control.Top := Target.Top;
-    if Target is TGroupBox then begin
-      GroupBox := TGroupBox(Target);
-      if GroupBox.Caption[1] <> ' ' then
-        GroupBox.Caption := '      '+GroupBox.Caption;
-    end;
-  end;
-
-begin
-  Place(LabelSrcFilenamesRequired, GroupBoxImageFiles);
-  Place(LabelDstFolderRequired, GroupBoxDstFolder);
-  Place(LabelSizesRequired, GroupBoxParams);
-end;
-
-procedure TMainDialog.RadioButtonFilelistChange(Sender: TObject);
-begin
-  NotebookFileSource.PageIndex := (Sender as TRadioButton).Tag;
-  UpdateSrcFilesRequireLabel;
+  PaintBox := Sender as TPaintBox;
+  ImageList32x32.Draw(PaintBox.Canvas, 0, 0, IfThen(FRequiredSteps[PaintBox.Tag], 21, 22));
 end;
 
 procedure TMainDialog.EditDstFolderChange(Sender: TObject);
 begin
-  UpdateDstFolderRequireLabel;
+  UpdateRequiredStep(3);
 end;
 
 procedure TMainDialog.EditMrkSizeChange(Sender: TObject);
@@ -1264,41 +1369,19 @@ end;
 
 procedure TMainDialog.EditSizesChange(Sender: TObject);
 begin
-  UpdateSizesRequireLabel;
+  UpdateRequiredStep(2);
 end;
 
 procedure TMainDialog.ActionSaveAsExecute(Sender: TObject);
 begin
-  SaveAsDialog.Filename := FIniFilename;
-  if SaveAsDialog.Execute then begin
-    SaveToFile(SaveAsDialog.Filename);
-  end;
-end;
-
-procedure TMainDialog.ActionBrowseFilenamesExecute(Sender: TObject);
-begin
-end;
-
-procedure TMainDialog.ActionBrowseMrkFilenameExecute(Sender: TObject);
-begin
-end;
-
-procedure TMainDialog.ActionClearFilenamesExecute(Sender: TObject);
-begin
-
-end;
-
-procedure TMainDialog.ActionBrowseDstFolderExecute(Sender: TObject);
-begin
+  SaveAsDialog.Filename := FProjectFilename;
+  if SaveAsDialog.Execute then
+    SaveProjectToFile(SaveAsDialog.Filename);
 end;
 
 procedure TMainDialog.ActionAboutExecute(Sender: TObject);
 begin
   TAboutDialog.Execute(IMGRESGUICPR, SCptProcessor + ' ' +IMGRESVER, STxtLicense);
-end;
-
-procedure TMainDialog.ActionClearSizesExecute(Sender: TObject);
-begin
 end;
 
 procedure TMainDialog.ActionEditWatermarkExecute(Sender: TObject);
@@ -1358,8 +1441,8 @@ begin
     ActionExecute.Enabled := true;
     ActionExecute.Caption := SCptCancel;
     ButtonExecute.Caption := SCptCancel;
-    ActionExecute.ImageIndex := 7;
-    ButtonExecute.ImageIndex := 1;
+    ActionExecute.ImageIndex := 5;
+    ButtonExecute.ImageIndex := 5;
     ButtonExecute.Invalidate;
     ProgressBar.Position := 0;
     ProgressBar.Visible := true;
@@ -1374,19 +1457,14 @@ begin
       SrcFilenames := TStringList.Create;
       try
         // Source filenames
-        case NotebookFileSource.PageIndex of
-        0:
-          begin
-            if (MemoSrcFilenames.Text='') then
-              raise Exception.Create(SErrMissingSourceFilenames);
-            SrcFilenames.Assign(MemoSrcFilenames.Lines);
-          end;
-        1:
-          begin
-            if (EditSrcFolder.Text='') or not DirectoryExists(EditSrcFolder.Text) then
+        if ActionSrcFilenames.Checked then begin
+          if (MemoSrcFilenames.Text='') then
+            raise Exception.Create(SErrMissingSourceFilenames);
+          SrcFilenames.Assign(MemoSrcFilenames.Lines);
+        end else begin
+          if (EditSrcFolder.Text='') or not DirectoryExists(EditSrcFolder.Text) then
               raise Exception.Create(SErrMissingSourceFolder);
-            FindAllFiles(SrcFilenames, EditSrcFolder.Text, EditSrcMasks.Text, false);
-          end;
+          FindAllFiles(SrcFilenames, EditSrcFolder.Text, EditSrcMasks.Text, false);
         end;
 
         // Destination folder
@@ -1472,8 +1550,8 @@ begin
         Processor.Sizes := SizesToSizesStr(Sizes);
         Processor.SrcFilenames := SrcFilenames;
         Processor.DstFolder := DstFolder;
-        Processor.ThreadCount := BoostStrToThreadCount(ComboBoxBoost.Text);
-        Processor.StopOnError := CheckBoxStopOnError.Checked;
+        Processor.ThreadCount := FProcessingSettings.ThreadsUsed;
+        Processor.StopOnError := FProcessingSettings.StopOnError;
         Processor.Execute;
 
       except on E :Exception do
@@ -1489,8 +1567,8 @@ begin
       ActionExecute.Enabled := true;
       ActionExecute.Caption := SCptExecuteA;
       ButtonExecute.Caption := SCptExecute;
-      ActionExecute.ImageIndex := 6;
-      ButtonExecute.ImageIndex := 2;
+      ActionExecute.ImageIndex := 4;
+      ButtonExecute.ImageIndex := 4;
       TimerProgressBarOff.Enabled := true;
       Screen.Cursor := crDefault;
     end;

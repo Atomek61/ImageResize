@@ -193,11 +193,6 @@ msgctxt "maindlg.scptcancel"
 msgid "Cancel"
 msgstr ""
 
-#: maindlg.scptcoresfmt
-#, object-pascal-format
-msgid "%d Cores"
-msgstr ""
-
 #: maindlg.scptdependenciesfmt
 #, object-pascal-format
 msgctxt "maindlg.scptdependenciesfmt"
@@ -224,7 +219,8 @@ msgstr ""
 msgid "%s %s %s, Processor %s, %d Cores"
 msgstr ""
 
-#: maindlg.scptlastsettings
+#: maindlg.scptlastproject
+msgctxt "maindlg.scptlastproject"
 msgid "<last settings>"
 msgstr ""
 
@@ -319,22 +315,43 @@ msgstr ""
 msgid "hlp\\en"
 msgstr ""
 
-#: maindlg.slogcantload
-msgid "Cant load Image Resize Settings File"
+#: maindlg.slogcantloadproject
+msgctxt "maindlg.slogcantloadproject"
+msgid "Cant load ImageResize project File"
+msgstr ""
+
+#: maindlg.slogcantloadsettings
+msgid "Cant load ImageResize settings File"
 msgstr ""
 
 #: maindlg.slogerrorprefix
 msgid "Error - "
 msgstr ""
 
-#: maindlg.slogfilesavedtofmt
+#: maindlg.slogwarningprojectversionfmt
 #, object-pascal-format
-msgid "Settings saved to '%s'"
+msgid "Warning: Unexpected project format %s (%s expected)."
 msgstr ""
 
-#: maindlg.slogwarningversionfmt
+#: maindlg.slogwarningsettingversionfmt
 #, object-pascal-format
-msgid "Warning: Unexpected format %s (%s expected)."
+msgid "Warning: Unexpected settings format %s (%s expected)."
+msgstr ""
+
+#: maindlg.smsgcurrentdirfmt
+#, object-pascal-format
+msgid "Current directory: %s"
+msgstr ""
+
+#: maindlg.smsgprojectloadedfromfmt
+#, object-pascal-format
+msgid "Project '%s' loaded."
+msgstr ""
+
+#: maindlg.smsgprojectsavedtofmt
+#, object-pascal-format
+msgctxt "maindlg.smsgprojectsavedtofmt"
+msgid "Project saved to '%s'"
 msgstr ""
 
 #: maindlg.stxtlicense
@@ -369,6 +386,17 @@ msgstr ""
 
 #: mrkeditdlg.serrinvalidparams
 msgid "Invalid parameters"
+msgstr ""
+
+#: settingsdlg.scptcoresfmt
+#, object-pascal-format
+msgctxt "settingsdlg.scptcoresfmt"
+msgid "for %d Cores"
+msgstr ""
+
+#: settingsdlg.serrinvalidcoresusedfmt
+#, object-pascal-format
+msgid "Invalid number of threads '%s'."
 msgstr ""
 
 #: taboutdialog.actioncheckupdate.caption
@@ -467,11 +495,6 @@ msgstr ""
 msgid "&Version"
 msgstr ""
 
-#: taboutdialog.toolbar.caption
-msgctxt "taboutdialog.toolbar.caption"
-msgid "ToolBar"
-msgstr ""
-
 #: tags.serrasterisk
 msgid "first row cannot contain a *"
 msgstr ""
@@ -512,11 +535,12 @@ msgid "Ok"
 msgstr ""
 
 #: tmaindialog.actionabout.caption
-msgid "Abou&t"
+msgid "A&bout"
 msgstr ""
 
 #: tmaindialog.actioneditwatermark.caption
-msgid "Wat&ermark"
+msgctxt "tmaindialog.actioneditwatermark.caption"
+msgid "Water&mark..."
 msgstr ""
 
 #: tmaindialog.actioneditwatermark.hint
@@ -526,7 +550,7 @@ msgstr ""
 
 #: tmaindialog.actionexecute.caption
 msgctxt "tmaindialog.actionexecute.caption"
-msgid "E&xecute"
+msgid "&Execute"
 msgstr ""
 
 #: tmaindialog.actionexecute.hint
@@ -536,7 +560,7 @@ msgstr ""
 
 #: tmaindialog.actionhelp.caption
 msgctxt "tmaindialog.actionhelp.caption"
-msgid "Help"
+msgid "&Help"
 msgstr ""
 
 #: tmaindialog.actionhelp.hint
@@ -563,15 +587,6 @@ msgstr ""
 
 #: tmaindialog.actionopen.hint
 msgid "Load saved settings"
-msgstr ""
-
-#: tmaindialog.actionparamboost.caption
-msgctxt "tmaindialog.actionparamboost.caption"
-msgid "&Boost"
-msgstr ""
-
-#: tmaindialog.actionparamboost.hint
-msgid "Accelerate the resampling Process by Multithreading"
 msgstr ""
 
 #: tmaindialog.actionparamquality.caption
@@ -636,6 +651,19 @@ msgstr ""
 msgid "Save current settings to another place"
 msgstr ""
 
+#: tmaindialog.actionsettings.caption
+msgctxt "tmaindialog.actionsettings.caption"
+msgid "Settin&gs..."
+msgstr ""
+
+#: tmaindialog.actionsrcfilenames.caption
+msgid "&List of Files"
+msgstr ""
+
+#: tmaindialog.actionsrcfolder.caption
+msgid "&Folder"
+msgstr ""
+
 #: tmaindialog.buttonbrowsesrcfiles.hint
 msgid "Browse for one or more images"
 msgstr ""
@@ -650,16 +678,6 @@ msgstr ""
 
 #: tmaindialog.buttonclearsrcfiles.hint
 msgid "Clear image list"
-msgstr ""
-
-#: tmaindialog.buttonexecute.caption
-msgctxt "tmaindialog.buttonexecute.caption"
-msgid "Execute"
-msgstr ""
-
-#: tmaindialog.buttonexecute.hint
-msgctxt "tmaindialog.buttonexecute.hint"
-msgid "Starts the resampling process"
 msgstr ""
 
 #: tmaindialog.buttonmrkedit.hint
@@ -693,10 +711,6 @@ msgstr ""
 msgid "Enables the image file names to be mixed randomly (shaked)"
 msgstr ""
 
-#: tmaindialog.checkboxstoponerror.caption
-msgid "Stop on Error"
-msgstr ""
-
 #: tmaindialog.checkboxtagcopyright.caption
 msgid "Copyright"
 msgstr ""
@@ -720,14 +734,6 @@ msgstr ""
 
 #: tmaindialog.checkboxtagtitle.caption
 msgid "Title"
-msgstr ""
-
-#: tmaindialog.comboboxboost.hint
-msgid "The application can use a multithreaded pooling"
-msgstr ""
-
-#: tmaindialog.comboboxboost.text
-msgid "Single"
 msgstr ""
 
 #: tmaindialog.comboboxjpgquality.hint
@@ -869,10 +875,6 @@ msgid ""
 "into the path where the program shall insert the current size ."
 msgstr ""
 
-#: tmaindialog.groupboxdstfolder.caption
-msgid "Destination Folder"
-msgstr ""
-
 #: tmaindialog.groupboxexiftagging.caption
 msgid "EXIF Tagging"
 msgstr ""
@@ -886,10 +888,6 @@ msgid ""
 "Windows Explorer or with a photo editor like RawTherapee."
 msgstr ""
 
-#: tmaindialog.groupboximagefiles.caption
-msgid "Images"
-msgstr ""
-
 #: tmaindialog.groupboxjpgoptions.caption
 msgid "JPEG"
 msgstr ""
@@ -900,10 +898,6 @@ msgstr ""
 
 #: tmaindialog.groupboxmrklayout.caption
 msgid "Layout"
-msgstr ""
-
-#: tmaindialog.groupboxparams.caption
-msgid "Parameters"
 msgstr ""
 
 #: tmaindialog.groupboxpngoptions.caption
@@ -986,21 +980,7 @@ msgid "(EXIF ImageDescription)"
 msgstr ""
 
 #: tmaindialog.label18.caption
-msgid "File Wildcards:"
-msgstr ""
-
-#: tmaindialog.label19.caption
-msgid ""
-"ImageResize uses thread pooling to benefit\n"
-"the full computers power.\n"
-"\n"
-"The number of threads is limited to the\n"
-"available cores and the number of tasks.\n"
-"A task is a single resampling process."
-msgstr ""
-
-#: tmaindialog.label2.caption
-msgid "( may include %SIZE% )"
+msgid "File Selection:"
 msgstr ""
 
 #: tmaindialog.label20.caption
@@ -1031,26 +1011,8 @@ msgstr ""
 msgid "Overwrite with this:"
 msgstr ""
 
-#: tmaindialog.label8.caption
-msgid "Threads:"
-msgstr ""
-
 #: tmaindialog.label9.caption
 msgid "Horizontal:"
-msgstr ""
-
-#: tmaindialog.labelcores.caption
-msgid "Cores"
-msgstr ""
-
-#: tmaindialog.labeldstfolderrequired.caption
-msgctxt "tmaindialog.labeldstfolderrequired.caption"
-msgid "Ø"
-msgstr ""
-
-#: tmaindialog.labeldstfolderrequired.hint
-msgctxt "tmaindialog.labeldstfolderrequired.hint"
-msgid "Required"
 msgstr ""
 
 #: tmaindialog.labelhintplaceholder1.caption
@@ -1076,24 +1038,16 @@ msgstr ""
 msgid "Seed:"
 msgstr ""
 
-#: tmaindialog.labelsizesrequired.caption
-msgctxt "tmaindialog.labelsizesrequired.caption"
-msgid "Ø"
+#: tmaindialog.labelstep1.caption
+msgid "Source Images"
 msgstr ""
 
-#: tmaindialog.labelsizesrequired.hint
-msgctxt "tmaindialog.labelsizesrequired.hint"
-msgid "Required"
+#: tmaindialog.labelstep2.caption
+msgid "Sizes and Parameters"
 msgstr ""
 
-#: tmaindialog.labelsrcfilenamesrequired.caption
-msgctxt "tmaindialog.labelsrcfilenamesrequired.caption"
-msgid "Ø"
-msgstr ""
-
-#: tmaindialog.labelsrcfilenamesrequired.hint
-msgctxt "tmaindialog.labelsrcfilenamesrequired.hint"
-msgid "Required"
+#: tmaindialog.labelstep3.caption
+msgid "&Destination Folder"
 msgstr ""
 
 #: tmaindialog.memosrcfilenames.hint
@@ -1102,14 +1056,6 @@ msgstr ""
 
 #: tmaindialog.opendialogsrcfilenames.title
 msgid "Select one or more Images"
-msgstr ""
-
-#: tmaindialog.radiobuttonfilelist.caption
-msgid "List of Files"
-msgstr ""
-
-#: tmaindialog.radiobuttonpathmask.caption
-msgid "All Files in a Folder"
 msgstr ""
 
 #: tmaindialog.radiobuttonrenadvanced.caption
@@ -1128,11 +1074,6 @@ msgstr ""
 msgid "Save Tags Report as"
 msgstr ""
 
-#: tmaindialog.tabsheetboost.caption
-msgctxt "tmaindialog.tabsheetboost.caption"
-msgid "Boost"
-msgstr ""
-
 #: tmaindialog.tabsheetquality.caption
 msgid "Quality"
 msgstr ""
@@ -1147,6 +1088,14 @@ msgctxt "tmaindialog.tabsheetsizes.caption"
 msgid "Sizes"
 msgstr ""
 
+#: tmaindialog.tabsheetsrcfilenames.caption
+msgid "TabSheetSrcFilenames"
+msgstr ""
+
+#: tmaindialog.tabsheetsrcfolder.caption
+msgid "TabSheetSrcFolder"
+msgstr ""
+
 #: tmaindialog.tabsheettagging.caption
 msgid "Tagging"
 msgstr ""
@@ -1156,25 +1105,12 @@ msgctxt "tmaindialog.tabsheetwatermark.caption"
 msgid "Watermark"
 msgstr ""
 
-#: tmaindialog.toolbar.caption
-msgctxt "tmaindialog.toolbar.caption"
-msgid "ToolBar"
-msgstr ""
-
-#: tmaindialog.toolbarparameters.caption
-msgid "ToolBarParameters"
-msgstr ""
-
-#: tmaindialog.toolbutton1.hint
-msgid "Reset all settings to default values"
+#: tmaindialog.toolbarsrc.caption
+msgid "ToolBarSrc"
 msgstr ""
 
 #: tmaindialog.toolbutton10.caption
 msgid "ToolButton10"
-msgstr ""
-
-#: tmaindialog.toolbutton3.hint
-msgid "Save current settings to another file"
 msgstr ""
 
 #: tmaindialog.toolbutton5.caption
@@ -1187,6 +1123,16 @@ msgstr ""
 
 #: tmaindialog.toolbuttonabout.hint
 msgid "License and Vendor Infos"
+msgstr ""
+
+#: tmaindialog.toolbuttonnew.hint
+msgctxt "tmaindialog.toolbuttonnew.hint"
+msgid "Reset all settings to default values"
+msgstr ""
+
+#: tmaindialog.toolbuttonsaveas.hint
+msgctxt "tmaindialog.toolbuttonsaveas.hint"
+msgid "Save current settings to another file"
 msgstr ""
 
 #: tmrkeditdialog.actionfont.caption
@@ -1357,6 +1303,56 @@ msgstr ""
 
 #: tmrkeditdialog.toolbutton9.caption
 msgid "ToolButton9"
+msgstr ""
+
+#: tsettingsdialog.buttoncancel.caption
+msgctxt "tsettingsdialog.buttoncancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tsettingsdialog.buttonok.caption
+msgctxt "tsettingsdialog.buttonok.caption"
+msgid "Ok"
+msgstr ""
+
+#: tsettingsdialog.caption
+msgctxt "tsettingsdialog.caption"
+msgid "Settings"
+msgstr ""
+
+#: tsettingsdialog.checkboxstoponerror.caption
+msgctxt "tsettingsdialog.checkboxstoponerror.caption"
+msgid "Stop on Error"
+msgstr ""
+
+#: tsettingsdialog.comboboxthreadsused.hint
+msgctxt "tsettingsdialog.comboboxthreadsused.hint"
+msgid "The application can use a multithreaded pooling"
+msgstr ""
+
+#: tsettingsdialog.comboboxthreadsused.text
+msgctxt "tsettingsdialog.comboboxthreadsused.text"
+msgid "Single"
+msgstr ""
+
+#: tsettingsdialog.label19.caption
+msgctxt "tsettingsdialog.label19.caption"
+msgid ""
+"ImageResize uses thread pooling to benefit\n"
+"the full computers power.\n"
+"\n"
+"The number of threads should be limited\n"
+"to the available number of cores."
+msgstr ""
+
+#: tsettingsdialog.label8.caption
+msgctxt "tsettingsdialog.label8.caption"
+msgid "Threads:"
+msgstr ""
+
+#: tsettingsdialog.labelcores.caption
+msgctxt "tsettingsdialog.labelcores.caption"
+msgid "Cores"
 msgstr ""
 
 #: twebcreatordialog.button1.caption
