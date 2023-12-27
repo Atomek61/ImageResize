@@ -7,31 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>   
     <link rel="stylesheet" href="../help.css"/>
     <style>
-      br+img {margin-top: 0.3em}
-      .atop td {vertical-align: top;}
-      .atop tr td:nth-child(1)  {width: 7em; font-weight: bold; font-style: italic;}
-      .framed {border: 1px solid silver;}
-
-      .filter {display: flex; flex-wrap: wrap;}
-      .filter div {width: 160px;}
-      .filter .filter-box { margin-bottom: 1em; padding-top: 0.5em;}
-
-      .filter-box i:nth-child(1) {
-        background: linear-gradient(15deg, rgb(128, 63, 63) 0%, rgb(52, 52, 113) 100%);
-        padding: 0 0.5em 0 0.5em;
-        color: rgb(226, 226, 76);
-        font-weight: bold;
-        font-size: 16pt;
-        border-radius: 4px;
-      }
-
-      .resampling .filter-box { margin-bottom: 1em; border-top: 2px solid silver; padding-top: 0.5em;}
-
     </style>
   </head>
 
   <body>
-    <header style="background-image: url('../../images/title.jpg');">
+    <header style="background-image: url('../../img/title.jpg');">
       <div class="title-box">
         <div>Atomek</div>
         <div>ImageResize</div>
@@ -51,15 +31,15 @@
       
       <h2 id="contents">Inhalt</h2>
       <a href="#overview">Übersicht</a><br/>
-      <a href="#srcfilelist">Liste der Bilddateien</a><br/>
-      <a href="#dstfolder">Zielverzeichnis</a><br/>
+      <a href="#srcfilelist">Quelldateien</a><br/>
       <a href="#sizes">Zielgrößen</a><br/>
+      <a href="#dstfolder">Zielverzeichnis</a><br/>
       <a href="#renaming">Umbenennen und mischen</a><br/>
       <a href="#watermark">Wasserzeichen</a><br/>
       <a href="#quality">Qualität</a><br/>
       <a href="#tagging">Taggen</a><br/>
-      <a href="#boost">Beschleunigte Verarbeitung</a><br/>
       <a href="#saving">Speichern und Öffnen</a><br/>
+      <a href="#settings">Einstellungen</a><br/>
       <a href="#commandline">Kommandozeilen-Parameter</a><br/>
       <a href="#mrkeditor">Wasserzeichen-Editor</a><br/>
       
@@ -95,16 +75,16 @@
       </p>
       <ol>
         <li>Eine Liste von Bilddateien oder ein Quellverzeichnis mit Dateifilter<br/><img src="img/minsrc.png"/></li>
-        <li>Ein Zielverzeichnis<br/><img src="img/mindst.png"/></li>
         <li>Eine oder mehrere Zielgrößen<br/><img src="img/minsize.png"/></li>
+        <li>Ein Zielverzeichnis<br/><img src="img/mindst.png"/></li>
       </ol>
       <p>
         Drücken Sie am Ende <img class="btn" src="img/minexec.png"/> um das Resampling zu starten.
       </p>
       
-      <h1 id="srcfilelist">Liste der Bilddateien</h1>
+      <h1 id="srcfilelist">Quelldateien</h1>
       <p>
-        ImageResize kann viele Bilddateien resampeln. Die Liste besteht aus
+        ImageResize kann viele Bilddateien resampeln. Die Liste der Bilder besteht aus
         Pfad/Dateiname und kann
       </p>
       <ol>
@@ -122,19 +102,6 @@
       </p>
       <a class="chfot" href="#contents">Inhalt</a>
       
-      <h1 id="dstfolder">Zielordner</h1>
-      <p>
-        Ein Zielordner muss angegeben werden. Sie können ihn direkt eintippen
-        oder mit der Schaltfläche <img class="btn" src="../img/open.png"/> auswählen.
-      </p>
-      <p>
-        Um Konflikte der Zielnamen zu vermeiden, wenn mehrere Zielgrößen angegeben werden,
-        können Sie entweder mit <a href="#renaming">Umbenennen</a> verschiedene Dateinamen erzeugen,
-        oder indem jede Größe einen eigenen Zielordner enthält. Dazu muss der Name des Zielordners 
-        den Platzhalter <span class="plh">%SIZE%</span> enthalten.
-      </p>
-      <a class="chfot" href="#contents">Inhalt</a>
-      
       <h1 id="sizes">Größen</h1>
       <p>
         Eine <i>Größe</i> in Pixeln bezieht sich auf die längere Seite eines Bildes.
@@ -149,9 +116,22 @@
         Sie können alle Größen angeben, die größer als 0 sind. Die Vorschläge unter der Liste sind unverbindlich.
       </p>
       <p>
-        Sie können die Liste ändern, indem Sie die Löschen-Schaltfläche <img class="btn" src="../img/cancel.png"/>
+        Sie können die Liste ändern, indem Sie die Löschen-Schaltfläche <img class="btn" src="../img/delete.png"/>
         klicken. Um eine einzelne Größe zu löschen, markieren Sie zuvor die Größe, oder sie klicken einen
         bereits gewählten Vorschlag erneut.
+      </p>
+      <a class="chfot" href="#contents">Inhalt</a>
+      
+      <h1 id="dstfolder">Zielordner</h1>
+      <p>
+        Ein Zielordner muss angegeben werden. Sie können ihn direkt eintippen
+        oder mit der Schaltfläche <img class="btn" src="../img/button-folder.png"/> auswählen.
+      </p>
+      <p>
+        Um Konflikte der Zielnamen zu vermeiden, wenn mehrere Zielgrößen angegeben werden,
+        können Sie entweder mit <a href="#renaming">Umbenennen</a> verschiedene Dateinamen erzeugen,
+        oder indem jede Größe einen eigenen Zielordner enthält. Dazu muss der Name des Zielordners 
+        den Platzhalter <span class="plh">%SIZE%</span> enthalten.
       </p>
       <a class="chfot" href="#contents">Inhalt</a>
       
@@ -239,7 +219,7 @@
         </tr>
       </table>
 
-      <h2 id="shaking">Mischen</h2>
+      <h2 id="shuffle">Mischen</h2>
       <p>
         <i>Mischen</i> bedeutet, dass die lexikalische Reihenfolge der Zieldateinamen zufällig ist.
       </p>
@@ -335,14 +315,33 @@
         den Resampling-Algorithmus steuern.
       </p>
 
-      <h2>JPEG Qualität</h2>
+      <h2 id="quality-resampling">Resampling</h2>
+      <p>
+        Resampling bedeutet das Aufbauen eines neuen Bildes mit kleineren oder größeren
+        Abmessungen bei gleichem Seitenverhältnis. Dazu müssen die Farben der Pixel des Zielbildes
+        durch Interpolation ermittelt werden. Im einfachsten Falle - Stretch (ohne Interpolation) -
+        bekommt das Pixel den Farbwert des ihm nächsten Pixels des Originales. Dies führt zu
+        Informations- und Qualitätsverlust beim Verkleinern und zu schlechter Qualität beim
+        Vergrößern.
+      </p>
+      <p>
+        Es stehen 11 Resampling-Algorithmen zur Verfügung.
+        Ausser dem einfachen <i>Stretch</i> sind die Algorithmen Interpolationen.
+        Je nach Skalierung wirken Sie sich unterschiedlich aus.
+      </p>
+      <img src="img/quality-resampling.png"/>
+      <p>
+        Schauen Sie sich die <a href="interpol.html">Wirkung verschiedener Interpolationen</a> an.
+      </p>
+      
+      <h2 id="quality-jpeg">JPEG Qualität</h2>
       <p>
         JPEG hat ein verlustbehaftetes Verfahren. Eine höhere Qualität resultiert
-        in größeren Dateien. Bei JPEG ist 75 bis 95 Prozent eine gute Wahl.<br/>
-        <img src="img/quality-JPEG.png"/>
+        in größeren Dateien. Bei JPEG ist 75 bis 95 Prozent eine gute Wahl.
       </p>
+      <img src="img/quality-JPEG.png"/>
 
-      <h2>PNG Qualität</h2>
+      <h2 id="quality-png">PNG Qualität</h2>
       <p>
         Das PNG-Format komprimiert verlustfrei, ergibt aber bei Naturbildern
         eine geringe Kompression, daher ist es hauptsächlich bei künstlichen Bildern sinnvoll.
@@ -353,162 +352,9 @@
           <li><i>default</i> - normale Kompression</li>
           <li><i>maximum</i> - größte und langsamste Kompression</li>
         </ul>
-        <img src="img/quality-PNG.png"/>
       </p>
+      <img src="img/quality-PNG.png"/><br/>
 
-      <h2>Qualität des Resampling</h2>
-      <p>
-        Es stehen 11 Resampling-Algorithmen zur Verfügung.
-        Ausser dem einfachen <i>Stretch</i> sind die Algorithmen Interpolationen.
-        Je nach Skalierung wirken Sie sich unterschiedlich aus.
-      </p>
-      <img src="img/quality-resampling.png"/>
-
-      <h2>Wirkung der Algorithmen</h2>
-      <div class="filter">
-        <div class="filter-box">
-          <i>Stretch</i><br/>
-          <img src="../img/img_Stretch_16.png"/>
-        </div>
-        <div class="filter-box">
-          <i>Box</i><br/>
-          <img src="../img/img_Box_16.png"/>
-        </div>
-        <div class="filter-box">
-          <i>Linear</i><br/>
-          <img src="../img/img_Linear_16.png"/>
-        </div>
-        <div class="filter-box">
-          <i>Half Cosine</i><br/>
-          <img src="../img/img_HalfCosine_16.png"/>
-        </div>
-        <div class="filter-box">
-          <i>Cosine</i><br/>
-          <img src="../img/img_Cosine_16.png"/>
-        </div>
-        <div class="filter-box">
-          <i>Bicubic</i><br/>
-          <img src="../img/img_Bicubic_16.png"/>
-        </div>
-        <div class="filter-box">
-          <i>Mitchell</i><br/>
-          <img src="../img/img_Mitchell_16.png"/>
-        </div>
-        <div class="filter-box">
-          <i>Spline</i><br/>
-          <img src="../img/img_Spline_16.png"/>
-        </div>
-        <div class="filter-box">
-          <i>Lanczos 2</i><br/>
-          <img src="../img/img_Lanczos2_16.png"/>
-        </div>
-        <div class="filter-box">
-          <i>Lanczos 3</i><br/>
-          <img src="../img/img_Lanczos3_16.png"/>
-        </div>
-        <div class="filter-box">
-          <i>Lanczos 4</i><br/>
-          <img src="../img/img_Lanczos4_16.png"/>
-        </div>
-      </div>
-
-      <h2>Wirkung beim Hochskalieren</h2>
-      <div class="filter-box">
-        (Ohne Bild) <i>Best Quality</i> verwendet abhängig vom Herauf- oder Herunterskalieren <i>Spline</i> bzw. <i>Mitchell</i><br/>
-      </div>
-      <div class="resampling">
-        <div class="filter-box">
-          <i>Stretch</i> ist kein Filter, sondern ein Strecken der Pixel ohne Interpolation<br/>
-          <img src="../img/img_Stretch_256.png"/>
-        </div>
-        <div class="filter-box">
-          <i>Box</i>Equivalent zum <i>Stretch</i> mit hoher Qualität und pixelzentrierten Koordinaten<br/>
-          <img src="../img/img_Box_256.png"/>
-        </div>
-        <div class="filter-box">
-          <i>Linear</i> Lineare Interpolation ergibt einen Übergang zwischen den Pixeln<br/>
-          <img src="../img/img_Linear_256.png"/>
-        </div>
-        <div class="filter-box">
-          <i>Half Cosine</i> Mischung aus <i>Linear</i> und <i>Cosine</i> ergibt einen mittleren Übergang zwischen den Pixeln<br/>
-          <img src="../img/img_HalfCosine_256.png"/>
-        </div>
-        <div class="filter-box">
-          <i>Cosine</i> Cosinus-artiger Interpolation ergibt einen schnelleren Übergang zwischen den Pixeln <br/>
-          <img src="../img/img_Cosine_256.png"/>
-        </div>
-        <div class="filter-box">
-          <i>Bicubic</i> Simpler bi-kubischer filter (verschwommen)<br/>
-          <img src="../img/img_Bicubic_256.png"/>
-        </div>
-        <div class="filter-box">
-          <i>Mitchell</i> Der Mitchell-Filter ist eine gute Interpolation fürs Herunterskalieren.<br/>
-          <img src="../img/img_Mitchell_256.png"/>
-        </div>
-        <div class="filter-box">
-          <i>Spline</i> Guter Filter für das Heraufskalieren<br/>
-          <img src="../img/img_Spline_256.png"/>
-        </div>
-        <div class="filter-box">
-          <i>Lanczos 2</i> Lanczos-Filter mit Radius 2 und Unschärfe-Korrektur<br/>
-          <img src="../img/img_Lanczos2_256.png"/>
-        </div>
-        <div class="filter-box">
-          <i>Lanczos 3</i> Lanczos-Filter mit Radius 3, hoher Kontrast<br/>
-          <img src="../img/img_Lanczos3_256.png"/>
-        </div>
-        <div class="filter-box">
-          <i>Lanczos 4</i> Lanczos-Filter mit Radius 4, hoher Kontrast<br/>
-          <img src="../img/img_Lanczos4_256.png"/>
-        </div>
-      </div>
-      <h2>Wirkung beim Herunterskalieren</h2>
-      <div class="resampling">
-          <div class="filter-box">
-          <i>Stretch</i> ist kein Filter, sondern ein Strecken der Pixel ohne Interpolation<br/>
-          <img src="../img/img_Stretch_64.png"/>
-        </div>
-        <div class="filter-box">
-          <i>Box</i>Equivalent zum <i>Stretch</i> mit hoher Qualität und pixelzentrierten Koordinaten<br/>
-          <img src="../img/img_Box_64.png"/>
-        </div>
-        <div class="filter-box">
-          <i>Linear</i> Lineare Interpolation ergibt einen Übergang zwischen den Pixeln<br/>
-          <img src="../img/img_Linear_64.png"/>
-        </div>
-        <div class="filter-box">
-          <i>Half Cosine</i> Mischung aus <i>Linear</i> und <i>Cosine</i> ergibt einen mittleren Übergang zwischen den Pixeln<br/>
-          <img src="../img/img_HalfCosine_64.png"/>
-        </div>
-        <div class="filter-box">
-          <i>Cosine</i> Cosinus-artiger Interpolation ergibt einen schnelleren Übergang zwischen den Pixeln <br/>
-          <img src="../img/img_Cosine_64.png"/>
-        </div>
-        <div class="filter-box">
-          <i>Bicubic</i> Simpler bi-kubischer filter (verschwommen)<br/>
-          <img src="../img/img_Bicubic_64.png"/>
-        </div>
-        <div class="filter-box">
-          <i>Mitchell</i> Der Mitchell-Filter ist eine gute Interpolation fürs Herunterskalieren.<br/>
-          <img src="../img/img_Mitchell_64.png"/>
-        </div>
-        <div class="filter-box">
-          <i>Spline</i> Guter Filter für das Heraufskalieren<br/>
-          <img src="../img/img_Spline_64.png"/>
-        </div>
-        <div class="filter-box">
-          <i>Lanczos 2</i> Lanczos-Filter mit Radius 2 und Unschärfe-Korrektur<br/>
-          <img src="../img/img_Lanczos2_64.png"/>
-        </div>
-        <div class="filter-box">
-          <i>Lanczos 3</i> Lanczos-Filter mit Radius 3, hoher Kontrast<br/>
-          <img src="../img/img_Lanczos3_64.png"/>
-        </div>
-        <div class="filter-box">
-          <i>Lanczos 4</i> Lanczos-Filter mit Radius 4, hoher Kontrast<br/>
-          <img src="../img/img_Lanczos4_64.png"/>
-        </div>
-      </div>
       <a class="chfot" href="#contents">Inhalt</a>
       
       <h1 id="tagging">Taggen</h1>
@@ -545,7 +391,8 @@
         <li>
           <h4>Copyright</h4>
           <p>
-            Die Copyright-Note besteht mindestens aus den Teilen <i>Copyright-Zeichen</i> © od. (c), dem <i>Jahr</i> und dem <i>Urheber</i>.
+            Das Copyright-Tag besteht mindestens aus den Teilen <i>Copyright-Zeichen</i> © od. (c), dem <i>Jahr</i> und dem <i>Urheber</i>.
+            Z.B. "© 2024 Mogli Maisenkeyser, www.atomek.de". Hängen Sie eine Webdomäne dran, um keinen Zweifel zu lassen.
           </p>
         </li>
       </ul>
@@ -611,6 +458,8 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
       </p>
 
       <h2>Tagging Dialog</h2>
+
+      <h3 id="tagging-source">Tags Quellen</h3>
       <img src="img/tagging-sources.png"/>
       <p>
         Sie können die Quellen der Tags explizit angeben. Damit haben sie mehr Kontroller darüber, wo die Tags herkommen.
@@ -621,6 +470,8 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
         Wenn Sie .tags-Dateien zu den Original-Dateien gespeichert haben und diese, z.B. für den Tags Report verwenden möchten,
         müssen Sie die die Checkbox "Suche nach .tags-Dateien" klicken.
       </p>
+
+      <h3 id="tagging-exif">EXIF Tagging</h3>
       <img src="img/tagging-exif.png"/>
       <p>
         Hier wählen Sie aus, welche Tags in die erzeugten Bilder als EXIF-Tags übernommen werden sollen. Der Bildtitel wird im
@@ -631,6 +482,7 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
         der Originaldateien werden dann nur verwendet, wenn die .tags-Dateien für die betreffende Datei keine Felder definiert haben.
       </p>
 
+      <h3 id="tagging-tagsreport">Tags Report</h3>
       <img src="img/tagging-tagsreport.png"/>
       <p>
         Zum Abschluss der Erzeugung der Bilddateien kann eine Liste aller ermittelten Tags gespeichert werden. Die Datei wird
@@ -645,7 +497,10 @@ C:\Bilder\DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
         Die erzeugte Datei soll eines Tages als Grundlage für den Slideshow-Nachbrenner dienen.
       </p>
 
-      <h1 id="boost">Beschleunigte Verarbeitung</h1>
+      <h1 id="settings">Einstellungen</h1>
+      <p>
+        Mit <img src="img/button-settings.png"/> kommen sie zum Dialog mit globalen Einstellungen.
+      </p>
       <h3 id="threads">Threads</h3>
       <p>
         ImageResize kann durch Multi-Threading die Rechenpower des Systems besser nutzen.<br/>
@@ -658,21 +513,27 @@ C:\Bilder\DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
         Wenn Sie 12 Kerne haben, von denen nur 6 physisch sind, bewirkt die Nutzung von 12 Threads
         gegenüber 6 Threads nur eine Erhöhung der Verarbeitungsgeschwindigkeit um etwa 8 Prozent.
       </p>
-      <h3 id="stoponerr">Anhalten bei Fehlern </h3>
+      <h3 id="stoponerr">Anhalten bei Fehler</h3>
       <p>
         Diese Options signalisiert den Threads ein Beenden sobald es möglich ist. Das kann bei der 
         Nutzung mehrerer Kerne etwas verzögert auftreten.
       </p>
       <a class="chfot" href="#contents">Inhalt</a>
       
-      <h1 id="saving">Speichern und Öffnen von .irs Files</h1>
+      <h1 id="saving">Öffnen und Speichern von Projektdateien</h1>
+      <img src="img/buttons-project.png"/>
       <p>
-        .irs-Dateien sind einfache textbasierte INI-Dateien. Sie enthalten alle Einstellungen, die Sie
-        im Dialog sehen, außer den Boost-Einstellungen.
+        Sie können die aktuellen Einstellungen als Projekt mit der Erweiterung .irs speichern.
+        Es sind einfache textbasierte INI-Dateien. 
       </p>
       <p>
         Weil ImageResize außerdem die letzten Einstellungen in einer veborgenen Datei sichert,
         fragt es nicht, ob nach Änderungen der Einstellungen gespeichert werden soll.
+      </p>
+      <p>
+        Beim Öffnen einer Projektdatei wird das aktuelle Verzeichnis auf das Verzeichnis der
+        Projektdatei gesetzt. Dadurch können Sie Pfadangaben relativ angeben und das Projekt mit den
+        Bildern verschiebbar machen.
       </p>
       <a class="chfot" href="#contents">Inhalt</a>
       
@@ -702,12 +563,11 @@ C:\Bilder\DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
       <p>
         Die Anwendung ist für die englische Sprache entwickelt, aber es gibt eine deutsche
         Lokalisierung, die automatisch auf deutschen Systemen angezeigt wird.
-        Mit diesem Schalter, kann dieses Verhalten verhindert werden.
+        Mit dem Schalter kann dieses Verhalten verhindert werden.
       </p>
-
       <p>
         Um ImageResize automatisch eine Liste von Bildern resampeln zu lassen, speichern Sie 
-        zunächst eine geeignete .irs-Date und starten dann das Programm mit diesen Kommandozeilenparametern:
+        zunächst eine geeignete .irs-Datei und starten dann das Programm mit diesen Kommandozeilenparametern:
       </p>
       <p>
         <span class="plh">C:\Programme\ImageResize\ImageResize.exe C:\mylist.irs -A -X</span>
@@ -716,13 +576,13 @@ C:\Bilder\DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
       
       <h1 id="mrkeditor">Wasserzeichen-Editor</h1>
       <p>
-        Mit <img class="btn" src="../img/editor.png"/> können Sie den eingebauten
+        Mit <img class="btn" src="img/button-editor.png"/> können Sie den eingebauten
         Wasserzeichen-Editor öffnen. Dieser einfache Dialog lässt Sie einen Schriftzug mit ein paar 
         nützlichen Dekorationen erzeugen.  
       </p>
       <p>
         Die Vorschau zeigt Ihnen, wie das Wasserzeichen ungefähr aussehen wird,
-        allerdings ohne die zusätzliche Transparenz, die sie bei den Wasserzeichen-Einstellungen angebenen können.
+        allerdings ohne die zusätzliche Transparenz, die sie bei den Wasserzeichen-Einstellungen angeben können.
       </p>
       <p>
         Um einen Eindruck davon zu bekommen, wie ihr Wasserzeichen auf dunklem, bzw. hellem Hintergrund aussieht,
@@ -731,39 +591,17 @@ C:\Bilder\DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
       <p>
         <img style="max-width: 80%" src="img/watermarkeditor.png"/>
       </p>
-      <table class="atop">
-        <tr><td><img class="btn" src="../img/new.png"/></td>
-          <td>
-            Lädt die Voreinstellungen
-          </td>
-        </tr>
-        <tr><td><img class="btn" src="../img/open.png"/></td>
-          <td>
-            Lädt eine zuvor gespeicherte .was-Datei mit Wasserzeichen-Einstellungen
-          </td>
-        </tr>
-        <tr><td><img class="btn" src="../img/save.png"/></td>
-          <td>
-            Speichert die aktuellen Einstellungen in einer .was-Datei und das Wasserzeichen selbst als .png-Datei.
-            Diese Bilddatei wird von ImageResize benötgt, die .was-Datei wird zur späteren Änderung der 
-            Erscheinung benötigt.
-          </td>
-        </tr>
-        <tr><td><img class="btn" src="../img/saveas.png"/></td>
-          <td>
-            Speichert .was- und PNG-Datei unter einem anderen Namen.
-          </td>
-        </tr>
-        <tr><td><img class="btn" src="../img/loadfav.png"/></td>
-          <td>
-            Lädt die favorisierten Voreinstellungen - z.B. Ihren persönlichen Copyright-Text.
-          </td>
-        </tr>
-        <tr><td><img class="btn" src="../img/saveasfav.png"/></td>
-          <td>
-            Speichert die aktuellen Einstellungen und den Text als Ihren Favoriten.
-          </td>
-        </tr>
+
+      <img src="img/buttons-watermark.png"/>
+      <p>
+        Mit diesen Schaltflächen können Sie die Einstellungen des Dialoges als .was-Datei speichern
+        und später wieder laden. Es wird neben der .was-Datei das erzeugte PNG-Bild des Wasserzeichens gespeichert.
+      </p>
+      <p>
+        Sie können Ihre aktuellen favorisierten Einstellungen ohne einen Dateinamen als
+        <i>Favoriten</i> speichern und später einfach wieder abrufen.
+      </p>
+      <table class="simple-table">
         <tr id="mrktext"><td>Text</td>
           <td>
             Geben Sie hier die Textzeile ein, die im Wasserzeichen dargestellt werden soll. Das ©-Zeichen mit
@@ -814,7 +652,7 @@ C:\Bilder\DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
         </tr>
         <tr id="mrkquality"><td>Qualität</td>
           <td>
-            Kontrolliert die Art der Erscheinung des Schattens. Probieren Sie die möglichen Eistellungen durch
+            Kontrolliert die Art der Erscheinung des Schattens. Probieren Sie die möglichen Einstellungen durch
             <i>Normal</i>, <i>Disk</i>, <i>Corona</i>, <i>Precise</i>, <i>Fast</i> und <i>Box</i>. <i>Precise</i>
             ist ein sehr dünner Schatten, wie ein Umriss.
           </td>

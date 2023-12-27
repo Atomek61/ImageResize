@@ -34,7 +34,6 @@ resourcestring
     SCptCoresFmt = 'for %d Cores';
     SErrInvalidCoresUsedFmt = 'Invalid number of threads ''%s''.';
 
-
 implementation
 
 {$R *.lfm}

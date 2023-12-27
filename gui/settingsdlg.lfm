@@ -3,6 +3,8 @@ object SettingsDialog: TSettingsDialog
   Height = 243
   Top = 451
   Width = 429
+  HelpType = htKeyword
+  HelpKeyword = 'HTML/index.html#settings'
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Settings'

@@ -221,7 +221,7 @@ msgstr ""
 
 #: maindlg.scptlastproject
 msgctxt "maindlg.scptlastproject"
-msgid "<last settings>"
+msgid "<last project>"
 msgstr ""
 
 #: maindlg.scptprocessor
@@ -287,8 +287,8 @@ msgstr ""
 msgid "Invalid watermark y border."
 msgstr ""
 
-#: maindlg.serrinvalidshakeseed
-msgid "Invalid Shake Seed."
+#: maindlg.serrinvalidshuffleseed
+msgid "Invalid Shuffle Seed."
 msgstr ""
 
 #: maindlg.serrinvalidsizes
@@ -341,6 +341,11 @@ msgstr ""
 #: maindlg.smsgcurrentdirfmt
 #, object-pascal-format
 msgid "Current directory: %s"
+msgstr ""
+
+#: maindlg.smsgprojectdescriptionfmt
+#, object-pascal-format
+msgid "Description: %s"
 msgstr ""
 
 #: maindlg.smsgprojectloadedfromfmt
@@ -550,7 +555,7 @@ msgstr ""
 
 #: tmaindialog.actionexecute.caption
 msgctxt "tmaindialog.actionexecute.caption"
-msgid "&Execute"
+msgid "E&xecute"
 msgstr ""
 
 #: tmaindialog.actionexecute.hint
@@ -653,7 +658,7 @@ msgstr ""
 
 #: tmaindialog.actionsettings.caption
 msgctxt "tmaindialog.actionsettings.caption"
-msgid "Settin&gs..."
+msgid "S&ettings..."
 msgstr ""
 
 #: tmaindialog.actionsrcfilenames.caption
@@ -703,12 +708,13 @@ msgstr ""
 msgid "Enables destination image file renaming - choose a strategy."
 msgstr ""
 
-#: tmaindialog.checkboxshake.caption
+#: tmaindialog.checkboxshuffle.caption
+msgctxt "tmaindialog.checkboxshuffle.caption"
 msgid "Enable"
 msgstr ""
 
-#: tmaindialog.checkboxshake.hint
-msgid "Enables the image file names to be mixed randomly (shaked)"
+#: tmaindialog.checkboxshuffle.hint
+msgid "Enables the image file names to be mixed randomly (shuffled)"
 msgstr ""
 
 #: tmaindialog.checkboxtagcopyright.caption
@@ -771,21 +777,13 @@ msgid ""
 "2 means the Lanczos algorithms radius."
 msgstr ""
 
-#: tmaindialog.comboboxshakeseed.hint
-msgid "Enter a number, lets say 1000, to create always the same shaked order or 0 for shaking always randomly."
+#: tmaindialog.comboboxshuffleseed.hint
+msgid "Enter a number, lets say 1000, to create always the same mixed order or 0 for shuffeling always randomly."
 msgstr ""
 
-#: tmaindialog.comboboxshakeseed.text
-msgctxt "tmaindialog.comboboxshakeseed.text"
+#: tmaindialog.comboboxshuffleseed.text
+msgctxt "tmaindialog.comboboxshuffleseed.text"
 msgid "<random>"
-msgstr ""
-
-#: tmaindialog.editdstfolder.hint
-msgctxt "tmaindialog.editdstfolder.hint"
-msgid ""
-"Enter a destination folder of the resampled images.\n"
-"If multiple sizes are entered, insert a placeholder %SIZE%\n"
-"into the path where the program shall insert the current size ."
 msgstr ""
 
 #: tmaindialog.editmrkalpha.hint
@@ -875,6 +873,13 @@ msgid ""
 "into the path where the program shall insert the current size ."
 msgstr ""
 
+#: tmaindialog.edittargetfolder.hint
+msgid ""
+"Enter a destination for the resampled images.\n"
+"If multiple sizes are entered, insert a placeholder %SIZE%\n"
+"into the path where the program shall insert the current size ."
+msgstr ""
+
 #: tmaindialog.groupboxexiftagging.caption
 msgid "EXIF Tagging"
 msgstr ""
@@ -913,8 +918,8 @@ msgctxt "tmaindialog.groupboxresampling.caption"
 msgid "Resampling"
 msgstr ""
 
-#: tmaindialog.groupboxshaking.caption
-msgid "Shake"
+#: tmaindialog.groupboxshuffle.caption
+msgid "Shuffle"
 msgstr ""
 
 #: tmaindialog.groupboxtagsreport.caption
@@ -1034,7 +1039,8 @@ msgstr ""
 msgid "Available Placeholders:"
 msgstr ""
 
-#: tmaindialog.labelshakeseed.caption
+#: tmaindialog.labelshuffleseed.caption
+msgctxt "tmaindialog.labelshuffleseed.caption"
 msgid "Seed:"
 msgstr ""
 
@@ -1047,11 +1053,14 @@ msgid "Sizes and Parameters"
 msgstr ""
 
 #: tmaindialog.labelstep3.caption
-msgid "&Destination Folder"
+msgid "Target &Folder"
 msgstr ""
 
 #: tmaindialog.memosrcfilenames.hint
-msgid "Enter a list of files with absolute pathes."
+msgid ""
+"Enter a list of files with absolute or relative paths.\n"
+"A relative path refers to the current directory, which is the directory\n"
+"where the project file was stored."
 msgstr ""
 
 #: tmaindialog.opendialogsrcfilenames.title

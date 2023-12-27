@@ -58,8 +58,8 @@ const
   DEFAULT_RENFILETEMPLATE  = 'img%INDEX:1,3%.%FILEEXT%';
   DEFAULT_RENINDEXSTART    = 1;
   DEFAULT_RENINDEXDIGITS   = 3;
-  DEFAULT_SHAKE            = false;
-  DEFAULT_SHAKESEED        = 0;
+  DEFAULT_SHUFFLE          = false;
+  DEFAULT_SHUFFLESEED      = 0;
   DEFAULT_FILETAGS         = nil;
   DEFAULT_COPYRIGHT        = '';
   DEFAULT_TAGSREPORT       = 'imagelist.trp';
@@ -96,11 +96,11 @@ type
     { TExecutionRessources }
 
     TExecutionRessources = class // Temporary process global ressources while processing
-      IsMultipleDstFolderStrategy :boolean;
-      IsDstFileRenamingStrategy :boolean;
-      SrcFilenames :array of string;    // After Shaking
+      IsMultipleTargetFolderStrategy :boolean;
+      IsTargetFileRenamingStrategy :boolean;
+      SourceFilenames :array of string;    // After Shaking
       MrkImages :array of TBGRABitmap;  // Empty, One or for each Size
-      DstFolders :array of string;      // One or for each Size
+      TargetFolders :array of string;      // One or for each Size
       FilesTags :TFilesTags;            // A database of all tags of all files
       constructor Create;
       destructor Destroy; override;
@@ -115,14 +115,14 @@ type
     public
       Processor :TProcessor;
       ProcRes :TExecutionRessources;
-      SrcFilename :string;
-      SrcFileIndex :integer;
+      SourceFilename :string;
+      SourceFileIndex :integer;
       Tags :TTags;
     end;
 
   private // Processing Params
-    FSrcFilenames    :TStrings;
-    FDstFolder       :string;
+    FSourceFilenames    :TStrings;
+    FTargetFolder       :string;
     FSizes           :TSizes;
     FJpgQuality      :integer;
     FPngCompression  :integer;
@@ -137,8 +137,8 @@ type
     FThreadCount     :integer;
     FStopOnError     :boolean;
     FRen             :TRenameParams;
-    FShake           :boolean;
-    FShakeSeed       :integer;
+    FShuffle         :boolean;
+    FShuffleSeed     :integer;
     FTagsSources     :TTagsSources;
     FTagIDs          :TTagIDs; // 'Copyright',
     FCopyright       :string;
@@ -147,11 +147,11 @@ type
     FCancel :boolean;
     FOnPrint :TPrintEvent;
     FOnProgress :TProgressEvent;
-    function GetDstFiletemplate: string;
+    function GetTargetFiletemplate: string;
     function GetResampling: TResampling;
     function GetSizes: string;
-    function GetSrcFilenames: TStrings;
-    procedure SetDstFiletemplate(AValue: string);
+    function GetSourceFilenames: TStrings;
+    procedure SetTargetFiletemplate(AValue: string);
     procedure SetResampling(AValue: TResampling);
     procedure SetMrkFilename(AValue: string);
     procedure SetSizes(AValue: string);
@@ -161,9 +161,9 @@ type
     procedure SetMrkX(AValue: single);
     procedure SetMrkY(AValue: single);
     procedure SetMrkAlpha(AValue: single);
-    procedure SetSrcFilenames(AValue: TStrings);
+    procedure SetSourceFilenames(AValue: TStrings);
     procedure SetThreadCount(AValue: integer);
-    procedure SetShakeSeed(AValue :integer);
+    procedure SetShuffleSeed(AValue :integer);
     function ResampleImg(Img :TBgraBitmap; const Size :TSize) :TBgraBitmap;
     class function CalcResamplingSize(const Size :TSize; LongWidth :integer) :TSize;
     procedure OnTaskPrint(Sender :TObject; WorkerId: integer; const Line :string; Level :TLevel);
@@ -187,9 +187,9 @@ type
     class function TryNameToResampling(const Str :string; out Value :TResampling) :boolean;
     class function NameToResampling(const Str :string) :TResampling;
 
-    property SrcFilenames :TStrings read GetSrcFilenames write SetSrcFilenames;
-    property DstFolder :string read FDstFolder write FDstFolder;
-    property DstFiletemplate :string read GetDstFiletemplate write SetDstFiletemplate;
+    property SourceFilenames :TStrings read GetSourceFilenames write SetSourceFilenames;
+    property TargetFolder :string read FTargetFolder write FTargetFolder;
+    property TargetFiletemplate :string read GetTargetFiletemplate write SetTargetFiletemplate;
     property Sizes :string read GetSizes write SetSizes;
     property JpgQuality :integer read FJpgQuality write SetJpgQuality;
     property PngCompression :integer read FPngCompression write SetPngCompression;
@@ -202,8 +202,8 @@ type
     property ThreadCount :integer read FThreadCount write SetThreadCount;
     property StopOnError :boolean read FStopOnError write FStopOnError;
     property RenEnabled :boolean read FRen.Enabled;
-    property Shake :boolean read FShake write FShake;
-    property ShakeSeed :integer read FShakeSeed write SetShakeSeed;
+    property Shuffle :boolean read FShuffle write FShuffle;
+    property ShuffleSeed :integer read FShuffleSeed write SetShuffleSeed;
     property TagsSources :TTagsSources read FTagsSources write FTagsSources;
     property TagIDs :TStringArray read FTagIDs write FTagIDs;
     property Copyright :string read FCopyright write FCopyright;
@@ -349,17 +349,17 @@ end;
 
 function TProcessor.TResampleTask.Execute(Context: TContext): boolean;
 var
-  SrcImg :TBGRABitmap;
-  DstFolder :string;
-  DstFileExt :string;
-  DstFiletitle :string;
-  DstFiletitleExt :string;
-  DstFilename :string;
-  DstImg :TBGRABitmap;
+  SourceImg :TBGRABitmap;
+  TargetFolder :string;
+  TargetFileExt :string;
+  TargetFiletitle :string;
+  TargetFiletitleExt :string;
+  TargetFilename :string;
+  TargetImg :TBGRABitmap;
   Writer :TFPCustomImageWriter;
   Size :integer;
-  SrcSize :TSize;
-  DstSize :TSize;
+  SourceSize :TSize;
+  TargetSize :TSize;
   MrkImg :TBGRABitmap;
   MrkRectSize :TSize;
   MrkRect :TRect;
@@ -375,25 +375,25 @@ begin
   if Context.Cancelled then
     Exit;
 
-  SrcImg := nil;
+  SourceImg := nil;
 
   // Source File
   try
     if Context.Cancelled then Exit;
 
     // Load source file...
-    Print(Format(SMsgLoadingFmt, [SrcFilename]));
-    SrcImg := TBGRABitmap.Create(SrcFilename);
+    Print(Format(SMsgLoadingFmt, [SourceFilename]));
+    SourceImg := TBGRABitmap.Create(SourceFilename);
 
     if Context.Cancelled then Exit;
     Progress(1);
 
-    if (tsEXIF in Processor.FTagsSources) and IsJPEG(SrcFilename) then begin
+    if (tsEXIF in Processor.FTagsSources) and IsJPEG(SourceFilename) then begin
       // Load EXIF
-      Print(Format(SMsgReadingExifFmt, [SrcFilename]));
+      Print(Format(SMsgReadingExifFmt, [SourceFilename]));
       ExifTags := TTags.Create;
       try
-        ReadExifTags(SrcFilename, ExifTags, ExifTagIds);
+        ReadExifTags(SourceFilename, ExifTags, ExifTagIds);
         for TagId in ExifTagIds do
           if not Tags.ContainsKey(TagId) then
             Tags.AddOrSetValue(TagId, ExifTags[TagId]);
@@ -409,19 +409,19 @@ begin
     for i:=0 to m-1 do begin
 
       Writer := nil;
-      DstImg := nil;
+      TargetImg := nil;
 
       try
         // Create Writer depending on file extension
-        DstFileExt := ExtractExt(SrcFilename);
-        if IsJPEG(SrcFilename) then begin
+        TargetFileExt := ExtractExt(SourceFilename);
+        if IsJPEG(SourceFilename) then begin
 
           // Jpg-options
           Writer := TFPWriterJPEG.Create;
           with TFPWriterJPEG(Writer) do
             CompressionQuality := TFPJPEGCompressionQuality(Processor.JpgQuality);
 
-        end else if IsPNG(SrcFilename) then begin
+        end else if IsPNG(SourceFilename) then begin
 
           // Png-options
           Writer := TFPWriterPNG.Create;
@@ -429,23 +429,23 @@ begin
             CompressionLevel := ZStream.TCompressionLevel(Processor.PngCompression);
 
         end else
-          raise Exception.CreateFmt(SErrFormatNotSupportedFmt, [DstFileExt]);
+          raise Exception.CreateFmt(SErrFormatNotSupportedFmt, [TargetFileExt]);
 
         // Calculate new size
         Size := Processor.FSizes[i];
-        SrcSize := TSize.Create(SrcImg.Width, SrcImg.Height);
-        DstSize := CalcResamplingSize(SrcSize, Size);
+        SourceSize := TSize.Create(SourceImg.Width, SourceImg.Height);
+        TargetSize := CalcResamplingSize(SourceSize, Size);
 
         // Warning, if upsampling
-        if (SrcSize.cx<DstSize.cx) or (DstSize.cy<DstSize.cy) then
+        if (SourceSize.cx<TargetSize.cx) or (TargetSize.cy<TargetSize.cy) then
           Print(Format(SWrnUpsamplingFmt, [
-             ExtractFilename(SrcFilename)]), mlWarning);
+             ExtractFilename(SourceFilename)]), mlWarning);
 
         ////////////////////////////////////////////////////////////////////////////
         // Resampling...
         Print(Format(SMsgResamplingFmt, [
-          ExtractFilename(SrcFilename), SrcSize.cx, SrcSize.cy, DstSize.cx, DstSize.cy]));
-        DstImg := Processor.ResampleImg(SrcImg, DstSize);
+          ExtractFilename(SourceFilename), SourceSize.cx, SourceSize.cy, TargetSize.cx, TargetSize.cy]));
+        TargetImg := Processor.ResampleImg(SourceImg, TargetSize);
 
         ////////////////////////////////////////////////////////////////////////////
         Progress(1);
@@ -458,18 +458,18 @@ begin
 
           // Watermark size in percent of the width or original size if MrkSize=0.0
           if Processor.MrkSize<>0.0 then begin
-            MrkRectSize.cx := round(DstSize.cx*Processor.MrkSize/100.0);
-            MrkRectSize.cy := round(DstSize.cx*Processor.MrkSize/100.0 * MrkImg.Height/MrkImg.Width);
+            MrkRectSize.cx := round(TargetSize.cx*Processor.MrkSize/100.0);
+            MrkRectSize.cy := round(TargetSize.cx*Processor.MrkSize/100.0 * MrkImg.Height/MrkImg.Width);
           end else begin
             MrkRectSize.cx := MrkImg.Width;
             MrkRectSize.cy := MrkImg.Height;
           end;
-          MrkRect.Left := round((DstSize.cx - MrkRectSize.cx) * Processor.MrkX/100.0);
-          MrkRect.Top := round((DstSize.cy - MrkRectSize.cy) * Processor.MrkY/100.0);
+          MrkRect.Left := round((TargetSize.cx - MrkRectSize.cx) * Processor.MrkX/100.0);
+          MrkRect.Top := round((TargetSize.cy - MrkRectSize.cy) * Processor.MrkY/100.0);
           MrkRect.Width := MrkRectSize.cx;
           MrkRect.Height := MrkRectSize.cy;
-          Print(Format(SMsgWatermarkingFmt, [ExtractFilename(SrcFilename), SrcSize.cx, SrcSize.cy, DstSize.cx, DstSize.cy]));
-          DstImg.StretchPutImage(MrkRect, MrkImg, dmLinearBlend, round(255*Processor.MrkAlpha/100.0));
+          Print(Format(SMsgWatermarkingFmt, [ExtractFilename(SourceFilename), SourceSize.cx, SourceSize.cy, TargetSize.cx, TargetSize.cy]));
+          TargetImg.StretchPutImage(MrkRect, MrkImg, dmLinearBlend, round(255*Processor.MrkAlpha/100.0));
         end;
 
         ////////////////////////////////////////////////////////////////////////////
@@ -480,42 +480,42 @@ begin
         if Processor.FRen.Enabled then begin
           // Specialize the prepared template
           // %FILENAME%
-          DstFiletitle := ExtractFilename(SrcFilename);
-          if Length(DstFileExt)>0 then
-            DstFiletitle := Copy(DstFiletitle, 1, Length(DstFiletitle)-Length(DstFileExt)-1);
+          TargetFiletitle := ExtractFilename(SourceFilename);
+          if Length(TargetFileExt)>0 then
+            TargetFiletitle := Copy(TargetFiletitle, 1, Length(TargetFiletitle)-Length(TargetFileExt)-1);
           // %FILEEXT% - has been extracted previously
           // %INDEX%
           if Processor.FRen.IndexDigits = 0 then
-            IndexStr := IntToStr(SrcFileIndex)
+            IndexStr := IntToStr(SourceFileIndex)
           else begin
             if Processor.FRen.IndexDigits = -1 then
-              n := round(log10(Processor.FSrcFilenames.Count))+1
+              n := round(log10(Processor.FSourceFilenames.Count))+1
             else
               n := Processor.FRen.IndexDigits;
-            IndexStr := Format('%*.*d', [n, n, SrcFileIndex+Processor.FRen.IndexStart]);
+            IndexStr := Format('%*.*d', [n, n, SourceFileIndex+Processor.FRen.IndexStart]);
           end;
           // %SIZE%
           SizeStr := IntToStr(Size);
-          DstFiletitleExt := Format(Processor.FRen.FmtStr,
-            [DstFiletitle, DstFileExt, IndexStr, SizeStr, RESAMPLING_NAMES[Processor.Resampling]]);
+          TargetFiletitleExt := Format(Processor.FRen.FmtStr,
+            [TargetFiletitle, TargetFileExt, IndexStr, SizeStr, RESAMPLING_NAMES[Processor.Resampling]]);
         end else
-          DstFiletitleExt := ExtractFilename(SrcFilename);
+          TargetFiletitleExt := ExtractFilename(SourceFilename);
 
         // Save
-        DstFolder := ProcRes.DstFolders[i mod Length(ProcRes.DstFolders)];
-        DstFilename := IncludeTrailingPathDelimiter(DstFolder) + DstFiletitleExt;
-        Print(Format(SMsgSavingFmt, [DstFilename]));
-        DstImg.SaveToFile(DstFilename, Writer);
+        TargetFolder := ProcRes.TargetFolders[i mod Length(ProcRes.TargetFolders)];
+        TargetFilename := IncludeTrailingPathDelimiter(TargetFolder) + TargetFiletitleExt;
+        Print(Format(SMsgSavingFmt, [TargetFilename]));
+        TargetImg.SaveToFile(TargetFilename, Writer);
 
       finally
         Writer.Free;
-        DstImg.Free;
+        TargetImg.Free;
       end;
 
       // EXIF
-      if (Length(Processor.FTagIds)>0) and IsJPEG(DstFilename) then begin
-        Print(Format(SMsgWritingExifFmt, [DstFilename]));
-        WriteExifTags(DstFilename, Tags, Processor.FTagIds);
+      if (Length(Processor.FTagIds)>0) and IsJPEG(TargetFilename) then begin
+        Print(Format(SMsgWritingExifFmt, [TargetFilename]));
+        WriteExifTags(TargetFilename, Tags, Processor.FTagIds);
       end;
 
       Progress(1);
@@ -523,7 +523,7 @@ begin
     end;
     result := true;
   finally
-    SrcImg.Free;
+    SourceImg.Free;
   end;
 end;
 
@@ -536,7 +536,7 @@ end;
 
 constructor TProcessor.Create;
 begin
-  FSrcFilenames     := TStringList.Create;
+  FSourceFilenames     := TStringList.Create;
   FSizes            := nil;
   FJpgQuality       := DEFAULTJPGQUALITY;
   FPngCompression   := DEFAULTPNGCOMPRESSION;
@@ -552,8 +552,8 @@ begin
   FRen.FmtStr       := DEFAULT_RENFMTSTR;
   FRen.IndexStart   := DEFAULT_RENINDEXSTART;
   FRen.IndexDigits  := DEFAULT_RENINDEXDIGITS;
-  FShake            := DEFAULT_SHAKE;
-  FShakeSeed        := DEFAULT_SHAKESEED;
+  FShuffle          := DEFAULT_SHUFFLE;
+  FShuffleSeed      := DEFAULT_SHUFFLESEED;
   FTagsSources      := DEFAULT_TAGSOURCES;
   FTagIDs           := nil;
   FCopyright        := DEFAULT_COPYRIGHT;
@@ -562,7 +562,7 @@ end;
 
 destructor TProcessor.Destroy;
 begin
-  FSrcFilenames.Free;
+  FSourceFilenames.Free;
   inherited Destroy;
 end;
 
@@ -616,10 +616,10 @@ begin
   FThreadCount := AValue;
 end;
 
-procedure TProcessor.SetShakeSeed(AValue: integer);
+procedure TProcessor.SetShuffleSeed(AValue: integer);
 begin
   if AValue<0 then AValue := 0;
-  FShakeSeed := AValue;
+  FShuffleSeed := AValue;
 end;
 
 function TProcessor.ResampleImg(Img :TBgraBitmap; const Size :TSize) :TBgraBitmap;
@@ -638,7 +638,7 @@ var
   x :string;
 begin
   // Check main parameters
-  if FSrcFilenames.Count=0 then
+  if FSourceFilenames.Count=0 then
     Exit(true);
 
   if Length(FSizes)=0 then
@@ -650,20 +650,20 @@ begin
   Dispatcher  := TDispatcher.Create;
   try
 
-    n := FSrcFilenames.Count;
-    SetLength(exer.SrcFilenames, n);
+    n := FSourceFilenames.Count;
+    SetLength(exer.SourceFilenames, n);
     for i:=0 to n-1 do
-      exer.SrcFilenames[i] := ExpandFilename(FSrcFilenames[i]);
+      exer.SourceFilenames[i] := ExpandFilename(FSourceFilenames[i]);
 
-    // If the files list has to be shaked
-    if FShake then begin
+    // If the files list has to be shuffled
+    if FShuffle then begin
       Print(SMsgShakingFiles);
-      if FShakeSeed=0 then Randomize else RandSeed := FShakeSeed;
+      if FShuffleSeed=0 then Randomize else RandSeed := FShuffleSeed;
       for i:=0 to n-1 do begin
         j := Random(n);
-        x := exer.SrcFilenames[i];
-        exer.SrcFilenames[i] := exer.SrcFilenames[j];
-        exer.SrcFilenames[j] := x;
+        x := exer.SourceFilenames[i];
+        exer.SourceFilenames[i] := exer.SourceFilenames[j];
+        exer.SourceFilenames[j] := x;
       end;
     end;
 
@@ -678,7 +678,7 @@ begin
     // If required, prepare the tags database
     if (FTagsSources<>[]) or (Length(FTagIds)>0) then begin
       for i:=0 to n-1 do
-        exer.FilesTags.add(exer.SrcFilenames[i]);
+        exer.FilesTags.add(exer.SourceFilenames[i]);
 
       // Load Tags
       if tsTagsFiles in FTagsSources then begin
@@ -691,13 +691,13 @@ begin
     m := Length(FSizes);
 
     // Check, if multiple sizes, then either %SIZE% must be in folder or in renamed filename
-    exer.IsDstFileRenamingStrategy := FRen.Enabled and (Pos('%3:s', FRen.FmtStr)>0);
+    exer.IsTargetFileRenamingStrategy := FRen.Enabled and (Pos('%3:s', FRen.FmtStr)>0);
     if Length(FSizes)>1 then begin
-      exer.IsMultipleDstFolderStrategy := Pos('%SIZE%', FDstFolder)>0;
-      if not exer.IsMultipleDstFolderStrategy and not exer.IsDstFileRenamingStrategy then
+      exer.IsMultipleTargetFolderStrategy := Pos('%SIZE%', FTargetFolder)>0;
+      if not exer.IsMultipleTargetFolderStrategy and not exer.IsTargetFileRenamingStrategy then
         raise Exception.Create(SErrMultipleSizes);
     end else
-      exer.IsMultipleDstFolderStrategy := false;
+      exer.IsMultipleTargetFolderStrategy := false;
 
     // Load MrkImages...
     if FMrkFilename='' then begin
@@ -718,26 +718,26 @@ begin
     end;
 
     // Create Destination Folders...
-    SetLength(exer.DstFolders, m);
+    SetLength(exer.TargetFolders, m);
     for i:=0 to m-1 do begin
-      x := ExpandFilename(ReplaceStr(FDstFolder, '%SIZE%', IntToStr(FSizes[i])));
-      exer.DstFolders[i] := x;
+      x := ExpandFilename(ReplaceStr(FTargetFolder, '%SIZE%', IntToStr(FSizes[i])));
+      exer.TargetFolders[i] := x;
     end;
-    for i:=0 to High(exer.DstFolders) do begin
-      Print(Format(SMsgCreatingFolderFmt, [exer.DstFolders[i]]));
-      ForceDirectories(exer.DstFolders[i]);
+    for i:=0 to High(exer.TargetFolders) do begin
+      Print(Format(SMsgCreatingFolderFmt, [exer.TargetFolders[i]]));
+      ForceDirectories(exer.TargetFolders[i]);
     end;
 
-    // For each SrcFilename create a task and prepare the tasks parameters
+    // For each SourceFilename create a task and prepare the tasks parameters
     Tasks.Capacity := n;
     for i:=0 to n-1 do begin
       Task := TResampleTask.Create;
       Task.Processor := self;
       Task.ProcRes := exer;
-      Task.SrcFilename := exer.SrcFilenames[i];
-      Task.SrcFileIndex := i;
+      Task.SourceFilename := exer.SourceFilenames[i];
+      Task.SourceFileIndex := i;
       if Assigned(exer.FilesTags) then
-        exer.FilesTags.TryGetValue(Task.SrcFilename, Task.Tags);
+        exer.FilesTags.TryGetValue(Task.SourceFilename, Task.Tags);
       Tasks.Add(Task);
     end;
 
@@ -954,7 +954,7 @@ begin
   result := SizesToSizesStr(FSizes);
 end;
 
-function TProcessor.GetDstFiletemplate: string;
+function TProcessor.GetTargetFiletemplate: string;
 begin
   result := RenameParamsToStr(FRen);
 end;
@@ -967,12 +967,12 @@ begin
     result := TResampling(integer(FResampleFilter)+1);
 end;
 
-function TProcessor.GetSrcFilenames: TStrings;
+function TProcessor.GetSourceFilenames: TStrings;
 begin
-  result := FSrcFilenames;
+  result := FSourceFilenames;
 end;
 
-procedure TProcessor.SetDstFiletemplate(AValue: string);
+procedure TProcessor.SetTargetFiletemplate(AValue: string);
 var
   ErrMsg :string;
   Params :TRenameParams;
@@ -1044,9 +1044,9 @@ begin
   FMrkAlpha:=AValue;
 end;
 
-procedure TProcessor.SetSrcFilenames(AValue: TStrings);
+procedure TProcessor.SetSourceFilenames(AValue: TStrings);
 begin
-  FSrcFilenames.Assign(AValue);
+  FSourceFilenames.Assign(AValue);
 end;
 
 class function TProcessor.GetVersion: string;

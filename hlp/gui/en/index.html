@@ -1,21 +1,17 @@
 <!DOCTYPE HTML>
-<html lang="en">
+<html lang="de">
 
   <head>
     <meta charset="UTF-8"/>
-    <title>ImageResize Documentation</title>
+    <title>ImageResize Documents</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>   
     <link rel="stylesheet" href="../help.css"/>
     <style>
-      br+img {margin-top: 0.3em}
-      .atop td {vertical-align: top;}
-      .atop tr td:nth-child(1)  {width: 7em; font-weight: bold; font-style: italic;}
-      .framed {border: 1px solid silver;}
     </style>
   </head>
 
   <body>
-    <header style="background-image: url('../img/title.jpg');">
+    <header style="background-image: url('../../img/title.jpg');">
       <div class="title-box">
         <div>Atomek</div>
         <div>ImageResize</div>
@@ -23,278 +19,263 @@
     </header>
   
     <div class="contents">
-      <img class="flag" src="../img/en.png"/>
       <a href="../de/index.html"><img class="flag" src="../img/de.png"/></a>
+      <img class="flag" src="../img/en.png"/>
 
       <h1 id="overview">Overview</h1>
       <p>
-        <i>ImageResize</i> 3.4 is an app for resizing and watermarking of
-        JPEG and PNG images. Its for web image galleries and bulk processing.
+        <i>ImageResize</i> 3.4 is an app for scaling of JPEG and PNG images.
+        Its for web image galleries creation and bulk processing.
       </p>
       
       <h2 id="contents">Contents</h2>
       <a href="#overview">Overview</a><br/>
-      <a href="#srcfilelist">Source List of Images</a><br/>
-      <a href="#dstfolder">Destination Folder</a><br/>
+      <a href="#srcfilelist">Source Images</a><br/>
       <a href="#sizes">Sizes</a><br/>
-      <a href="#renaming">Renaming and Shaking</a><br/>
+      <a href="#dstfolder">Target Folder</a><br/>
+      <a href="#renaming">Renaming and shuffle</a><br/>
       <a href="#watermark">Watermark</a><br/>
-      <a href="#compression">Quality</a><br/>
-      <a href="#tagging">Tagging and Copyright</a><br/>
-      <a href="#boost">Boost</a><br/>
+      <a href="#quality">Quality</a><br/>
+      <a href="#tagging">Tagging</a><br/>
       <a href="#saving">Saving and Loading</a><br/>
+      <a href="#settings">Settings</a><br/>
       <a href="#commandline">Commandline Parameters</a><br/>
       <a href="#mrkeditor">Watermark Editor</a><br/>
       
       <p>
-        Capabilities
+        Features
       </p>
       <ul>
         <li>Context-sensitive help system</li>
-        <li>resampling (shrinking) of multiple image files</li>
-        <li>resampling each image to multiple sizes</li>
-        <li>using <i>Lanczos</i> filtering for good quality resampling</li>
-        <li>optional watermark printing</li>
-        <li>supporting JPEG and PNG file format</li>
-        <li>controlling compression qualities</li>
-        <li>GUI, CLI and API interfaces available</li>
-        <li>systematic file renaming</li>
-        <li>optional random file sequence shaking</li>
-        <li>Limited EXIF tagging (description and copyright)</li>
+        <li>Scaling (shrinking) of many image files</li>
+        <li>Each image to multiple sizes</li>
+        <li>Uses different interpolations for good results</li>
+        <li>Optional Watermarking</li>
+        <li>EXIF Tags (Title, Timestamp, Copyright)</li>
+        <li>Supports JPEG and PNG</li>
+        <li>Controls compression quality</li>
+        <li>GUI, CLI and API interface available</li>
+        <li>Controlled file renaming</li>
+        <li>Optional random file shuffle</li>
       </ul>
       <p>
-        Incapabilites
+        Non-Features
       </p>
       <ul>
-        <li>stretching</li>
-        <li>format conversion (JPEG remains JPEG and PNG remains PNG)</li>
-        <li>preview</li>
-        <li>complete meta information handling (EXIF)</li>
+        <li>No other transformation than isometric scaling</li>
+        <li>No format conversion, PNG stays PNG and JPEG stays JPEG</li>
+        <li>No Preview</li>
       </ul>
       
       <h1 id="overview">Overview</h1>
       <p>
-        The program needs at least this information to work:
+        The app needs at least these 3 informations:
       </p>
       <ol>
-        <li>A list of image files or a source folder with wildcards<br/><img src="img/minsrc.png"/></li>
-        <li>A destination folder<br/><img src="img/mindst.png"/></li>
-        <li>A destination size or a list of destination sizes<br/><img src="img/minsize.png"/></li>
+        <li>A list of image files or a folder and a wildcard<br/><img src="img/minsrc.png"/></li>
+        <li>A target size<br/><img src="img/minsize.png"/></li>
+        <li>A target folder<br/><img src="img/mindst.png"/></li>
       </ol>
       <p>
-        Finally press <img class="btn" src="img/minexec.png"/> to start the resampling.
-      </p>
-
-      <p class="hint-box">
-        <b>Context-sensitive help system</b><br/>
-        While the focus is on a control, you 
-        can press &lt;F1&gt; and your browser should show an HTML topic. Most controls have 
-        <i>hints</i> which will appear, when the mouse pointer reclines a moment over a control.
+        After that press <img class="btn" src="img/minexec.png"/> to start the resampling.
       </p>
       
-      <h1 id="srcfilelist">Source File List</h1>
+      <h1 id="srcfilelist">Source Images</h1>
       <p>
-        ImageResize can resample multiple source files. The list consists of
-        path/filenames and can be entered
+        ImageResize can resample many files at once. The list contains path/filename an can
       </p>
       <ol>
-        <li>manually, each line a path/filename</li>
-        <li>by browsing a folder with <img class="btn" src="../img/open.png"/></li>
-        <li>dragging files from the explorer into the application window</li>
-        <li>by entering a source folder with an optional list of wildcards</li>
+        <li>be manually entered</li>
+        <li>selected with a dialog <img class="btn" src="../img/open.png"/> with &lt;CTRL&gt; and &lt;SHIFT&gt;</li>
+        <li>be completed by dragging files from the Windows explorer</li>
+        <li>be a folder with one or more wildcards</li>
+        <li>have relative paths</li>
       </ol>
       <p>
-        The list can contain JPEG files and PNG files. The filenames can be
-        retained or <a href="#renaming">renamed</a>. Relative pathes are based on the programs working directory.
-      </p>
-      <a class="chfot" href="#contents">Contents</a>
-      
-      <h1 id="dstfolder">Destination Folder</h1>
-      <p>
-        A destination folder is required. You can enter it manually or browse it
-        with <img class="btn" src="../img/open.png"/>
-      </p>
-      <p>
-        If you enter multiple destination sizes, you can enter the placeholder
-        <span class="plh">%SIZE%</span> into the path, where ImageResize will
-        insert the size in pixels. If multiple sizes are entered and the
-        placeholder is missing, you will get a warning.
-      </p>
+        The list can contain JPEG and PNG files. The file names can be retained
+        or <a href="#renaming">renamed</a>. Relative paths refer to
+        the working directory of the program, which is created after loading or saving a
+        Project file (.irs) is the path to this.
+     </p>
       <a class="chfot" href="#contents">Contents</a>
       
       <h1 id="sizes">Sizes</h1>
       <p>
-        A <i>size</i> in pixels refers to the longer side of the resized image.
-        Usually the source size is larger than the destination size.
+        A <i>size</i> in pixels refers to the longer side of an image.
+        Usually the size of the original file is larger than that of the target.
       </p>
       <p>
-        ImageResize can create multiple resolutions for each source file. Enter
-        a list of sizes just by appending the additional sizes with commas.<br/>
+        ImageResize can produce multiple sizes for each image. Enter a list of sizes,
+        separated by a comma, or select sizes from the suggestions.<br/>
         <img src="img/multiplesizes.png"/>
       </p>
       <p>
-        You can enter all sizes you want greater than 0. The buttons beneath the
-        list are common suggestions.
+        You can specify any size greater than 0. The suggestions under the list are non-binding.
       </p>
       <p>
-        Change the list manually, by pressing the suggested size buttons or with
-        the clear button <img class="btn" src="../img/cancel.png"/>.
-        To remove a single size, double-click the size and press the clear button,
-        or press the associated suggestion button again.
+        You can change the list by using the delete button <img class="btn" src="../img/delete.png"/>
+        click. To delete a single size, first select the size or click one
+        already selected suggestion again.
       </p>
-      <a class="chfot" href="#contents">Contents</a>
-      
-      <h1 id="renaming">Renaming and Shaking</h1>
+      <a class="chfot" href="#contents">Content</a>
+     
+      <h1 id="dstfolder">Target folder</h1>
       <p>
-        Renaming of the destination image files becomes interesting if its
-        not your strategy to create a folder for each destination image size,
-        but to put all files (of different sizes) in one folder. In this case
-        the multiple resolutions of a single source image must have different names.
+        A target folder must be specified. You can type it directly
+        or select with the <img class="btn" src="../img/button-folder.png"/> button.
       </p>
       <p>
-        After enabling Renaming by checking <i>Enable</i>, select one of the <i>Strategies</i>. 
+        To avoid target name conflicts when multiple target sizes are specified,
+        you can either create different file names with <a href="#renaming">Rename</a>,
+        or by each size containing its own target folder. The name of the target folder must
+        contain the placeholder <span class="plh">%SIZE%</span>.
       </p>
+      <a class="chfot" href="#contents">Content</a> <h1 id="renaming">Rename and shuffle</h1>
+      <p>
+        Renaming the target files becomes interesting if you don't
+        want to create a separate folder for each size, but rather
+        want to pack all files into one folder. Then the target files
+        have to be renamed, best by containing the target sizes for differentiation.
+      </p>
+      <p>
+        Click <i>Apply</i> and choose one of the possible strategies:
+      </p>
+      <h2 id="rensimple">Strategy <b>"Simple"</b></h2>
+      <p>
+        The simple filename template produces names like this: <i>img085.jpg</i>.
+        File numbering starts at 1 and does not include the size.
+        Then it is necessary to create a separate folder for each size. Therefore
+        insert the placeholder <span class="plh">%SIZE%</span> into the target directory name template.
+      </p>
+      <p>
+        The file name template in the simple case is <span class="plh">img%INDEX:1,3%.%FILEEXT%</span>.
+        The INDEX is the 0-based sequential number of the source file in the list. The numbers
+        1 and 3 after the INDEX keyword mean that the index starts at 1 and 3
+        will contain digits with leading zeros.
+      </p>      
 
-      <h2 id="rensimple"><b>Simple</b> Strategy</h2>
+      <h2 id="renadvanced">Strategy <b>"Advanced"</b></h2>
       <p>
-        The simple filename template forms filenames like this: <i>img085.jpg</i>.
-        The files are numbered beginning with 1 and they dont contain the
-        image size. Thus its required to create a folder for each size. You must insert the placeholder <span class="plh">%SIZE%</span> in the destination folders name.
-      </p>
-      <p>
-        The simple filename template is
-        <span class="plh">img%INDEX:1,3%.%FILEEXT%</span>.
-        The INDEX is the zero-based current number of the source image in the
-        list. The numbers 1 and 3 behind the keyword INDEX mean, that the
-        index counting starts with 1 and the number will have 3 digits with
-        leading zeroes.
+        The file name template in this case is, for example, <span class="plh">img%INDEX:1,3%_%SIZE%.%FILEEXT%</span>,
+        to create all files in the same directory. It creates a file name like
+        <i>img085_1920.jpg</i>. The file name conflict is avoided by using the
+        <span class="plh">%SIZE%</span> placeholder.
       </p>
       
-      <h2 id="renadvanced"><b>Advanced</b> Strategy</h2>
+      <h2 id="rencustom">Strategy <b>"Custom"</b></h2>
       <p>
-        The advanced filename template
-        <span class="plh">img%INDEX:1,3%_%SIZE%.%FILEEXT%</span> (example)
-        enables you to create all files in the same directory. It creates a
-        filename like <i>img085_1920.jpg</i>. The filename conflict is solved
-        by using the <span class="plh">%SIZE%</span>-placeholder.
-      </p>
-      
-      <h2 id="rencustom"><b>Custom</b> Strategy</h2>
-      <p>
-        To let the program form a destination filename, you can enter a
-        <i>template</i> of your own. The template contains <i>placeholders</i>
-        for special values, which will be known while processing an beeing
-        inserted.
+        To have the program generate a suitable file name, you can here
+        provide your own template. The template contains <i>placeholders</i> for
+        special values that are created and inserted during processing.
       </p>
       <p>
-        Examples for valid templates for the case where all resulting images
-        filenames with different sizes will not collide in the same directory
-        may look like this:
+        Examples of valid templates in the case where the resulting filenames
+        do not create a conflict for different sizes in the common directory,
+        could look like this:
       </p>
-      <p><span class="plh">img%INDEX:1,3%_%SIZE%.%FILEEXT%</span></p>
-      <p>Results in <span class="plh">img012_1920.jpg</span></p>
+      <p><span class="plh">img%INDEX:1.3%_%SIZE%.%FILEEXT%</span></p>
+      <p>results e.g. <span class="plh">img012_1920.jpg</span></p>
       <p><span class="plh">%FILENAME%_%SIZE%.%FILEEXT%</span></p>
-      <p>Results in <span class="plh">DSC3240_1920.jpg</span></p>
-      
-      <h2>Available Placeholders</h2>
+      <p>results.e.g. <span class="plh">DSC3240_1920.jpg</span></p>
+    
+      <h2 id="placeholders">Available placeholders</h2>
       <table class="partab">
         <tr>
           <td><span class="plh">%FILENAME%</span></td>
-          <td>This is the original filename without the path and without the
-          file extension.</td>
+          <td>This is the original file name, without the extension.</td>
         </tr>
         <tr>
           <td><span class="plh">%FILEEXT%</span></td>
-          <td>The original filenames extension without the dot.<br/><br/>
-          Note: You cant change the image files format just by changing all
-          filename extension to .jpg or so. This may confuse image viewers.
-          Its mandatory to use the original filenames extension.
+          <td>The extension of the original name without the period.<br/><br/>
+          You cannot change the format of the target file by
+          changing the extension. This could confuse image viewers.
           </td>
         </tr>
         <tr>
           <td><span class="plh">%INDEX:N,D%</span></td>
           <td>
-            The 1-based index (current number) of the file in the list.
-            <i>N</i> is an offset. A series usually begins with one, but for 
-            adding images to existing lists it may be usefull the enter another
-            start-index of the new files. <i>D</i> is the number of digits of
-            the number.<br/><br/>
-            Note: the parameters <i>N</i> and <i>D</i> are not available for the
-            <span class="plh">%SIZE%</span> placeholder.
+            The 0-based index (sequential number) of the file in the list.<br/><br/>
+            <i>N</i> is an offset. Lists usually start with the number 1, but by
+            specifying an offset you can expand existing lists.
+            D is the number of digits of the resulting number, which
+            if necessary, receives leading zeros. This allows the correct lexical order.<br/><br/>
+          </td>
         </tr>
         <tr>
           <td><span class="plh">%SIZE%</span></td>
-          <td>The destination size in pixels of the current image.</td>
+          <td>The target size in pixels of the current file.</td>
+        </tr>
+        <tr>
+          <td><span class="plh">%FILTER%</span></td>
+          <td>The name of the currently selected interpolation filter.</td>
         </tr>
       </table>
-      <h2 id="shaking">Shaking</h2>
+
+      <h2 id="shuffle">Shuffle</h2>
       <p>
-        <i>Shaking</i> means that the lexical order of the destination file names is mixed randomly.
+        <i>Shuffling</i> means that the lexical order of the target file names is random.
       </p>
       <p>
-        ImageResize mixes the order of the file list before it resamples the destination files.
-        This makes only sense, if the resulting filename contains the files index at the
-        beginning of the variable part of the filename to change the lexical order.
-        So its required to choose an appropriate filename template, like <span class="plh">img%INDEX:1,3%.%FILEEXT%</span>.
+        ImageResize first mixes the order of the images before producing the resampled images.
+        This only makes sense if the target file name contains the index of the image at the
+        beginning of the variable  part of the name so that the lexical order is ascending.
+        A suitable template for the target name is, for example,
+        <span class="plh">img%INDEX:1,3%.%FILEEXT%</span>.
       </p>
       <p>
-        The parameter <i>Seed</i> controls the random sequence. A seed of 0 will lead to another
-        order each time you execute ImageResize. Any other but constant value will initialize
-        the random sequence in the same manner as long as the number of files does not change.
+        The <i>Seed</i> parameter controls the random sequence. A seed of 0 will
+        produce a different sequence each time the processing is started.
+        Any other constant value will shuffle the sequence in the same way,
+        as long as the length of the image list does not change.
       </p>
       
       <h1 id="watermark">Watermark</h1>
       <p>
-        A watermark is a semi-transparent small image, that adds a copyright note
-        or whatever to your images. The image must exsist as a PNG file and can
-        have an alpha channel, which means transparency. When printing the
-        image an additional transparency can be entered. 20 to 30 percent is good
-        for a discrete appearance, from 50% above the watermark becomes more visible.
+        A watermark is a semi-transparent small image that, for example, adds a copyright
+        to the target image. The image must be in PNG format and can have an alpha channel
+        (transparency). If that, when an image is printed, additional transparency can be specified.
+        20 to 30 percent is good for a slightly visible appearance, from 50 percent the watermark
+        becomes clearly visible.
       </p>
       
-      <h3 id="mrkenable">Enabled</h3>
-      <p>Check this check box to enable watermark printing.</p>
+      <h3 id="mrkenable">Apply</h3>
+      <p>
+        Select this option to activate the watermark.
+      </p>
       
       <h3 id="mrkfilename">Filename</h3>
       <p>
-        Enter or browse a PNG file which will be scaled and printed to all destination
-        images.
+        Specify a filename of a PNG file whose image will be scaled into each target image.
       </p>
       <p>
-        Usually you have to create only one watermark file for all the destination
-        images sizes, because the size is in percent and the watermark will be stretched
-        to the right size. So its ok to create a watermark file with a high resolution.
+        Normally it is sufficient to specify a common file for all target sizes because the size
+        is adjusted for each image. Therefore it is ok to use a high resolution watermark image once
+        to create for everyone.
       </p>
       <p>
-        There is a way to assign a different watermark image for each size. For
-        this case, enter the placeholder <span class="plh">%SIZE%</span> into the watermark filename.
-        In this case, ImageResize expects a watermark image for each size matching the 
-        given template.
+        To set a different water image for each target size, you must specify the placeholder
+        <span class="plh">%SIZE%</span> in the name of the watermark file.
+        In this case, ImageResize expects a watermark file for each size, its name
+        corresponds to the template, i.e. contains the size.
       </p>
       <p>
-        You can create a watermark image with eny program that supports then
-        PNG image format. Suggestions:
+        You can create a watermark file with any program that supports the PNG format.
+        Some suggestions:
       </p>
       <ul>
-        <li><a href="http://inkscape.org">Inkscape</a> - a free vector graphic editor</li>
-        <li><a href="http://gimp.org">Gimp</a> - a free raster graphic editor</li>
-        <li><a href="http://greenfishsoftware.org">Greenfish Icon Editor</a> - a raster images graphic editor</li>
-        <li>the inbuilt <a href="#mrkeditor">Watermark Editor</a></li>
-      </ul>      
+        <li><a href="http://inkscape.org">Inkscape</a> - a free vector graphics editor</li>
+        <li><a href="http://gimp.org">Gimp</a> - a free raster graphics program</li>
+        <li><a href="http://greenfishsoftware.org">Greenfish Icon Editor</a> - a graphical raster image editor</li>
+        <li>with the built-in <a href="#mrkeditor">watermark editor</a></li>
+      </ul>
       <p>
-        You can use transparency, but keep in mind that ImageResize allows
-        an overall opacity, so you dont have to consider the printing transparency.
-      </p>
-      <p>
-        Its a good idea to have any glow, shadow or outline effect for a better
-        contrast on dark and bright backgrounds:<br/>
-        <img src="../img/watermark3.png"/>
+        You can use <i>transparency</i>, but note that ImageResize will add transparency on top of it.
       </p>
       
-      <h3 id="mrkopaque">Opacity</h3>
+      <h3 id="mrkopaque">Transparency</h3>
       <p>
-        An opacity of 0% makes the watermark invisible, an opacity of 100% makes
-        it fully opaque. A value of 40% is a good choice.
+        A transparency of 0 percent makes the water image disappear, while 100 percent makes it fully opaque.
+        40 percent is a good choice.
       </p>
       <table>
         <tr><td>10%</td><td><img src="../img/opaque10.jpg"/></td>
@@ -309,257 +290,379 @@
         <td>100%</td><td><img src="../img/opaque100.jpg"/></td></tr>
       </table>
       
-      <h3 id="mrkx">Horizontal Position</h3>
+      <h3 id="mrkx">Horizontal position</h3>
       <p>
-        The watermarks position is in percent of the horizontal space. If the X-size
-        is 10%, the image is 640px width, the watermark has a size of 20% then the
-        position is 10% * (640px - 20% * 640px) = 51px from the left. 50% means a
-        horizontal centered position.<br/>
-        0% means a left aligned position.<br/>
-        50% means a horizontally centered position.<br/>
-        100% means a right aligned watermark.
+        The position is given as a percentage of the available space and is counted from the top left.<br/>
+        0 percent is left-aligned, 50 percent is centered, and 100 percent is right-aligned.
       </p>
-    
-      <h3 id="mrky">Vertical Position</h3>
+   
+      <h3 id="mrky">Vertikale Position</h3>
       <p>
-        The watermarks position is in percent of the vertical space.<br/> 
-        0% means a top aligned position.<br/>
-        50% means a vertically centered position.<br/>
-        100% means a bottom aligned watermark.
+        0 Prozent ist ganz oben, 50 Prozent ist vertikal zentriert, 100 Prozent ist ganz unten.
       </p>
-      <a class="chfot" href="#contents">Contents</a>
+      <a class="chfot" href="#contents">Inhalt</a>
 
-      <h1 id="compression">Compression</h1>
+      <h1 id="quality">Qualität</h1>
       <p>
-        You can control the degree of compression for the JPEG format and for
-        the PNG format.
+        Die Qualität des Ergebnisses hängt von diesen Einstellungen ab.
+        Sie können den Kompressionsgrad für JPEG- und für PNG-Formate und
+        den Resampling-Algorithmus steuern.
+      </p>
+
+      <h2 id="quality-resampling">Resampling</h2>
+      <p>
+        Resampling means building a new image with smaller or larger ones 
+        Dimensions with the same aspect ratio. To do this, the colors of the pixels of the target image must 
+        be determined by interpolation. In the simplest case - stretch (without interpolation) - 
+        the pixel gets the color value of the next pixel of the original. this leads to 
+        Loss of information and quality when reducing and poor quality 
+        Enlarge.
       </p>
       <p>
-        For JPEG encoded files a higher quality results in larger files and lower 
-        compression of the destination files. 75 to 90 percent are good choices.
-        <br/><img src="img/jpgcompression.png"/>
-      </p>
+        There are 11 resampling algorithms available.
+        Apart from the simple <i>Stretch</i>, the algorithms are interpolations.
+        Depending on the scale, they have different effects.
+     </p>
+      <img src="img/quality-resampling.png"/>
       <p>
-        In the case of PNG files there are 4 compression degrees possible - 
-        <i>none, fastest, default</i> and <i>maximum</i>. The quality of the
-        resulting file is always the same, because PNG compression is lossless.
-        The drawback of a maximum compression is the decoders decompression effort
-        but its usually faster to load a small file and decompress it.
-        <br/><img src="img/pngcompression.png"/>
+        Take a look at the <a href="interpol.html">effect of different interpolations</a>.
       </p>
-      <a class="chfot" href="#contents">Contents</a>
+      
+      <h2 id="quality-jpeg">JPEG quality</h2>
+      <p>
+        JPEG has a lossy process. A higher quality results
+        in larger files. For JPEG, 75 to 95 percent is a good choice.
+      </p>
+      <img src="img/quality-JPEG.png"/>
+
+      <h2 id="quality-png">PNG quality</h2>
+      <p>
+        The PNG format compresses losslessly, but results for nature images
+        in a low compression, so it is mainly useful for artificial images.
+        There are 4 degrees of compression available:
+        <ul>
+          <li><i>none</i> - no compression</li>
+          <li><i>fastest</i> - low and fastest compression</li>
+          <li><i>default</i> - normal compression</li>
+          <li><i>maximum</i> - highest and slowest compression</li>
+        </ul>
+      </p>
+      <img src="img/quality-PNG.png"/><br/>
+      <a class="chfot" href="#contents">Content</a>
       
       <h1 id="tagging">Tagging</h1>
+      <p>
+        You can write certain meta information of your images into the generated images. Normally 
+        meta information for photos (e.g. JPEG) is saved in EXIF format within the file.
+        Most cameras store a lot of technical information in the JPEG files they generate.
+      </p>
+      <p>
+        Tagging means that you can add certain tags to the images created with ImageResize
+        to provide information. It is supported by ImageResize for two reasons:
+      </p>
+      <ul>
+        <li>To maintain your copyright when sharing images</li>
+        <li>As the basis for a <i>Slideshow</i> (automated image viewer)</li>
+      </ul>
+      <p>
+        The following meta information (<i>Tags</i>) is supported:
+      </p>
+      <ul>
+        <li>
+          <h4>Title</h4>
+          <p>
+            A brief description of the image content as it would be rendered by a viewing program.
+            The title is stored as the EXIF tag <i>ImageDescription</i>.
+          </p>
+        </li>
+        <li>
+          <h4>Timestamp</h4>
+          <p>
+            The date a photo was taken.
+          </p>
+        </li>
+        <li>
+          <h4>Copyright</h4>
+          <p>
+            The copyright tag consists at least of the parts <i>copyright symbol</i> © or (c), the <i>year</i> and the <i>author</i>.
+            E.g. “© 2024 Mogli Maisenkeyser, www.atomek.de”. Attach a web domain to leave no doubt.
+          </p>
+        </li>
+      </ul>
+      <p>
+        In the <i>Tagging</i> parameter dialog you can select which of the tags mentioned should be included in the target images.
+        The copyright entries for all images can be overwritten with a new character string.
+      </p>
+     
+      <h2>Preparing to tag your images</h2>
+      <p>
+        There are two ways to tag the created copies:
+      </p>
+      <h3>1. Expand the original files with EXIF meta information</h3>
+      <p>
+        This only works with JPEG images, but not with PNG images. You can use external programs for this:
+      </p>
+      <ul>
+        <li>Using the properties dialog in Windows Explorer. In the "Details" tab you can use the tags <i>Title</i>,
+          <i>Change date of creation</i> and <i>Copyright</i> in the originals.</li>
+        <li>Use of a third-party program - e.g. ExifTool or RawTherapee</li>
+      </ul>
+      <h3>2. Preparing the tags in .tags files</h3>
+      <p>
+        Using any simple text editing program, such as Windows Notepad (notepad.exe), write a list of tags and
+        save the UTF-8 encoded file in the directory with the original files under the name “.tags”. If you have multiple directories
+        with images, put a .tags file in each directory.
+      </p>
+      <p>
+        A .tags file is a CSV (comma separated list) file with UTF-8 encoding. The title bar contains the names of the columns
+        (Filename, Title, Timestamp, Copyright). Below is a line for each image with the fields corresponding to the header line.
+      </p>
+      <pre class="code">
+Filename, Title, Copyright
+DSC04262.jpg, Sanitas Laboratories, (c) 2023 ATOMEK
+DSC04264.jpg, lighthouse at the harbor, (c) 2023 ATOMEK
+DSC04288.jpg, "Trip home through the mudflats, wonderful", (c) 2023 ATOMEK</pre>
+      <p>
+        You can use any column headings, but only the following are used by ImageResize:
+        Filename, Title, Timestamp and Copyright.
+      </p>
+      <p>
+        The first column must be called "Filename" and contains the name of the file without the path.
+        The order of the other columns and the order of the rows are insignificant.
+        If you want a field to contain commas or leading spaces, enclose the field in double quotation marks.
+      </p>
+      <p>
+        If you create multiple .tags files in different directories, they do not have to be structured the same.
+        They can have different column names.
+      </p>
 
-      <h2>Copy Tags</h2>
+      <h2>Create a list of all tags (TagsReport)</h2>
       <p>
-        Tagging is a technique to attach meta information to a JPEG file. Modern 
-        Cameras and programs do support the EXIF format for this. ImageResize 
-        is made for creating web galleries and only a few tags are supported:
-      </p>
-      <table class="simple-table">
-        <tr><td>Description</td><td>A short text describing the contents</td></tr>
-        <tr><td>Timestamp</td><td>The point of time, when the photo was taken</td></tr>
-        <tr><td>Copyright</td><td>A standard copyright note</td></tr>
-      </table>
-      <p>
-        The resampled images will receive a copy of these tags, assuming they are 
-        available in your source files. You can tag your source files with any 
-        good image editor, like RawTherapee or Lightroom or Photoshop.
+        In the <i>Tagging</i> parameter dialog you can instruct ImageResize to create a UTF-8 encoded text file with a list
+        of known tags. Tagging is a prerequisite. The .tags files are then read, if necessary completed with EXIF metadata
+        and finally saved as one large table.
       </p>
       <p>
-        PNG files cannot be tagged with ImageResize.
+        Such a file can form the basis for a slideshow generator.
+        The next release of ImageResize will include an HTML slideshow generator tool.
+      </p>
+      <p>
+        If a field contains the asterisk (as the only character), the field value is taken from the previous.
       </p>
 
-      <h2>Override Copyright</h2>
+      <h2>Tagging Dialog</h2>
+
+      <h3 id="tagging-source">Tags Source</h3>
+      <img src="img/tagging-sources.png"/>
       <p>
-        Enable this option to attach the same copyright note to all created
-        images. This is an easy way to deal with a mass of files and to avoid tagging 
-        all source files. The copyright note is attached with the EXIF format and 
-        is enabled for JPEG files only.
+        You can explicitly specify the sources of the tags. This gives you more control over where the tags come from.
+        Usually the program itself detects which source is required. If you don't provide a source, EXIF is assumed.
       </p>
       <p>
-        The standard copyright note consists of the ©-Symbol, the year and the 
-        name of the owner or company.
+        If you have saved .tags files to the original files and would like to use them, for example for the tags report,
+        you must click the “Search for .tags files” checkbox.
       </p>
 
-      <h1 id="boost">Boost</h1>
+      <h3 id="tagging-exif">EXIF Tagging</h3>
+      <img src="img/tagging-exif.png"/>
+      <p>
+        Here you select which tags should be included in the generated images as EXIF tags. The image title is stored in
+        EXIF field "ImageDescription". You can override the copyright tag for all generated images.
+      </p>
+      <p>
+        If you specified both EXIF and .tags files as the source, the .tags files take precedence. The EXIF meta information
+        of the original files are only used if the .tags files have no fields defined for the file in question.
+      </p>
+
+      <h3 id="tagging-tagsreport">Tags Report</h3>
+      <img src="img/tagging-tagsreport.png"/>
+      <p>
+        At the end of the creation of the image files, a list of all identified tags can be saved. The file will
+        UTF-8 encoded and saved as a CSV file. Example:
+      </p>
+      <pre class="code">
+Filename, Title, Copyright
+DSC04262.jpg, Sanitas Laboratories, (c) 2023 ATOMEK
+C:\Images\DSC04264.jpg, lighthouse at the harbor, (c) 2023 ATOMEK
+C:\Images\DSC04288.jpg, "Trip home through the mudflats, wonderful", (c) 2023 ATOMEK</pre>
+      <p>
+        The file created will one day serve as the basis for the slideshow afterburner.
+      </p>
+
+      <h1 id="settings">Settings</h1>
+      <p>
+        With <img src="img/button-settings.png"/> you come to the dialog with global settings.
+      </p>
       <h3 id="threads">Threads</h3>
       <p>
-        ImageResize can utilize the computers full processor power through a thread
-        pooling system. <i>Single</i> means, only one core is used for resampling.
-        You can enter up to the number of the available cores (just enter <i>maximum</i>)
-        to use the full computers power.
+        ImageResize can make better use of the system's computing power through multi-threading.<br/>
+        <i>Single</i> means that only one core is used - processing becomes correspondingly slow.
+        You can go up to the total number of available cores (=<i>Maximum</i>).
+        This can multiply the processing speed, e.g. 5-fold with 12 hyperthreads instead of just one.
       </p>
       <p>
-        In systems with hyper-threading the number of "cores" is the double of the
-        physical cores. Hyper-threading doesnt really accelerate the processing
-        here. If you have 12 cores (6 real cores, 2 threads per core), then using
-        12 threads instead of 6 increases the performance by only about 8%.
+        In systems with <i>Hyperthreading</i>, the number of virtual cores is higher than the number of physical cores.
+        If you have 12 cores, only 6 of which are physical, that results in the use of 12 threads
+        Compared to 6 threads, the processing speed only increases by around 8 percent.
       </p>
-      <h3 id="stoponerr">Stop on Error</h3>
+      <h3 id="stoponerr">Stop on error</h3>
       <p>
-        This option enables an immediate stop, when an error occures. Otherwise
-        only the current task (task = single resampling) is cancelled.
+        This option signals the threads to terminate as soon as possible. This can be the case
+        There is a slight delay in using multiple cores.
       </p>
-      <a class="chfot" href="#contents">Contents</a>
-      
-      <h1 id="saving">Saving and Loading .irs Files</h1>
+      <a class="chfot" href="#contents">Content</a>
+     
+      <h1 id="saving">Opening and Saving project files</h1>
+      <img src="img/buttons-project.png"/>
       <p>
-        .irs files (ImageResize Settings) are simple text based INI-files. They
-        contain all settings you can see in the main dialog except the
-        <i><b>Boost</b></i>-Settings.
-      </p><p>
-        Because ImageResize stores all current visible settings in a hidden file,
-        the program doesnt query for saving unsaved settings.
+        You can save the current settings as a project file with the .irs extension.
+        This is a simple text-based INI file.
       </p>
-      <a class="chfot" href="#contents">Contents</a>
-      
+      <p>
+        Because ImageResize also saves the latest settings in a hidden file,
+        It doesn't ask whether to save after changing the settings.
+      </p>
+      <p>
+        When opening a project file, the current directory is set to the directory of the  project file.
+        This allows you to specify path information relatively and the project with the
+        images becomes movable.
+      </p>
+      <a class="chfot" href="#contents">Content</a>
+
       <h1 id="commandline">Commandline Parameters</h1>
+      <p>
+        These refer to the graphical application ImageResize.exe. There is also the command line program
+        <a href="../../cli/index.html">imgres.exe</a> with significantly more options.
+      </p>
+
       <h3><i>filename.irs</i></h3>
       <p>
-        You can let ImageResize load an .irs file on start by entering a filename
-        as parameter.
+        You can have ImageResize load an .irs file on startup by passing the filename as a command line parameter.
+        This allows the ImageResize application to be associated with the .irs extension in the Control Panel.
       </p>
-      <h3>-A  or  -AUTOSTART</h3>
+
+      <h3>-A or -AUTOSTART</h3>
       <p>
-        Lets ImageResize auto-press the Execute-Button automatically on starting.
+        Makes ImageResize automatically press the Execute button at startup.
       </p>
-      <h3>-X  or  -AUTOEXIT</h3>
+
+      <h3>-X or -AUTOEXIT</h3>
       <p>
-        Lets ImageResize close after running the conversion process automatically.
-        This switch works only together with <b>-A</b>.
+        Causes the application to close automatically after processing is finished.
       </p>
-      <h3>-E  or  -ENGLISH</h3>
+
+      <h3>-L EN or -LANGUAGE EN</h3>
       <p>
-        Prevents from loading any localization and uses the original language.
-      </p>
-      <h3>Example</h3>
-      <p>
-        To let ImageResize automatically resample a list of files, first of all 
-        save appropriate settings to an .irs-file and start the program with this 
-        commandline parameters:
+        The application is developed for the English language, but there is a German
+        localization that automatically appears on German systems.
+        This behavior can be prevented with the switch.
       </p>
       <p>
-        <span class="plh">C:\Programs\ImageResize\ImageResize.exe C:\mylist.irs -A -X</span>
+        To have ImageResize automatically resample a list of images, first save a suitable .irs file and then
+        start the program with these command line parameters:
       </p>
-      <a class="chfot" href="#contents">Contents</a>
-      
+      <p>
+        <span class="plh">C:\Program Files\ImageResize\ImageResize.exe C:\mylist.irs -A -X</span>
+      </p>
+      <a class="chfot" href="#contents">Content</a>      
+
       <h1 id="mrkeditor">Watermark Editor</h1>
       <p>
-        With <img class="btn" src="../img/editor.png"/> you can open the
-        inbuilt watermark editor. This simple dialog lets you design a single
-        text line with a glow effect and colors of your choice.
+        With <img class="btn" src="img/button-editor.png"/> you can use the built-in
+        watermark editor. This simple dialog lets you create a watermark image with some
+        useful decorations.
       </p>
       <p>
-        The <i>Preview</i> displays the image opaque and without transparency. The transparency is to be defined in the ImageResize watermark settings.
+        The preview shows you what the watermark will approximately look like,
+        but without the additional transparency that you can specify in the watermark settings.
       </p>
       <p>
-        To get an impression with a white or dark background click on one of the buttons <img src='../img/whiteblackbkg.png'/>.
+        To get an impression of what your watermark looks like on a dark or light background,
+        press one of these buttons <img src='../img/whiteblackbkg.png'/>
       </p>
       <p>
         <img style="max-width: 80%" src="img/watermarkeditor.png"/>
       </p>
-      <table class="atop">
-        <tr><td><img class="btn" src="../img/new.png"/></td>
-          <td>
-            Loads default settings.
-          </td>
-        </tr>
-        <tr><td><img class="btn" src="../img/open.png"/></td>
-          <td>
-            Loads a previous saved .was file with watermark settings.
-          </td>
-        </tr>
-        <tr><td><img class="btn" src="../img/save.png"/></td>
-          <td>
-            Save the current watermark settings as a .was file and an image as a PNG image file. The image file is needed by ImageResize, the settings file is for editing and creating the image. 
-          </td>
-        </tr>
-        <tr><td><img class="btn" src="../img/saveas.png"/></td>
-          <td>
-            Save .was and PNG file to another folder or with another name. 
-          </td>
-        </tr>
-        <tr><td><img class="btn" src="../img/loadfav.png"/></td>
-          <td>
-            Load your favorite settings.
-          </td>
-        </tr>
-        <tr><td><img class="btn" src="../img/saveasfav.png"/></td>
-          <td>
-            Save the current settings as your favorite, which can be loaded later.
-          </td>
-        </tr>
+
+      <img src="img/buttons-watermark.png"/>
+      <p>
+        With these buttons you can save the dialog settings as a .was file
+        and load it again later. The generated PNG image of the watermark is saved next to the .was file.
+      </p>
+      <p>
+        You can save your current favorite settings without a file name
+        Save <i>favorites</i> and easily retrieve them later.
+      </p>
+      <table class="simple-table">
         <tr id="mrktext"><td>Text</td>
           <td>
-            Enter a line of text to this field. Enter the © character with
-            &lt;ALT&gt; &lt;0&gt; &lt;1&gt; &lt;6&gt; &lt;9&gt; or with the
+            Enter the line of text that should be displayed in the watermark here. The © symbol with
+            &lt;ALT&gt; &lt;0&gt; &lt;1&gt; &lt;6&gt; &lt;9&gt; or with that
             <img class="btn" src="../img/copyright.png"/> button.
           </td>
         </tr>
         <tr id="mrkfont"><td>Font</td>
           <td>
-            Select a font with size in <i>Points</i>, a name in quotes and optionally the styles <i>italic</i> and
-            <i>bold</i> or select a font with the dialog <img class="btn" src="../img/font.png"/>.
-            The quality of the watermark image depends on the font height. 12pt results in visible pixels, 48pt results in a smooth watermark font.
+            Choose a font with the size in <i>points</i>, a font name in quotation marks, and optionally the styles <i>Italic</i> and
+            <i>Bold</i> or select a font in the <img class="btn" src="../img/font.png"/> dialog.
+            The quality of the watermark depends on the font size. 12pt creates a coarse pixel watermark, 48pt creates one
+            more accurate illustration. The font size has no influence on the later display in the image, as its size is determined by the watermark settings
+            of the main window.
           </td>
         </tr>
-        <tr id="mrkcolor"><td>Font Color</td>
+        <tr id="mrkcolor"><td>Font color</td>
           <td>
-            Select a character color (foreground)
+            Select the character color (foreground).
           </td>
         </tr>
         <tr id="mrkoutline"><td>Outline</td>
           <td>
-            The font has a thin outline of the selected color
-            width.
+            The font receives a fine outline with the selected color.
           </td>
         </tr>
-        <tr id="mrkoutlinecolor"><td>Outline Color</td>
+        <tr id="mrkoutlinecolor"><td>Outline color</td>
           <td>
-            The outlines color.
+            Color of the fine outline.
           </td>
         </tr>
         <tr id="mrkshadow"><td>Shadow</td>
           <td>
-            Enable a shadow (background glowing)
+            Allows the font to have a blurred background that glows or appears like a shadow, depending on the color.
           </td>
         </tr>
         <tr id="mrkshadowcolor"><td>Shadow Color</td>
           <td>
-            Select a shadow color
+            Select the color of the blurred background.
           </td>
         </tr>
         <tr id="mrkblur"><td>Blur</td>
           <td>
-            Select a shadow blur in pixel. 6 is a good choice, depending on the
-            font size. If you enlarge the font size, you may adjust the blur.
+            This creates a glow or shadow around the writing to contrast the watermark image with the
+            improve background. Select a width of the highlight or shadow in pixels.
+            The effective width also depends on the font size.
           </td>
         </tr>
         <tr id="mrkquality"><td>Quality</td>
           <td>
-            Controls the shadows appearance. Try out the settings <i>normal</i>, <i>disk</i>, <i>Corona</i>, <i>precise</i>, <i>fast</i> and <i>box</i>. Precise is a very thind shadow, like an outline.
+            Controls the way the shadow appears. Try out the possible settings
+            <i>Normal</i>, <i>Disk</i>, <i>Corona</i>, <i>Precise</i>, <i>Fast</i> and <i>Box</i>. <i>Precise</i>
+            is a very thin shadow, like an outline.
           </td>
         </tr>
         <tr><td>Ok</td>
           <td>
-            In order to use an edited watermark, you have to save it first or loaded
-            one from a file. Then the Ok-button will be enabled.
+            After a watermark has been defined, it must first be saved as a PNG file, or
+            must be previously loaded from a file. Only then <b>Ok</b> becomes available.
           </td>
         </tr>
         <tr><td>Cancel</td>
           <td>
-            Closes the dialog without using the last filename.
+            Closes the dialog without using the file.
           </td>
         </tr>
       </table>
-      <p>
-        <b>Important:</b> The effective size of the watermark image is determined by the font size (height) and the length of the text (+ shadow). The higher the font size, the higher the images resolution. The effective size of the watermark results from the percentual scaling in the watermark settings (not in the watermark editors settings). 
-      </p>
-      <a class="chfot" href="#contents">Contents</a>
+      <a class="chfot" href="#contents">Content</a>
     </div>
-
     <footer>
       © 2023 Jan Schirrmacher, www.atomek.de
     </footer>

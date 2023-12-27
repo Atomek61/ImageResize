@@ -12,7 +12,7 @@
   </head>
 
   <body>
-    <header style="background-image: url('../images/title.jpg');">
+    <header style="background-image: url('../img/title.jpg');">
       <div class="title-box">
         <div>Atomek</div>
         <div>imgres - command line tool</div>
@@ -54,9 +54,9 @@ short long            parameter   comment
     -r -rename         template   Rename files by a template with placeholders.
                                   SIZE% and %INDEX[:n[,d]]% with n=startindex, d=number of digits/auto
     -w -watermark      file.png   A PNG watermark file and optional a position and opacity, see example.
-    -s -shake          0..n       shakes the image list, makes sense together with -r.
+    -s -shuffle        0..n       Mixes the image list, makes sense together with -r.
                                   A random seed of 0 (assumed if ommited) means an unpredictable sequence.
-                                  A fix value will shake a list always in the same manner, 
+                                  A fix value will mix a list always in the same manner, 
                                   unless the number of files doesnt change.
     -m -meta           sources    EXIF | TAGS | EXIF,TAGS
                                   EXIF loads tags from origin files, TAGS from .tags files
@@ -88,7 +88,7 @@ Examples:
     inserts an EXIF copyright note
 
   More info at www.atomek.de/imageresize/cli/index.html
-                                      </pre>
+</pre>
 
       <h2 id="syntax">Syntax</h2>
       <p>
@@ -222,6 +222,54 @@ Examples:
             </p>
           </td>
         </tr>
+        <tr id="exif">
+          <td>
+            <i>-e&nbsp;taglist</i><br/>
+            <i>-exif&nbsp;taglist</i>
+          </td>
+          <td>
+            Inserts EXIF tags listed in the taglist into the target files. The taglist is a comma-separated
+            list of the keywords <b>Title</b>, <b>Timestamp</b>, <b>Copyright</b>. Other tags are not supported.
+            The source of tags are either existing EXIF tags or .tags files.
+            <a href="../gui/en/index.html#tagging">More details here</a>.
+          </td>
+        </tr>
+        <tr id="copyright">
+          <td>
+            <i>-c&nbsp;text</i><br/>
+            <i>-copyright&nbsp;text</i>
+          </td>
+          <td>
+            Inserts an EXIF Copyright tag with the given text. This overrides any existing Copyright tags in
+            the original files.
+            <a href="../gui/en/index.html#tagging">More details here</a>.
+          </td>
+        </tr>
+        <tr id="meta">
+          <td>
+            <i>-m&nbsp;sources</i><br/>
+            <i>-meta&nbsp;sources</i>
+          </td>
+          <td>
+            Controls the source of the EXIF tagging by the -e switch. <i>sources</i> is a comma-separated list
+            of the keywords <b>EXIF</b> and <b>TAGS</b>. EXIF means the internal tags dictionary is filled
+            with EXIF tags from the original files. TAGS means, that files names .tags are interpreted, if 
+            exist.
+            <a href="../gui/en/index.html#tagging">More details here</a>.
+          </td>
+        </tr>
+        <tr id="listing">
+          <td>
+            <i>-l&nbsp;tagsreport</i><br/>
+            <i>-listing&nbsp;tagsreport</i>
+          </td>
+          <td>
+            imgres maintains an internal dictionary with tags. It is filled either by EXIF tags or by additional
+            .tags files in each source folder. The -l switch lets imgres dump its contents to a .csv formatted
+            UTF-8 encoded file.
+            <a href="../gui/en/index.html#tagging">More details here</a>.
+          </td>
+        </tr>
         <tr>
           <td>
             <i>-t&nbsp;value</i><br/>
@@ -259,7 +307,7 @@ Examples:
           </td>
           <td>
             <p>
-              Enables destination file renaming. Enter a filename template as
+              Enables target file renaming. Enter a filename template as
               parameter. The template can contain up to 4 placeholders:<br/>
               <span class="plh">%FILENAME%</span> stands for the original file
               title. That is the filename without path and without extension.<br/>
@@ -272,7 +320,7 @@ Examples:
               program will calculate the number of digits automatically. This is
               the default. <span class="plh">%INDEX%</span> is equivalent to
               <span class="plh">%INDEX:1,auto%</span>.<br/>
-              Destination file renaming with the <span class="plh">%SIZE%</span>
+              target file renaming with the <span class="plh">%SIZE%</span>
               -placeholder enables you to create all resized images into the
               same folder without any naming conflict.<br/>
               See <a href="../gui/en/index.html#placeholders">available placeholders</a>.              
@@ -282,11 +330,11 @@ Examples:
         <tr>
           <td>
             <i>-s&nbsp;seed</i><br/>
-            <i>-shake seed</i>
+            <i>-shuffle seed</i>
           </td>
           <td>
             <p>
-              Mixes (shakes) the renamed destination files randomly. To get the same
+              Mixes (shuffles) the renamed target files randomly. To get the same
               (random) sequence of files, enter a <i>seed</i> not equal to zero. Multiple
               executions of the resampling processor will then result in the same order,
               as long as the number of files does not change.
@@ -295,7 +343,7 @@ Examples:
               A seed of 0 results in another sequence of files you press Execute.
             </p>
             <p>
-              If you want to mix the destination files, its recommended to insert
+              If you want to mix the target files, its recommended to insert
               the %INDEX% placeholder at a first placeholder in the filename
               template for renaming. The system uses a file attribute for sorting
               (usually the name of the the file), when listing them.
@@ -306,9 +354,9 @@ Examples:
       
       <h2 id="howworks">Examples</h2>
       <p>
-        The tool needs a source file, a destination folder and a destination size.
+        The tool needs a source file, a target folder and a target size.
         It loads the image (jpg or png), resamples it to the desired size and
-        saves the result to the destination folder, always using the original name.
+        saves the result to the target folder, always using the original name.
       </p><p>
         To resample multiple files you can create a list of files like this
       </p><p>
@@ -321,7 +369,7 @@ Examples:
         To resample multiple files in multiple resolutions, just enter multiple
         comma separated sizes without spaces.
       </p><p>
-        Note: the placeholder %SIZE% in the destination path is required.
+        Note: the placeholder %SIZE% in the target path is required.
       </p><p>
         <span class="cmd">imgres @imglist.txt .\img%SIZE% 240,640,1280</span>
       </p><p>
@@ -332,7 +380,7 @@ Examples:
         <span class="cmd">imgres image.jpg img640 640 -w "watermark.png?60,2,98?20"</span>
       </p><p>
         This example demonstrates how to create all resized image files to a single
-        folder. The trick is to build in the destination size into the filename
+        folder. The trick is to build in the target size into the filename
         that all filenames become unique.
       </p><p>
         <span class="cmd">imgres MyImages\*.jpg;*.png .\images 200,1920 -r "img%INDEX:1,3%_%SIZE%.%FILEEXT%"</span>

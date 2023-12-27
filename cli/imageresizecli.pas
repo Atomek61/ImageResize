@@ -31,15 +31,15 @@ const
     '-----------------------------------------'#10+
     '   -j -jpgquality     1..100     A quality from 1 to 100 percent (default is 75)'#10+
     '   -p -pngcompression degree     None|Fastest|Default|max'#10+
-    '   -f -filter         filter     None, Box, Linear, HalfCosine, Cosine, Bicubic, Mitchell, Spline,'#10+
+    '   -f -filter         filter     Stretch, Box, Linear, HalfCosine, Cosine, Bicubic, Mitchell, Spline,'#10+
     '                                 Lanczos2, Lanczos3, Lanczos4, BestQuality'#10+
     '                                 Default is Lanczos2.'#10+
     '   -r -rename         template   Rename files by a template with placeholders.'#10+
     '                                 SIZE% and %INDEX[:n[,d]]% with n=startindex, d=number of digits/auto'#10+
     '   -w -watermark      file.png   A PNG watermark file and optional a position and opacity, see example.'#10+
-    '   -s -shake          0..n       shakes the image list, makes sense together with -r.'#10+
+    '   -s -shuffle        0..n       Mixes the image list, makes sense together with -r.'#10+
     '                                 A random seed of 0 (assumed if ommited) means an unpredictable sequence.'#10+
-    '                                 A fix value will shake a list always in the same manner, '#10+
+    '                                 A fix value will mix a list always in the same manner, '#10+
     '                                 unless the number of files doesnt change.'#10+
     '   -m -meta           sources    EXIF | TAGS | EXIF,TAGS'#10+
     '                                 EXIF loads tags from origin files, TAGS from .tags files'#10+
@@ -76,7 +76,7 @@ const
   ERRINVALIDSRCFILENAME = 'Invalid parameter srcfilename.';
   ERRINVALIDDSTFOLDER = 'Invalid parameter dstfolder.';
 //  ERRMISSINGSIZE = 'For multiple sizes dstfolder must contain placeholder ''%SIZE%''.';
-  ERRINVALIDSHAKESEED = 'Invalid shake seed value, 0..n expected.';
+  ERRINVALIDSHAKESEED = 'Invalid shuffle seed value, 0..n expected.';
   ERRNOSRCFILES = 'No source files found.';
 
 type
@@ -112,11 +112,11 @@ var
   JpgQuality :integer;
   PngCompression :integer;
   Resampling :TResampling;
-  DstFolder :string;
-  DstFileTemplate :string;
-  SrcFolder :string;
-  SrcFilename :string;
-  SrcFilenames :TStringList;
+  TargetFolder :string;
+  TargetFileTemplate :string;
+  SourceFolder :string;
+  SourceFilename :string;
+  SourceFilenames :TStringList;
   Items :TStringDynArray;
   FloatParams :TSingleDynArray;
   MrkFilename :string;
@@ -127,8 +127,8 @@ var
   Path, MaskStr :string;
   Masks :TStringArray;
   Mask :string;
-  Shake :boolean;
-  ShakeSeed :integer;
+  Shuffle :boolean;
+  ShuffleSeed :integer;
   TagsSources :TTagsSources;
   TagIDs :TTagIDs;
   Copyright :string;
@@ -158,7 +158,7 @@ begin
   if Quiet then
     inc(OptionCount);
 
-  SrcFilenames := nil;
+  SourceFilenames := nil;
   Processor := TProcessor.Create;
   try
 
@@ -266,35 +266,35 @@ begin
       inc(OptionCount);
 
     // Filerenaming
-    DstFileTemplate := GetOptionValue('r', 'rename');
-    if DstFileTemplate<>'' then begin
+    TargetFileTemplate := GetOptionValue('r', 'rename');
+    if TargetFileTemplate<>'' then begin
       inc(OptionCount, 2);
     end else
-      DstFileTemplate := '';
+      TargetFileTemplate := '';
 
     // File Shaking
-    Shake := HasOption('s', 'shake');
-    if Shake then begin
+    Shuffle := HasOption('s', 'shuffle');
+    if Shuffle then begin
       inc(OptionCount, 1);
-      Param := GetOptionValue('s', 'shake');
+      Param := GetOptionValue('s', 'shuffle');
       if Param<>'' then begin
         inc(OptionCount, 1);
-        if not TryStrToInt(Param, ShakeSeed) or (ShakeSeed<0) then
+        if not TryStrToInt(Param, ShuffleSeed) or (ShuffleSeed<0) then
           raise Exception.Create(ERRINVALIDSHAKESEED);
       end else
-        ShakeSeed := 0;
+        ShuffleSeed := 0;
     end else begin
-      Shake := false;
-      ShakeSeed := 0;
+      Shuffle := false;
+      ShuffleSeed := 0;
     end;
 
     // Check number of parameters
     if ParamCount<>3+OptionCount then
       raise Exception.Create(ERRINVALIDNUMBEROFPARAMS);
 
-    // Required Parameters: SrcFilename, Folder, Size.
-    SrcFilename := ParamStr(1);
-    DstFolder := ParamStr(2);
+    // Required Parameters: SourceFilename, Folder, Size.
+    SourceFilename := ParamStr(1);
+    TargetFolder := ParamStr(2);
 
     // Sizes
     Param := ParamStr(3);
@@ -302,36 +302,36 @@ begin
       raise Exception.CreateFmt('Invalid sizes ''%s''.', [Param]);
 
     // Dont allow empty parameters
-    if Length(SrcFilename)=0 then
+    if Length(SourceFilename)=0 then
       raise Exception.Create(ERRINVALIDSRCFILENAME);
-    if Length(DstFolder)=0 then
+    if Length(TargetFolder)=0 then
       raise Exception.Create(ERRINVALIDDSTFOLDER);
 
     // source file list
-    SrcFilenames := TStringList.Create;
-    if SrcFilename[1]='@' then begin
+    SourceFilenames := TStringList.Create;
+    if SourceFilename[1]='@' then begin
       // Build srcfile list with
-      SrcFilename := Copy(SrcFilename, 2, Length(SrcFilename)-1);
-      SrcFolder := IncludeTrailingPathDelimiterEx(ExpandFilename(ExtractFilePath(SrcFilename)));
-      SrcFilenames.LoadFromFile(SrcFilename);
-      for i:=0 to SrcFilenames.Count-1 do
-        if not IsPathAbsolute(SrcFilenames[i]) then
-          SrcFilenames[i] := SrcFolder + SrcFilenames[i];
-    end else if IsWildcard(SrcFilename) then begin
-      Path := ExtractFilePath(SrcFilename);
-      MaskStr := ExtractFilename(SrcFilename);
+      SourceFilename := Copy(SourceFilename, 2, Length(SourceFilename)-1);
+      SourceFolder := IncludeTrailingPathDelimiterEx(ExpandFilename(ExtractFilePath(SourceFilename)));
+      SourceFilenames.LoadFromFile(SourceFilename);
+      for i:=0 to SourceFilenames.Count-1 do
+        if not IsPathAbsolute(SourceFilenames[i]) then
+          SourceFilenames[i] := SourceFolder + SourceFilenames[i];
+    end else if IsWildcard(SourceFilename) then begin
+      Path := ExtractFilePath(SourceFilename);
+      MaskStr := ExtractFilename(SourceFilename);
       Masks := MaskStr.Split(';', '"', '"');
       for Mask in Masks do
-        FindAllFiles(SrcFilenames, Path, Mask, false);
+        FindAllFiles(SourceFilenames, Path, Mask, false);
     end else begin
-      SrcFilenames.Add(SrcFilename);
+      SourceFilenames.Add(SourceFilename);
     end;
-    if SrcFilenames.Count=0 then
+    if SourceFilenames.Count=0 then
       raise Exception.Create(ERRNOSRCFILES);
 
     // Prepare the processor
-    Processor.SrcFilenames := SrcFilenames;
-    Processor.DstFolder := DstFolder;
+    Processor.SourceFilenames := SourceFilenames;
+    Processor.TargetFolder := TargetFolder;
     Processor.Sizes := SizesToSizesStr(Sizes);
     Processor.JpgQuality := JpgQuality;
     Processor.PngCompression := PngCompression;
@@ -343,9 +343,9 @@ begin
     Processor.MrkAlpha := MrkAlpha;
     Processor.ThreadCount := ThreadCount;
     Processor.StopOnError := StopOnError;
-    Processor.DstFiletemplate := DstFileTemplate;
-    Processor.Shake := Shake;
-    Processor.ShakeSeed := ShakeSeed;
+    Processor.TargetFiletemplate := TargetFileTemplate;
+    Processor.Shuffle := Shuffle;
+    Processor.ShuffleSeed := ShuffleSeed;
     Processor.TagsSources := TagsSources;
     Processor.TagIDs := TagIDs;
     Processor.Copyright := Copyright;
@@ -361,7 +361,7 @@ begin
 
   finally
     Processor.Free;
-    SrcFilenames.Free;
+    SourceFilenames.Free;
   end;
 
   Terminate;

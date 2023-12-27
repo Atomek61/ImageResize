@@ -84,7 +84,6 @@ type
     ToolButton9: TToolButton;
     UpDownShadowBlur: TUpDown;
     procedure ActionHelpExecute(Sender: TObject);
-    procedure ButtonCancelClick(Sender: TObject);
     procedure ButtonSaveClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -165,11 +164,6 @@ end;
 procedure TMrkEditDialog.FormDestroy(Sender: TObject);
 begin
   FMrkImage.Free;
-end;
-
-procedure TMrkEditDialog.ButtonCancelClick(Sender: TObject);
-begin
-
 end;
 
 procedure TMrkEditDialog.ButtonSaveClick(Sender: TObject);

@@ -96,6 +96,8 @@ type
   end;
 
   TMainDialog = class(TForm)
+    ActionListParams: TActionList;
+    ActionListSource: TActionList;
     ActionSettings: TAction;
     ActionSrcFolder: TAction;
     ActionSrcFilenames: TAction;
@@ -120,18 +122,18 @@ type
     MainActionList: TActionList;
     ApplicationProperties1: TApplicationProperties;
     BrowseSrcFolder: TSelectDirectoryDialog;
-    ButtonBrowseDstFolder1: TBitBtn;
+    ButtonBrowseTagsReportFolder: TBitBtn;
     ButtonBrowseMrkFilename: TBitBtn;
     ButtonBrowseSrcFolder: TBitBtn;
     ButtonClearSizes: TBitBtn;
-    ButtonBrowseDstFolder: TBitBtn;
+    ButtonBrowseTargetFolder: TBitBtn;
     ButtonClearSrcFiles: TBitBtn;
     ButtonBrowseSrcFiles: TBitBtn;
     ButtonClearCopyright: TBitBtn;
     ButtonInsertSIZE: TBitBtn;
     ButtonInsertCopyright: TBitBtn;
     ButtonMrkEdit: TBitBtn;
-    BrowseDstFolder: TSelectDirectoryDialog;
+    BrowseTargetFolder: TSelectDirectoryDialog;
     CheckBoxTagsSourceTagsFiles: TCheckBox;
     CheckBoxTagsReportEnabled: TCheckBox;
     CheckBoxTagsSourceEXIF: TCheckBox;
@@ -140,9 +142,9 @@ type
     CheckBoxTagTitle: TCheckBox;
     CheckBoxRenEnabled: TCheckBox;
     CheckBoxMrkEnabled: TCheckBox;
-    CheckBoxShake: TCheckBox;
+    CheckBoxShuffle: TCheckBox;
     ComboBoxResampling: TComboBox;
-    ComboBoxShakeSeed: TComboBox;
+    ComboBoxShuffleSeed: TComboBox;
     EditCopyright: TEdit;
     EditTagsReportFilename: TEdit;
     EditSrcFolder: TEdit;
@@ -156,13 +158,13 @@ type
     EditMrkX: TEdit;
     EditMrkY: TEdit;
     EditSizes: TEdit;
-    EditDstFolder: TEdit;
+    EditTargetFolder: TEdit;
     GroupBoxResampling: TGroupBox;
     GroupBoxTagsReport: TGroupBox;
     GroupBoxTagsSource: TGroupBox;
     GroupBoxEXIFTagging: TGroupBox;
     GroupBoxMrkFilename: TGroupBox;
-    GroupBoxShaking: TGroupBox;
+    GroupBoxShuffle: TGroupBox;
     GroupBoxRename: TGroupBox;
     GroupBoxMrkLayout: TGroupBox;
     GroupBoxJpgOptions: TGroupBox;
@@ -183,7 +185,7 @@ type
     Label21: TLabel;
     Label7: TLabel;
     LabelHintPlaceholder1: TLabel;
-    LabelShakeSeed: TLabel;
+    LabelShuffleSeed: TLabel;
     Label18: TLabel;
     Label20: TLabel;
     LabelHintPlaceholderTitle: TLabel;
@@ -200,7 +202,7 @@ type
     OpenDialog: TOpenDialog;
     OpenDialogSrcFilenames: TOpenDialog;
     OpenDialogMrkFilename: TOpenDialog;
-    PageControlSrc: TPageControl;
+    PageControlSource: TPageControl;
     PageControlParams: TPageControl;
     PaintBoxStep1: TPaintBox;
     PaintBoxMrkPreview: TPaintBox;
@@ -255,9 +257,9 @@ type
     UpDownMrkY: TUpDown;
     procedure ActionListCreatorExecute(Sender: TObject);
     procedure ActionSettingsExecute(Sender: TObject);
-    procedure ActionSrcFilenamesExecute(Sender: TObject);
-    procedure ButtonBrowseDstFolder1Click(Sender: TObject);
-    procedure ButtonBrowseDstFolderClick(Sender: TObject);
+    procedure ActionSourceExecute(Sender: TObject);
+    procedure ButtonBrowseTagsReportFolderClick(Sender: TObject);
+    procedure ButtonBrowseTargetFolderClick(Sender: TObject);
     procedure ButtonBrowseMrkFilenameClick(Sender: TObject);
     procedure ButtonBrowseSrcFilesClick(Sender: TObject);
     procedure ButtonBrowseSrcFolderClick(Sender: TObject);
@@ -266,11 +268,11 @@ type
     procedure ButtonClearSrcFilesClick(Sender: TObject);
     procedure ButtonInsertCopyrightClick(Sender: TObject);
     procedure ButtonInsertSIZEClick(Sender: TObject);
-    procedure ButtonParamClick(Sender :TObject);
+    procedure ActionParamExecute(Sender :TObject);
     procedure EditSrcFolderChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-//    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure ActionAboutExecute(Sender: TObject);
@@ -282,7 +284,7 @@ type
     procedure ActionSaveAsExecute(Sender: TObject);
     procedure ActionSaveExecute(Sender: TObject);
     procedure EditRenTemplateEnter(Sender: TObject);
-    procedure EditDstFolderChange(Sender: TObject);
+    procedure EditTargetFolderChange(Sender: TObject);
     procedure EditMrkSizeChange(Sender: TObject);
     procedure EditSizesChange(Sender: TObject);
     procedure FormDropFiles(Sender: TObject; const FileNames: array of String);
@@ -303,9 +305,9 @@ type
     procedure EditSizesExit(Sender: TObject);
   private
     FProjectFilename :string;
+    FProjectDescription :string; // From project file
     FAutoExit :boolean;
     FIsSave :boolean;
-    //FIniFilename :string;
     FCancelled :boolean;
     FExecuting :boolean;
     FProgress :single;
@@ -339,6 +341,7 @@ type
     function MouseToSpace(X, Y :integer) :TSize;
     function MouseToMrkSpace(X, Y :integer; out Value :TSize) :boolean;
     function CalcMarkRect(out Rect :TRect) :boolean;
+    function HasFocus(Control :TWinControl) :boolean;
   public
     property RequiredSteps[Index :integer] :boolean read GetRequiredSteps write SetRequiredSteps;
   end;
@@ -359,10 +362,11 @@ const
 
 resourcestring
   SCptProcessor             = 'Processor';
+  SMsgProjectDescriptionFmt = 'Description: %s';
   SCptUnnamed               = '<unnamed>';
-  SErrInvalidShakeSeed      = 'Invalid Shake Seed.';
+  SErrInvalidShuffleSeed      = 'Invalid Shuffle Seed.';
   SCptTitlePrefix           = 'ImageResize - ';
-  SCptLastProject       = '<last settings>';
+  SCptLastProject           = '<last project>';
   SCptCancel                = 'Cancel';
   SCptExecute               = 'Execute';
   SCptExecuteA              = 'E&xecute';
@@ -399,25 +403,33 @@ resourcestring
 
 {$R *.lfm}
 
-//procedure IncGroupedAction(ActionList :TActionList; AGroupIndex :integer);
-//var
-//  i, n :integer;
-//  FindNext :boolean;
-//begin
-//  n := 0;
-//  FindNext := false:
-//  for i:=0 to ActionList.ActionCount-1 do begin
-//    if (ActionList.Actions[i] is TAction) then with TAction(ActionList.Actions[i]) do if AGroupIndex = GroupIndex then begin
-//
-//      inc(n);
-//      if Checked then begin
-//        FindNext := true;
-//      end;
-//    end;
-//  end;
-//
-//end;
-//
+function TMainDialog.HasFocus(Control :TWinControl) :boolean;
+var
+  Subject :TWinControl;
+begin
+  Subject := ActiveControl;
+  while Subject<>nil do begin
+    if Subject=Control then Exit(true);
+    Subject := Subject.Parent;
+  end;
+  result := false;
+end;
+
+procedure MoveChecked(ActionList :TActionList; Delta :integer);
+var
+  i :integer;
+  Action :TAction;
+begin
+  if Delta<0 then Delta := ActionList.ActionCount+Delta;
+  for i:=0 to ActionList.ActionCount-1 do begin
+    Action := ActionList.Actions[i] as TAction;
+    if Action.Checked then begin
+      TAction(ActionList.Actions[(i+Delta) mod ActionList.ActionCount]).Execute;
+      exit;
+    end;
+  end;
+end;
+
 procedure SetRequiredState(Control :TLabel; Value :boolean);
 begin
   if Value then begin
@@ -427,15 +439,15 @@ begin
   end;
 end;
 
-function StrToShakeSeed(const Value :string) :integer;
+function StrToShuffleSeed(const Value :string) :integer;
 begin
   if Value=SCptRandom then
     result := 0
   else
-    if not TryStrToInt(Value, result) then raise Exception.Create(SErrInvalidShakeSeed);
+    if not TryStrToInt(Value, result) then raise Exception.Create(SErrInvalidShuffleSeed);
 end;
 
-function ShakeSeedToStr(Value :integer) :string;
+function ShuffleSeedToStr(Value :integer) :string;
 begin
   if Value<=0 then
     result := SCptRandom
@@ -500,7 +512,7 @@ var
   LangCode :string;
   Resampling :TResampling;
 begin
-  if (SysLocale.PriLangId=7) and not (IsSwitch('L', '', LangCode) and SameText(LangCode, 'en')) then
+  if (SysLocale.PriLangId=7) and not (IsSwitch('L', 'LANGUAGE', LangCode) and SameText(LangCode, 'en')) then
     SetDefaultLang('de');
 
   AllowDropFiles := true;
@@ -594,25 +606,30 @@ begin
   FProcessingSettings.Free;
 end;
 
-//procedure TMainDialog.FormKeyDown(Sender: TObject; var Key: Word;
-//  Shift: TShiftState);
-//begin
-//  if (Key=VK_TAB) and (Shift=[ssCtrl]) then begin
-//    if PanelSource.Focused then
-//      IncGroupedAction(MainActionList, 1);
-//  end;
-//end;
-//
+procedure TMainDialog.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+var
+  Delta :integer;
+begin
+  if (Key=VK_TAB) and (ssCtrl in Shift) then begin
+    if ssShift in Shift then Delta := -1 else Delta := 1;
+    if HasFocus(PanelSource) then
+      MoveChecked(ActionListSource, Delta)
+    else if HasFocus(PanelParams) then
+      MoveChecked(ActionListParams, Delta);
+  end;
+end;
+
 procedure TMainDialog.EditSrcFolderChange(Sender: TObject);
 begin
   UpdateRequiredStep(1);
 end;
 
-procedure TMainDialog.ButtonParamClick(Sender: TObject);
+procedure TMainDialog.ActionParamExecute(Sender: TObject);
 begin
   with Sender as TAction do begin
     Checked := true;
     PageControlParams.TabIndex := Tag;
+    PageControlParams.SetFocus;
   end;
 end;
 
@@ -629,34 +646,35 @@ begin
     SettingsDialog.GetProcessingSettings(FProcessingSettings);
 end;
 
-procedure TMainDialog.ActionSrcFilenamesExecute(Sender: TObject);
+procedure TMainDialog.ActionSourceExecute(Sender: TObject);
 begin
   with Sender as TAction do begin
     Checked := true;
-    PageControlSrc.TabIndex := Tag;
+    PageControlSource.TabIndex := Tag;
+    PageControlSource.SetFocus;
     UpdateRequiredStep(1);
   end;
 end;
 
-procedure TMainDialog.ButtonBrowseDstFolder1Click(Sender: TObject);
+procedure TMainDialog.ButtonBrowseTagsReportFolderClick(Sender: TObject);
 begin
   SaveAsDialogTagsReport.Filename := EditTagsReportFilename.Text;
   if SaveAsDialogTagsReport.Execute then
     EditTagsReportFilename.Text := SaveAsDialogTagsReport.Filename;
 end;
 
-procedure TMainDialog.ButtonBrowseDstFolderClick(Sender: TObject);
+procedure TMainDialog.ButtonBrowseTargetFolderClick(Sender: TObject);
 var
   s :string;
   f :string;
 begin
-  s := EditDstFolder.Text;
+  s := EditTargetFolder.Text;
   f := '';
   if Pos('%SIZE%', s)>0 then
     f := ExtractFilename(s);
-  BrowseDstFolder.Filename := LeftStr(s, Length(s)-Length(f));
-  if BrowseDstFolder.Execute then
-    EditDstFolder.Text := IncludeTrailingPathDelimiter(BrowseDstFolder.FileName)+f;
+  BrowseTargetFolder.Filename := LeftStr(s, Length(s)-Length(f));
+  if BrowseTargetFolder.Execute then
+    EditTargetFolder.Text := IncludeTrailingPathDelimiter(BrowseTargetFolder.FileName)+f;
 end;
 
 procedure TMainDialog.ButtonBrowseMrkFilenameClick(Sender: TObject);
@@ -707,7 +725,7 @@ end;
 
 procedure TMainDialog.ButtonInsertSIZEClick(Sender: TObject);
 begin
-  EditDstFolder.SelText := '%SIZE%';
+  EditTargetFolder.SelText := '%SIZE%';
 end;
 
 procedure TMainDialog.ApplicationProperties1Exception(Sender: TObject;
@@ -839,10 +857,11 @@ begin
   ImgResizer := TProcessor.Create;
   try
     MemoSrcFilenames.Lines.Clear;
+    FProjectDescription                 := '';
     ActionSrcFilenames.Checked          := true;
     EditSrcFolder.Text                  := '';
     EditSrcMasks.Text                   := '*.jpg; *.png';
-    EditDstFolder.Text                  := '';
+    EditTargetFolder.Text               := '';
     EditSizes.Text                      := '';
     ComboBoxJpgQuality.Text             := ImgResizer.JpgQualityToStr(ImgResizer.JpgQuality);
     ComboBoxPngCompression.Text         := TProcessor.PngCompressionToStr(ImgResizer.PngCompression);
@@ -856,8 +875,8 @@ begin
     CheckBoxRenEnabled.Checked          := ImgResizer.RenEnabled;
     RadioButtonRenSimple.Checked        := true;
     EditRenTemplate.Text                := DEFAULT_RENFILETEMPLATE;
-    CheckBoxShake.Checked               := DEFAULT_SHAKE;
-    ComboBoxShakeSeed.Text              := SCptRandom;
+    CheckBoxShuffle.Checked             := DEFAULT_SHUFFLE;
+    ComboBoxShuffleSeed.Text            := SCptRandom;
     CheckBoxMrkEnabled.Checked          := false;
     CheckBoxTagsSourceEXIF.Checked      := false;
     CheckBoxTagsSourceTagsFiles.Checked := false;
@@ -903,11 +922,11 @@ begin
       ActionSrcFilenames.Execute
     else
       ActionSrcFolder.Execute;
-
-    EditSrcFolder.Text                    := ReadString(SETTINGSSECTION, 'SrcFolder', EditSrcFolder.Text);
-    EditSrcMasks.Text                     := ReadString(SETTINGSSECTION, 'SrcMasks', EditSrcMasks.Text);
-    MemoSrcFilenames.Text                 := ReplaceStr(ReadString(SETTINGSSECTION, 'SrcFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, LINESEP)), LINESEP, #13#10);
-    EditDstFolder.Text                    := ReadString(SETTINGSSECTION, 'DstFolder', EditDstFolder.Text);
+    FProjectDescription                   := ReadString(SETTINGSSECTION, 'Description', '');
+    EditSrcFolder.Text                    := ReadString(SETTINGSSECTION, 'SourceFolder', EditSrcFolder.Text);
+    EditSrcMasks.Text                     := ReadString(SETTINGSSECTION, 'SourceMasks', EditSrcMasks.Text);
+    MemoSrcFilenames.Text                 := ReplaceStr(ReadString(SETTINGSSECTION, 'SourceFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, LINESEP)), LINESEP, #13#10);
+    EditTargetFolder.Text                 := ReadString(SETTINGSSECTION, 'TargetFolder', EditTargetFolder.Text);
     EditSizes.Text                        := ReadString(SETTINGSSECTION, 'Sizes', EditSizes.Text);
     RequiredStepsUpdate;
     ComboBoxJpgQuality.Text               := ReadString(SETTINGSSECTION, 'JpgOptions.Quality', ComboBoxJpgQuality.Text);
@@ -924,8 +943,8 @@ begin
     RadioButtonRenAdvanced.Checked        := ReadBool(SETTINGSSECTION, 'RenAdvanced', RadioButtonRenAdvanced.Checked);
     RadioButtonRenCustom.Checked          := ReadBool(SETTINGSSECTION, 'RenCustom', RadioButtonRenCustom.Checked);
     EditRenTemplate.Text                  := ReadString(SETTINGSSECTION, 'RenTemplate', EditRenTemplate.Text);
-    CheckBoxShake.Checked                 := ReadBool(SETTINGSSECTION, 'Shake', CheckBoxShake.Checked);
-    ComboBoxShakeSeed.Text                := ShakeSeedToStr(ReadInteger(SETTINGSSECTION, 'ShakeSeed', 0));
+    CheckBoxShuffle.Checked               := ReadBool(SETTINGSSECTION, 'Shuffle', CheckBoxShuffle.Checked);
+    ComboBoxShuffleSeed.Text              := ShuffleSeedToStr(ReadInteger(SETTINGSSECTION, 'ShuffleSeed', 0));
     CheckBoxTagsSourceEXIF.Checked        := ReadBool(SETTINGSSECTION, 'TagsSourceEXIF', CheckBoxTagsSourceEXIF.Checked);
     CheckBoxTagsSourceTagsFiles.Checked   := ReadBool(SETTINGSSECTION, 'TagsSourceTagsFiles', CheckBoxTagsSourceTagsFiles.Checked);
     CheckBoxTagTitle.Checked              := ReadBool(SETTINGSSECTION, 'TagTitle', CheckBoxTagTitle.Checked);
@@ -948,13 +967,13 @@ begin
     WriteString(COMMONSECTION, 'Type', PRJTYPE);
     WriteString(COMMONSECTION, 'Version', PRJVERSION);
     EraseSection(SETTINGSSECTION);
+    WriteString(SETTINGSSECTION, 'Description', FProjectDescription);
     WriteString(SETTINGSSECTION, 'Source', SRCMODES[ActionSrcFilenames.Checked]);
-    WriteString(SETTINGSSECTION, 'SrcFolder', EditSrcFolder.Text);
-    WriteString(SETTINGSSECTION, 'SrcMasks', EditSrcMasks.Text);
-    WriteString(SETTINGSSECTION, 'DstFolder', EditDstFolder.Text);
-    WriteString(SETTINGSSECTION, 'SrcFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, LINESEP));
-    WriteString(SETTINGSSECTION, 'DstFolder', EditDstFolder.Text);
+    WriteString(SETTINGSSECTION, 'SourceFolder', EditSrcFolder.Text);
+    WriteString(SETTINGSSECTION, 'SourceMasks', EditSrcMasks.Text);
+    WriteString(SETTINGSSECTION, 'SourceFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, LINESEP));
     WriteString(SETTINGSSECTION, 'Sizes', EditSizes.Text);
+    WriteString(SETTINGSSECTION, 'TargetFolder', EditTargetFolder.Text);
     WriteString(SETTINGSSECTION, 'JpgOptions.Quality', ComboBoxJpgQuality.Text);
     WriteString(SETTINGSSECTION, 'PngOptions.Compression', ComboBoxPngCompression.Text);
     WriteString(SETTINGSSECTION, 'Resampling', ComboBoxResampling.Text);
@@ -969,8 +988,8 @@ begin
     WriteBool(SETTINGSSECTION, 'RenAdvanced', RadioButtonRenAdvanced.Checked);
     WriteBool(SETTINGSSECTION, 'RenCustom', RadioButtonRenCustom.Checked);
     WriteString(SETTINGSSECTION, 'RenTemplate', EditRenTemplate.Text);
-    WriteBool(SETTINGSSECTION, 'Shake', CheckBoxShake.Checked);
-    WriteInteger(SETTINGSSECTION, 'ShakeSeed', StrToShakeSeed(ComboBoxShakeSeed.Text));
+    WriteBool(SETTINGSSECTION, 'Shuffle', CheckBoxShuffle.Checked);
+    WriteInteger(SETTINGSSECTION, 'ShuffleSeed', StrToShuffleSeed(ComboBoxShuffleSeed.Text));
     WriteBool(SETTINGSSECTION, 'TagsSourceEXIF', CheckBoxTagsSourceEXIF.Checked);
     WriteBool(SETTINGSSECTION, 'TagsSourceTagsFiles', CheckBoxTagsSourceTagsFiles.Checked);
     WriteBool(SETTINGSSECTION, 'TagTitle', CheckBoxTagTitle.Checked);
@@ -1025,6 +1044,8 @@ begin
       FProjectFilename := Filename;
       SetTitle(''''+Filename+'''');
       Log(Format(SMsgProjectLoadedFromFmt, [Filename]));
+      if FProjectDescription<>'' then
+        Log(Format(SMsgProjectDescriptionFmt, [FProjectDescription]));
       ChangeCurrentDir(ExtractFilePath(Filename));
     end;
   finally
@@ -1213,7 +1234,7 @@ begin
         RequiredSteps[2] := true;
     end;
   3:
-    RequiredSteps[3] :=  Length(EditDstFolder.Text) = 0;
+    RequiredSteps[3] :=  Length(EditTargetFolder.Text) = 0;
   end;
 end;
 
@@ -1357,7 +1378,7 @@ begin
   ImageList32x32.Draw(PaintBox.Canvas, 0, 0, IfThen(FRequiredSteps[PaintBox.Tag], 21, 22));
 end;
 
-procedure TMainDialog.EditDstFolderChange(Sender: TObject);
+procedure TMainDialog.EditTargetFolderChange(Sender: TObject);
 begin
   UpdateRequiredStep(3);
 end;
@@ -1427,9 +1448,10 @@ var
   Sizes :TIntegerDynArray;
   x :single;
   p :TPos;
-  DstFolder :string;
+  TargetFolder :string;
   IntValue :integer;
-  SrcFilenames :TStringList;
+  SourceFilenames :TStringList;
+  TagsSources :TTagsSources;
   TagIDs :TTagIDs;
   Processor :TProcessor;
 begin
@@ -1454,21 +1476,21 @@ begin
     Application.ProcessMessages;
     Processor := nil;
     try
-      SrcFilenames := TStringList.Create;
+      SourceFilenames := TStringList.Create;
       try
         // Source filenames
         if ActionSrcFilenames.Checked then begin
           if (MemoSrcFilenames.Text='') then
             raise Exception.Create(SErrMissingSourceFilenames);
-          SrcFilenames.Assign(MemoSrcFilenames.Lines);
+          SourceFilenames.Assign(MemoSrcFilenames.Lines);
         end else begin
           if (EditSrcFolder.Text='') or not DirectoryExists(EditSrcFolder.Text) then
               raise Exception.Create(SErrMissingSourceFolder);
-          FindAllFiles(SrcFilenames, EditSrcFolder.Text, EditSrcMasks.Text, false);
+          FindAllFiles(SourceFilenames, EditSrcFolder.Text, EditSrcMasks.Text, false);
         end;
 
         // Destination folder
-        if (EditDstFolder.Text='') then
+        if (EditTargetFolder.Text='') then
           raise Exception.Create(SErrMissingDestinationFolder);
 
         // Sizes
@@ -1490,15 +1512,15 @@ begin
         // Rename
         if CheckBoxRenEnabled.Checked then begin
           if RadioButtonRenSimple.Checked then
-            Processor.DstFiletemplate := RENSIMPLETEMPLATE
+            Processor.TargetFiletemplate := RENSIMPLETEMPLATE
           else if RadioButtonRenAdvanced.Checked then
-            Processor.DstFiletemplate := RENADVANCEDTEMPLATE
+            Processor.TargetFiletemplate := RENADVANCEDTEMPLATE
           else
-            Processor.DstFiletemplate := EditRenTemplate.Text;
+            Processor.TargetFiletemplate := EditRenTemplate.Text;
         end else
-          Processor.DstFiletemplate := '';
-        Processor.Shake := CheckBoxShake.Checked;
-        Processor.ShakeSeed := StrToShakeSeed(ComboBoxShakeSeed.Text);
+          Processor.TargetFiletemplate := '';
+        Processor.Shuffle := CheckBoxShuffle.Checked;
+        Processor.ShuffleSeed := StrToShuffleSeed(ComboBoxShuffleSeed.Text);
 
         // Watermark
         Processor.MrkFilename := EditMrkFilename.Text;
@@ -1521,6 +1543,10 @@ begin
 
         // Tagging
         TagIDs := nil;
+        TagsSources := [];
+        if CheckBoxTagsSourceTagsFiles.Checked then Include(TagsSources, tsTagsFiles);
+        if CheckBoxTagsSourceEXIF.Checked then Include(TagsSources, tsEXIF);
+        Processor.TagsSources := TagsSources;
         if CheckBoxTagTitle.Checked then TagIDs.Add(TAGID_TITLE);
         if CheckBoxTagTimestamp.Checked then TagIDs.Add(TAGID_TIMESTAMP);
         if CheckBoxTagCopyright.Checked then TagIDs.Add(TAGID_COPYRIGHT);
@@ -1541,15 +1567,15 @@ begin
         Processor.OnProgress := @OnProgress;
 
         // warn, if %SIZE% placeholder is not contained either in
-        // DstFolder nor in FileTemplate
-        DstFolder := EditDstFolder.Text;
-        if (Length(Sizes)>1) and (Pos('%SIZE%', DstFolder)=0)
-         and not (Processor.RenEnabled and (Pos('%SIZE%', Processor.DstFiletemplate)>0)) then
+        // TargetFolder nor in FileTemplate
+        TargetFolder := EditTargetFolder.Text;
+        if (Length(Sizes)>1) and (Pos('%SIZE%', TargetFolder)=0)
+         and not (Processor.RenEnabled and (Pos('%SIZE%', Processor.TargetFiletemplate)>0)) then
           raise Exception.Create(SErrEnterPlaceholder);
 
         Processor.Sizes := SizesToSizesStr(Sizes);
-        Processor.SrcFilenames := SrcFilenames;
-        Processor.DstFolder := DstFolder;
+        Processor.SourceFilenames := SourceFilenames;
+        Processor.TargetFolder := TargetFolder;
         Processor.ThreadCount := FProcessingSettings.ThreadsUsed;
         Processor.StopOnError := FProcessingSettings.StopOnError;
         Processor.Execute;
@@ -1560,7 +1586,7 @@ begin
         end;
       end;
     finally
-      SrcFilenames.Free;
+      SourceFilenames.Free;
       Processor.Free;
       FExecuting := false;
       if FCancelled then Log(Format(SErrCancelledAtFmt, [FProgress*100.0]));

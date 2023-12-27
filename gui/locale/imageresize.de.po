@@ -231,8 +231,10 @@ msgid "%s %s %s, Processor %s, %d Cores"
 msgstr "%s %s %s, Prozessor %s, %d Kerne"
 
 #: maindlg.scptlastproject
+#, fuzzy
+#| msgid "<last settings>"
 msgctxt "maindlg.scptlastproject"
-msgid "<last settings>"
+msgid "<last project>"
 msgstr "<letzte Einstellungen>"
 
 #: maindlg.scptprocessor
@@ -298,9 +300,9 @@ msgstr "Ungültige Wasserbild-X-Position."
 msgid "Invalid watermark y border."
 msgstr "Ungültige Wasserbild-Y-Position."
 
-#: maindlg.serrinvalidshakeseed
-msgid "Invalid Shake Seed."
-msgstr "Ungültige Zufalls-Saat."
+#: maindlg.serrinvalidshuffleseed
+msgid "Invalid Shuffle Seed."
+msgstr ""
 
 #: maindlg.serrinvalidsizes
 msgid "Invalid Sizes string."
@@ -353,6 +355,11 @@ msgstr "Warnung: Unerwartetes Einstellungen-Format %s (%s erwartet)."
 #, object-pascal-format
 msgid "Current directory: %s"
 msgstr "Aktuelles Verzeichnis: %s"
+
+#: maindlg.smsgprojectdescriptionfmt
+#, object-pascal-format
+msgid "Description: %s"
+msgstr ""
 
 #: maindlg.smsgprojectloadedfromfmt
 #, object-pascal-format
@@ -557,17 +564,13 @@ msgid "Ok"
 msgstr "Ok"
 
 #: tmaindialog.actionabout.caption
-#, fuzzy
-#| msgid "Abou&t"
 msgid "A&bout"
 msgstr "&Über"
 
 #: tmaindialog.actioneditwatermark.caption
-#, fuzzy
-#| msgid "Wat&ermark"
 msgctxt "tmaindialog.actioneditwatermark.caption"
 msgid "Water&mark..."
-msgstr "Wass&erzeichen"
+msgstr "&Wasserzeichen"
 
 #: tmaindialog.actioneditwatermark.hint
 msgctxt "tmaindialog.actioneditwatermark.hint"
@@ -576,10 +579,10 @@ msgstr "Öffnet den eingebauten Wasserzeichen-Editor"
 
 #: tmaindialog.actionexecute.caption
 #, fuzzy
-#| msgid "E&xecute"
+#| msgid "&Execute"
 msgctxt "tmaindialog.actionexecute.caption"
-msgid "&Execute"
-msgstr "Ausfüh&ren"
+msgid "E&xecute"
+msgstr "Ausführ&en"
 
 #: tmaindialog.actionexecute.hint
 msgctxt "tmaindialog.actionexecute.hint"
@@ -587,11 +590,9 @@ msgid "Starts the resampling process"
 msgstr "Startet das Resampling"
 
 #: tmaindialog.actionhelp.caption
-#, fuzzy
-#| msgid "Help"
 msgctxt "tmaindialog.actionhelp.caption"
 msgid "&Help"
-msgstr "Hilfe"
+msgstr "&Hilfe"
 
 #: tmaindialog.actionhelp.hint
 msgid "Opens the local or internet-based HTML help (F1)"
@@ -683,22 +684,18 @@ msgstr "Speichert die aktuellen Einstellungen in einer anderen Datei"
 
 #: tmaindialog.actionsettings.caption
 #, fuzzy
-#| msgid "Settings"
+#| msgid "Settin&gs..."
 msgctxt "tmaindialog.actionsettings.caption"
-msgid "Settin&gs..."
-msgstr "Einstellungen"
+msgid "S&ettings..."
+msgstr "Einstellun&gen"
 
 #: tmaindialog.actionsrcfilenames.caption
-#, fuzzy
-#| msgid "Filenames"
 msgid "&List of Files"
-msgstr "Dateiliste"
+msgstr "Datei&liste"
 
 #: tmaindialog.actionsrcfolder.caption
-#, fuzzy
-#| msgid "Folder"
 msgid "&Folder"
-msgstr "Ordner"
+msgstr "&Ordner"
 
 #: tmaindialog.buttonbrowsesrcfiles.hint
 msgid "Browse for one or more images"
@@ -739,13 +736,15 @@ msgstr "Anwenden"
 msgid "Enables destination image file renaming - choose a strategy."
 msgstr "Ermöglicht die Umbenennung der Zieldateien - wähle eine Strategie."
 
-#: tmaindialog.checkboxshake.caption
+#: tmaindialog.checkboxshuffle.caption
+#, fuzzy
+msgctxt "tmaindialog.checkboxshuffle.caption"
 msgid "Enable"
 msgstr "Anwenden"
 
-#: tmaindialog.checkboxshake.hint
-msgid "Enables the image file names to be mixed randomly (shaked)"
-msgstr "Vermischt die Bilder zufällig"
+#: tmaindialog.checkboxshuffle.hint
+msgid "Enables the image file names to be mixed randomly (shuffled)"
+msgstr ""
 
 #: tmaindialog.checkboxtagcopyright.caption
 msgid "Copyright"
@@ -819,25 +818,15 @@ msgstr ""
 "für gute Geschwindigkeit und Qualität.\n"
 "2 ist der Radius des Lanczos-Algorithmus."
 
-#: tmaindialog.comboboxshakeseed.hint
-msgid "Enter a number, lets say 1000, to create always the same shaked order or 0 for shaking always randomly."
-msgstr "Geben Sie eine Zahl an, z.B. 1000, um immer die gleiche Ordnung nach dem Mischen zu erreichen, oder 0 um immer anders zu mischen."
+#: tmaindialog.comboboxshuffleseed.hint
+msgid "Enter a number, lets say 1000, to create always the same mixed order or 0 for shuffeling always randomly."
+msgstr ""
 
-#: tmaindialog.comboboxshakeseed.text
-msgctxt "tmaindialog.comboboxshakeseed.text"
+#: tmaindialog.comboboxshuffleseed.text
+#, fuzzy
+msgctxt "tmaindialog.comboboxshuffleseed.text"
 msgid "<random>"
 msgstr "<Zufall>"
-
-#: tmaindialog.editdstfolder.hint
-msgctxt "tmaindialog.editdstfolder.hint"
-msgid ""
-"Enter a destination folder of the resampled images.\n"
-"If multiple sizes are entered, insert a placeholder %SIZE%\n"
-"into the path where the program shall insert the current size ."
-msgstr ""
-"Geben Sie ein Zielverzeichnis für die resampelten Bilder an.\n"
-"Wenn mehrere Zielgrößen angegeben wurden, muss der Verzeichnisname den Platzhalter %SIZE% enthalten.\n"
-"Dort baut das Programm die Größe im Namen ein."
 
 #: tmaindialog.editmrkalpha.hint
 msgid ""
@@ -931,7 +920,7 @@ msgstr "Geben Sie das Verzeichnis mit ihren Bildern ein"
 #: tmaindialog.editsrcmasks.hint
 msgctxt "tmaindialog.editsrcmasks.hint"
 msgid "Semicolon separated list of wildcards - filename templates with ? and * placeholders"
-msgstr "Durch Semikolon getrennte Liste von Wildcards - Dateinamen-Corlagen mir ? und * Platzhaltern"
+msgstr "Durch Semikolon getrennte Liste von Wildcards - Dateinamen-Vorlagen mir ? und * Platzhaltern."
 
 #: tmaindialog.editsrcmasks.text
 msgid "*.jpg;*.png"
@@ -947,6 +936,13 @@ msgstr ""
 "Geben Sie ein Zielverzeichnis für die resampelten Bilder an.\n"
 "Wenn mehrere Zielgrößen angegeben wurden, muss der Verzeichnisname den Platzhalter %SIZE% enthalten.\n"
 "Dort baut das Programm die Größe im Namen ein."
+
+#: tmaindialog.edittargetfolder.hint
+msgid ""
+"Enter a destination for the resampled images.\n"
+"If multiple sizes are entered, insert a placeholder %SIZE%\n"
+"into the path where the program shall insert the current size ."
+msgstr ""
 
 #: tmaindialog.groupboxexiftagging.caption
 msgid "EXIF Tagging"
@@ -992,9 +988,9 @@ msgctxt "tmaindialog.groupboxresampling.caption"
 msgid "Resampling"
 msgstr "Resampling"
 
-#: tmaindialog.groupboxshaking.caption
-msgid "Shake"
-msgstr "Mischen"
+#: tmaindialog.groupboxshuffle.caption
+msgid "Shuffle"
+msgstr ""
 
 #: tmaindialog.groupboxtagsreport.caption
 msgctxt "tmaindialog.groupboxtagsreport.caption"
@@ -1064,8 +1060,6 @@ msgid "(EXIF ImageDescription)"
 msgstr "(EXIF ImageDescription)"
 
 #: tmaindialog.label18.caption
-#, fuzzy
-#| msgid "File Wildcards:"
 msgid "File Selection:"
 msgstr "Dateiauswahl:"
 
@@ -1126,7 +1120,9 @@ msgstr ""
 msgid "Available Placeholders:"
 msgstr "Verfügbare Platzhalter:"
 
-#: tmaindialog.labelshakeseed.caption
+#: tmaindialog.labelshuffleseed.caption
+#, fuzzy
+msgctxt "tmaindialog.labelshuffleseed.caption"
 msgid "Seed:"
 msgstr "Saat:"
 
@@ -1139,14 +1135,18 @@ msgid "Sizes and Parameters"
 msgstr "Größen und Einstellungen"
 
 #: tmaindialog.labelstep3.caption
-#, fuzzy
-#| msgid "Destination Folder"
-msgid "&Destination Folder"
-msgstr "Zielordner"
+msgid "Target &Folder"
+msgstr "&Zielordner"
 
 #: tmaindialog.memosrcfilenames.hint
-msgid "Enter a list of files with absolute pathes."
-msgstr "Enter a list of files with absolute pathes."
+msgid ""
+"Enter a list of files with absolute or relative paths.\n"
+"A relative path refers to the current directory, which is the directory\n"
+"where the project file was stored."
+msgstr ""
+"Geben Sie eine Liste von Quelldateien mit absoluten oder relativen Pfaden ein.\n"
+"Relative Pfade beziehen sich auf das aktuelle Verzeichnis, welches der Speicherort der\n"
+"Projektdatei ist."
 
 #: tmaindialog.opendialogsrcfilenames.title
 msgid "Select one or more Images"
