@@ -12,7 +12,7 @@ uses
   Interfaces, // this includes the LCL widgetset
   Forms, lazcontrols, maindlg, aboutdlg, mrkeditdlg, imgres, updateutils,
   datetimeutils, threading.dispatcher, imggallery,
-  EXIFUtils, tags, settingsdlg, settings;
+  EXIFUtils, tags, settingsdlg, settings, animator;
 
 {$R *.res}
 

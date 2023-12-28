@@ -67,10 +67,10 @@ uses
 
 resourcestring
   SCptAvailable           = 'Available';
-  SErrAppNotMatchingFmt   = 'Application ''%s'' not matching, ''%s'' expected.';
+  SErrAppNotMatchingFmt   = 'Application ''%s'' not matching, ''%s'' expected';
   SMsgChecking            = 'Checking for update...';
   SMsgUpdateAvailableFmt  = 'Update available: Version %s from %s';
-  SMsgIsUpToDate          = 'There is no newer version available.';
+  SMsgIsUpToDate          = 'There is no newer version available';
   SErrUpdateCheckFmt      = 'Update check failed - %s';
 
 {$R *.lfm}

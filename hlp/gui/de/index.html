@@ -38,7 +38,7 @@
       <a href="#watermark">Wasserzeichen</a><br/>
       <a href="#quality">Qualität</a><br/>
       <a href="#tagging">Taggen</a><br/>
-      <a href="#saving">Speichern und Öffnen</a><br/>
+      <a href="#saving">Öffnen und Speichern</a><br/>
       <a href="#settings">Einstellungen</a><br/>
       <a href="#commandline">Kommandozeilen-Parameter</a><br/>
       <a href="#mrkeditor">Wasserzeichen-Editor</a><br/>
@@ -74,7 +74,7 @@
         Das Programm benötigt mindestens die folgenden 3 Angaben:
       </p>
       <ol>
-        <li>Eine Liste von Bilddateien oder ein Quellordner mit Dateifilter<br/><img src="img/minsrc.png"/></li>
+        <li>Eine Liste von Bilddateien oder einen Quellordner mit Dateifilter<br/><img src="img/minsrc.png"/></li>
         <li>Eine oder mehrere Zielgrößen<br/><img src="img/minsize.png"/></li>
         <li>Ein Zielordner<br/><img src="img/mindst.png"/></li>
       </ol>
@@ -155,7 +155,7 @@
         fügen Sie in die Vorlage des Zielordners den Platzhalter <span class="plh">%SIZE%</span> ein.
       </p>
       <p>
-        Die Dateinamen-Vorlage im einfachen Falle ist <span class="plh">img%INDEX:1,3%.%FILEEXT%</span>.
+        Die Dateinamen-Vorlage ist im einfachsten Falle <span class="plh">img%INDEX:1,3%.%FILEEXT%</span>.
         Der INDEX ist die 0-basierte laufende Nummer der Quelldatei in der Liste. Die Zahlen
         1 und 3 hinter dem Schlüsselwort INDEX bedeuten, dass der Index bei 1 beginnt und 3
         Ziffern mit führenden Nullen enthalten wird.
@@ -497,11 +497,32 @@ C:\Bilder\DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
         Die erzeugte Datei soll eines Tages als Grundlage für den Slideshow-Nachbrenner dienen.
       </p>
 
+      <h1 id="saving">Öffnen und Speichern von Projektdateien</h1>
+      <img src="img/buttons-project.png"/>
+      <p>
+        Sie können die aktuellen Einstellungen als Projekt mit der Erweiterung .irs speichern.
+        Das sind einfache textbasierte INI-Dateien. 
+      </p>
+      <p>
+        Beim Öffnen einer Projektdatei wird das aktuelle Verzeichnis auf das Verzeichnis der
+        Projektdatei gesetzt. Dadurch können Sie Pfadangaben relativ angeben und das Projekt mit den
+        Bildern verschiebbar machen.
+      </p>
+      <p>
+        Sie können einstellen, wie weit Sie ImageResize auf zu speichernde Einstellungen hinweist.
+        Im bequemsten Falle speichert ImageResize stets automatisch die aktuellen Einstellungen.
+      </p>
+      <p>
+        Sie können dieses Verhalten im Dialog <i>Einstellungen</i> ändern.
+      </p>
+      <a class="chfot" href="#contents">Inhalt</a>
+      
       <h1 id="settings">Einstellungen</h1>
       <p>
         Mit <img src="img/button-settings.png"/> kommen sie zum Dialog mit globalen Einstellungen.
       </p>
-      <h3 id="threads">Threads</h3>
+
+      <h2 id="threads">Threads</h2>
       <p>
         ImageResize kann durch Multi-Threading die Rechenpower des Systems besser nutzen.<br/>
         <i>Single</i> bedeutet, dass nur ein Kern genutzt wird - die Verarbeitung wird entsprechend langsam.
@@ -513,28 +534,24 @@ C:\Bilder\DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
         Wenn Sie 12 Kerne haben, von denen nur 6 physisch sind, bewirkt die Nutzung von 12 Threads
         gegenüber 6 Threads nur eine Erhöhung der Verarbeitungsgeschwindigkeit um etwa 8 Prozent.
       </p>
-      <h3 id="stoponerr">Anhalten bei Fehler</h3>
+
+      <h2 id="stoponerr">Anhalten bei Fehler</h2>
       <p>
         Diese Options signalisiert den Threads ein Beenden sobald es möglich ist. Das kann bei der 
         Nutzung mehrerer Kerne etwas verzögert auftreten.
       </p>
-      <a class="chfot" href="#contents">Inhalt</a>
-      
-      <h1 id="saving">Öffnen und Speichern von Projektdateien</h1>
-      <img src="img/buttons-project.png"/>
+
+      <h2>Benehmen</h2>
       <p>
-        Sie können die aktuellen Einstellungen als Projekt mit der Erweiterung .irs speichern.
-        Es sind einfache textbasierte INI-Dateien. 
+        Diese Einstellung steuert das Verhalten der Anwendung zur Vermeidung von Datenverlust.
       </p>
-      <p>
-        Weil ImageResize außerdem die letzten Einstellungen in einer veborgenen Datei sichert,
-        fragt es nicht, ob nach Änderungen der Einstellungen gespeichert werden soll.
-      </p>
-      <p>
-        Beim Öffnen einer Projektdatei wird das aktuelle Verzeichnis auf das Verzeichnis der
-        Projektdatei gesetzt. Dadurch können Sie Pfadangaben relativ angeben und das Projekt mit den
-        Bildern verschiebbar machen.
-      </p>
+      <ul>
+        <li><u>Standard</u> - Rückfragen zum Speichern ohne automatische Sicherung der Einstellungen</li>
+        <li><u>Komfortabel</u> - Kein Rückfragen zum Speichern, aber Sicherheit durch automatisches Speichern</li>
+        <li><u>Neurotisch</u> - Rückfragen zum Speichern und automatische Sicherung</li>
+        <li><u>Chuck Norris</u> - Kein Rückfragen, kein automatisches Speichern</li>
+      </ul>
+
       <a class="chfot" href="#contents">Inhalt</a>
       
       <h1 id="commandline">Kommandozeilen-Parameter</h1>

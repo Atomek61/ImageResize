@@ -25,10 +25,43 @@ type
     procedure Assign(const Value :TSettings); override;
   end;
 
+  { TDialogSettings }
+
+  TDialogSettings = class(TSettings)
+  public
+    AutoSave :boolean;
+    WarnDirty :boolean;
+    procedure Defaults; override;
+    function Compare(const Value :TSettings) :boolean; override;
+    procedure Assign(const Value :TSettings); override;
+  end;
+
   //TGUISettings = class(TSettings)
   //end;
 
 implementation
+
+{ TDialogSettings }
+
+procedure TDialogSettings.Defaults;
+begin
+  AutoSave := true;
+  WarnDirty := false;
+end;
+
+function TDialogSettings.Compare(const Value: TSettings): boolean;
+begin
+  with Value as TDialogSettings do
+    result := (self.AutoSave = AutoSave) and (self.WarnDirty = WarnDirty);
+end;
+
+procedure TDialogSettings.Assign(const Value: TSettings);
+begin
+  with Value as TDialogSettings do begin
+    self.AutoSave := AutoSave;
+    self.WarnDirty := WarnDirty;
+  end;
+end;
 
 { TProcessingSettings }
 

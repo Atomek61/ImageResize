@@ -66,6 +66,16 @@ const
   SIZEBTNHINTFMT  = '%s - %dpx';
   REQUIREDSTEP_COLORS :array[boolean] of TColor = ($00955215, $00DA49A0);
 
+  IMAGEINDEX_START        = 5;
+  IMAGEINDEX_CANCEL       = 6;
+  IMAGEINDEX_DIRTY        = 4;
+  IMAGEINDEX_SAVE         = 2;
+  IMAGEINDEX_IMGTHUMBNAIL = 9;
+  IMAGEINDEX_IMGDOCUMENT  = 10;
+  IMAGEINDEX_IMGSCREEN    = 11;
+  IMAGEINDEX_REQUIRED     = 22;
+  IMAGEINDEX_NOTREQUIRED  = 23;
+
 resourcestring
   SCptDependenciesFmt = 'Build with Lazarus %s, BGRABitmap %s, dExif %s';
   SUrlWebHelp = 'http://www.atomek.de/imageresize/hlp35/gui/en';
@@ -270,6 +280,7 @@ type
     procedure ButtonInsertSIZEClick(Sender: TObject);
     procedure ActionParamExecute(Sender :TObject);
     procedure EditSrcFolderChange(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -303,11 +314,13 @@ type
     procedure PaintBoxStep1Paint(Sender: TObject);
     procedure TimerProgressBarOffTimer(Sender: TObject);
     procedure EditSizesExit(Sender: TObject);
+    procedure ProjectChanged(Sender :TObject);
   private
     FProjectFilename :string;
     FProjectDescription :string; // From project file
     FAutoExit :boolean;
-    FIsSave :boolean;
+    FIsSave :boolean; // If Current project is from a file: if false then save -> saveas
+    FIsDirty :boolean; // If Changes since last modification
     FCancelled :boolean;
     FExecuting :boolean;
     FProgress :single;
@@ -315,8 +328,10 @@ type
     FMrkOffset :TSize; // while dragging
     FRequiredSteps :array[1..3] of boolean;
     FProcessingSettings :TProcessingSettings;
+    FDialogSettings :TDialogSettings;
     procedure ChangeCurrentDir(const Path :string);
     function GetAppDataFilename(const Filetitle :string; CanCreate :boolean) :string;
+    procedure SetDirty(AValue: boolean);
     procedure SetTitle(const Str :string);
     procedure OnPrint(Sender :TObject; const Line :string);
     procedure OnProgress(Sender :TObject; Progress :single);
@@ -328,6 +343,7 @@ type
     procedure SaveLastProject;
     function LoadProjectFromFile(const Filename :string) :boolean;
     procedure SaveProjectToFile(const Filename :string);
+    function CheckSave :boolean;
     procedure Log(const Msg :string);
     function BoostStrToThreadCount(const Value :string) :integer;
     function ThreadCountToBoostStr(ThreadCount :integer) :string;
@@ -344,6 +360,7 @@ type
     function HasFocus(Control :TWinControl) :boolean;
   public
     property RequiredSteps[Index :integer] :boolean read GetRequiredSteps write SetRequiredSteps;
+    property Dirty :boolean read FIsDirty write SetDirty;
   end;
 
 var
@@ -361,44 +378,44 @@ const
   SCptMaximumThread = 'maximum';
 
 resourcestring
-  SCptProcessor             = 'Processor';
-  SMsgProjectDescriptionFmt = 'Description: %s';
-  SCptUnnamed               = '<unnamed>';
-  SErrInvalidShuffleSeed      = 'Invalid Shuffle Seed.';
-  SCptTitlePrefix           = 'ImageResize - ';
-  SCptLastProject           = '<last project>';
-  SCptCancel                = 'Cancel';
-  SCptExecute               = 'Execute';
-  SCptExecuteA              = 'E&xecute';
-  SCptSizeClassSmall        = 'Small - Thumbnail size';
-  SCptSizeClassMedium       = 'Medium - Document size';
-  SCptSizeClassLarge        = 'Large - Desktop size';
-  SCptInfoFmt               = '%s %s %s, Processor %s, %d Cores';
-  SLogErrorPrefix           = 'Error - ';
-  SLogCantLoadProject       = 'Cant load ImageResize project File';
-  SLogCantLoadSettings      = 'Cant load ImageResize settings File';
-  SLogWarningSettingVersionFmt     = 'Warning: Unexpected settings format %s (%s expected).';
-  SLogWarningProjectVersionFmt     = 'Warning: Unexpected project format %s (%s expected).';
-  SCptFileNotFoundFmt       = 'File ''%s'' not found.';
-  SMsgProjectSavedToFmt     = 'Project saved to ''%s''';
-  SMsgProjectLoadedFromFmt  = 'Project ''%s'' loaded.';
-  SCptSourceFilesFmt        = '%d source files';
-  SErrMissingSourceFilenames = 'Missing source filenames.';
-  SErrMissingSourceFolder   = 'Missing source folder.';
-  SErrMissingDestinationFolder = 'Missing destination folder.';
-  SErrInvalidSizes          = 'Invalid Sizes string.';
-  SErrInvalidJpgQuality     = 'Invalid jpg quality.';
-  SErrInvalidMrkSize        = 'Invalid watermark size.';
-  SErrInvalidMrkXBrd        = 'Invalid watermark x border.';
-  SErrInvalidMrkYBrd        = 'Invalid watermark y border.';
-  SErrInvalidMrkOpacity     = 'Invalid watermark opacity.';
-  SErrEnterPlaceholder      = 'Enter placeholder %SIZE% to either the destination folder or the file template.';
-  SErrAtFmt                 = 'Error at %.0f%% - %s';
-  SErrCancelledAtFmt        = 'Cancelled at %.0f%%';
-  //SErrNoTags                = 'Select a tag to copy or disable copying of tags.';
-  //SErrInvalidCopyright      = 'Invalid copyright.';
-  SErrMissingTagsReport     = 'Missing filename for tags reporting.';
-  SMsgCurrentDirFmt         = 'Current directory: %s';
+  SCptProcessor                 = 'Processor';
+  SMsgQuerySave                 = 'The project has been modified.'+#10+#10+'Do you want to save the changes?';
+  SCptQuerySave                 = 'Project unsaved';
+  SMsgProjectDescriptionFmt     = 'Description: %s';
+  SCptUnnamed                   = '<unnamed>';
+  SErrInvalidShuffleSeed        = 'Invalid Shuffle Seed';
+  SCptTitlePrefix               = 'ImageResize - ';
+  SCptLastProject               = '<last project>';
+  SCptCancel                    = 'Cancel';
+  SCptExecute                   = 'Execute';
+  SCptExecuteA                  = 'E&xecute';
+  SCptSizeClassSmall            = 'Small - Thumbnail size';
+  SCptSizeClassMedium           = 'Medium - Document size';
+  SCptSizeClassLarge            = 'Large - Desktop size';
+  SCptInfoFmt                   = '%s %s %s, Processor %s, %d Cores';
+  SLogErrorPrefix               = 'Error - ';
+  SLogCantLoadProject           = 'Cant load ImageResize project File';
+  SLogCantLoadSettings          = 'Cant load ImageResize settings File';
+  SLogWarningSettingVersionFmt  = 'Warning: Unexpected settings format %s (%s expected)';
+  SLogWarningProjectVersionFmt  = 'Warning: Unexpected project format %s (%s expected)';
+  SCptFileNotFoundFmt           = 'File ''%s'' not found';
+  SMsgProjectSavedToFmt         = 'Project saved to ''%s''';
+  SMsgProjectLoadedFromFmt      = 'Project ''%s'' loaded';
+  SCptSourceFilesFmt            = '%d source files';
+  SErrMissingSourceFilenames    = 'Missing source filenames';
+  SErrMissingSourceFolder       = 'Missing source folder';
+  SErrMissingDestinationFolder  = 'Missing target folder';
+  SErrInvalidSizes              = 'Invalid Sizes string';
+  SErrInvalidJpgQuality         = 'Invalid JPEG quality';
+  SErrInvalidMrkSize            = 'Invalid watermark size';
+  SErrInvalidMrkXBrd            = 'Invalid watermark x border';
+  SErrInvalidMrkYBrd            = 'Invalid watermark y border';
+  SErrInvalidMrkOpacity         = 'Invalid watermark opacity';
+  SErrEnterPlaceholder          = 'Enter placeholder %SIZE% to either the target folder or the file template';
+  SErrAtFmt                     = 'Error at %.0f%% - %s';
+  SErrCancelledAtFmt            = 'Cancelled at %.0f%%';
+  SErrMissingTagsReport         = 'Missing filename for tags reporting';
+  SMsgCurrentDirFmt             = 'Current directory: %s';
 
 
 {$R *.lfm}
@@ -521,6 +538,9 @@ begin
   FProcessingSettings := TProcessingSettings.Create;
   FProcessingSettings.Defaults;
 
+  FDialogSettings := TDialogSettings.Create;
+  FDialogSettings.Defaults;
+
   // Create Size Buttons
   for i:=0 to High(DEFSIZES) do begin
     Button := TToolButton.Create(ToolBarSizeButtons);
@@ -535,11 +555,11 @@ begin
 
     Button.Hint := Format(SIZEBTNHINTFMT, [Cpt, DEFSIZES[i]]);
     if DEFSIZES[i]<=THUMBNAILIMGMAX then
-        Button.ImageIndex := 8
+        Button.ImageIndex := IMAGEINDEX_IMGTHUMBNAIL
     else if DEFSIZES[i]<=DOCIMGMAX then
-      Button.ImageIndex := 9
+      Button.ImageIndex := IMAGEINDEX_IMGDOCUMENT
     else
-      Button.ImageIndex := 10;
+      Button.ImageIndex := IMAGEINDEX_IMGSCREEN;
     Button.Style := tbsCheck;
     Button.Tag := DEFSIZES[i];
     Button.OnClick := @SizeButtonClick;
@@ -564,7 +584,7 @@ begin
   Log(Format(SCptInfoFmt, [GUIVER_APP, GUIVER_VERSION, GUIVER_DATE, IMGRESVER, TThread.ProcessorCount]));
 
   LoadSettings;
-  if not LoadLastProject then
+  if not FDialogSettings.AutoSave or not LoadLastProject then
     ActionNew.Execute;
   RequiredStepsUpdate;
 
@@ -596,15 +616,22 @@ begin
     Close;
 end;
 
+procedure TMainDialog.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+begin
+  CanClose := CheckSave;
+end;
+
 procedure TMainDialog.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-  SaveLastProject;
+  if FDialogSettings.AutoSave then
+    SaveLastProject;
   SaveSettings;
 end;
 
 procedure TMainDialog.FormDestroy(Sender: TObject);
 begin
   FProcessingSettings.Free;
+  FDialogSettings.Free;
 end;
 
 procedure TMainDialog.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -622,6 +649,7 @@ end;
 
 procedure TMainDialog.EditSrcFolderChange(Sender: TObject);
 begin
+  Dirty := true;
   UpdateRequiredStep(1);
 end;
 
@@ -643,8 +671,11 @@ end;
 procedure TMainDialog.ActionSettingsExecute(Sender: TObject);
 begin
   SettingsDialog.SetProcessingSettings(FProcessingSettings);
-  if SettingsDialog.ShowModal = mrOk then
+  SettingsDialog.SetDialogSettings(FDialogSettings);
+  if SettingsDialog.ShowModal = mrOk then begin
     SettingsDialog.GetProcessingSettings(FProcessingSettings);
+    SettingsDialog.GetDialogSettings(FDialogSettings);
+  end;
 end;
 
 procedure TMainDialog.ActionSourceExecute(Sender: TObject);
@@ -654,6 +685,7 @@ begin
     PageControlSource.TabIndex := Tag;
     PageControlSource.SetFocus;
     UpdateRequiredStep(1);
+    Dirty := true;
   end;
 end;
 
@@ -745,6 +777,11 @@ begin
   UpdateRequiredStep(2);
 end;
 
+procedure TMainDialog.ProjectChanged(Sender: TObject);
+begin
+  Dirty := true;
+end;
+
 procedure TMainDialog.ChangeCurrentDir(const Path: string);
 begin
   SetCurrentDir(Path);
@@ -758,6 +795,16 @@ begin
   Path := IncludeTrailingPathDelimiter(GetWindowsSpecialDir(FOLDERID_LocalAppData, CanCreate));
   AppPath := IncludeTrailingPathDelimiter(Path+ChangeFileExt(ExtractFileName(Application.ExeName), '.'+GUIVER_VERSION));
   result := AppPath+Filetitle;
+end;
+
+procedure TMainDialog.SetDirty(AValue: boolean);
+//const
+//  INDICATORCOLORS :array[boolean] of TColor = (clDefault, clRed);
+begin
+  if FIsDirty=AValue then Exit;
+  FIsDirty:=AValue;
+  ActionSave.ImageIndex := IfThen(Dirty, IMAGEINDEX_DIRTY, IMAGEINDEX_SAVE);
+//  PanelDirtyIndicator.Color := INDICATORCOLORS[Dirty];
 end;
 
 function TMainDialog.GetRequiredSteps(Index: integer): boolean;
@@ -802,6 +849,8 @@ begin
     Ini.WriteInteger(DIALOGSECTION, 'Height', Height);
     Ini.WriteInteger(DIALOGSECTION, 'PanelControls.Height', PanelControls.Height);
     Ini.WriteString(DIALOGSECTION, 'CurrentDirectory', GetCurrentDir);
+    Ini.WriteBool(DIALOGSECTION, 'AutoSave', FDialogSettings.AutoSave);
+    Ini.WriteBool(DIALOGSECTION, 'WarnDirty', FDialogSettings.WarnDirty);
     EraseSection(SETTINGSSECTION);
     WriteBool(SETTINGSSECTION, 'StopOnError', FProcessingSettings.StopOnError);
     WriteInteger(SETTINGSSECTION, 'ThreadsUsed', FProcessingSettings.ThreadsUsed);
@@ -840,6 +889,8 @@ begin
     AHeight := Ini.ReadInteger(DIALOGSECTION, 'PanelControls.Height', PanelControls.Height);
     if AHeight+PanelControls.Top + 16 < ClientHeight then
       PanelControls.Height := AHeight;
+    FDialogSettings.AutoSave := Ini.ReadBool(DIALOGSECTION, 'AutoSave', FDialogSettings.AutoSave);
+    FDialogSettings.WarnDirty := Ini.ReadBool(DIALOGSECTION, 'WarnDirty', FDialogSettings.WarnDirty);
     Path := Ini.ReadString(DIALOGSECTION, 'CurrentDirectory', GetCurrentDir);
     if DirectoryExists(Path) then
       ChangeCurrentDir(Path);
@@ -854,6 +905,7 @@ procedure TMainDialog.ActionNewExecute(Sender: TObject);
 var
   ImgResizer :TProcessor;
 begin
+  if not CheckSave then Exit;
   MemoMessages.Lines.Clear;
   ImgResizer := TProcessor.Create;
   try
@@ -895,6 +947,7 @@ begin
     SetTitle(SCptUnnamed);
     FProjectFilename := '';
     FIsSave := false;
+    Dirty := false;
   finally
     ImgResizer.Free;
   end;
@@ -1015,8 +1068,11 @@ begin
   finally
     Ini.Free;
   end;
-  if result then
+  if result then begin
+    FIsSave := true;
+    Dirty := false;
     SetTitle(SCptLastProject);
+  end;
 end;
 
 procedure TMainDialog.SaveLastProject;
@@ -1041,13 +1097,14 @@ begin
   try
     result := LoadProjectFromIni(Ini);
     if result then begin
-      FIsSave := true;
       FProjectFilename := Filename;
       SetTitle(''''+Filename+'''');
       Log(Format(SMsgProjectLoadedFromFmt, [Filename]));
       if FProjectDescription<>'' then
         Log(Format(SMsgProjectDescriptionFmt, [FProjectDescription]));
       ChangeCurrentDir(ExtractFilePath(Filename));
+      FIsSave := true;
+      Dirty := false;
     end;
   finally
      Ini.Free;
@@ -1062,13 +1119,37 @@ begin
   try
     SaveProjectToIni(Ini);
     FProjectFilename := Filename;
-    FIsSave := true;
     SetTitle(''''+Filename+'''');
     ChangeCurrentDir(ExtractFilePath(Filename));
     Log(Format(SMsgProjectSavedToFmt, [Filename]));
+    FIsSave := true;
+    Dirty := false;
   finally
     Ini.Free;
   end;
+end;
+
+function TMainDialog.CheckSave: boolean;
+var
+  QueryResult :integer;
+begin
+  if FDialogSettings.WarnDirty and Dirty then begin
+    QueryResult := Application.MessageBox(PChar(SMsgQuerySave), PChar(SCptQuerySave), MB_ICONQUESTION + MB_YESNOCANCEL);
+    case QueryResult of
+    IDYES:
+      begin
+        ActionSave.Execute;
+        result := FIsSave;
+      end;
+    IDNO:
+      result := true;
+    IDCANCEL:
+      result := false;
+    else
+      result := false;
+    end;
+  end else
+    result := true;
 end;
 
 procedure TMainDialog.FormDropFiles(Sender: TObject; const FileNames: array of String);
@@ -1107,6 +1188,7 @@ end;
 
 procedure TMainDialog.ActionOpenExecute(Sender: TObject);
 begin
+  if not CheckSave then Exit;
   if OpenDialog.Execute then begin
     LoadProjectFromFile(OpenDialog.Filename);
   end;
@@ -1153,6 +1235,7 @@ end;
 procedure TMainDialog.MemoSrcFilenamesChange(Sender: TObject);
 begin
   UpdateRequiredStep(1);
+  Dirty := true;
 end;
 
 function TMainDialog.MouseToSpace(X, Y: integer): TSize;
@@ -1376,22 +1459,25 @@ var
   PaintBox :TPaintBox;
 begin
   PaintBox := Sender as TPaintBox;
-  ImageList32x32.Draw(PaintBox.Canvas, 0, 0, IfThen(FRequiredSteps[PaintBox.Tag], 21, 22));
+  ImageList32x32.Draw(PaintBox.Canvas, 0, 0, IfThen(FRequiredSteps[PaintBox.Tag], IMAGEINDEX_REQUIRED, IMAGEINDEX_NOTREQUIRED));
 end;
 
 procedure TMainDialog.EditTargetFolderChange(Sender: TObject);
 begin
   UpdateRequiredStep(3);
+  Dirty := true;
 end;
 
 procedure TMainDialog.EditMrkSizeChange(Sender: TObject);
 begin
   PaintBoxMrkPreview.Invalidate;
+  Dirty := true;
 end;
 
 procedure TMainDialog.EditSizesChange(Sender: TObject);
 begin
   UpdateRequiredStep(2);
+  Dirty := true;
 end;
 
 procedure TMainDialog.ActionSaveAsExecute(Sender: TObject);
@@ -1464,8 +1550,8 @@ begin
     ActionExecute.Enabled := true;
     ActionExecute.Caption := SCptCancel;
     ButtonExecute.Caption := SCptCancel;
-    ActionExecute.ImageIndex := 5;
-    ButtonExecute.ImageIndex := 5;
+    ActionExecute.ImageIndex := 6;
+    ButtonExecute.ImageIndex := 6;
     ButtonExecute.Invalidate;
     ProgressBar.Position := 0;
     ProgressBar.Visible := true;
@@ -1594,8 +1680,8 @@ begin
       ActionExecute.Enabled := true;
       ActionExecute.Caption := SCptExecuteA;
       ButtonExecute.Caption := SCptExecute;
-      ActionExecute.ImageIndex := 4;
-      ButtonExecute.ImageIndex := 4;
+      ActionExecute.ImageIndex := 5;
+      ButtonExecute.ImageIndex := 5;
       TimerProgressBarOff.Enabled := true;
       Screen.Cursor := crDefault;
     end;

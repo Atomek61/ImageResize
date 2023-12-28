@@ -43,9 +43,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {font-size: 24pt; border-top: 2px solid hsl(var(--fgdhue), 20%, 40%);}
-h2 {font-size: 20pt;}
-h3 {font-size: 16pt; font-weight: bold;}
-h4 {font-size: 14pt; font-style: italic;}
+h2 {font-size: 20pt; font-style: italic;}
+h3 {font-size: 16pt;}
+h4 {font-size: 14pt; font-weight: bold;}
+
+img:not(.btn) {margin-top: 0.5em;}
 
 .title-box {
   font-family: "Arial";

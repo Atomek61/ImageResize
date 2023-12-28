@@ -7,7 +7,7 @@ msgstr ""
 
 #: aboutdlg.serrappnotmatchingfmt
 #, object-pascal-format
-msgid "Application '%s' not matching, '%s' expected."
+msgid "Application '%s' not matching, '%s' expected"
 msgstr ""
 
 #: aboutdlg.serrupdatecheckfmt
@@ -20,7 +20,7 @@ msgid "Checking for update..."
 msgstr ""
 
 #: aboutdlg.smsgisuptodate
-msgid "There is no newer version available."
+msgid "There is no newer version available"
 msgstr ""
 
 #: aboutdlg.smsgupdateavailablefmt
@@ -56,65 +56,66 @@ msgid "Hint"
 msgstr ""
 
 #: imgres.scptwarning
+msgctxt "imgres.scptwarning"
 msgid "Warning"
 msgstr ""
 
 #: imgres.serrformatnotsupportedfmt
 #, object-pascal-format
-msgid "Format %s not supported."
+msgid "Format %s not supported"
 msgstr ""
 
 #: imgres.serrinvalidindexdigitsfmt
 #, object-pascal-format
-msgid "Invalid INDEX digits number '%s'."
+msgid "Invalid INDEX digits number '%s'"
 msgstr ""
 
 #: imgres.serrinvalidindexparamcountfmt
 #, object-pascal-format
-msgid "Invalid INDEX parameter count '%s' (2 expected)."
+msgid "Invalid INDEX parameter count '%s' (2 expected)"
 msgstr ""
 
 #: imgres.serrinvalidindexplaceholderfmt
 #, object-pascal-format
-msgid "Invalid INDEX placeholder parameters '%s'."
+msgid "Invalid INDEX placeholder parameters '%s'"
 msgstr ""
 
 #: imgres.serrinvalidindexstartfmt
 #, object-pascal-format
-msgid "Invalid INDEX start '%s'."
+msgid "Invalid INDEX start '%s'"
 msgstr ""
 
 #: imgres.serrinvalidjpgqualityfmt
 #, object-pascal-format
-msgid "Invalid JPEG quality %d (1..100 expected)."
+msgid "Invalid JPEG quality %d (1..100 expected)"
 msgstr ""
 
 #: imgres.serrinvalidplaceholder
-msgid "Unknown or invalid placeholder."
+msgid "Unknown or invalid placeholder"
 msgstr ""
 
 #: imgres.serrinvalidpngcompressionfmt
 #, object-pascal-format
-msgid "Invalid png compression %d (0..3 expected)."
+msgid "Invalid png compression %d (0..3 expected)"
 msgstr ""
 
 #: imgres.serrinvalidrenamingparamfmt
 #, object-pascal-format
-msgid "Invalid renaming parameter '%s'."
+msgid "Invalid renaming parameter '%s'"
 msgstr ""
 
 #: imgres.serrinvalidresamplingfmt
 #, object-pascal-format
-msgid "Invalid resampling value '%s'."
+msgid "Invalid resampling value '%s'"
 msgstr ""
 
 #: imgres.serrinvalidsizesfmt
 #, object-pascal-format
-msgid "Invalid sizes '%s'."
+msgid "Invalid sizes '%s'"
 msgstr ""
 
 #: imgres.serrinvalidthreadcount
-msgid "Invalid threadcount."
+msgid "Invalid threadcount"
 msgstr ""
 
 #: imgres.serrmissingsizes
@@ -122,7 +123,7 @@ msgid "Missing sizes."
 msgstr ""
 
 #: imgres.serrmultiplesizes
-msgid "Multiple sizes but placeholder %SIZE% not found in either folder or filename template."
+msgid "Multiple sizes but placeholder %SIZE% not found in either folder or filename template"
 msgstr ""
 
 #: imgres.sinfresultfmt
@@ -211,7 +212,7 @@ msgstr ""
 
 #: maindlg.scptfilenotfoundfmt
 #, object-pascal-format
-msgid "File '%s' not found."
+msgid "File '%s' not found"
 msgstr ""
 
 #: maindlg.scptinfofmt
@@ -226,6 +227,11 @@ msgstr ""
 
 #: maindlg.scptprocessor
 msgid "Processor"
+msgstr ""
+
+#: maindlg.scptquerysave
+msgctxt "maindlg.scptquerysave"
+msgid "Project unsaved"
 msgstr ""
 
 #: maindlg.scptsizeclasslarge
@@ -264,51 +270,51 @@ msgid "Cancelled at %.0f%%"
 msgstr ""
 
 #: maindlg.serrenterplaceholder
-msgid "Enter placeholder %SIZE% to either the destination folder or the file template."
+msgid "Enter placeholder %SIZE% to either the target folder or the file template"
 msgstr ""
 
 #: maindlg.serrinvalidjpgquality
-msgid "Invalid jpg quality."
+msgid "Invalid JPEG quality"
 msgstr ""
 
 #: maindlg.serrinvalidmrkopacity
-msgid "Invalid watermark opacity."
+msgid "Invalid watermark opacity"
 msgstr ""
 
 #: maindlg.serrinvalidmrksize
-msgid "Invalid watermark size."
+msgid "Invalid watermark size"
 msgstr ""
 
 #: maindlg.serrinvalidmrkxbrd
-msgid "Invalid watermark x border."
+msgid "Invalid watermark x border"
 msgstr ""
 
 #: maindlg.serrinvalidmrkybrd
-msgid "Invalid watermark y border."
+msgid "Invalid watermark y border"
 msgstr ""
 
 #: maindlg.serrinvalidshuffleseed
-msgid "Invalid Shuffle Seed."
+msgid "Invalid Shuffle Seed"
 msgstr ""
 
 #: maindlg.serrinvalidsizes
-msgid "Invalid Sizes string."
+msgid "Invalid Sizes string"
 msgstr ""
 
 #: maindlg.serrmissingdestinationfolder
-msgid "Missing destination folder."
+msgid "Missing target folder"
 msgstr ""
 
 #: maindlg.serrmissingsourcefilenames
-msgid "Missing source filenames."
+msgid "Missing source filenames"
 msgstr ""
 
 #: maindlg.serrmissingsourcefolder
-msgid "Missing source folder."
+msgid "Missing source folder"
 msgstr ""
 
 #: maindlg.serrmissingtagsreport
-msgid "Missing filename for tags reporting."
+msgid "Missing filename for tags reporting"
 msgstr ""
 
 #: maindlg.slocdirhelp
@@ -330,12 +336,12 @@ msgstr ""
 
 #: maindlg.slogwarningprojectversionfmt
 #, object-pascal-format
-msgid "Warning: Unexpected project format %s (%s expected)."
+msgid "Warning: Unexpected project format %s (%s expected)"
 msgstr ""
 
 #: maindlg.slogwarningsettingversionfmt
 #, object-pascal-format
-msgid "Warning: Unexpected settings format %s (%s expected)."
+msgid "Warning: Unexpected settings format %s (%s expected)"
 msgstr ""
 
 #: maindlg.smsgcurrentdirfmt
@@ -350,13 +356,20 @@ msgstr ""
 
 #: maindlg.smsgprojectloadedfromfmt
 #, object-pascal-format
-msgid "Project '%s' loaded."
+msgid "Project '%s' loaded"
 msgstr ""
 
 #: maindlg.smsgprojectsavedtofmt
 #, object-pascal-format
 msgctxt "maindlg.smsgprojectsavedtofmt"
 msgid "Project saved to '%s'"
+msgstr ""
+
+#: maindlg.smsgquerysave
+msgid ""
+"The project has been modified.\n"
+"\n"
+"Do you want to save the changes?"
 msgstr ""
 
 #: maindlg.stxtlicense
@@ -381,16 +394,36 @@ msgstr ""
 #: mrkeditdlg.serrincompatiblefileversionfmt
 #, object-pascal-format
 msgctxt "mrkeditdlg.serrincompatiblefileversionfmt"
-msgid "Incompatible file version %.2f (%.2f expected)."
+msgid "Incompatible file version %.2f (%.2f expected)"
 msgstr ""
 
 #: mrkeditdlg.serrinvalidfiletypefmt
 #, object-pascal-format
-msgid "Invalid filetype, %s expected."
+msgid "Invalid filetype, %s expected"
 msgstr ""
 
 #: mrkeditdlg.serrinvalidparams
 msgid "Invalid parameters"
+msgstr ""
+
+#: settingsdlg.scptbehavior0
+msgctxt "settingsdlg.scptbehavior0"
+msgid "Standard"
+msgstr ""
+
+#: settingsdlg.scptbehavior1
+msgctxt "settingsdlg.scptbehavior1"
+msgid "Comfortable"
+msgstr ""
+
+#: settingsdlg.scptbehavior2
+msgctxt "settingsdlg.scptbehavior2"
+msgid "Neurotic"
+msgstr ""
+
+#: settingsdlg.scptbehavior3
+msgctxt "settingsdlg.scptbehavior3"
+msgid "Chuck Norris"
 msgstr ""
 
 #: settingsdlg.scptcoresfmt
@@ -401,7 +434,7 @@ msgstr ""
 
 #: settingsdlg.serrinvalidcoresusedfmt
 #, object-pascal-format
-msgid "Invalid number of threads '%s'."
+msgid "Invalid number of threads '%s'"
 msgstr ""
 
 #: taboutdialog.actioncheckupdate.caption
@@ -1343,23 +1376,41 @@ msgctxt "tsettingsdialog.caption"
 msgid "Settings"
 msgstr ""
 
+#: tsettingsdialog.checkboxautosave.caption
+msgid "&Auto Save"
+msgstr ""
+
+#: tsettingsdialog.checkboxautosave.hint
+msgid ""
+"Always save the current settings in a hidden file,\n"
+"so it is available on the next start."
+msgstr ""
+
 #: tsettingsdialog.checkboxstoponerror.caption
 msgctxt "tsettingsdialog.checkboxstoponerror.caption"
-msgid "Stop on Error"
+msgid "&Stop on Error"
+msgstr ""
+
+#: tsettingsdialog.checkboxstoponerror.hint
+msgid "When processing the images, if to stop on the first error"
+msgstr ""
+
+#: tsettingsdialog.checkboxwarndirty.caption
+msgctxt "tsettingsdialog.checkboxwarndirty.caption"
+msgid "Saving &Query"
+msgstr ""
+
+#: tsettingsdialog.checkboxwarndirty.hint
+msgctxt "tsettingsdialog.checkboxwarndirty.hint"
+msgid "Makes sure that unsaved changes will not be lost, when loading a new project."
+msgstr ""
+
+#: tsettingsdialog.comboboxbehavior.hint
+msgid "Quick Settings for Auto Save and Saving Query"
 msgstr ""
 
 #: tsettingsdialog.comboboxthreadsused.hint
 msgctxt "tsettingsdialog.comboboxthreadsused.hint"
-msgid "The application can use a multithreaded pooling"
-msgstr ""
-
-#: tsettingsdialog.comboboxthreadsused.text
-msgctxt "tsettingsdialog.comboboxthreadsused.text"
-msgid "Single"
-msgstr ""
-
-#: tsettingsdialog.label19.caption
-msgctxt "tsettingsdialog.label19.caption"
 msgid ""
 "ImageResize uses thread pooling to benefit\n"
 "the full computers power.\n"
@@ -1368,9 +1419,19 @@ msgid ""
 "to the available number of cores."
 msgstr ""
 
+#: tsettingsdialog.comboboxthreadsused.text
+msgctxt "tsettingsdialog.comboboxthreadsused.text"
+msgid "Single"
+msgstr ""
+
 #: tsettingsdialog.label8.caption
 msgctxt "tsettingsdialog.label8.caption"
-msgid "Threads:"
+msgid "&Threads:"
+msgstr ""
+
+#: tsettingsdialog.labelbehavior.caption
+msgctxt "tsettingsdialog.labelbehavior.caption"
+msgid "&Behaviour:"
 msgstr ""
 
 #: tsettingsdialog.labelcores.caption

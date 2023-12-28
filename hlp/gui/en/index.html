@@ -489,11 +489,31 @@ C:\Images\DSC04288.jpg, "Trip home through the mudflats, wonderful", (c) 2023 AT
         The file created will one day serve as the basis for the slideshow afterburner.
       </p>
 
+      <h1 id="saving">Open and save project files</h1>
+      <img src="img/buttons-project.png"/>
+      <p>
+        You can save the current settings as a project with the .irs extension.
+        These are simple text-based INI files.
+      </p>
+      <p>
+        When opening a project file, the current directory is set to the directory of the
+        project file. This allows you to specify path information relatively and the project with Its
+        image references becomes movable.
+      </p>
+      <p>
+        You can adjust how far ImageResize alerts you to save your settings.
+        In the most convenient case, ImageResize always automatically saves the current settings.
+      </p>
+      <p>
+        You can change this behavior in the <i>Settings</i> dialog.
+      </p>
+      <a class="chfot" href="#contents">Content</a>
+
       <h1 id="settings">Settings</h1>
       <p>
         With <img src="img/button-settings.png"/> you come to the dialog with global settings.
       </p>
-      <h3 id="threads">Threads</h3>
+      <h2 id="threads">Threads</h2>
       <p>
         ImageResize can make better use of the system's computing power through multi-threading.<br/>
         <i>Single</i> means that only one core is used - processing becomes correspondingly slow.
@@ -505,28 +525,24 @@ C:\Images\DSC04288.jpg, "Trip home through the mudflats, wonderful", (c) 2023 AT
         If you have 12 cores, only 6 of which are physical, that results in the use of 12 threads
         Compared to 6 threads, the processing speed only increases by around 8 percent.
       </p>
-      <h3 id="stoponerr">Stop on error</h3>
+
+      <h2 id="stoponerr">Stop on error</h2>
       <p>
         This option signals the threads to terminate as soon as possible. This can be the case
         There is a slight delay in using multiple cores.
       </p>
       <a class="chfot" href="#contents">Content</a>
      
-      <h1 id="saving">Opening and Saving project files</h1>
-      <img src="img/buttons-project.png"/>
+      <h2>Behavior</h2>
       <p>
-        You can save the current settings as a project file with the .irs extension.
-        This is a simple text-based INI file.
+        This setting controls the behavior of the application to avoid data loss.
       </p>
-      <p>
-        Because ImageResize also saves the latest settings in a hidden file,
-        It doesn't ask whether to save after changing the settings.
-      </p>
-      <p>
-        When opening a project file, the current directory is set to the directory of the  project file.
-        This allows you to specify path information relatively and the project with the
-        images becomes movable.
-      </p>
+      <ul>
+        <li><u>Standard</u> - Queries about saving without automatic backup of the settings</li>
+        <li><u>Comfortable</u> - No questions about saving, but security through automatic saving</li>
+        <li><u>Neurotic</u> - Questions about saving and automatic backup</li>
+        <li><u>Chuck Norris</u> - No questions asked, no automatic backup</li>
+      </ul>
       <a class="chfot" href="#contents">Content</a>
 
       <h1 id="commandline">Commandline Parameters</h1>

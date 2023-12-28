@@ -136,8 +136,8 @@ uses
 resourcestring
   SCptDialogTitle = 'Watermark Editor';
   SErrInvalidParams = 'Invalid parameters';
-  SErrInvalidFileTypeFmt = 'Invalid filetype, %s expected.';
-  SErrIncompatibleFileVersionFmt = 'Incompatible file version %.2f (%.2f expected).';
+  SErrInvalidFileTypeFmt = 'Invalid filetype, %s expected';
+  SErrIncompatibleFileVersionFmt = 'Incompatible file version %.2f (%.2f expected)';
 
 {$R *.lfm}
 
