@@ -11,7 +11,7 @@
   </head>
 
   <body>
-    <header style="background-image: url('../../img/title.jpg');">
+    <header style="background-image: url('../img/title.jpg');">
       <div class="title-box">
         <div>Atomek</div>
         <div>ImageResize</div>
@@ -33,7 +33,7 @@
       <a href="#overview">Übersicht</a><br/>
       <a href="#srcfilelist">Quelldateien</a><br/>
       <a href="#sizes">Zielgrößen</a><br/>
-      <a href="#dstfolder">Zielverzeichnis</a><br/>
+      <a href="#dstfolder">Zielordner</a><br/>
       <a href="#renaming">Umbenennen und mischen</a><br/>
       <a href="#watermark">Wasserzeichen</a><br/>
       <a href="#quality">Qualität</a><br/>
@@ -50,17 +50,17 @@
         <li>Kontextsensitives Hilfesystem</li>
         <li>Resampling (Verkleinerung) von Listen mit Bilddateien</li>
         <li>Resampling jedes Bildes in mehrere Größen</li>
-        <li>Nutzt <i>Lanczos</i>-Filterung für gute Ergebnisse</li>
+        <li>Nutzt <i>Lanczos</i>-Interpolation für gute Ergebnisse</li>
         <li>Optionales Wasserzeichen</li>
         <li>EXIF Tags (Titel, Timestamp, Copyright)</li>
-        <li>Unterstützt JPEG- und PNG-Formate</li>
-        <li>Kontrolle der Kompressionsqualität</li>
-        <li>GUI-, CLI- und API-Schnittstelle verfügbar</li>
-        <li>Systematische Dateiumbenennung</li>
-        <li>Optionales zufälliges Mischen der Liste</li>
+        <li>Unterstützt JPEG- und PNG</li>
+        <li>Kontrolle der Kompression</li>
+        <li>GUI-, CLI- und API-Schnittstelle</li>
+        <li>Kontrollierte Dateiumbenennung</li>
+        <li>Zufälliges Mischen der Bilder</li>
       </ul>
       <p>
-        Was sie nicht kann
+        Unfähigkeiten
       </p>
       <ul>
         <li>Bildverzerrung</li>
@@ -74,9 +74,9 @@
         Das Programm benötigt mindestens die folgenden 3 Angaben:
       </p>
       <ol>
-        <li>Eine Liste von Bilddateien oder ein Quellverzeichnis mit Dateifilter<br/><img src="img/minsrc.png"/></li>
+        <li>Eine Liste von Bilddateien oder ein Quellordner mit Dateifilter<br/><img src="img/minsrc.png"/></li>
         <li>Eine oder mehrere Zielgrößen<br/><img src="img/minsize.png"/></li>
-        <li>Ein Zielverzeichnis<br/><img src="img/mindst.png"/></li>
+        <li>Ein Zielordner<br/><img src="img/mindst.png"/></li>
       </ol>
       <p>
         Drücken Sie am Ende <img class="btn" src="img/minexec.png"/> um das Resampling zu starten.
@@ -91,7 +91,7 @@
         <li>manuell eingegeben werden</li>
         <li>im Auswahldialog ausgewählt werden<img class="btn" src="../img/open.png"/> mit &lt;STRG&gt; und &lt;UMSCHALT&gt;</li>
         <li>durch Ziehen von Bilddateien aus dem Windows-Explorer ergänzt werden</li>
-        <li>durch Angabe eines Quellverzeichnisses mit Dateifilter angegeben werden</li>
+        <li>durch Angabe eines Quellordners mit Dateifilter angegeben werden</li>
         <li>relative Pfadangaben beinhalten</li>
       </ol>
       <p>
@@ -130,7 +130,7 @@
       <p>
         Um Konflikte der Zielnamen zu vermeiden, wenn mehrere Zielgrößen angegeben werden,
         können Sie entweder mit <a href="#renaming">Umbenennen</a> verschiedene Dateinamen erzeugen,
-        oder indem jede Größe einen eigenen Zielordner enthält. Dazu muss der Name des Zielordners 
+        oder indem jede Größe einen eigenen Zielordner enthält. Dazu muss der Name des Zielordners
         den Platzhalter <span class="plh">%SIZE%</span> enthalten.
       </p>
       <a class="chfot" href="#contents">Inhalt</a>
@@ -140,7 +140,7 @@
         Umbenennen der Zieldateien wird interessant, wenn Sie nicht
         für jede Größe einen eigenen Ordner erzeugen möchten, sondern
         alle Dateien in einen Ordner packen möchten. Dann müssen die
-        Zieldateien umbenannt werden, am besten, indem sie die Zielgrößen
+        Zieldateien umbenannt werden, am besten, indem sie die Zielgröße
         zur Unterscheidung enthalten.
       </p>
       <p>
@@ -151,8 +151,8 @@
       <p>
         Die einfache Dateinamenvorlage erzeugt Namen wie diesen: <i>img085.jpg</i>.
         Die Datei-Nummerierung beginnt bei 1 und enthält nicht die Größe (in Pixeln).
-        Dann ist es erforderlich für jede Größe einen eigenen Folder zu erzeugen. Dazu
-        fügen Sie in die Vorlage des Zielverzeichnisnamens den Platzhalter <span class="plh">%SIZE%</span> ein.
+        Dann ist es erforderlich für jede Größe einen eigenes Verzeichnis zu erzeugen. Dazu
+        fügen Sie in die Vorlage des Zielordners den Platzhalter <span class="plh">%SIZE%</span> ein.
       </p>
       <p>
         Die Dateinamen-Vorlage im einfachen Falle ist <span class="plh">img%INDEX:1,3%.%FILEEXT%</span>.

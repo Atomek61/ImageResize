@@ -512,6 +512,7 @@ var
   LangCode :string;
   Resampling :TResampling;
 begin
+  LangCode := '';
   if (SysLocale.PriLangId=7) and not (IsSwitch('L', 'LANGUAGE', LangCode) and SameText(LangCode, 'en')) then
     SetDefaultLang('de');
 

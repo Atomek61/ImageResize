@@ -500,6 +500,11 @@ msgstr ""
 msgid "&Version"
 msgstr ""
 
+#: taboutdialog.toolbar.caption
+msgctxt "taboutdialog.toolbar.caption"
+msgid "ToolBar"
+msgstr ""
+
 #: tags.serrasterisk
 msgid "first row cannot contain a *"
 msgstr ""
@@ -1114,6 +1119,15 @@ msgctxt "tmaindialog.tabsheetwatermark.caption"
 msgid "Watermark"
 msgstr ""
 
+#: tmaindialog.toolbar.caption
+msgctxt "tmaindialog.toolbar.caption"
+msgid "ToolBar"
+msgstr ""
+
+#: tmaindialog.toolbarparameters.caption
+msgid "ToolBarParameters"
+msgstr ""
+
 #: tmaindialog.toolbarsrc.caption
 msgid "ToolBarSrc"
 msgstr ""
@@ -1362,30 +1376,5 @@ msgstr ""
 #: tsettingsdialog.labelcores.caption
 msgctxt "tsettingsdialog.labelcores.caption"
 msgid "Cores"
-msgstr ""
-
-#: twebcreatordialog.button1.caption
-msgctxt "twebcreatordialog.button1.caption"
-msgid "Button1"
-msgstr ""
-
-#: twebcreatordialog.button2.caption
-msgctxt "twebcreatordialog.button2.caption"
-msgid "Button2"
-msgstr ""
-
-#: twebcreatordialog.button3.caption
-msgctxt "twebcreatordialog.button3.caption"
-msgid "Button3"
-msgstr ""
-
-#: twebcreatordialog.caption
-msgctxt "twebcreatordialog.caption"
-msgid "WebCreatorDialog"
-msgstr ""
-
-#: twebcreatordialog.label1.caption
-msgctxt "twebcreatordialog.label1.caption"
-msgid "Steps:"
 msgstr ""
 

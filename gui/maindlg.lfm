@@ -128,7 +128,7 @@ object MainDialog: TMainDialog
             TabOrder = 0
           end
           object ButtonClearSrcFiles: TBitBtn
-            Left = 285
+            Left = 286
             Height = 25
             Hint = 'Clear image list'
             Top = 5
@@ -228,7 +228,7 @@ object MainDialog: TMainDialog
         Top = 4
         Width = 393
         TabStop = False
-        ActivePage = TabSheetRenaming
+        ActivePage = TabSheetTagging
         Align = alClient
         BorderSpacing.Around = 4
         Images = ImageList32x32
@@ -236,7 +236,7 @@ object MainDialog: TMainDialog
         MultiLine = True
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 1
+        TabIndex = 4
         TabOrder = 1
         Options = [nboMultiLine]
         object TabSheetSizes: TTabSheet
@@ -256,7 +256,7 @@ object MainDialog: TMainDialog
             ParentColor = False
           end
           object ButtonClearSizes: TBitBtn
-            Left = 354
+            Left = 356
             Height = 25
             Hint = 'Clear all sizes or the selected one'
             Top = 26
@@ -273,7 +273,7 @@ object MainDialog: TMainDialog
             Height = 23
             Hint = 'Enter a comma-separated list of image sizes.'#13#10'The size refers to the longer side of an image.'#13#10'You can build a list by clicking the suggested'#13#10'sizes from the button field.'
             Top = 27
-            Width = 345
+            Width = 347
             Anchors = [akTop, akLeft, akRight]
             OnChange = EditSizesChange
             OnExit = EditSizesExit
@@ -695,13 +695,13 @@ object MainDialog: TMainDialog
               Height = 23
               Hint = 'Select a png file with the desired watermark.'#13#10#13#10'A watermark is a little image, which usually'#13#10'appears in a corner of the image.'#13#10#13#10'Inkscape is a good tool for creating'#13#10'watermark files. Or use the inbuilt'#13#10'editor.'
               Top = 1
-              Width = 308
+              Width = 311
               Anchors = [akTop, akLeft, akRight]
               AutoSize = False
               TabOrder = 0
             end
             object ButtonBrowseMrkFilename: TBitBtn
-              Left = 317
+              Left = 321
               Height = 25
               Top = 0
               Width = 25
@@ -713,7 +713,7 @@ object MainDialog: TMainDialog
               TabOrder = 1
             end
             object ButtonMrkEdit: TBitBtn
-              Left = 342
+              Left = 345
               Height = 25
               Hint = 'Opens the internal Watermark Editor'
               Top = 0
@@ -1012,7 +1012,7 @@ object MainDialog: TMainDialog
               ParentColor = False
             end
             object ButtonClearCopyright: TBitBtn
-              Left = 320
+              Left = 321
               Height = 25
               Top = 100
               Width = 25
@@ -1057,7 +1057,7 @@ object MainDialog: TMainDialog
               TabOrder = 1
             end
             object ButtonBrowseTagsReportFolder: TBitBtn
-              Left = 344
+              Left = 346
               Height = 25
               Top = 30
               Width = 25

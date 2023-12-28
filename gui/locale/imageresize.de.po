@@ -231,8 +231,6 @@ msgid "%s %s %s, Processor %s, %d Cores"
 msgstr "%s %s %s, Prozessor %s, %d Kerne"
 
 #: maindlg.scptlastproject
-#, fuzzy
-#| msgid "<last settings>"
 msgctxt "maindlg.scptlastproject"
 msgid "<last project>"
 msgstr "<letzte Einstellungen>"
@@ -302,7 +300,7 @@ msgstr "Ungültige Wasserbild-Y-Position."
 
 #: maindlg.serrinvalidshuffleseed
 msgid "Invalid Shuffle Seed."
-msgstr ""
+msgstr "Ungültige Zufalls-Saat."
 
 #: maindlg.serrinvalidsizes
 msgid "Invalid Sizes string."
@@ -359,7 +357,7 @@ msgstr "Aktuelles Verzeichnis: %s"
 #: maindlg.smsgprojectdescriptionfmt
 #, object-pascal-format
 msgid "Description: %s"
-msgstr ""
+msgstr "Beschreibung: %s"
 
 #: maindlg.smsgprojectloadedfromfmt
 #, object-pascal-format
@@ -524,6 +522,11 @@ msgstr "&Update"
 msgid "&Version"
 msgstr "&Version"
 
+#: taboutdialog.toolbar.caption
+msgctxt "taboutdialog.toolbar.caption"
+msgid "ToolBar"
+msgstr ""
+
 #: tags.serrasterisk
 msgid "first row cannot contain a *"
 msgstr "erste Zeile darf nicht den * enthalten"
@@ -578,8 +581,6 @@ msgid "Opens the internal Watermark Editor"
 msgstr "Öffnet den eingebauten Wasserzeichen-Editor"
 
 #: tmaindialog.actionexecute.caption
-#, fuzzy
-#| msgid "&Execute"
 msgctxt "tmaindialog.actionexecute.caption"
 msgid "E&xecute"
 msgstr "Ausführ&en"
@@ -683,8 +684,6 @@ msgid "Save current settings to another place"
 msgstr "Speichert die aktuellen Einstellungen in einer anderen Datei"
 
 #: tmaindialog.actionsettings.caption
-#, fuzzy
-#| msgid "Settin&gs..."
 msgctxt "tmaindialog.actionsettings.caption"
 msgid "S&ettings..."
 msgstr "Einstellun&gen"
@@ -737,14 +736,13 @@ msgid "Enables destination image file renaming - choose a strategy."
 msgstr "Ermöglicht die Umbenennung der Zieldateien - wähle eine Strategie."
 
 #: tmaindialog.checkboxshuffle.caption
-#, fuzzy
 msgctxt "tmaindialog.checkboxshuffle.caption"
 msgid "Enable"
 msgstr "Anwenden"
 
 #: tmaindialog.checkboxshuffle.hint
 msgid "Enables the image file names to be mixed randomly (shuffled)"
-msgstr ""
+msgstr "Bewirkt, dass die Zieldateinamen zufällig gemischt werden."
 
 #: tmaindialog.checkboxtagcopyright.caption
 msgid "Copyright"
@@ -820,13 +818,12 @@ msgstr ""
 
 #: tmaindialog.comboboxshuffleseed.hint
 msgid "Enter a number, lets say 1000, to create always the same mixed order or 0 for shuffeling always randomly."
-msgstr ""
+msgstr "Geben Sie eine Zahl, z.B. 1000. um immer die selbe gemischte Ordnung zu erzeugen  oder 0, um immer eine andere Zufallsfolge zu erzeugen. "
 
 #: tmaindialog.comboboxshuffleseed.text
-#, fuzzy
 msgctxt "tmaindialog.comboboxshuffleseed.text"
 msgid "<random>"
-msgstr "<Zufall>"
+msgstr "<random>"
 
 #: tmaindialog.editmrkalpha.hint
 msgid ""
@@ -943,6 +940,9 @@ msgid ""
 "If multiple sizes are entered, insert a placeholder %SIZE%\n"
 "into the path where the program shall insert the current size ."
 msgstr ""
+"Geben Sie ein Ziel für die skalierten Bilder an.\n"
+"Wenn mehrere Größen angegeben werden, muss der Platzhalter %SIZE% im Pfad\n"
+" an der Stelle eingefügt werden, wo die aktuelle Größe erscheinen soll."
 
 #: tmaindialog.groupboxexiftagging.caption
 msgid "EXIF Tagging"
@@ -990,7 +990,7 @@ msgstr "Resampling"
 
 #: tmaindialog.groupboxshuffle.caption
 msgid "Shuffle"
-msgstr ""
+msgstr "Mischen"
 
 #: tmaindialog.groupboxtagsreport.caption
 msgctxt "tmaindialog.groupboxtagsreport.caption"
@@ -1121,7 +1121,6 @@ msgid "Available Placeholders:"
 msgstr "Verfügbare Platzhalter:"
 
 #: tmaindialog.labelshuffleseed.caption
-#, fuzzy
 msgctxt "tmaindialog.labelshuffleseed.caption"
 msgid "Seed:"
 msgstr "Saat:"
@@ -1198,6 +1197,15 @@ msgstr "Taggen"
 msgctxt "tmaindialog.tabsheetwatermark.caption"
 msgid "Watermark"
 msgstr "Wasserzeichen"
+
+#: tmaindialog.toolbar.caption
+msgctxt "tmaindialog.toolbar.caption"
+msgid "ToolBar"
+msgstr ""
+
+#: tmaindialog.toolbarparameters.caption
+msgid "ToolBarParameters"
+msgstr ""
 
 #: tmaindialog.toolbarsrc.caption
 msgid "ToolBarSrc"
@@ -1457,29 +1465,3 @@ msgstr "Threads:"
 msgctxt "tsettingsdialog.labelcores.caption"
 msgid "Cores"
 msgstr "Kerne"
-
-#: twebcreatordialog.button1.caption
-msgctxt "twebcreatordialog.button1.caption"
-msgid "Button1"
-msgstr ""
-
-#: twebcreatordialog.button2.caption
-msgctxt "twebcreatordialog.button2.caption"
-msgid "Button2"
-msgstr ""
-
-#: twebcreatordialog.button3.caption
-msgctxt "twebcreatordialog.button3.caption"
-msgid "Button3"
-msgstr ""
-
-#: twebcreatordialog.caption
-msgctxt "twebcreatordialog.caption"
-msgid "WebCreatorDialog"
-msgstr ""
-
-#: twebcreatordialog.label1.caption
-msgctxt "twebcreatordialog.label1.caption"
-msgid "Steps:"
-msgstr "Schritte:"
-

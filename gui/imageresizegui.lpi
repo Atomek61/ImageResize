@@ -17,20 +17,7 @@
     <i18n>
       <EnableI18N Value="True"/>
       <OutDir Value="locale"/>
-      <ExcludedIdentifiers Count="12">
-        <Item1 Value="tmaindialog.toolbar.caption"/>
-        <Item2 Value="tmaindialog.toolbarparameters.caption"/>
-        <Item3 Value="toolbutton10"/>
-        <Item4 Value="taboutdialog.toolbar.caption"/>
-        <Item5 Value="toolbutton5"/>
-        <Item6 Value="toolbutton8"/>
-        <Item7 Value="toolbarparameters"/>
-        <Item8 Value="toolbutton7"/>
-        <Item9 Value="toobutton9"/>
-        <Item10 Value="button1"/>
-        <Item11 Value="button2"/>
-        <Item12 Value="button3"/>
-      </ExcludedIdentifiers>
+      <ExcludedOriginals Count="1"/>
     </i18n>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
@@ -182,13 +169,6 @@
       <Unit>
         <Filename Value="..\src\datetimeutils.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="webcreatordlg.pas"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="WebCreatorDialog"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\threading.dispatcher.pas"/>
