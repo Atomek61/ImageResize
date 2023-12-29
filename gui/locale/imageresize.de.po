@@ -329,8 +329,8 @@ msgid "Missing filename for tags reporting"
 msgstr "Fehlender Dateiname for Tags Report"
 
 #: maindlg.slocdirhelp
-msgid "hlp\\en"
-msgstr "hlp\\de"
+msgid "hlp\\gui\\en"
+msgstr "hlp\\gui\\de"
 
 #: maindlg.slogcantloadproject
 msgctxt "maindlg.slogcantloadproject"
@@ -633,7 +633,7 @@ msgstr "&Hilfe"
 
 #: tmaindialog.actionhelp.hint
 msgid "Opens the local or internet-based HTML help (F1)"
-msgstr "Öffent die lokale oder die Internet-basierte HTML-Hilfe (F1)"
+msgstr "Öffnet die lokale oder die Internet-basierte HTML-Hilfe (F1)"
 
 #: tmaindialog.actionlistcreator.caption
 msgid "Create List"
@@ -723,6 +723,10 @@ msgstr "Speichert die aktuellen Einstellungen in einer anderen Datei"
 msgctxt "tmaindialog.actionsettings.caption"
 msgid "S&ettings..."
 msgstr "Einstellun&gen"
+
+#: tmaindialog.actionsettings.hint
+msgid "Settings dialog for some global and project-independent settings"
+msgstr "Dialog für einige globale, nicht projektabhängige Einstellungen"
 
 #: tmaindialog.actionsrcfilenames.caption
 msgid "&List of Files"

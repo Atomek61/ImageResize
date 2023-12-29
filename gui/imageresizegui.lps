@@ -3,7 +3,7 @@
   <ProjectSession>
     <PathDelim Value="\"/>
     <Version Value="12"/>
-    <BuildModes Active="Debug"/>
+    <BuildModes Active="Release"/>
     <Units>
       <Unit>
         <Filename Value="imageresizegui.lpr"/>
@@ -18,8 +18,8 @@
         <ComponentName Value="MainDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <TopLine Value="624"/>
-        <CursorPos Y="675"/>
+        <TopLine Value="51"/>
+        <CursorPos X="22" Y="82"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -41,10 +41,13 @@
         <ComponentName Value="MrkEditDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
         <TopLine Value="105"/>
         <CursorPos X="38" Y="125"/>
         <UsageCount Value="201"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\imgres.pas"/>
@@ -90,7 +93,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="188"/>
         <CursorPos X="47" Y="232"/>
-        <UsageCount Value="191"/>
+        <UsageCount Value="193"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\exifutils.pas"/>
@@ -99,7 +102,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="55"/>
         <CursorPos Y="84"/>
-        <UsageCount Value="196"/>
+        <UsageCount Value="198"/>
       </Unit>
       <Unit>
         <Filename Value="settingsdlg.pas"/>
@@ -107,11 +110,10 @@
         <ComponentName Value="SettingsDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="2"/>
         <TopLine Value="82"/>
         <CursorPos X="26" Y="105"/>
-        <UsageCount Value="91"/>
+        <UsageCount Value="93"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -121,7 +123,16 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="41"/>
         <CursorPos Y="55"/>
-        <UsageCount Value="90"/>
+        <UsageCount Value="92"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\animator.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="50"/>
+        <CursorPos X="14" Y="76"/>
+        <UsageCount Value="30"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="webcreatordlg.pas"/>
@@ -163,13 +174,13 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="232"/>
         <CursorPos X="10" Y="254"/>
-        <UsageCount Value="0"/>
+        <UsageCount Value="10"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\lcl\lcltranslator.pas"/>
         <UnitName Value="LCLTranslator"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="0"/>
+        <UsageCount Value="10"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\packages\fcl-base\src\custapp.pp"/>
@@ -213,7 +224,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="184"/>
         <CursorPos Y="207"/>
-        <UsageCount Value="0"/>
+        <UsageCount Value="10"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\win64\classes.pp"/>
@@ -561,14 +572,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="219"/>
         <CursorPos Y="247"/>
-        <UsageCount Value="21"/>
+        <UsageCount Value="20"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\lcl\include\containedaction.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="69"/>
         <CursorPos Y="100"/>
-        <UsageCount Value="21"/>
+        <UsageCount Value="20"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\lcl\include\application.inc"/>
@@ -628,15 +639,6 @@
         <UsageCount Value="14"/>
       </Unit>
       <Unit>
-        <Filename Value="..\src\animator.pas"/>
-        <IsPartOfProject Value="True"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="50"/>
-        <CursorPos X="14" Y="76"/>
-        <UsageCount Value="27"/>
-        <Loaded Value="True"/>
-      </Unit>
-      <Unit>
         <Filename Value="C:\lazarus\lcl\customtimer.pas"/>
         <UnitName Value="CustomTimer"/>
         <EditorIndex Value="-1"/>
@@ -646,10 +648,6 @@
       </Unit>
     </Units>
     <JumpHistory HistoryIndex="29">
-      <Position>
-        <Filename Value="..\src\animator.pas"/>
-        <Caret Line="38" TopLine="25"/>
-      </Position>
       <Position>
         <Filename Value="..\src\animator.pas"/>
         <Caret Line="83" TopLine="80"/>
@@ -765,6 +763,10 @@
       <Position>
         <Filename Value="..\src\animator.pas"/>
         <Caret Line="71" Column="36" TopLine="44"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="638" Column="80" TopLine="624"/>
       </Position>
     </JumpHistory>
     <RunParams>

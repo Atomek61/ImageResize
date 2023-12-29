@@ -37,7 +37,7 @@ Filename: {app}\ImageResize.exe; Description: "Start {#PROGNAME} now"; Flags: po
 Source: bin\ImageResize.exe; DestDir: "{app}"; 
 Source: bin\locale\*.po; DestDir: "{app}\locale"; 
 Source: bin\imgres.exe; DestDir: "{win}"; Tasks: installconsoleapp; 
-Source: hlp\gui\*.*; DestDir: "{app}\hlp"; Flags: recursesubdirs; Tasks: localhelp; 
+Source: hlp\*.*; DestDir: "{app}\hlp"; Flags: recursesubdirs; Tasks: localhelp; 
 
 [Icons]
 Name: "{group}\{#PROGNAME}"; Filename: "{app}\{#PROGEXE}";

@@ -79,7 +79,7 @@ const
 resourcestring
   SCptDependenciesFmt = 'Build with Lazarus %s, BGRABitmap %s, dExif %s';
   SUrlWebHelp = 'http://www.atomek.de/imageresize/hlp35/gui/en';
-  SLocDirHelp = 'hlp\en';
+  SLocDirHelp = 'hlp\gui\en';
   STxtLicense =
     'ImageResize Copyright (c) 2023 Jan Schirrmacher, www.atomek.de'#10#10+
     'Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy and merge copies of the Software, subject to the following conditions:'#10#10+

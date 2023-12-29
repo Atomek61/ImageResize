@@ -1,7 +1,7 @@
 object MainDialog: TMainDialog
-  Left = 433
+  Left = 577
   Height = 680
-  Top = 434
+  Top = 579
   Width = 840
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'ImageResize'
@@ -229,7 +229,7 @@ object MainDialog: TMainDialog
         Top = 4
         Width = 393
         TabStop = False
-        ActivePage = TabSheetQuality
+        ActivePage = TabSheetRenaming
         Align = alClient
         BorderSpacing.Around = 4
         Images = ImageList32x32
@@ -237,7 +237,7 @@ object MainDialog: TMainDialog
         MultiLine = True
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 3
+        TabIndex = 1
         TabOrder = 1
         Options = [nboMultiLine]
         object TabSheetSizes: TTabSheet
@@ -1475,6 +1475,7 @@ object MainDialog: TMainDialog
     end
     object ActionSettings: TAction
       Caption = 'S&ettings...'
+      Hint = 'Settings dialog for some global and project-independent settings'
       ImageIndex = 21
       OnExecute = ActionSettingsExecute
     end

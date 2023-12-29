@@ -1,7 +1,7 @@
 object SettingsDialog: TSettingsDialog
-  Left = 654
+  Left = 872
   Height = 234
-  Top = 451
+  Top = 601
   Width = 429
   HelpType = htKeyword
   HelpKeyword = 'HTML/index.html#settings'

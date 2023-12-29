@@ -318,7 +318,7 @@ msgid "Missing filename for tags reporting"
 msgstr ""
 
 #: maindlg.slocdirhelp
-msgid "hlp\\en"
+msgid "hlp\\gui\\en"
 msgstr ""
 
 #: maindlg.slogcantloadproject
@@ -697,6 +697,10 @@ msgstr ""
 #: tmaindialog.actionsettings.caption
 msgctxt "tmaindialog.actionsettings.caption"
 msgid "S&ettings..."
+msgstr ""
+
+#: tmaindialog.actionsettings.hint
+msgid "Settings dialog for some global and project-independent settings"
 msgstr ""
 
 #: tmaindialog.actionsrcfilenames.caption

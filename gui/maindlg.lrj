@@ -114,6 +114,7 @@
 {"hash":249215465,"name":"tmaindialog.actionhelp.hint","sourcebytes":[79,112,101,110,115,32,116,104,101,32,108,111,99,97,108,32,111,114,32,105,110,116,101,114,110,101,116,45,98,97,115,101,100,32,72,84,77,76,32,104,101,108,112,32,40,70,49,41],"value":"Opens the local or internet-based HTML help (F1)"},
 {"hash":71079620,"name":"tmaindialog.actionabout.caption","sourcebytes":[65,38,98,111,117,116],"value":"A&bout"},
 {"hash":185773230,"name":"tmaindialog.actionsettings.caption","sourcebytes":[83,38,101,116,116,105,110,103,115,46,46,46],"value":"S&ettings..."},
+{"hash":16728099,"name":"tmaindialog.actionsettings.hint","sourcebytes":[83,101,116,116,105,110,103,115,32,100,105,97,108,111,103,32,102,111,114,32,115,111,109,101,32,103,108,111,98,97,108,32,97,110,100,32,112,114,111,106,101,99,116,45,105,110,100,101,112,101,110,100,101,110,116,32,115,101,116,116,105,110,103,115],"value":"Settings dialog for some global and project-independent settings"},
 {"hash":3528851,"name":"tmaindialog.opendialogsrcfilenames.title","sourcebytes":[83,101,108,101,99,116,32,111,110,101,32,111,114,32,109,111,114,101,32,73,109,97,103,101,115],"value":"Select one or more Images"},
 {"hash":151014323,"name":"tmaindialog.saveasdialogtagsreport.title","sourcebytes":[83,97,118,101,32,84,97,103,115,32,82,101,112,111,114,116,32,97,115],"value":"Save Tags Report as"},
 {"hash":189179683,"name":"tmaindialog.actionsrcfilenames.caption","sourcebytes":[38,76,105,115,116,32,111,102,32,70,105,108,101,115],"value":"&List of Files"},

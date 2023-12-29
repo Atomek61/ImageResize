@@ -3103,21 +3103,23 @@ object MrkEditDialog: TMrkEditDialog
       TabOrder = 9
     end
     object Label6: TLabel
-      Left = 411
+      Left = 403
       Height = 15
       Top = 112
-      Width = 24
+      Width = 101
       Anchors = [akTop, akRight]
+      AutoSize = False
       Caption = 'Blur:'
       FocusControl = EditShadowBlur
       ParentColor = False
     end
     object Label4: TLabel
-      Left = 411
+      Left = 403
       Height = 15
       Top = 79
-      Width = 32
+      Width = 100
       Anchors = [akTop, akRight]
+      AutoSize = False
       Caption = 'Color:'
       FocusControl = ColorBoxShadowColor
       ParentColor = False
@@ -3214,11 +3216,12 @@ object MrkEditDialog: TMrkEditDialog
       Shape = bsBottomLine
     end
     object Label7: TLabel
-      Left = 411
+      Left = 403
       Height = 15
       Top = 147
-      Width = 41
+      Width = 100
       Anchors = [akTop, akRight]
+      AutoSize = False
       Caption = 'Quality:'
       FocusControl = EditShadowBlur
       ParentColor = False
