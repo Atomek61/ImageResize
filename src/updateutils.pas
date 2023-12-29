@@ -63,15 +63,15 @@ uses
 const
   CRLF = #13#10;
 
-function NextKeyValue(const str :string; var p :integer; out Key, Value :string) :boolean;
-var
-  p0 :integer;
-begin
-  p0 := p + 1;
-  while p0<=Length(str) do begin
-  end;
-end;
-
+//function NextKeyValue(const str :string; var p :integer; out Key, Value :string) :boolean;
+//var
+//  p0 :integer;
+//begin
+//  p0 := p + 1;
+//  while p0<=Length(str) do begin
+//  end;
+//end;
+//
 { TVersionManifest }
 
 function TVersionManifest.GetAsDateTime: TDateTime;

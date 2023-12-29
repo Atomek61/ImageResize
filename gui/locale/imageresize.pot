@@ -169,6 +169,10 @@ msgstr ""
 msgid "Shaking list of files..."
 msgstr ""
 
+#: imgres.smsgwarningnocreate
+msgid "Not really creating any image or folder (-nocreate flag)"
+msgstr ""
+
 #: imgres.smsgwatermarkingfmt
 #, object-pascal-format
 msgid "Watermarking '%s'..."
@@ -739,6 +743,18 @@ msgstr ""
 #: tmaindialog.checkboxmrkenabled.caption
 msgctxt "tmaindialog.checkboxmrkenabled.caption"
 msgid "Enabled"
+msgstr ""
+
+#: tmaindialog.checkboxnocreate.caption
+msgid "Don't really create Images"
+msgstr ""
+
+#: tmaindialog.checkboxnocreate.hint
+msgid ""
+"If checked, no image or folder will be created.\n"
+"Its to check the settings and gather statistics.\n"
+"\n"
+"One exception: the Tags Report will be created!"
 msgstr ""
 
 #: tmaindialog.checkboxrenenabled.caption

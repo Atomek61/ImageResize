@@ -19,13 +19,13 @@ uses
   LCLTranslator, Classes, Types, SysUtils, Forms, Controls, Graphics, Dialogs,
   StdCtrls, ComCtrls, ActnList, ExtCtrls, imgres, aboutdlg, inifiles, strutils,
   LMessages, LCLIntf, Buttons, ImgList, LCLType, LazHelpHTML, BGRABitmap,
-  BGRABitmapTypes, BGRASpeedButton, Generics.Collections,
-  mrkeditdlg, WinDirs, updateutils, settings;
+  BGRABitmapTypes, BGRASpeedButton, RichMemo, Generics.Collections,
+  mrkeditdlg, WinDirs, updateutils, settings, logging;
 
 const
   GUIVER_APP      = 'ImageResize';
-  GUIVER_VERSION  = '3.5';
-  GUIVER_DATE     = '2023-12-16';
+  GUIVER_VERSION  = '3.6';
+  GUIVER_DATE     = '2024-01-01';
 
   GUIVER          :TVersionManifest = (App: GUIVER_APP; Version: GUIVER_VERSION; Date: GUIVER_DATE; Hint: '');
 
@@ -34,7 +34,7 @@ const
   APPGITHUBURL    = 'https://github.com/Atomek61/ImageResize';
   GUIVERURL       = 'https://www.atomek.de/imageresize/download/version.manifest';
 
-  IMGRESGUICPR    = 'ImageResize ' + GUIVER_VERSION + ' © 2023 Jan Schirrmacher, www.atomek.de';
+  IMGRESGUICPR    = 'ImageResize ' + GUIVER_VERSION + ' © 2024 Jan Schirrmacher, www.atomek.de';
 
   PRJTYPE         = 'IRS';
   PRJVERSION200   = '200';
@@ -126,6 +126,7 @@ type
     ActionAbout: TAction;
     ActionExecute: TAction;
     ButtonExecute: TBGRASpeedButton;
+    CheckBoxNoCreate: TCheckBox;
     LabelStep1: TLabel;
     LabelStep2: TLabel;
     LabelStep3: TLabel;
@@ -207,7 +208,6 @@ type
     Label5: TLabel;
     Label6: TLabel;
     LabelMrkSpace: TLabel;
-    MemoMessages: TMemo;
     MemoSrcFilenames: TMemo;
     OpenDialog: TOpenDialog;
     OpenDialogSrcFilenames: TOpenDialog;
@@ -227,6 +227,7 @@ type
     RadioButtonRenSimple: TRadioButton;
     RadioButtonRenCustom: TRadioButton;
     RadioButtonRenAdvanced: TRadioButton;
+    MemoMessages: TRichMemo;
     SaveAsDialog: TSaveDialog;
     SaveAsDialogTagsReport: TSaveDialog;
     TabSheetSrcFilenames: TTabSheet;
@@ -329,11 +330,12 @@ type
     FRequiredSteps :array[1..3] of boolean;
     FProcessingSettings :TProcessingSettings;
     FDialogSettings :TDialogSettings;
+    FLogTextParams :TFontParams;
     procedure ChangeCurrentDir(const Path :string);
     function GetAppDataFilename(const Filetitle :string; CanCreate :boolean) :string;
     procedure SetDirty(AValue: boolean);
     procedure SetTitle(const Str :string);
-    procedure OnPrint(Sender :TObject; const Line :string);
+    procedure OnPrint(Sender :TObject; const Line :string; Level :TLogLevel);
     procedure OnProgress(Sender :TObject; Progress :single);
     function LoadSettings :boolean;
     procedure SaveSettings;
@@ -344,7 +346,7 @@ type
     function LoadProjectFromFile(const Filename :string) :boolean;
     procedure SaveProjectToFile(const Filename :string);
     function CheckSave :boolean;
-    procedure Log(const Msg :string);
+    procedure Log(const Msg :string; Level :TLogLevel = llInfo);
     function BoostStrToThreadCount(const Value :string) :integer;
     function ThreadCountToBoostStr(ThreadCount :integer) :string;
     function GetRequiredSteps(Index : integer) :boolean;
@@ -376,6 +378,8 @@ const
   SCptSizesDefault  = 'default';
   SCptSingleThread  = 'single';
   SCptMaximumThread = 'maximum';
+
+  LOGCOLORS :array[TLogLevel] of TColor = (clSilver, clWindowText, clOlive, clMaroon, clRed);
 
 resourcestring
   SCptProcessor                 = 'Processor';
@@ -572,6 +576,12 @@ begin
   for Resampling in TResampling do
     ComboBoxResampling.Items.Add(RESAMPLING_STRINGS[Resampling]);
 
+  FLogTextParams.Name       := MemoMessages.Font.Name;
+  FLogTextParams.Size       := MemoMessages.Font.Size;
+  FLogTextParams.Style      := [];
+  FLogTextParams.HasBkClr   := False;
+  FLogTextParams.Color      :=clWindowText;
+  FLogTextParams.VScriptPos :=vpNormal;
 end;
 
 procedure TMainDialog.FormShow(Sender: TObject);
@@ -939,6 +949,7 @@ begin
     EditCopyright.Text                  := '';
     CheckBoxTagsReportEnabled.Checked   := false;
     EditTagsReportFilename.Text         := '';
+    CheckBoxNoCreate.Checked            := false;
 
     ActionSrcFilenames.Execute;
     ActionParamSizes.Execute;
@@ -1007,6 +1018,7 @@ begin
     EditCopyright.Text                    := ReadString(SETTINGSSECTION, 'Copyright', EditCopyright.Text);
     CheckBoxTagsReportEnabled.Checked     := ReadBool(SETTINGSSECTION, 'TagsReportEnabled', CheckBoxTagsReportEnabled.Checked);
     EditTagsReportFilename.Text           := ReadString(SETTINGSSECTION, 'TagsReportFilename', EditTagsReportFilename.Text);
+    CheckBoxNoCreate.Checked              := ReadBool(SETTINGSSECTION, 'NoCreate', DEFAULT_NOCREATE);
     ActionParamSizes.Execute;
   end;
 end;
@@ -1052,6 +1064,7 @@ begin
     WriteString(SETTINGSSECTION, 'Copyright', EditCopyright.Text);
     WriteBool(SETTINGSSECTION, 'TagsReportEnabled', CheckBoxTagsReportEnabled.Checked);
     WriteString(SETTINGSSECTION, 'TagsReportFilename', EditTagsReportFilename.Text);
+    WriteBool(SETTINGSSECTION, 'NoCreate', CheckBoxNoCreate.Checked);
   end;
 end;
 
@@ -1069,7 +1082,7 @@ begin
     Ini.Free;
   end;
   if result then begin
-    FIsSave := true;
+    FIsSave := false;
     Dirty := false;
     SetTitle(SCptLastProject);
   end;
@@ -1194,8 +1207,10 @@ begin
   end;
 end;
 
-procedure TMainDialog.Log(const Msg: string);
+procedure TMainDialog.Log(const Msg: string; Level :TLogLevel);
 begin
+  FLogTextParams.Color := LOGCOLORS[Level];
+  MemoMessages.SetTextAttributes(-1, 0, FLogTextParams);
   MemoMessages.Lines.Add(Msg);
 end;
 
@@ -1513,9 +1528,9 @@ begin
   Caption := SCptTitlePrefix+Str;
 end;
 
-procedure TMainDialog.OnPrint(Sender: TObject; const Line: string);
+procedure TMainDialog.OnPrint(Sender: TObject; const Line: string; Level :TLogLevel);
 begin
-  Log(Line);
+  Log(Line, Level);
   Application.ProcessMessages;
   if FCancelled then
     (Sender as TProcessor).Cancel;
@@ -1648,6 +1663,9 @@ begin
           Processor.TagsReportFilename := EditTagsReportFilename.Text;
         end else
           Processor.TagsReportFilename := '';
+
+        // NoCreate flag
+        Processor.NoCreate := CheckBoxNoCreate.Checked;
 
         // Hook the processor
         Processor.OnPrint := @OnPrint;

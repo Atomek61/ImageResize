@@ -33,7 +33,7 @@ var
   i, p, n, x :integer;
   item :string;
 begin
-  SetLength(Values, 0);
+  Values := nil;
   p := 1;
   n := 0;
   for i:=1 to Length(Str)+1 do begin
@@ -75,7 +75,7 @@ var
   i, p, n :integer;
   x :single;
 begin
-  SetLength(Values, 0);
+  Values := nil;
   p := 1;
   n := 0;
   for i:=1 to Length(Str)+1 do begin
@@ -96,7 +96,7 @@ var
 begin
   n := 0;
   p1 := 0;
-  SetLength(Placeholders, 0);
+  Placeholders := nil;
   while true do begin
     p0 := PosEx(Del, Str, p1+1);
     if p0=0 then break;

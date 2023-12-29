@@ -180,6 +180,10 @@ msgstr "Speichere '%s'..."
 msgid "Shaking list of files..."
 msgstr "Mische die Dateiliste..."
 
+#: imgres.smsgwarningnocreate
+msgid "Not really creating any image or folder (-nocreate flag)"
+msgstr "Erzeuge nicht wirklich irgendein Bild oder einen Folder (-nocreate Flag)"
+
 #: imgres.smsgwatermarkingfmt
 #, object-pascal-format
 msgid "Watermarking '%s'..."
@@ -765,6 +769,22 @@ msgstr "ImageResize"
 msgctxt "tmaindialog.checkboxmrkenabled.caption"
 msgid "Enabled"
 msgstr "Anwenden"
+
+#: tmaindialog.checkboxnocreate.caption
+msgid "Don't really create Images"
+msgstr "Erzeuge keine Bilder"
+
+#: tmaindialog.checkboxnocreate.hint
+msgid ""
+"If checked, no image or folder will be created.\n"
+"Its to check the settings and gather statistics.\n"
+"\n"
+"One exception: the Tags Report will be created!"
+msgstr ""
+"Wenn ausgewählt wird kein Bild oder Ordner erzeugt.\n"
+"Das ist, um die Einstellungen zu prüfen und um Statistiken zu sammeln.\n"
+"\n"
+"Ausnahme: Der Tags Report wird trotzdem erzeugt!"
 
 #: tmaindialog.checkboxrenenabled.caption
 msgctxt "tmaindialog.checkboxrenenabled.caption"

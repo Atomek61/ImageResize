@@ -23,7 +23,7 @@ interface
 
 uses
   Classes, SysUtils, StrUtils, Types, BGRABitmap, BGRABitmapTypes,
-  threading.dispatcher, tags;
+  threading.dispatcher, tags, logging;
 
 type
   TTagsSource = (tsEXIF, tsTagsFiles); // Tags from EXIF and/or .tags files
@@ -41,29 +41,30 @@ const
     'Mitchell', 'Spline', 'Lanczos2', 'Lanczos3', 'Lanczos4', 'BestQuality');
 
 const
-  IMGRESVER = '3.2';
-  IMGRESCPR = 'imgres '+IMGRESVER+' © 2023 Jan Schirrmacher, www.atomek.de';
+  IMGRESVER = '3.3';
+  IMGRESCPR = 'imgres '+IMGRESVER+' © 2024 Jan Schirrmacher, www.atomek.de';
 
-  DEFAULTPNGCOMPRESSION    = 2;
-  DEFAULTJPGQUALITY        = 75;
-  DEFAULT_RESAMPLING       = rsLanczos2;
-  DEFAULTMRKSIZE           = 20.0;
-  DEFAULTMRKX              = 98.0;
-  DEFAULTMRKY              = 98.0;
-  DEFAULTMRKALPHA          = 50.0;
-  DEFAULT_THREADCOUNT      = 0;
-  DEFAULT_STOPONERROR      = true;
-  DEFAULT_RENENABLED       = false;
-  DEFAULT_RENFMTSTR        = 'img%2:s.%1:s';
-  DEFAULT_RENFILETEMPLATE  = 'img%INDEX:1,3%.%FILEEXT%';
-  DEFAULT_RENINDEXSTART    = 1;
-  DEFAULT_RENINDEXDIGITS   = 3;
-  DEFAULT_SHUFFLE          = false;
-  DEFAULT_SHUFFLESEED      = 0;
-  DEFAULT_FILETAGS         = nil;
-  DEFAULT_COPYRIGHT        = '';
-  DEFAULT_TAGSREPORT       = 'imagelist.trp';
-  DEFAULT_TAGSOURCES       :TTagsSources = [];
+  DEFAULTPNGCOMPRESSION     = 2;
+  DEFAULTJPGQUALITY         = 75;
+  DEFAULT_RESAMPLING        = rsLanczos2;
+  DEFAULTMRKSIZE            = 20.0;
+  DEFAULTMRKX               = 98.0;
+  DEFAULTMRKY               = 98.0;
+  DEFAULTMRKALPHA           = 50.0;
+  DEFAULT_THREADCOUNT       = 0;
+  DEFAULT_STOPONERROR       = true;
+  DEFAULT_RENENABLED        = false;
+  DEFAULT_RENFMTSTR         = 'img%2:s.%1:s';
+  DEFAULT_RENFILETEMPLATE   = 'img%INDEX:1,3%.%FILEEXT%';
+  DEFAULT_RENINDEXSTART     = 1;
+  DEFAULT_RENINDEXDIGITS    = 3;
+  DEFAULT_SHUFFLE           = false;
+  DEFAULT_SHUFFLESEED       = 0;
+  DEFAULT_FILETAGS          = nil;
+  DEFAULT_COPYRIGHT         = '';
+  DEFAULT_TAGSREPORT        = '.tagsreport';
+  DEFAULT_TAGSOURCES        :TTagsSources = [];
+  DEFAULT_NOCREATE          = false;
 
   DEFSIZES :array[0..15] of integer = (32, 48, 64, 120, 240, 360, 480, 640, 800, 960, 1280, 1600, 1920, 2560, 3840, 4096);
 
@@ -71,11 +72,12 @@ type
 
   TSizes = array of integer;
 
-  TPrintEvent = procedure(Sender :TObject; const Line :string) of object;
+//  TPrintEvent = procedure(Sender :TObject; const Line :string) of object;
+  TPrintEvent = procedure(Sender :TObject; const Line :string; Level :TLogLevel = llInfo) of object;
   TProgressEvent = procedure(Sender :TObject; Progress :single) of object;
 
   //////////////////////////////////////////////////////////////////////////////
-  // Main class: resamples a list a images to a list of sizes
+  // Main class: resamples a list of images to a list of images and sizes
 
   { TProcessor }
 
@@ -143,6 +145,7 @@ type
     FTagIDs          :TTagIDs; // 'Copyright',
     FCopyright       :string;
     FTagsReportFilename :string;
+    FNoCreate        :boolean;
   private
     FCancel :boolean;
     FOnPrint :TPrintEvent;
@@ -208,6 +211,7 @@ type
     property TagIDs :TStringArray read FTagIDs write FTagIDs;
     property Copyright :string read FCopyright write FCopyright;
     property TagsReportFilename :string read FTagsReportFilename write FTagsReportFilename;
+    property NoCreate :boolean read FNoCreate write FNoCreate;
     property OnPrint :TPrintEvent read FOnPrint write FOnPrint;
     property OnProgress :TProgressEvent read FOnProgress write FOnProgress;
   end;
@@ -230,37 +234,38 @@ const
   SCptJpgQualityDefault = 'default';
 
 resourcestring
-  SCptHint    = 'Hint';
-  SCptWarning = 'Warning';
-  SCptAbort   = 'Abort';
-  SCptFatal   = 'Fatal';
-  SErrFormatNotSupportedFmt = 'Format %s not supported';
-  SWrnUpsamplingFmt = 'Upsampling ''%s''';
-  SMsgResamplingFmt = 'Resampling ''%s'' from %dx%d to %dx%d...';
-  SMsgWatermarkingFmt = 'Watermarking ''%s''...';
-  SMsgSavingFmt = 'Saving ''%s''...';
-  SMsgLoadingFmt = 'Loading ''%s''...';
-  SMsgLoadingTags = 'Loading .tags...';
-  SMsgWritingTagsReportFmt = 'Writing Tags Report to ''%s''...';
-  SMsgReadingExifFmt = 'Reading EXIF from ''%s''...';
-  SMsgCreatingFolderFmt = 'Creating folder ''%s''...';
-  SMsgShakingFiles = 'Shaking list of files...';
-  SMsgLoadMrkFileFmt = 'Loading Watermark ''%s''...';
-  SMsgWritingExifFmt = 'Writing EXIF to ''%s''...';
-  SErrInvalidThreadCount = 'Invalid threadcount';
-  SErrMissingSizes = 'Missing sizes.';
-  SErrInvalidSizesFmt = 'Invalid sizes ''%s''';
-  SErrMultipleSizes = 'Multiple sizes but placeholder %SIZE% not found in either folder or filename template';
-  SErrInvalidPngCompressionFmt = 'Invalid png compression %d (0..3 expected)';
-  SErrInvalidJpgQualityFmt = 'Invalid JPEG quality %d (1..100 expected)';
-  SErrInvalidRenamingParamFmt = 'Invalid renaming parameter ''%s''';
-  SErrInvalidINDEXPlaceholderFmt = 'Invalid INDEX placeholder parameters ''%s''';
-  SErrInvalidINDEXStartFmt = 'Invalid INDEX start ''%s''';
-  SErrInvalidINDEXDigitsFmt = 'Invalid INDEX digits number ''%s''';
-  SErrInvalidINDEXParamCountFmt = 'Invalid INDEX parameter count ''%s'' (2 expected)';
-  SErrInvalidPlaceholder = 'Unknown or invalid placeholder';
-  SInfResultFmt = 'Images: %d, Filter: %s, Sizes: %d, Tasks: %d, Successful: %d, Failed: %d, Elapsed: %.2fs';
-  SErrInvalidResamplingFmt = 'Invalid resampling value ''%s''';
+  SCptHint                        = 'Hint';
+  SCptWarning                     = 'Warning';
+  SCptAbort                       = 'Abort';
+  SCptFatal                       = 'Fatal';
+  SMsgWarningNoCreate             = 'Not really creating any image or folder (-nocreate flag)';
+  SErrFormatNotSupportedFmt       = 'Format %s not supported';
+  SWrnUpsamplingFmt               = 'Upsampling ''%s''';
+  SMsgResamplingFmt               = 'Resampling ''%s'' from %dx%d to %dx%d...';
+  SMsgWatermarkingFmt             = 'Watermarking ''%s''...';
+  SMsgSavingFmt                   = 'Saving ''%s''...';
+  SMsgLoadingFmt                  = 'Loading ''%s''...';
+  SMsgLoadingTags                 = 'Loading .tags...';
+  SMsgWritingTagsReportFmt        = 'Writing Tags Report to ''%s''...';
+  SMsgReadingExifFmt              = 'Reading EXIF from ''%s''...';
+  SMsgCreatingFolderFmt           = 'Creating folder ''%s''...';
+  SMsgShakingFiles                = 'Shaking list of files...';
+  SMsgLoadMrkFileFmt              = 'Loading Watermark ''%s''...';
+  SMsgWritingExifFmt              = 'Writing EXIF to ''%s''...';
+  SErrInvalidThreadCount          = 'Invalid threadcount';
+  SErrMissingSizes                = 'Missing sizes.';
+  SErrInvalidSizesFmt             = 'Invalid sizes ''%s''';
+  SErrMultipleSizes               = 'Multiple sizes but placeholder %SIZE% not found in either folder or filename template';
+  SErrInvalidPngCompressionFmt    = 'Invalid png compression %d (0..3 expected)';
+  SErrInvalidJpgQualityFmt        = 'Invalid JPEG quality %d (1..100 expected)';
+  SErrInvalidRenamingParamFmt     = 'Invalid renaming parameter ''%s''';
+  SErrInvalidINDEXPlaceholderFmt  = 'Invalid INDEX placeholder parameters ''%s''';
+  SErrInvalidINDEXStartFmt        = 'Invalid INDEX start ''%s''';
+  SErrInvalidINDEXDigitsFmt       = 'Invalid INDEX digits number ''%s''';
+  SErrInvalidINDEXParamCountFmt   = 'Invalid INDEX parameter count ''%s'' (2 expected)';
+  SErrInvalidPlaceholder          = 'Unknown or invalid placeholder';
+  SInfResultFmt                   = 'Images: %d, Filter: %s, Sizes: %d, Tasks: %d, Successful: %d, Failed: %d, Elapsed: %.2fs';
+  SErrInvalidResamplingFmt        = 'Invalid resampling value ''%s''';
 const
   PNGCOMPRS :array[0..3] of string = (SCptPNGCompNone, SCptPNGCompFastest, SCptPNGCompDefault, SCptPNGCompMax);
   LEVELSTRS :array[TLevel] of string = (SCptHint, '', SCptWarning, SCptAbort, SCptFatal);
@@ -416,17 +421,21 @@ begin
         TargetFileExt := ExtractExt(SourceFilename);
         if IsJPEG(SourceFilename) then begin
 
-          // Jpg-options
-          Writer := TFPWriterJPEG.Create;
-          with TFPWriterJPEG(Writer) do
-            CompressionQuality := TFPJPEGCompressionQuality(Processor.JpgQuality);
+          if not Processor.FNoCreate then begin
+            // Jpg-options
+            Writer := TFPWriterJPEG.Create;
+            with TFPWriterJPEG(Writer) do
+              CompressionQuality := TFPJPEGCompressionQuality(Processor.JpgQuality);
+          end;
 
         end else if IsPNG(SourceFilename) then begin
 
-          // Png-options
-          Writer := TFPWriterPNG.Create;
-          with TFPWriterPNG(Writer) do
-            CompressionLevel := ZStream.TCompressionLevel(Processor.PngCompression);
+          if not Processor.FNoCreate then begin
+            // Png-options
+            Writer := TFPWriterPNG.Create;
+            with TFPWriterPNG(Writer) do
+              CompressionLevel := ZStream.TCompressionLevel(Processor.PngCompression);
+          end;
 
         end else
           raise Exception.CreateFmt(SErrFormatNotSupportedFmt, [TargetFileExt]);
@@ -505,7 +514,8 @@ begin
         TargetFolder := ProcRes.TargetFolders[i mod Length(ProcRes.TargetFolders)];
         TargetFilename := IncludeTrailingPathDelimiter(TargetFolder) + TargetFiletitleExt;
         Print(Format(SMsgSavingFmt, [TargetFilename]));
-        TargetImg.SaveToFile(TargetFilename, Writer);
+        if not Processor.FNoCreate then
+          TargetImg.SaveToFile(TargetFilename, Writer);
 
       finally
         Writer.Free;
@@ -515,7 +525,8 @@ begin
       // EXIF
       if (Length(Processor.FTagIds)>0) and IsJPEG(TargetFilename) then begin
         Print(Format(SMsgWritingExifFmt, [TargetFilename]));
-        WriteExifTags(TargetFilename, Tags, Processor.FTagIds);
+        if not Processor.FNoCreate then
+          WriteExifTags(TargetFilename, Tags, Processor.FTagIds);
       end;
 
       Progress(1);
@@ -558,6 +569,7 @@ begin
   FTagIDs           := nil;
   FCopyright        := DEFAULT_COPYRIGHT;
   FTagsReportFilename := '';
+  FNoCreate         := DEFAULT_NOCREATE;
 end;
 
 destructor TProcessor.Destroy;
@@ -590,12 +602,14 @@ end;
 procedure TProcessor.OnTaskPrint(Sender: TObject; WorkerId: integer; const Line: string; Level: TLevel);
 var
   Prefix :string;
+const
+  LOGLEVELS :array[TLevel] of TLogLevel = (llHint, llInfo, llWarning, llError, llCrash);
 begin
   if Assigned(FOnPrint) then begin
     Prefix := LEVELSTRS[Level];
     if Prefix<>'' then
       Prefix := Prefix + '  ';
-    FOnPrint(self, Format('[%d] %s%s', [WorkerId+1, Prefix, Line]));
+    FOnPrint(self, Format('[%d] %s%s', [WorkerId+1, Prefix, Line]), LOGLEVELS[Level]);
   end;
 end;
 
@@ -649,6 +663,9 @@ begin
   Tasks       := TTasks.Create;
   Dispatcher  := TDispatcher.Create;
   try
+
+    if FNoCreate then
+      Print(SMsgWarningNoCreate, mlWarning);
 
     n := FSourceFilenames.Count;
     SetLength(exer.SourceFilenames, n);
@@ -725,7 +742,8 @@ begin
     end;
     for i:=0 to High(exer.TargetFolders) do begin
       Print(Format(SMsgCreatingFolderFmt, [exer.TargetFolders[i]]));
-      ForceDirectories(exer.TargetFolders[i]);
+      if not FNoCreate then
+        ForceDirectories(exer.TargetFolders[i]);
     end;
 
     // For each SourceFilename create a task and prepare the tasks parameters

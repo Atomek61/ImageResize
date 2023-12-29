@@ -1,7 +1,7 @@
 object MainDialog: TMainDialog
-  Left = 577
+  Left = 691
   Height = 680
-  Top = 579
+  Top = 369
   Width = 840
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'ImageResize'
@@ -22,12 +22,12 @@ object MainDialog: TMainDialog
   LCLVersion = '2.2.6.0'
   object PanelControls: TPanel
     Left = 0
-    Height = 466
+    Height = 482
     Top = 64
     Width = 840
     Align = alTop
     BevelOuter = bvNone
-    ClientHeight = 466
+    ClientHeight = 482
     ClientWidth = 840
     Color = 15850953
     Constraints.MinHeight = 456
@@ -229,7 +229,7 @@ object MainDialog: TMainDialog
         Top = 4
         Width = 393
         TabStop = False
-        ActivePage = TabSheetRenaming
+        ActivePage = TabSheetSizes
         Align = alClient
         BorderSpacing.Around = 4
         Images = ImageList32x32
@@ -237,7 +237,7 @@ object MainDialog: TMainDialog
         MultiLine = True
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 1
+        TabIndex = 0
         TabOrder = 1
         Options = [nboMultiLine]
         object TabSheetSizes: TTabSheet
@@ -1185,7 +1185,7 @@ object MainDialog: TMainDialog
     object LabelStep3: TLabel
       Left = 48
       Height = 25
-      Top = 424
+      Top = 422
       Width = 118
       Anchors = [akLeft, akBottom]
       Caption = 'Target &Folder'
@@ -1199,7 +1199,7 @@ object MainDialog: TMainDialog
     object PanelDestination: TPanel
       Left = 256
       Height = 39
-      Top = 418
+      Top = 416
       Width = 344
       HelpType = htKeyword
       HelpKeyword = 'HTML/index.html#dstfolder'
@@ -1248,7 +1248,7 @@ object MainDialog: TMainDialog
     object ButtonExecute: TBGRASpeedButton
       Left = 640
       Height = 37
-      Top = 418
+      Top = 416
       Width = 194
       Action = ActionExecute
       Anchors = [akRight, akBottom]
@@ -1283,7 +1283,7 @@ object MainDialog: TMainDialog
       Tag = 3
       Left = 8
       Height = 32
-      Top = 422
+      Top = 420
       Width = 32
       Anchors = [akLeft, akBottom]
       OnPaint = PaintBoxStep1Paint
@@ -1302,21 +1302,18 @@ object MainDialog: TMainDialog
       ParentColor = False
       ParentFont = False
     end
-  end
-  object MemoMessages: TMemo
-    Left = 4
-    Height = 133
-    Top = 543
-    Width = 836
-    Align = alClient
-    BorderSpacing.Left = 4
-    BorderSpacing.Top = 4
-    BorderSpacing.Bottom = 4
-    BorderStyle = bsNone
-    Constraints.MinHeight = 24
-    ReadOnly = True
-    ScrollBars = ssAutoVertical
-    TabOrder = 3
+    object CheckBoxNoCreate: TCheckBox
+      Left = 664
+      Height = 19
+      Hint = 'If checked, no image or folder will be created.'#13#10'Its to check the settings and gather statistics.'#13#10#13#10'One exception: the Tags Report will be created!'
+      Top = 456
+      Width = 156
+      Alignment = taLeftJustify
+      Anchors = [akTop, akRight]
+      Caption = 'Don''t really create Images'
+      OnClick = ProjectChanged
+      TabOrder = 3
+    end
   end
   object ToolBar: TToolBar
     Left = 0
@@ -1410,12 +1407,29 @@ object MainDialog: TMainDialog
   object ProgressBar: TProgressBar
     Left = 0
     Height = 9
-    Top = 530
+    Top = 546
     Width = 840
     Align = alTop
     Anchors = []
     TabOrder = 2
     Visible = False
+  end
+  object MemoMessages: TRichMemo
+    Left = 4
+    Height = 121
+    Top = 555
+    Width = 836
+    Align = alClient
+    BorderSpacing.Left = 4
+    BorderSpacing.Bottom = 4
+    BorderStyle = bsNone
+    Font.Height = -13
+    HideSelection = False
+    ParentFont = False
+    ReadOnly = True
+    ScrollBars = ssVertical
+    TabOrder = 3
+    ZoomFactor = 1
   end
   object MainActionList: TActionList
     Images = ImageList32x32

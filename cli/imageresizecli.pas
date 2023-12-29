@@ -51,6 +51,7 @@ const
     '   -t -threadcount    0..n       Number of threads to use, 0 means maximum.'#10+
     '   -x -stoponerror               Stop on error. flag: 0-false, 1-true'#10+
     '   -h -help                      Outputs this text.'#10+
+    '   -n -nocreate                  Dryrun, does not create images, but if applicable listing.'#10+
     '   -q -quit                      Suppresses any message output.'#10;
 
   EXAMPLESTR =
@@ -133,6 +134,7 @@ var
   TagIDs :TTagIDs;
   Copyright :string;
   TagsReportFilename :string;
+  NoCreate :boolean;
   Processor :TProcessor;
 
   function IncludeTrailingPathDelimiterEx(const Path :string) :string;
@@ -288,6 +290,11 @@ begin
       ShuffleSeed := 0;
     end;
 
+    // NoCreate flag
+    NoCreate := HasOption('n', 'nocreate');
+    if NoCreate then
+      inc(OptionCount, 1);
+
     // Check number of parameters
     if ParamCount<>3+OptionCount then
       raise Exception.Create(ERRINVALIDNUMBEROFPARAMS);
@@ -350,6 +357,7 @@ begin
     Processor.TagIDs := TagIDs;
     Processor.Copyright := Copyright;
     Processor.TagsReportFilename := TagsReportFilename;
+    Processor.NoCreate := NoCreate;
 
     if not Quiet then
       Processor.OnPrint := @OnPrint;

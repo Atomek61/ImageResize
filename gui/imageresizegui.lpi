@@ -55,7 +55,6 @@
           <Linking>
             <Debugging>
               <DebugInfoType Value="dsDwarf3"/>
-              <UseHeaptrc Value="True"/>
               <TrashVariables Value="True"/>
               <UseExternalDbgSyms Value="True"/>
             </Debugging>
@@ -113,6 +112,9 @@
       <FormatVersion Value="2"/>
     </RunParams>
     <RequiredPackages>
+      <Item>
+        <PackageName Value="richmemopackage"/>
+      </Item>
       <Item>
         <PackageName Value="dexif_package"/>
       </Item>
@@ -200,6 +202,10 @@
       </Unit>
       <Unit>
         <Filename Value="..\src\animator.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\logging.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
     </Units>

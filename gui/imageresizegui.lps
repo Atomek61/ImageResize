@@ -3,7 +3,7 @@
   <ProjectSession>
     <PathDelim Value="\"/>
     <Version Value="12"/>
-    <BuildModes Active="Release"/>
+    <BuildModes Active="Debug"/>
     <Units>
       <Unit>
         <Filename Value="imageresizegui.lpr"/>
@@ -18,9 +18,12 @@
         <ComponentName Value="MainDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <TopLine Value="51"/>
-        <CursorPos X="22" Y="82"/>
+        <TopLine Value="542"/>
+        <CursorPos X="54" Y="580"/>
         <UsageCount Value="201"/>
+        <Bookmarks Count="1">
+          <Item0 X="3" Y="1212"/>
+        </Bookmarks>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -41,29 +44,29 @@
         <ComponentName Value="MrkEditDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="11"/>
         <TopLine Value="105"/>
         <CursorPos X="38" Y="125"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\imgres.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="656"/>
-        <CursorPos X="31" Y="690"/>
+        <EditorIndex Value="7"/>
+        <TopLine Value="199"/>
+        <CursorPos X="14" Y="215"/>
         <UsageCount Value="200"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\updateutils.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="20"/>
-        <CursorPos X="3" Y="41"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="139"/>
+        <CursorPos X="25" Y="164"/>
         <UsageCount Value="210"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\datetimeutils.pas"/>
@@ -75,17 +78,19 @@
       <Unit>
         <Filename Value="..\src\threading.dispatcher.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="114"/>
-        <CursorPos X="3" Y="135"/>
+        <EditorIndex Value="8"/>
+        <CursorPos X="45" Y="10"/>
         <UsageCount Value="200"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\imggallery.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos Y="5"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="69"/>
+        <CursorPos X="120" Y="102"/>
         <UsageCount Value="200"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\tags.pas"/>
@@ -93,7 +98,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="188"/>
         <CursorPos X="47" Y="232"/>
-        <UsageCount Value="193"/>
+        <UsageCount Value="196"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\exifutils.pas"/>
@@ -102,7 +107,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="55"/>
         <CursorPos Y="84"/>
-        <UsageCount Value="198"/>
+        <UsageCount Value="200"/>
       </Unit>
       <Unit>
         <Filename Value="settingsdlg.pas"/>
@@ -110,10 +115,10 @@
         <ComponentName Value="SettingsDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="12"/>
         <TopLine Value="82"/>
         <CursorPos X="26" Y="105"/>
-        <UsageCount Value="93"/>
+        <UsageCount Value="96"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -123,15 +128,15 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="41"/>
         <CursorPos Y="55"/>
-        <UsageCount Value="92"/>
+        <UsageCount Value="95"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\animator.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="13"/>
         <TopLine Value="50"/>
         <CursorPos X="14" Y="76"/>
-        <UsageCount Value="30"/>
+        <UsageCount Value="33"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -333,10 +338,12 @@
       <Unit>
         <Filename Value="..\lib\generics.collections.pas"/>
         <UnitName Value="Generics.Collections"/>
-        <EditorIndex Value="-1"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="4"/>
         <TopLine Value="1608"/>
-        <CursorPos X="21" Y="1629"/>
-        <UsageCount Value="98"/>
+        <CursorPos X="50" Y="1622"/>
+        <UsageCount Value="99"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\lib\generics.strings.pas"/>
@@ -482,9 +489,11 @@
       </Unit>
       <Unit>
         <Filename Value="..\src\utils.pas"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="45" Y="11"/>
-        <UsageCount Value="10"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="78"/>
+        <CursorPos X="22" Y="99"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\sysutils\diskh.inc"/>
@@ -646,127 +655,168 @@
         <CursorPos Y="70"/>
         <UsageCount Value="12"/>
       </Unit>
+      <Unit>
+        <Filename Value="..\tst\guitest1.irs"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="62" Y="13"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\generics.queue.pas"/>
+        <EditorIndex Value="10"/>
+        <TopLine Value="34"/>
+        <CursorPos X="3" Y="55"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\logging.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="9"/>
+        <CursorPos Y="9"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\lazarus\lcl\graphics.pp"/>
+        <UnitName Value="Graphics"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="233"/>
+        <CursorPos X="10" Y="249"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\richmemo\richmemo.pas"/>
+        <UnitName Value="RichMemo"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="21"/>
+        <CursorPos X="26" Y="33"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
     </Units>
     <JumpHistory HistoryIndex="29">
       <Position>
-        <Filename Value="..\src\animator.pas"/>
-        <Caret Line="83" TopLine="80"/>
+        <Filename Value="..\src\threading.dispatcher.pas"/>
+        <Caret Line="308" Column="67" TopLine="273"/>
       </Position>
       <Position>
-        <Filename Value="..\src\animator.pas"/>
-        <Caret Line="37" TopLine="11"/>
+        <Filename Value="..\src\threading.dispatcher.pas"/>
+        <Caret Line="483" Column="49" TopLine="449"/>
       </Position>
       <Position>
-        <Filename Value="settingsdlg.pas"/>
-        <Caret Line="145" Column="28" TopLine="123"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="76" TopLine="49"/>
       </Position>
       <Position>
-        <Filename Value="..\src\animator.pas"/>
-        <Caret Line="53" TopLine="25"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="602" TopLine="589"/>
       </Position>
       <Position>
-        <Filename Value="..\src\animator.pas"/>
-        <Caret Line="124" Column="10" TopLine="114"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="171" Column="15" TopLine="153"/>
       </Position>
       <Position>
-        <Filename Value="..\src\animator.pas"/>
-        <Caret Line="61" TopLine="36"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="612" Column="85" TopLine="592"/>
       </Position>
       <Position>
-        <Filename Value="..\src\animator.pas"/>
-        <Caret Line="127" Column="3" TopLine="106"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="151" Column="5" TopLine="131"/>
       </Position>
       <Position>
-        <Filename Value="..\src\animator.pas"/>
-        <Caret Line="78" Column="22" TopLine="46"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="76" Column="3" TopLine="54"/>
       </Position>
       <Position>
-        <Filename Value="..\src\animator.pas"/>
-        <Caret Line="63" TopLine="28"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="774" Column="38" TopLine="748"/>
       </Position>
       <Position>
-        <Filename Value="..\src\animator.pas"/>
-        <Caret Line="151" Column="53" TopLine="118"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="151" Column="5" TopLine="130"/>
       </Position>
       <Position>
-        <Filename Value="..\src\animator.pas"/>
-        <Caret Line="120" Column="28" TopLine="94"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\animator.pas"/>
-        <Caret Line="115" TopLine="98"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\animator.pas"/>
-        <Caret Line="116" TopLine="98"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\animator.pas"/>
-        <Caret Line="117" TopLine="98"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\animator.pas"/>
-        <Caret Line="121" TopLine="98"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\animator.pas"/>
-        <Caret Line="122" TopLine="98"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\animator.pas"/>
-        <Caret Line="123" TopLine="98"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\animator.pas"/>
-        <Caret Line="124" TopLine="98"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\animator.pas"/>
-        <Caret Line="115" TopLine="98"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\animator.pas"/>
-        <Caret Line="116" TopLine="98"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\animator.pas"/>
-        <Caret Line="117" TopLine="98"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\animator.pas"/>
-        <Caret Line="118" TopLine="98"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\animator.pas"/>
-        <Caret Line="119" TopLine="98"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\animator.pas"/>
-        <Caret Line="121" TopLine="98"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\animator.pas"/>
-        <Caret Line="122" TopLine="98"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\animator.pas"/>
-        <Caret Line="123" TopLine="98"/>
-      </Position>
-      <Position>
-        <Filename Value="settingsdlg.pas"/>
-        <Caret Line="157" TopLine="136"/>
-      </Position>
-      <Position>
-        <Filename Value="settingsdlg.pas"/>
-        <Caret Line="158" TopLine="136"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\animator.pas"/>
-        <Caret Line="71" Column="36" TopLine="44"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="76" Column="89" TopLine="54"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="638" Column="80" TopLine="624"/>
+        <Caret Line="1660" Column="35" TopLine="1639"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="337" TopLine="317"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1522" Column="11" TopLine="1519"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="348" TopLine="329"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1203" Column="44" TopLine="1199"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="381" TopLine="358"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="580" Column="3" TopLine="542"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="326" Column="53" TopLine="313"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret TopLine="16"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="42" Column="34" TopLine="16"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="338" TopLine="317"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1527" Column="18" TopLine="1524"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="349" TopLine="330"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1208" Column="3" TopLine="1204"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="584" Column="30" TopLine="544"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="583" Column="23" TopLine="544"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1213" Column="55" TopLine="1190"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="361" TopLine="338"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="580" Column="54" TopLine="542"/>
       </Position>
     </JumpHistory>
     <RunParams>
