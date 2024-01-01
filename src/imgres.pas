@@ -28,6 +28,7 @@ uses
 type
   TTagsSource = (tsEXIF, tsTagsFiles); // Tags from EXIF and/or .tags files
   TTagsSources = set of TTagsSource;
+  TScalingDirection = (sdUpScaling, sdNoscaling, sdDownScaling);
 
   TResampling = (rsStretch, rsBox, rsLinear, rsHalfCosine, rsCosine, rsBicubic,
     rsMitchell, rsSpline, rsLanczos2, rsLanczos3, rsLanczos4, rsBestQuality);
@@ -100,9 +101,9 @@ type
     TExecutionRessources = class // Temporary process global ressources while processing
       IsMultipleTargetFolderStrategy :boolean;
       IsTargetFileRenamingStrategy :boolean;
-      SourceFilenames :array of string;    // After Shaking
+      SourceFilenames :array of string; // After Shaking
       MrkImages :array of TBGRABitmap;  // Empty, One or for each Size
-      TargetFolders :array of string;      // One or for each Size
+      TargetFolders :array of string;   // One or for each Size
       FilesTags :TFilesTags;            // A database of all tags of all files
       constructor Create;
       destructor Destroy; override;
@@ -171,7 +172,7 @@ type
     class function CalcResamplingSize(const Size :TSize; LongWidth :integer) :TSize;
     procedure OnTaskPrint(Sender :TObject; WorkerId: integer; const Line :string; Level :TLevel);
     procedure OnTaskProgress(Sender :TObject; Progress :single);
-    procedure Print(const Line :string; Level :TLevel = mlNormal);
+    procedure Print(const Line :string; Level :TLevel = mlInfo);
   public
     constructor Create;
     destructor Destroy; override;
@@ -240,8 +241,9 @@ resourcestring
   SCptFatal                       = 'Fatal';
   SMsgWarningNoCreate             = 'Not really creating any image or folder (-nocreate flag)';
   SErrFormatNotSupportedFmt       = 'Format %s not supported';
-  SWrnUpsamplingFmt               = 'Upsampling ''%s''';
-  SMsgResamplingFmt               = 'Resampling ''%s'' from %dx%d to %dx%d...';
+  SMsgDownScalingFmt              = 'Down-scaling ''%s'' from %dx%d to %dx%d...';
+  SMsgUpScalingFmt                = 'Up-scaling ''%s'' from %dx%d to %dx%d...';
+  SMsgNoScalingFmt                = 'No scaling ''%s'' (%dx%d to %dx%d)...';
   SMsgWatermarkingFmt             = 'Watermarking ''%s''...';
   SMsgSavingFmt                   = 'Saving ''%s''...';
   SMsgLoadingFmt                  = 'Loading ''%s''...';
@@ -374,6 +376,8 @@ var
   ExifTags :TTags;
   ExifTagIds :TTagIDs;
   TagID :string;
+  MsgScalingFmt :string;
+  MsgScalingLevel :TLevel;
 begin
 
   result := false;
@@ -445,15 +449,22 @@ begin
         SourceSize := TSize.Create(SourceImg.Width, SourceImg.Height);
         TargetSize := CalcResamplingSize(SourceSize, Size);
 
-        // Warning, if upsampling
-        if (SourceSize.cx<TargetSize.cx) or (TargetSize.cy<TargetSize.cy) then
-          Print(Format(SWrnUpsamplingFmt, [
-             ExtractFilename(SourceFilename)]), mlWarning);
+        // Scaling direction
+        if (SourceSize.cx=TargetSize.cx) and (TargetSize.cy=TargetSize.cy) then begin
+          MsgScalingFmt := SMsgNoScalingFmt;
+          MsgScalingLevel := mlWarning;
+        end else if (SourceSize.cx<TargetSize.cx) or (TargetSize.cy<TargetSize.cy) then begin
+          MsgScalingFmt := SMsgUpScalingFmt;
+          MsgScalingLevel := mlWarning;
+        end else begin
+          MsgScalingFmt := SMsgDownScalingFmt;
+          MsgScalingLevel := mlInfo;
+        end;
 
         ////////////////////////////////////////////////////////////////////////////
         // Resampling...
-        Print(Format(SMsgResamplingFmt, [
-          ExtractFilename(SourceFilename), SourceSize.cx, SourceSize.cy, TargetSize.cx, TargetSize.cy]));
+        Print(Format(MsgScalingFmt, [
+          ExtractFilename(SourceFilename), SourceSize.cx, SourceSize.cy, TargetSize.cx, TargetSize.cy]), MsgScalingLevel);
         TargetImg := Processor.ResampleImg(SourceImg, TargetSize);
 
         ////////////////////////////////////////////////////////////////////////////
@@ -644,12 +655,12 @@ end;
 
 function TProcessor.Execute :boolean;
 var
-  exer :TExecutionRessources;
+  Exer :TExecutionRessources;
   Task :TResampleTask;
   Tasks :TTasks;
   Dispatcher :TDispatcher;
   i, j, n, m :integer;
-  x :string;
+  Item :string;
 begin
   // Check main parameters
   if FSourceFilenames.Count=0 then
@@ -659,7 +670,7 @@ begin
     raise Exception.Create(SErrMissingSizes);
 
   FCancel     := false;
-  exer        := TExecutionRessources.Create;
+  Exer        := TExecutionRessources.Create;
   Tasks       := TTasks.Create;
   Dispatcher  := TDispatcher.Create;
   try
@@ -668,9 +679,9 @@ begin
       Print(SMsgWarningNoCreate, mlWarning);
 
     n := FSourceFilenames.Count;
-    SetLength(exer.SourceFilenames, n);
+    SetLength(Exer.SourceFilenames, n);
     for i:=0 to n-1 do
-      exer.SourceFilenames[i] := ExpandFilename(FSourceFilenames[i]);
+      Exer.SourceFilenames[i] := ExpandFilename(FSourceFilenames[i]);
 
     // If the files list has to be shuffled
     if FShuffle then begin
@@ -678,9 +689,9 @@ begin
       if FShuffleSeed=0 then Randomize else RandSeed := FShuffleSeed;
       for i:=0 to n-1 do begin
         j := Random(n);
-        x := exer.SourceFilenames[i];
-        exer.SourceFilenames[i] := exer.SourceFilenames[j];
-        exer.SourceFilenames[j] := x;
+        Item := Exer.SourceFilenames[i];
+        Exer.SourceFilenames[i] := Exer.SourceFilenames[j];
+        Exer.SourceFilenames[j] := Item;
       end;
     end;
 
@@ -695,12 +706,12 @@ begin
     // If required, prepare the tags database
     if (FTagsSources<>[]) or (Length(FTagIds)>0) then begin
       for i:=0 to n-1 do
-        exer.FilesTags.add(exer.SourceFilenames[i]);
+        Exer.FilesTags.add(Exer.SourceFilenames[i]);
 
       // Load Tags
       if tsTagsFiles in FTagsSources then begin
         Print(SMsgLoadingTags);
-        exer.FilesTags.LoadTagsFiles;
+        Exer.FilesTags.LoadTagsFiles;
       end;
     end;
 
@@ -708,42 +719,40 @@ begin
     m := Length(FSizes);
 
     // Check, if multiple sizes, then either %SIZE% must be in folder or in renamed filename
-    exer.IsTargetFileRenamingStrategy := FRen.Enabled and (Pos('%3:s', FRen.FmtStr)>0);
+    Exer.IsTargetFileRenamingStrategy := FRen.Enabled and (Pos('%3:s', FRen.FmtStr)>0);
     if Length(FSizes)>1 then begin
-      exer.IsMultipleTargetFolderStrategy := Pos('%SIZE%', FTargetFolder)>0;
-      if not exer.IsMultipleTargetFolderStrategy and not exer.IsTargetFileRenamingStrategy then
+      Exer.IsMultipleTargetFolderStrategy := Pos('%SIZE%', FTargetFolder)>0;
+      if not Exer.IsMultipleTargetFolderStrategy and not Exer.IsTargetFileRenamingStrategy then
         raise Exception.Create(SErrMultipleSizes);
     end else
-      exer.IsMultipleTargetFolderStrategy := false;
+      Exer.IsMultipleTargetFolderStrategy := false;
 
     // Load MrkImages...
     if FMrkFilename='' then begin
-      SetLength(exer.MrkImages, 0);
+      SetLength(Exer.MrkImages, 0);
     end else begin
       if FMrkFilenameDependsOnSize then begin
-        SetLength(exer.MrkImages, m);
+        SetLength(Exer.MrkImages, m);
         for i:=0 to m-1 do begin
-          x := ReplaceStr(FMrkFilename, '%SIZE%', IntToStr(FSizes[i]));
-          Print(Format(SMsgLoadMrkFileFmt, [ExtractFilename(x)]));
-          exer.MrkImages[i] := TBGRABitmap.Create(x);
+          Item := ReplaceStr(FMrkFilename, '%SIZE%', IntToStr(FSizes[i]));
+          Print(Format(SMsgLoadMrkFileFmt, [ExtractFilename(Item)]));
+          Exer.MrkImages[i] := TBGRABitmap.Create(Item);
         end;
       end else begin
-        SetLength(exer.MrkImages, 1);
+        SetLength(Exer.MrkImages, 1);
         Print(Format(SMsgLoadMrkFileFmt, [ExtractFilename(FMrkFilename)]));
-        exer.MrkImages[0] := TBGRABitmap.Create(FMrkFilename);
+        Exer.MrkImages[0] := TBGRABitmap.Create(FMrkFilename);
       end;
     end;
 
     // Create Destination Folders...
-    SetLength(exer.TargetFolders, m);
-    for i:=0 to m-1 do begin
-      x := ExpandFilename(ReplaceStr(FTargetFolder, '%SIZE%', IntToStr(FSizes[i])));
-      exer.TargetFolders[i] := x;
-    end;
-    for i:=0 to High(exer.TargetFolders) do begin
-      Print(Format(SMsgCreatingFolderFmt, [exer.TargetFolders[i]]));
+    SetLength(Exer.TargetFolders, m);
+    for i:=0 to m-1 do
+      Exer.TargetFolders[i] := ExpandFilename(ReplaceStr(FTargetFolder, '%SIZE%', IntToStr(FSizes[i])));   ;
+    for i:=0 to High(Exer.TargetFolders) do begin
+      Print(Format(SMsgCreatingFolderFmt, [Exer.TargetFolders[i]]));
       if not FNoCreate then
-        ForceDirectories(exer.TargetFolders[i]);
+        ForceDirectories(Exer.TargetFolders[i]);
     end;
 
     // For each SourceFilename create a task and prepare the tasks parameters
@@ -751,11 +760,11 @@ begin
     for i:=0 to n-1 do begin
       Task := TResampleTask.Create;
       Task.Processor := self;
-      Task.ProcRes := exer;
-      Task.SourceFilename := exer.SourceFilenames[i];
+      Task.ProcRes := Exer;
+      Task.SourceFilename := Exer.SourceFilenames[i];
       Task.SourceFileIndex := i;
-      if Assigned(exer.FilesTags) then
-        exer.FilesTags.TryGetValue(Task.SourceFilename, Task.Tags);
+      if Assigned(Exer.FilesTags) then
+        Exer.FilesTags.TryGetValue(Task.SourceFilename, Task.Tags);
       Tasks.Add(Task);
     end;
 
@@ -768,7 +777,7 @@ begin
 
     if FTagsReportFilename<>'' then begin
       Print(Format(SMsgWritingTagsReportFmt, [FTagsReportFilename]));
-      exer.FilesTags.SaveToFile(FTagsReportFilename, exer.FilesTags.TagIds, [soRelative]);
+      Exer.FilesTags.SaveToFile(FTagsReportFilename, Exer.FilesTags.TagIds, [soRelative]);
     end;
 
     if Assigned(FOnPrint) then with Dispatcher.Stats do
@@ -777,7 +786,7 @@ begin
   finally
     Dispatcher.Free;
     Tasks.Free;
-    exer.Free;
+    Exer.Free;
   end;
 
 end;

@@ -58,7 +58,7 @@ type
     function Contains(const ID :string) :boolean;
   end;
 
-  TTags = TDictionary<string, string>;
+  TTags = TDictionary<string, string>; // Tags of a source file
   TFilesTagsDictionary = TObjectDictionary<string, TTags>; // Directory/.tags
   TTagsFileDictionary = TDictionary<string, string>;
   TFilenameTags = TPair<string, TTags>;

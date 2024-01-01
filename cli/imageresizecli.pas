@@ -7,7 +7,7 @@ uses
   {$IFDEF UNIX}{$IFDEF UseCThreads}
   cthreads,
   {$ENDIF}{$ENDIF}
-  Classes, Types, SysUtils, CustApp, interfaces, exifutils, tags,
+  Classes, Types, SysUtils, CustApp, interfaces, exifutils, tags, logging,
   { you can add units after this } fileutil, utils, imgres, generics.collections;
 
 const
@@ -76,7 +76,6 @@ const
   ERRINVALIDNUMBEROFPARAMS = 'Invalid number of parameters.';
   ERRINVALIDSRCFILENAME = 'Invalid parameter srcfilename.';
   ERRINVALIDDSTFOLDER = 'Invalid parameter dstfolder.';
-//  ERRMISSINGSIZE = 'For multiple sizes dstfolder must contain placeholder ''%SIZE%''.';
   ERRINVALIDSHAKESEED = 'Invalid shuffle seed value, 0..n expected.';
   ERRNOSRCFILES = 'No source files found.';
 
@@ -89,7 +88,7 @@ type
     procedure DoException(Sender :TObject; E :Exception);
   protected
     procedure DoRun; override;
-    procedure OnPrint(Sender :TObject; const Line :string);
+    procedure OnPrint(Sender :TObject; const Line :string; Level :TLogLevel);
     procedure OnProgress(Sender :TObject; Progress :single);
   public
     constructor Create(AComponent :TComponent); override;
@@ -375,7 +374,7 @@ begin
   Terminate;
 end;
 
-procedure TImageResizeCli.OnPrint(Sender: TObject; const Line: string);
+procedure TImageResizeCli.OnPrint(Sender: TObject; const Line: string; Level :TLogLevel);
 begin
   WriteLn(Line);
 end;

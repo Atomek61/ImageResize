@@ -64,7 +64,6 @@ const
   DEFAULTSIZE     = 640;
 
   SIZEBTNHINTFMT  = '%s - %dpx';
-  REQUIREDSTEP_COLORS :array[boolean] of TColor = ($00955215, $00DA49A0);
 
   IMAGEINDEX_START        = 5;
   IMAGEINDEX_CANCEL       = 6;
@@ -75,6 +74,11 @@ const
   IMAGEINDEX_IMGSCREEN    = 11;
   IMAGEINDEX_REQUIRED     = 22;
   IMAGEINDEX_NOTREQUIRED  = 23;
+
+  clOrange = $3d69a6;
+  clDarkGray = $403040;
+
+  LOGCOLORS :array[TLogLevel] of TColor = (clGray, clDarkGray, clOrange, clMaroon, clRed);
 
 resourcestring
   SCptDependenciesFmt = 'Build with Lazarus %s, BGRABitmap %s, dExif %s';
@@ -379,8 +383,6 @@ const
   SCptSingleThread  = 'single';
   SCptMaximumThread = 'maximum';
 
-  LOGCOLORS :array[TLogLevel] of TColor = (clSilver, clWindowText, clOlive, clMaroon, clRed);
-
 resourcestring
   SCptProcessor                 = 'Processor';
   SMsgQuerySave                 = 'The project has been modified.'+#10+#10+'Do you want to save the changes?';
@@ -577,7 +579,7 @@ begin
     ComboBoxResampling.Items.Add(RESAMPLING_STRINGS[Resampling]);
 
   FLogTextParams.Name       := MemoMessages.Font.Name;
-  FLogTextParams.Size       := MemoMessages.Font.Size;
+  FLogTextParams.Size       := 9;
   FLogTextParams.Style      := [];
   FLogTextParams.HasBkClr   := False;
   FLogTextParams.Color      :=clWindowText;
@@ -591,7 +593,7 @@ var
 begin
 
   // Show initial message in Message log
-  Log(Format(SCptInfoFmt, [GUIVER_APP, GUIVER_VERSION, GUIVER_DATE, IMGRESVER, TThread.ProcessorCount]));
+  Log(Format(SCptInfoFmt, [GUIVER_APP, GUIVER_VERSION, GUIVER_DATE, IMGRESVER, TThread.ProcessorCount]), llHint);
 
   LoadSettings;
   if not FDialogSettings.AutoSave or not LoadLastProject then
@@ -774,7 +776,7 @@ end;
 procedure TMainDialog.ApplicationProperties1Exception(Sender: TObject;
   E: Exception);
 begin
-  Log(SLogErrorPrefix+E.Message);
+  Log(SLogErrorPrefix+E.Message, llError);
 end;
 
 procedure TMainDialog.EditRenTemplateEnter(Sender: TObject);
@@ -795,7 +797,7 @@ end;
 procedure TMainDialog.ChangeCurrentDir(const Path: string);
 begin
   SetCurrentDir(Path);
-  Log(Format(SMsgCurrentDirFmt, [Path]));
+  Log(Format(SMsgCurrentDirFmt, [Path]), llHint);
 end;
 
 function TMainDialog.GetAppDataFilename(const Filetitle :string; CanCreate :boolean): string;
@@ -885,13 +887,13 @@ begin
     IniTyp := Ini.ReadString('Common', 'Type', 'unknown');
     result := IniTyp=SETTYPE;
     if not result then begin
-       Log(SLogCantLoadSettings);
+       Log(SLogCantLoadSettings, llWarning);
        Exit;
     end;
     IniVer := Ini.ReadString('Common', 'Version', '000');
     result := IniVer=SETVERSION;
     if not result then begin
-      Log(Format(SLogWarningSettingVersionFmt, [IniVer, SETVERSION]));
+      Log(Format(SLogWarningSettingVersionFmt, [IniVer, SETVERSION]), llWarning);
       Exit;
     end;
     Width := Ini.ReadInteger(DIALOGSECTION, 'Width', Width);
@@ -973,13 +975,13 @@ begin
     IniTyp := Ini.ReadString('Common', 'Type', 'unknown');
     result := IniTyp=PRJTYPE;
     if not result then begin
-       Log(SLogCantLoadProject);
+       Log(SLogCantLoadProject, llWarning);
        Exit;
     end;
     IniVer := Ini.ReadString('Common', 'Version', '000');
     result := (IniVer=PRJVERSION) or (IniVer=PRJVERSION200) or (IniVer=PRJVERSION210);
     if not result then begin
-      Log(Format(SLogWarningProjectVersionFmt, [IniVer, PRJVERSION]));
+      Log(Format(SLogWarningProjectVersionFmt, [IniVer, PRJVERSION]), llWarning);
       Exit;
     end;
 
@@ -1112,9 +1114,9 @@ begin
     if result then begin
       FProjectFilename := Filename;
       SetTitle(''''+Filename+'''');
-      Log(Format(SMsgProjectLoadedFromFmt, [Filename]));
+      Log(Format(SMsgProjectLoadedFromFmt, [Filename]), llHint);
       if FProjectDescription<>'' then
-        Log(Format(SMsgProjectDescriptionFmt, [FProjectDescription]));
+        Log(Format(SMsgProjectDescriptionFmt, [FProjectDescription]), llInfo);
       ChangeCurrentDir(ExtractFilePath(Filename));
       FIsSave := true;
       Dirty := false;
@@ -1134,7 +1136,7 @@ begin
     FProjectFilename := Filename;
     SetTitle(''''+Filename+'''');
     ChangeCurrentDir(ExtractFilePath(Filename));
-    Log(Format(SMsgProjectSavedToFmt, [Filename]));
+    Log(Format(SMsgProjectSavedToFmt, [Filename]), llHint);
     FIsSave := true;
     Dirty := false;
   finally
@@ -1687,14 +1689,14 @@ begin
 
       except on E :Exception do
         begin
-          Log(Format(SErrAtFmt, [FProgress*100.0, E.Message]));
+          Log(Format(SErrAtFmt, [FProgress*100.0, E.Message]), llError);
         end;
       end;
     finally
       SourceFilenames.Free;
       Processor.Free;
       FExecuting := false;
-      if FCancelled then Log(Format(SErrCancelledAtFmt, [FProgress*100.0]));
+      if FCancelled then Log(Format(SErrCancelledAtFmt, [FProgress*100.0]), llWarning);
       ActionExecute.Enabled := true;
       ActionExecute.Caption := SCptExecuteA;
       ButtonExecute.Caption := SCptExecute;

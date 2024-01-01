@@ -140,12 +140,17 @@ msgstr "Mehrfache Größe, aber Platzhalter %SIZE% nicht gefunden im Verzeichnis
 #: imgres.sinfresultfmt
 #, object-pascal-format
 msgid "Images: %d, Filter: %s, Sizes: %d, Tasks: %d, Successful: %d, Failed: %d, Elapsed: %.2fs"
-msgstr "Bilder: %d, Filter: %s, Größen: %d, Tasks: %d, Erfolgreich: %d, Fehlerhaft: %d, Vergangen: %.2fs"
+msgstr "Bilder: %d, Filter: %s, Größen: %d, Tasks: %d, erfolgreich: %d, fehlerhaft: %d, vergangen: %.2fs"
 
 #: imgres.smsgcreatingfolderfmt
 #, object-pascal-format
 msgid "Creating folder '%s'..."
 msgstr "Erzeuge Verzeichnis '%s'..."
+
+#: imgres.smsgdownscalingfmt
+#, object-pascal-format
+msgid "Down-scaling '%s' from %dx%d to %dx%d..."
+msgstr "Herunterskaliere '%s' von %dx%d nach %dx%d..."
 
 #: imgres.smsgloadingfmt
 #, object-pascal-format
@@ -161,15 +166,15 @@ msgstr "Lade .tags..."
 msgid "Loading Watermark '%s'..."
 msgstr "Lade Wasserzeichen '%s'..."
 
+#: imgres.smsgnoscalingfmt
+#, object-pascal-format
+msgid "No scaling '%s' (%dx%d to %dx%d)..."
+msgstr "Keine Skalierung '%s' (%dx%d nach %dx%d)..."
+
 #: imgres.smsgreadingexiffmt
 #, object-pascal-format
 msgid "Reading EXIF from '%s'..."
 msgstr "Lese EXIF aus '%s'..."
-
-#: imgres.smsgresamplingfmt
-#, object-pascal-format
-msgid "Resampling '%s' from %dx%d to %dx%d..."
-msgstr "Resample '%s' von %dx%d zu %dx%d..."
 
 #: imgres.smsgsavingfmt
 #, object-pascal-format
@@ -180,6 +185,11 @@ msgstr "Speichere '%s'..."
 msgid "Shaking list of files..."
 msgstr "Mische die Dateiliste..."
 
+#: imgres.smsgupscalingfmt
+#, object-pascal-format
+msgid "Up-scaling '%s' from %dx%d to %dx%d..."
+msgstr "Heraufskaliere '%s' von %dx%d nach %dx%d..."
+
 #: imgres.smsgwarningnocreate
 msgid "Not really creating any image or folder (-nocreate flag)"
 msgstr "Erzeuge nicht wirklich irgendein Bild oder einen Folder (-nocreate Flag)"
@@ -187,7 +197,7 @@ msgstr "Erzeuge nicht wirklich irgendein Bild oder einen Folder (-nocreate Flag)
 #: imgres.smsgwatermarkingfmt
 #, object-pascal-format
 msgid "Watermarking '%s'..."
-msgstr "Drucke Wasserzeichen '%s'..."
+msgstr "Drucke Wasserzeichen auf '%s'..."
 
 #: imgres.smsgwritingexiffmt
 #, object-pascal-format
@@ -198,11 +208,6 @@ msgstr "Schreibe EXIF nach '%s'..."
 #, object-pascal-format
 msgid "Writing Tags Report to '%s'..."
 msgstr "Schreibe Tags Report nach '%s'..."
-
-#: imgres.swrnupsamplingfmt
-#, object-pascal-format
-msgid "Upsampling '%s'"
-msgstr "Vergrößere '%s'"
 
 #: maindlg.scptcancel
 msgctxt "maindlg.scptcancel"

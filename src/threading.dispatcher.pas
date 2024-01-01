@@ -29,7 +29,7 @@ type
   TWorker = class;
 
   // Flags for printing and workers exit messages
-  TLevel = (mlHint, mlNormal, mlWarning, mlCancelled, mlFatal);
+  TLevel = (mlHint, mlInfo, mlWarning, mlCancelled, mlFatal);
 
   TPrintEvent = procedure(Sender :TObject; WorkerId: integer; const Line :string; Level :TLevel) of object;
   TProgressEvent = procedure(Sender :TObject; Progress :single) of object;
@@ -50,7 +50,7 @@ type
     function Execute(Context :TContext) :boolean; virtual; abstract;
     property Worker :TWorker read FWorker;
     function GetTaskSteps :integer; virtual; // Progress system: tells dispatcher how many steps this task goes
-    procedure Print(const Text :string; Level :TLevel = mlNormal);
+    procedure Print(const Text :string; Level :TLevel = mlInfo);
     procedure Progress(Steps :integer);
   public
     property TaskSteps :integer read GetTaskSteps;
@@ -94,7 +94,7 @@ type
   TPrintMessage = class(TMessage)
     Text :string;
     Level :TLevel;
-    constructor Create(Sender :TCustomTask; const Value :string; Level :TLevel = mlNormal);
+    constructor Create(Sender :TCustomTask; const Value :string; Level :TLevel = mlInfo);
   end;
 
   // Progress-messages are created by the task with help of a context
@@ -301,7 +301,7 @@ begin
   while not Terminated do begin
     try
       if FTask.Execute(FContext) then
-        ExitMessage := TExitMessage.Create(FTask, SCptOk, mlNormal)
+        ExitMessage := TExitMessage.Create(FTask, SCptOk, mlInfo)
       else
         ExitMessage := TExitMessage.Create(FTask, SCptCancelled, mlCancelled);
     except on E :Exception do
@@ -466,7 +466,7 @@ begin
               dec(WorkingCount);
 
               // Update stats
-              if Level = mlNormal then
+              if Level = mlInfo then
                 inc(FStats.Successful)
               else
                 inc(FStats.Failed);

@@ -136,6 +136,11 @@ msgstr ""
 msgid "Creating folder '%s'..."
 msgstr ""
 
+#: imgres.smsgdownscalingfmt
+#, object-pascal-format
+msgid "Down-scaling '%s' from %dx%d to %dx%d..."
+msgstr ""
+
 #: imgres.smsgloadingfmt
 #, object-pascal-format
 msgid "Loading '%s'..."
@@ -150,14 +155,14 @@ msgstr ""
 msgid "Loading Watermark '%s'..."
 msgstr ""
 
+#: imgres.smsgnoscalingfmt
+#, object-pascal-format
+msgid "No scaling '%s' (%dx%d to %dx%d)..."
+msgstr ""
+
 #: imgres.smsgreadingexiffmt
 #, object-pascal-format
 msgid "Reading EXIF from '%s'..."
-msgstr ""
-
-#: imgres.smsgresamplingfmt
-#, object-pascal-format
-msgid "Resampling '%s' from %dx%d to %dx%d..."
 msgstr ""
 
 #: imgres.smsgsavingfmt
@@ -167,6 +172,11 @@ msgstr ""
 
 #: imgres.smsgshakingfiles
 msgid "Shaking list of files..."
+msgstr ""
+
+#: imgres.smsgupscalingfmt
+#, object-pascal-format
+msgid "Up-scaling '%s' from %dx%d to %dx%d..."
 msgstr ""
 
 #: imgres.smsgwarningnocreate
@@ -186,11 +196,6 @@ msgstr ""
 #: imgres.smsgwritingtagsreportfmt
 #, object-pascal-format
 msgid "Writing Tags Report to '%s'..."
-msgstr ""
-
-#: imgres.swrnupsamplingfmt
-#, object-pascal-format
-msgid "Upsampling '%s'"
 msgstr ""
 
 #: maindlg.scptcancel
