@@ -1,7 +1,8 @@
 # .gitignore for Lazarus
-lib/
 backup/
 tst/tst*/
+gui/lib/
+cli/lib/
 *.lps
 *.exe
 *.dbg
