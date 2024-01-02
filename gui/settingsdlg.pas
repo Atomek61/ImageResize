@@ -76,6 +76,7 @@ const
 procedure TSettingsDialog.FormCreate(Sender: TObject);
 begin
   FChuckyAnimator := TAnimator.Create;
+  FChuckyAnimator.Resolution := 20;
   LabelCores.Caption := Format(SCptCoresFmt, [TThread.ProcessorCount]);
   ComboBoxBehavior.Items.Add(SCptBehavior0);
   ComboBoxBehavior.Items.Add(SCptBehavior1);

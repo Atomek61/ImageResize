@@ -772,19 +772,19 @@ begin
 
     // Create Destination Folders and delete .info files
     SetLength(Exer.TargetFolders, m);
-    SetLength(Exer.TargetFolderTagsSIZEFile, m);
+//    SetLength(Exer.TargetFolderTagsSIZEFile, m);
     for i:=0 to m-1 do begin
       Exer.TargetFolders[i] := IncludeTrailingPathDelimiter(ExpandFilename(ReplaceStr(FTargetFolder, '%SIZE%', IntToStr(FSizes[i]))));;
-      Exer.TargetFolderTagsSIZEFile[i] := Exer.TargetFolders[i]+Format(DEFAULT_TAGSFMT, [FSizes[i]]);
+//      Exer.TargetFolderTagsSIZEFile[i] := Exer.TargetFolders[i]+Format(DEFAULT_TAGSFMT, [FSizes[i]]);
     end;
     for i:=0 to High(Exer.TargetFolders) do begin
       Print(Format(SMsgCreatingFolderFmt, [Exer.TargetFolders[i]]));
       if not FNoCreate then
         ForceDirectories(Exer.TargetFolders[i]);
-      if FileExists(Exer.TargetFolderTagsSIZEFile[i]) then begin
-        Print(Format(SMsgDeletingTagsSIZEFileFmt, [Exer.TargetFolderTagsSIZEFile[i]]));
-        DeleteFile(Exer.TargetFolderTagsSIZEFile[i]);
-      end;
+      //if FileExists(Exer.TargetFolderTagsSIZEFile[i]) then begin
+      //  Print(Format(SMsgDeletingTagsSIZEFileFmt, [Exer.TargetFolderTagsSIZEFile[i]]));
+      //  DeleteFile(Exer.TargetFolderTagsSIZEFile[i]);
+      //end;
     end;
 
     // For each SourceFilename create a task and prepare the tasks parameters
