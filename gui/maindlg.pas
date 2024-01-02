@@ -2,7 +2,7 @@ unit maindlg;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
-//  ImageResize (c) 2023 Jan Schirrmacher, www.atomek.de
+//  ImageResize (c) 2024 Jan Schirrmacher, www.atomek.de
 //
 //  See https://github.com/Atomek61/ImageResize.git for licensing
 //
@@ -20,7 +20,7 @@ uses
   StdCtrls, ComCtrls, ActnList, ExtCtrls, imgres, aboutdlg, inifiles, strutils,
   LMessages, LCLIntf, Buttons, ImgList, LCLType, LazHelpHTML, BGRABitmap,
   BGRABitmapTypes, BGRASpeedButton, RichMemo, Generics.Collections,
-  mrkeditdlg, WinDirs, updateutils, settings, logging;
+  mrkeditdlg, WinDirs, updateutils, settings, logging, loggingrichmemo;
 
 const
   GUIVER_APP      = 'ImageResize';
@@ -78,19 +78,19 @@ const
   clOrange = $3d69a6;
   clDarkGray = $403040;
 
-  LOGCOLORS :array[TLogLevel] of TColor = (clGray, clDarkGray, clOrange, clMaroon, clRed);
+  LOGCOLORS :array[llHint..llCrash] of TColor = (clGray, clDarkGray, clOrange, clMaroon, clRed);
 
 resourcestring
   SCptDependenciesFmt = 'Build with Lazarus %s, BGRABitmap %s, dExif %s';
   SUrlWebHelp = 'http://www.atomek.de/imageresize/hlp35/gui/en';
   SLocDirHelp = 'hlp\gui\en';
   STxtLicense =
-    'ImageResize Copyright (c) 2023 Jan Schirrmacher, www.atomek.de'#10#10+
+    'ImageResize Copyright (c) 2024 Jan Schirrmacher, www.atomek.de'#10#10+
     'Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy and merge copies of the Software, subject to the following conditions:'#10#10+
     'The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.'#10#10+
     'THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHOR OR COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.';
 
-//Image Resize Copyright (c) 2023 Jan Schirrmacher, www.atomek.de
+//Image Resize Copyright (c) 2024 Jan Schirrmacher, www.atomek.de
 //Hiermit wird jeder Person, die eine Kopie dieser Software und der dazugehörigen Dokumentationsdateien (die „Software“) erhält, kostenlos die Erlaubnis erteilt, uneingeschränkt mit der Software umzugehen, einschließlich, aber nicht beschränkt auf die Rechte zur Nutzung, Vervielfältigung und Zusammenführung von Kopien der Software, vorbehaltlich der folgenden Bedingungen:
 //Der obige Urheberrechtshinweis und dieser Genehmigungshinweis müssen in allen Kopien oder wesentlichen Teilen der Software enthalten sein.
 //DIE SOFTWARE WIRD OHNE MÄNGELGEWÄHR BEREITGESTELLT, OHNE AUSDRÜCKLICHE ODER STILLSCHWEIGENDE GEWÄHRLEISTUNG, EINSCHLIESSLICH, ABER NICHT BESCHRÄNKT AUF GEWÄHRLEISTUNGEN DER MARKTFÄHIGKEIT, EIGNUNG FÜR EINEN BESTIMMTEN ZWECK UND NICHTVERLETZUNG VON RECHTEN DRITTER. DER AUTOR ODER URHEBERRECHTSINHABER IST IN KEINEM FALL HAFTBAR FÜR ANSPRÜCHE, SCHÄDEN ODER SONSTIGE HAFTUNG, OB AUS VERTRAG, UNERLAUBTER HANDLUNG ODER ANDERWEITIG, DIE SICH AUS, AUS ODER IM ZUSAMMENHANG MIT DER SOFTWARE ODER DER NUTZUNG ODER ANDEREN HANDLUNGEN MIT DER SOFTWARE ERGEBEN.
@@ -110,6 +110,7 @@ type
   end;
 
   TMainDialog = class(TForm)
+    ActionSlideShowAfterburner: TAction;
     ActionListParams: TActionList;
     ActionListSource: TActionList;
     ActionSettings: TAction;
@@ -131,13 +132,13 @@ type
     ActionExecute: TAction;
     ButtonExecute: TBGRASpeedButton;
     CheckBoxNoCreate: TCheckBox;
+    CheckBoxImageInfosEnabled: TCheckBox;
     LabelStep1: TLabel;
     LabelStep2: TLabel;
     LabelStep3: TLabel;
     MainActionList: TActionList;
     ApplicationProperties1: TApplicationProperties;
     BrowseSrcFolder: TSelectDirectoryDialog;
-    ButtonBrowseTagsReportFolder: TBitBtn;
     ButtonBrowseMrkFilename: TBitBtn;
     ButtonBrowseSrcFolder: TBitBtn;
     ButtonClearSizes: TBitBtn;
@@ -161,7 +162,6 @@ type
     ComboBoxResampling: TComboBox;
     ComboBoxShuffleSeed: TComboBox;
     EditCopyright: TEdit;
-    EditTagsReportFilename: TEdit;
     EditSrcFolder: TEdit;
     EditSrcMasks: TEdit;
     EditRenTemplate: TComboBox;
@@ -248,7 +248,7 @@ type
     ToolBarSizeButtons: TToolBar;
     ToolButtonNew: TToolButton;
     ToolButton10: TToolButton;
-    ToolButtonListing: TToolButton;
+    ToolButtonSlideshowAfterburner: TToolButton;
     ToolButtonSrcFilenames: TToolButton;
     ToolButtonSrcFolder: TToolButton;
     ToolButtonSettings: TToolButton;
@@ -273,7 +273,6 @@ type
     procedure ActionListCreatorExecute(Sender: TObject);
     procedure ActionSettingsExecute(Sender: TObject);
     procedure ActionSourceExecute(Sender: TObject);
-    procedure ButtonBrowseTagsReportFolderClick(Sender: TObject);
     procedure ButtonBrowseTargetFolderClick(Sender: TObject);
     procedure ButtonBrowseMrkFilenameClick(Sender: TObject);
     procedure ButtonBrowseSrcFilesClick(Sender: TObject);
@@ -334,7 +333,6 @@ type
     FRequiredSteps :array[1..3] of boolean;
     FProcessingSettings :TProcessingSettings;
     FDialogSettings :TDialogSettings;
-    FLogTextParams :TFontParams;
     procedure ChangeCurrentDir(const Path :string);
     function GetAppDataFilename(const Filetitle :string; CanCreate :boolean) :string;
     procedure SetDirty(AValue: boolean);
@@ -350,7 +348,7 @@ type
     function LoadProjectFromFile(const Filename :string) :boolean;
     procedure SaveProjectToFile(const Filename :string);
     function CheckSave :boolean;
-    procedure Log(const Msg :string; Level :TLogLevel = llInfo);
+//    procedure Log(const Msg :string; Level :TLogLevel = llInfo);
     function BoostStrToThreadCount(const Value :string) :integer;
     function ThreadCountToBoostStr(ThreadCount :integer) :string;
     function GetRequiredSteps(Index : integer) :boolean;
@@ -420,9 +418,7 @@ resourcestring
   SErrEnterPlaceholder          = 'Enter placeholder %SIZE% to either the target folder or the file template';
   SErrAtFmt                     = 'Error at %.0f%% - %s';
   SErrCancelledAtFmt            = 'Cancelled at %.0f%%';
-  SErrMissingTagsReport         = 'Missing filename for tags reporting';
   SMsgCurrentDirFmt             = 'Current directory: %s';
-
 
 {$R *.lfm}
 
@@ -539,6 +535,8 @@ begin
   if (SysLocale.PriLangId=7) and not (IsSwitch('L', 'LANGUAGE', LangCode) and SameText(LangCode, 'en')) then
     SetDefaultLang('de');
 
+  TLogger.DefaultLogger := TRichMemoLogger.Create(MemoMessages);
+
   AllowDropFiles := true;
 
   FProcessingSettings := TProcessingSettings.Create;
@@ -578,12 +576,6 @@ begin
   for Resampling in TResampling do
     ComboBoxResampling.Items.Add(RESAMPLING_STRINGS[Resampling]);
 
-  FLogTextParams.Name       := MemoMessages.Font.Name;
-  FLogTextParams.Size       := 9;
-  FLogTextParams.Style      := [];
-  FLogTextParams.HasBkClr   := False;
-  FLogTextParams.Color      :=clWindowText;
-  FLogTextParams.VScriptPos :=vpNormal;
 end;
 
 procedure TMainDialog.FormShow(Sender: TObject);
@@ -699,13 +691,6 @@ begin
     UpdateRequiredStep(1);
     Dirty := true;
   end;
-end;
-
-procedure TMainDialog.ButtonBrowseTagsReportFolderClick(Sender: TObject);
-begin
-  SaveAsDialogTagsReport.Filename := EditTagsReportFilename.Text;
-  if SaveAsDialogTagsReport.Execute then
-    EditTagsReportFilename.Text := SaveAsDialogTagsReport.Filename;
 end;
 
 procedure TMainDialog.ButtonBrowseTargetFolderClick(Sender: TObject);
@@ -950,7 +935,7 @@ begin
     CheckBoxTagCopyright.Checked        := false;
     EditCopyright.Text                  := '';
     CheckBoxTagsReportEnabled.Checked   := false;
-    EditTagsReportFilename.Text         := '';
+    CheckBoxImageInfosEnabled.Checked   := false;
     CheckBoxNoCreate.Checked            := false;
 
     ActionSrcFilenames.Execute;
@@ -1019,7 +1004,7 @@ begin
     CheckBoxTagCopyright.Checked          := ReadBool(SETTINGSSECTION, 'TagCopyright', CheckBoxTagCopyright.Checked);
     EditCopyright.Text                    := ReadString(SETTINGSSECTION, 'Copyright', EditCopyright.Text);
     CheckBoxTagsReportEnabled.Checked     := ReadBool(SETTINGSSECTION, 'TagsReportEnabled', CheckBoxTagsReportEnabled.Checked);
-    EditTagsReportFilename.Text           := ReadString(SETTINGSSECTION, 'TagsReportFilename', EditTagsReportFilename.Text);
+    CheckBoxImageInfosEnabled.Checked     := ReadBool(SETTINGSSECTION, 'ImageInfosEnabled', CheckBoxImageInfosEnabled.Checked);
     CheckBoxNoCreate.Checked              := ReadBool(SETTINGSSECTION, 'NoCreate', DEFAULT_NOCREATE);
     ActionParamSizes.Execute;
   end;
@@ -1065,7 +1050,7 @@ begin
     WriteBool(SETTINGSSECTION, 'TagCopyright', CheckBoxTagCopyright.Checked);
     WriteString(SETTINGSSECTION, 'Copyright', EditCopyright.Text);
     WriteBool(SETTINGSSECTION, 'TagsReportEnabled', CheckBoxTagsReportEnabled.Checked);
-    WriteString(SETTINGSSECTION, 'TagsReportFilename', EditTagsReportFilename.Text);
+    WriteBool(SETTINGSSECTION, 'ImageInfosEnabled', CheckBoxImageInfosEnabled.Checked);
     WriteBool(SETTINGSSECTION, 'NoCreate', CheckBoxNoCreate.Checked);
   end;
 end;
@@ -1207,13 +1192,6 @@ begin
   if OpenDialog.Execute then begin
     LoadProjectFromFile(OpenDialog.Filename);
   end;
-end;
-
-procedure TMainDialog.Log(const Msg: string; Level :TLogLevel);
-begin
-  FLogTextParams.Color := LOGCOLORS[Level];
-  MemoMessages.SetTextAttributes(-1, 0, FLogTextParams);
-  MemoMessages.Lines.Add(Msg);
 end;
 
 function TMainDialog.BoostStrToThreadCount(const Value: string): integer;
@@ -1659,12 +1637,8 @@ begin
           Processor.Copyright := EditCopyright.Text
         else
           Processor.Copyright := '';
-        if CheckBoxTagsReportEnabled.Checked then begin
-          if EditTagsReportFilename.Text = '' then
-            raise Exception.Create(SErrMissingTagsReport);
-          Processor.TagsReportFilename := EditTagsReportFilename.Text;
-        end else
-          Processor.TagsReportFilename := '';
+        Processor.TagsReport := CheckBoxTagsReportEnabled.Checked;
+        Processor.ImageInfos := CheckBoxImageInfosEnabled.Checked;
 
         // NoCreate flag
         Processor.NoCreate := CheckBoxNoCreate.Checked;

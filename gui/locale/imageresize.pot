@@ -136,6 +136,11 @@ msgstr ""
 msgid "Creating folder '%s'..."
 msgstr ""
 
+#: imgres.smsgdeletingtagssizefilefmt
+#, object-pascal-format
+msgid "Deleting tags file '%s'..."
+msgstr ""
+
 #: imgres.smsgdownscalingfmt
 #, object-pascal-format
 msgid "Down-scaling '%s' from %dx%d to %dx%d..."
@@ -322,10 +327,6 @@ msgstr ""
 msgid "Missing source folder"
 msgstr ""
 
-#: maindlg.serrmissingtagsreport
-msgid "Missing filename for tags reporting"
-msgstr ""
-
 #: maindlg.slocdirhelp
 msgid "hlp\\gui\\en"
 msgstr ""
@@ -383,7 +384,7 @@ msgstr ""
 
 #: maindlg.stxtlicense
 msgid ""
-"ImageResize Copyright (c) 2023 Jan Schirrmacher, www.atomek.de\n"
+"ImageResize Copyright (c) 2024 Jan Schirrmacher, www.atomek.de\n"
 "\n"
 "Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy and merge copies of the Software, subject to the following conditions:\n"
 "\n"
@@ -712,6 +713,10 @@ msgstr ""
 msgid "Settings dialog for some global and project-independent settings"
 msgstr ""
 
+#: tmaindialog.actionslideshowafterburner.caption
+msgid "&Cinema"
+msgstr ""
+
 #: tmaindialog.actionsrcfilenames.caption
 msgid "&List of Files"
 msgstr ""
@@ -743,6 +748,16 @@ msgstr ""
 
 #: tmaindialog.caption
 msgid "ImageResize"
+msgstr ""
+
+#: tmaindialog.checkboximageinfosenabled.caption
+msgid "Create Slideshow Infos (.images)"
+msgstr ""
+
+#: tmaindialog.checkboximageinfosenabled.hint
+msgid ""
+"The Slideshow Afterburner requires such files with the\n"
+"names and titles of the images to be displayed."
 msgstr ""
 
 #: tmaindialog.checkboxmrkenabled.caption
@@ -786,7 +801,14 @@ msgstr ""
 
 #: tmaindialog.checkboxtagsreportenabled.caption
 msgctxt "tmaindialog.checkboxtagsreportenabled.caption"
-msgid "Create"
+msgid "Create Tags Report (.tagsreport)"
+msgstr ""
+
+#: tmaindialog.checkboxtagsreportenabled.hint
+msgid ""
+"A .tagsreport file contains all the gathered tags of all origin images.\n"
+"\n"
+"The source may be the EXIF tags or from .tags files."
 msgstr ""
 
 #: tmaindialog.checkboxtagssourceexif.caption
@@ -928,14 +950,6 @@ msgstr ""
 msgid "*.jpg;*.png"
 msgstr ""
 
-#: tmaindialog.edittagsreportfilename.hint
-msgctxt "tmaindialog.edittagsreportfilename.hint"
-msgid ""
-"Enter a destination folder of the resampled images.\n"
-"If multiple sizes are entered, insert a placeholder %SIZE%\n"
-"into the path where the program shall insert the current size ."
-msgstr ""
-
 #: tmaindialog.edittargetfolder.hint
 msgid ""
 "Enter a destination for the resampled images.\n"
@@ -987,7 +1001,7 @@ msgstr ""
 
 #: tmaindialog.groupboxtagsreport.caption
 msgctxt "tmaindialog.groupboxtagsreport.caption"
-msgid "Tags Report"
+msgid "Tags Reporting"
 msgstr ""
 
 #: tmaindialog.groupboxtagsreport.hint

@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, ExtCtrls;
 
 type
-  TGradient = (agLinear, agEaseIn, agEaseOut, agEaseInAndOut);
+  TGradient = (agLinear, agEaseIn, agEaseOut, agEaseInAndOut, agEaseOut2);
   TGradientFunction = function(x :double) :double;
 
 const
@@ -81,8 +81,13 @@ begin
   result := sin(x*PI-PI2)/2.0+0.5;
 end;
 
+function EaseOut2(x :double) :double;
+begin
+  result := 1-SQR(2-2*x)/4;
+end;
+
 const
-  GRADIENTFUNCTIONS :array[TGradient] of TGradientFunction = (@Linear, @EaseIn, @EaseOut, @EaseInAndOut);
+  GRADIENTFUNCTIONS :array[TGradient] of TGradientFunction = (@Linear, @EaseIn, @EaseOut, @EaseInAndOut, @EaseOut2);
 
 { TAnimator }
 

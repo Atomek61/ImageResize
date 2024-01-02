@@ -14,7 +14,7 @@ object SettingsDialog: TSettingsDialog
   OnDestroy = FormDestroy
   OnShow = FormShow
   ShowHint = True
-  LCLVersion = '2.2.6.0'
+  LCLVersion = '3.0.0.3'
   object ButtonOk: TButton
     Left = 342
     Height = 25
@@ -42,7 +42,7 @@ object SettingsDialog: TSettingsDialog
     Height = 19
     Hint = 'When processing the images, if to stop on the first error'
     Top = 45
-    Width = 89
+    Width = 87
     Caption = '&Stop on Error'
     Checked = True
     State = cbChecked
@@ -161,20 +161,20 @@ object SettingsDialog: TSettingsDialog
     Height = 19
     Hint = 'Always save the current settings in a hidden file,'#13#10'so it is available on the next start.'
     Top = 136
-    Width = 73
+    Width = 71
     Caption = '&Auto Save'
-    OnClick = CheckBoxAutoSaveClick
     TabOrder = 3
+    OnClick = CheckBoxAutoSaveClick
   end
   object CheckBoxWarnDirty: TCheckBox
     Left = 112
     Height = 19
     Hint = 'Makes sure that unsaved changes will not be lost, when loading a new project.'
     Top = 160
-    Width = 90
+    Width = 88
     Caption = 'Saving &Query'
-    OnClick = CheckBoxAutoSaveClick
     TabOrder = 4
+    OnClick = CheckBoxAutoSaveClick
   end
   object Bevel2: TBevel
     Left = 0
@@ -191,9 +191,9 @@ object SettingsDialog: TSettingsDialog
     Top = 96
     Width = 108
     ItemHeight = 15
-    OnChange = ComboBoxBehaviorChange
     Style = csDropDownList
     TabOrder = 2
+    OnChange = ComboBoxBehaviorChange
   end
   object LabelBehavior: TLabel
     Left = 112

@@ -45,6 +45,9 @@ const
   IMGRESVER = '3.3';
   IMGRESCPR = 'imgres '+IMGRESVER+' © 2024 Jan Schirrmacher, www.atomek.de';
 
+  TAGSREPORTFILETITLE       = '.tagsreport';
+  IMAGEINFOSFILETITLE       = '.imageinfos';
+
   DEFAULTPNGCOMPRESSION     = 2;
   DEFAULTJPGQUALITY         = 75;
   DEFAULT_RESAMPLING        = rsLanczos2;
@@ -63,8 +66,9 @@ const
   DEFAULT_SHUFFLESEED       = 0;
   DEFAULT_FILETAGS          = nil;
   DEFAULT_COPYRIGHT         = '';
-  DEFAULT_TAGSREPORT        = '.tagsreport';
+  DEFAULT_TAGSFMT           = '.images%d';
   DEFAULT_TAGSOURCES        :TTagsSources = [];
+  DEFAULT_TAGSREPORT        = true;
   DEFAULT_NOCREATE          = false;
 
   DEFSIZES :array[0..15] of integer = (32, 48, 64, 120, 240, 360, 480, 640, 800, 960, 1280, 1600, 1920, 2560, 3840, 4096);
@@ -103,7 +107,8 @@ type
       IsTargetFileRenamingStrategy :boolean;
       SourceFilenames :array of string; // After Shaking
       MrkImages :array of TBGRABitmap;  // Empty, One or for each Size
-      TargetFolders :array of string;   // One or for each Size
+      TargetFolders :array of string;   // One folder for each Size
+      TargetFoldersImageInfos :array of string;  // Names of the .imageinfos files, each folder has at least one
       FilesTags :TFilesTags;            // A database of all tags of all files
       constructor Create;
       destructor Destroy; override;
@@ -124,29 +129,30 @@ type
     end;
 
   private // Processing Params
-    FSourceFilenames    :TStrings;
-    FTargetFolder       :string;
-    FSizes           :TSizes;
-    FJpgQuality      :integer;
-    FPngCompression  :integer;
-    FResampleMode    :TResampleMode;
-    FResampleFilter  :TResampleFilter;
-    FMrkFilename     :string;
+    FSourceFilenames  :TStrings;
+    FTargetFolder     :string;
+    FSizes            :TSizes;
+    FJpgQuality       :integer;
+    FPngCompression   :integer;
+    FResampleMode     :TResampleMode;
+    FResampleFilter   :TResampleFilter;
+    FMrkFilename      :string;
     FMrkFilenameDependsOnSize :boolean; // if MrkFilename contains %SIZE%
-    FMrkSize         :single;
-    FMrkX            :single;
-    FMrkY            :single;
-    FMrkAlpha        :single;
-    FThreadCount     :integer;
-    FStopOnError     :boolean;
-    FRen             :TRenameParams;
-    FShuffle         :boolean;
-    FShuffleSeed     :integer;
-    FTagsSources     :TTagsSources;
-    FTagIDs          :TTagIDs; // 'Copyright',
-    FCopyright       :string;
-    FTagsReportFilename :string;
-    FNoCreate        :boolean;
+    FMrkSize          :single;
+    FMrkX             :single;
+    FMrkY             :single;
+    FMrkAlpha         :single;
+    FThreadCount      :integer;
+    FStopOnError      :boolean;
+    FRen              :TRenameParams;
+    FShuffle          :boolean;
+    FShuffleSeed      :integer;
+    FTagsSources      :TTagsSources;
+    FTagIDs           :TTagIDs; // 'Copyright',
+    FCopyright        :string;
+    FTagsReport       :boolean;
+    FImageInfos       :boolean;
+    FNoCreate         :boolean;
   private
     FCancel :boolean;
     FOnPrint :TPrintEvent;
@@ -166,6 +172,7 @@ type
     procedure SetMrkY(AValue: single);
     procedure SetMrkAlpha(AValue: single);
     procedure SetSourceFilenames(AValue: TStrings);
+    procedure SetTargetFolder(AValue: string);
     procedure SetThreadCount(AValue: integer);
     procedure SetShuffleSeed(AValue :integer);
     function ResampleImg(Img :TBgraBitmap; const Size :TSize) :TBgraBitmap;
@@ -192,7 +199,7 @@ type
     class function NameToResampling(const Str :string) :TResampling;
 
     property SourceFilenames :TStrings read GetSourceFilenames write SetSourceFilenames;
-    property TargetFolder :string read FTargetFolder write FTargetFolder;
+    property TargetFolder :string read FTargetFolder write SetTargetFolder;
     property TargetFiletemplate :string read GetTargetFiletemplate write SetTargetFiletemplate;
     property Sizes :string read GetSizes write SetSizes;
     property JpgQuality :integer read FJpgQuality write SetJpgQuality;
@@ -211,7 +218,8 @@ type
     property TagsSources :TTagsSources read FTagsSources write FTagsSources;
     property TagIDs :TStringArray read FTagIDs write FTagIDs;
     property Copyright :string read FCopyright write FCopyright;
-    property TagsReportFilename :string read FTagsReportFilename write FTagsReportFilename;
+    property TagsReport :boolean read FTagsReport write FTagsReport;
+    property ImageInfos :boolean read FImageInfos write FImageInfos;
     property NoCreate :boolean read FNoCreate write FNoCreate;
     property OnPrint :TPrintEvent read FOnPrint write FOnPrint;
     property OnProgress :TProgressEvent read FOnProgress write FOnProgress;
@@ -251,6 +259,7 @@ resourcestring
   SMsgWritingTagsReportFmt        = 'Writing Tags Report to ''%s''...';
   SMsgReadingExifFmt              = 'Reading EXIF from ''%s''...';
   SMsgCreatingFolderFmt           = 'Creating folder ''%s''...';
+  SMsgDeletingTagsSIZEFileFmt     = 'Deleting tags file ''%s''...';
   SMsgShakingFiles                = 'Shaking list of files...';
   SMsgLoadMrkFileFmt              = 'Loading Watermark ''%s''...';
   SMsgWritingExifFmt              = 'Writing EXIF to ''%s''...';
@@ -274,6 +283,19 @@ const
 
 type
   TIntegerArrayHelper = TArrayHelper<Integer>;
+
+function GetParentDirectory(const Directory :string) :string;
+var
+  i, n :integer;
+begin
+  n := Length(Directory);
+  if (n>0) and (Directory[n]=DirectorySeparator) then
+    dec(n);
+  for i:=n downto 1 do
+    if Directory[i]=DirectorySeparator then
+      Exit(Copy(Directory, 1, i));
+  result := '';
+end;
 
 function TrySizesStrToSizes(const Str :string; out Values :TSizes) :boolean;
 var
@@ -579,7 +601,7 @@ begin
   FTagsSources      := DEFAULT_TAGSOURCES;
   FTagIDs           := nil;
   FCopyright        := DEFAULT_COPYRIGHT;
-  FTagsReportFilename := '';
+  FTagsReport       := DEFAULT_TAGSREPORT;
   FNoCreate         := DEFAULT_NOCREATE;
 end;
 
@@ -661,6 +683,7 @@ var
   Dispatcher :TDispatcher;
   i, j, n, m :integer;
   Item :string;
+  TagsFilename :string;
 begin
   // Check main parameters
   if FSourceFilenames.Count=0 then
@@ -695,15 +718,17 @@ begin
       end;
     end;
 
-    // Check, if the TagsSources are consistent with the other options
-    if (FTagsSources=[]) and ((Length(FTagIds)>0) or (FTagsReportFilename<>'')) then
+    // Check, if EXIF must be read
+    if (FTagsSources=[]) and ((Length(FTagIds)>0) or FTagsReport or FImageInfos) then begin
       include(FTagsSources, tsEXIF);
+      include(FTagsSources, tsTagsFiles);
+    end;
 
     // A Copyright overwrite implicitely requires tagging
     if (FCopyright<>'') and not FTagIDs.contains(TAGID_COPYRIGHT) then
       FTagIDs.Add(TAGID_COPYRIGHT);
 
-    // If required, prepare the tags database
+    // Check if the tags database is required
     if (FTagsSources<>[]) or (Length(FTagIds)>0) then begin
       for i:=0 to n-1 do
         Exer.FilesTags.add(Exer.SourceFilenames[i]);
@@ -719,7 +744,7 @@ begin
     m := Length(FSizes);
 
     // Check, if multiple sizes, then either %SIZE% must be in folder or in renamed filename
-    Exer.IsTargetFileRenamingStrategy := FRen.Enabled and (Pos('%3:s', FRen.FmtStr)>0);
+    Exer.IsTargetFileRenamingStrategy := FRen.Enabled and (Pos('%3:', FRen.FmtStr)>0);
     if Length(FSizes)>1 then begin
       Exer.IsMultipleTargetFolderStrategy := Pos('%SIZE%', FTargetFolder)>0;
       if not Exer.IsMultipleTargetFolderStrategy and not Exer.IsTargetFileRenamingStrategy then
@@ -745,14 +770,21 @@ begin
       end;
     end;
 
-    // Create Destination Folders...
+    // Create Destination Folders and delete .info files
     SetLength(Exer.TargetFolders, m);
-    for i:=0 to m-1 do
-      Exer.TargetFolders[i] := ExpandFilename(ReplaceStr(FTargetFolder, '%SIZE%', IntToStr(FSizes[i])));   ;
+    SetLength(Exer.TargetFolderTagsSIZEFile, m);
+    for i:=0 to m-1 do begin
+      Exer.TargetFolders[i] := IncludeTrailingPathDelimiter(ExpandFilename(ReplaceStr(FTargetFolder, '%SIZE%', IntToStr(FSizes[i]))));;
+      Exer.TargetFolderTagsSIZEFile[i] := Exer.TargetFolders[i]+Format(DEFAULT_TAGSFMT, [FSizes[i]]);
+    end;
     for i:=0 to High(Exer.TargetFolders) do begin
       Print(Format(SMsgCreatingFolderFmt, [Exer.TargetFolders[i]]));
       if not FNoCreate then
         ForceDirectories(Exer.TargetFolders[i]);
+      if FileExists(Exer.TargetFolderTagsSIZEFile[i]) then begin
+        Print(Format(SMsgDeletingTagsSIZEFileFmt, [Exer.TargetFolderTagsSIZEFile[i]]));
+        DeleteFile(Exer.TargetFolderTagsSIZEFile[i]);
+      end;
     end;
 
     // For each SourceFilename create a task and prepare the tasks parameters
@@ -775,9 +807,24 @@ begin
 
     result := Dispatcher.Execute(Tasks);
 
-    if FTagsReportFilename<>'' then begin
-      Print(Format(SMsgWritingTagsReportFmt, [FTagsReportFilename]));
-      Exer.FilesTags.SaveToFile(FTagsReportFilename, Exer.FilesTags.TagIds, [soRelative]);
+    if FTagsReport then begin
+      if Exer.IsMultipleTargetFolderStrategy then
+        TagsFilename := GetParentDirectory(FTargetFolder)+TAGSREPORTFILETITLE
+      else
+        TagsFilename := TargetFolder+TAGSREPORTFILETITLE;
+      Print(Format(SMsgWritingTagsReportFmt, [TagsFilename]));
+      Exer.FilesTags.SaveToFile(TagsFilename, Exer.FilesTags.TagIds, [soRelative]);
+    end;
+
+    if FImageInfos then begin
+      for i:=0 to m-1 do begin
+        if Exer.IsMultipleTargetFolderStrategy then
+          TagsFilename := GetParentDirectory(FTargetFolder)+IMAGEINFOSFILETITLE+IntToStr(FSizes[i])
+        else
+          TagsFilename := Exer.TargetFolders[i]+IMAGEINFOSFILETITLE;
+        Print(Format(SMsgWritingTagsReportFmt, [TagsFilename]));
+
+      end;
     end;
 
     if Assigned(FOnPrint) then with Dispatcher.Stats do
@@ -1074,6 +1121,13 @@ end;
 procedure TProcessor.SetSourceFilenames(AValue: TStrings);
 begin
   FSourceFilenames.Assign(AValue);
+end;
+
+procedure TProcessor.SetTargetFolder(AValue: string);
+begin
+  AValue := IncludeTrailingPathDelimiter(AValue);
+  if FTargetFolder=AValue then Exit;
+  FTargetFolder:=AValue;
 end;
 
 class function TProcessor.GetVersion: string;

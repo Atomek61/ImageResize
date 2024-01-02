@@ -69,7 +69,7 @@ implementation
 
 const
   BEHAVIORMATRIX :array[boolean] of array[boolean] of TBehavior = ((bhChucky, bhStandard), (bhComfortable, bhNeurotic));
-  CHUCKYSPEED = 2.0; // secs to appear
+  CHUCKYSPEED = 1.5; // secs to appear
 
 { TSettingsDialog }
 
@@ -102,7 +102,7 @@ begin
     Max := ImageChucky.Height;
     OnAnimate := @OnAnimateChucky;
     Duration := CHUCKYSPEED;
-    Gradient := agEaseOut;
+    Gradient := agEaseOut2;
   end;
 end;
 
