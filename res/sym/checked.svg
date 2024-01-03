@@ -26,9 +26,9 @@
      showgrid="true"
      showguides="true"
      inkscape:lockguides="true"
-     inkscape:zoom="10.35098"
-     inkscape:cx="41.300438"
-     inkscape:cy="54.487595"
+     inkscape:zoom="7.3192481"
+     inkscape:cx="-1.4345736"
+     inkscape:cy="67.083393"
      inkscape:window-width="2560"
      inkscape:window-height="1417"
      inkscape:window-x="-8"
@@ -69,10 +69,10 @@
      inkscape:label="Dots"
      style="display:inline">
     <path
+       id="path397"
        style="fill:#4e9a06;fill-opacity:1;stroke:none;stroke-width:16;stroke-linecap:square;stroke-linejoin:round"
-       d="M 96,28 C 88,36 68,60 58,84 58,84 51.999988,71.99999 40,60 l -16,4 c 11.999988,7.999992 28,40 28,40 H 68 C 69,84 92,50 108,36 Z"
-       id="path297"
-       sodipodi:nodetypes="cccccccc" />
+       d="M 64,0 C 28.653776,0 0,28.653776 0,64 0,99.346224 28.653776,128 64,128 99.346224,128 128,99.346224 128,64 128,28.653776 99.346224,0 64,0 Z m 0,12 c 28.718807,0 52,23.281193 52,52 0,28.718807 -23.281193,52 -52,52 C 35.281193,116 12,92.718807 12,64 12,35.281193 35.281193,12 64,12 Z M 92,32 C 86,40 68,60 58,84 58,84 55.999988,75.99999 44,64 l -16,4 c 11.999988,7.999992 24,36 24,36 H 68 C 68,84 96,48 104,40 Z"
+       sodipodi:nodetypes="sssssssssscccccccc" />
   </g>
   <g
      inkscape:label="Ebene 1"

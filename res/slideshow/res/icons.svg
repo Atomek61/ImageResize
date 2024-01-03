@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="128"
+   height="128"
+   viewBox="0 0 128 128"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   sodipodi:docname="icons.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     showgrid="true"
+     showguides="true"
+     inkscape:lockguides="true"
+     guidecolor="#29e500"
+     guideopacity="0.6"
+     inkscape:zoom="4.3509259"
+     inkscape:cx="-67.456906"
+     inkscape:cy="84.349862"
+     inkscape:window-width="2560"
+     inkscape:window-height="1417"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1">
+    <inkscape:grid
+       id="grid1"
+       units="px"
+       originx="0"
+       originy="0"
+       spacingx="1"
+       spacingy="1"
+       empcolor="#3f3fff"
+       empopacity="0.25098039"
+       color="#3f3fff"
+       opacity="0.1254902"
+       empspacing="4"
+       dotted="false"
+       gridanglex="30"
+       gridanglez="30"
+       visible="true" />
+    <inkscape:grid
+       id="grid2"
+       units="px"
+       originx="0"
+       originy="0"
+       spacingx="16"
+       spacingy="16"
+       empcolor="#3f3fff"
+       empopacity="0.25098039"
+       color="#bd0000"
+       opacity="0.36078431"
+       empspacing="4"
+       dotted="false"
+       gridanglex="30"
+       gridanglez="30"
+       visible="true" />
+    <sodipodi:guide
+       position="64,-60"
+       orientation="1,0"
+       id="guide2"
+       inkscape:locked="true" />
+    <sodipodi:guide
+       position="-72,64"
+       orientation="0,-1"
+       id="guide3"
+       inkscape:locked="true" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Circle"
+     style="display:none">
+    <path
+       id="path3"
+       style="display:inline;fill:#888888;fill-opacity:1;stroke-width:12;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+       d="M 64,8 A 56,56 0 0 0 8,64 56,56 0 0 0 64,120 56,56 0 0 0 120,64 56,56 0 0 0 64,8 Z m 0,8 A 48,48 0 0 1 112,64 48,48 0 0 1 64,112 48,48 0 0 1 16,64 48,48 0 0 1 64,16 Z"
+       inkscape:label="circle" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Bullet"
+     style="display:none">
+    <circle
+       style="display:inline;fill:#888888;fill-opacity:1;stroke-width:12;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+       id="path4"
+       cx="64"
+       cy="64"
+       r="32"
+       inkscape:label="bullet" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer5"
+     inkscape:label="Lt"
+     style="display:none">
+    <path
+       style="display:inline;fill:#888888;fill-opacity:1;stroke-width:12;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+       d="M 76,20 32,64 76,108 86,98 52,64 86,30 Z"
+       id="path4-3"
+       sodipodi:nodetypes="ccccccc"
+       inkscape:label="lt" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="Gt"
+     style="display:none">
+    <path
+       style="display:inline;fill:#888888;fill-opacity:1;stroke-width:12;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+       d="M 52,20 96,64 52,108 42,98 76,64 42,30 Z"
+       id="path4-0"
+       sodipodi:nodetypes="ccccccc"
+       inkscape:label="gt" />
+  </g>
+  <g
+     inkscape:label="Rect"
+     inkscape:groupmode="layer"
+     id="layer1"
+     style="display:inline">
+    <path
+       id="rect861"
+       style="fill:#808080;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
+       d="m 8,16 v 96 H 120 V 16 Z m 8,8 h 96 v 80 H 16 Z" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer9"
+     inkscape:label="Pause"
+     style="display:none">
+    <path
+       id="rect7"
+       style="fill:#888888;fill-opacity:1;stroke-width:13.8564;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+       d="M 40,40 V 88 H 56 V 40 Z m 32,0 V 88 H 88 V 40 Z"
+       inkscape:label="pause" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer8"
+     inkscape:label="Stop"
+     style="display:none">
+    <rect
+       style="display:none;fill:#888888;fill-opacity:1;stroke-width:12;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+       id="rect6"
+       width="48"
+       height="48"
+       x="40"
+       y="40"
+       inkscape:label="stop" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer10"
+     inkscape:label="Start"
+     style="display:none">
+    <path
+       style="fill:#808080;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
+       d="M 92,64 44,96 V 32 Z"
+       id="path310"
+       sodipodi:nodetypes="cccc"
+       inkscape:label="start" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer6"
+     inkscape:label="Expand"
+     style="display:none">
+    <path
+       style="display:inline;fill:#888888;fill-opacity:1;stroke-width:12;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+       d="m 80,40 -8,-8 h 24 v 24 l -8,-8 -40,40 8,8 H 32 V 72 l 8,8 z"
+       id="path5"
+       sodipodi:nodetypes="ccccccccccc"
+       inkscape:label="expand" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer7"
+     inkscape:label="Shrink"
+     style="display:none">
+    <path
+       id="path6"
+       style="fill:#888888;fill-opacity:1;stroke-width:12;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+       d="M 108,12 88,32 80,24 v 24 h 24 l -8,-8 20,-20 z m -84,68 8,8 -20,20 8,8 20,-20 8,8 V 80 Z"
+       sodipodi:nodetypes="cccccccccccccccc"
+       inkscape:label="shrink" />
+  </g>
+</svg>

@@ -1,0 +1,123 @@
+:root {
+   --svgNormal: hue-rotate(220deg);
+   --svgHover: hue-rotate(240deg);
+  }
+
+.container {
+  position: relative; width: 100%; height: 100%;
+}
+
+.title {
+  Height: 1em;
+  color: #3399ff;
+  filter: drop-shadow(2px 2px 3px black);
+  padding: 0.5em 0 0.5em 0;
+  z-index: 2;
+  text-align: center;
+}
+
+.pictures {
+  width: 100%;
+  height: calc(100% - 4em);
+}
+
+.pictures img {
+  display: none;
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+
+.symbol { 
+  display: inline-block;
+  width: 1em; height: 1em;
+  cursor: pointer;
+  background-size: cover;
+  filter: var(--svgNormal) grayscale(50%) brightness(200%);
+  border-radius: 4px;
+}
+
+.symbol:hover {
+  transition: 0.6s ease;
+  filter: var(--svgHover) grayscale(0%) brightness(200%);
+}
+
+.prev:hover, .next:hover {
+  transition: 0.6s ease;
+  background-color:hsla(80, 50%, 50%, 0.2);
+  border-radius: 4px;
+  filter: var(--svgHosver);
+}
+
+.prev:active, .next:active {
+  background-color:red;
+}
+
+.bullets {
+  user-select: none;
+  height: 1em;
+  padding:0.5em 0 0.5em 0;
+  text-align: center;
+  bottom: 0;
+  cursor: default;
+}
+
+.bullet {
+  background-image: url("bulletoff.svg");
+}
+
+.bullet-active {
+  background-image: url("bulleton.svg");
+}
+
+.cinema {
+  background-image: url("start.svg");
+  margin-left: 1em;
+}
+
+.cinema-playing {
+  background-image: url("stop.svg");
+}
+
+.full {
+  background-image: url("full.svg");
+  margin-left: 1em;
+}
+
+.window {
+  background-image: url("window.svg");
+  margin-left: 1em;
+}
+
+.picture {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+.prev, .next {
+  display: inline-block;
+  position: absolute;
+  width: 2em;
+  height: 3em;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  background-size: cover;
+  filter: var(--svgNormal) opacity(25%);
+  border-radius: 4px;
+}
+
+.prev {
+  background-image: url("prev.svg");
+  left: 10px;
+}
+.next {
+  background-image: url("next.svg");
+  right: 10px;
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}      
+

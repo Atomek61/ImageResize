@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" version="1.1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+ <g style="display:none">
+  <path d="m64 8a56 56 0 0 0-56 56 56 56 0 0 0 56 56 56 56 0 0 0 56-56 56 56 0 0 0-56-56zm0 8a48 48 0 0 1 48 48 48 48 0 0 1-48 48 48 48 0 0 1-48-48 48 48 0 0 1 48-48z" style="display:inline;fill:#888888;paint-order:markers fill stroke;stroke-linecap:round;stroke-linejoin:round;stroke-width:12"/>
+ </g>
+ <g style="display:none">
+  <circle cx="64" cy="64" r="32" style="display:inline;fill:#888888;paint-order:markers fill stroke;stroke-linecap:round;stroke-linejoin:round;stroke-width:12"/>
+ </g>
+ <g style="display:none">
+  <path d="m76 20-44 44 44 44 10-10-34-34 34-34z" style="display:inline;fill:#888888;paint-order:markers fill stroke;stroke-linecap:round;stroke-linejoin:round;stroke-width:12"/>
+ </g>
+ <g style="display:none">
+  <path d="m52 20 44 44-44 44-10-10 34-34-34-34z" style="display:inline;fill:#888888;paint-order:markers fill stroke;stroke-linecap:round;stroke-linejoin:round;stroke-width:12"/>
+ </g>
+ <g>
+  <path d="m8 16v96h112v-96zm8 8h96v80h-96z" style="display:none;fill:#888888;paint-order:markers fill stroke;stroke-linecap:round;stroke-linejoin:round;stroke-width:12"/>
+ </g>
+ <g style="display:none">
+  <path d="m40 40v48h16v-48zm32 0v48h16v-48z" style="fill:#888888;paint-order:markers fill stroke;stroke-linecap:round;stroke-linejoin:round;stroke-width:13.856"/>
+ </g>
+ <g style="display:none">
+  <rect x="40" y="40" width="48" height="48" style="display:none;fill:#888888;paint-order:markers fill stroke;stroke-linecap:round;stroke-linejoin:round;stroke-width:12"/>
+ </g>
+ <g>
+  <path d="m92 64-48 32v-64z" style="fill:#808080;stroke-linecap:round;stroke-linejoin:round;stroke-width:2"/>
+ </g>
+ <g style="display:none">
+  <path d="m80 40-8-8h24v24l-8-8-40 40 8 8h-24v-24l8 8z" style="display:inline;fill:#888888;paint-order:markers fill stroke;stroke-linecap:round;stroke-linejoin:round;stroke-width:12"/>
+ </g>
+ <g style="display:none">
+  <path d="m108 12-20 20-8-8v24h24l-8-8 20-20zm-84 68 8 8-20 20 8 8 20-20 8 8v-24z" style="fill:#888888;paint-order:markers fill stroke;stroke-linecap:round;stroke-linejoin:round;stroke-width:12"/>
+ </g>
+</svg>

@@ -976,6 +976,7 @@ msgid "1"
 msgstr "1"
 
 #: tmaindialog.editrentemplate.hint
+#, fuzzy, badformat
 msgid ""
 "Enter a filename template containing placeholders for special values.\n"
 "This template will be expanded for each resampled image. Insert the\n"
@@ -1595,3 +1596,9 @@ msgstr "Dieser Ordner muss die Bilder und eine .imageinfo-Datei enthalten."
 #: tslideshowdialog.label1.caption
 msgid "Folder with Images:"
 msgstr "Ordner mit Bildern:"
+
+#: webprocessor.serrunregisterwebprocessorfmt
+#, object-pascal-format
+msgid "Unregistered WebProcessor class '%s'."
+msgstr ""
+

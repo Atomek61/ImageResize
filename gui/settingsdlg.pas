@@ -37,7 +37,6 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure ImageChuckyClick(Sender: TObject);
     procedure TimerChuckyTimer(Sender: TObject);
   private
     FBehaviorLocked :boolean;
@@ -111,11 +110,6 @@ begin
     Duration := CHUCKYSPEED;
     Gradient := agEaseOut2;
   end;
-end;
-
-procedure TSettingsDialog.ImageChuckyClick(Sender: TObject);
-begin
-
 end;
 
 procedure TSettingsDialog.CheckBoxAutoSaveClick(Sender: TObject);

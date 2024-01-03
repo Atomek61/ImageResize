@@ -46,7 +46,7 @@ const
   IMGRESCPR = 'imgres '+IMGRESVER+' © 2024 Jan Schirrmacher, www.atomek.de';
 
   TAGSREPORTFILETITLE       = '.tagsreport';
-  IMAGEINFOSFILETITLE       = '.imageinfos';
+  IMAGEINFOSFILETITLE       = '.images';
 
   DEFAULTPNGCOMPRESSION     = 2;
   DEFAULTJPGQUALITY         = 75;
@@ -108,7 +108,7 @@ type
       SourceFilenames :array of string; // After Shaking
       MrkImages :array of TBGRABitmap;  // Empty, One or for each Size
       TargetFolders :array of string;   // One folder for each Size
-      TargetFoldersImageInfos :array of string;  // Names of the .imageinfos files, each folder has at least one
+      TargetFoldersImageInfos :array of string;  // Names of the .images files, each folder has at least one
       FilesTags :TFilesTags;            // A database of all tags of all files
       TagsRequired :boolean;
       constructor Create;
@@ -776,9 +776,9 @@ begin
         ForceDirectories(Exer.TargetFolders[i]);
     end;
 
-    // Delete .imageinfos
+    // Delete .images
     // Depending on the Strategies IsMultipleTargetFolders and IsTargetFileRenamingStrategy
-    // there a 3 tactics of storing .imageinfos
+    // there a 3 tactics of storing .images
     for i:=0 to m-1 do begin
       if Exer.IsMultipleTargetFolderStrategy or not Exer.IsTargetFileRenamingStrategy then
         ImageInfosFilename := Exer.TargetFolders[i]+IMAGEINFOSFILETITLE

@@ -1497,3 +1497,8 @@ msgstr ""
 msgid "Folder with Images:"
 msgstr ""
 
+#: webprocessor.serrunregisterwebprocessorfmt
+#, object-pascal-format
+msgid "Unregistered WebProcessor class '%s'."
+msgstr ""
+

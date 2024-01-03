@@ -8,7 +8,7 @@
    version="1.1"
    id="svg138"
    inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
-   sodipodi:docname="ok.svg"
+   sodipodi:docname="magicwand.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -26,9 +26,9 @@
      showgrid="true"
      showguides="true"
      inkscape:lockguides="true"
-     inkscape:zoom="10.35098"
-     inkscape:cx="41.300438"
-     inkscape:cy="54.487595"
+     inkscape:zoom="5.17549"
+     inkscape:cx="2.2220118"
+     inkscape:cy="86.755071"
      inkscape:window-width="2560"
      inkscape:window-height="1417"
      inkscape:window-x="-8"
@@ -69,10 +69,50 @@
      inkscape:label="Dots"
      style="display:inline">
     <path
-       style="fill:#4e9a06;fill-opacity:1;stroke:none;stroke-width:16;stroke-linecap:square;stroke-linejoin:round"
-       d="M 96,28 C 88,36 68,60 58,84 58,84 51.999988,71.99999 40,60 l -16,4 c 11.999988,7.999992 28,40 28,40 H 68 C 69,84 92,50 108,36 Z"
-       id="path297"
-       sodipodi:nodetypes="cccccccc" />
+       style="fill:#1bf4fb;stroke-linecap:round;stroke-linejoin:round;fill-opacity:1"
+       d="M 16.000001,8 H 24 v 8 l 8,1e-6 V 24 h -8 v 8.000002 H 16 V 24 H 8 V 16.000001 L 16,16 Z"
+       id="path831"
+       sodipodi:nodetypes="ccccccccccccc" />
+    <path
+       style="display:inline;fill:#87ff49;fill-opacity:1;stroke-linecap:round;stroke-linejoin:round"
+       d="M 28.000001,36 H 36 v 8 l 8,10e-7 V 52 h -8 v 8.000002 H 28 V 52 H 20 V 44.000001 L 28,44 Z"
+       id="path831-6"
+       sodipodi:nodetypes="ccccccccccccc" />
+    <g
+       id="g946"
+       transform="rotate(-30,96.000001,51.999989)">
+      <rect
+         style="fill:#000000;stroke-linecap:round;stroke-linejoin:round"
+         id="rect885"
+         width="16"
+         height="72"
+         x="80"
+         y="16.000002" />
+      <rect
+         style="fill:#eeeeec;stroke-linecap:round;stroke-linejoin:round"
+         id="rect887"
+         width="16.000006"
+         height="8"
+         x="80"
+         y="88" />
+      <rect
+         style="fill:#000000;stroke-linecap:round;stroke-linejoin:round"
+         id="rect941"
+         width="15.999995"
+         height="16.000002"
+         x="80.000008"
+         y="96.000008" />
+    </g>
+    <path
+       style="display:inline;fill:#fb4848;stroke-linecap:round;stroke-linejoin:round;fill-opacity:1"
+       d="m 44,12 h 8 v 8 l 8,1e-6 V 28 h -8 v 8.000002 H 44 V 28 H 36 V 20.000001 L 44,20 Z"
+       id="path831-8"
+       sodipodi:nodetypes="ccccccccccccc" />
+    <path
+       style="display:inline;fill:#f03cdc;stroke-linecap:round;stroke-linejoin:round;fill-opacity:1"
+       d="M 20.000001,68 H 28 v 8 l 8,10e-7 V 84 h -8 v 8 H 20 V 84 H 12 V 76.000001 L 20,76 Z"
+       id="path831-83"
+       sodipodi:nodetypes="ccccccccccccc" />
   </g>
   <g
      inkscape:label="Ebene 1"

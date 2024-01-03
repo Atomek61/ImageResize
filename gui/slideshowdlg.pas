@@ -22,6 +22,7 @@ type
     ImageList32: TImageList;
     Label1: TLabel;
     PanelControls: TPanel;
+    procedure FormShow(Sender: TObject);
   private
 
   public
@@ -33,7 +34,17 @@ var
 
 implementation
 
+uses
+  webprocessor;
+
 {$R *.lfm}
+
+{ TSlideshowDialog }
+
+procedure TSlideshowDialog.FormShow(Sender: TObject);
+begin
+  TWebProcessor.Create('D:\Mf\Dev\Lazarus\ImageResize\bin\slideshow.wpr');
+end;
 
 end.
 

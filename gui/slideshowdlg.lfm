@@ -8,6 +8,7 @@ object SlideshowDialog: TSlideshowDialog
   Caption = 'Slideshow Afterburner'
   ClientHeight = 219
   ClientWidth = 503
+  OnShow = FormShow
   LCLVersion = '3.0.0.3'
   object ButtonBrowseTargetFolder: TBitBtn
     Left = 447
@@ -113,6 +114,7 @@ object SlideshowDialog: TSlideshowDialog
       BorderSpacing.Around = 8
       Caption = 'Create'
       Images = ImagesModule.ImageList20x20
+      ImageIndex = 11
       TabOrder = 0
     end
     object ButtonCancel: TBitBtn

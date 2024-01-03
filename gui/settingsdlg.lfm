@@ -10,9 +10,11 @@ object SettingsDialog: TSettingsDialog
   Caption = 'Settings'
   ClientHeight = 245
   ClientWidth = 429
+  DoubleBuffered = False
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
+  ParentDoubleBuffered = False
   ShowHint = True
   LCLVersion = '3.0.0.3'
   object ImageChucky: TImage
@@ -21,7 +23,6 @@ object SettingsDialog: TSettingsDialog
     Top = 77
     Width = 176
     AutoSize = True
-    OnClick = ImageChuckyClick
     Picture.Data = {
       1754506F727461626C654E6574776F726B47726170686963EA2A000089504E47
       0D0A1A0A0000000D49484452000000B0000000A80806000000403264A8000001
@@ -559,6 +560,7 @@ object SettingsDialog: TSettingsDialog
       BorderSpacing.Around = 8
       Caption = 'Ok'
       Images = ImagesModule.ImageList20x20
+      ImageIndex = 2
       TabOrder = 0
     end
     object ButtonCancel: TBitBtn

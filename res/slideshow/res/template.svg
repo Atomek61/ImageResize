@@ -8,7 +8,7 @@
    version="1.1"
    id="svg138"
    inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
-   sodipodi:docname="ok.svg"
+   sodipodi:docname="template.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -26,15 +26,15 @@
      showgrid="true"
      showguides="true"
      inkscape:lockguides="true"
-     inkscape:zoom="10.35098"
-     inkscape:cx="41.300438"
-     inkscape:cy="54.487595"
+     inkscape:zoom="3.6596241"
+     inkscape:cx="105.88519"
+     inkscape:cy="57.656195"
      inkscape:window-width="2560"
      inkscape:window-height="1417"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer3">
+     inkscape:current-layer="layer1">
     <inkscape:grid
        type="xygrid"
        id="grid259"
@@ -63,17 +63,6 @@
   </sodipodi:namedview>
   <defs
      id="defs135" />
-  <g
-     inkscape:groupmode="layer"
-     id="layer3"
-     inkscape:label="Dots"
-     style="display:inline">
-    <path
-       style="fill:#4e9a06;fill-opacity:1;stroke:none;stroke-width:16;stroke-linecap:square;stroke-linejoin:round"
-       d="M 96,28 C 88,36 68,60 58,84 58,84 51.999988,71.99999 40,60 l -16,4 c 11.999988,7.999992 28,40 28,40 H 68 C 69,84 92,50 108,36 Z"
-       id="path297"
-       sodipodi:nodetypes="cccccccc" />
-  </g>
   <g
      inkscape:label="Ebene 1"
      inkscape:groupmode="layer"
