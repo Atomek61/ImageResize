@@ -2,7 +2,7 @@ unit imgres;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
-//  ImageResize (c) 2023 Jan Schirrmacher, www.atomek.de
+//  ImageResize (c) 2024 Jan Schirrmacher, www.atomek.de
 //
 //  See https://github.com/Atomek61/ImageResize.git for licensing
 //
@@ -709,6 +709,7 @@ begin
     if FNoCreate then
       Print(SMsgWarningNoCreate, mlWarning);
 
+    // Build list of SourceFilenames with absolute paths
     n := FSourceFilenames.Count;
     SetLength(Exer.SourceFilenames, n);
     for i:=0 to n-1 do
@@ -761,6 +762,34 @@ begin
     end else
       Exer.IsMultipleTargetFolderStrategy := false;
 
+    // Create Destination Folders
+    SetLength(Exer.TargetFolders, m);
+    if Exer.IsMultipleTargetFolderStrategy then
+      for i:=0 to m-1 do
+        Exer.TargetFolders[i] := IncludeTrailingPathDelimiter(ExpandFilename(ReplaceStr(FTargetFolder, '%SIZE%', IntToStr(FSizes[i]))))
+    else
+      for i:=0 to m-1 do
+        Exer.TargetFolders[i] := IncludeTrailingPathDelimiter(ExpandFilename(FTargetFolder));
+    for i:=0 to m-1 do begin
+      Print(Format(SMsgCreatingFolderFmt, [Exer.TargetFolders[i]]));
+      if not FNoCreate then
+        ForceDirectories(Exer.TargetFolders[i]);
+    end;
+
+    // Delete .imageinfos
+    // Depending on the Strategies IsMultipleTargetFolders and IsTargetFileRenamingStrategy
+    // there a 3 tactics of storing .imageinfos
+    for i:=0 to m-1 do begin
+      if Exer.IsMultipleTargetFolderStrategy or not Exer.IsTargetFileRenamingStrategy then
+        ImageInfosFilename := Exer.TargetFolders[i]+IMAGEINFOSFILETITLE
+      else
+        ImageInfosFilename := Exer.TargetFolders[i]+IMAGEINFOSFILETITLE+IntToStr(FSizes[i]);
+      if FileExists(ImageInfosFilename) then begin
+        Print(Format(SMsgDeletingImageInfosFmt, [ImageInfosFilename]));
+        DeleteFile(ImageInfosFilename);
+      end;
+    end;
+
     // Load MrkImages...
     if FMrkFilename='' then begin
       SetLength(Exer.MrkImages, 0);
@@ -776,21 +805,6 @@ begin
         SetLength(Exer.MrkImages, 1);
         Print(Format(SMsgLoadMrkFileFmt, [ExtractFilename(FMrkFilename)]));
         Exer.MrkImages[0] := TBGRABitmap.Create(FMrkFilename);
-      end;
-    end;
-
-    // Create Destination Folders and delete .imageinfos files
-    SetLength(Exer.TargetFolders, m);
-    for i:=0 to m-1 do
-      Exer.TargetFolders[i] := IncludeTrailingPathDelimiter(ExpandFilename(ReplaceStr(FTargetFolder, '%SIZE%', IntToStr(FSizes[i]))));;
-    for i:=0 to m-1 do begin
-      Print(Format(SMsgCreatingFolderFmt, [Exer.TargetFolders[i]]));
-      if not FNoCreate then
-        ForceDirectories(Exer.TargetFolders[i]);
-      ImageInfosFilename := Exer.TargetFolders[i]+IMAGEINFOSFILETITLE;
-      if FileExists(ImageInfosFilename) then begin
-        Print(Format(SMsgDeletingImageInfosFmt, [ImageInfosFilename]));
-        DeleteFile(ImageInfosFilename);
       end;
     end;
 
@@ -825,17 +839,17 @@ begin
 
     if FImageInfos then begin
       for i:=0 to m-1 do begin
-        if Exer.IsMultipleTargetFolderStrategy then
-          ImageInfosFilename := GetParentDirectory(FTargetFolder)+IMAGEINFOSFILETITLE+IntToStr(FSizes[i])
+        if Exer.IsMultipleTargetFolderStrategy or not Exer.IsTargetFileRenamingStrategy then
+          ImageInfosFilename := Exer.TargetFolders[i]+IMAGEINFOSFILETITLE
         else
-          ImageInfosFilename := Exer.TargetFolders[i]+IMAGEINFOSFILETITLE;
+          ImageInfosFilename := Exer.TargetFolders[i]+IMAGEINFOSFILETITLE+IntToStr(FSizes[i]);
         Print(Format(SMsgWritingTagsReportFmt, [ImageInfosFilename]));
         Exer.FilesTags.SaveImageInfos(ImageInfosFilename, FSizes[i]);
       end;
     end;
 
     if Assigned(FOnPrint) then with Dispatcher.Stats do
-      FOnPrint(self, Format(SInfResultFmt, [n, RESAMPLING_STRINGS[Resampling], m, TaskCount, Successful, Failed, Elapsed/1000.0]));
+      FOnPrint(self, Format(SInfResultFmt, [n, RESAMPLING_STRINGS[Resampling], m, TaskCount, Successful, Failed, Elapsed/1000.0]), llNews);
 
   finally
     Dispatcher.Free;

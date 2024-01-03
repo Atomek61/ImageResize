@@ -55,7 +55,6 @@ type
     EditFont: TEdit;
     FontDialog: TFontDialog;
     ImageLandscape: TImage;
-    ImageList20x20: TImageList;
     ImageList32x32: TImageList;
     Label1: TLabel;
     Label2: TLabel;

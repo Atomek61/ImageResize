@@ -5,7 +5,8 @@ unit settingsdlg;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls, Settings, animator;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Buttons,
+  ExtCtrls, Settings, animator;
 
 type
 
@@ -15,9 +16,9 @@ type
 
   TSettingsDialog = class(TForm)
     Bevel1: TBevel;
-    Bevel2: TBevel;
-    ButtonOk: TButton;
-    ButtonCancel: TButton;
+    Bevel4: TBevel;
+    ButtonCancel: TBitBtn;
+    ButtonOk: TBitBtn;
     CheckBoxWarnDirty: TCheckBox;
     CheckBoxAutoSave: TCheckBox;
     CheckBoxStopOnError: TCheckBox;
@@ -29,12 +30,14 @@ type
     LabelBehavior: TLabel;
     Label8: TLabel;
     LabelCores: TLabel;
+    PanelControls: TPanel;
     TimerChucky: TTimer;
     procedure CheckBoxAutoSaveClick(Sender: TObject);
     procedure ComboBoxBehaviorChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure ImageChuckyClick(Sender: TObject);
     procedure TimerChuckyTimer(Sender: TObject);
   private
     FBehaviorLocked :boolean;
@@ -64,6 +67,9 @@ resourcestring
   SCptBehavior3 = 'Chuck Norris';  //      0          0
 
 implementation
+
+uses
+  maindlg;
 
 {$R *.lfm}
 
@@ -105,6 +111,11 @@ begin
     Duration := CHUCKYSPEED;
     Gradient := agEaseOut2;
   end;
+end;
+
+procedure TSettingsDialog.ImageChuckyClick(Sender: TObject);
+begin
+
 end;
 
 procedure TSettingsDialog.CheckBoxAutoSaveClick(Sender: TObject);

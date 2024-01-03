@@ -177,10 +177,6 @@
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="..\src\imggallery.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
         <Filename Value="..\src\tags.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
@@ -211,6 +207,18 @@
       <Unit>
         <Filename Value="..\src\loggingrichmemo.pas"/>
         <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="slideshowdlg.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="SlideshowDialog"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="imagesmod.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="ImagesModule"/>
+        <ResourceBaseClass Value="DataModule"/>
       </Unit>
     </Units>
   </ProjectOptions>

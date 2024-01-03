@@ -15,7 +15,7 @@ type
   end;
 
 const
-  LOGLEVELSTR :array[TLogLevel] of string = ('', 'DEBUG', 'HINT', 'INFO', 'WARNING', 'ERROR', 'CRASH', 'SPECIAL');
+  LOGLEVELSTR :array[TLogLevel] of string = ('', 'DEBUG', 'HINT', 'INFO', 'NEWS', 'WARNING', 'ERROR', 'CRASH', 'SPECIAL');
 
 
 implementation

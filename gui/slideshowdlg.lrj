@@ -1,0 +1,7 @@
+{"version":1,"strings":[
+{"hash":242723650,"name":"tslideshowdialog.caption","sourcebytes":[83,108,105,100,101,115,104,111,119,32,65,102,116,101,114,98,117,114,110,101,114],"value":"Slideshow Afterburner"},
+{"hash":257333198,"name":"tslideshowdialog.editslideshowfolder.hint","sourcebytes":[84,104,105,115,32,102,111,108,100,101,114,32,109,117,115,116,32,99,111,110,116,97,105,110,32,116,104,101,32,105,109,97,103,101,115,32,97,110,100,32,97,110,32,46,105,109,97,103,101,105,110,102,111,32,102,105,108,101,46],"value":"This folder must contain the images and an .imageinfo file."},
+{"hash":116775466,"name":"tslideshowdialog.label1.caption","sourcebytes":[70,111,108,100,101,114,32,119,105,116,104,32,73,109,97,103,101,115,58],"value":"Folder with Images:"},
+{"hash":78166181,"name":"tslideshowdialog.buttonok.caption","sourcebytes":[67,114,101,97,116,101],"value":"Create"},
+{"hash":77089212,"name":"tslideshowdialog.buttoncancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"}
+]}

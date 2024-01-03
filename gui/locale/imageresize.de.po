@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: aboutdlg.scptavailable
 msgid "Available"
@@ -150,7 +150,7 @@ msgstr "Erzeuge Verzeichnis '%s'..."
 #: imgres.smsgdeletingimageinfosfmt
 #, object-pascal-format
 msgid "Deleting file '%s'..."
-msgstr ""
+msgstr "Lösche Datei '%s'..."
 
 #: imgres.smsgdownscalingfmt
 #, object-pascal-format
@@ -345,11 +345,11 @@ msgstr "hlp\\gui\\de"
 #: maindlg.slogcantloadproject
 msgctxt "maindlg.slogcantloadproject"
 msgid "Cant load ImageResize project File"
-msgstr "Kann ImageResize-Projekt nicht laden."
+msgstr "Kann ImageResize-Projekt nicht laden"
 
 #: maindlg.slogcantloadsettings
 msgid "Cant load ImageResize settings File"
-msgstr "Kann die ImageResize-Einstellungen nicht laden."
+msgstr "Kann die ImageResize-Einstellungen nicht laden"
 
 #: maindlg.slogerrorprefix
 msgid "Error - "
@@ -397,15 +397,6 @@ msgstr ""
 "Wollen Sie die Änderungen speichern?"
 
 #: maindlg.stxtlicense
-#, fuzzy
-#| msgid ""
-#| "ImageResize Copyright (c) 2023 Jan Schirrmacher, www.atomek.de\n"
-#| "\n"
-#| "Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy and merge copies of the Software, subject to the following conditions:\n"
-#| "\n"
-#| "The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n"
-#| "\n"
-#| "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHOR OR COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
 msgid ""
 "ImageResize Copyright (c) 2024 Jan Schirrmacher, www.atomek.de\n"
 "\n"
@@ -415,7 +406,7 @@ msgid ""
 "\n"
 "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHOR OR COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
 msgstr ""
-"ImageResize Copyright (c) 2023 Jan Schirrmacher, www.atomek.de\n"
+"ImageResize Copyright (c) 2024 Jan Schirrmacher, www.atomek.de\n"
 "\n"
 "Hiermit wird jeder Person, die eine Kopie dieser Software und der dazugehörigen Dokumentationsdateien (die „Software“) erhält, kostenlos die Erlaubnis erteilt, uneingeschränkt mit der Software umzugehen, einschließlich, aber nicht beschränkt auf die Rechte zur Nutzung, Vervielfältigung und Zusammenführung von Kopien der Software, vorbehaltlich der folgenden Bedingungen:\n"
 "\n"
@@ -627,8 +618,8 @@ msgstr "&Über"
 
 #: tmaindialog.actioneditwatermark.caption
 msgctxt "tmaindialog.actioneditwatermark.caption"
-msgid "Water&mark..."
-msgstr "&Wasserzeichen"
+msgid "&Watermark..."
+msgstr "&Wasserzeichen..."
 
 #: tmaindialog.actioneditwatermark.hint
 msgctxt "tmaindialog.actioneditwatermark.hint"
@@ -653,10 +644,6 @@ msgstr "&Hilfe"
 #: tmaindialog.actionhelp.hint
 msgid "Opens the local or internet-based HTML help (F1)"
 msgstr "Öffnet die lokale oder die Internet-basierte HTML-Hilfe (F1)"
-
-#: tmaindialog.actionlistcreator.caption
-msgid "Create List"
-msgstr "Erzeuge Liste"
 
 #: tmaindialog.actionnew.caption
 msgctxt "tmaindialog.actionnew.caption"
@@ -740,8 +727,8 @@ msgstr "Speichert die aktuellen Einstellungen in einer anderen Datei"
 
 #: tmaindialog.actionsettings.caption
 msgctxt "tmaindialog.actionsettings.caption"
-msgid "S&ettings..."
-msgstr "Einstellun&gen"
+msgid "Settin&gs..."
+msgstr "Einstellun&gen..."
 
 #: tmaindialog.actionsettings.hint
 msgid "Settings dialog for some global and project-independent settings"
@@ -749,7 +736,7 @@ msgstr "Dialog für einige globale, nicht projektabhängige Einstellungen"
 
 #: tmaindialog.actionslideshowafterburner.caption
 msgid "&Cinema"
-msgstr ""
+msgstr "Web&kino..."
 
 #: tmaindialog.actionsrcfilenames.caption
 msgid "&List of Files"
@@ -786,13 +773,15 @@ msgstr "ImageResize"
 
 #: tmaindialog.checkboximageinfosenabled.caption
 msgid "Create Slideshow Infos (.images)"
-msgstr ""
+msgstr "Erzeuge Webkino Infos (.Images)"
 
 #: tmaindialog.checkboximageinfosenabled.hint
 msgid ""
 "The Slideshow Afterburner requires such files with the\n"
 "names and titles of the images to be displayed."
 msgstr ""
+"Der Slideshow Afterburner benötigt eine solche Datei mit\n"
+"Dateinamen und Titeln der Bilder für die Anzeige."
 
 #: tmaindialog.checkboxmrkenabled.caption
 msgctxt "tmaindialog.checkboxmrkenabled.caption"
@@ -838,11 +827,9 @@ msgid "Copyright"
 msgstr "Copyright"
 
 #: tmaindialog.checkboxtagsreportenabled.caption
-#, fuzzy
-#| msgid "Create"
 msgctxt "tmaindialog.checkboxtagsreportenabled.caption"
 msgid "Create Tags Report (.tagsreport)"
-msgstr "Erzeugen"
+msgstr "Erzeuge Tags Report (.tagsreport)"
 
 #: tmaindialog.checkboxtagsreportenabled.hint
 msgid ""
@@ -850,6 +837,9 @@ msgid ""
 "\n"
 "The source may be the EXIF tags or from .tags files."
 msgstr ""
+"Eine .tagsreport-Datei enthält alle gesammelten Tags zu den Bilders.\n"
+"\n"
+"Quelle können EXIF-Tags oder aus .tags-Dateien sein."
 
 #: tmaindialog.checkboxtagssourceexif.caption
 msgid "Use origins EXIF meta information"
@@ -916,7 +906,7 @@ msgstr ""
 
 #: tmaindialog.comboboxshuffleseed.hint
 msgid "Enter a number, lets say 1000, to create always the same mixed order or 0 for shuffeling always randomly."
-msgstr "Geben Sie eine Zahl, z.B. 1000. um immer die selbe gemischte Ordnung zu erzeugen  oder 0, um immer eine andere Zufallsfolge zu erzeugen. "
+msgstr "Geben Sie eine Zahl, z.B. 1000. um immer die selbe gemischte Ordnung zu erzeugen  oder 0, um immer eine andere Zufallsfolge zu erzeugen."
 
 #: tmaindialog.comboboxshuffleseed.text
 msgctxt "tmaindialog.comboboxshuffleseed.text"
@@ -986,7 +976,6 @@ msgid "1"
 msgstr "1"
 
 #: tmaindialog.editrentemplate.hint
-#, fuzzy, badformat
 msgid ""
 "Enter a filename template containing placeholders for special values.\n"
 "This template will be expanded for each resampled image. Insert the\n"
@@ -1015,7 +1004,7 @@ msgstr "Geben Sie das Verzeichnis mit ihren Bildern ein"
 
 #: tmaindialog.editsrcmasks.hint
 msgctxt "tmaindialog.editsrcmasks.hint"
-msgid "Semicolon separated list of wildcards - filename templates with ? and * placeholders"
+msgid "Semicolon separated list of wildcards - filename templates with ? and * placeholders."
 msgstr "Durch Semikolon getrennte Liste von Wildcards - Dateinamen-Vorlagen mir ? und * Platzhaltern."
 
 #: tmaindialog.editsrcmasks.text
@@ -1158,7 +1147,7 @@ msgid "Click or drag the watermark"
 msgstr "Klicken oder ziehen Sie das Wasserzeichen"
 
 #: tmaindialog.label21.caption
-msgid " Algorithm:"
+msgid "Algorithm:"
 msgstr "Algorithmus:"
 
 #: tmaindialog.label3.caption
@@ -1363,12 +1352,13 @@ msgid "Ok"
 msgstr "Ok"
 
 #: tmrkeditdialog.actionok.hint
+msgctxt "tmrkeditdialog.actionok.hint"
 msgid ""
 "The Ok button becomes available when you\n"
 "save the watermark or load it from a file.\n"
 "\n"
 "This is, because the Image Resize processor\n"
-"always needs a PNG file"
+"always needs a PNG file."
 msgstr ""
 "Die Ok-Schaltfläche wird verfügbar, wenn Sie\n"
 " das Wasserzeichen aus einer Datei laden, oder in einer speichern.\n"
@@ -1383,7 +1373,7 @@ msgstr "&Öffnen"
 #: tmrkeditdialog.actionopen.hint
 msgid ""
 "Open an existing .was file which contains\n"
-"Watermark settings"
+"Watermark settings."
 msgstr "Ein existierende .was-Datei öffnen mit Wasserzeichen-einstellungen "
 
 #: tmrkeditdialog.actionsave.caption
@@ -1393,7 +1383,7 @@ msgstr "&Speichern"
 
 #: tmrkeditdialog.actionsave.hint
 msgctxt "tmrkeditdialog.actionsave.hint"
-msgid "Save the current settings as a .was file and a PNG watermark file"
+msgid "Save the current settings as a .was file and a PNG watermark file."
 msgstr "Die aktuellen Einstellungen als .was-Datei und das Wasserzeichen als PNG-Datei speichern."
 
 #: tmrkeditdialog.actionsaveas.caption
@@ -1426,8 +1416,8 @@ msgstr "&Speichern"
 
 #: tmrkeditdialog.buttonsave.hint
 msgctxt "tmrkeditdialog.buttonsave.hint"
-msgid "Saves the current settings as a .was file and a .png watermark file"
-msgstr "Die aktuellen Einstellungen als .was-Datei und das Wasserzeichen als PNG-Datei speichern."
+msgid "Save the current settings as a .was file and a PNG watermark file."
+msgstr "Speichert die aktuelle Einstellungen als .was-Datei und als PNG-Datei."
 
 #: tmrkeditdialog.caption
 msgid "Watermark Image Editor"
@@ -1532,7 +1522,7 @@ msgid "&Stop on Error"
 msgstr "Anhalten bei &Fehler"
 
 #: tsettingsdialog.checkboxstoponerror.hint
-msgid "When processing the images, if to stop on the first error"
+msgid "When processing the images, if to stop on the first error."
 msgstr "Wenn die Bilder prozessiert werden, ob beim ersten Fehler gestoppt werden soll."
 
 #: tsettingsdialog.checkboxwarndirty.caption
@@ -1543,7 +1533,7 @@ msgstr "Speichern &rückfragen"
 #: tsettingsdialog.checkboxwarndirty.hint
 msgctxt "tsettingsdialog.checkboxwarndirty.hint"
 msgid "Makes sure that unsaved changes will not be lost, when loading a new project."
-msgstr "Verhindert, dass ungesicherte Änderungen verloren gehen"
+msgstr "Verhindert, dass ungesicherte Änderungen verloren gehen."
 
 #: tsettingsdialog.comboboxbehavior.hint
 msgid "Quick Settings for Auto Save and Saving Query"
@@ -1584,3 +1574,24 @@ msgctxt "tsettingsdialog.labelcores.caption"
 msgid "Cores"
 msgstr "Kerne"
 
+#: tslideshowdialog.buttoncancel.caption
+msgctxt "tslideshowdialog.buttoncancel.caption"
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: tslideshowdialog.buttonok.caption
+msgctxt "tslideshowdialog.buttonok.caption"
+msgid "Create"
+msgstr "Erzeugen"
+
+#: tslideshowdialog.caption
+msgid "Slideshow Afterburner"
+msgstr "Web-Kino Nachbrenner"
+
+#: tslideshowdialog.editslideshowfolder.hint
+msgid "This folder must contain the images and an .imageinfo file."
+msgstr "Dieser Ordner muss die Bilder und eine .imageinfo-Datei enthalten."
+
+#: tslideshowdialog.label1.caption
+msgid "Folder with Images:"
+msgstr "Ordner mit Bildern:"

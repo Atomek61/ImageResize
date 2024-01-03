@@ -6,7 +6,7 @@ uses SysUtils;
 
 type
 
-  TLogLevel = (llNone=-2, llDebug=-1, llHint=0, llInfo=1, llWarning=2, llError=3, llCrash=4, llSpecial=5);
+  TLogLevel = (llNone=-2, llDebug=-1, llHint=0, llInfo=1, llNews=2, llWarning=3, llError=4, llCrash=5, llSpecial=6);
   TLogFlag = (lfApp, lfUser, lfSystem);
 
   TLogger = class

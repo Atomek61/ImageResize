@@ -7,8 +7,11 @@
    viewBox="0 0 128 128.00001"
    version="1.1"
    id="svg138"
-   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
    sodipodi:docname="slideshow.svg"
+   inkscape:export-filename="img48\slideshow.png"
+   inkscape:export-xdpi="36"
+   inkscape:export-ydpi="36"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -27,21 +30,25 @@
      showgrid="true"
      showguides="true"
      inkscape:lockguides="true"
-     inkscape:zoom="3.659624"
-     inkscape:cx="193.59912"
-     inkscape:cy="131.70752"
-     inkscape:window-width="2560"
-     inkscape:window-height="1417"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:zoom="1.829812"
+     inkscape:cx="-106.84158"
+     inkscape:cy="195.92177"
+     inkscape:window-width="1920"
+     inkscape:window-height="1057"
+     inkscape:window-x="2552"
+     inkscape:window-y="359"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1">
+     inkscape:current-layer="layer3">
     <inkscape:grid
        type="xygrid"
        id="grid259"
        empspacing="4"
        originx="0"
-       originy="0" />
+       originy="0"
+       spacingy="1"
+       spacingx="1"
+       units="px"
+       visible="true" />
     <inkscape:grid
        type="xygrid"
        id="grid261"
@@ -50,7 +57,9 @@
        color="#e5001f"
        opacity="0.14901961"
        originx="0"
-       originy="0" />
+       originy="0"
+       units="px"
+       visible="true" />
     <sodipodi:guide
        position="-68,64.000005"
        orientation="0,-1"
@@ -112,17 +121,25 @@
      id="layer3"
      inkscape:label="Dots"
      style="display:inline">
+    <rect
+       style="fill:#2e3436;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;paint-order:markers fill stroke"
+       id="rect1"
+       width="128.00002"
+       height="87.999992"
+       x="0"
+       y="19.999998" />
     <g
-       id="g1704">
+       id="g1704"
+       transform="matrix(0.56126691,0,0,0.58333325,28.078921,26.666665)">
       <rect
-         style="fill:url(#linearGradient1681);stroke-linecap:round;stroke-linejoin:round;fill-opacity:1"
+         style="fill:url(#linearGradient1681);fill-opacity:1;stroke-linecap:round;stroke-linejoin:round"
          id="rect3673"
          width="128.00002"
          height="96.000008"
          x="0"
          y="16.000002" />
       <path
-         style="fill:url(#linearGradient1689);stroke-linecap:round;stroke-linejoin:round;fill-opacity:1"
+         style="fill:url(#linearGradient1689);fill-opacity:1;stroke-linecap:round;stroke-linejoin:round"
          d="M 0,80.000005 C 64.000004,24 64.000004,112 128,72 v 40 l -128,1e-5 z"
          id="path3781"
          sodipodi:nodetypes="ccccc" />
@@ -188,42 +205,14 @@
      inkscape:groupmode="layer"
      id="layer1">
     <path
-       style="fill:#cc0000;stroke:none;stroke-linecap:round;stroke-linejoin:round"
-       d="m 4,64.000004 16,-16.000001 4,0 V 80 l -4,5e-6 z"
+       style="fill:#ef2929;stroke:none;stroke-linecap:round;stroke-linejoin:round"
+       d="M 0,64.000003 16,48.000002 h 4 v 31.999997 l -4,5e-6 z"
        id="path315"
        sodipodi:nodetypes="cccccc" />
     <path
-       style="fill:#cc0000;stroke:none;stroke-linecap:round;stroke-linejoin:round"
-       d="M 124,64.000004 108,48.000003 h -4 V 80 l 4,5e-6 z"
+       style="fill:#ef2929;stroke:none;stroke-linecap:round;stroke-linejoin:round"
+       d="M 128,63.999995 112,47.999994 h -4 v 31.999997 l 4,5e-6 z"
        id="path315-0"
        sodipodi:nodetypes="cccccc" />
-    <ellipse
-       style="fill:#cc0000;stroke:none;stroke-linecap:round;stroke-linejoin:round"
-       id="path591"
-       cx="34"
-       cy="120"
-       rx="8"
-       ry="7.9999967" />
-    <ellipse
-       style="fill:#cc0000;stroke:none;stroke-linecap:round;stroke-linejoin:round"
-       id="path591-9"
-       cx="54"
-       cy="120"
-       rx="8"
-       ry="7.9999967" />
-    <ellipse
-       style="fill:#cc0000;stroke:none;stroke-linecap:round;stroke-linejoin:round"
-       id="path591-1"
-       cx="74"
-       cy="120"
-       rx="8"
-       ry="7.9999967" />
-    <ellipse
-       style="fill:#cc0000;stroke:none;stroke-linecap:round;stroke-linejoin:round"
-       id="path591-9-7"
-       cx="94"
-       cy="120"
-       rx="8"
-       ry="7.9999967" />
   </g>
 </svg>

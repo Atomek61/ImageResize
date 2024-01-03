@@ -1,8 +1,6 @@
 {"version":1,"strings":[
 {"hash":213582195,"name":"tsettingsdialog.caption","sourcebytes":[83,101,116,116,105,110,103,115],"value":"Settings"},
-{"hash":1371,"name":"tsettingsdialog.buttonok.caption","sourcebytes":[79,107],"value":"Ok"},
-{"hash":77089212,"name":"tsettingsdialog.buttoncancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
-{"hash":265706610,"name":"tsettingsdialog.checkboxstoponerror.hint","sourcebytes":[87,104,101,110,32,112,114,111,99,101,115,115,105,110,103,32,116,104,101,32,105,109,97,103,101,115,44,32,105,102,32,116,111,32,115,116,111,112,32,111,110,32,116,104,101,32,102,105,114,115,116,32,101,114,114,111,114],"value":"When processing the images, if to stop on the first error"},
+{"hash":224774078,"name":"tsettingsdialog.checkboxstoponerror.hint","sourcebytes":[87,104,101,110,32,112,114,111,99,101,115,115,105,110,103,32,116,104,101,32,105,109,97,103,101,115,44,32,105,102,32,116,111,32,115,116,111,112,32,111,110,32,116,104,101,32,102,105,114,115,116,32,101,114,114,111,114,46],"value":"When processing the images, if to stop on the first error."},
 {"hash":184204946,"name":"tsettingsdialog.checkboxstoponerror.caption","sourcebytes":[38,83,116,111,112,32,111,110,32,69,114,114,111,114],"value":"&Stop on Error"},
 {"hash":260788426,"name":"tsettingsdialog.label8.caption","sourcebytes":[38,84,104,114,101,97,100,115,58],"value":"&Threads:"},
 {"hash":115819950,"name":"tsettingsdialog.comboboxthreadsused.hint","sourcebytes":[73,109,97,103,101,82,101,115,105,122,101,32,117,115,101,115,32,116,104,114,101,97,100,32,112,111,111,108,105,110,103,32,116,111,32,98,101,110,101,102,105,116,13,10,116,104,101,32,102,117,108,108,32,99,111,109,112,117,116,101,114,115,32,112,111,119,101,114,46,13,10,13,10,84,104,101,32,110,117,109,98,101,114,32,111,102,32,116,104,114,101,97,100,115,32,115,104,111,117,108,100,32,98,101,32,108,105,109,105,116,101,100,13,10,116,111,32,116,104,101,32,97,118,97,105,108,97,98,108,101,32,110,117,109,98,101,114,32,111,102,32,99,111,114,101,115,46],"value":"ImageResize uses thread pooling to benefit\r\nthe full computers power.\r\n\r\nThe number of threads should be limited\r\nto the available number of cores."},
@@ -13,5 +11,7 @@
 {"hash":59977326,"name":"tsettingsdialog.checkboxwarndirty.hint","sourcebytes":[77,97,107,101,115,32,115,117,114,101,32,116,104,97,116,32,117,110,115,97,118,101,100,32,99,104,97,110,103,101,115,32,119,105,108,108,32,110,111,116,32,98,101,32,108,111,115,116,44,32,119,104,101,110,32,108,111,97,100,105,110,103,32,97,32,110,101,119,32,112,114,111,106,101,99,116,46],"value":"Makes sure that unsaved changes will not be lost, when loading a new project."},
 {"hash":188069977,"name":"tsettingsdialog.checkboxwarndirty.caption","sourcebytes":[83,97,118,105,110,103,32,38,81,117,101,114,121],"value":"Saving &Query"},
 {"hash":251807385,"name":"tsettingsdialog.comboboxbehavior.hint","sourcebytes":[81,117,105,99,107,32,83,101,116,116,105,110,103,115,32,102,111,114,32,65,117,116,111,32,83,97,118,101,32,97,110,100,32,83,97,118,105,110,103,32,81,117,101,114,121],"value":"Quick Settings for Auto Save and Saving Query"},
-{"hash":149350330,"name":"tsettingsdialog.labelbehavior.caption","sourcebytes":[38,66,101,104,97,118,105,111,117,114,58],"value":"&Behaviour:"}
+{"hash":149350330,"name":"tsettingsdialog.labelbehavior.caption","sourcebytes":[38,66,101,104,97,118,105,111,117,114,58],"value":"&Behaviour:"},
+{"hash":1371,"name":"tsettingsdialog.buttonok.caption","sourcebytes":[79,107],"value":"Ok"},
+{"hash":77089212,"name":"tsettingsdialog.buttoncancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"}
 ]}

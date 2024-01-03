@@ -20,7 +20,7 @@ uses
   StdCtrls, ComCtrls, ActnList, ExtCtrls, imgres, aboutdlg, inifiles, strutils,
   LMessages, LCLIntf, Buttons, ImgList, LCLType, LazHelpHTML, BGRABitmap,
   BGRABitmapTypes, BGRASpeedButton, RichMemo, Generics.Collections,
-  mrkeditdlg, WinDirs, updateutils, settings, logging, loggingrichmemo;
+  mrkeditdlg, WinDirs, updateutils, settings, logging, loggingrichmemo, imagesmod;
 
 const
   GUIVER_APP      = 'ImageResize';
@@ -78,7 +78,7 @@ const
   clOrange = $3d69a6;
   clDarkGray = $403040;
 
-  LOGCOLORS :array[llHint..llCrash] of TColor = (clGray, clDarkGray, clOrange, clMaroon, clRed);
+  LOGCOLORS :array[llHint..llCrash] of TColor = (clGray, clDarkGray, clGreen, clOrange, clMaroon, clRed);
 
 resourcestring
   SCptDependenciesFmt = 'Build with Lazarus %s, BGRABitmap %s, dExif %s';
@@ -116,7 +116,6 @@ type
     ActionSettings: TAction;
     ActionSrcFolder: TAction;
     ActionSrcFilenames: TAction;
-    ActionListCreator: TAction;
     ActionParamTagging: TAction;
     ActionParamWatermark: TAction;
     ActionParamRenaming: TAction;
@@ -186,7 +185,6 @@ type
     GroupBoxPngOptions: TGroupBox;
     HTMLBrowserHelpViewer: THTMLBrowserHelpViewer;
     HTMLHelpDatabase: THTMLHelpDatabase;
-    ImageList20x20: TImageList;
     ImageList32x32: TImageList;
     Label1: TLabel;
     Label10: TLabel;
@@ -272,6 +270,7 @@ type
     UpDownMrkY: TUpDown;
     procedure ActionListCreatorExecute(Sender: TObject);
     procedure ActionSettingsExecute(Sender: TObject);
+    procedure ActionSlideShowAfterburnerExecute(Sender: TObject);
     procedure ActionSourceExecute(Sender: TObject);
     procedure ButtonBrowseTargetFolderClick(Sender: TObject);
     procedure ButtonBrowseMrkFilenameClick(Sender: TObject);
@@ -373,7 +372,7 @@ var
 implementation
 
 uses
-  math, helpintfs, Windows, FileUtil, tags, webcreatordlg, settingsdlg;
+  math, helpintfs, Windows, FileUtil, tags, slideshowdlg, settingsdlg;
 
 const
   SCptRandom        = '<random>';
@@ -668,8 +667,6 @@ end;
 
 procedure TMainDialog.ActionListCreatorExecute(Sender: TObject);
 begin
-  WebCreatorDialog := TWebCreatorDialog.Create(self);
-  WebCreatorDialog.ShowModal;
 end;
 
 procedure TMainDialog.ActionSettingsExecute(Sender: TObject);
@@ -680,6 +677,12 @@ begin
     SettingsDialog.GetProcessingSettings(FProcessingSettings);
     SettingsDialog.GetDialogSettings(FDialogSettings);
   end;
+end;
+
+procedure TMainDialog.ActionSlideShowAfterburnerExecute(Sender: TObject);
+begin
+  SlideshowDialog.ShowModal;
+
 end;
 
 procedure TMainDialog.ActionSourceExecute(Sender: TObject);
@@ -1101,7 +1104,7 @@ begin
       SetTitle(''''+Filename+'''');
       Log(Format(SMsgProjectLoadedFromFmt, [Filename]), llHint);
       if FProjectDescription<>'' then
-        Log(Format(SMsgProjectDescriptionFmt, [FProjectDescription]), llInfo);
+        Log(Format(SMsgProjectDescriptionFmt, [FProjectDescription]), llNews);
       ChangeCurrentDir(ExtractFilePath(Filename));
       FIsSave := true;
       Dirty := false;

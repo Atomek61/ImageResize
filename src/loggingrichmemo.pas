@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, richmemo, graphics, logging, loggingtypes;
 
 const
-  RICHCOLORS :array[llHint..llCrash] of TColor = (clDkGray, clWindowText, clOlive, clMaroon, clRed);
+  RICHCOLORS :array[llHint..llCrash] of TColor = (clDkGray, clWindowText, clGreen, clOlive, clMaroon, clRed);
 
 type
 

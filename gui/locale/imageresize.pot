@@ -593,7 +593,7 @@ msgstr ""
 
 #: tmaindialog.actioneditwatermark.caption
 msgctxt "tmaindialog.actioneditwatermark.caption"
-msgid "Water&mark..."
+msgid "&Watermark..."
 msgstr ""
 
 #: tmaindialog.actioneditwatermark.hint
@@ -618,10 +618,6 @@ msgstr ""
 
 #: tmaindialog.actionhelp.hint
 msgid "Opens the local or internet-based HTML help (F1)"
-msgstr ""
-
-#: tmaindialog.actionlistcreator.caption
-msgid "Create List"
 msgstr ""
 
 #: tmaindialog.actionnew.caption
@@ -706,7 +702,7 @@ msgstr ""
 
 #: tmaindialog.actionsettings.caption
 msgctxt "tmaindialog.actionsettings.caption"
-msgid "S&ettings..."
+msgid "Settin&gs..."
 msgstr ""
 
 #: tmaindialog.actionsettings.hint
@@ -943,7 +939,7 @@ msgstr ""
 
 #: tmaindialog.editsrcmasks.hint
 msgctxt "tmaindialog.editsrcmasks.hint"
-msgid "Semicolon separated list of wildcards - filename templates with ? and * placeholders"
+msgid "Semicolon separated list of wildcards - filename templates with ? and * placeholders."
 msgstr ""
 
 #: tmaindialog.editsrcmasks.text
@@ -1070,7 +1066,7 @@ msgid "Click or drag the watermark"
 msgstr ""
 
 #: tmaindialog.label21.caption
-msgid " Algorithm:"
+msgid "Algorithm:"
 msgstr ""
 
 #: tmaindialog.label3.caption
@@ -1266,12 +1262,13 @@ msgid "Ok"
 msgstr ""
 
 #: tmrkeditdialog.actionok.hint
+msgctxt "tmrkeditdialog.actionok.hint"
 msgid ""
 "The Ok button becomes available when you\n"
 "save the watermark or load it from a file.\n"
 "\n"
 "This is, because the Image Resize processor\n"
-"always needs a PNG file"
+"always needs a PNG file."
 msgstr ""
 
 #: tmrkeditdialog.actionopen.caption
@@ -1282,7 +1279,7 @@ msgstr ""
 #: tmrkeditdialog.actionopen.hint
 msgid ""
 "Open an existing .was file which contains\n"
-"Watermark settings"
+"Watermark settings."
 msgstr ""
 
 #: tmrkeditdialog.actionsave.caption
@@ -1292,7 +1289,7 @@ msgstr ""
 
 #: tmrkeditdialog.actionsave.hint
 msgctxt "tmrkeditdialog.actionsave.hint"
-msgid "Save the current settings as a .was file and a PNG watermark file"
+msgid "Save the current settings as a .was file and a PNG watermark file."
 msgstr ""
 
 #: tmrkeditdialog.actionsaveas.caption
@@ -1325,7 +1322,7 @@ msgstr ""
 
 #: tmrkeditdialog.buttonsave.hint
 msgctxt "tmrkeditdialog.buttonsave.hint"
-msgid "Saves the current settings as a .was file and a .png watermark file"
+msgid "Save the current settings as a .was file and a PNG watermark file."
 msgstr ""
 
 #: tmrkeditdialog.caption
@@ -1431,7 +1428,7 @@ msgid "&Stop on Error"
 msgstr ""
 
 #: tsettingsdialog.checkboxstoponerror.hint
-msgid "When processing the images, if to stop on the first error"
+msgid "When processing the images, if to stop on the first error."
 msgstr ""
 
 #: tsettingsdialog.checkboxwarndirty.caption
@@ -1476,5 +1473,27 @@ msgstr ""
 #: tsettingsdialog.labelcores.caption
 msgctxt "tsettingsdialog.labelcores.caption"
 msgid "Cores"
+msgstr ""
+
+#: tslideshowdialog.buttoncancel.caption
+msgctxt "tslideshowdialog.buttoncancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tslideshowdialog.buttonok.caption
+msgctxt "tslideshowdialog.buttonok.caption"
+msgid "Create"
+msgstr ""
+
+#: tslideshowdialog.caption
+msgid "Slideshow Afterburner"
+msgstr ""
+
+#: tslideshowdialog.editslideshowfolder.hint
+msgid "This folder must contain the images and an .imageinfo file."
+msgstr ""
+
+#: tslideshowdialog.label1.caption
+msgid "Folder with Images:"
 msgstr ""
 
