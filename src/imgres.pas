@@ -110,6 +110,7 @@ type
       TargetFolders :array of string;   // One folder for each Size
       TargetFoldersImageInfos :array of string;  // Names of the .imageinfos files, each folder has at least one
       FilesTags :TFilesTags;            // A database of all tags of all files
+      TagsRequired :boolean;
       constructor Create;
       destructor Destroy; override;
     end;
@@ -125,7 +126,7 @@ type
       ProcRes :TExecutionRessources;
       SourceFilename :string;
       SourceFileIndex :integer;
-      Tags :TTags;
+      FileTags :TTags;
     end;
 
   private // Processing Params
@@ -259,7 +260,7 @@ resourcestring
   SMsgWritingTagsReportFmt        = 'Writing Tags Report to ''%s''...';
   SMsgReadingExifFmt              = 'Reading EXIF from ''%s''...';
   SMsgCreatingFolderFmt           = 'Creating folder ''%s''...';
-  SMsgDeletingTagsSIZEFileFmt     = 'Deleting tags file ''%s''...';
+  SMsgDeletingImageInfosFmt       = 'Deleting file ''%s''...';
   SMsgShakingFiles                = 'Shaking list of files...';
   SMsgLoadMrkFileFmt              = 'Loading Watermark ''%s''...';
   SMsgWritingExifFmt              = 'Writing EXIF to ''%s''...';
@@ -426,16 +427,18 @@ begin
       try
         ReadExifTags(SourceFilename, ExifTags, ExifTagIds);
         for TagId in ExifTagIds do
-          if not Tags.ContainsKey(TagId) then
-            Tags.AddOrSetValue(TagId, ExifTags[TagId]);
+          if not FileTags.ContainsKey(TagId) then
+            FileTags.AddOrSetValue(TagId, ExifTags[TagId]);
       finally
         ExifTags.Free;
       end;
     end;
 
     if Processor.FCopyright<>'' then
-      Tags.AddOrSetValue(TAGID_COPYRIGHT, Processor.FCopyright);
+      FileTags.AddOrSetValue(TAGID_COPYRIGHT, Processor.FCopyright);
 
+    ////////////////////////////////////////////////////
+    // Big SIZE loop
     m := Length(Processor.FSizes);
     for i:=0 to m-1 do begin
 
@@ -550,6 +553,10 @@ begin
         if not Processor.FNoCreate then
           TargetImg.SaveToFile(TargetFilename, Writer);
 
+        // Store TargetFilename in FileTags
+        if ProcRes.TagsRequired then
+          FileTags.Add(IntToStr(Size), TargetFilename);
+
       finally
         Writer.Free;
         TargetImg.Free;
@@ -559,7 +566,7 @@ begin
       if (Length(Processor.FTagIds)>0) and IsJPEG(TargetFilename) then begin
         Print(Format(SMsgWritingExifFmt, [TargetFilename]));
         if not Processor.FNoCreate then
-          WriteExifTags(TargetFilename, Tags, Processor.FTagIds);
+          WriteExifTags(TargetFilename, FileTags, Processor.FTagIds);
       end;
 
       Progress(1);
@@ -684,6 +691,7 @@ var
   i, j, n, m :integer;
   Item :string;
   TagsFilename :string;
+  ImageInfosFilename :string;
 begin
   // Check main parameters
   if FSourceFilenames.Count=0 then
@@ -729,7 +737,8 @@ begin
       FTagIDs.Add(TAGID_COPYRIGHT);
 
     // Check if the tags database is required
-    if (FTagsSources<>[]) or (Length(FTagIds)>0) then begin
+    Exer.TagsRequired := (FTagsSources<>[]) or (Length(FTagIds)>0);
+    if Exer.TagsRequired then begin
       for i:=0 to n-1 do
         Exer.FilesTags.add(Exer.SourceFilenames[i]);
 
@@ -770,21 +779,19 @@ begin
       end;
     end;
 
-    // Create Destination Folders and delete .info files
+    // Create Destination Folders and delete .imageinfos files
     SetLength(Exer.TargetFolders, m);
-//    SetLength(Exer.TargetFolderTagsSIZEFile, m);
-    for i:=0 to m-1 do begin
+    for i:=0 to m-1 do
       Exer.TargetFolders[i] := IncludeTrailingPathDelimiter(ExpandFilename(ReplaceStr(FTargetFolder, '%SIZE%', IntToStr(FSizes[i]))));;
-//      Exer.TargetFolderTagsSIZEFile[i] := Exer.TargetFolders[i]+Format(DEFAULT_TAGSFMT, [FSizes[i]]);
-    end;
-    for i:=0 to High(Exer.TargetFolders) do begin
+    for i:=0 to m-1 do begin
       Print(Format(SMsgCreatingFolderFmt, [Exer.TargetFolders[i]]));
       if not FNoCreate then
         ForceDirectories(Exer.TargetFolders[i]);
-      //if FileExists(Exer.TargetFolderTagsSIZEFile[i]) then begin
-      //  Print(Format(SMsgDeletingTagsSIZEFileFmt, [Exer.TargetFolderTagsSIZEFile[i]]));
-      //  DeleteFile(Exer.TargetFolderTagsSIZEFile[i]);
-      //end;
+      ImageInfosFilename := Exer.TargetFolders[i]+IMAGEINFOSFILETITLE;
+      if FileExists(ImageInfosFilename) then begin
+        Print(Format(SMsgDeletingImageInfosFmt, [ImageInfosFilename]));
+        DeleteFile(ImageInfosFilename);
+      end;
     end;
 
     // For each SourceFilename create a task and prepare the tasks parameters
@@ -795,8 +802,8 @@ begin
       Task.ProcRes := Exer;
       Task.SourceFilename := Exer.SourceFilenames[i];
       Task.SourceFileIndex := i;
-      if Assigned(Exer.FilesTags) then
-        Exer.FilesTags.TryGetValue(Task.SourceFilename, Task.Tags);
+      if Exer.TagsRequired then
+        Exer.FilesTags.TryGetValue(Task.SourceFilename, Task.FileTags);
       Tasks.Add(Task);
     end;
 
@@ -819,11 +826,11 @@ begin
     if FImageInfos then begin
       for i:=0 to m-1 do begin
         if Exer.IsMultipleTargetFolderStrategy then
-          TagsFilename := GetParentDirectory(FTargetFolder)+IMAGEINFOSFILETITLE+IntToStr(FSizes[i])
+          ImageInfosFilename := GetParentDirectory(FTargetFolder)+IMAGEINFOSFILETITLE+IntToStr(FSizes[i])
         else
-          TagsFilename := Exer.TargetFolders[i]+IMAGEINFOSFILETITLE;
-        Print(Format(SMsgWritingTagsReportFmt, [TagsFilename]));
-
+          ImageInfosFilename := Exer.TargetFolders[i]+IMAGEINFOSFILETITLE;
+        Print(Format(SMsgWritingTagsReportFmt, [ImageInfosFilename]));
+        Exer.FilesTags.SaveImageInfos(ImageInfosFilename, FSizes[i]);
       end;
     end;
 

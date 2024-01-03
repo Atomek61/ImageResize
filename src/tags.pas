@@ -79,6 +79,7 @@ type
     procedure Add(Filenames :TStrings); overload;
     procedure LoadTagsFiles;
     procedure SaveToFile(const LstFilename :string; const TagIDs :TTagIDs; Options :TSaveOptions = []);
+    procedure SaveImageInfos(const ImageInfosFilename :string; Size :integer);
     function TagIDs :TTagIDs;
   end;
 
@@ -315,6 +316,33 @@ begin
       end;
     end;
     s.SaveToFile(LstFilename, TEncoding.UTF8);
+  finally
+    s.Free;
+  end;
+end;
+
+procedure TFilesTags.SaveImageInfos(const ImageInfosFilename: string; Size: integer);
+var
+  i :integer;
+  FileTags :TTags;
+  s :TStringList;
+  Line :string;
+  BasePath :string;
+  TargetFilename :string;
+  Title :string;
+begin
+  BasePath := ExpandFilename(ExtractFilePath(ImageInfosFilename));
+  s := TStringList.Create;
+  try
+    s.WriteBOM := true;
+    s.Add('Filename, Title');
+    for i:=0 to FFilenames.Count-1 do if TryGetValue(FFilenames[i], FileTags) and FileTags.TryGetValue(IntToStr(Size), TargetFilename) then begin
+      Line := ExtractRelativePath(BasePath, TargetFilename)+', ';
+      if FileTags.TryGetValue('Title', Title) then
+        Line := Line + QuotedIfComma(Title);
+      s.Add(Line);
+    end;
+    s.SaveToFile(ImageInfosFilename, TEncoding.UTF8);
   finally
     s.Free;
   end;

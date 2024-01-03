@@ -136,9 +136,9 @@ msgstr ""
 msgid "Creating folder '%s'..."
 msgstr ""
 
-#: imgres.smsgdeletingtagssizefilefmt
+#: imgres.smsgdeletingimageinfosfmt
 #, object-pascal-format
-msgid "Deleting tags file '%s'..."
+msgid "Deleting file '%s'..."
 msgstr ""
 
 #: imgres.smsgdownscalingfmt
