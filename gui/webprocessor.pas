@@ -5,14 +5,17 @@ unit webprocessor;
 interface
 
 uses
-  Classes, SysUtils, Controls, Forms, IniFiles, Generics.Collections, webprocessorinfofrm;
+  Classes, SysUtils, Controls, Forms, IniFiles, Generics.Collections,
+  webprocessorinfofrm, taskparamsfrm, taskparamfrm;
 
 type
   TWebProcessor = class;
   TWebProcessorClass = class of TWebProcessor;
-  TTaskClass = class of TTask;
   TWebProcessors = TObjectList<TWebProcessor>;
-
+  TTask = class;
+  TTaskClass = class of TTask;
+  TTaskClasses = TDictionary<string, TTaskClass>;
+  TTasks = TObjectList<TTask>;
   TFeature = (wpfDialog);
   TFeatures = set of TFeature;
 
@@ -28,14 +31,17 @@ type
     FDate :TDateTime;
     FIniFile :TCustomIniFile;
     FIconFile :string;
+    FTasks :TTasks;
+    FTargetFolder :string;
   public
     constructor Create(IniFile :TCustomIniFile); virtual; overload;
+    destructor Destroy; override;
     class procedure Register(ProcessorClass :TWebProcessorClass);
     class function Create(const Filename :string) :TWebProcessor; overload;
     class function Scan(const Folder :string) :TWebProcessors;
     procedure SaveSettings(const Section :string; Store :TCustomInifile); virtual; abstract;
     procedure Execute;
-    function ShowDialog(Parent :TWinControl) :TFrame;
+    function GetParamsFrame(Parent :TWinControl) :TTaskParamsFrame;
     function GetInfoFrameClass :TWebProcessorInfoFrameClass; virtual;
     property Folder :string read FFolder;
     property Features :TFeatures read FFeatures;
@@ -44,14 +50,28 @@ type
     property Title :string read FTitle;
     property Description :string read FDescription;
     property IconFile :string read FIconFile;
+    property TargetFolder :string read FTargetFolder;
   end;
 
   { TTask }
 
   TTask = class
-    constructor Create(WebProcessor :TWebProcessor);
+  private
+    FWebProcessor :TWebProcessor;
+  protected
+    function GetParamFrameClass :TParamFrameClass; virtual;
+  public
+    constructor Create(WebProcessor :TWebProcessor); virtual;
     class procedure Register(TaskClass :TTaskClass);
-    procedure Execute(const Section :string);
+    function GetParamFrame(Parent :TWinControl) :TTaskParamFrame;
+    procedure Execute;
+  end;
+
+  { TCopyTask }
+
+  TCopyTask = class(TTask)
+  public
+    constructor Create(WebProcessor :TWebProcessor); override;
   end;
 
 implementation
@@ -70,12 +90,19 @@ const
 
 resourcestring
   SErrUnregisterWebProcessorFmt = 'Unregistered WebProcessor class ''%s''.';
+  SErrTaskClassNotRegisteredFmt = 'Unregistered WebProcessor Task class ''%s''.';
 
 { TWebProcessor }
 
 constructor TWebProcessor.Create(IniFile :TCustomIniFile);
+var
+  TaskIndex :integer;
+  TaskSection :string;
+  TaskClassName :string;
+  TaskClass :TTaskClass;
 begin
   inherited Create;
+  FTasks := TTasks.Create;
   FFolder := IncludeTrailingPathDelimiter(ExtractFilePath(IniFile.Filename));
   FIniFile := IniFile;
   FDate := FIniFile.ReadDateTime(PROCESSOR_SECTION, 'Date', 0.0);
@@ -84,6 +111,24 @@ begin
   FDescription := FIniFile.ReadString(PROCESSOR_SECTION, 'Description', '');
   FIconFile := FIniFile.ReadString(PROCESSOR_SECTION, 'Icon', '');
   FFeatures := [];
+
+  TaskIndex := 1;
+  while true do begin
+    TaskSection := Format('Task.%d', [TaskIndex]);
+    if not IniFile.SectionExists(TaskSection) then break;
+    TaskClassName := IniFile.ReadString(TaskSection, 'Class', '<undefined>');
+    if not TaskClasses.TryGetValue(TaskClassName, TaskClass) then
+      raise Exception.CreateFmt(SErrTaskClassNotRegisteredFmt, [TaskClassName]);
+    FTasks.Add(TaskClass.Create(self));
+    inc(TaskIndex);
+  end;
+
+end;
+
+destructor TWebProcessor.Destroy;
+begin
+  FTasks.Free;
+  inherited Destroy;
 end;
 
 class procedure TWebProcessor.Register(ProcessorClass: TWebProcessorClass);
@@ -136,9 +181,22 @@ begin
 
 end;
 
-function TWebProcessor.ShowDialog(Parent: TWinControl): TFrame;
+function TWebProcessor.GetParamsFrame(Parent :TWinControl): TTaskParamsFrame;
+var
+  Task :TTask;
+  TaskParamFrame :TTaskParamFrame;
+  i :integer;
 begin
-  result := nil;
+  result := TTaskParamsFrame.Create(nil);
+  i := 1;
+  for Task in FTasks do begin
+    TaskParamFrame := Task.GetParamFrame(result);
+    if Assigned(TaskParamFrame) then begin
+      TaskParamFrame.Name := Format('TaskParamFrame%d', [i]);
+      TaskParamFrame.Visible := true;
+      inc(i);
+    end;
+  end;
 end;
 
 function TWebProcessor.GetInfoFrameClass: TWebProcessorInfoFrameClass;
@@ -148,26 +206,51 @@ end;
 
 { TTask }
 
+function TTask.GetParamFrameClass: TParamFrameClass;
+begin
+  result := nil;
+end;
+
 constructor TTask.Create(WebProcessor: TWebProcessor);
 begin
-
+  inherited Create;
+  FWebProcessor := WebProcessor;
 end;
 
 class procedure TTask.Register(TaskClass: TTaskClass);
 begin
-  // Assumes TIdTask
-  TaskClasses.Add(Copy(TaskClass.Classname, 2, Length(TaskClass.Classname)-4), TaskClass);
+  // Assumes TXxxxTask
+  TaskClasses.Add(Copy(TaskClass.Classname, 2, Length(TaskClass.Classname)-5), TaskClass);
 end;
 
-procedure TTask.Execute(const Section: string);
+function TTask.GetParamFrame(Parent: TWinControl): TTaskParamFrame;
+var
+  ParamFrameClass :TParamFrameClass;
+begin
+  ParamFrameClass := GetParamFrameClass;
+  if Assigned(ParamFrameClass) then
+    result := ParamFrameClass.Create(Parent)
+  else
+    result := nil;
+end;
+
+procedure TTask.Execute;
 begin
 
+end;
+
+{ TCopyTask }
+
+constructor TCopyTask.Create(WebProcessor: TWebProcessor);
+begin
+  inherited;
 end;
 
 initialization
 begin
   WebProcessorClasses := TDictionary<string, TWebProcessorClass>.Create;
-  TaskClasses := TDictionary<string, TTaskClass>.Create;
+  TaskClasses := TTaskClasses.Create;
+  TTask.Register(TCopyTask);
 end;
 
 finalization

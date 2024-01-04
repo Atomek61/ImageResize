@@ -1,3 +1,4 @@
 # .gitignore for Lazarus
 hlp/
+hlp
 locale/

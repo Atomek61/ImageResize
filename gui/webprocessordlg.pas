@@ -6,7 +6,8 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ButtonPanel, Buttons,
-  StdCtrls, ExtCtrls, ComCtrls, webprocessor, LCLIntf, LCLType, logging;
+  StdCtrls, ExtCtrls, ComCtrls, webprocessor, LCLIntf, LCLType, logging,
+  webprocessorinfofrm;
 
 type
 
@@ -15,6 +16,7 @@ type
   TWebProcessorDialog = class(TForm)
     Bevel4: TBevel;
     ButtonBrowseTargetFolder: TBitBtn;
+    ButtonClose: TBitBtn;
     ButtonCancel: TBitBtn;
     ButtonOk: TBitBtn;
     EditSlideshowFolder: TEdit;
@@ -22,12 +24,15 @@ type
     ImageList32: TImageList;
     Label1: TLabel;
     Label2: TLabel;
+    Label3: TLabel;
+    PanelParams: TPanel;
     PanelControls: TPanel;
     ScrollBox: TScrollBox;
-    procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
     FWebProcessors :TWebProcessors;
+    FInfoFrames :array of TWebProcessorInfoFrame;
+    procedure OnRadioButtonClick(Sender :TObject);
   public
     procedure Scan;
   end;
@@ -36,9 +41,6 @@ var
   WebProcessorDialog: TWebProcessorDialog;
 
 implementation
-
-uses
-  webprocessorinfofrm;
 
 const
   WEBFOLDER = 'web';
@@ -53,9 +55,9 @@ begin
   Scan;
 end;
 
-procedure TWebProcessorDialog.FormCreate(Sender: TObject);
+procedure TWebProcessorDialog.OnRadioButtonClick(Sender: TObject);
 begin
-
+//  FInfoFrames[TRadioButton(Sender).Tag].Visible := true;
 end;
 
 procedure TWebProcessorDialog.Scan;
@@ -76,16 +78,19 @@ begin
     FWebProcessors := TWebProcessor.Scan(Folder);
     with ScrollBox do while ControlCount>0 do
       Controls[ControlCount-1].Free;
-    i := 1;
+    SetLength(FInfoFrames, 0);
+    i := 0;
     y := VSPACE;
     w := ScrollBox.ClientWidth-LSPACE-HSPACE-GetSystemMetrics(SM_CXVSCROLL);
     for wp in FWebProcessors do begin
       RadioButton := TRadioButton.Create(self);
-      RadioButton.Name := Format('RadioButtonWebProcessor%d', [i]);
-      RadioButton.Caption := Format('&%d %s', [i, wp.Caption]);
+      RadioButton.Name := Format('RadioButtonWebProcessor%d', [i+1]);
+      RadioButton.Caption := Format('&%d %s', [i+1, wp.Caption]);
       RadioButton.SetBounds(HSPACE, y+VSPACE, LSPACE-HSPACE, RadioButton.Height);
       RadioButton.Parent := ScrollBox;
       RadioButton.TabStop := true;
+      RadioButton.Tag := i;
+      RadioButton.OnClick := @OnRadioButtonClick;
       RadioButton.Visible := true;
 
       Frame := wp.GetInfoFrameClass.Create(self);
@@ -98,6 +103,10 @@ begin
       Frame.SetBounds(LSPACE, y, w, h);
       Frame.Parent := ScrollBox;
       Frame.Visible := true;
+
+      SetLength(FInfoFrames, i+1);
+      FInfoFrames[i] := Frame;
+
       inc(i);
       inc(y, h+VSPACE);
     end;

@@ -2,16 +2,16 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="256"
-   height="192"
-   viewBox="0 0 256 192.00002"
+   width="128"
+   height="128"
+   viewBox="0 0 128 128.00001"
    version="1.1"
    id="svg138"
    inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
-   sodipodi:docname="not-available.svg"
-   inkscape:export-filename="img256\not-available.png"
-   inkscape:export-xdpi="102.74689"
-   inkscape:export-ydpi="102.74689"
+   sodipodi:docname="exit.svg"
+   inkscape:export-filename="img20\cancel.png"
+   inkscape:export-xdpi="18"
+   inkscape:export-ydpi="18"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -30,14 +30,14 @@
      showguides="true"
      inkscape:lockguides="true"
      inkscape:zoom="3.659624"
-     inkscape:cx="30.194359"
-     inkscape:cy="109.30085"
+     inkscape:cx="-19.810778"
+     inkscape:cy="115.03914"
      inkscape:window-width="2560"
      inkscape:window-height="1417"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g1704">
+     inkscape:current-layer="layer3">
     <inkscape:grid
        type="xygrid"
        id="grid259"
@@ -59,6 +59,16 @@
        originy="0"
        units="px"
        visible="true" />
+    <sodipodi:guide
+       position="-68,64.000005"
+       orientation="0,-1"
+       id="guide263"
+       inkscape:locked="true" />
+    <sodipodi:guide
+       position="64.000007,63.999998"
+       orientation="1,0"
+       id="guide315"
+       inkscape:locked="true" />
   </sodipodi:namedview>
   <defs
      id="defs135" />
@@ -67,28 +77,15 @@
      id="layer3"
      inkscape:label="Dots"
      style="display:inline">
-    <g
-       id="g1704">
-      <g
-         id="g308"
-         style="stroke:#babdb6">
-        <g
-           id="g1"
-           transform="matrix(2.3333337,0,0,2.3333337,-21.333341,-58.666672)"
-           style="stroke:#babdb6">
-          <path
-             style="fill:none;stroke:#babdb6;stroke-width:8;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
-             d="M 16.000002,31.999997 111.99999,100.57141"
-             id="path1"
-             sodipodi:nodetypes="cc" />
-          <path
-             style="display:inline;fill:none;stroke:#babdb6;stroke-width:8;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
-             d="M 111.99999,31.999997 16.000001,100.57142"
-             id="path1-3"
-             sodipodi:nodetypes="cc" />
-        </g>
-      </g>
-    </g>
+    <path
+       id="rect523"
+       style="fill:#2e3436;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;fill-opacity:1"
+       d="M 32 16 L 32 112 L 96 112 L 96 80 L 88 80 L 88 104 L 40 104 L 40 24 L 88 24 L 88 48 L 96 48 L 96 16 L 32 16 z " />
+    <path
+       style="fill:#2e3436;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
+       d="m 64,72 4e-6,-16 H 104 v -8 l 16,16 -16,16 v -8 z"
+       id="path1296"
+       sodipodi:nodetypes="cccccccc" />
   </g>
   <g
      inkscape:label="Ebene 1"

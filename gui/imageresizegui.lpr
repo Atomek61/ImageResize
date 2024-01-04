@@ -13,7 +13,7 @@ uses
   Forms, lazcontrols, maindlg, aboutdlg, mrkeditdlg, imgres, updateutils,
   datetimeutils, threading.dispatcher, EXIFUtils, tags, settingsdlg, settings,
   animator, logging, webprocessordlg, imagesmod, webprocessor, 
-slideshow200webprocessor, webprocessorinfofrm;
+slideshow200webprocessor, webprocessorinfofrm, taskparamsfrm, taskparamfrm;
 
 {$R *.res}
 

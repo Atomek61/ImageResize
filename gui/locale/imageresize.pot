@@ -1505,6 +1505,10 @@ msgstr ""
 msgid "Available  Web Processors:"
 msgstr ""
 
+#: twebprocessordialog.label3.caption
+msgid "Parameter:"
+msgstr ""
+
 #: twebprocessorinfoframe.labeldescription.caption
 msgctxt "twebprocessorinfoframe.labeldescription.caption"
 msgid "LabelDescription"
@@ -1513,6 +1517,11 @@ msgstr ""
 #: twebprocessorinfoframe.labeltitle.caption
 msgctxt "twebprocessorinfoframe.labeltitle.caption"
 msgid "LabelTitle"
+msgstr ""
+
+#: webprocessor.serrtaskclassnotregisteredfmt
+#, object-pascal-format
+msgid "Unregistered WebProcessor Task class '%s'."
 msgstr ""
 
 #: webprocessor.serrunregisterwebprocessorfmt

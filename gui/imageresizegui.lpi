@@ -237,6 +237,19 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
       </Unit>
+      <Unit>
+        <Filename Value="taskparamsfrm.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="TaskParamsFrame"/>
+        <ResourceBaseClass Value="Frame"/>
+      </Unit>
+      <Unit>
+        <Filename Value="taskparamfrm.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="TaskParamFrame"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

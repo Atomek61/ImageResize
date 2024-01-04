@@ -1,18 +1,17 @@
 object WebProcessorDialog: TWebProcessorDialog
-  Left = 813
+  Left = 523
   Height = 505
-  Top = 587
-  Width = 664
+  Top = 553
+  Width = 946
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Slideshow Afterburner'
   ClientHeight = 505
-  ClientWidth = 664
-  OnCreate = FormCreate
+  ClientWidth = 946
   OnShow = FormShow
   LCLVersion = '3.0.0.3'
   object ButtonBrowseTargetFolder: TBitBtn
-    Left = 576
+    Left = 858
     Height = 25
     Top = 385
     Width = 25
@@ -27,7 +26,7 @@ object WebProcessorDialog: TWebProcessorDialog
     Height = 23
     Hint = 'This folder must contain the images and an .imageinfo file.'
     Top = 385
-    Width = 438
+    Width = 720
     Anchors = [akTop, akLeft, akRight]
     TabOrder = 1
   end
@@ -39,9 +38,9 @@ object WebProcessorDialog: TWebProcessorDialog
     Caption = 'Folder with Images:'
   end
   object Image1: TImage
-    Left = 24
+    Left = 176
     Height = 90
-    Top = 8
+    Top = 415
     Width = 90
     Center = True
     Picture.Data = {
@@ -99,14 +98,14 @@ object WebProcessorDialog: TWebProcessorDialog
     Left = 0
     Height = 44
     Top = 461
-    Width = 664
+    Width = 946
     Align = alBottom
     BevelOuter = bvNone
     ClientHeight = 44
-    ClientWidth = 664
+    ClientWidth = 946
     TabOrder = 2
     object ButtonOk: TBitBtn
-      Left = 448
+      Left = 622
       Height = 28
       Top = 8
       Width = 100
@@ -118,49 +117,80 @@ object WebProcessorDialog: TWebProcessorDialog
       ImageIndex = 11
       TabOrder = 0
     end
-    object ButtonCancel: TBitBtn
-      Left = 556
+    object ButtonClose: TBitBtn
+      Left = 730
       Height = 28
       Top = 8
       Width = 100
       Align = alRight
       Anchors = [akRight, akBottom]
       BorderSpacing.Around = 8
-      Cancel = True
+      Caption = 'Close'
+      GlyphShowMode = gsmAlways
+      ModalResult = 11
+      Images = ImagesModule.ImageList20x20
+      ImageIndex = 12
+      TabOrder = 1
+    end
+    object ButtonCancel: TBitBtn
+      Left = 838
+      Height = 28
+      Top = 8
+      Width = 100
+      Align = alRight
+      Anchors = [akRight, akBottom]
+      BorderSpacing.Around = 8
       Caption = 'Cancel'
       GlyphShowMode = gsmAlways
       ModalResult = 2
       Images = ImagesModule.ImageList20x20
       ImageIndex = 3
-      TabOrder = 1
+      TabOrder = 2
     end
   end
   object Bevel4: TBevel
     Left = 4
     Height = 3
     Top = 458
-    Width = 656
+    Width = 938
     Align = alBottom
     BorderSpacing.Left = 4
     BorderSpacing.Right = 4
     Shape = bsBottomLine
   end
   object ScrollBox: TScrollBox
-    Left = 136
+    Left = 8
     Height = 328
-    Top = 32
+    Top = 28
     Width = 512
     HorzScrollBar.Page = 1
     VertScrollBar.Page = 1
+    BorderStyle = bsNone
     TabOrder = 3
   end
   object Label2: TLabel
-    Left = 144
+    Left = 16
     Height = 15
-    Top = 12
+    Top = 8
     Width = 140
     Caption = 'Available  Web Processors:'
     FocusControl = ScrollBox
+  end
+  object Label3: TLabel
+    Left = 544
+    Height = 15
+    Top = 8
+    Width = 57
+    Caption = 'Parameter:'
+    FocusControl = ScrollBox
+  end
+  object PanelParams: TPanel
+    Left = 536
+    Height = 336
+    Top = 24
+    Width = 400
+    BevelOuter = bvLowered
+    TabOrder = 4
   end
   object ImageList32: TImageList
     Height = 32

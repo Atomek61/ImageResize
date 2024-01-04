@@ -16,7 +16,6 @@ type
     ImageIcon: TImage;
     LabelDescription: TLabel;
     LabelTitle: TLabel;
-    procedure ImageIconClick(Sender: TObject);
   private
 
   public
@@ -26,13 +25,6 @@ type
 implementation
 
 {$R *.lfm}
-
-{ TWebProcessorInfoFrame }
-
-procedure TWebProcessorInfoFrame.ImageIconClick(Sender: TObject);
-begin
-
-end;
 
 end.
 

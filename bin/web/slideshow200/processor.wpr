@@ -12,9 +12,10 @@ Icon=icon.png
 Description=This is the latest version with .svg icons.
 
 [Task.1]
-Task=Copy
+Class=Copy
 Copy=slideshow.js,slideshow.css[w]
 
 [Task.2]
-Task=Sswb2
+Class=Replace
+
 HTML.Index.Template=index.html.template
