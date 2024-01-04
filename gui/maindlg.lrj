@@ -111,7 +111,7 @@
 {"hash":114478933,"name":"tmaindialog.actionsaveas.hint","sourcebytes":[83,97,118,101,32,99,117,114,114,101,110,116,32,115,101,116,116,105,110,103,115,32,116,111,32,97,110,111,116,104,101,114,32,112,108,97,99,101],"value":"Save current settings to another place"},
 {"hash":139496894,"name":"tmaindialog.actioneditwatermark.caption","sourcebytes":[38,87,97,116,101,114,109,97,114,107,46,46,46],"value":"&Watermark..."},
 {"hash":77274978,"name":"tmaindialog.actioneditwatermark.hint","sourcebytes":[79,112,101,110,115,32,116,104,101,32,105,110,116,101,114,110,97,108,32,87,97,116,101,114,109,97,114,107,32,69,100,105,116,111,114],"value":"Opens the internal Watermark Editor"},
-{"hash":178277393,"name":"tmaindialog.actionslideshowafterburner.caption","sourcebytes":[38,67,105,110,101,109,97],"value":"&Cinema"},
+{"hash":178277393,"name":"tmaindialog.actionwebprocessor.caption","sourcebytes":[38,67,105,110,101,109,97],"value":"&Cinema"},
 {"hash":233547989,"name":"tmaindialog.actionexecute.caption","sourcebytes":[69,38,120,101,99,117,116,101],"value":"E&xecute"},
 {"hash":205145971,"name":"tmaindialog.actionexecute.hint","sourcebytes":[83,116,97,114,116,115,32,116,104,101,32,114,101,115,97,109,112,108,105,110,103,32,112,114,111,99,101,115,115],"value":"Starts the resampling process"},
 {"hash":2812976,"name":"tmaindialog.actionhelp.caption","sourcebytes":[38,72,101,108,112],"value":"&Help"},

@@ -209,9 +209,9 @@
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="slideshowdlg.pas"/>
+        <Filename Value="webprocessordlg.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="SlideshowDialog"/>
+        <ComponentName Value="WebProcessorDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
@@ -223,16 +223,19 @@
         <ResourceBaseClass Value="DataModule"/>
       </Unit>
       <Unit>
-        <Filename Value="..\bin\slideshow.wpr"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
         <Filename Value="webprocessor.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="slideshow200webprocessor.pas"/>
         <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="webprocessorinfofrm.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="WebProcessorInfoFrame"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
       </Unit>
     </Units>
   </ProjectOptions>

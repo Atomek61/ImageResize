@@ -709,16 +709,17 @@ msgstr ""
 msgid "Settings dialog for some global and project-independent settings"
 msgstr ""
 
-#: tmaindialog.actionslideshowafterburner.caption
-msgid "&Cinema"
-msgstr ""
-
 #: tmaindialog.actionsrcfilenames.caption
 msgid "&List of Files"
 msgstr ""
 
 #: tmaindialog.actionsrcfolder.caption
 msgid "&Folder"
+msgstr ""
+
+#: tmaindialog.actionwebprocessor.caption
+msgctxt "tmaindialog.actionwebprocessor.caption"
+msgid "&Cinema"
 msgstr ""
 
 #: tmaindialog.buttonbrowsesrcfiles.hint
@@ -1475,26 +1476,43 @@ msgctxt "tsettingsdialog.labelcores.caption"
 msgid "Cores"
 msgstr ""
 
-#: tslideshowdialog.buttoncancel.caption
-msgctxt "tslideshowdialog.buttoncancel.caption"
+#: twebprocessordialog.buttoncancel.caption
+msgctxt "twebprocessordialog.buttoncancel.caption"
 msgid "Cancel"
 msgstr ""
 
-#: tslideshowdialog.buttonok.caption
-msgctxt "tslideshowdialog.buttonok.caption"
+#: twebprocessordialog.buttonok.caption
+msgctxt "twebprocessordialog.buttonok.caption"
 msgid "Create"
 msgstr ""
 
-#: tslideshowdialog.caption
+#: twebprocessordialog.caption
+msgctxt "twebprocessordialog.caption"
 msgid "Slideshow Afterburner"
 msgstr ""
 
-#: tslideshowdialog.editslideshowfolder.hint
+#: twebprocessordialog.editslideshowfolder.hint
+msgctxt "twebprocessordialog.editslideshowfolder.hint"
 msgid "This folder must contain the images and an .imageinfo file."
 msgstr ""
 
-#: tslideshowdialog.label1.caption
+#: twebprocessordialog.label1.caption
+msgctxt "twebprocessordialog.label1.caption"
 msgid "Folder with Images:"
+msgstr ""
+
+#: twebprocessordialog.label2.caption
+msgid "Available  Web Processors:"
+msgstr ""
+
+#: twebprocessorinfoframe.labeldescription.caption
+msgctxt "twebprocessorinfoframe.labeldescription.caption"
+msgid "LabelDescription"
+msgstr ""
+
+#: twebprocessorinfoframe.labeltitle.caption
+msgctxt "twebprocessorinfoframe.labeltitle.caption"
+msgid "LabelTitle"
 msgstr ""
 
 #: webprocessor.serrunregisterwebprocessorfmt

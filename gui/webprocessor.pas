@@ -5,11 +5,13 @@ unit webprocessor;
 interface
 
 uses
-  Classes, SysUtils, Controls, Forms, IniFiles;
+  Classes, SysUtils, Controls, Forms, IniFiles, Generics.Collections, webprocessorinfofrm;
 
 type
+  TWebProcessor = class;
   TWebProcessorClass = class of TWebProcessor;
   TTaskClass = class of TTask;
+  TWebProcessors = TObjectList<TWebProcessor>;
 
   TFeature = (wpfDialog);
   TFeatures = set of TFeature;
@@ -18,20 +20,30 @@ type
 
   TWebProcessor = class
   private
+    FFolder :string;
     FFeatures :TFeatures;
+    FCaption :string;
     FTitle :string;
+    FDescription :string;
     FDate :TDateTime;
     FIniFile :TCustomIniFile;
-    FIcon :string;
+    FIconFile :string;
   public
     constructor Create(IniFile :TCustomIniFile); virtual; overload;
     class procedure Register(ProcessorClass :TWebProcessorClass);
     class function Create(const Filename :string) :TWebProcessor; overload;
+    class function Scan(const Folder :string) :TWebProcessors;
     procedure SaveSettings(const Section :string; Store :TCustomInifile); virtual; abstract;
     procedure Execute;
     function ShowDialog(Parent :TWinControl) :TFrame;
+    function GetInfoFrameClass :TWebProcessorInfoFrameClass; virtual;
+    property Folder :string read FFolder;
     property Features :TFeatures read FFeatures;
+    property Caption :string read FCaption;
     property Date :TDateTime read FDate;
+    property Title :string read FTitle;
+    property Description :string read FDescription;
+    property IconFile :string read FIconFile;
   end;
 
   { TTask }
@@ -45,7 +57,7 @@ type
 implementation
 
 uses
-  Generics.Collections;
+  FileUtil;
 
 var
   WebProcessorClasses :TDictionary<string, TWebProcessorClass>;
@@ -54,6 +66,7 @@ var
 const
   COMMON_SECTION    = 'Common';
   PROCESSOR_SECTION = 'Processor';
+  WPREXT = 'wpr';
 
 resourcestring
   SErrUnregisterWebProcessorFmt = 'Unregistered WebProcessor class ''%s''.';
@@ -63,10 +76,13 @@ resourcestring
 constructor TWebProcessor.Create(IniFile :TCustomIniFile);
 begin
   inherited Create;
+  FFolder := IncludeTrailingPathDelimiter(ExtractFilePath(IniFile.Filename));
   FIniFile := IniFile;
   FDate := FIniFile.ReadDateTime(PROCESSOR_SECTION, 'Date', 0.0);
+  FCaption := FIniFile.ReadString(PROCESSOR_SECTION, 'Caption', '');
   FTitle := FIniFile.ReadString(PROCESSOR_SECTION, 'Title', '');
-  FIcon := FIniFile.ReadString(PROCESSOR_SECTION, 'Icon', '');
+  FDescription := FIniFile.ReadString(PROCESSOR_SECTION, 'Description', '');
+  FIconFile := FIniFile.ReadString(PROCESSOR_SECTION, 'Icon', '');
   FFeatures := [];
 end;
 
@@ -94,6 +110,27 @@ begin
   end;
 end;
 
+class function TWebProcessor.Scan(const Folder: string): TWebProcessors;
+var
+  WprFilenames :TStringList;
+  Filename :string;
+begin
+  result := TWebProcessors.Create;
+  try
+    WprFilenames := FindAllFiles(Folder, '*.'+WPREXT, true);
+    try
+      for Filename in WprFilenames do begin
+        result.Add(TWebProcessor.Create(Filename));
+      end;
+    finally
+      WprFilenames.Free;
+    end;
+  except
+    result.Free;
+    raise;
+  end;
+end;
+
 procedure TWebProcessor.Execute;
 begin
 
@@ -102,6 +139,11 @@ end;
 function TWebProcessor.ShowDialog(Parent: TWinControl): TFrame;
 begin
   result := nil;
+end;
+
+function TWebProcessor.GetInfoFrameClass: TWebProcessorInfoFrameClass;
+begin
+  result := TWebProcessorInfoFrame;
 end;
 
 { TTask }

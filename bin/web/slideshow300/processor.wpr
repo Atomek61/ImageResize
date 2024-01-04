@@ -7,7 +7,8 @@ Class=Slideshow200
 Date=2024-01-03 20:00:00
 Title=Slideshow with bullets
 Title.de=Webkino mit Navigator
-Icon=slideshow-with-bullets.jpg
+Icon=icon.jpg
+Description=
 
 [Task.1]
 Task=Copy

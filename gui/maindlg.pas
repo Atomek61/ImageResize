@@ -110,7 +110,7 @@ type
   end;
 
   TMainDialog = class(TForm)
-    ActionSlideShowAfterburner: TAction;
+    ActionWebProcessor: TAction;
     ActionListParams: TActionList;
     ActionListSource: TActionList;
     ActionSettings: TAction;
@@ -269,7 +269,7 @@ type
     UpDownMrkX: TUpDown;
     UpDownMrkY: TUpDown;
     procedure ActionSettingsExecute(Sender: TObject);
-    procedure ActionSlideShowAfterburnerExecute(Sender: TObject);
+    procedure ActionWebProcessorExecute(Sender: TObject);
     procedure ActionSourceExecute(Sender: TObject);
     procedure ButtonBrowseTargetFolderClick(Sender: TObject);
     procedure ButtonBrowseMrkFilenameClick(Sender: TObject);
@@ -373,7 +373,7 @@ var
 implementation
 
 uses
-  math, helpintfs, Windows, FileUtil, tags, slideshowdlg, settingsdlg;
+  math, helpintfs, Windows, FileUtil, tags, webprocessordlg, settingsdlg;
 
 const
   SCptRandom        = '<random>';
@@ -677,9 +677,9 @@ begin
   end;
 end;
 
-procedure TMainDialog.ActionSlideShowAfterburnerExecute(Sender: TObject);
+procedure TMainDialog.ActionWebProcessorExecute(Sender: TObject);
 begin
-  SlideshowDialog.ShowModal;
+  WebProcessorDialog.ShowModal;
 
 end;
 

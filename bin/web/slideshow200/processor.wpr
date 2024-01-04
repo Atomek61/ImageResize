@@ -1,0 +1,20 @@
+[Common]
+Type=WPR
+Version=100
+
+[Processor]
+Class=Slideshow200
+Caption=Slideshow
+Date=2024-01-03 20:00:00
+Title=Slideshow with bullets
+Title.de=Webkino mit Navigator
+Icon=icon.png
+Description=This is the latest version with .svg icons.
+
+[Task.1]
+Task=Copy
+Copy=slideshow.js,slideshow.css[w]
+
+[Task.2]
+Task=Sswb2
+HTML.Index.Template=index.html.template
