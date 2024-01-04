@@ -8,18 +8,16 @@
       <Unit0>
         <Filename Value="imageresizecli.pas"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="71"/>
-        <CursorPos Y="79"/>
+        <CursorPos X="22" Y="14"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="..\src\imgres.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="198"/>
-        <CursorPos X="14" Y="216"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="19"/>
         <ExtraEditorCount Value="1"/>
         <ExtraEditor1>
           <EditorIndex Value="-1"/>
@@ -41,9 +39,11 @@
       <Unit3>
         <Filename Value="..\src\generics.queue.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="46" Y="38"/>
-        <UsageCount Value="199"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="5"/>
+        <CursorPos X="12" Y="38"/>
+        <UsageCount Value="200"/>
+        <Loaded Value="True"/>
       </Unit3>
       <Unit4>
         <Filename Value="..\src\threading.dispatcher.pas"/>
@@ -51,7 +51,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="282"/>
         <CursorPos X="45" Y="307"/>
-        <UsageCount Value="199"/>
+        <UsageCount Value="200"/>
       </Unit4>
       <Unit5>
         <Filename Value="..\src\exifutils.pas"/>
@@ -60,7 +60,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="46"/>
         <CursorPos X="48" Y="53"/>
-        <UsageCount Value="92"/>
+        <UsageCount Value="95"/>
       </Unit5>
       <Unit6>
         <Filename Value="..\src\tags.pas"/>
@@ -68,7 +68,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="66"/>
         <CursorPos X="36" Y="82"/>
-        <UsageCount Value="88"/>
+        <UsageCount Value="91"/>
       </Unit6>
       <Unit7>
         <Filename Value="..\src\filestags.pas"/>
@@ -543,7 +543,7 @@
         <Filename Value="..\tst\org\imglist.txt"/>
         <EditorIndex Value="-1"/>
         <UsageCount Value="4"/>
-        <DefaultSyntaxHighlighter Value="None"/>
+        <DefaultSyntaxHighlighter Value="Text"/>
       </Unit71>
       <Unit72>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\packages\rtl-generics\src\inc\generics.dictionariesh.inc"/>
@@ -562,10 +562,10 @@
       <Unit74>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\packages\fcl-base\src\custapp.pp"/>
         <UnitName Value="CustApp"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="3"/>
         <TopLine Value="54"/>
         <CursorPos X="14" Y="75"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="13"/>
         <Loaded Value="True"/>
       </Unit74>
       <Unit75>
@@ -638,7 +638,7 @@
         <EditorIndex Value="-1"/>
         <CursorPos X="52" Y="5"/>
         <UsageCount Value="6"/>
-        <DefaultSyntaxHighlighter Value="None"/>
+        <DefaultSyntaxHighlighter Value="Text"/>
       </Unit84>
       <Unit85>
         <Filename Value="C:\TEMP\.filestags"/>
@@ -720,124 +720,124 @@
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="738" TopLine="714"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="330" TopLine="311"/>
       </Position1>
       <Position2>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="736" TopLine="714"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="331" TopLine="311"/>
       </Position2>
       <Position3>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="740" TopLine="714"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="332" TopLine="311"/>
       </Position3>
       <Position4>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="741" TopLine="714"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="331" TopLine="311"/>
       </Position4>
       <Position5>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="742" TopLine="714"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="336" TopLine="311"/>
       </Position5>
       <Position6>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="740" TopLine="714"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="340" TopLine="313"/>
       </Position6>
       <Position7>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="747" TopLine="714"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="341" TopLine="314"/>
       </Position7>
       <Position8>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="748" TopLine="714"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="342" TopLine="315"/>
       </Position8>
       <Position9>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="749" TopLine="715"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="343" TopLine="316"/>
       </Position9>
       <Position10>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="750" TopLine="716"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="344" TopLine="317"/>
       </Position10>
       <Position11>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="751" TopLine="717"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="345" TopLine="318"/>
       </Position11>
       <Position12>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="752" TopLine="718"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="346" TopLine="319"/>
       </Position12>
       <Position13>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="753" TopLine="719"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="347" TopLine="320"/>
       </Position13>
       <Position14>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="754" TopLine="720"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="348" TopLine="321"/>
       </Position14>
       <Position15>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="755" TopLine="721"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="349" TopLine="322"/>
       </Position15>
       <Position16>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="756" TopLine="722"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="350" TopLine="323"/>
       </Position16>
       <Position17>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="748" TopLine="722"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="351" TopLine="324"/>
       </Position17>
       <Position18>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="749" TopLine="722"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="352" TopLine="325"/>
       </Position18>
       <Position19>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="750" TopLine="722"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="353" TopLine="326"/>
       </Position19>
       <Position20>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="766" TopLine="743"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="354" TopLine="327"/>
       </Position20>
       <Position21>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="771" TopLine="743"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="355" TopLine="328"/>
       </Position21>
       <Position22>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="772" TopLine="743"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="356" TopLine="329"/>
       </Position22>
       <Position23>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="662" TopLine="640"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="357" TopLine="330"/>
       </Position23>
       <Position24>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="354" Column="41" TopLine="341"/>
+        <Caret Line="358" TopLine="331"/>
       </Position24>
       <Position25>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="363" Column="33" TopLine="342"/>
+        <Caret Line="359" TopLine="332"/>
       </Position25>
       <Position26>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="92" Column="68" TopLine="70"/>
+        <Caret Line="360" TopLine="333"/>
       </Position26>
       <Position27>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="364" Column="24" TopLine="342"/>
+        <Caret Line="375" TopLine="350"/>
       </Position27>
       <Position28>
-        <Filename Value="imageresizecli.pas"/>
-        <Caret Line="92" TopLine="70"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="652" TopLine="635"/>
       </Position28>
       <Position29>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="378" Column="88" TopLine="374"/>
+        <Caret Line="355" Column="27" TopLine="350"/>
       </Position29>
       <Position30>
-        <Filename Value="imageresizecli.pas"/>
-        <Caret Line="19" Column="32" TopLine="334"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="641" Column="32" TopLine="635"/>
       </Position30>
     </JumpHistory>
     <RunParams>
@@ -845,17 +845,17 @@
       <Modes Count="1" ActiveMode="default">
         <Mode0 Name="default">
           <local>
-            <CommandLineParams Value="srcB\src1\*.jpg tstX 1200 -n"/>
+            <CommandLineParams Value="srcF\*.jpg tst9 1200 -l TagsReport,Images"/>
             <LaunchingApplication PathPlusParams="C:\WINDOWS\system32\cmd.exe /C ${TargetCmdLine}"/>
-            <WorkingDirectory Value="D:\Mf\Dev\Lazarus\ImageResize\tst"/>
+            <WorkingDirectory Value="D:\Mf\Lazarus\ImageResize\tst"/>
           </local>
         </Mode0>
       </Modes>
     </RunParams>
     <HistoryLists Count="3">
       <List0 Name="WorkingDirectory" Type="File" Count="4">
-        <Item1 Value="D:\Mf\Dev\Lazarus\ImageResize\tst"/>
-        <Item2 Value="D:\Mf\Lazarus\ImageResize\tst"/>
+        <Item1 Value="D:\Mf\Lazarus\ImageResize\tst"/>
+        <Item2 Value="D:\Mf\Dev\Lazarus\ImageResize\tst"/>
         <Item3 Value="..\tst"/>
         <Item4 Value="D:\Mf\DEV\Lazarus\ImageResize"/>
       </List0>
@@ -863,26 +863,26 @@
         <Item1 Value="C:\WINDOWS\system32\cmd.exe /C ${TargetCmdLine}"/>
       </List1>
       <List2 Name="CommandLineParameters" Count="20">
-        <Item1 Value="srcB\src1\*.jpg tstX 1200 -n"/>
-        <Item2 Value="tstHlp\tmp\*_64.png tstHlp\ 512 -filter Stretch"/>
-        <Item3 Value="tstHlp\tmp\*_64.png tstHlp\ 512 -filter=Stretch"/>
-        <Item4 Value="tstHlp\tmp\*_64.png tstHlp\ 512 -f Stretch"/>
-        <Item5 Value="tstHlp\*_64.png tstHlp\ 512 -f Stretch"/>
-        <Item6 Value="testFilter\img_*_64.png testFilter\img256 256 -f Stretch"/>
-        <Item7 Value="..\bin\imgres testFilter\img_*_64.png testFilter\img256 256 -f Stretch"/>
-        <Item8 Value="srcE\testimage3.png tstFilter 64 -r img_%FILTER%_%SIZE%.%FILEEXT% -f Lanczos2"/>
-        <Item9 Value="srcA\*.jpg;*.png C:\TEMP\img%SIZE% 800 -t 1 -f BestQuality"/>
-        <Item10 Value="srcA\*.jpg;*.png C:\TEMP\img%SIZE% 800 -t 1 -f BestQualty"/>
-        <Item11 Value="srcA\*.jpg;*.png C:\TEMP\img%SIZE% 800 -t 1"/>
-        <Item12 Value="srcA\*.jpg;*.png C:\TEMP\img%SIZE% 800 -t 1 -f Linear"/>
-        <Item13 Value="srcA\*.jpg;srcA\*.png C:\TEMP\img%SIZE% 800 -t 1"/>
-        <Item14 Value="srcA\*.jpg;srcA\*.png C:\TEMP\img%SIZE% 800"/>
-        <Item15 Value="srcA\img3.jpg &quot;.\tst7\img%SIZE%&quot; 1080 -e &quot;Title,Copyright&quot; "/>
-        <Item16 Value="@srcA\imglist.txt .\tst1_%SIZE% 120,1000 -t 1 -c &quot;(c) Jan Schirrmacher&quot;"/>
-        <Item17 Value="@srcA\imglist.txt .\tst1_%SIZE% 120,1000 -t 1"/>
-        <Item18 Value="@srcA\imglist.txt .\tst1_%SIZE% 120,1000"/>
-        <Item19 Value=" @srcA\imglist.txt .\tst1_%%SIZE%% 120,1000"/>
-        <Item20 Value="srcA\img3.jpg &quot;.\tst7\img%SIZE%&quot; 1080 -e &quot;Title,Copyright&quot;"/>
+        <Item1 Value="srcF\*.jpg tst9 1200 -l TagsReport,Images"/>
+        <Item2 Value="srcB\src1\*.jpg tstX 1200 -n"/>
+        <Item3 Value="tstHlp\tmp\*_64.png tstHlp\ 512 -filter Stretch"/>
+        <Item4 Value="tstHlp\tmp\*_64.png tstHlp\ 512 -filter=Stretch"/>
+        <Item5 Value="tstHlp\tmp\*_64.png tstHlp\ 512 -f Stretch"/>
+        <Item6 Value="tstHlp\*_64.png tstHlp\ 512 -f Stretch"/>
+        <Item7 Value="testFilter\img_*_64.png testFilter\img256 256 -f Stretch"/>
+        <Item8 Value="..\bin\imgres testFilter\img_*_64.png testFilter\img256 256 -f Stretch"/>
+        <Item9 Value="srcE\testimage3.png tstFilter 64 -r img_%FILTER%_%SIZE%.%FILEEXT% -f Lanczos2"/>
+        <Item10 Value="srcA\*.jpg;*.png C:\TEMP\img%SIZE% 800 -t 1 -f BestQuality"/>
+        <Item11 Value="srcA\*.jpg;*.png C:\TEMP\img%SIZE% 800 -t 1 -f BestQualty"/>
+        <Item12 Value="srcA\*.jpg;*.png C:\TEMP\img%SIZE% 800 -t 1"/>
+        <Item13 Value="srcA\*.jpg;*.png C:\TEMP\img%SIZE% 800 -t 1 -f Linear"/>
+        <Item14 Value="srcA\*.jpg;srcA\*.png C:\TEMP\img%SIZE% 800 -t 1"/>
+        <Item15 Value="srcA\*.jpg;srcA\*.png C:\TEMP\img%SIZE% 800"/>
+        <Item16 Value="srcA\img3.jpg &quot;.\tst7\img%SIZE%&quot; 1080 -e &quot;Title,Copyright&quot; "/>
+        <Item17 Value="@srcA\imglist.txt .\tst1_%SIZE% 120,1000 -t 1 -c &quot;(c) Jan Schirrmacher&quot;"/>
+        <Item18 Value="@srcA\imglist.txt .\tst1_%SIZE% 120,1000 -t 1"/>
+        <Item19 Value="@srcA\imglist.txt .\tst1_%SIZE% 120,1000"/>
+        <Item20 Value=" @srcA\imglist.txt .\tst1_%%SIZE%% 120,1000"/>
       </List2>
     </HistoryLists>
   </ProjectSession>
@@ -892,15 +892,8 @@
         <Kind Value="bpkSource"/>
         <WatchScope Value="wpsLocal"/>
         <WatchKind Value="wpkWrite"/>
-        <Source Value="..\src\imgres.pas"/>
-        <Line Value="652"/>
-      </Item>
-      <Item>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
         <Source Value="imageresizecli.pas"/>
-        <Line Value="293"/>
+        <Line Value="149"/>
       </Item>
     </BreakPoints>
     <Watches>

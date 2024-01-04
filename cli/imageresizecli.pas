@@ -11,7 +11,7 @@ uses
   { you can add units after this } fileutil, utils, imgres, generics.collections;
 
 const
-  IMGRESCLIVER = '3.2';
+  IMGRESCLIVER = '3.3';
   IMGRESCLICPR = 'imgres CLI '+IMGRESCLIVER+' for engine '+IMGRESVER+' (c) 2023 Jan Schirrmacher, www.atomek.de';
 
   INTROSTR = 'Free tool for JPEG and PNG quality resampling.';
@@ -47,7 +47,8 @@ const
     '                                 taglist is a list of special tagnames: "Title,Timestamp,Copyright"'#10+
     '                                 if no meta sources is defined, EXIF is assumed.'#10+
     '   -c -copyright      "text"     Writes (overrides) the EXIF or .tags copyright tag.'+#10+
-    '   -l -listing        file.csv   Exports a CSV list of filenames and tags.'+#10+
+    '   -l -listing        listings   Exports infos. listings is a comma-separated combination of "tagsreport"'#10+
+    '                                 and "images", e.g. "Images" or "TagsReports,Images".'+#10+
     '   -t -threadcount    0..n       Number of threads to use, 0 means maximum.'#10+
     '   -x -stoponerror               Stop on error. flag: 0-false, 1-true'#10+
     '   -h -help                      Outputs this text.'#10+
@@ -132,7 +133,7 @@ var
   TagsSources :TTagsSources;
   TagIDs :TTagIDs;
   Copyright :string;
-  TagsReportFilename :string;
+  TagsReports :TTagsReports;
   NoCreate :boolean;
   Processor :TProcessor;
 
@@ -244,13 +245,14 @@ begin
     end else
       Copyright := '';
 
-    // TagsReport for slideshow
+    // TagsReporting
     Param := GetOptionValue('l', 'listing');
     if Param<>'' then begin
-      TagsReportFilename := Param;
+      if not TProcessor.TryStrToTagsReports(Param, TagsReports) or (TagsReports=[]) then
+        raise Exception.CreateFmt('Invalid tags reports ''%s'', keyword list of "TagsReport" and/or "Images" expected.', [Param]);
       inc(OptionCount, 2);
     end else
-      TagsReportFilename := '';
+      TagsReports := [];
 
     // Threading control
     Param := GetOptionValue('t', 'threadcount');
@@ -355,7 +357,7 @@ begin
     Processor.TagsSources := TagsSources;
     Processor.TagIDs := TagIDs;
     Processor.Copyright := Copyright;
-    Processor.TagsReportFilename := TagsReportFilename;
+    Processor.TagsReports := TagsReports;
     Processor.NoCreate := NoCreate;
 
     if not Quiet then

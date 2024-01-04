@@ -29,9 +29,10 @@ type
   TTagsSource = (tsEXIF, tsTagsFiles); // Tags from EXIF and/or .tags files
   TTagsSources = set of TTagsSource;
   TScalingDirection = (sdUpScaling, sdNoscaling, sdDownScaling);
-
   TResampling = (rsStretch, rsBox, rsLinear, rsHalfCosine, rsCosine, rsBicubic,
     rsMitchell, rsSpline, rsLanczos2, rsLanczos3, rsLanczos4, rsBestQuality);
+  TTagsReport = (trTagsReport, trImages);
+  TTagsReports = set of TTagsReport;
 
 const
   RESAMPLING_STRINGS :array[TResampling] of string = (
@@ -67,8 +68,8 @@ const
   DEFAULT_FILETAGS          = nil;
   DEFAULT_COPYRIGHT         = '';
   DEFAULT_TAGSFMT           = '.images%d';
-  DEFAULT_TAGSOURCES        :TTagsSources = [];
-  DEFAULT_TAGSREPORT        = true;
+  DEFAULT_TAGSSOURCES       = [];
+  DEFAULT_TAGSREPORTS       = [];
   DEFAULT_NOCREATE          = false;
 
   DEFSIZES :array[0..15] of integer = (32, 48, 64, 120, 240, 360, 480, 640, 800, 960, 1280, 1600, 1920, 2560, 3840, 4096);
@@ -151,8 +152,7 @@ type
     FTagsSources      :TTagsSources;
     FTagIDs           :TTagIDs; // 'Copyright',
     FCopyright        :string;
-    FTagsReport       :boolean;
-    FImageInfos       :boolean;
+    FTagsReports      :TTagsReports;
     FNoCreate         :boolean;
   private
     FCancel :boolean;
@@ -194,6 +194,7 @@ type
     class function TryStrToRenameParams(const Str :string; out Params :TRenameParams; out ErrStr :string) :boolean;
     class function RenameParamsToStr(const Params :TRenameParams) :string;
     class function TryStrToTagsSources(const Str :string; out Value :TTagsSources) :boolean;
+    class function TryStrToTagsReports(const Str :string; out Value :TTagsReports) :boolean;
     class function TryStrToResampling(const Str :string; out Value :TResampling) :boolean;
     class function StrToResampling(const Str :string) :TResampling;
     class function TryNameToResampling(const Str :string; out Value :TResampling) :boolean;
@@ -219,8 +220,7 @@ type
     property TagsSources :TTagsSources read FTagsSources write FTagsSources;
     property TagIDs :TStringArray read FTagIDs write FTagIDs;
     property Copyright :string read FCopyright write FCopyright;
-    property TagsReport :boolean read FTagsReport write FTagsReport;
-    property ImageInfos :boolean read FImageInfos write FImageInfos;
+    property TagsReports :TTagsReports read FTagsReports write FTagsReports;
     property NoCreate :boolean read FNoCreate write FNoCreate;
     property OnPrint :TPrintEvent read FOnPrint write FOnPrint;
     property OnProgress :TProgressEvent read FOnProgress write FOnProgress;
@@ -605,10 +605,10 @@ begin
   FRen.IndexDigits  := DEFAULT_RENINDEXDIGITS;
   FShuffle          := DEFAULT_SHUFFLE;
   FShuffleSeed      := DEFAULT_SHUFFLESEED;
-  FTagsSources      := DEFAULT_TAGSOURCES;
+  FTagsSources      := DEFAULT_TAGSSOURCES;
   FTagIDs           := nil;
   FCopyright        := DEFAULT_COPYRIGHT;
-  FTagsReport       := DEFAULT_TAGSREPORT;
+  FTagsReports      := DEFAULT_TAGSREPORTS;
   FNoCreate         := DEFAULT_NOCREATE;
 end;
 
@@ -727,8 +727,8 @@ begin
       end;
     end;
 
-    // Check, if EXIF must be read
-    if (FTagsSources=[]) and ((Length(FTagIds)>0) or FTagsReport or FImageInfos) then begin
+    // Check if TagsSources are implicite
+    if (FTagsSources=[]) and ((Length(FTagIds)>0) or (FTagsReports<>[])) then begin
       include(FTagsSources, tsEXIF);
       include(FTagsSources, tsTagsFiles);
     end;
@@ -828,7 +828,7 @@ begin
 
     result := Dispatcher.Execute(Tasks);
 
-    if FTagsReport then begin
+    if trTagsReport in FTagsReports then begin
       if Exer.IsMultipleTargetFolderStrategy then
         TagsFilename := GetParentDirectory(FTargetFolder)+TAGSREPORTFILETITLE
       else
@@ -837,7 +837,7 @@ begin
       Exer.FilesTags.SaveToFile(TagsFilename, Exer.FilesTags.TagIds, [soRelative]);
     end;
 
-    if FImageInfos then begin
+    if trImages in FTagsReports then begin
       for i:=0 to m-1 do begin
         if Exer.IsMultipleTargetFolderStrategy or not Exer.IsTargetFileRenamingStrategy then
           ImageInfosFilename := Exer.TargetFolders[i]+IMAGEINFOSFILETITLE
@@ -998,6 +998,21 @@ begin
   for Item in Items do
     if SameText(Item, 'EXIF') then include(Value, tsEXIF)
     else if SameText(Item, 'TAGS') then include(Value, tsTagsFiles)
+    else Exit(false);
+  result := true;
+end;
+
+class function TProcessor.TryStrToTagsReports(const Str: string; out
+  Value: TTagsReports): boolean;
+var
+  Item :string;
+  Items :TStringArray;
+begin
+  Value := [];
+  Items := StrToStringArray(Str, ',');
+  for Item in Items do
+    if SameText(Item, 'TAGSREPORT') then include(Value, trTagsReport)
+    else if SameText(Item, 'IMAGES') then include(Value, trImages)
     else Exit(false);
   result := true;
 end;

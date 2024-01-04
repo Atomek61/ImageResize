@@ -230,7 +230,7 @@ object MainDialog: TMainDialog
         Top = 4
         Width = 393
         TabStop = False
-        ActivePage = TabSheetSizes
+        ActivePage = TabSheetTagging
         Align = alClient
         BorderSpacing.Around = 4
         Images = ImageList32x32
@@ -238,7 +238,7 @@ object MainDialog: TMainDialog
         MultiLine = True
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 0
+        TabIndex = 4
         TabOrder = 1
         Options = [nboMultiLine]
         object TabSheetSizes: TTabSheet

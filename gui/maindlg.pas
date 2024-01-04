@@ -1548,6 +1548,7 @@ var
   IntValue :integer;
   SourceFilenames :TStringList;
   TagsSources :TTagsSources;
+  TagsReports :TTagsReports;
   TagIDs :TTagIDs;
   Processor :TProcessor;
 begin
@@ -1651,8 +1652,10 @@ begin
           Processor.Copyright := EditCopyright.Text
         else
           Processor.Copyright := '';
-        Processor.TagsReport := CheckBoxTagsReportEnabled.Checked;
-        Processor.ImageInfos := CheckBoxImageInfosEnabled.Checked;
+        TagsReports := [];
+        if CheckBoxTagsReportEnabled.Checked then include(TagsReports, trTagsReport);
+        if CheckBoxImageInfosEnabled.Checked then include(TagsReports, trImages);
+        Processor.TagsReports := TagsReports;
 
         // NoCreate flag
         Processor.NoCreate := CheckBoxNoCreate.Checked;

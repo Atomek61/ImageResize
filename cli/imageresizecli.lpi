@@ -96,16 +96,13 @@
     <RunParams>
       <FormatVersion Value="2"/>
     </RunParams>
-    <RequiredPackages Count="3">
+    <RequiredPackages Count="2">
       <Item1>
         <PackageName Value="dexif_package"/>
       </Item1>
       <Item2>
-        <PackageName Value="sparta_generics"/>
-      </Item2>
-      <Item3>
         <PackageName Value="BGRABitmapPack"/>
-      </Item3>
+      </Item2>
     </RequiredPackages>
     <Units Count="7">
       <Unit0>
@@ -160,6 +157,7 @@
     <Linking>
       <Debugging>
         <GenerateDebugInfo Value="False"/>
+        <DebugInfoType Value="dsDwarf3"/>
       </Debugging>
       <LinkSmart Value="True"/>
     </Linking>

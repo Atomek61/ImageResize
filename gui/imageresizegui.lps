@@ -19,8 +19,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="915"/>
-        <CursorPos X="11" Y="943"/>
+        <TopLine Value="1641"/>
+        <CursorPos X="20" Y="1657"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -789,15 +789,7 @@
         <UsageCount Value="10"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="27">
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="174" Column="14" TopLine="140"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="284" TopLine="250"/>
-      </Position>
+    <JumpHistory HistoryIndex="29">
       <Position>
         <Filename Value="maindlg.pas"/>
         <Caret Line="1474" TopLine="1465"/>
@@ -899,14 +891,23 @@
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="943" Column="38" TopLine="914"/>
+        <Caret Line="943" Column="11" TopLine="915"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
+        <Caret Line="1658" Column="46" TopLine="1636"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="780" TopLine="745"/>
+        <Caret Line="1657" Column="35" TopLine="1641"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="162" Column="89" TopLine="137"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1656" Column="35" TopLine="1641"/>
       </Position>
     </JumpHistory>
     <RunParams>
