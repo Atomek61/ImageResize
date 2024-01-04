@@ -268,7 +268,6 @@ type
     UpDownMrkSize: TUpDown;
     UpDownMrkX: TUpDown;
     UpDownMrkY: TUpDown;
-    procedure ActionListCreatorExecute(Sender: TObject);
     procedure ActionSettingsExecute(Sender: TObject);
     procedure ActionSlideShowAfterburnerExecute(Sender: TObject);
     procedure ActionSourceExecute(Sender: TObject);
@@ -282,6 +281,7 @@ type
     procedure ButtonInsertCopyrightClick(Sender: TObject);
     procedure ButtonInsertSIZEClick(Sender: TObject);
     procedure ActionParamExecute(Sender :TObject);
+    procedure EditSizesKeyPress(Sender: TObject; var Key: char);
     procedure EditSrcFolderChange(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormCreate(Sender: TObject);
@@ -332,6 +332,7 @@ type
     FRequiredSteps :array[1..3] of boolean;
     FProcessingSettings :TProcessingSettings;
     FDialogSettings :TDialogSettings;
+    FWorkingDirectory :string;
     procedure ChangeCurrentDir(const Path :string);
     function GetAppDataFilename(const Filetitle :string; CanCreate :boolean) :string;
     procedure SetDirty(AValue: boolean);
@@ -575,6 +576,7 @@ begin
   for Resampling in TResampling do
     ComboBoxResampling.Items.Add(RESAMPLING_STRINGS[Resampling]);
 
+  FWorkingDirectory := GetCurrentDir;
 end;
 
 procedure TMainDialog.FormShow(Sender: TObject);
@@ -663,10 +665,6 @@ begin
     PageControlParams.TabIndex := Tag;
     PageControlParams.SetFocus;
   end;
-end;
-
-procedure TMainDialog.ActionListCreatorExecute(Sender: TObject);
-begin
 end;
 
 procedure TMainDialog.ActionSettingsExecute(Sender: TObject);
@@ -770,11 +768,6 @@ end;
 procedure TMainDialog.EditRenTemplateEnter(Sender: TObject);
 begin
   RadioButtonRenCustom.Checked := true;
-end;
-
-procedure TMainDialog.EditSizesExit(Sender: TObject);
-begin
-  UpdateRequiredStep(2);
 end;
 
 procedure TMainDialog.ProjectChanged(Sender: TObject);
@@ -947,6 +940,7 @@ begin
     RequiredStepsUpdate;
     SetTitle(SCptUnnamed);
     FProjectFilename := '';
+    ChangeCurrentDir(FWorkingDirectory);
     FIsSave := false;
     Dirty := false;
   finally
@@ -1302,18 +1296,21 @@ begin
     begin
       if TrySizesStrToSizes(EditSizes.Text, Sizes) then begin
         EditSizes.Text := SizesToSizesStr(Sizes);
-        SizeDict := TSizeDict.Create;
-        try
-          for i:=0 to High(Sizes) do
-            SizeDict.Add(Sizes[i], i);
-          with ToolBarSizeButtons do for i:=0 to ButtonCount-1 do
-            Buttons[i].Down := SizeDict.ContainsKey(Buttons[i].Tag);
-        finally
-          SizeDict.Free;
-        end;
         RequiredSteps[2] := Length(Sizes)=0;
-      end else
+      end else begin
         RequiredSteps[2] := true;
+        if EditSizes.Focused then
+          Warning(SErrInvalidSizes);
+      end;
+      SizeDict := TSizeDict.Create;
+      try
+        for i:=0 to High(Sizes) do
+          SizeDict.Add(Sizes[i], i);
+        with ToolBarSizeButtons do for i:=0 to ButtonCount-1 do
+          Buttons[i].Down := SizeDict.ContainsKey(Buttons[i].Tag);
+      finally
+        SizeDict.Free;
+      end;
     end;
   3:
     RequiredSteps[3] :=  Length(EditTargetFolder.Text) = 0;
@@ -1472,9 +1469,23 @@ begin
   Dirty := true;
 end;
 
-procedure TMainDialog.EditSizesChange(Sender: TObject);
+procedure TMainDialog.EditSizesExit(Sender: TObject);
 begin
   UpdateRequiredStep(2);
+end;
+
+procedure TMainDialog.EditSizesKeyPress(Sender: TObject; var Key: char);
+begin
+  if Key=#13 then begin
+    UpdateRequiredStep(2);
+    Key := #0;
+  end;
+end;
+
+procedure TMainDialog.EditSizesChange(Sender: TObject);
+begin
+  if not EditSizes.Focused then
+    UpdateRequiredStep(2);
   Dirty := true;
 end;
 

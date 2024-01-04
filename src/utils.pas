@@ -39,12 +39,12 @@ begin
   for i:=1 to Length(Str)+1 do begin
     if (i>Length(Str)) or (Str[i]=Separator) then begin
       item := Trim(Copy(Str, p, i-p));
-      if item<>'' then begin
+  //    if item<>'' then begin
         if not TryStrToInt(item, x) then Exit(false);
         SetLength(Values, n+1);
         Values[n] := x;
         inc(n);
-      end;
+//      end;
       p := i+1;
     end;
   end;

@@ -84,12 +84,12 @@ object MainDialog: TMainDialog
         Top = 70
         Width = 324
         TabStop = False
-        ActivePage = TabSheetSrcFolder
+        ActivePage = TabSheetSrcFilenames
         Align = alClient
         BorderSpacing.Around = 4
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 1
+        TabIndex = 0
         TabOrder = 1
         object TabSheetSrcFilenames: TTabSheet
           Caption = 'TabSheetSrcFilenames'
@@ -123,6 +123,7 @@ object MainDialog: TMainDialog
             Top = 5
             Width = 25
             Anchors = [akTop, akRight]
+            Images = ImagesModule.ImageList20x20
             ImageIndex = 9
             OnClick = ButtonBrowseSrcFilesClick
             Spacing = 0
@@ -135,6 +136,7 @@ object MainDialog: TMainDialog
             Top = 5
             Width = 25
             Anchors = [akTop, akRight]
+            Images = ImagesModule.ImageList20x20
             ImageIndex = 8
             OnClick = ButtonClearSrcFilesClick
             Spacing = 0
@@ -228,7 +230,7 @@ object MainDialog: TMainDialog
         Top = 4
         Width = 393
         TabStop = False
-        ActivePage = TabSheetQuality
+        ActivePage = TabSheetSizes
         Align = alClient
         BorderSpacing.Around = 4
         Images = ImageList32x32
@@ -236,7 +238,7 @@ object MainDialog: TMainDialog
         MultiLine = True
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 3
+        TabIndex = 0
         TabOrder = 1
         Options = [nboMultiLine]
         object TabSheetSizes: TTabSheet
@@ -262,6 +264,7 @@ object MainDialog: TMainDialog
             Top = 26
             Width = 25
             Anchors = [akTop, akRight]
+            Images = ImagesModule.ImageList20x20
             ImageIndex = 8
             OnClick = ButtonClearSizesClick
             Spacing = 0
@@ -277,6 +280,7 @@ object MainDialog: TMainDialog
             TabOrder = 0
             OnChange = EditSizesChange
             OnExit = EditSizesExit
+            OnKeyPress = EditSizesKeyPress
           end
           object ToolBarSizeButtons: TToolBar
             Left = 6
@@ -1454,6 +1458,7 @@ object MainDialog: TMainDialog
       Caption = '&Cinema'
       ImageIndex = 24
       OnExecute = ActionSlideShowAfterburnerExecute
+      Visible = False
     end
     object ActionExecute: TAction
       Caption = 'E&xecute'
@@ -1483,7 +1488,7 @@ object MainDialog: TMainDialog
     Title = 'Select one or more Images'
     Filter = 'Image Files (*.jpg, *.png)|*.jpg;*.png|All Files|*.*'
     Options = [ofAllowMultiSelect, ofEnableSizing, ofViewDetail]
-    Left = 528
+    Left = 608
     Top = 552
   end
   object BrowseTargetFolder: TSelectDirectoryDialog
@@ -1492,7 +1497,7 @@ object MainDialog: TMainDialog
   end
   object OpenDialogMrkFilename: TOpenDialog
     Filter = 'Image Files (*.png)|*.png|All Files|*.*'
-    Left = 608
+    Left = 744
     Top = 552
   end
   object TimerProgressBarOff: TTimer
@@ -1864,19 +1869,19 @@ object MainDialog: TMainDialog
   object SaveAsDialog: TSaveDialog
     DefaultExt = '.irs'
     Filter = 'Image Resize Settings (*.irs)|*.irs|All Files|*.*'
-    Left = 360
+    Left = 392
     Top = 552
   end
   object OpenDialog: TOpenDialog
     DefaultExt = '.irs'
     Filter = 'Image Resize Settings (*.irs)|*.irs|All Files|*.*'
-    Left = 288
+    Left = 312
     Top = 552
   end
   object ApplicationProperties1: TApplicationProperties
     OnException = ApplicationProperties1Exception
-    Left = 784
-    Top = 544
+    Left = 760
+    Top = 616
   end
   object HTMLHelpDatabase: THTMLHelpDatabase
     BaseURL = 'file://hlp'
@@ -1895,7 +1900,7 @@ object MainDialog: TMainDialog
     Filter = '*.jpg;*.png'
     FilterIndex = 0
     Options = [ofPathMustExist, ofEnableSizing]
-    Left = 456
+    Left = 480
     Top = 552
   end
   object SaveAsDialogTagsReport: TSaveDialog
