@@ -1,7 +1,7 @@
 object MainDialog: TMainDialog
-  Left = 707
+  Left = 3200
   Height = 680
-  Top = 476
+  Top = 486
   Width = 840
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'ImageResize'
@@ -22,12 +22,12 @@ object MainDialog: TMainDialog
   LCLVersion = '3.0.0.3'
   object PanelControls: TPanel
     Left = 0
-    Height = 482
+    Height = 456
     Top = 64
     Width = 840
     Align = alTop
     BevelOuter = bvNone
-    ClientHeight = 482
+    ClientHeight = 456
     ClientWidth = 840
     Color = 15850953
     Constraints.MinHeight = 456
@@ -230,7 +230,7 @@ object MainDialog: TMainDialog
         Top = 4
         Width = 393
         TabStop = False
-        ActivePage = TabSheetTagging
+        ActivePage = TabSheetSizes
         Align = alClient
         BorderSpacing.Around = 4
         Images = ImageList32x32
@@ -238,7 +238,7 @@ object MainDialog: TMainDialog
         MultiLine = True
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 4
+        TabIndex = 0
         TabOrder = 1
         Options = [nboMultiLine]
         object TabSheetSizes: TTabSheet
@@ -1174,7 +1174,7 @@ object MainDialog: TMainDialog
     object LabelStep3: TLabel
       Left = 48
       Height = 25
-      Top = 422
+      Top = 396
       Width = 118
       Anchors = [akLeft, akBottom]
       Caption = 'Target &Folder'
@@ -1188,7 +1188,7 @@ object MainDialog: TMainDialog
     object PanelDestination: TPanel
       Left = 256
       Height = 39
-      Top = 416
+      Top = 390
       Width = 344
       HelpType = htKeyword
       HelpKeyword = 'HTML/index.html#dstfolder'
@@ -1237,7 +1237,7 @@ object MainDialog: TMainDialog
     object ButtonExecute: TBGRASpeedButton
       Left = 640
       Height = 37
-      Top = 416
+      Top = 390
       Width = 194
       Action = ActionExecute
       Anchors = [akRight, akBottom]
@@ -1272,7 +1272,7 @@ object MainDialog: TMainDialog
       Tag = 3
       Left = 8
       Height = 32
-      Top = 420
+      Top = 394
       Width = 32
       Anchors = [akLeft, akBottom]
       OnPaint = PaintBoxStep1Paint
@@ -1306,7 +1306,7 @@ object MainDialog: TMainDialog
     object ProgressBar: TProgressBar
       Left = 11
       Height = 8
-      Top = 464
+      Top = 438
       Width = 631
       Anchors = [akLeft, akRight, akBottom]
       TabOrder = 4
@@ -1404,8 +1404,8 @@ object MainDialog: TMainDialog
   end
   object MemoMessages: TRichMemo
     Left = 4
-    Height = 126
-    Top = 550
+    Height = 152
+    Top = 524
     Width = 836
     Align = alClient
     BorderSpacing.Left = 4

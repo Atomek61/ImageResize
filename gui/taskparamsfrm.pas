@@ -5,9 +5,12 @@ unit taskparamsfrm;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls;
+  Classes, SysUtils, Forms, Controls, EditBtn;
 
 type
+
+  { TTaskParamsFrame }
+
   TTaskParamsFrame = class(TFrame)
   private
 

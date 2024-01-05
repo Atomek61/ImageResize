@@ -33,11 +33,11 @@
      inkscape:zoom="1.829812"
      inkscape:cx="-106.84158"
      inkscape:cy="195.92177"
-     inkscape:window-width="1920"
-     inkscape:window-height="1057"
-     inkscape:window-x="2552"
-     inkscape:window-y="359"
-     inkscape:window-maximized="1"
+     inkscape:window-width="2560"
+     inkscape:window-height="1417"
+     inkscape:window-x="-32000"
+     inkscape:window-y="-32000"
+     inkscape:window-maximized="0"
      inkscape:current-layer="layer3">
     <inkscape:grid
        type="xygrid"
@@ -127,7 +127,10 @@
        width="128.00002"
        height="87.999992"
        x="0"
-       y="19.999998" />
+       y="19.999998"
+       inkscape:export-filename="img64\slideshow.png"
+       inkscape:export-xdpi="48"
+       inkscape:export-ydpi="48" />
     <g
        id="g1704"
        transform="matrix(0.56126691,0,0,0.58333325,28.078921,26.666665)">

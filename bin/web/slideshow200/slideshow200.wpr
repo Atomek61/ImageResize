@@ -1,0 +1,16 @@
+[Common]
+Type=WPR
+Version=100
+
+[Processor]
+Class=Slideshow200
+Title=Slideshow 2.0
+Description=Cinematic with navigation
+Comment=Simple slideshow for full-screen with HTML, CSS and JavaScript
+Date=2024-01-03 20:00:00
+Icon=..\icon-slideshow.png
+Preview=preview.png
+
+[Task.1]
+Class=Copy
+Copy=slideshow.js,slideshow.css[w]

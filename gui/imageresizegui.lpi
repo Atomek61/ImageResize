@@ -241,6 +241,7 @@
         <Filename Value="taskparamsfrm.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="TaskParamsFrame"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
       </Unit>
       <Unit>

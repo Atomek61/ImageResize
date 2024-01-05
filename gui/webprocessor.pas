@@ -6,12 +6,13 @@ interface
 
 uses
   Classes, SysUtils, Controls, Forms, IniFiles, Generics.Collections,
-  webprocessorinfofrm, taskparamsfrm, taskparamfrm;
+  webprocessorinfofrm, taskparamsfrm, taskparamfrm, Graphics, GetText,
+  DateUtils;
 
 type
   TWebProcessor = class;
   TWebProcessorClass = class of TWebProcessor;
-  TWebProcessors = TObjectList<TWebProcessor>;
+  TWebProcessors = class;
   TTask = class;
   TTaskClass = class of TTask;
   TTaskClasses = TDictionary<string, TTaskClass>;
@@ -23,16 +24,19 @@ type
 
   TWebProcessor = class
   private
+    FId :string;              // "slideshow200"
+    FTitle :string;           // "Slideshow 2.0"
+    FDescription :string;     // "Full-Screen Slideshow"
+    FComment :string;         // "Displays a single image and navigates through a list.
+    FDate :TDateTime;
     FFolder :string;
     FFeatures :TFeatures;
-    FCaption :string;
-    FTitle :string;
-    FDescription :string;
-    FDate :TDateTime;
     FIniFile :TCustomIniFile;
     FIconFile :string;
+    FIcon :TPicture;
     FTasks :TTasks;
     FTargetFolder :string;
+    function GetIcon: TBitmap;
   public
     constructor Create(IniFile :TCustomIniFile); virtual; overload;
     destructor Destroy; override;
@@ -43,17 +47,32 @@ type
     procedure Execute;
     function GetParamsFrame(Parent :TWinControl) :TTaskParamsFrame;
     function GetInfoFrameClass :TWebProcessorInfoFrameClass; virtual;
-    property Folder :string read FFolder;
-    property Features :TFeatures read FFeatures;
-    property Caption :string read FCaption;
-    property Date :TDateTime read FDate;
+    property Id :string read FId;
     property Title :string read FTitle;
     property Description :string read FDescription;
+    property Comment :string read FComment;
+    property Folder :string read FFolder;
+    property Features :TFeatures read FFeatures;
+    property Date :TDateTime read FDate;
     property IconFile :string read FIconFile;
+    property Icon :TBitmap read GetIcon;
     property TargetFolder :string read FTargetFolder;
   end;
 
-  { TTask }
+  { TWebProcessors }
+
+  TWebProcessors = class(TObjectList<TWebProcessor>)
+  private
+    FDictionary :TDictionary<string, TWebProcessor>;
+    function GetById(Id : string): TWebProcessor;
+  protected
+    procedure Notify(constref AValue: TWebProcessor; ACollectionNotification: TCollectionNotification); override;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    procedure SortByDate;
+    property ById[Id :string] :TWebProcessor read GetById;
+  end;
 
   TTask = class
   private
@@ -91,8 +110,18 @@ const
 resourcestring
   SErrUnregisterWebProcessorFmt = 'Unregistered WebProcessor class ''%s''.';
   SErrTaskClassNotRegisteredFmt = 'Unregistered WebProcessor Task class ''%s''.';
+  SErrTaskClassNotFoundFmt      = 'In WebProcessor ''%s'' [%s] ''Class='' not found.';
 
 { TWebProcessor }
+
+function TWebProcessor.GetIcon: TBitmap;
+begin
+  if not Assigned(FIcon) and (FIconFile<>'') then begin
+    FIcon := TPicture.Create;
+    FIcon.LoadFromFile(FIconFile);
+  end;
+  result := FIcon.Bitmap;
+end;
 
 constructor TWebProcessor.Create(IniFile :TCustomIniFile);
 var
@@ -100,15 +129,26 @@ var
   TaskSection :string;
   TaskClassName :string;
   TaskClass :TTaskClass;
+  Lang, FallbackLang :string;
+
+  function IniRead(const Key :string) :string;
+  begin
+    result := IniFile.ReadString(PROCESSOR_SECTION, Format('%s.%s', [Key, FallbackLang]), '');
+    if result = '' then
+      result := IniFile.ReadString(PROCESSOR_SECTION, Key, '');
+  end;
+
 begin
   inherited Create;
+  FIniFile := IniFile;
+  GetLanguageIDs(Lang, FallBackLang);
+  FId := ChangeFileExt(ExtractFilename(IniFile.Filename), '');
+  FTitle := IniRead('Title');
+  FDescription := IniRead('Description');
+  FComment := IniRead('Comment');
   FTasks := TTasks.Create;
   FFolder := IncludeTrailingPathDelimiter(ExtractFilePath(IniFile.Filename));
-  FIniFile := IniFile;
   FDate := FIniFile.ReadDateTime(PROCESSOR_SECTION, 'Date', 0.0);
-  FCaption := FIniFile.ReadString(PROCESSOR_SECTION, 'Caption', '');
-  FTitle := FIniFile.ReadString(PROCESSOR_SECTION, 'Title', '');
-  FDescription := FIniFile.ReadString(PROCESSOR_SECTION, 'Description', '');
   FIconFile := FIniFile.ReadString(PROCESSOR_SECTION, 'Icon', '');
   FFeatures := [];
 
@@ -116,7 +156,9 @@ begin
   while true do begin
     TaskSection := Format('Task.%d', [TaskIndex]);
     if not IniFile.SectionExists(TaskSection) then break;
-    TaskClassName := IniFile.ReadString(TaskSection, 'Class', '<undefined>');
+    TaskClassName := IniFile.ReadString(TaskSection, 'Class', '');
+    if TaskClassName='' then
+      raise Exception.CreateFmt(SErrTaskClassNotFoundFmt, [FId, TaskSection]);
     if not TaskClasses.TryGetValue(TaskClassName, TaskClass) then
       raise Exception.CreateFmt(SErrTaskClassNotRegisteredFmt, [TaskClassName]);
     FTasks.Add(TaskClass.Create(self));
@@ -128,6 +170,7 @@ end;
 destructor TWebProcessor.Destroy;
 begin
   FTasks.Free;
+  FIcon.Free;
   inherited Destroy;
 end;
 
@@ -159,14 +202,17 @@ class function TWebProcessor.Scan(const Folder: string): TWebProcessors;
 var
   WprFilenames :TStringList;
   Filename :string;
+  WebProcessor :TWebProcessor;
 begin
   result := TWebProcessors.Create;
   try
     WprFilenames := FindAllFiles(Folder, '*.'+WPREXT, true);
     try
       for Filename in WprFilenames do begin
-        result.Add(TWebProcessor.Create(Filename));
+        WebProcessor := TWebProcessor.Create(Filename);
+        result.Add(WebProcessor);
       end;
+      result.SortByDate;
     finally
       WprFilenames.Free;
     end;
@@ -202,6 +248,49 @@ end;
 function TWebProcessor.GetInfoFrameClass: TWebProcessorInfoFrameClass;
 begin
   result := TWebProcessorInfoFrame;
+end;
+
+{ TWebProcessors }
+
+function TWebProcessors.GetById(Id : string): TWebProcessor;
+begin
+  result := FDictionary[Id];
+end;
+
+procedure TWebProcessors.Notify(constref AValue: TWebProcessor;
+  ACollectionNotification: TCollectionNotification);
+begin
+  if Assigned(FDictionary) then begin
+    case ACollectionNotification of
+    cnAdded:
+      FDictionary.Add(AValue.Id, AValue);
+    cnRemoved, cnExtracted:
+      FDictionary.Remove(AValue.Id);
+    end;
+  end;
+  inherited Notify(AValue, ACollectionNotification);
+end;
+
+constructor TWebProcessors.Create;
+begin
+  inherited Create(false);
+  FDictionary := TDictionary<string, TWebProcessor>.Create;
+end;
+
+destructor TWebProcessors.Destroy;
+begin
+  FreeAndNil(FDictionary);
+  inherited Destroy;
+end;
+
+//function CompareDateTime(constref Left, Right :TDateTime) :integer;
+//begin
+//  result := CompareDateTime(Left
+//end;
+//
+procedure TWebProcessors.SortByDate;
+begin
+  Sort(@CompareDateTime);
 end;
 
 { TTask }

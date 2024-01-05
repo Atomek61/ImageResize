@@ -1481,6 +1481,11 @@ msgctxt "twebprocessordialog.buttoncancel.caption"
 msgid "Cancel"
 msgstr ""
 
+#: twebprocessordialog.buttonclose.caption
+msgctxt "twebprocessordialog.buttonclose.caption"
+msgid "Close"
+msgstr ""
+
 #: twebprocessordialog.buttonok.caption
 msgctxt "twebprocessordialog.buttonok.caption"
 msgid "Create"
@@ -1502,11 +1507,11 @@ msgid "Folder with Images:"
 msgstr ""
 
 #: twebprocessordialog.label2.caption
-msgid "Available  Web Processors:"
+msgid "Available:"
 msgstr ""
 
 #: twebprocessordialog.label3.caption
-msgid "Parameter:"
+msgid "Processor:"
 msgstr ""
 
 #: twebprocessorinfoframe.labeldescription.caption
@@ -1514,9 +1519,9 @@ msgctxt "twebprocessorinfoframe.labeldescription.caption"
 msgid "LabelDescription"
 msgstr ""
 
-#: twebprocessorinfoframe.labeltitle.caption
-msgctxt "twebprocessorinfoframe.labeltitle.caption"
-msgid "LabelTitle"
+#: webprocessor.serrtaskclassnotfoundfmt
+#, object-pascal-format
+msgid "In WebProcessor '%s' [%s] 'Class=' not found."
 msgstr ""
 
 #: webprocessor.serrtaskclassnotregisteredfmt

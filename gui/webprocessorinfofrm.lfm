@@ -1,24 +1,29 @@
 object WebProcessorInfoFrame: TWebProcessorInfoFrame
   Left = 0
-  Height = 111
+  Height = 84
   Top = 0
-  Width = 499
-  ClientHeight = 111
-  ClientWidth = 499
-  Color = 15850953
+  Width = 286
+  ClientHeight = 84
+  ClientWidth = 286
+  Color = clWindow
+  OnClick = FrameClick
+  OnMouseEnter = FrameMouseEnter
+  OnMouseLeave = FrameMouseLeave
   ParentBackground = False
   ParentColor = False
   TabOrder = 0
+  TabStop = True
   DesignLeft = 1262
   DesignTop = 281
   object ImageIcon: TImage
-    Left = 8
-    Height = 95
+    Left = 134
+    Height = 68
     Top = 8
-    Width = 152
-    Align = alLeft
+    Width = 144
+    Align = alRight
     BorderSpacing.Around = 8
     Center = True
+    Enabled = False
     Picture.Data = {
       1754506F727461626C654E6574776F726B477261706869639C1C000089504E47
       0D0A1A0A0000000D4948445200000112000000CD08060000007428FF6D000000
@@ -254,18 +259,11 @@ object WebProcessorInfoFrame: TWebProcessorInfoFrame
     Proportional = True
     StretchOutEnabled = False
   end
-  object LabelTitle: TLabel
-    Left = 184
-    Height = 15
-    Top = 16
-    Width = 50
-    Caption = 'LabelTitle'
-  end
   object LabelDescription: TLabel
-    Left = 183
-    Height = 62
-    Top = 41
-    Width = 298
+    Left = 8
+    Height = 68
+    Top = 8
+    Width = 122
     Anchors = [akTop, akLeft, akRight, akBottom]
     AutoSize = False
     Caption = 'LabelDescription'
