@@ -1,0 +1,4 @@
+inherited BasicWebProcessorFrame: TBasicWebProcessorFrame
+  Height = 270
+  Width = 567
+end

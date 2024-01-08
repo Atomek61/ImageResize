@@ -58,7 +58,7 @@ type
     constructor Create(const Delimiters :TDelimiters);
     destructor Destroy; override;
     procedure Clear;
-    procedure Add(const Key, Value :string);
+    procedure Add(const Key :string; const Value :string = '');
     procedure Reload(Index :integer; const Value :string);
     function Solve(out Stats :TStats) :boolean;
     function Replace(const Subject :string) :string;
@@ -120,7 +120,7 @@ begin
   FArray.Clear;
 end;
 
-procedure TSolver.Add(const Key, Value: string);
+procedure TSolver.Add(const Key :string; const Value :string);
 var
   Rec :TRec;
 begin

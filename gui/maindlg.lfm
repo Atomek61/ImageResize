@@ -1,7 +1,7 @@
 object MainDialog: TMainDialog
-  Left = 545
+  Left = 669
   Height = 680
-  Top = 439
+  Top = 431
   Width = 840
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'ImageResize'
@@ -22,12 +22,12 @@ object MainDialog: TMainDialog
   LCLVersion = '3.0.0.3'
   object PanelControls: TPanel
     Left = 0
-    Height = 456
+    Height = 480
     Top = 64
     Width = 840
     Align = alTop
     BevelOuter = bvNone
-    ClientHeight = 456
+    ClientHeight = 480
     ClientWidth = 840
     Color = 15850953
     Constraints.MinHeight = 456
@@ -230,7 +230,7 @@ object MainDialog: TMainDialog
         Top = 4
         Width = 393
         TabStop = False
-        ActivePage = TabSheetSizes
+        ActivePage = TabSheetTagging
         Align = alClient
         BorderSpacing.Around = 4
         Images = ImageList32x32
@@ -238,7 +238,7 @@ object MainDialog: TMainDialog
         MultiLine = True
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 0
+        TabIndex = 4
         TabOrder = 1
         Options = [nboMultiLine]
         object TabSheetSizes: TTabSheet
@@ -1070,8 +1070,8 @@ object MainDialog: TMainDialog
               Height = 19
               Hint = 'The Slideshow Afterburner requires such files with the'#13#10'names and titles of the images to be displayed.'
               Top = 33
-              Width = 189
-              Caption = 'Create Slideshow Infos (.images)'
+              Width = 202
+              Caption = 'Create Presentation Infos (.images)'
               TabOrder = 1
               OnChange = ProjectChanged
             end
@@ -1174,7 +1174,7 @@ object MainDialog: TMainDialog
     object LabelStep3: TLabel
       Left = 48
       Height = 25
-      Top = 396
+      Top = 420
       Width = 118
       Anchors = [akLeft, akBottom]
       Caption = 'Target &Folder'
@@ -1188,7 +1188,7 @@ object MainDialog: TMainDialog
     object PanelDestination: TPanel
       Left = 256
       Height = 39
-      Top = 390
+      Top = 414
       Width = 344
       HelpType = htKeyword
       HelpKeyword = 'HTML/index.html#dstfolder'
@@ -1237,7 +1237,7 @@ object MainDialog: TMainDialog
     object ButtonExecute: TBGRASpeedButton
       Left = 640
       Height = 37
-      Top = 390
+      Top = 414
       Width = 194
       Action = ActionExecute
       Anchors = [akRight, akBottom]
@@ -1272,7 +1272,7 @@ object MainDialog: TMainDialog
       Tag = 3
       Left = 8
       Height = 32
-      Top = 394
+      Top = 418
       Width = 32
       Anchors = [akLeft, akBottom]
       OnPaint = PaintBoxStep1Paint
@@ -1306,7 +1306,7 @@ object MainDialog: TMainDialog
     object ProgressBar: TProgressBar
       Left = 11
       Height = 8
-      Top = 438
+      Top = 462
       Width = 631
       Anchors = [akLeft, akRight, akBottom]
       TabOrder = 4
@@ -1350,24 +1350,24 @@ object MainDialog: TMainDialog
       Action = ActionSave
     end
     object ToolButton5: TToolButton
-      Left = 569
+      Left = 572
       Height = 64
       Top = 0
       Caption = 'ToolButton5'
       Style = tbsSeparator
     end
     object ToolButtonExecute: TToolButton
-      Left = 577
+      Left = 580
       Top = 0
       Action = ActionExecute
     end
     object ToolButtonHelp: TToolButton
-      Left = 662
+      Left = 665
       Top = 0
       Action = ActionHelp
     end
     object ToolButton8: TToolButton
-      Left = 657
+      Left = 660
       Height = 64
       Top = 0
       Caption = 'ToolButton8'
@@ -1386,7 +1386,7 @@ object MainDialog: TMainDialog
       Style = tbsSeparator
     end
     object ToolButtonAbout: TToolButton
-      Left = 742
+      Left = 745
       Hint = 'License and Vendor Infos'
       Top = 0
       Action = ActionAbout
@@ -1394,7 +1394,7 @@ object MainDialog: TMainDialog
     object ToolButtonSlideshowAfterburner: TToolButton
       Left = 489
       Top = 0
-      Action = ActionWebProcessor
+      Action = ActionPresentation
     end
     object ToolButtonSettings: TToolButton
       Left = 321
@@ -1404,8 +1404,8 @@ object MainDialog: TMainDialog
   end
   object MemoMessages: TRichMemo
     Left = 4
-    Height = 152
-    Top = 524
+    Height = 128
+    Top = 548
     Width = 836
     Align = alClient
     BorderSpacing.Left = 4
@@ -1454,10 +1454,10 @@ object MainDialog: TMainDialog
       ImageIndex = 18
       OnExecute = ActionEditWatermarkExecute
     end
-    object ActionWebProcessor: TAction
-      Caption = '&Cinema'
+    object ActionPresentation: TAction
+      Caption = '&Presentation...'
       ImageIndex = 24
-      OnExecute = ActionWebProcessorExecute
+      OnExecute = ActionPresentationExecute
     end
     object ActionExecute: TAction
       Caption = 'E&xecute'

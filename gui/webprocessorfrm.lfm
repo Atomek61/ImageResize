@@ -1,0 +1,27 @@
+object WebProcessorFrame: TWebProcessorFrame
+  Left = 0
+  Height = 126
+  Top = 0
+  Width = 455
+  ClientHeight = 126
+  ClientWidth = 455
+  TabOrder = 0
+  DesignLeft = 381
+  DesignTop = 136
+  object Label4: TLabel
+    Left = 16
+    Height = 15
+    Top = 19
+    Width = 81
+    Caption = 'Slideshow Title:'
+    FocusControl = EditTitle
+  end
+  object EditTitle: TEdit
+    Left = 136
+    Height = 23
+    Top = 16
+    Width = 304
+    Anchors = [akTop, akLeft, akRight]
+    TabOrder = 0
+  end
+end

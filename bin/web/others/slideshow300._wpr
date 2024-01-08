@@ -9,7 +9,3 @@ Comment=For web browsers with HTML, CSS and JavaScript
 Date=2022-01-01 00:00:00
 Icon=..\icon-pinboard.png
 Preview=preview-pinboard100.jpg
-
-[Task.1]
-Class=Copy
-Copy=slideshow.js,slideshow.css[w]

@@ -5,17 +5,17 @@ unit slideshow200webprocessor;
 interface
 
 uses
-  Classes, SysUtils, webprocessor;
+  Classes, SysUtils, WebProcessor, ColorWebProcessorFrm;
 
 type
-  TSlideshow200WebProcessor = class(TWebProcessor)
+  TSlideshow200WebProcessor = class(TColorWebProcessor)
   end;
 
 implementation
 
 initialization
 begin
-  TWebProcessor.Register(TSlideshow200WebProcessor);
+  TProcessors.Register(TSlideshow200WebProcessor);
 end;
 
 

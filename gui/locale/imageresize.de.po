@@ -477,6 +477,10 @@ msgstr "Unerwarteter Dateityp (%s erwartet)"
 msgid "Invalid parameters"
 msgstr "Ungültige Parameter"
 
+#: presentationdlg.serrmissingfolder
+msgid "Folder missing or doesnt exists."
+msgstr ""
+
 #: settingsdlg.scptbehavior0
 msgctxt "settingsdlg.scptbehavior0"
 msgid "Standard"
@@ -647,6 +651,21 @@ msgstr "fehlender Dateiname"
 msgid "more values than tags"
 msgstr "mehr Werte als Tags"
 
+#: tcolorwebprocessorframe.label1.caption
+msgctxt "tcolorwebprocessorframe.label1.caption"
+msgid "Button Color:"
+msgstr ""
+
+#: tcolorwebprocessorframe.label2.caption
+msgctxt "tcolorwebprocessorframe.label2.caption"
+msgid "Title Color:"
+msgstr ""
+
+#: tcolorwebprocessorframe.label3.caption
+msgctxt "tcolorwebprocessorframe.label3.caption"
+msgid "Background Color:"
+msgstr ""
+
 #: threading.dispatcher.scptcancelled
 msgid "Cancelled"
 msgstr "Abgebrochen"
@@ -751,6 +770,10 @@ msgstr "&Wasserzeichen"
 msgid "Optional Watermark printing"
 msgstr "Optionales Drucken eines Wasserzeichens"
 
+#: tmaindialog.actionpresentation.caption
+msgid "&Presentation..."
+msgstr ""
+
 #: tmaindialog.actionsave.caption
 msgctxt "tmaindialog.actionsave.caption"
 msgid "&Save"
@@ -786,12 +809,6 @@ msgstr "Datei&liste"
 msgid "&Folder"
 msgstr "&Ordner"
 
-#: tmaindialog.actionwebprocessor.caption
-#, fuzzy
-msgctxt "tmaindialog.actionwebprocessor.caption"
-msgid "&Cinema"
-msgstr "Web&kino..."
-
 #: tmaindialog.buttonbrowsesrcfiles.hint
 msgid "Browse for one or more images"
 msgstr "Wählen Sie ein oder mehrere Bilder aus"
@@ -818,7 +835,9 @@ msgid "ImageResize"
 msgstr "ImageResize"
 
 #: tmaindialog.checkboximageinfosenabled.caption
-msgid "Create Slideshow Infos (.images)"
+#, fuzzy
+#| msgid "Create Slideshow Infos (.images)"
+msgid "Create Presentation Infos (.images)"
 msgstr "Erzeuge Webkino Infos (.Images)"
 
 #: tmaindialog.checkboximageinfosenabled.hint
@@ -1538,6 +1557,52 @@ msgstr ""
 msgid "ToolButton9"
 msgstr ""
 
+#: tpresentationdialog.buttoncancel.caption
+#, fuzzy
+msgctxt "tpresentationdialog.buttoncancel.caption"
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: tpresentationdialog.buttonclose.caption
+#, fuzzy
+msgctxt "tpresentationdialog.buttonclose.caption"
+msgid "Close"
+msgstr "Schließen"
+
+#: tpresentationdialog.buttonexecute.caption
+msgctxt "tpresentationdialog.buttonexecute.caption"
+msgid "Create"
+msgstr ""
+
+#: tpresentationdialog.caption
+msgid "Presentation"
+msgstr ""
+
+#: tpresentationdialog.editfolder.hint
+msgctxt "tpresentationdialog.editfolder.hint"
+msgid "This folder must contain the images and an .imageinfo file."
+msgstr ""
+
+#: tpresentationdialog.groupboxparams.caption
+msgctxt "tpresentationdialog.groupboxparams.caption"
+msgid "&Settings"
+msgstr ""
+
+#: tpresentationdialog.label1.caption
+msgctxt "tpresentationdialog.label1.caption"
+msgid "&Folder with Images:"
+msgstr ""
+
+#: tpresentationdialog.label2.caption
+msgctxt "tpresentationdialog.label2.caption"
+msgid "&Available:"
+msgstr ""
+
+#: tpresentationdialog.labellongdescription.caption
+msgctxt "tpresentationdialog.labellongdescription.caption"
+msgid "<LongDescription>"
+msgstr ""
+
 #: tsettingsdialog.buttoncancel.caption
 msgctxt "tsettingsdialog.buttoncancel.caption"
 msgid "Cancel"
@@ -1621,53 +1686,14 @@ msgctxt "tsettingsdialog.labelcores.caption"
 msgid "Cores"
 msgstr "Kerne"
 
-#: twebprocessordialog.buttoncancel.caption
-#, fuzzy
-msgctxt "twebprocessordialog.buttoncancel.caption"
-msgid "Cancel"
-msgstr "Abbrechen"
-
-#: twebprocessordialog.buttonclose.caption
-#, fuzzy
-msgctxt "twebprocessordialog.buttonclose.caption"
-msgid "Close"
-msgstr "Schließen"
-
-#: twebprocessordialog.buttonok.caption
-#, fuzzy
-msgctxt "twebprocessordialog.buttonok.caption"
-msgid "Create"
-msgstr "Erzeugen"
-
-#: twebprocessordialog.caption
-#, fuzzy
-msgctxt "twebprocessordialog.caption"
-msgid "Slideshow Afterburner"
-msgstr "Web-Kino Nachbrenner"
-
-#: twebprocessordialog.editslideshowfolder.hint
-#, fuzzy
-msgctxt "twebprocessordialog.editslideshowfolder.hint"
-msgid "This folder must contain the images and an .imageinfo file."
-msgstr "Dieser Ordner muss die Bilder und eine .imageinfo-Datei enthalten."
-
-#: twebprocessordialog.label1.caption
-#, fuzzy
-#| msgid "Folder with Images:"
-msgctxt "twebprocessordialog.label1.caption"
-msgid "&Folder with Images:"
-msgstr "Ordner mit Bildern:"
-
-#: twebprocessordialog.label2.caption
-msgid "&Available:"
+#: twebprocessorframe.label4.caption
+msgctxt "twebprocessorframe.label4.caption"
+msgid "Slideshow Title:"
 msgstr ""
 
-#: twebprocessordialog.label3.caption
-msgid "&Parameters:"
-msgstr ""
-
-#: twebprocessordialog.labellongdescription.caption
-msgid "<LongDescription>"
+#: webprocessor.serrmissingwebprocessorclassfmt
+#, object-pascal-format
+msgid "Missing WebProcessor class entry in '%s'."
 msgstr ""
 
 #: webprocessor.serrunregisterwebprocessorfmt

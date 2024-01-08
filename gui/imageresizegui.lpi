@@ -209,9 +209,9 @@
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="webprocessordlg.pas"/>
+        <Filename Value="presentationdlg.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="WebProcessorDialog"/>
+        <ComponentName Value="PresentationDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
@@ -239,9 +239,17 @@
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="webprocessorparamsfrm.pas"/>
+        <Filename Value="colorwebprocessorfrm.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="WebProcessorParamsFrame"/>
+        <ComponentName Value="ColorWebProcessorFrame"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+      </Unit>
+      <Unit>
+        <Filename Value="webprocessorfrm.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="WebProcessorFrame"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
       </Unit>
     </Units>

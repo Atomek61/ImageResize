@@ -1,4 +1,3 @@
 {"version":1,"strings":[
-{"hash":203435685,"name":"twebprocessorframe.labeltitle.caption","sourcebytes":[76,97,98,101,108,84,105,116,108,101],"value":"LabelTitle"},
-{"hash":84427390,"name":"twebprocessorframe.labeldescription.caption","sourcebytes":[76,97,98,101,108,68,101,115,99,114,105,112,116,105,111,110],"value":"LabelDescription"}
+{"hash":259852010,"name":"twebprocessorframe.label4.caption","sourcebytes":[83,108,105,100,101,115,104,111,119,32,84,105,116,108,101,58],"value":"Slideshow Title:"}
 ]}

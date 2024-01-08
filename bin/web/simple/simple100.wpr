@@ -1,0 +1,17 @@
+[Common]
+Type=WPR
+Version=100
+
+[Processor]
+Class=Web
+Title=Simple 1.0
+Description=Simple HTML IMG-Tags
+LongDescription=For demo purpose. Simply lists all images with an IMG tag, without any styles or scripting.
+Date=2024-01-01 00:00:00
+Icon=..\icon-test.png
+;Preview=.jpg
+Copy=
+Templates=index.html
+Fragment.IMAGES=<img src="%URL%" alt="%TITLE%"/>
+
+

@@ -21,7 +21,7 @@ uses
   LMessages, LCLIntf, Buttons, ImgList, LCLType, LazHelpHTML, BGRABitmap,
   BGRABitmapTypes, BGRASpeedButton, RichMemo, Generics.Collections,
   mrkeditdlg, WinDirs, updateutils, settings, logging, loggingrichmemo,
-  imagesmod, StringArrays;
+  StringArrays;
 
 const
   GUIVER_APP      = 'ImageResize';
@@ -111,7 +111,7 @@ type
   end;
 
   TMainDialog = class(TForm)
-    ActionWebProcessor: TAction;
+    ActionPresentation: TAction;
     ActionListParams: TActionList;
     ActionListSource: TActionList;
     ActionSettings: TAction;
@@ -270,7 +270,7 @@ type
     UpDownMrkX: TUpDown;
     UpDownMrkY: TUpDown;
     procedure ActionSettingsExecute(Sender: TObject);
-    procedure ActionWebProcessorExecute(Sender: TObject);
+    procedure ActionPresentationExecute(Sender: TObject);
     procedure ActionSourceExecute(Sender: TObject);
     procedure ButtonBrowseTargetFolderClick(Sender: TObject);
     procedure ButtonBrowseMrkFilenameClick(Sender: TObject);
@@ -374,7 +374,7 @@ var
 implementation
 
 uses
-  math, helpintfs, Windows, FileUtil, tags, webprocessordlg, settingsdlg;
+  math, helpintfs, Windows, FileUtil, tags, presentationdlg, settingsdlg;
 
 const
   SCptRandom        = '<random>';
@@ -678,10 +678,9 @@ begin
   end;
 end;
 
-procedure TMainDialog.ActionWebProcessorExecute(Sender: TObject);
+procedure TMainDialog.ActionPresentationExecute(Sender: TObject);
 begin
-  WebProcessorDialog.ShowModal;
-
+  PresentationDialog.ShowModal;
 end;
 
 procedure TMainDialog.ActionSourceExecute(Sender: TObject);
