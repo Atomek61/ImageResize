@@ -113,6 +113,9 @@
     </RunParams>
     <RequiredPackages>
       <Item>
+        <PackageName Value="bgracontrols"/>
+      </Item>
+      <Item>
         <PackageName Value="richmemopackage"/>
       </Item>
       <Item>
@@ -123,9 +126,6 @@
       </Item>
       <Item>
         <PackageName Value="weblaz"/>
-      </Item>
-      <Item>
-        <PackageName Value="bgracontrols"/>
       </Item>
       <Item>
         <PackageName Value="BGRABitmapPack"/>
@@ -231,24 +231,17 @@
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="webprocessorinfofrm.pas"/>
+        <Filename Value="galleryprocessor.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="WebProcessorInfoFrame"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Frame"/>
       </Unit>
       <Unit>
-        <Filename Value="taskparamsfrm.pas"/>
+        <Filename Value="stringarrays.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="TaskParamsFrame"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Frame"/>
       </Unit>
       <Unit>
-        <Filename Value="taskparamfrm.pas"/>
+        <Filename Value="webprocessorparamsfrm.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="TaskParamFrame"/>
-        <HasResources Value="True"/>
+        <ComponentName Value="WebProcessorParamsFrame"/>
         <ResourceBaseClass Value="Frame"/>
       </Unit>
     </Units>

@@ -3,13 +3,12 @@ Type=WPR
 Version=100
 
 [Processor]
-Class=Gallery100
 Title=Web Gallery 1.0
-Description=A wall with pinned photo
+Description=A pinboard with fotos
 Comment=For web browsers with HTML, CSS and JavaScript
 Date=2022-01-01 00:00:00
 Icon=..\icon-pinboard.png
-Preview=preview.png
+Preview=preview-pinboard100.jpg
 
 [Task.1]
 Class=Copy

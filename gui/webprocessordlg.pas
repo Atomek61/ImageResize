@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ButtonPanel, Buttons,
   StdCtrls, ExtCtrls, ComCtrls, webprocessor, LCLIntf, LCLType, logging,
-  webprocessorinfofrm, Types, ImagesMod, gettext;
+  Types, ImagesMod, gettext;
 
 type
 
@@ -20,29 +20,35 @@ type
     ButtonCancel: TBitBtn;
     ButtonOk: TBitBtn;
     EditSlideshowFolder: TEdit;
+    ImagePreview: TImage;
     ImageList64x44: TImageList;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
+    LabelLongDescription: TLabel;
     ListBoxProcessors: TListBox;
+    PanelInfo: TPanel;
     PanelParams: TPanel;
     PanelControls: TPanel;
+    procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure ListBoxProcessorsClick(Sender: TObject);
     procedure ListBoxProcessorsDrawItem(Control: TWinControl; Index: Integer;
       ARect: TRect; State: TOwnerDrawState);
   private
+    FProcessorIndex :integer;
     FProcessors :TWebProcessors;
-    FInfoFrames :array of TWebProcessorInfoFrame;
-    FSelectedFrame :TWebProcessorInfoFrame;
+
+    function GetProcessor: TWebProcessor;
     function GetProcessorId: string;
-    function GetSelectedProcessor: TWebProcessor;
-    procedure OnRadioButtonClick(Sender :TObject);
     procedure OnFrameSelected(Sender :TObject);
     procedure SetProcessorId(AValue: string);
+    procedure SetProcessorIndex(AValue: integer);
   public
     procedure Scan;
     property ProcessorId :string read GetProcessorId write SetProcessorId;
-    property SelectedProcessor :TWebProcessor read GetSelectedProcessor;
+    property Processor :TWebProcessor read GetProcessor;
+    property ProcessorIndex :integer read FProcessorIndex write SetProcessorIndex;
   end;
 
 var
@@ -65,15 +71,31 @@ begin
   Scan;
 end;
 
+procedure TWebProcessorDialog.FormCreate(Sender: TObject);
+begin
+  FProcessorIndex := -1;
+end;
+
+procedure TWebProcessorDialog.ListBoxProcessorsClick(Sender: TObject);
+begin
+  ProcessorIndex := ListBoxProcessors.ItemIndex;
+end;
+
 procedure TWebProcessorDialog.ListBoxProcessorsDrawItem(Control: TWinControl; Index: Integer; ARect: TRect; State: TOwnerDrawState);
 var
   Cnvs :TCanvas;
+  ProcessorIcon :TGraphic;
+  wi, hi, wr, hr :integer;
 begin
   Cnvs := ListBoxProcessors.Canvas;
   Cnvs.Brush.Color := IfThen(odSelected in State, clHighlight, clBtnFace);
   Cnvs.FillRect(ARect);
-  SelectedProcessor.Icon.Draw(Cnvs, ARect);
-//  ImageList64x44.Draw(Cnvs, ARect.Left+4, ARect.Top+(ARect.Height-ImageList64x44.Height) div 2, 0);
+  ProcessorIcon := FProcessors[Index].Icon;
+  wi := ProcessorIcon.Width;
+  hi := ProcessorIcon.Height;
+  wr := ARect.Width;
+  hr := ARect.Height;
+  Cnvs.Draw(ARect.Left+4, ARect.Top+(hr-hi) div 2, ProcessorIcon);
   Cnvs.Font.Color := IfThen(odSelected in State, clHighlightText, clBtnText);
   Cnvs.Font.Size := 11;
   Cnvs.Font.Style := [fsBold];
@@ -83,19 +105,18 @@ begin
   Cnvs.TextOut(78, ARect.Top+36, FProcessors[Index].Description);
 end;
 
-procedure TWebProcessorDialog.OnRadioButtonClick(Sender: TObject);
-begin
-end;
-
 function TWebProcessorDialog.GetProcessorId: string;
 begin
   if ListBoxProcessors.ItemIndex = -1 then Exit('');
   result := FProcessors[ListBoxProcessors.ItemIndex].Id;
 end;
 
-function TWebProcessorDialog.GetSelectedProcessor: TWebProcessor;
+function TWebProcessorDialog.GetProcessor: TWebProcessor;
 begin
-  result := FProcessors[ListBoxProcessors.ItemIndex];
+  if FProcessorIndex = -1 then
+    result := nil
+  else
+    result := FProcessors[FProcessorIndex];
 end;
 
 procedure TWebProcessorDialog.SetProcessorId(AValue: string);
@@ -103,14 +124,19 @@ begin
 //  ListBoxProcessors.ItemIndex :=
 end;
 
+procedure TWebProcessorDialog.SetProcessorIndex(AValue: integer);
+begin
+  if FProcessorIndex=AValue then Exit;
+  if AValue<0 then
+    AValue := -1;
+  FProcessorIndex := AValue;
+  LabelLongDescription.Caption := Processor.LongDescription;
+  ListBoxProcessors.ItemIndex := AValue;
+  ImagePreview.Picture.Assign(Processor.Preview);
+end;
+
 procedure TWebProcessorDialog.OnFrameSelected(Sender: TObject);
 begin
-  if Sender=FSelectedFrame then Exit;
-  if Assigned(FSelectedFrame) then
-    FSelectedFrame.Selected := false;
-  if Assigned(Sender) then
-    (Sender as TWebProcessorInfoFrame).Selected := true;
-  FSelectedFrame := TWebProcessorInfoFrame(Sender);
 end;
 
 procedure TWebProcessorDialog.Scan;
@@ -121,35 +147,14 @@ var
   Folder :string;
   wp :TWebProcessor;
   i, y, w, h :integer;
-  Frame :TWebProcessorInfoFrame;
-//  RadioButton :TRadioButton;
 begin
+  ProcessorIndex := -1;
   Folder := IncludeTrailingPathDelimiter(ExtractFilePath(Application.Exename)+WEBFOLDER);
   FreeAndNil(FProcessors);
   FProcessors := TWebProcessor.Scan(Folder);
   ListBoxProcessors.Items.Clear;
   for wp in FProcessors do
     ListBoxProcessors.Items.Add(wp.Title);
-  //i := 0;
-  //y := VSPACE;
-  //w := ScrollBox.ClientWidth-2*HSPACE-GetSystemMetrics(SM_CXVSCROLL);
-//
-//
-//    Frame := wp.GetInfoFrameClass.Create(self);
-//    Frame.Name := Format('InfoFrame%d', [i]);
-//    Frame.LabelTitle.Caption := wp.Title;
-//    Frame.LabelDescription.Caption := wp.Description;
-//    if wp.IconFile<>'' then
-//      Frame.ImageIcon.Picture.LoadFromFile(wp.Folder+wp.IconFile);
-//    h := Frame.Height;
-//    Frame.SetBounds(HSPACE, y, w, h);
-//    Frame.Parent := ScrollBox;
-//    Frame.OnSelectedChanged := @OnFrameSelected;
-//    Frame.Visible := true;
-    //SetLength(FInfoFrames, i+1);
-    //FInfoFrames[i] := Frame;
-    //inc(i);
-    //inc(y, h+VSPACE);
 end;
 
 end.

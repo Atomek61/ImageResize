@@ -1,19 +1,20 @@
 object WebProcessorDialog: TWebProcessorDialog
-  Left = 598
+  Left = 542
   Height = 471
-  Top = 677
-  Width = 846
+  Top = 532
+  Width = 808
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Slideshow Afterburner'
   ClientHeight = 471
-  ClientWidth = 846
+  ClientWidth = 808
+  OnCreate = FormCreate
   OnShow = FormShow
   LCLVersion = '3.0.0.3'
   object ButtonBrowseTargetFolder: TBitBtn
-    Left = 758
+    Left = 319
     Height = 25
-    Top = 385
+    Top = 32
     Width = 25
     Anchors = [akTop, akRight]
     Images = ImagesModule.ImageList20x20
@@ -22,33 +23,33 @@ object WebProcessorDialog: TWebProcessorDialog
     TabOrder = 0
   end
   object EditSlideshowFolder: TEdit
-    Left = 136
+    Left = 16
     Height = 23
     Hint = 'This folder must contain the images and an .imageinfo file.'
-    Top = 385
-    Width = 620
+    Top = 33
+    Width = 300
     Anchors = [akTop, akLeft, akRight]
     TabOrder = 1
   end
   object Label1: TLabel
-    Left = 144
+    Left = 16
     Height = 15
-    Top = 368
+    Top = 16
     Width = 103
-    Caption = 'Folder with Images:'
+    Caption = '&Folder with Images:'
   end
   object PanelControls: TPanel
     Left = 0
     Height = 44
     Top = 427
-    Width = 846
+    Width = 808
     Align = alBottom
     BevelOuter = bvNone
     ClientHeight = 44
-    ClientWidth = 846
+    ClientWidth = 808
     TabOrder = 2
     object ButtonOk: TBitBtn
-      Left = 522
+      Left = 484
       Height = 28
       Top = 8
       Width = 100
@@ -61,7 +62,7 @@ object WebProcessorDialog: TWebProcessorDialog
       TabOrder = 0
     end
     object ButtonClose: TBitBtn
-      Left = 630
+      Left = 592
       Height = 28
       Top = 8
       Width = 100
@@ -76,7 +77,7 @@ object WebProcessorDialog: TWebProcessorDialog
       TabOrder = 1
     end
     object ButtonCancel: TBitBtn
-      Left = 738
+      Left = 700
       Height = 28
       Top = 8
       Width = 100
@@ -95,7 +96,7 @@ object WebProcessorDialog: TWebProcessorDialog
     Left = 4
     Height = 3
     Top = 424
-    Width = 838
+    Width = 800
     Align = alBottom
     BorderSpacing.Left = 4
     BorderSpacing.Right = 4
@@ -104,41 +105,68 @@ object WebProcessorDialog: TWebProcessorDialog
   object Label2: TLabel
     Left = 16
     Height = 15
-    Top = 8
+    Top = 64
     Width = 51
-    Caption = 'Available:'
+    Caption = '&Available:'
   end
   object Label3: TLabel
     Left = 360
     Height = 15
-    Top = 8
-    Width = 54
-    Caption = 'Processor:'
-  end
-  object PanelParams: TPanel
-    Left = 352
-    Height = 88
-    Top = 24
-    Width = 448
-    BevelOuter = bvLowered
-    TabOrder = 3
+    Top = 128
+    Width = 62
+    Caption = '&Parameters:'
   end
   object ListBoxProcessors: TListBox
     Left = 16
     Height = 336
-    Top = 24
+    Top = 80
     Width = 328
     Font.Height = -16
     Font.Style = [fsBold]
-    Items.Strings = (
-      'Slideshow 200'
-      'Slideshow 300'
-    )
     ItemHeight = 64
     ParentFont = False
     Style = lbOwnerDrawFixed
-    TabOrder = 4
+    TabOrder = 3
+    OnClick = ListBoxProcessorsClick
     OnDrawItem = ListBoxProcessorsDrawItem
+  end
+  object PanelParams: TPanel
+    Left = 355
+    Height = 272
+    Top = 144
+    Width = 440
+    BevelOuter = bvLowered
+    TabOrder = 4
+  end
+  object PanelInfo: TPanel
+    Left = 352
+    Height = 88
+    Top = 32
+    Width = 450
+    BevelOuter = bvLowered
+    ClientHeight = 88
+    ClientWidth = 450
+    Color = clWindow
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 5
+    object LabelLongDescription: TLabel
+      Left = 8
+      Height = 69
+      Top = 8
+      Width = 304
+      Anchors = [akTop, akLeft, akBottom]
+      AutoSize = False
+      Caption = '<LongDescription>'
+      WordWrap = True
+    end
+    object ImagePreview: TImage
+      Left = 336
+      Height = 72
+      Top = 8
+      Width = 106
+      Proportional = True
+    end
   end
   object ImageList64x44: TImageList
     Height = 44

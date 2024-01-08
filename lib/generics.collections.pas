@@ -37,9 +37,6 @@ unit Generics.Collections;
 {$HINTS OFF}
 {$OVERFLOWCHECKS OFF}
 {$RANGECHECKS OFF}
-{$WARN 3250 off : Virtual method "$1" has a lower visibility ($2) than parent class $3 ($4)}
-{%H-}
-
 interface
 
 uses
@@ -1185,7 +1182,7 @@ var
   i: SizeInt;
   LEnumerator: TEnumerator<T>;
 begin
-  SetLength(Result{%H-}, ACount);
+  SetLength(Result, ACount);
 
   try
     LEnumerator := GetEnumerator;

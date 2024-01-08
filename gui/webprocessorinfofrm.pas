@@ -10,11 +10,8 @@ uses
 
 type
 
-  { TWebProcessorInfoFrame }
-  TWebProcessorInfoFrameClass = class of TWebProcessorInfoFrame;
-
   TWebProcessorInfoFrame = class(TFrame)
-    ImageIcon: TImage;
+    Preview: TImage;
     LabelDescription: TLabel;
     procedure FrameClick(Sender: TObject);
     procedure FrameMouseEnter(Sender: TObject);

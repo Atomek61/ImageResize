@@ -20,7 +20,8 @@ uses
   StdCtrls, ComCtrls, ActnList, ExtCtrls, imgres, aboutdlg, inifiles, strutils,
   LMessages, LCLIntf, Buttons, ImgList, LCLType, LazHelpHTML, BGRABitmap,
   BGRABitmapTypes, BGRASpeedButton, RichMemo, Generics.Collections,
-  mrkeditdlg, WinDirs, updateutils, settings, logging, loggingrichmemo, imagesmod;
+  mrkeditdlg, WinDirs, updateutils, settings, logging, loggingrichmemo,
+  imagesmod, StringArrays;
 
 const
   GUIVER_APP      = 'ImageResize';
@@ -85,10 +86,10 @@ resourcestring
   SUrlWebHelp = 'http://www.atomek.de/imageresize/hlp35/gui/en';
   SLocDirHelp = 'hlp\gui\en';
   STxtLicense =
-    'ImageResize Copyright (c) 2024 Jan Schirrmacher, www.atomek.de'#10#10+
-    'Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy and merge copies of the Software, subject to the following conditions:'#10#10+
-    'The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.'#10#10+
-    'THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHOR OR COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.';
+'ImageResize Copyright (c) 2024 Jan Schirrmacher, www.atomek.de'#10#10+
+'Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy and merge copies of the Software, subject to the following conditions:'#10#10+
+'The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.'#10#10+
+'THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHOR OR COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.';
 
 //Image Resize Copyright (c) 2024 Jan Schirrmacher, www.atomek.de
 //Hiermit wird jeder Person, die eine Kopie dieser Software und der dazugehörigen Dokumentationsdateien (die „Software“) erhält, kostenlos die Erlaubnis erteilt, uneingeschränkt mit der Software umzugehen, einschließlich, aber nicht beschränkt auf die Rechte zur Nutzung, Vervielfältigung und Zusammenführung von Kopien der Software, vorbehaltlich der folgenden Bedingungen:
@@ -1549,7 +1550,7 @@ var
   SourceFilenames :TStringList;
   TagsSources :TTagsSources;
   TagsReports :TTagsReports;
-  TagIDs :TTagIDs;
+  TagKeys :TStringArray;
   Processor :TProcessor;
 begin
   if FExecuting then begin
@@ -1639,15 +1640,15 @@ begin
         Processor.MrkAlpha := x;
 
         // Tagging
-        TagIDs := nil;
+        TagKeys := nil;
         TagsSources := [];
         if CheckBoxTagsSourceTagsFiles.Checked then Include(TagsSources, tsTagsFiles);
         if CheckBoxTagsSourceEXIF.Checked then Include(TagsSources, tsEXIF);
         Processor.TagsSources := TagsSources;
-        if CheckBoxTagTitle.Checked then TagIDs.Add(TAGID_TITLE);
-        if CheckBoxTagTimestamp.Checked then TagIDs.Add(TAGID_TIMESTAMP);
-        if CheckBoxTagCopyright.Checked then TagIDs.Add(TAGID_COPYRIGHT);
-        Processor.TagIDs := TagIDs;
+        if CheckBoxTagTitle.Checked then TagKeys.Add(TAGID_TITLE);
+        if CheckBoxTagTimestamp.Checked then TagKeys.Add(TAGID_TIMESTAMP);
+        if CheckBoxTagCopyright.Checked then TagKeys.Add(TAGID_COPYRIGHT);
+        Processor.TagKeys := TagKeys;
         if CheckBoxTagCopyright.Checked then
           Processor.Copyright := EditCopyright.Text
         else

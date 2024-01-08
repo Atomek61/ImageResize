@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>   
+    <title></title>
+    <script src="slideshow.js"></script>
+    <link rel="stylesheet" href="slideshow.css">
+    <style>
+        body {
+            margin: 0;
+            background-color: darkslategray;
+        }        
+    </style>
+	<style>
+    <script>
+        window.onload = function() {
+           sl = new Slideshow(document.getElementById('slideshow'));
+        };
+    </script>      
+  </head>
+  <body>
+    <div style="display: none">
+        <svg version="1.1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <g id="svg-circle"><path d="M 64,8 A 56,56 0 0 0 8,64 56,56 0 0 0 64,120 56,56 0 0 0 120,64 56,56 0 0 0 64,8 Z m 0,8 A 48,48 0 0 1 112,64 48,48 0 0 1 64,112 48,48 0 0 1 16,64 48,48 0 0 1 64,16 Z"/></g>
+                <g id="svg-bullet"><circle cx="64" cy="64" r="32"/></g>
+                <g id="svg-prev"><path d="M 76,20 32,64 76,108 86,98 52,64 86,30 Z" /></g>
+                <g id="svg-next"><path d="M 52,20 96,64 52,108 42,98 76,64 42,30 Z" /></g>
+                <g id="svg-frame"><path d="M 8,16 h 112 v 96 h -112 v -96 Z M 16,24 v 80 h 96 v -80 Z" /></g>
+                <g id="svg-start"><path d="M 92,64 44,96 V 32 Z" /></g>
+                <g id="svg-pause"><path d="M 40 40 L 40 88 L 56 88 L 56 40 L 40 40 z M 72 40 L 72 88 L 88 88 L 88 40 L 72 40 z" /></g>
+                <g id="svg-expand"><path d="m 80,40 -8,-8 h 24 v 24 l -8,-8 -40,40 8,8 H 32 V 72 l 8,8 z" /></g>
+                <g id="svg-shrink"><path d="M 108,12 88,32 80,24 v 24 h 24 l -8,-8 20,-20 z m -84,68 8,8 -20,20 8,8 20,-20 8,8 V 80 Z" /></g>
+                <g id="svg-selected"><use href="#svg-circle"/><use href="#svg-bullet"/></g>
+                <g id="svg-frame-start"><use href="#svg-frame"/><use href="#svg-start"/></g>
+                <g id="svg-frame-pause"><use href="#svg-frame"/><use href="#svg-pause"/></g>
+            </defs>
+        </svg>        
+    </div>
+    <div style="position: absolute; top: 0px; width: 100%;" id="slideshow" class="slideshow">
+»		«LIST-IMG
+        <div class="title-bar"></div>
+        <div class="navigation-bar button-prev">
+            <svg viewbox="0 0 128 128" ><use href="#svg-prev"/></svg>
+        </div>    
+        <div class="navigation-bar button-next">
+            <svg viewbox="0 0 128 128" ><use href="#svg-next"/></svg>
+        </div>    
+        <div class="control-bar">
+            <svg class="button-image" viewbox="0 0 128 128"><use href="#svg-circle"/></svg>
+            <svg class="button-image" viewbox="0 0 128 128"><use href="#svg-circle"/></svg>
+            <svg class="button-image" viewbox="0 0 128 128"><use href="#svg-circle"/></svg>
+            <svg class="button-image" viewbox="0 0 128 128"><use href="#svg-circle"/></svg> 
+            <svg class="button-cinema" viewbox="0 0 128 128"><use href="#svg-frame-start"/></svg>
+            <svg class="button-fullscreen" viewbox="0 0 128 128"><use href="#svg-expand"/></svg>
+        </div>
+    </div>
+  </body>
+</html>

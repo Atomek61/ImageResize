@@ -1,9 +1,9 @@
 object WebProcessorInfoFrame: TWebProcessorInfoFrame
   Left = 0
-  Height = 84
+  Height = 85
   Top = 0
   Width = 286
-  ClientHeight = 84
+  ClientHeight = 85
   ClientWidth = 286
   Color = clWindow
   OnClick = FrameClick
@@ -15,11 +15,11 @@ object WebProcessorInfoFrame: TWebProcessorInfoFrame
   TabStop = True
   DesignLeft = 1262
   DesignTop = 281
-  object ImageIcon: TImage
-    Left = 134
-    Height = 68
+  object Preview: TImage
+    Left = 136
+    Height = 69
     Top = 8
-    Width = 144
+    Width = 142
     Align = alRight
     BorderSpacing.Around = 8
     Center = True
@@ -261,7 +261,7 @@ object WebProcessorInfoFrame: TWebProcessorInfoFrame
   end
   object LabelDescription: TLabel
     Left = 8
-    Height = 68
+    Height = 69
     Top = 8
     Width = 122
     Anchors = [akTop, akLeft, akRight, akBottom]

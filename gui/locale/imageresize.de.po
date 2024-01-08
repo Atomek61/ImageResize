@@ -54,6 +54,35 @@ msgstr "Ungültige Zeitangabe '%s'."
 msgid "Invalid format for datetime '%s'."
 msgstr "Ungültiges Fomat für Datum/Zeit '%s'."
 
+#: galleryprocessor.serrdirnotfoundfmt
+#, object-pascal-format
+msgid "Directory '%s' not found."
+msgstr ""
+
+#: galleryprocessor.serrdotimagesnotfoundfmt
+#, object-pascal-format
+msgid "Tags file '%s' not found."
+msgstr ""
+
+#: galleryprocessor.smsgbuildinglists
+msgid "Building lists..."
+msgstr ""
+
+#: galleryprocessor.smsgcopyingfmt
+#, object-pascal-format
+msgid "Copying '%s'..."
+msgstr ""
+
+#: galleryprocessor.smsgloadingdotimagesfmt
+#, object-pascal-format
+msgid "Loading image infos '%s'..."
+msgstr ""
+
+#: galleryprocessor.smsgprocessingtemplatefmt
+#, object-pascal-format
+msgid "Processing '%s'..."
+msgstr ""
+
 #: imgres.scptabort
 msgid "Abort"
 msgstr "Abbruch"
@@ -196,7 +225,9 @@ msgid "Up-scaling '%s' from %dx%d to %dx%d..."
 msgstr "Heraufskaliere '%s' von %dx%d nach %dx%d..."
 
 #: imgres.smsgwarningnocreate
-msgid "Not really creating any image or folder (-nocreate flag)"
+#, fuzzy
+#| msgid "Not really creating any image or folder (-nocreate flag)"
+msgid "Not really creating any image (-nocreate flag)"
 msgstr "Erzeuge nicht wirklich irgendein Bild oder einen Folder (-nocreate Flag)"
 
 #: imgres.smsgwatermarkingfmt
@@ -397,6 +428,15 @@ msgstr ""
 "Wollen Sie die Änderungen speichern?"
 
 #: maindlg.stxtlicense
+#, fuzzy
+#| msgid ""
+#| "ImageResize Copyright (c) 2024 Jan Schirrmacher, www.atomek.de\n"
+#| "\n"
+#| "Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy and merge copies of the Software, subject to the following conditions:\n"
+#| "\n"
+#| "The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n"
+#| "\n"
+#| "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHOR OR COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
 msgid ""
 "ImageResize Copyright (c) 2024 Jan Schirrmacher, www.atomek.de\n"
 "\n"
@@ -580,6 +620,10 @@ msgstr "erste Zeile darf nicht den * enthalten"
 #: tags.serrempty
 msgid "file is empty"
 msgstr "leere Datei"
+
+#: tags.serrfilenamenotallowed
+msgid "multiple 'Filename' tags"
+msgstr ""
 
 #: tags.serrfilenamenotfound
 msgid "tag 'Filename' not in first column"
@@ -1609,31 +1653,21 @@ msgstr "Dieser Ordner muss die Bilder und eine .imageinfo-Datei enthalten."
 
 #: twebprocessordialog.label1.caption
 #, fuzzy
+#| msgid "Folder with Images:"
 msgctxt "twebprocessordialog.label1.caption"
-msgid "Folder with Images:"
+msgid "&Folder with Images:"
 msgstr "Ordner mit Bildern:"
 
 #: twebprocessordialog.label2.caption
-msgid "Available:"
+msgid "&Available:"
 msgstr ""
 
 #: twebprocessordialog.label3.caption
-msgid "Processor:"
+msgid "&Parameters:"
 msgstr ""
 
-#: twebprocessorinfoframe.labeldescription.caption
-msgctxt "twebprocessorinfoframe.labeldescription.caption"
-msgid "LabelDescription"
-msgstr ""
-
-#: webprocessor.serrtaskclassnotfoundfmt
-#, object-pascal-format
-msgid "In WebProcessor '%s' [%s] 'Class=' not found."
-msgstr ""
-
-#: webprocessor.serrtaskclassnotregisteredfmt
-#, object-pascal-format
-msgid "Unregistered WebProcessor Task class '%s'."
+#: twebprocessordialog.labellongdescription.caption
+msgid "<LongDescription>"
 msgstr ""
 
 #: webprocessor.serrunregisterwebprocessorfmt

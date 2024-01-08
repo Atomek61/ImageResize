@@ -43,6 +43,35 @@ msgstr ""
 msgid "Invalid format for datetime '%s'."
 msgstr ""
 
+#: galleryprocessor.serrdirnotfoundfmt
+#, object-pascal-format
+msgid "Directory '%s' not found."
+msgstr ""
+
+#: galleryprocessor.serrdotimagesnotfoundfmt
+#, object-pascal-format
+msgid "Tags file '%s' not found."
+msgstr ""
+
+#: galleryprocessor.smsgbuildinglists
+msgid "Building lists..."
+msgstr ""
+
+#: galleryprocessor.smsgcopyingfmt
+#, object-pascal-format
+msgid "Copying '%s'..."
+msgstr ""
+
+#: galleryprocessor.smsgloadingdotimagesfmt
+#, object-pascal-format
+msgid "Loading image infos '%s'..."
+msgstr ""
+
+#: galleryprocessor.smsgprocessingtemplatefmt
+#, object-pascal-format
+msgid "Processing '%s'..."
+msgstr ""
+
 #: imgres.scptabort
 msgid "Abort"
 msgstr ""
@@ -185,7 +214,7 @@ msgid "Up-scaling '%s' from %dx%d to %dx%d..."
 msgstr ""
 
 #: imgres.smsgwarningnocreate
-msgid "Not really creating any image or folder (-nocreate flag)"
+msgid "Not really creating any image (-nocreate flag)"
 msgstr ""
 
 #: imgres.smsgwatermarkingfmt
@@ -554,6 +583,10 @@ msgstr ""
 
 #: tags.serrempty
 msgid "file is empty"
+msgstr ""
+
+#: tags.serrfilenamenotallowed
+msgid "multiple 'Filename' tags"
 msgstr ""
 
 #: tags.serrfilenamenotfound
@@ -1503,30 +1536,19 @@ msgstr ""
 
 #: twebprocessordialog.label1.caption
 msgctxt "twebprocessordialog.label1.caption"
-msgid "Folder with Images:"
+msgid "&Folder with Images:"
 msgstr ""
 
 #: twebprocessordialog.label2.caption
-msgid "Available:"
+msgid "&Available:"
 msgstr ""
 
 #: twebprocessordialog.label3.caption
-msgid "Processor:"
+msgid "&Parameters:"
 msgstr ""
 
-#: twebprocessorinfoframe.labeldescription.caption
-msgctxt "twebprocessorinfoframe.labeldescription.caption"
-msgid "LabelDescription"
-msgstr ""
-
-#: webprocessor.serrtaskclassnotfoundfmt
-#, object-pascal-format
-msgid "In WebProcessor '%s' [%s] 'Class=' not found."
-msgstr ""
-
-#: webprocessor.serrtaskclassnotregisteredfmt
-#, object-pascal-format
-msgid "Unregistered WebProcessor Task class '%s'."
+#: twebprocessordialog.labellongdescription.caption
+msgid "<LongDescription>"
 msgstr ""
 
 #: webprocessor.serrunregisterwebprocessorfmt

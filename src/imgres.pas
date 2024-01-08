@@ -18,12 +18,13 @@ unit imgres;
 
 {$mode Delphi}
 {$modeSwitch advancedRecords}
+{$modeSwitch typehelpers}
 
 interface
 
 uses
   Classes, SysUtils, StrUtils, Types, BGRABitmap, BGRABitmapTypes,
-  threading.dispatcher, tags, logging;
+  threading.dispatcher, tags, logging, StringArrays;
 
 type
   TTagsSource = (tsEXIF, tsTagsFiles); // Tags from EXIF and/or .tags files
@@ -106,7 +107,7 @@ type
     TExecutionRessources = class // Temporary process global ressources while processing
       IsMultipleTargetFolderStrategy :boolean;
       IsTargetFileRenamingStrategy :boolean;
-      SourceFilenames :array of string; // After Shaking
+      SourceFilenames :TStringArray; // After Shaking
       MrkImages :array of TBGRABitmap;  // Empty, One or for each Size
       TargetFolders :array of string;   // One folder for each Size
       TargetFoldersImageInfos :array of string;  // Names of the .images files, each folder has at least one
@@ -150,7 +151,7 @@ type
     FShuffle          :boolean;
     FShuffleSeed      :integer;
     FTagsSources      :TTagsSources;
-    FTagIDs           :TTagIDs; // 'Copyright',
+    FTagKeys           :TStringArray; // 'Copyright',
     FCopyright        :string;
     FTagsReports      :TTagsReports;
     FNoCreate         :boolean;
@@ -218,7 +219,7 @@ type
     property Shuffle :boolean read FShuffle write FShuffle;
     property ShuffleSeed :integer read FShuffleSeed write SetShuffleSeed;
     property TagsSources :TTagsSources read FTagsSources write FTagsSources;
-    property TagIDs :TStringArray read FTagIDs write FTagIDs;
+    property TagKeys :TStringArray read FTagKeys write FTagKeys;
     property Copyright :string read FCopyright write FCopyright;
     property TagsReports :TTagsReports read FTagsReports write FTagsReports;
     property NoCreate :boolean read FNoCreate write FNoCreate;
@@ -248,7 +249,7 @@ resourcestring
   SCptWarning                     = 'Warning';
   SCptAbort                       = 'Abort';
   SCptFatal                       = 'Fatal';
-  SMsgWarningNoCreate             = 'Not really creating any image or folder (-nocreate flag)';
+  SMsgWarningNoCreate             = 'Not really creating any image (-nocreate flag)';
   SErrFormatNotSupportedFmt       = 'Format %s not supported';
   SMsgDownScalingFmt              = 'Down-scaling ''%s'' from %dx%d to %dx%d...';
   SMsgUpScalingFmt                = 'Up-scaling ''%s'' from %dx%d to %dx%d...';
@@ -397,8 +398,8 @@ var
   SizeStr :string;
   i, n, m :integer;
   ExifTags :TTags;
-  ExifTagIds :TTagIDs;
-  TagID :string;
+  ExifTagKeys :TStringArray;
+  TagKey :string;
   MsgScalingFmt :string;
   MsgScalingLevel :TLevel;
 begin
@@ -408,6 +409,7 @@ begin
     Exit;
 
   SourceImg := nil;
+  //FileTags.Clear;
 
   // Source File
   try
@@ -425,10 +427,10 @@ begin
       Print(Format(SMsgReadingExifFmt, [SourceFilename]));
       ExifTags := TTags.Create;
       try
-        ReadExifTags(SourceFilename, ExifTags, ExifTagIds);
-        for TagId in ExifTagIds do
-          if not FileTags.ContainsKey(TagId) then
-            FileTags.AddOrSetValue(TagId, ExifTags[TagId]);
+        ReadExifTags(SourceFilename, ExifTags, ExifTagKeys);
+        for TagKey in ExifTagKeys do
+          if not FileTags.ContainsKey(TagKey) then
+            FileTags.AddOrSetValue(TagKey, ExifTags[TagKey]);
       finally
         ExifTags.Free;
       end;
@@ -563,10 +565,10 @@ begin
       end;
 
       // EXIF
-      if (Length(Processor.FTagIds)>0) and IsJPEG(TargetFilename) then begin
+      if (Length(Processor.FTagKeys)>0) and IsJPEG(TargetFilename) then begin
         Print(Format(SMsgWritingExifFmt, [TargetFilename]));
         if not Processor.FNoCreate then
-          WriteExifTags(TargetFilename, FileTags, Processor.FTagIds);
+          WriteExifTags(TargetFilename, FileTags, Processor.FTagKeys);
       end;
 
       Progress(1);
@@ -606,7 +608,7 @@ begin
   FShuffle          := DEFAULT_SHUFFLE;
   FShuffleSeed      := DEFAULT_SHUFFLESEED;
   FTagsSources      := DEFAULT_TAGSSOURCES;
-  FTagIDs           := nil;
+  FTagKeys           := nil;
   FCopyright        := DEFAULT_COPYRIGHT;
   FTagsReports      := DEFAULT_TAGSREPORTS;
   FNoCreate         := DEFAULT_NOCREATE;
@@ -728,25 +730,22 @@ begin
     end;
 
     // Check if TagsSources are implicite
-    if (FTagsSources=[]) and ((Length(FTagIds)>0) or (FTagsReports<>[])) then begin
+    if (FTagsSources=[]) and ((Length(FTagKeys)>0) or (FTagsReports<>[])) then begin
       include(FTagsSources, tsEXIF);
       include(FTagsSources, tsTagsFiles);
     end;
 
     // A Copyright overwrite implicitely requires tagging
-    if (FCopyright<>'') and not FTagIDs.contains(TAGID_COPYRIGHT) then
-      FTagIDs.Add(TAGID_COPYRIGHT);
+    if (FCopyright<>'') and not FTagKeys.contains(TAGID_COPYRIGHT) then
+      FTagKeys.Add(TAGID_COPYRIGHT);
 
     // Check if the tags database is required
-    Exer.TagsRequired := (FTagsSources<>[]) or (Length(FTagIds)>0);
+    Exer.TagsRequired := (FTagsSources<>[]) or (Length(FTagKeys)>0);
     if Exer.TagsRequired then begin
-      for i:=0 to n-1 do
-        Exer.FilesTags.add(Exer.SourceFilenames[i]);
-
       // Load Tags
       if tsTagsFiles in FTagsSources then begin
         Print(SMsgLoadingTags);
-        Exer.FilesTags.LoadTagsFiles;
+        Exer.FilesTags.LoadFromTagsFiles(Exer.SourceFilenames);
       end;
     end;
 
@@ -834,7 +833,8 @@ begin
       else
         TagsFilename := TargetFolder+TAGSREPORTFILETITLE;
       Print(Format(SMsgWritingTagsReportFmt, [TagsFilename]));
-      Exer.FilesTags.SaveToFile(TagsFilename, Exer.FilesTags.TagIds, [soRelative]);
+      ForceDirectories(ExtractFilePath(TagsFilename));
+      Exer.FilesTags.SaveToFile(TagsFilename, Exer.FilesTags.TagKeys, [soRelative]);
     end;
 
     if trImages in FTagsReports then begin
@@ -844,7 +844,8 @@ begin
         else
           ImageInfosFilename := Exer.TargetFolders[i]+IMAGEINFOSFILETITLE+IntToStr(FSizes[i]);
         Print(Format(SMsgWritingTagsReportFmt, [ImageInfosFilename]));
-        Exer.FilesTags.SaveImageInfos(ImageInfosFilename, FSizes[i]);
+        ForceDirectories(ExtractFilePath(ImageInfosFilename));
+        Exer.FilesTags.SaveToImagesFile(ImageInfosFilename, Exer.FilesTags.TagKeys, FSizes[i]);
       end;
     end;
 

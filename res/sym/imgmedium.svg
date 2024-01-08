@@ -28,14 +28,14 @@
      showguides="true"
      inkscape:lockguides="true"
      inkscape:zoom="3.659624"
-     inkscape:cx="44.949973"
+     inkscape:cx="8.8806938"
      inkscape:cy="120.50418"
      inkscape:window-width="2560"
      inkscape:window-height="1417"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g1704-1">
+     inkscape:current-layer="layer3">
     <inkscape:grid
        type="xygrid"
        id="grid259"
@@ -114,7 +114,7 @@
      style="display:inline">
     <g
        id="g1704-1"
-       transform="matrix(0.49999994,0,0,0.49999994,48.000003,40.000001)"
+       transform="matrix(0.56249996,0,0,0.5833333,48,26.666666)"
        style="display:inline">
       <rect
          style="fill:url(#linearGradient1681-8);fill-opacity:1;stroke-linecap:round;stroke-linejoin:round"
@@ -181,47 +181,54 @@
       </g>
     </g>
     <rect
-       style="fill:#babdb6;stroke:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+       style="fill:#babdb6;stroke:none;stroke-width:4.151;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
        id="rect3904"
-       width="96.000008"
-       height="8.000001"
-       x="16"
-       y="8" />
+       width="112"
+       height="8"
+       x="8"
+       y="0" />
     <rect
-       style="display:inline;fill:#babdb6;stroke:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+       style="display:inline;fill:#babdb6;stroke:none;stroke-width:4.151;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
        id="rect3904-2"
-       width="96.000008"
-       height="8.000001"
-       x="16"
-       y="28" />
+       width="112"
+       height="8"
+       x="8"
+       y="20" />
     <rect
-       style="display:inline;fill:#babdb6;stroke:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+       style="display:inline;fill:#babdb6;stroke:none;stroke-width:4.151;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
        id="rect3904-2-4"
-       width="96.000008"
-       height="8.000001"
-       x="16"
-       y="108" />
+       width="112"
+       height="8"
+       x="8"
+       y="120" />
     <rect
        style="display:inline;fill:#babdb6;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
        id="rect3904-4"
-       width="24"
+       width="32"
        height="8.000001"
-       x="16"
-       y="48.000004" />
+       x="8"
+       y="40" />
     <rect
        style="display:inline;fill:#babdb6;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
        id="rect3904-4-7"
-       width="24"
-       height="8.000001"
-       x="16"
-       y="68" />
+       width="32"
+       height="8"
+       x="8"
+       y="60" />
     <rect
        style="display:inline;fill:#babdb6;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
        id="rect3904-4-2"
-       width="24"
-       height="8.000001"
-       x="16"
-       y="88" />
+       width="32"
+       height="8"
+       x="8"
+       y="80" />
+    <rect
+       style="display:inline;fill:#babdb6;stroke:none;stroke-width:3.74166;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+       id="rect3904-4-2-6"
+       width="112"
+       height="8"
+       x="8"
+       y="100" />
   </g>
   <g
      inkscape:label="Ebene 1"

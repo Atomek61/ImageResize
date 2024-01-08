@@ -2,15 +2,16 @@ unit EXIFUtils;
 
 {$mode ObjFPC}{$H+}
 {$modeSwitch advancedRecords}
+{$modeSwitch typehelpers}
 
 interface
 
 uses
-  Classes, SysUtils, tags, datetimeutils;
+  Classes, SysUtils, tags, datetimeutils, StringArrays;
 
-function ReadExifTags(const Filename :string; Tags :TTags; out TagIDs :TTagIDs) :boolean;
-procedure WriteExifTags(const Filename :string; Tags :TTags; const TagIDs :TTagIDs);
-function allSupported(const TagIDs :TTagIDs) :boolean;
+function ReadExifTags(const Filename :string; Tags :TTags; out TagIDs :TStringArray) :boolean;
+procedure WriteExifTags(const Filename :string; Tags :TTags; const TagIDs :TStringArray);
+function allSupported(const TagIDs :TStringArray) :boolean;
 
 implementation
 
@@ -20,7 +21,7 @@ uses
 const
   TAGIDS_SUPPORTED   :array[0..2] of string = (TAGID_TITLE, TAGID_TIMESTAMP, TAGID_COPYRIGHT);
 
-function allSupported(const TagIDs :TTagIDs) :boolean;
+function allSupported(const TagIDs :TStringArray) :boolean;
 var
   i, j :integer;
 begin
@@ -34,7 +35,7 @@ begin
   end;
 end;
 
-function ReadExifTags(const Filename :string; Tags :TTags; out TagIDs :TTagIDs) :boolean;
+function ReadExifTags(const Filename :string; Tags :TTags; out TagIDs :TStringArray) :boolean;
 var
   ImgData :TImgData;
   Timestamp :TDateTime;
@@ -74,7 +75,7 @@ begin
   end;
 end;
 
-procedure WriteExifTags(const Filename :string; Tags :TTags; const TagIDs :TTagIDs);
+procedure WriteExifTags(const Filename :string; Tags :TTags; const TagIDs :TStringArray);
 var
   ImgData :TImgData;
   Value :string;

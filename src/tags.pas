@@ -9,7 +9,7 @@ unit tags;
 // First of all, add a list of full qualified filenames. For each of them,
 // a tags dictionary will be created.
 //
-// Now you can load .tags files with LoadTagsFiles.This will search for .tags-
+// Now you can load .tags files with LoadFromTagsFiles.This will search for .tags-
 // files in each directory where files are originated.
 //
 // .tags file format
@@ -36,7 +36,7 @@ unit tags;
 interface
 
 uses
-  Classes, SysUtils, generics.collections;
+  Classes, SysUtils, generics.collections, StringArrays;
 
 const
   TAGS_FILETITLE      = '.tags';
@@ -49,19 +49,10 @@ const
   TAGID_COPYRIGHT    =  'Copyright';
 
 type
-  TTagIDs = TStringArray;
-
-  { TTagIDsHelper }
-
-  TTagIDsHelper = type helper for TTagIDs
-    procedure Add(const ID :string);
-    function Contains(const ID :string) :boolean;
-  end;
-
-  TTags = TDictionary<string, string>; // Tags of a source file
+  TStringDictionary = TDictionary<string, string>;
+  TTags = TStringDictionary; // Tags of a source file
   TFilesTagsDictionary = TObjectDictionary<string, TTags>; // Directory/.tags
-  TTagsFileDictionary = TDictionary<string, string>;
-  TFilenameTags = TPair<string, TTags>;
+  TFileTags = TPair<string, TTags>;
   TUniqueStrings = THashSet<string>;
 
   { TFilesTags }
@@ -71,16 +62,22 @@ type
     TSaveOption = (soCompact, soRelative);
     TSaveOptions = set of TSaveOption;
   private
-    FFilenames :TStringList; // Contains the Filenames in the order they where added
+    FFilenames :TStringArray; // Contains the Filenames in the order they where added
+    FTagKeys :TStringArray;
+    // One call for two sources: .tags files or .images file.
+    // 1. If .tags, then load with LoadFromTagsFile with a given image file list
+    // 2. If .images, then load with LoadFromImagesFile with a given .image file (Filenames will be created from this file)
+    procedure LoadFromFile(const Filename :string; ImplicitFilenames :boolean);
   public
-    constructor Create; override;
-    destructor Destroy; override;
-    procedure Add(const Filename :string); overload;
-    procedure Add(Filenames :TStrings); overload;
-    procedure LoadTagsFiles;
-    procedure SaveToFile(const LstFilename :string; const TagIDs :TTagIDs; Options :TSaveOptions = []);
-    procedure SaveImageInfos(const ImageInfosFilename :string; Size :integer);
-    function TagIDs :TTagIDs;
+    procedure Clear; override;
+    //procedure Add(const Filename :string); overload;
+    //procedure Add(Filenames :TStrings); overload;
+    procedure LoadFromTagsFiles(const Filenames :TStringArray);
+    procedure SaveToFile(const LstFilename :string; const TagKeys :TStringArray; Options :TSaveOptions = []);
+    procedure SaveToImagesFile(const ImagesFilename :string; const TagKeys :TStringArray; Size :integer);
+    procedure LoadFromImagesFile(const ImagesFilename :string);
+    property TagKeys :TStringArray read FTagKeys;
+    property Filenames :TStringArray read FFilenames;
   end;
 
 resourcestring
@@ -88,6 +85,7 @@ resourcestring
   SErrInvalidLineFmt      = 'Invalid .tags file ''%s'' line %d - %s.';
   SErrEmpty               = 'file is empty';
   SErrFilenameNotFound    = 'tag ''Filename'' not in first column';
+  SErrFilenameNotAllowed  = 'multiple ''Filename'' tags';
   SErrMoreValuesThanTags  = 'more values than tags';
   SErrMissingFilename     = 'missing filename';
   SErrAsterisk            = 'first row cannot contain a *';
@@ -127,60 +125,33 @@ begin
   result := Value;
 end;
 
-{ TTagIDsHelper }
-
-procedure TTagIDsHelper.Add(const ID: string);
-begin
-  if Contains(ID) then Exit;
-  SetLength(self, Length(self)+1);
-  self[High(self)] := ID;
-end;
-
-function TTagIDsHelper.Contains(const ID: string): boolean;
-var
-  i :integer;
-begin
-  for i:=0 to High(self) do
-    if SameText(ID, self[i]) then Exit(true);
-  result := false;
-end;
-
 { TFilesTags }
 
-constructor TFilesTags.Create;
+procedure TFilesTags.Clear;
 begin
   inherited;
-  FFilenames := TStringList.Create;
+  FTagKeys.Clear;
+  FFilenames.Clear;
 end;
 
-destructor TFilesTags.Destroy;
-begin
-  FFilenames.Free;
-  inherited;
-end;
-
-procedure TFilesTags.Add(const Filename: string);
-begin
-  inherited Add(Filename, TTags.Create);
-  FFilenames.Add(Filename);
-end;
-
-procedure TFilesTags.Add(Filenames: TStrings);
+//procedure TFilesTags.Add(const Filename: string);
+//begin
+//  inherited Add(Filename, TTags.Create);
+//  FFilenames.Add(Filename);
+//end;
+//
+//procedure TFilesTags.Add(Filenames: TStrings);
+//var
+//  Filename :string;
+//begin
+//  for Filename in Filenames do
+//    Add(Filename);
+//end;
+//
+procedure TFilesTags.LoadFromFile(const Filename :string; ImplicitFilenames :boolean);
 var
-  Filename :string;
-begin
-  for Filename in Filenames do
-    Add(Filename);
-end;
-
-procedure TFilesTags.LoadTagsFiles;
-var
-  TagsFileSet :TUniqueStrings;
-  TagIDSet :TUniqueStrings;
-  FilenameTags :TFilenameTags;
-  Path, Filetitle, Filename :string;
-  TagsFilename :string;
-  TagsFile :TStringList;
+  Path, Filetitle :string;
+  Lines :TStringList;
   ColKeys :TStringArray;
   Row :TStringArray;
   Tags :TTags;
@@ -190,94 +161,124 @@ var
   Value :string;
   UnusedRow :boolean;
   UnusedTags :TTags;
+  ItemFilename :string;
 
   procedure RaiseInvalid(const Reason :string; Line :integer=-1);
   begin
     if Line=-1 then
-      raise Exception.CreateFmt(SErrInvalidTagsFileFmt, [TagsFilename, Reason])
+      raise Exception.CreateFmt(SErrInvalidTagsFileFmt, [Filename, Reason])
     else
-      raise Exception.CreateFmt(SErrInvalidLineFmt, [TagsFilename, Line+1, Reason]);
-  end;
-
-  procedure AddTagID(const TagID :string);
-  begin
-    if TagIDSet.Contains(TagId) then Exit;
-    TagIdSet.Add(TagID);
+      raise Exception.CreateFmt(SErrInvalidLineFmt, [Filename, Line+1, Reason]);
   end;
 
 begin
-  TagsFileSet := TUniqueStrings.Create;
-  TagIDSet := TUniqueStrings.Create;
   UnusedTags := TTags.Create;
   try
-    for FilenameTags in self do begin
-      Path := IncludeTrailingPathDelimiter(ExtractFilePath(FilenameTags.Key));
-      Filetitle := ExtractFilename(FilenameTags.Key);
-      TagsFilename := Path + TAGS_FILETITLE;
-      if not TagsFileSet.Contains(TagsFilename) and FileExists(TagsFilename) then begin
-        TagsFile := TStringList.Create;
-        try
-          LastTags := nil;
-          TagsFileSet.Add(TagsFilename);
-          TagsFile.LoadFromFile(TagsFilename, TEncoding.UTF8);
-          if TagsFile.Count=0 then RaiseInvalid(SErrEmpty);
-          // Handle header line: Filename, Tag1, Tag2, ...
-          ColKeys := TagsFile[0].Split(',');
-          if (Length(ColKeys)=0) then RaiseInvalid(SErrEmpty);
-          RemoveQuotes(ColKeys);
-          FilenameTag := Trim(ColKeys[0]);
-          if not SameText(FilenameTag, TAGID_FILENAME) then RaiseInvalid(SErrFilenameNotFound, 0);
-          for i:=1 to TagsFile.Count-1 do begin
-            Row := TagsFile[i].Split(',', '"', '"');
-            if (Length(Row)<1) then
-              RaiseInvalid(SErrMissingFilename, i);
-            if Length(Row)>Length(ColKeys) then
-              RaiseInvalid(SErrMoreValuesThanTags, i);
-            Filetitle := RemoveQuotes(Row[0]);
-            Filename := Path + Filetitle;
-            // All rows are beeing evaluated
-            UnusedRow := not TryGetValue(Filename, Tags);
-            if UnusedRow then Tags := UnusedTags;
-//              WriteLn(Format('Loading for %s', [Filename]));
-            for j:=1 to High(ColKeys) do begin
-              if j>=Length(Row) then break;
-              if Trim(Row[j])='*' then begin
-                if not Assigned(LastTags) then RaiseInvalid(SErrAsterisk);
-                Value := LastTags[ColKeys[j]];
-              end else
-                Value := Row[j];
-              Tags.AddOrSetValue(ColKeys[j], RemoveQuotes(Value));
-            end;
-            LastTags := Tags;
-          end;
-        finally
-          TagsFile.Free;
-        end;
+    Lines := TStringList.Create;
+    try
+      LastTags := nil;
+      Lines.LoadFromFile(Filename, TEncoding.UTF8);
+      if Lines.Count=0 then RaiseInvalid(SErrEmpty);
+      // Handle header line: Filename, Tag1, Tag2, ...
+      Path := IncludeTrailingPathDelimiter(ExtractFilePath(Filename));
+      ColKeys := Lines[0].Split(',');
+      if (Length(ColKeys)=0) then RaiseInvalid(SErrEmpty);
+      RemoveQuotes(ColKeys);
+      FilenameTag := Trim(ColKeys[0]);
+      if not SameText(FilenameTag, TAGID_FILENAME) then RaiseInvalid(SErrFilenameNotFound, 0);
+      // Update global list of all keys...
+      for j:=1 to High(ColKeys) do begin
+        // 'Filename' is only allowed for the first column
+        if SameText(ColKeys[j], TAGID_FILENAME) then
+          RaiseInvalid(SErrFilenameNotAllowed, -1);
+        if not FTagKeys.Contains(ColKeys[j]) then
+          FTagKeys.Add(ColKeys[j]);
       end;
+      // Parse lines...
+      for i:=1 to Lines.Count-1 do begin
+        Row := Lines[i].Split(',', '"', '"');
+        if (Length(Row)<1) then
+          RaiseInvalid(SErrMissingFilename, i);
+        if Length(Row)>Length(ColKeys) then
+          RaiseInvalid(SErrMoreValuesThanTags, i);
+        Filetitle := RemoveQuotes(Row[0]);
+        ItemFilename := Path + Filetitle;
+        if not ImplicitFilenames then begin
+          // All rows are beeing evaluated
+          UnusedRow := not TryGetValue(ItemFilename, Tags);
+          if UnusedRow then Tags := UnusedTags;
+        end else begin
+          Tags := TTags.Create;
+          FFilenames.Add(ItemFilename);
+          Add(ItemFilename, Tags);
+        end;
+//              WriteLn(Format('Loading for %s', [Filename]));
+        for j:=1 to High(ColKeys) do begin
+          if j>=Length(Row) then break;
+          if Trim(Row[j])='*' then begin
+            if not Assigned(LastTags) then RaiseInvalid(SErrAsterisk);
+            Value := LastTags[ColKeys[j]];
+          end else
+            Value := Row[j];
+          Tags.AddOrSetValue(ColKeys[j], RemoveQuotes(Value));
+        end;
+        LastTags := Tags;
+      end;
+    finally
+      Lines.Free;
     end;
   finally
-    TagsFileSet.Free;
-    TagIDSet.Free;
     UnusedTags.Free;
   end;
 end;
 
-procedure TFilesTags.SaveToFile(const LstFilename: string; const TagIDs :TTagIDs; Options :TSaveOptions);
+procedure TFilesTags.LoadFromTagsFiles(const Filenames :TStringArray);
+var
+  Filename :string;
+  Path :string;
+  TagsFilename :string;
+  UniqueTagsFiles :TUniqueStrings;
+begin
+  Clear;
+  UniqueTagsFiles := TUniqueStrings.Create;
+  try
+    // Create a tags dictionary for all the files
+    for Filename in Filenames do begin
+      FFilenames.Add(Filename);
+      Add(Filename, TTags.Create);
+    end;
+    // Look for .tags files in every folder where a file is, but take care not to
+    // load tags twice
+    for Filename in Filenames do begin
+      Path := IncludeTrailingPathDelimiter(ExtractFilePath(Filename));
+      TagsFilename := Path + TAGS_FILETITLE;
+      if not UniqueTagsFiles.contains(TagsFilename) and FileExists(TagsFilename) then begin
+        UniqueTagsFiles.Add(TagsFilename);
+        LoadFromFile(TagsFilename, false);
+      end;
+    end;
+  finally
+    UniqueTagsFiles.Free;
+  end;
+end;
+
+procedure TFilesTags.SaveToFile(const LstFilename: string; const TagKeys :TStringArray; Options :TSaveOptions);
 var
   s :TStringList;
   Line :string;
-  Filename :string;
+  Filename, Key :string;
   Tags :TTags;
   Pair :TPair<string, string>;
   i :integer;
   BasePath :string;
+  Value :string;
 
-  function GetField(const TagID :string) :string;
+  function GetField(const TagKey :string) :string;
   begin
-    if Tags.TryGetValue(TagID, result) then
-      result := QuotedIfComma(result)
+    if Tags.TryGetValue(TagKey, result) then
+      result := ', '+QuotedIfComma(result)
     else
-      result := '';
+      result := ',';
   end;
 
 begin
@@ -299,8 +300,8 @@ begin
     end else begin
       begin
         Line := TAGID_FILENAME;
-        for i:=0 to High(TagIDs) do
-          Line := Line + ', ' + TagIDs[i];
+        for Key in TagKeys do
+          Line := Line + ', ' + Key;
         s.Add(Line);
         for Filename in FFilenames do begin
           Tags := self[Filename];
@@ -308,9 +309,8 @@ begin
             Line := ExtractRelativePath(BasePath, Filename)
           else
             Line := Filename;
-          Line := QuotedIfComma(Line);
-          for i:=0 to High(TagIDs) do
-            Line := Line + ',' + GetField(TagIDs[i]);
+          for Key in TagKeys do
+            Line := Line + GetField(Key);
           s.Add(Line);
         end;
       end;
@@ -321,59 +321,67 @@ begin
   end;
 end;
 
-procedure TFilesTags.SaveImageInfos(const ImageInfosFilename: string; Size: integer);
+procedure TFilesTags.SaveToImagesFile(const ImagesFilename: string; const TagKeys :TStringArray; Size: integer);
 var
   i :integer;
-  FileTags :TTags;
+  Tags :TTags;
   s :TStringList;
   Line :string;
   BasePath :string;
   TargetFilename :string;
-  Title :string;
+  Key :string;
+  Value :string;
+
+  function GetField(const TagKey :string) :string;
+  begin
+    if Tags.TryGetValue(TagKey, result) then
+      result := ', '+QuotedIfComma(result)
+    else
+      result := ',';
+  end;
+
 begin
-  BasePath := ExpandFilename(ExtractFilePath(ImageInfosFilename));
+  BasePath := ExpandFilename(ExtractFilePath(ImagesFilename));
   s := TStringList.Create;
   try
     s.WriteBOM := true;
-    s.Add('Filename, Title');
-    for i:=0 to FFilenames.Count-1 do if TryGetValue(FFilenames[i], FileTags) and FileTags.TryGetValue(IntToStr(Size), TargetFilename) then begin
-      Line := ExtractRelativePath(BasePath, TargetFilename)+', ';
-      if FileTags.TryGetValue('Title', Title) then
-        Line := Line + QuotedIfComma(Title);
+    Line := TAGID_FILENAME;
+    for Key in TagKeys do
+      Line := Line + ', ' + Key;
+    s.Add(Line);
+    for i:=0 to FFilenames.Count-1 do if TryGetValue(FFilenames[i], Tags) and Tags.TryGetValue(IntToStr(Size), TargetFilename) then begin
+      Line := ExtractRelativePath(BasePath, TargetFilename);
+      for Key in TagKeys do
+        Line := Line + GetField(Key);
       s.Add(Line);
     end;
-    s.SaveToFile(ImageInfosFilename, TEncoding.UTF8);
+    s.SaveToFile(ImagesFilename, TEncoding.UTF8);
   finally
     s.Free;
   end;
 end;
 
-function TFilesTags.TagIDs: TTagIDs;
+procedure TFilesTags.LoadFromImagesFile(const ImagesFilename: string);
 var
-  i :TFilenameTags;
-  j :TPair<string, string>;
+  FileTitle :string;
 begin
-  result := nil;
-  for i in self do begin
-    for j in i.value do
-      result.Add(j.Key);
-  end;
+  Clear;
+  LoadFromFile(ImagesFilename, true);
 end;
 
 //procedure test;
 //var
 //  ft :TFilesTags;
+//  fns :TStringArray;
 //begin
 //  ft := TFilesTags.Create;
-//  ft.Add('D:\Mf\Dev\Lazarus\ImageResize\tst\srcB\src1\DSC04236.jpg');
-//  ft.Add('D:\Mf\Dev\Lazarus\ImageResize\tst\srcB\src1\DSC04242.jpg');
-//  ft.Add('D:\Mf\Dev\Lazarus\ImageResize\tst\srcB\src2\DSC04288.jpg');
-//  ft.Add('D:\Mf\Dev\Lazarus\ImageResize\tst\srcB\src2\DSC04262.jpg');
-//  ft.Add('D:\Mf\Dev\Lazarus\ImageResize\tst\srcB\src2\src3\DSC04293.jpg');
-//  ft.Add('D:\Mf\Dev\Lazarus\ImageResize\tst\srcB\src2\src3\DSC04314.jpg');
+//  fns.Clear;
+//  fns.Add('D:\Mf\Dev\Lazarus\ImageResize\tst\srcF\DSC04752.jpg');
+//  fns.Add('D:\Mf\Dev\Lazarus\ImageResize\tst\srcF\DSC04757.jpg');
+//  fns.Add('D:\Mf\Dev\Lazarus\ImageResize\tst\srcF\DSC04770.jpg');
 //  try
-//    ft.LoadTagsFiles;
-//    ft.SaveToFile('D:\Mf\Dev\Lazarus\ImageResize\tst\srcB\.filestags', [soRelative]);
+//    ft.LoadFromTagsFiles(fns);
+//    ft.SaveToFile('D:\Mf\Dev\Lazarus\ImageResize\tst\tst9\.images', ft.TagKeys, [soRelative]);
 //  except on E :Exception do
 //    begin
 //      WriteLn(E.Message);

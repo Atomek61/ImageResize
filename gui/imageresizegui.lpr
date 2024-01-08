@@ -12,8 +12,9 @@ uses
   Interfaces, // this includes the LCL widgetset
   Forms, lazcontrols, maindlg, aboutdlg, mrkeditdlg, imgres, updateutils,
   datetimeutils, threading.dispatcher, EXIFUtils, tags, settingsdlg, settings,
-  animator, logging, webprocessordlg, imagesmod, webprocessor, 
-slideshow200webprocessor, webprocessorinfofrm, taskparamsfrm, taskparamfrm;
+  animator, logging, webprocessordlg, imagesmod, webprocessor,
+  slideshow200webprocessor,
+  galleryprocessor, stringarrays, webprocessorparamsfrm;
 
 {$R *.res}
 
@@ -27,5 +28,5 @@ begin
   Application.CreateForm(TWebProcessorDialog, WebProcessorDialog);
   Application.CreateForm(TImagesModule, ImagesModule);
   Application.Run;
-end.
+  end.
 
