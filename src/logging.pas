@@ -9,11 +9,14 @@ type
   TLogLevel = (llNone=-2, llDebug=-1, llHint=0, llInfo=1, llNews=2, llWarning=3, llError=4, llCrash=5, llSpecial=6);
   TLogFlag = (lfApp, lfUser, lfSystem);
 
+  { TLogger }
+
   TLogger = class
   public
     procedure Log(const Line :string; Level :TLogLevel = llInfo); virtual; abstract;
     class function GetDefaultLogger :TLogger; static;
     class procedure SetDefaultLogger(Value :TLogger); static;
+    class function SwapDefaultLogger(Value :TLogger) :TLogger;
     class property DefaultLogger :TLogger read GetDefaultLogger write SetDefaultLogger;
   end;
 
@@ -81,6 +84,12 @@ begin
     FreeAndNil(Logging.DefaultLogger);
     Logging.DefaultLogger := Value;
   end;
+end;
+
+class function TLogger.SwapDefaultLogger(Value: TLogger): TLogger;
+begin
+  result := Logging.DefaultLogger;
+  Logging.DefaultLogger := Value;
 end;
 
 initialization

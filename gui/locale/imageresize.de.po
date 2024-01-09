@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.3.1\n"
 
 #: aboutdlg.scptavailable
 msgid "Available"
@@ -57,31 +57,31 @@ msgstr "Ungültiges Fomat für Datum/Zeit '%s'."
 #: galleryprocessor.serrdirnotfoundfmt
 #, object-pascal-format
 msgid "Directory '%s' not found."
-msgstr ""
+msgstr "Verzeichnis '%s' nicht gefunden."
 
 #: galleryprocessor.serrdotimagesnotfoundfmt
 #, object-pascal-format
 msgid "Tags file '%s' not found."
-msgstr ""
+msgstr "Tags-Datei '%s' nicht gefunden..."
 
 #: galleryprocessor.smsgbuildinglists
 msgid "Building lists..."
-msgstr ""
+msgstr "Baue Listen..."
 
 #: galleryprocessor.smsgcopyingfmt
 #, object-pascal-format
 msgid "Copying '%s'..."
-msgstr ""
+msgstr "kopiere '%s'..."
 
 #: galleryprocessor.smsgloadingdotimagesfmt
 #, object-pascal-format
 msgid "Loading image infos '%s'..."
-msgstr ""
+msgstr "Lade Bildinformationen '%s'..."
 
 #: galleryprocessor.smsgprocessingtemplatefmt
 #, object-pascal-format
 msgid "Processing '%s'..."
-msgstr ""
+msgstr "Bearbeite '%s'..."
 
 #: imgres.scptabort
 msgid "Abort"
@@ -225,8 +225,6 @@ msgid "Up-scaling '%s' from %dx%d to %dx%d..."
 msgstr "Heraufskaliere '%s' von %dx%d nach %dx%d..."
 
 #: imgres.smsgwarningnocreate
-#, fuzzy
-#| msgid "Not really creating any image or folder (-nocreate flag)"
 msgid "Not really creating any image (-nocreate flag)"
 msgstr "Erzeuge nicht wirklich irgendein Bild oder einen Folder (-nocreate Flag)"
 
@@ -428,15 +426,6 @@ msgstr ""
 "Wollen Sie die Änderungen speichern?"
 
 #: maindlg.stxtlicense
-#, fuzzy
-#| msgid ""
-#| "ImageResize Copyright (c) 2024 Jan Schirrmacher, www.atomek.de\n"
-#| "\n"
-#| "Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy and merge copies of the Software, subject to the following conditions:\n"
-#| "\n"
-#| "The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n"
-#| "\n"
-#| "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHOR OR COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
 msgid ""
 "ImageResize Copyright (c) 2024 Jan Schirrmacher, www.atomek.de\n"
 "\n"
@@ -478,8 +467,8 @@ msgid "Invalid parameters"
 msgstr "Ungültige Parameter"
 
 #: presentationdlg.serrmissingfolder
-msgid "Folder missing or doesnt exists."
-msgstr ""
+msgid "Folder missing or does not exist."
+msgstr "Verzeichnisangabe fehlt oder das Verzeichnis existiert nicht."
 
 #: settingsdlg.scptbehavior0
 msgctxt "settingsdlg.scptbehavior0"
@@ -627,7 +616,7 @@ msgstr "leere Datei"
 
 #: tags.serrfilenamenotallowed
 msgid "multiple 'Filename' tags"
-msgstr ""
+msgstr "mehrfaches 'Filename'-Tag"
 
 #: tags.serrfilenamenotfound
 msgid "tag 'Filename' not in first column"
@@ -654,17 +643,17 @@ msgstr "mehr Werte als Tags"
 #: tcolorwebprocessorframe.label1.caption
 msgctxt "tcolorwebprocessorframe.label1.caption"
 msgid "Button Color:"
-msgstr ""
+msgstr "Symbolfarben:"
 
 #: tcolorwebprocessorframe.label2.caption
 msgctxt "tcolorwebprocessorframe.label2.caption"
 msgid "Title Color:"
-msgstr ""
+msgstr "Titelfarbe:"
 
 #: tcolorwebprocessorframe.label3.caption
 msgctxt "tcolorwebprocessorframe.label3.caption"
 msgid "Background Color:"
-msgstr ""
+msgstr "Hintergrundfarbe:"
 
 #: threading.dispatcher.scptcancelled
 msgid "Cancelled"
@@ -772,7 +761,22 @@ msgstr "Optionales Drucken eines Wasserzeichens"
 
 #: tmaindialog.actionpresentation.caption
 msgid "&Presentation..."
+msgstr "&Präsentation..."
+
+#: tmaindialog.actionpresentation.hint
+msgid ""
+"Creates a Web gallery.\n"
+"You can choose between different presentations:\n"
+"- Slideshow\n"
+"- Pinboard\n"
+"- Based on your own web-templates"
 msgstr ""
+"Erzeugt eine Web-Gallerie.\n"
+"\n"
+"Sie können zwischen verschiedenen Präsentationen wählen:\n"
+"- Slideshow\n"
+"- Pinboard\n"
+"- basierend auf eigenen Vorlagen"
 
 #: tmaindialog.actionsave.caption
 msgctxt "tmaindialog.actionsave.caption"
@@ -835,10 +839,8 @@ msgid "ImageResize"
 msgstr "ImageResize"
 
 #: tmaindialog.checkboximageinfosenabled.caption
-#, fuzzy
-#| msgid "Create Slideshow Infos (.images)"
 msgid "Create Presentation Infos (.images)"
-msgstr "Erzeuge Webkino Infos (.Images)"
+msgstr "Erzeuge Infos für Präsentationen (.Images)"
 
 #: tmaindialog.checkboximageinfosenabled.hint
 msgid ""
@@ -1048,7 +1050,7 @@ msgid ""
 "%SIZE% placeholder to enable multiple sizes in a common folder."
 msgstr ""
 "Geben Sie eine Dateinamen-Vorlage ein, die Platzhalter für bestimmte\n"
-"Werte enthält. Die Vorlage wird für jede resampelte Datei evaluiert. Fügen\n"
+"Werte enthält. Die Vorlage wird für jede skalierte Datei evaluiert. Fügen\n"
 "Sie den %SIZE%-Platzhalter ein, um mehrere Größen eines Bildes in\n"
 "einem gemeinsamen Verzeichnis zu erzeugen."
 
@@ -1136,8 +1138,6 @@ msgid "Shuffle"
 msgstr "Mischen"
 
 #: tmaindialog.groupboxtagsreport.caption
-#, fuzzy
-#| msgid "Tags Report"
 msgctxt "tmaindialog.groupboxtagsreport.caption"
 msgid "Tags Reporting"
 msgstr "Tags Report"
@@ -1356,8 +1356,8 @@ msgstr ""
 msgid "ToolBarSrc"
 msgstr ""
 
-#: tmaindialog.toolbutton10.caption
-msgid "ToolButton10"
+#: tmaindialog.toolbutton1.caption
+msgid "ToolButton1"
 msgstr ""
 
 #: tmaindialog.toolbutton5.caption
@@ -1557,14 +1557,7 @@ msgstr ""
 msgid "ToolButton9"
 msgstr ""
 
-#: tpresentationdialog.buttoncancel.caption
-#, fuzzy
-msgctxt "tpresentationdialog.buttoncancel.caption"
-msgid "Cancel"
-msgstr "Abbrechen"
-
 #: tpresentationdialog.buttonclose.caption
-#, fuzzy
 msgctxt "tpresentationdialog.buttonclose.caption"
 msgid "Close"
 msgstr "Schließen"
@@ -1572,11 +1565,11 @@ msgstr "Schließen"
 #: tpresentationdialog.buttonexecute.caption
 msgctxt "tpresentationdialog.buttonexecute.caption"
 msgid "Create"
-msgstr ""
+msgstr "Erzeugen"
 
 #: tpresentationdialog.caption
 msgid "Presentation"
-msgstr ""
+msgstr "Präsentation"
 
 #: tpresentationdialog.editfolder.hint
 msgctxt "tpresentationdialog.editfolder.hint"
@@ -1586,22 +1579,22 @@ msgstr ""
 #: tpresentationdialog.groupboxparams.caption
 msgctxt "tpresentationdialog.groupboxparams.caption"
 msgid "&Settings"
-msgstr ""
+msgstr "&Einstellungen"
 
 #: tpresentationdialog.label1.caption
 msgctxt "tpresentationdialog.label1.caption"
 msgid "&Folder with Images:"
-msgstr ""
+msgstr "Bild&ordner:"
 
 #: tpresentationdialog.label2.caption
 msgctxt "tpresentationdialog.label2.caption"
-msgid "&Available:"
-msgstr ""
+msgid "&Available Presentations:"
+msgstr "&Verfügbare Präsentationen:"
 
 #: tpresentationdialog.labellongdescription.caption
 msgctxt "tpresentationdialog.labellongdescription.caption"
 msgid "<LongDescription>"
-msgstr ""
+msgstr "<Lange Beschreibung>"
 
 #: tsettingsdialog.buttoncancel.caption
 msgctxt "tsettingsdialog.buttoncancel.caption"
@@ -1689,15 +1682,15 @@ msgstr "Kerne"
 #: twebprocessorframe.label4.caption
 msgctxt "twebprocessorframe.label4.caption"
 msgid "Slideshow Title:"
-msgstr ""
+msgstr "Slideshow Titel:"
 
 #: webprocessor.serrmissingwebprocessorclassfmt
 #, object-pascal-format
 msgid "Missing WebProcessor class entry in '%s'."
-msgstr ""
+msgstr "Fehlender Eintrag für die WebProcessor class in '%s'."
 
 #: webprocessor.serrunregisterwebprocessorfmt
 #, object-pascal-format
 msgid "Unregistered WebProcessor class '%s'."
-msgstr ""
+msgstr "Webprocessor-Klasse '%s' nicht registriert"
 

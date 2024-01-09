@@ -6,27 +6,26 @@ interface
 
 uses
   Messages, Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Buttons,
-  StdCtrls, ExtCtrls, ComCtrls, webprocessor, LCLIntf, LCLType, logging,
-  Types, gettext, FileUtil;
+  StdCtrls, ExtCtrls, ComCtrls, webprocessor, LCLIntf, LCLType, RichMemo,
+  logging, Types, gettext, FileUtil, LoggingRichMemo;
 
 type
 
   { TPresentationDialog }
 
   TPresentationDialog = class(TForm)
-    Bevel4: TBevel;
     ButtonBrowseTargetFolder: TBitBtn;
     ButtonClose: TBitBtn;
-    ButtonCancel: TBitBtn;
     ButtonExecute: TBitBtn;
     EditFolder: TEdit;
     GroupBoxParams: TGroupBox;
     ImagePreview: TImage;
-    ImageList64x44: TImageList;
     Label1: TLabel;
     Label2: TLabel;
     LabelLongDescription: TLabel;
     ListBoxProcessors: TListBox;
+    MemoMessages: TRichMemo;
+    PanelPresentation: TPanel;
     PanelInfo: TPanel;
     PanelControls: TPanel;
     SelectFolderDialog: TSelectDirectoryDialog;
@@ -34,6 +33,7 @@ type
     procedure ButtonExecuteClick(Sender: TObject);
     procedure EditFolderChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormHide(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ListBoxProcessorsClick(Sender: TObject);
     procedure ListBoxProcessorsDrawItem(Control: TWinControl; Index: Integer;
@@ -41,6 +41,7 @@ type
   private
     FProcessorIndex :integer;
     FProcessors :TProcessors;
+    FOuterLogger :TLogger;
     function GetProcessor: TCustomProcessor;
     function GetProcessorId: string;
     procedure OnFrameSelected(Sender :TObject);
@@ -65,7 +66,7 @@ const
   WEBFOLDER = 'web';
 
 resourcestring
-  SErrMissingFolder = 'Folder missing or doesnt exists.';
+  SErrMissingFolder = 'Folder missing or does not exist.';
 
 {$R *.lfm}
 
@@ -74,6 +75,19 @@ resourcestring
 procedure TPresentationDialog.FormCreate(Sender: TObject);
 begin
   FProcessorIndex := -1;
+end;
+
+procedure TPresentationDialog.FormShow(Sender: TObject);
+begin
+  Scan;
+  if FProcessors.Count>0 then
+    ProcessorIndex := 0;
+  FOuterLogger := TLogger.SwapDefaultLogger(TRichMemoLogger.Create(MemoMessages));
+end;
+
+procedure TPresentationDialog.FormHide(Sender: TObject);
+begin
+  TLogger.SwapDefaultLogger(FOuterLogger).Free;
 end;
 
 procedure TPresentationDialog.ButtonExecuteClick(Sender: TObject);
@@ -95,13 +109,6 @@ begin
     SelectFolderDialog.InitialDir := EditFolder.Text;
   if SelectFolderDialog.Execute then
     EditFolder.Text := SelectFolderDialog.Filename;
-end;
-
-procedure TPresentationDialog.FormShow(Sender: TObject);
-begin
-  Scan;
-  if FProcessors.Count>0 then
-    ProcessorIndex := 0;
 end;
 
 procedure TPresentationDialog.ListBoxProcessorsClick(Sender: TObject);

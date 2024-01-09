@@ -27,9 +27,9 @@
      showgrid="true"
      showguides="true"
      inkscape:lockguides="true"
-     inkscape:zoom="7.3192481"
-     inkscape:cx="93.042344"
-     inkscape:cy="54.718735"
+     inkscape:zoom="2.587745"
+     inkscape:cx="-73.036563"
+     inkscape:cy="-6.7626447"
      inkscape:window-width="2401"
      inkscape:window-height="1230"
      inkscape:window-x="52"
@@ -112,16 +112,19 @@
      id="layer2"
      inkscape:label="Ebene 2">
     <g
-       id="g1704"
+       id="g801"
        style="display:inline"
-       transform="matrix(0.8124999,0,0,0.83333335,24,18.666665)">
+       transform="matrix(0.75000004,0,0,0.75000004,31.999999,23.999998)">
       <rect
          style="fill:url(#linearGradient1681);fill-opacity:1;stroke-linecap:round;stroke-linejoin:round"
          id="rect3673"
          width="128.00002"
          height="96.000008"
          x="0"
-         y="16.000002" />
+         y="16.000002"
+         inkscape:export-filename="img256\imglarge.png"
+         inkscape:export-xdpi="192"
+         inkscape:export-ydpi="192" />
       <path
          style="fill:url(#linearGradient1689);fill-opacity:1;stroke-linecap:round;stroke-linejoin:round"
          d="M 0,80.000005 C 64.000004,24 64.000004,112 128,72 v 40 l -128,1e-5 z"
@@ -130,69 +133,47 @@
       <g
          id="g1522"
          style="fill:#fce94f">
-        <ellipse
-           style="fill:#fce94f;stroke-width:16;stroke-linecap:square;stroke-linejoin:round"
-           id="path353"
-           cx="100"
-           cy="44"
-           rx="8.000001"
-           ry="7.999999" />
         <path
-           style="fill:none;stroke:#fce94f;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
-           d="m 112,44.000001 10,3e-6"
-           id="path463" />
-        <path
-           style="display:inline;fill:none;stroke:#fce94f;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
-           d="M 78,43.999997 88,44"
-           id="path463-2" />
-        <path
-           style="display:inline;fill:none;stroke:#fce94f;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
-           d="m 100,31.999999 v -10"
-           id="path463-4" />
-        <path
-           style="display:inline;fill:none;stroke:#fce94f;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
-           d="m 100,65.999999 v -10"
-           id="path463-2-3" />
-        <ellipse
-           style="fill:#fce94f;stroke-width:16;stroke-linecap:square;stroke-linejoin:round"
-           id="path353-2"
-           cx="101.82337"
-           cy="-39.59798"
-           rx="8.000001"
-           ry="7.999999"
-           transform="rotate(45)" />
-        <path
-           style="fill:none;stroke:#fce94f;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
-           d="m 108.48528,52.485281 7.07107,7.07107"
-           id="path463-8" />
-        <path
-           style="display:inline;fill:none;stroke:#fce94f;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
-           d="m 84.443653,28.443647 7.071066,7.07107"
-           id="path463-2-2" />
-        <path
-           style="display:inline;fill:none;stroke:#fce94f;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
-           d="m 108.48528,35.514717 7.07107,-7.071068"
-           id="path463-4-8" />
-        <path
-           style="display:inline;fill:none;stroke:#fce94f;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
-           d="m 84.443652,59.556347 7.071067,-7.071068"
-           id="path463-2-3-2" />
+           id="path411"
+           style="display:inline;fill:#fce94f;stroke-width:3.46709;stroke-linecap:round;stroke-linejoin:round"
+           d="m 94.94283,24.764711 0.02518,7.160431 A 9.919211,9.9192096 0 0 0 93.447198,33.80243 L 86.354575,35.53248 92,40 a 9.919211,9.9192096 0 0 0 0.499836,2.317065 l -3.080381,6.64316 6.95701,-1.615747 a 9.919211,9.9192096 0 0 0 2.177579,1.042292 l 3.274106,6.54823 3.09782,-6.493984 a 9.919211,9.9192096 0 0 0 2.16983,-0.999671 l 7.14106,1.51888 -3.1385,-6.453299 a 9.919211,9.9192096 0 0 0 0.53858,-2.319003 l 5.6648,-4.655443 -6.9667,-1.563438 a 9.919211,9.9192096 0 0 0 -1.51306,-1.937345 l -0.10852,-7.266986 -5.56213,4.469457 a 9.919211,9.9192096 0 0 0 -1.32321,-0.08912 9.919211,9.9192096 0 0 0 -1.08491,0.106557 z" />
       </g>
     </g>
     <rect
-       style="fill:#ffffff;stroke-width:1.04628;stroke-linecap:round;stroke-linejoin:round;fill-opacity:0.55151516"
+       style="fill:#ffffff;fill-opacity:0.551515;stroke-width:0.979777;stroke-linecap:round;stroke-linejoin:round"
        id="rect6861"
-       width="104.00001"
-       height="80"
-       x="24"
-       y="32" />
+       width="96.000008"
+       height="76"
+       x="32.000004"
+       y="36" />
+    <rect
+       style="display:inline;fill:#888a85;fill-opacity:1;stroke-width:0.408248;stroke-linecap:round;stroke-linejoin:round"
+       id="rect11545-7"
+       width="8"
+       height="16.000002"
+       x="100.00001"
+       y="88" />
+    <rect
+       style="display:inline;fill:#888a85;fill-opacity:1;stroke-width:0.408248;stroke-linecap:round;stroke-linejoin:round"
+       id="rect11545-6"
+       width="8"
+       height="16.000002"
+       x="112.00001"
+       y="88" />
   </g>
   <rect
-     style="display:inline;fill:#3465a4;fill-opacity:1;stroke-linecap:round;stroke-linejoin:round"
+     style="display:inline;fill:#888a85;fill-opacity:1;stroke-width:0.408248;stroke-linecap:round;stroke-linejoin:round"
      id="rect11545"
-     width="48"
+     width="8"
      height="16.000002"
-     x="72"
+     x="76.000008"
+     y="88" />
+  <rect
+     style="display:inline;fill:#888a85;fill-opacity:1;stroke-width:0.408248;stroke-linecap:round;stroke-linejoin:round"
+     id="rect11545-2"
+     width="8"
+     height="16.000002"
+     x="88.000008"
      y="88" />
   <g
      inkscape:label="Ebene 1"

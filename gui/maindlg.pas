@@ -79,6 +79,10 @@ const
   clOrange = $3d69a6;
   clDarkGray = $403040;
 
+  STYLECOLOR_LIGHT  = $00F1DDC9;
+  STYLECOLOR_LIGHT2 = $00E6C09B;
+  STYLECOLOR_DARK   = $00D59453;
+
   LOGCOLORS :array[llHint..llCrash] of TColor = (clGray, clDarkGray, clGreen, clOrange, clMaroon, clRed);
 
 resourcestring
@@ -217,6 +221,7 @@ type
     OpenDialogMrkFilename: TOpenDialog;
     PageControlSource: TPageControl;
     PageControlParams: TPageControl;
+    ProgressBar: TPaintBox;
     PaintBoxStep1: TPaintBox;
     PaintBoxMrkPreview: TPaintBox;
     PaintBoxStep2: TPaintBox;
@@ -226,7 +231,6 @@ type
     PanelSource: TPanel;
     PanelControls: TPanel;
     PanelPreview: TPanel;
-    ProgressBar: TProgressBar;
     RadioButtonRenSimple: TRadioButton;
     RadioButtonRenCustom: TRadioButton;
     RadioButtonRenAdvanced: TRadioButton;
@@ -245,8 +249,8 @@ type
     ToolBarSrc: TToolBar;
     ToolBarParameters: TToolBar;
     ToolBarSizeButtons: TToolBar;
+    ToolButton1: TToolButton;
     ToolButtonNew: TToolButton;
-    ToolButton10: TToolButton;
     ToolButtonSlideshowAfterburner: TToolButton;
     ToolButtonSrcFilenames: TToolButton;
     ToolButtonSrcFolder: TToolButton;
@@ -315,6 +319,7 @@ type
     procedure PaintBoxMrkPreviewMouseWheel(Sender: TObject; Shift: TShiftState;
       WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
     procedure PaintBoxMrkPreviewPaint(Sender: TObject);
+    procedure ProgressBarPaint(Sender: TObject);
     procedure PaintBoxStep1Paint(Sender: TObject);
     procedure TimerProgressBarOffTimer(Sender: TObject);
     procedure EditSizesExit(Sender: TObject);
@@ -1449,6 +1454,25 @@ begin
   Img.Free;
 end;
 
+procedure TMainDialog.ProgressBarPaint(Sender: TObject);
+var
+  cr :TRect;
+  r :TRect;
+  p :integer;
+begin
+  cr := ProgressBar.ClientRect;
+  r := cr;
+  r.Right := round(r.Left + FProgress*(r.Width));
+  with ProgressBar.Canvas do begin
+    Brush.Color := STYLECOLOR_LIGHT2;
+    FillRect(r);
+    //r.Left := r.Right;
+    //r.Right := cr.Right;
+    //Brush.Color := STYLECOLOR_LIGHT2;
+    //FillRect(r);
+  end;
+end;
+
 procedure TMainDialog.PaintBoxStep1Paint(Sender: TObject);
 var
   PaintBox :TPaintBox;
@@ -1533,8 +1557,10 @@ end;
 procedure TMainDialog.OnProgress(Sender: TObject; Progress: single);
 begin
   FProgress := Progress;
-  ProgressBar.Position := round(Progress*100.0);
+  ProgressBar.Invalidate;
+//  ProgressBar.Position := round(Progress*100.0);
   Application.ProcessMessages;
+//  Sleep(500);
   if FCancelled then
     (Sender as TProcessor).Cancel;
 end;
@@ -1557,13 +1583,13 @@ begin
     ActionExecute.Enabled := false;
   end else begin
     FProgress := 0;
+    ProgressBar.Invalidate;
     ActionExecute.Enabled := true;
     ActionExecute.Caption := SCptCancel;
     ButtonExecute.Caption := SCptCancel;
     ActionExecute.ImageIndex := 6;
     ButtonExecute.ImageIndex := 6;
     ButtonExecute.Invalidate;
-    ProgressBar.Position := 0;
     ProgressBar.Visible := true;
     TimerProgressBarOff.Enabled := false;
     MemoMessages.Lines.Clear;

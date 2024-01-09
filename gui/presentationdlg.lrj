@@ -1,11 +1,10 @@
 {"version":1,"strings":[
 {"hash":13658014,"name":"tpresentationdialog.caption","sourcebytes":[80,114,101,115,101,110,116,97,116,105,111,110],"value":"Presentation"},
-{"hash":257333198,"name":"tpresentationdialog.editfolder.hint","sourcebytes":[84,104,105,115,32,102,111,108,100,101,114,32,109,117,115,116,32,99,111,110,116,97,105,110,32,116,104,101,32,105,109,97,103,101,115,32,97,110,100,32,97,110,32,46,105,109,97,103,101,105,110,102,111,32,102,105,108,101,46],"value":"This folder must contain the images and an .imageinfo file."},
-{"hash":116775114,"name":"tpresentationdialog.label1.caption","sourcebytes":[38,70,111,108,100,101,114,32,119,105,116,104,32,73,109,97,103,101,115,58],"value":"&Folder with Images:"},
 {"hash":78166181,"name":"tpresentationdialog.buttonexecute.caption","sourcebytes":[67,114,101,97,116,101],"value":"Create"},
 {"hash":4863637,"name":"tpresentationdialog.buttonclose.caption","sourcebytes":[67,108,111,115,101],"value":"Close"},
-{"hash":77089212,"name":"tpresentationdialog.buttoncancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
-{"hash":859658,"name":"tpresentationdialog.label2.caption","sourcebytes":[38,65,118,97,105,108,97,98,108,101,58],"value":"&Available:"},
+{"hash":226039226,"name":"tpresentationdialog.label2.caption","sourcebytes":[38,65,118,97,105,108,97,98,108,101,32,80,114,101,115,101,110,116,97,116,105,111,110,115,58],"value":"&Available Presentations:"},
 {"hash":194472654,"name":"tpresentationdialog.labellongdescription.caption","sourcebytes":[60,76,111,110,103,68,101,115,99,114,105,112,116,105,111,110,62],"value":"<LongDescription>"},
-{"hash":213577587,"name":"tpresentationdialog.groupboxparams.caption","sourcebytes":[38,83,101,116,116,105,110,103,115],"value":"&Settings"}
+{"hash":213577587,"name":"tpresentationdialog.groupboxparams.caption","sourcebytes":[38,83,101,116,116,105,110,103,115],"value":"&Settings"},
+{"hash":257333198,"name":"tpresentationdialog.editfolder.hint","sourcebytes":[84,104,105,115,32,102,111,108,100,101,114,32,109,117,115,116,32,99,111,110,116,97,105,110,32,116,104,101,32,105,109,97,103,101,115,32,97,110,100,32,97,110,32,46,105,109,97,103,101,105,110,102,111,32,102,105,108,101,46],"value":"This folder must contain the images and an .imageinfo file."},
+{"hash":116775114,"name":"tpresentationdialog.label1.caption","sourcebytes":[38,70,111,108,100,101,114,32,119,105,116,104,32,73,109,97,103,101,115,58],"value":"&Folder with Images:"}
 ]}

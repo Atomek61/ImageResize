@@ -446,7 +446,7 @@ msgid "Invalid parameters"
 msgstr ""
 
 #: presentationdlg.serrmissingfolder
-msgid "Folder missing or doesnt exists."
+msgid "Folder missing or does not exist."
 msgstr ""
 
 #: settingsdlg.scptbehavior0
@@ -736,6 +736,15 @@ msgstr ""
 
 #: tmaindialog.actionpresentation.caption
 msgid "&Presentation..."
+msgstr ""
+
+#: tmaindialog.actionpresentation.hint
+msgid ""
+"Creates a Web gallery.\n"
+"You can choose between different presentations:\n"
+"- Slideshow\n"
+"- Pinboard\n"
+"- Based on your own web-templates"
 msgstr ""
 
 #: tmaindialog.actionsave.caption
@@ -1252,8 +1261,8 @@ msgstr ""
 msgid "ToolBarSrc"
 msgstr ""
 
-#: tmaindialog.toolbutton10.caption
-msgid "ToolButton10"
+#: tmaindialog.toolbutton1.caption
+msgid "ToolButton1"
 msgstr ""
 
 #: tmaindialog.toolbutton5.caption
@@ -1449,11 +1458,6 @@ msgstr ""
 msgid "ToolButton9"
 msgstr ""
 
-#: tpresentationdialog.buttoncancel.caption
-msgctxt "tpresentationdialog.buttoncancel.caption"
-msgid "Cancel"
-msgstr ""
-
 #: tpresentationdialog.buttonclose.caption
 msgctxt "tpresentationdialog.buttonclose.caption"
 msgid "Close"
@@ -1485,7 +1489,7 @@ msgstr ""
 
 #: tpresentationdialog.label2.caption
 msgctxt "tpresentationdialog.label2.caption"
-msgid "&Available:"
+msgid "&Available Presentations:"
 msgstr ""
 
 #: tpresentationdialog.labellongdescription.caption
