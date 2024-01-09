@@ -374,10 +374,12 @@ begin
 end;
 
 procedure TWebProcessor.Execute;
+var
+  Stats :TProcessor.TStats;
 begin
   FrameToParams;
   FProcessor.TargetFolder := TargetFolder;
-  FProcessor.Execute;
+  FProcessor.Execute(Stats);
 end;
 
 { TColorWebProcessor }

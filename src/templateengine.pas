@@ -24,7 +24,7 @@ type
   TSolver = class
   public type
     TStats = record
-      Dependencies :integer;
+      LeftDependencies :integer; // Is 0 after successfull solving all
       Solved :integer;
       Unknown :integer;
     end;
@@ -61,7 +61,7 @@ type
     procedure Add(const Key :string; const Value :string = '');
     procedure Reload(Index :integer; const Value :string);
     function Solve(out Stats :TStats) :boolean;
-    function Replace(const Subject :string) :string;
+    function Replace(const Subject :string; out Replacements :integer) :string;
     function TryGetValue(const Key :string; out Value :string) :boolean;
     function GetValue(const Key :string) :string; overload;
     function GetValue(Index :integer) :string; overload;
@@ -148,9 +148,9 @@ var
   q :string;
   Key :string;
   found :boolean;
-  n :integer;
+  Dependencies :integer;
 begin
-  Stats.Dependencies := 0;
+  Stats.LeftDependencies := 0;
   Stats.Solved := 0;
   Stats.Unknown := 0;
   if Count=0 then Exit(true);
@@ -167,7 +167,7 @@ begin
           if found then break;
         end;
         if not found then begin
-          inc(Stats.Dependencies);
+          inc(Stats.LeftDependencies);
           inc(l.DepsCount);
           SetLength(r.Refs, Length(r.Refs)+1);
           r.Refs[High(r.Refs)] := l;
@@ -179,40 +179,39 @@ begin
 
   // Solve all vars until no dependencies
   repeat
-    n := Stats.Dependencies;
+    Dependencies := Stats.LeftDependencies;
     for l in FArray do if l.DepsCount=0 then begin
       for r in l.Refs do begin
         r.Value := StringReplace(r.Value, FD1+l.Key+FD2, l.Value, [rfReplaceAll]);
         dec(r.DepsCount);
-        dec(Stats.Dependencies);
+        dec(Stats.LeftDependencies);
         inc(Stats.Solved);
       end;
       l.Refs := nil;
     end;
-  until (stats.Dependencies=0) or (n=Stats.Dependencies);
-  result := stats.Dependencies=0;
+  until (stats.LeftDependencies=0) or (Dependencies=Stats.LeftDependencies);
+  result := stats.LeftDependencies=0;
 end;
 
-function TSolver.Replace(const Subject: string): string;
+function TSolver.Replace(const Subject: string; out Replacements :integer): string;
 var
   Iterator :TIterator;
-  Found :boolean;
   Key :string;
   Rec :TRec;
   p :integer; // Points to the top of the reaulting string
 begin
-  Found := false;
+  Replacements := 0;
   Iterator := TIterator.Create(self, Subject);
   result := '';
   p := 1;
   while Iterator.Next(Key) do begin
     if FDict.TryGetValue(Key, Rec) then begin
-      Found := true;
+      inc(Replacements);
       result := result + Copy(Subject, p, Iterator.i0-p) + Rec.Value;
       p := Iterator.i1+Length(FD2);
     end;
   end;
-  if Found then
+  if Replacements>0 then
     result := result + Copy(Subject, p, Length(Subject)-p+1)
   else
     Exit(Subject);

@@ -758,8 +758,9 @@ begin
       Exer.IsMultipleTargetFolderStrategy := Pos('%SIZE%', FTargetFolder)>0;
       if not Exer.IsMultipleTargetFolderStrategy and not Exer.IsTargetFileRenamingStrategy then
         raise Exception.Create(SErrMultipleSizes);
-    end else
-      Exer.IsMultipleTargetFolderStrategy := false;
+    end else begin
+      Exer.IsMultipleTargetFolderStrategy := Pos('%SIZE%', FTargetFolder)>0;
+    end;
 
     // Create Destination Folders
     SetLength(Exer.TargetFolders, m);

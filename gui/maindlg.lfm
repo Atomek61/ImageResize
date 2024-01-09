@@ -1,7 +1,7 @@
 object MainDialog: TMainDialog
-  Left = 669
+  Left = 805
   Height = 680
-  Top = 431
+  Top = 306
   Width = 911
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'ImageResize'
@@ -1261,7 +1261,7 @@ object MainDialog: TMainDialog
         TabOrder = 2
       end
       object CheckBoxNoCreate: TCheckBox
-        Left = 336
+        Left = 278
         Height = 19
         Hint = 'If checked, no image or folder will be created.'#13#10'Its to check the settings and gather statistics.'#13#10#13#10'One exception: the Tags Report will be created!'
         Top = 32
@@ -1323,7 +1323,7 @@ object MainDialog: TMainDialog
       Width = 274
       Anchors = [akTop, akRight]
       AutoSize = False
-      Caption = 'Sizes and Parameters'
+      Caption = 'Scaling and other Settings'
       Font.Color = 9785877
       Font.Height = -19
       Font.Style = [fsBold]
@@ -1333,9 +1333,10 @@ object MainDialog: TMainDialog
     object ProgressBar: TPaintBox
       Left = 0
       Height = 6
-      Top = 474
+      Top = 471
       Width = 911
       Align = alBottom
+      BorderSpacing.Bottom = 3
       Visible = False
       OnPaint = ProgressBarPaint
     end

@@ -1456,20 +1456,13 @@ end;
 
 procedure TMainDialog.ProgressBarPaint(Sender: TObject);
 var
-  cr :TRect;
   r :TRect;
-  p :integer;
 begin
-  cr := ProgressBar.ClientRect;
-  r := cr;
+  r := ProgressBar.ClientRect;
   r.Right := round(r.Left + FProgress*(r.Width));
   with ProgressBar.Canvas do begin
     Brush.Color := STYLECOLOR_LIGHT2;
     FillRect(r);
-    //r.Left := r.Right;
-    //r.Right := cr.Right;
-    //Brush.Color := STYLECOLOR_LIGHT2;
-    //FillRect(r);
   end;
 end;
 

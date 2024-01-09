@@ -22,17 +22,31 @@ type
     FFilesTags :TFilesTags;         // Table with tags for each image file, usually from .images file in folder
     FListFragments :TStringDictionary;  // List fragments - each List, built by the FListSolver uses one
     FDocumentVars :TSolver;           // Global Vars like TITLE, DATE, OWNER, IMG-LIST, NAV-LIST
+  public type
+    TStats = record
+      FilesToCopy :integer;           // Number of files to be copied
+      FilesCopied :integer;           // Number of files copied
+      TemplatesToProcess :integer;    // Num,ber of templates to be processed
+      TemplatesProcessed :integer;    // Number of template files processed
+      Lists :integer;                 // Number of lists to build
+      ItemsPerList :integer;          // Number of items per list (same for all lists)
+      Dependencies :integer;          // Total number of dependencies
+      Solved :integer;                // Number of solved dependencies
+      Replacements :integer;          // Number of total replacements in the templates (without var solving)
+      Elapsed :integer;               // ms
+    end;
   public
     constructor Create; virtual;
     destructor Destroy; override;
     procedure Clear;
-    procedure Execute;
+    function Execute(out Stats :TStats) :boolean;
     property TargetFolder :string read FTargetFolder write FTargetFolder;
     property DocumentVars :TSolver read FDocumentVars;
     property ListFragments :TStringDictionary read FListFragments;
     property CopyFiles :TStringArray read FCopyFiles write FCopyFiles;
     property TemplateFiles :TStringArray read FTemplateFiles write FTemplateFiles;
     property Delimiters :TDelimiters read FDelimiters write FDelimiters;
+
   end;
 
 const
@@ -47,6 +61,8 @@ resourcestring
   SMsgBuildingLists = 'Building lists...';
   SMsgProcessingTemplateFmt = 'Processing ''%s''...';
   SMsgCopyingFmt = 'Copying ''%s''...';
+  SMsgStatisticsFmt = 'Copied: %d/%d (%.0f%%), Processed: %d/%d (%.0f%%), Solved: %d/%d (%.0f%%), Lists: %d, Rows: %d, Replaced: %d, Elapsed %.1fs.';
+  SMsgFinalOk = 'Ok';
 
 { TProcessor }
 
@@ -75,7 +91,7 @@ begin
   FDocumentVars.Clear;
 end;
 
-procedure TProcessor.Execute;
+function TProcessor.Execute(out Stats :TStats) :boolean;
 var
   ImagesFilename :string;
   Lists :TStringDictionary;
@@ -87,74 +103,120 @@ var
   Key, Value :string;
   Fragment :TPair<string, string>;
   List :TPair<string, string>;
-  Stats :TSolver.TStats;
+  SolverStats :TSolver.TStats;
   ListVars :TSolver;
   FileSource :TStringList;
   Filename, FileText :string;
+  Replacements :integer;
+  t0 :Int64;
+
+  function Percent(f1, f2 :integer) :single;
+  begin
+    if f1=0 then
+      result := 0.0
+    else
+      result := f2/f1*100.0;
+  end;
+
 begin
   Lists := TStringDictionary.Create;
   ListVars := TSolver.Create(FDelimiters);
   FileSource := TStringList.Create;
+  Stats := Default(TStats);
+  t0 := TThread.GetTickCount64;
+
   try
+    try
+      // Prepare Stats
+      Stats.FilesToCopy := CopyFiles.Count;
+      Stats.TemplatesToProcess := TemplateFiles.Count;
+      Stats.Lists := ListFragments.Count;
+      Stats.ItemsPerList := ListFragments.Count;
 
-    // 1. Check the parameters
-    FTargetFolder := IncludeTrailingPathDelimiter(FTargetFolder);
-    if not DirectoryExists(FTargetFolder) then
-      raise Exception.CreateFmt(SErrDirNotFoundFmt, [FTargetFolder]);
+      // 1. Check the parameters
+      FTargetFolder := IncludeTrailingPathDelimiter(FTargetFolder);
+      if not DirectoryExists(FTargetFolder) then
+        raise Exception.CreateFmt(SErrDirNotFoundFmt, [FTargetFolder]);
 
-    // 2. Load the tags of the .images file
-    ImagesFilename := FTargetFolder + DOTIMAGESFILETITLE;
-    if not FileExists(ImagesFilename) then
-      raise Exception.CreateFmt(SErrDotImagesNotFoundFmt, [ImagesFilename]);
-    Log(SMsgLoadingDotImagesFmt, [ImagesFilename], llInfo);
-    FFilesTags.LoadFromImagesFile(ImagesFilename);
+      // 2. Load the tags of the .images file
+      ImagesFilename := FTargetFolder + DOTIMAGESFILETITLE;
+      if not FileExists(ImagesFilename) then
+        raise Exception.CreateFmt(SErrDotImagesNotFoundFmt, [ImagesFilename]);
+      Log(SMsgLoadingDotImagesFmt, [ImagesFilename], llInfo);
+      FFilesTags.LoadFromImagesFile(ImagesFilename);
+      Stats.ItemsPerList := FFilesTags.Filenames.Count;
 
-    // 3. Iterate over the images and build the lists
-    Log(SMsgBuildingLists, llInfo);
-    for Fragment in FListFragments do
-      Lists.Add(Fragment.Key, '');
-    for i:=0 to FFilesTags.Filenames.Count-1 do begin
-      ListVars.Clear;
-      ListVars.Add('INDEX', IntToStr(i));
-      ListVars.Add('URL', ExtractFilename(FFilesTags.Filenames[i]));
-      Tags := FFilesTags[FFilesTags.Filenames[i]];
-      for Key in FFilesTags.TagKeys do begin
-        if not Tags.TryGetValue(Key, Value) then Value := '';
-        ListVars.Add(UpperCase(Key), Value);
+      // 3. Iterate over the images and build the lists
+      Log(SMsgBuildingLists, llInfo);
+      for Fragment in FListFragments do
+        Lists.Add(Fragment.Key, '');
+      for i:=0 to FFilesTags.Filenames.Count-1 do begin
+        ListVars.Clear;
+        ListVars.Add('INDEX', IntToStr(i));
+        ListVars.Add('URL', ExtractFilename(FFilesTags.Filenames[i]));
+        Tags := FFilesTags[FFilesTags.Filenames[i]];
+        for Key in FFilesTags.TagKeys do begin
+          if not Tags.TryGetValue(Key, Value) then Value := '';
+          ListVars.Add(UpperCase(Key), Value);
+        end;
+        for Fragment in FListFragments do
+          ListVars.Add(Fragment.Key, Fragment.Value);
+        ListVars.Solve(SolverStats);
+        inc(Stats.Dependencies, SolverStats.LeftDependencies + SolverStats.Solved);
+        inc(Stats.Solved, SolverStats.Solved);
+        for Fragment in FListFragments do
+          Lists[Fragment.Key] := Lists[Fragment.Key] + ListVars[Fragment.Key];
       end;
-      for Fragment in FListFragments do
-        ListVars.Add(Fragment.Key, Fragment.Value);
-      ListVars.Solve(Stats);
-      for Fragment in FListFragments do
-        Lists[Fragment.Key] := Lists[Fragment.Key] + ListVars[Fragment.Key];
+
+      // 4. Add the builded lists as global variables
+      for List in Lists do
+        FDocumentVars[List.Key] := List.Value;
+
+      // 5. Load the template files and replace the global var
+      for TemplateFilename in FTemplateFiles do begin
+        TargetFilename := TargetFolder+ExtractFilename(TemplateFilename);
+        Log(SMsgProcessingTemplateFmt, [ExtractFilename(TemplateFilename)], llInfo);
+        FileSource.LoadFromFile(TemplateFilename, TEncoding.UTF8);
+        FileText := FDocumentVars.Replace(FileSource.Text, Replacements);
+        inc(Stats.Replacements, Replacements);
+        FileSource.Text := FileText;
+        FileSource.SaveToFile(TargetFilename, TEncoding.UTF8);
+        inc(Stats.TemplatesProcessed);
+      end;
+
+      // 6. Copy some files
+      for SourceFilename in FCopyFiles do begin
+        Filename := ExtractFilename(SourceFilename);
+        TargetFilename := FTargetFolder+Filename;
+        Log(SMsgCopyingFmt, [Filename], llInfo);
+        CopyFile(SourceFilename, TargetFilename);
+        inc(Stats.FilesCopied);
+      end;
+
+    finally
+      Lists.Free;
+      ListVars.Free;
+      FileSource.Free;
     end;
+    result := true;
+    Log(SMsgFinalOk)
 
-    // 4. Add the builded lists as global variables
-    for List in Lists do
-      FDocumentVars[List.Key] := List.Value;
-
-    // 5. Load the template files and replace the global var
-    for TemplateFilename in FTemplateFiles do begin
-      TargetFilename := TargetFolder+ExtractFilename(TemplateFilename);
-      Log(SMsgProcessingTemplateFmt, [ExtractFilename(TemplateFilename)], llInfo);
-      FileSource.LoadFromFile(TemplateFilename, TEncoding.UTF8);
-      FileText := FDocumentVars.Replace(FileSource.Text);
-      FileSource.Text := FileText;
-      FileSource.SaveToFile(TargetFilename, TEncoding.UTF8);
+  except on E: Exception do
+    begin
+      Log(E.Message, llError);
+      result := false;
     end;
-
-    // 6. Copy some files
-    for SourceFilename in FCopyFiles do begin
-      Filename := ExtractFilename(SourceFilename);
-      TargetFilename := FTargetFolder+Filename;
-      Log(SMsgCopyingFmt, [Filename], llInfo);
-      CopyFile(SourceFilename, TargetFilename);
-    end;
-
-  finally
-    Lists.Free;
-    ListVars.Free;
-    FileSource.Free;
+  end;
+  with Stats do begin
+    Elapsed := TThread.GetTickCount64-t0;
+    Log(SMsgStatisticsFmt, [
+      FilesCopied, FilesToCopy, Percent(FilesToCopy, FilesCopied),
+      TemplatesProcessed, TemplatesToProcess, Percent(TemplatesToProcess, TemplatesProcessed),
+      Solved, Dependencies, Percent(Dependencies, Solved),
+      Lists, ItemsPerList,
+      Replacements,
+      Elapsed/1000.0
+    ], llNews);
   end;
 end;
 

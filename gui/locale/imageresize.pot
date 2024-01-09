@@ -62,6 +62,11 @@ msgstr ""
 msgid "Copying '%s'..."
 msgstr ""
 
+#: galleryprocessor.smsgfinalok
+msgctxt "galleryprocessor.smsgfinalok"
+msgid "Ok"
+msgstr ""
+
 #: galleryprocessor.smsgloadingdotimagesfmt
 #, object-pascal-format
 msgid "Loading image infos '%s'..."
@@ -70,6 +75,11 @@ msgstr ""
 #: galleryprocessor.smsgprocessingtemplatefmt
 #, object-pascal-format
 msgid "Processing '%s'..."
+msgstr ""
+
+#: galleryprocessor.smsgstatisticsfmt
+#, object-pascal-format
+msgid "Copied: %d/%d (%.0f%%), Processed: %d/%d (%.0f%%), Solved: %d/%d (%.0f%%), Lists: %d, Rows: %d, Replaced: %d, Elapsed %.1fs."
 msgstr ""
 
 #: imgres.scptabort
@@ -1183,7 +1193,7 @@ msgid "Source Images"
 msgstr ""
 
 #: tmaindialog.labelstep2.caption
-msgid "Sizes and Parameters"
+msgid "Scaling and other Settings"
 msgstr ""
 
 #: tmaindialog.labelstep3.caption
