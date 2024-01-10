@@ -19,9 +19,9 @@ uses
   LCLTranslator, Classes, Types, SysUtils, Forms, Controls, Graphics, Dialogs,
   StdCtrls, ComCtrls, ActnList, ExtCtrls, imgres, aboutdlg, inifiles, strutils,
   LMessages, LCLIntf, Buttons, ImgList, LCLType, LazHelpHTML, BGRABitmap,
-  BGRABitmapTypes, BGRASpeedButton, RichMemo, Generics.Collections,
-  mrkeditdlg, WinDirs, updateutils, settings, logging, loggingrichmemo,
-  StringArrays;
+  BGRABitmapTypes, BGRASpeedButton, BGRAGraphicControl, RichMemo,
+  Generics.Collections, mrkeditdlg, WinDirs, updateutils, settings, logging,
+  loggingrichmemo, StringArrays;
 
 const
   GUIVER_APP      = 'ImageResize';
@@ -134,9 +134,11 @@ type
     ActionNew: TAction;
     ActionAbout: TAction;
     ActionExecute: TAction;
+    PaintBoxMrkPreview: TBGRAGraphicControl;
     ButtonExecute: TBGRASpeedButton;
     CheckBoxNoCreate: TCheckBox;
     CheckBoxImageInfosEnabled: TCheckBox;
+    Image: TImage;
     LabelStep1: TLabel;
     LabelStep2: TLabel;
     LabelStep3: TLabel;
@@ -221,16 +223,15 @@ type
     OpenDialogMrkFilename: TOpenDialog;
     PageControlSource: TPageControl;
     PageControlParams: TPageControl;
+    PanelPreview: TPanel;
     ProgressBar: TPaintBox;
     PaintBoxStep1: TPaintBox;
-    PaintBoxMrkPreview: TPaintBox;
     PaintBoxStep2: TPaintBox;
     PaintBoxStep3: TPaintBox;
     PanelDestination: TPanel;
     PanelParams: TPanel;
     PanelSource: TPanel;
     PanelControls: TPanel;
-    PanelPreview: TPanel;
     RadioButtonRenSimple: TRadioButton;
     RadioButtonRenCustom: TRadioButton;
     RadioButtonRenAdvanced: TRadioButton;
@@ -1431,27 +1432,28 @@ end;
 
 procedure TMainDialog.PaintBoxMrkPreviewPaint(Sender: TObject);
 var
-  op :single;
-  cr, r :TRect;
+  ImgRect :TRect;
+  MarkRect :TRect;
+
   Img :TBGRABitmap;
-  bkg :TBGRAPixel;
-  frm :TBGRAPixel;
-  mrk :TBGRAPixel;
+  Border :TBGRAPixel;
+  Fill :TBGRAPixel;
+  Transparency :Byte;
 begin
-  cr := PaintBoxMrkPreview.ClientRect;
-  bkg.FromColor($00F7DBCC);
-  frm.FromColor(clBlack);
-  Img := TBGRABitmap.Create(cr.Width, cr.Height, bkg);
-  try
-    op := StrToFloat(EditMrkAlpha.Text)/100.0;
-    mrk.FromColor($00FF8000, round(255*op));
-    frm.FromColor(clNavy, round(30+225*op));
-    if CalcMarkRect(r) then
-      Img.Rectangle(r, frm, mrk, dmDrawWithTransparency);
-    Img.Draw(PaintBoxMrkPreview.Canvas, cr);
-  except
+  if CalcMarkRect(MarkRect) then begin
+    ImgRect := TRect.Create(0, 0, MarkRect.Width, MarkRect.Height);
+    Transparency := round(255*StrToFloat(EditMrkAlpha.Text)/100.0);
+    Border.FromColor(STYLECOLOR_DARK, Transparency);
+    Fill.FromColor(STYLECOLOR_LIGHT, Transparency);
+    Img := TBGRABitmap.Create(MarkRect.Width, MarkRect.Height, clWhite);
+    try
+      Img.Rectangle(ImgRect, Border, Fill, dmDrawWithTransparency);
+      Img.Draw(PaintBoxMrkPreview.Canvas, MarkRect);
+    except
+    end;
+    Img.Free;
+
   end;
-  Img.Free;
 end;
 
 procedure TMainDialog.ProgressBarPaint(Sender: TObject);
@@ -1492,11 +1494,14 @@ begin
 end;
 
 procedure TMainDialog.EditSizesKeyPress(Sender: TObject; var Key: char);
+const
+  INTLISTKEYS :string = '0123456789, ';
 begin
   if Key=#13 then begin
     UpdateRequiredStep(2);
     Key := #0;
-  end;
+  end else if Pos(Key, INTLISTKEYS)=0 then
+    Key := #0;
 end;
 
 procedure TMainDialog.EditSizesChange(Sender: TObject);

@@ -8,7 +8,7 @@
    version="1.1"
    id="svg138"
    inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
-   sodipodi:docname="ok.svg"
+   sodipodi:docname="checked.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -27,7 +27,7 @@
      showguides="true"
      inkscape:lockguides="true"
      inkscape:zoom="7.3192481"
-     inkscape:cx="-1.4345736"
+     inkscape:cx="-6.7629898"
      inkscape:cy="67.083393"
      inkscape:window-width="2560"
      inkscape:window-height="1417"
@@ -71,8 +71,7 @@
     <path
        id="path397"
        style="fill:#4e9a06;fill-opacity:1;stroke:none;stroke-width:16;stroke-linecap:square;stroke-linejoin:round"
-       d="M 64,0 C 28.653776,0 0,28.653776 0,64 0,99.346224 28.653776,128 64,128 99.346224,128 128,99.346224 128,64 128,28.653776 99.346224,0 64,0 Z m 0,12 c 28.718807,0 52,23.281193 52,52 0,28.718807 -23.281193,52 -52,52 C 35.281193,116 12,92.718807 12,64 12,35.281193 35.281193,12 64,12 Z M 92,32 C 86,40 68,60 58,84 58,84 55.999988,75.99999 44,64 l -16,4 c 11.999988,7.999992 24,36 24,36 H 68 C 68,84 96,48 104,40 Z"
-       sodipodi:nodetypes="sssssssssscccccccc" />
+       d="M 64 0 C 28.653811 0 0 28.653811 0 64 C 0 99.346189 28.653811 128 64 128 C 99.346189 128 128 99.346189 128 64 C 128 28.653811 99.346189 0 64 0 z M 64 12 C 92.718778 12 116 35.281222 116 64 C 116 92.718778 92.718778 116 64 116 C 35.281222 116 12 92.718778 12 64 C 12 35.281222 35.281222 12 64 12 z M 95.181641 31.691406 C 73.454215 45.750327 59.876879 65.913703 52.251953 80.228516 C 48.520657 73.485633 43.249678 65.909631 35.794922 59.386719 L 25.259766 71.427734 C 39.014416 83.463054 44.267578 102.05469 44.267578 102.05469 L 59.570312 102.58594 C 59.570312 102.58594 72.735966 65.272519 103.87305 45.125 L 95.181641 31.691406 z " />
   </g>
   <g
      inkscape:label="Ebene 1"

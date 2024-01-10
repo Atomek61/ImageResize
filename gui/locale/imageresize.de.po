@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.3.1\n"
 
 #: aboutdlg.scptavailable
 msgid "Available"
@@ -1053,6 +1053,7 @@ msgid "1"
 msgstr "1"
 
 #: tmaindialog.editrentemplate.hint
+#, fuzzy, badformat
 msgid ""
 "Enter a filename template containing placeholders for special values.\n"
 "This template will be expanded for each resampled image. Insert the\n"
@@ -1285,7 +1286,7 @@ msgstr "Quelldateien"
 
 #: tmaindialog.labelstep2.caption
 msgid "Scaling and other Settings"
-msgstr "Skalierung und andere Eistellungen"
+msgstr "Skalierung und andere Einstellungen"
 
 #: tmaindialog.labelstep3.caption
 msgid "Target &Folder"
@@ -1702,3 +1703,4 @@ msgstr "Fehlender Eintrag für die WebProcessor class in '%s'."
 #, object-pascal-format
 msgid "Unregistered WebProcessor class '%s'."
 msgstr "Webprocessor-Klasse '%s' nicht registriert"
+
