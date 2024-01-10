@@ -19,7 +19,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <CursorPos X="57" Y="22"/>
+        <TopLine Value="134"/>
+        <CursorPos X="28" Y="137"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -49,7 +50,7 @@
       <Unit>
         <Filename Value="..\src\imgres.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="9"/>
         <TopLine Value="838"/>
         <CursorPos X="131" Y="562"/>
         <UsageCount Value="200"/>
@@ -77,7 +78,7 @@
       <Unit>
         <Filename Value="..\src\threading.dispatcher.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="10"/>
         <TopLine Value="477"/>
         <CursorPos Y="505"/>
         <UsageCount Value="200"/>
@@ -131,13 +132,13 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="26"/>
         <CursorPos Y="49"/>
-        <UsageCount Value="194"/>
+        <UsageCount Value="195"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\loggingrichmemo.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="185"/>
+        <UsageCount Value="186"/>
       </Unit>
       <Unit>
         <Filename Value="presentationdlg.pas"/>
@@ -148,7 +149,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="58"/>
         <CursorPos X="49" Y="69"/>
-        <UsageCount Value="172"/>
+        <UsageCount Value="173"/>
       </Unit>
       <Unit>
         <Filename Value="imagesmod.pas"/>
@@ -158,7 +159,7 @@
         <ResourceBaseClass Value="DataModule"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="27" Y="8"/>
-        <UsageCount Value="169"/>
+        <UsageCount Value="170"/>
       </Unit>
       <Unit>
         <Filename Value="webprocessor.pas"/>
@@ -166,22 +167,22 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="78"/>
         <CursorPos X="20" Y="92"/>
-        <UsageCount Value="157"/>
+        <UsageCount Value="158"/>
       </Unit>
       <Unit>
         <Filename Value="slideshow200webprocessor.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="26" Y="8"/>
-        <UsageCount Value="155"/>
+        <UsageCount Value="156"/>
       </Unit>
       <Unit>
         <Filename Value="galleryprocessor.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="11"/>
         <TopLine Value="47"/>
         <CursorPos Y="64"/>
-        <UsageCount Value="104"/>
+        <UsageCount Value="105"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -190,7 +191,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="18"/>
         <CursorPos Y="59"/>
-        <UsageCount Value="100"/>
+        <UsageCount Value="101"/>
       </Unit>
       <Unit>
         <Filename Value="colorwebprocessorfrm.pas"/>
@@ -200,7 +201,7 @@
         <ResourceBaseClass Value="Frame"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="118" Y="9"/>
-        <UsageCount Value="59"/>
+        <UsageCount Value="60"/>
       </Unit>
       <Unit>
         <Filename Value="webprocessorfrm.pas"/>
@@ -210,7 +211,7 @@
         <ResourceBaseClass Value="Frame"/>
         <EditorIndex Value="-1"/>
         <CursorPos Y="26"/>
-        <UsageCount Value="43"/>
+        <UsageCount Value="44"/>
       </Unit>
       <Unit>
         <Filename Value="webprocessorparamsfrm.pas"/>
@@ -881,10 +882,10 @@
       </Unit>
       <Unit>
         <Filename Value="..\src\templateengine.pas"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="12"/>
         <TopLine Value="194"/>
         <CursorPos Y="214"/>
-        <UsageCount Value="42"/>
+        <UsageCount Value="43"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -978,10 +979,10 @@
       </Unit>
       <Unit>
         <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\unibitmapgeneric.inc"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="8"/>
         <TopLine Value="63"/>
         <CursorPos X="15" Y="82"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="12"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -994,119 +995,186 @@
         <CursorPos X="6" Y="47"/>
         <UsageCount Value="10"/>
       </Unit>
+      <Unit>
+        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgrawinbitmap.pas"/>
+        <UnitName Value="BGRAWinBitmap"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="14"/>
+        <CursorPos X="3" Y="23"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgrapixel.inc"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="421"/>
+        <CursorPos X="25" Y="456"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgradefaultbitmap.pas"/>
+        <UnitName Value="BGRADefaultBitmap"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="26"/>
+        <CursorPos X="21" Y="145"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgrabitmap.pas"/>
+        <UnitName Value="BGRABitmap"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="58"/>
+        <CursorPos X="9" Y="79"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgralclbitmap.pas"/>
+        <UnitName Value="BGRALCLBitmap"/>
+        <EditorIndex Value="7"/>
+        <CursorPos X="3" Y="14"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\csscolorconst.inc"/>
+        <EditorIndex Value="5"/>
+        <CursorPos X="23" Y="10"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRAControls\bgragraphiccontrol.pas"/>
+        <UnitName Value="BGRAGraphicControl"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="65"/>
+        <CursorPos X="14" Y="72"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
     </Units>
-    <JumpHistory HistoryIndex="27">
+    <JumpHistory HistoryIndex="29">
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="1495" Column="6" TopLine="1475"/>
+        <Caret Line="1439" Column="37" TopLine="1427"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="1486" Column="9" TopLine="1467"/>
+        <Caret Line="92" TopLine="85"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="1490" Column="35" TopLine="1467"/>
+        <Caret Line="323" TopLine="293"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="1498" TopLine="1477"/>
+        <Caret Line="1452" Column="62" TopLine="1433"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="1502" TopLine="1477"/>
+        <Caret Line="1453" Column="41" TopLine="1431"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="1501" TopLine="1476"/>
+        <Caret Line="54" Column="23" TopLine="22"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="1502" TopLine="1477"/>
+        <Caret Line="1453" Column="11" TopLine="1432"/>
+      </Position>
+      <Position>
+        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgrabitmap.pas"/>
+        <Caret Line="79" Column="9" TopLine="58"/>
+      </Position>
+      <Position>
+        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgrawinbitmap.pas"/>
+        <Caret Line="23" Column="3" TopLine="14"/>
+      </Position>
+      <Position>
+        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgralclbitmap.pas"/>
+        <Caret Line="14" Column="3"/>
+      </Position>
+      <Position>
+        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgradefaultbitmap.pas"/>
+        <Caret Line="35" Column="35" TopLine="15"/>
+      </Position>
+      <Position>
+        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgradefaultbitmap.pas"/>
+        <Caret Line="76" Column="10" TopLine="42"/>
+      </Position>
+      <Position>
+        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgradefaultbitmap.pas"/>
+        <Caret Line="77" Column="35" TopLine="43"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="1509" TopLine="1484"/>
+        <Caret Line="1449" Column="18" TopLine="1432"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="777" Column="3" TopLine="775"/>
+        <Caret Line="1441" Column="3" TopLine="1432"/>
+      </Position>
+      <Position>
+        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgrapixel.inc"/>
+        <Caret Line="49" Column="68" TopLine="25"/>
+      </Position>
+      <Position>
+        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgrapixel.inc"/>
+      </Position>
+      <Position>
+        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgrapixel.inc"/>
+        <Caret Line="176" Column="27" TopLine="141"/>
+      </Position>
+      <Position>
+        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgrapixel.inc"/>
+        <Caret Line="203" Column="18" TopLine="168"/>
+      </Position>
+      <Position>
+        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgrapixel.inc"/>
+        <Caret Line="235" Column="33" TopLine="200"/>
+      </Position>
+      <Position>
+        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgrapixel.inc"/>
+        <Caret Line="252" Column="18" TopLine="217"/>
+      </Position>
+      <Position>
+        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgrapixel.inc"/>
+        <Caret Line="284" Column="26" TopLine="249"/>
+      </Position>
+      <Position>
+        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgrapixel.inc"/>
+        <Caret Line="456" Column="25" TopLine="421"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="1445" Column="17" TopLine="1433"/>
-      </Position>
-      <Position>
-        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\unibitmapgeneric.inc"/>
-        <Caret Line="24" Column="17"/>
+        <Caret Line="1439" Column="45" TopLine="1432"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="1445" Column="59" TopLine="1433"/>
+        <Caret Line="54" Column="24" TopLine="22"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="1469" Column="54" TopLine="1440"/>
+        <Caret Line="718" Column="135" TopLine="707"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="707" Column="3" TopLine="705"/>
+        <Caret Line="138" Column="16" TopLine="134"/>
+      </Position>
+      <Position>
+        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRAControls\bgragraphiccontrol.pas"/>
+        <Caret Line="102" Column="29" TopLine="70"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="706" Column="3" TopLine="704"/>
+        <Caret Line="138" Column="16" TopLine="134"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="702" Column="3" TopLine="702"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1253" Column="87" TopLine="1218"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1443" TopLine="1433"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1444" TopLine="1434"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1443" TopLine="1433"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1387" Column="118" TopLine="1371"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1451" Column="21" TopLine="1433"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1442" Column="45" TopLine="1433"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1444" Column="3" TopLine="1433"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1451" Column="5" TopLine="1431"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1435" Column="3" TopLine="1414"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1443" TopLine="1427"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1431" Column="25" TopLine="1426"/>
+        <Caret Line="137" Column="28" TopLine="134"/>
       </Position>
     </JumpHistory>
     <RunParams>

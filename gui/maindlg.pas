@@ -19,7 +19,7 @@ uses
   LCLTranslator, Classes, Types, SysUtils, Forms, Controls, Graphics, Dialogs,
   StdCtrls, ComCtrls, ActnList, ExtCtrls, imgres, aboutdlg, inifiles, strutils,
   LMessages, LCLIntf, Buttons, ImgList, LCLType, LazHelpHTML, BGRABitmap,
-  BGRABitmapTypes, BGRASpeedButton, BGRAGraphicControl, RichMemo,
+  BGRABitmapTypes, BGRASpeedButton, BGRAGraphicControl, BGRAImageList, RichMemo,
   Generics.Collections, mrkeditdlg, WinDirs, updateutils, settings, logging,
   loggingrichmemo, StringArrays;
 
@@ -51,7 +51,7 @@ const
   SETTINGSSECTION = 'Settings';
   DIALOGSECTION   = 'Dialog';
 
-  MRKRECTRATIO    = 3.0;
+  MRKRECTRATIO    = 6.5;
 
   LINESEP         = '|';
 
@@ -89,6 +89,7 @@ resourcestring
   SCptDependenciesFmt = 'Build with Lazarus %s, BGRABitmap %s, dExif %s';
   SUrlWebHelp = 'http://www.atomek.de/imageresize/hlp35/gui/en';
   SLocDirHelp = 'hlp\gui\en';
+  SCptWatermark ='WATERMARK';
   STxtLicense =
 'ImageResize Copyright (c) 2024 Jan Schirrmacher, www.atomek.de'#10#10+
 'Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy and merge copies of the Software, subject to the following conditions:'#10#10+
@@ -1436,19 +1437,23 @@ var
   MarkRect :TRect;
 
   Img :TBGRABitmap;
-  Border :TBGRAPixel;
-  Fill :TBGRAPixel;
+  BorderColor :TBGRAPixel;
+  FillColor :TBGRAPixel;
+  TextColor :TBGRAPixel;
   Transparency :Byte;
 begin
   if CalcMarkRect(MarkRect) then begin
     ImgRect := TRect.Create(0, 0, MarkRect.Width, MarkRect.Height);
-    Transparency := round(255*StrToFloat(EditMrkAlpha.Text)/100.0);
-    Border.FromColor(STYLECOLOR_DARK, Transparency);
-    Fill.FromColor(STYLECOLOR_LIGHT, Transparency);
-    Img := TBGRABitmap.Create(MarkRect.Width, MarkRect.Height, clWhite);
+    Transparency := 255-round(255*StrToFloat(EditMrkAlpha.Text)/100.0);
+    BorderColor.FromColor(clRed);
+    TextColor.FromColor(clBlack, Transparency);
+    Img := TBGRABitmap.Create(MarkRect.Width, MarkRect.Height);
     try
-      Img.Rectangle(ImgRect, Border, Fill, dmDrawWithTransparency);
-      Img.Draw(PaintBoxMrkPreview.Canvas, MarkRect);
+      Img.FontHeight := ImgRect.Height;
+      Img.Rectangle(ImgRect, BorderColor, BGRAPixelTransparent, dmLinearBlend);
+      Img.TextOut(0, 0, SCptWatermark, TextColor);
+      Img.Draw(PaintBoxMrkPreview.Canvas, MarkRect, False);
+
     except
     end;
     Img.Free;
