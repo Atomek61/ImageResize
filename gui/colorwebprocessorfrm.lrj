@@ -1,5 +1,0 @@
-{"version":1,"strings":[
-{"hash":225419290,"name":"tcolorwebprocessorframe.label1.caption","sourcebytes":[66,117,116,116,111,110,32,67,111,108,111,114,58],"value":"Button Color:"},
-{"hash":20358186,"name":"tcolorwebprocessorframe.label2.caption","sourcebytes":[84,105,116,108,101,32,67,111,108,111,114,58],"value":"Title Color:"},
-{"hash":173869098,"name":"tcolorwebprocessorframe.label3.caption","sourcebytes":[66,97,99,107,103,114,111,117,110,100,32,67,111,108,111,114,58],"value":"Background Color:"}
-]}

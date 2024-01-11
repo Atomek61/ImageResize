@@ -1,4 +1,4 @@
-inherited ColorWebProcessorFrame: TColorWebProcessorFrame
+inherited ColorPresentationProcessorFrame: TColorPresentationProcessorFrame
   Height = 179
   ClientHeight = 179
   DesignLeft = 471

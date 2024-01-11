@@ -463,6 +463,16 @@ msgstr ""
 msgid "Folder missing or does not exist."
 msgstr ""
 
+#: presentationprocessor.serrmissingpresentationprocessorclassfmt
+#, object-pascal-format
+msgid "Missing PresentationProcessor class entry in '%s'."
+msgstr ""
+
+#: presentationprocessor.serrunregisterpresentationprocessorfmt
+#, object-pascal-format
+msgid "Unregistered PresentationProcessor class '%s'."
+msgstr ""
+
 #: settingsdlg.scptbehavior0
 msgctxt "settingsdlg.scptbehavior0"
 msgid "Standard"
@@ -627,21 +637,6 @@ msgstr ""
 
 #: tags.serrmorevaluesthantags
 msgid "more values than tags"
-msgstr ""
-
-#: tcolorwebprocessorframe.label1.caption
-msgctxt "tcolorwebprocessorframe.label1.caption"
-msgid "Button Color:"
-msgstr ""
-
-#: tcolorwebprocessorframe.label2.caption
-msgctxt "tcolorwebprocessorframe.label2.caption"
-msgid "Title Color:"
-msgstr ""
-
-#: tcolorwebprocessorframe.label3.caption
-msgctxt "tcolorwebprocessorframe.label3.caption"
-msgid "Background Color:"
 msgstr ""
 
 #: threading.dispatcher.scptcancelled
@@ -1587,20 +1582,5 @@ msgstr ""
 #: tsettingsdialog.labelcores.caption
 msgctxt "tsettingsdialog.labelcores.caption"
 msgid "Cores"
-msgstr ""
-
-#: twebprocessorframe.label4.caption
-msgctxt "twebprocessorframe.label4.caption"
-msgid "Slideshow Title:"
-msgstr ""
-
-#: webprocessor.serrmissingwebprocessorclassfmt
-#, object-pascal-format
-msgid "Missing WebProcessor class entry in '%s'."
-msgstr ""
-
-#: webprocessor.serrunregisterwebprocessorfmt
-#, object-pascal-format
-msgid "Unregistered WebProcessor class '%s'."
 msgstr ""
 

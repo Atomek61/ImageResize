@@ -1,93 +1,164 @@
 unit settings;
 
-{$mode ObjFPC}{$H+}
+{$mode delphi}
 
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, IniFiles, Generics.Collections, Logging;
 
 type
+
+  TSettingsClass = class of TSettings;
+  { TSettings }
+
   TSettings = class
-    procedure Defaults; virtual; abstract;
-    function Compare(const Value :TSettings) :boolean; virtual; abstract;
-    procedure Assign(const Value :TSettings); virtual; abstract;
-  end;
-
-  { TProcessingSettings }
-
-  TProcessingSettings = class(TSettings)
+  private
+    FDirty :boolean;
+    FOnChanged :TNotifyEvent;
+    FSection :string;
+  protected
+    procedure Changed;
   public
-    ThreadsUsed :integer;
-    StopOnError :boolean;
-    procedure Defaults; override;
-    function Compare(const Value :TSettings) :boolean; override;
-    procedure Assign(const Value :TSettings); override;
+    constructor Create; virtual; overload;
+    class procedure Register(Value :TSettingsClass);
+    class function Create(const Id :string) :TSettings; overload;
+    procedure Defaults; virtual;
+    function Compare(const Value :TSettings) :boolean; virtual;
+    procedure Assign(const Value :TSettings); virtual;
+    procedure SaveToIni(Ini :TCustomIniFile); virtual;
+    procedure LoadFromIni(Ini :TCustomIniFile); virtual;
+    property Section :string read FSection write FSection;
+    property OnChanged :TNotifyEvent read FOnChanged write FOnChanged;
   end;
 
-  { TDialogSettings }
+  { TSettingsList }
 
-  TDialogSettings = class(TSettings)
+  TSettingsList = class(TObjectDictionary<string, TSettings>)
+  private
+    FSectionPrefix :string;
   public
-    AutoSave :boolean;
-    WarnDirty :boolean;
-    procedure Defaults; override;
-    function Compare(const Value :TSettings) :boolean; override;
-    procedure Assign(const Value :TSettings); override;
+    constructor Create(const SectionPrefix :string; OwnsObjects :boolean);
+    procedure LoadFromIni(Ini :TCustomIniFile);
+    procedure SaveToIni(Ini :TCustomIniFile);
+    property SectionPrefix :string read FSectionPrefix {write FSectionPrefix whynot};
   end;
-
-  //TGUISettings = class(TSettings)
-  //end;
 
 implementation
 
-{ TDialogSettings }
+var
+  SettingsClasses :TDictionary<string, TSettingsClass>;
 
-procedure TDialogSettings.Defaults;
+{ TSettings }
+
+procedure TSettings.Changed;
 begin
-  AutoSave := true;
-  WarnDirty := false;
+  FDirty := true;
+  if Assigned(FOnChanged) then
+    FOnChanged(self);
 end;
 
-function TDialogSettings.Compare(const Value: TSettings): boolean;
+constructor TSettings.Create;
 begin
-  with Value as TDialogSettings do
-    result := (self.AutoSave = AutoSave) and (self.WarnDirty = WarnDirty);
+  FSection := Copy(ClassName, 2, Length(ClassName)-9);
+  Defaults;
 end;
 
-procedure TDialogSettings.Assign(const Value: TSettings);
+class procedure TSettings.Register(Value: TSettingsClass);
 begin
-  with Value as TDialogSettings do begin
-    self.AutoSave := AutoSave;
-    self.WarnDirty := WarnDirty;
+  SettingsClasses.Add(Value.ClassName, Value);
+end;
+
+class function TSettings.Create(const Id: string): TSettings;
+var
+  ClassName :string;
+  SettingsClass :TSettingsClass;
+begin
+  ClassName := Format('T%sSettings', [Id]);
+  if not SettingsClasses.TryGetValue(ClassName, SettingsClass) then
+    raise Exception.CreateFmt('Settings class ''%s'' not registered.', [ClassName]);
+  result := SettingsClass.Create;
+//Log('%s %s', [ClassName, result.ClassName], llHint);
+  result.FSection := Id;
+end;
+
+procedure TSettings.Defaults;
+begin
+end;
+
+function TSettings.Compare(const Value: TSettings): boolean;
+begin
+  result := false;
+end;
+
+procedure TSettings.Assign(const Value: TSettings);
+begin
+
+end;
+
+procedure TSettings.SaveToIni(Ini: TCustomIniFile);
+begin
+  FDirty := false;
+end;
+
+procedure TSettings.LoadFromIni(Ini: TCustomIniFile);
+begin
+  FDirty := false;
+end;
+
+{ TSettingsList }
+
+constructor TSettingsList.Create(const SectionPrefix: string; OwnsObjects: boolean);
+const
+  OWNERSHIP :array[boolean] of TDictionaryOwnerships = ([], [doOwnsValues]);
+begin
+  inherited Create(OWNERSHIP[OwnsObjects]);
+  FSectionPrefix := SectionPrefix;
+end;
+
+procedure TSettingsList.LoadFromIni(Ini: TCustomIniFile);
+var
+  Sections :TStrings;
+  Section :string;
+  Settings :TSettings;
+  Id :string;
+begin
+  Sections := TStringList.Create;
+  try
+    Ini.ReadSections(Sections);
+    for Section in Sections do
+      if Section.StartsWith(SectionPrefix+'.') then begin
+        Id := Copy(Section, Length(SectionPrefix)+2, Length(Section)-Length(SectionPrefix)-1);
+        if not TryGetValue(Id, Settings) then begin
+          Settings := TSettings.Create(Id);
+          Add(Id, Settings);
+        end;
+        Settings.LoadFromIni(Ini);
+      end;
+  finally
+    Sections.Free;
   end;
 end;
 
-{ TProcessingSettings }
-
-procedure TProcessingSettings.Defaults;
+procedure TSettingsList.SaveToIni(Ini: TCustomIniFile);
+var
+  Settings :TSettings;
 begin
-  ThreadsUsed := 0;
-  StopOnError := True;
+  for Settings in Values do
+    Settings.SaveToIni(Ini);
 end;
 
-function TProcessingSettings.Compare(const Value: TSettings): boolean;
-var
-  Source :TProcessingSettings;
+initialization
 begin
-  Source := Value as TProcessingSettings;
-  result := (ThreadsUsed = Source.ThreadsUsed)
-    and (StopOnError = Source.StopOnError);
+  SettingsClasses := TDictionary<string, TSettingsClass>.Create;
 end;
 
-procedure TProcessingSettings.Assign(const Value: TSettings);
-var
-  Source :TProcessingSettings;
+finalization
 begin
-  Source := Value as TProcessingSettings;
-  ThreadsUsed := Source.ThreadsUsed;
-  StopOnError := Source.StopOnError;
+  SettingsClasses.Free;
 end;
 
 end.
+
+
 

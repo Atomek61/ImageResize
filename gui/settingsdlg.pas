@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Buttons,
-  ExtCtrls, Settings, animator;
+  ExtCtrls, AppSettings, animator;
 
 type
 

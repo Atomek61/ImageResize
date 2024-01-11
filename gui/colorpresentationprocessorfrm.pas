@@ -1,17 +1,17 @@
-unit colorwebprocessorfrm;
+unit colorpresentationprocessorfrm;
 
 {$mode ObjFPC}{$H+}
 
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, StdCtrls, ColorBox, WebProcessorFrm;
+  Classes, SysUtils, Forms, Controls, StdCtrls, ColorBox, PresentationProcessorFrm;
 
 type
 
-  { TColorWebProcessorFrame }
+  { TColorPresentationProcessorFrame }
 
-  TColorWebProcessorFrame = class(TWebProcessorFrame)
+  TColorPresentationProcessorFrame = class(TPresentationProcessorFrame)
     ColorBoxButtonColor: TColorBox;
     ColorBoxTitleColor: TColorBox;
     ColorBoxBackgroundColor: TColorBox;

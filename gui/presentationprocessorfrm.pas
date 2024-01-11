@@ -1,4 +1,4 @@
-unit webprocessorfrm;
+unit presentationprocessorfrm;
 
 {$mode ObjFPC}{$H+}
 
@@ -9,9 +9,9 @@ uses
 
 type
 
-  { TWebProcessorFrame }
+  { TPresentationProcessorFrame }
 
-  TWebProcessorFrame = class(TFrame)
+  TPresentationProcessorFrame = class(TFrame)
     EditTitle: TEdit;
     Label4: TLabel;
   private

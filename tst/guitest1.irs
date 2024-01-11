@@ -35,3 +35,6 @@ Copyright=
 TagsReportEnabled=0
 TagsReportFilename=
 NoCreate=0
+
+[Presentation.Simple100]
+Title=Hallo

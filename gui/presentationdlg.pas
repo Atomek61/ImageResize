@@ -5,9 +5,9 @@ unit presentationdlg;
 interface
 
 uses
-  Messages, Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Buttons,
-  StdCtrls, ExtCtrls, ComCtrls, webprocessor, LCLIntf, LCLType, RichMemo,
-  logging, Types, gettext, FileUtil, LoggingRichMemo;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Buttons,
+  StdCtrls, ExtCtrls, ComCtrls, presentationprocessor, LCLIntf, LCLType, RichMemo,
+  logging, Types, gettext, FileUtil, LoggingRichMemo, Settings;
 
 type
 
@@ -42,12 +42,14 @@ type
     FProcessorIndex :integer;
     FProcessors :TProcessors;
     FOuterLogger :TLogger;
+    FPresentationSettings :TSettingsList;
     function GetProcessor: TCustomProcessor;
     function GetProcessorId: string;
     procedure OnFrameSelected(Sender :TObject);
     procedure SetProcessorId(AValue: string);
     procedure SetProcessorIndex(AValue: integer);
   public
+    procedure Show(PresentationSettings :TSettingsList);
     procedure Scan;
     property ProcessorId :string read GetProcessorId write SetProcessorId;
     property Processor :TCustomProcessor read GetProcessor;
@@ -63,7 +65,7 @@ uses
     Math, MainDlg;
 
 const
-  WEBFOLDER = 'web';
+  PRESENTATIONFOLDER = 'presentation';
 
 resourcestring
   SErrMissingFolder = 'Folder missing or does not exist.';
@@ -162,6 +164,7 @@ end;
 procedure TPresentationDialog.SetProcessorIndex(AValue: integer);
 var
   ParamsFrame :TFrame;
+  Settings :TSettings;
 begin
   if FProcessorIndex=AValue then Exit;
   if AValue<0 then
@@ -174,6 +177,9 @@ begin
     if GroupBoxParams.ControlCount>0 then
       GroupBoxParams.Controls[0].Parent := nil;
     ParamsFrame := Processor.Frame;
+    Log(Processor.Id);
+    if FPresentationSettings.TryGetValue(Processor.Id, Settings) then
+      Processor.Settings := Settings;
     if Assigned(ParamsFrame) then begin
       ParamsFrame.Parent := GroupBoxParams;
       ParamsFrame.Align := alTop;
@@ -189,6 +195,12 @@ begin
   end;
 end;
 
+procedure TPresentationDialog.Show(PresentationSettings: TSettingsList);
+begin
+  FPresentationSettings := PresentationSettings;
+  ShowModal;
+end;
+
 procedure TPresentationDialog.OnFrameSelected(Sender: TObject);
 begin
 end;
@@ -199,9 +211,9 @@ var
   wp :TCustomProcessor;
 begin
   ProcessorIndex := -1;
-  Folder := IncludeTrailingPathDelimiter(ExtractFilePath(Application.Exename)+WEBFOLDER);
+  Folder := IncludeTrailingPathDelimiter(ExtractFilePath(Application.Exename)+PRESENTATIONFOLDER);
   FreeAndNil(FProcessors);
-  FProcessors := TWebProcessor.Scan(Folder);
+  FProcessors := TPresentationProcessor.Scan(Folder);
   ListBoxProcessors.Items.Clear;
   for wp in FProcessors do
     ListBoxProcessors.Items.Add(wp.Title);

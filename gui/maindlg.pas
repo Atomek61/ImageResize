@@ -20,8 +20,8 @@ uses
   StdCtrls, ComCtrls, ActnList, ExtCtrls, imgres, aboutdlg, inifiles, strutils,
   LMessages, LCLIntf, Buttons, ImgList, LCLType, LazHelpHTML, BGRABitmap,
   BGRABitmapTypes, BGRASpeedButton, BGRAGraphicControl, BGRAImageList, RichMemo,
-  Generics.Collections, mrkeditdlg, WinDirs, updateutils, settings, logging,
-  loggingrichmemo, StringArrays;
+  Generics.Collections, mrkeditdlg, WinDirs, updateutils, AppSettings, Logging,
+  LoggingRichMemo, StringArrays, HtmlLabel, PresentationSettings, Settings;
 
 const
   GUIVER_APP      = 'ImageResize';
@@ -51,7 +51,7 @@ const
   SETTINGSSECTION = 'Settings';
   DIALOGSECTION   = 'Dialog';
 
-  MRKRECTRATIO    = 6.5;
+  MRKRECTRATIO    = 3.0;
 
   LINESEP         = '|';
 
@@ -342,6 +342,7 @@ type
     FProcessingSettings :TProcessingSettings;
     FDialogSettings :TDialogSettings;
     FWorkingDirectory :string;
+    FPresentationSettingsList :TSettingsList;
     procedure ChangeCurrentDir(const Path :string);
     function GetAppDataFilename(const Filetitle :string; CanCreate :boolean) :string;
     procedure SetDirty(AValue: boolean);
@@ -554,6 +555,8 @@ begin
   FDialogSettings := TDialogSettings.Create;
   FDialogSettings.Defaults;
 
+  FPresentationSettingsList := TSettingsList.Create(PRESENTATIONSETTINGS_PREFIX, true);
+
   // Create Size Buttons
   for i:=0 to High(DEFSIZES) do begin
     Button := TToolButton.Create(ToolBarSizeButtons);
@@ -646,6 +649,7 @@ procedure TMainDialog.FormDestroy(Sender: TObject);
 begin
   FProcessingSettings.Free;
   FDialogSettings.Free;
+  FPresentationSettingsList.Free;
 end;
 
 procedure TMainDialog.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -688,7 +692,7 @@ end;
 
 procedure TMainDialog.ActionPresentationExecute(Sender: TObject);
 begin
-  PresentationDialog.ShowModal;
+  PresentationDialog.Show(FPresentationSettingsList);
 end;
 
 procedure TMainDialog.ActionSourceExecute(Sender: TObject);
@@ -1013,6 +1017,8 @@ begin
     CheckBoxNoCreate.Checked              := ReadBool(SETTINGSSECTION, 'NoCreate', DEFAULT_NOCREATE);
     ActionParamSizes.Execute;
   end;
+
+  FPresentationSettingsList.LoadFromIni(Ini);
 end;
 
 const
@@ -1058,6 +1064,7 @@ begin
     WriteBool(SETTINGSSECTION, 'ImageInfosEnabled', CheckBoxImageInfosEnabled.Checked);
     WriteBool(SETTINGSSECTION, 'NoCreate', CheckBoxNoCreate.Checked);
   end;
+  FPresentationSettingsList.SaveToIni(Ini);
 end;
 
 function TMainDialog.LoadLastProject: boolean;
@@ -1436,33 +1443,64 @@ procedure TMainDialog.PaintBoxMrkPreviewPaint(Sender: TObject);
 var
   ImgRect :TRect;
   MarkRect :TRect;
-
-  Img :TBGRABitmap;
+  Bmp :TBGRABitmap;
   BorderColor :TBGRAPixel;
   FillColor :TBGRAPixel;
-  TextColor :TBGRAPixel;
   Transparency :Byte;
 begin
   if CalcMarkRect(MarkRect) then begin
     ImgRect := TRect.Create(0, 0, MarkRect.Width, MarkRect.Height);
     Transparency := 255-round(255*StrToFloat(EditMrkAlpha.Text)/100.0);
-    BorderColor.FromColor(clRed);
-    TextColor.FromColor(clBlack, Transparency);
-    Img := TBGRABitmap.Create(MarkRect.Width, MarkRect.Height);
+    BorderColor.FromColor(clBlack);
+    FillColor.FromColor(clBlue, Transparency);
+    Bmp := TBGRABitmap.Create(MarkRect.Width, MarkRect.Height);
     try
-      Img.FontHeight := ImgRect.Height;
-      Img.Rectangle(ImgRect, BorderColor, BGRAPixelTransparent, dmLinearBlend);
-//      Img.TextOut(0, 0, SCptWatermark, TextColor);
-      ImageListWatermarkText.StretchDraw(PaintBoxMrkPreview.Canvas, 0, MarkRect);
-      Img.Draw(PaintBoxMrkPreview.Canvas, MarkRect, False);
-
+      Bmp.Rectangle(ImgRect, BorderColor, FillColor, dmLinearBlend);
+      Bmp.Draw(PaintBoxMrkPreview.Canvas, MarkRect, False);
     except
     end;
-    Img.Free;
-
+    Bmp.Free;
   end;
 end;
 
+//procedure TMainDialog.PaintBoxMrkPreviewPaint(Sender: TObject);
+//var
+//  ImgRect :TRect;
+//  MarkRect :TRect;
+//
+//  Bmp :TBGRABitmap;
+//  Txt :TBGRABitmap;
+//  BorderColor :TBGRAPixel;
+//  FillColor :TBGRAPixel;
+////  TextColor :TBGRAPixel;
+//  Transparency :Byte;
+//begin
+//  if CalcMarkRect(MarkRect) then begin
+//    ImgRect := TRect.Create(0, 0, MarkRect.Width, MarkRect.Height);
+//    Transparency := 255-round(255*StrToFloat(EditMrkAlpha.Text)/100.0);
+//    BorderColor.FromColor(clBlue);
+//    FillColor.FromColor(clWhite);
+////    TextColor.FromColor(clBlack, Transparency);
+//    Bmp := TBGRABitmap.Create(MarkRect.Width, MarkRect.Height);
+//    Txt := TBGRABitmap.Create(MarkRect.Width, MarkRect.Height);
+//    try
+////      Txt.AlphaFill(120);
+//      ImageListWatermarkText.StretchDraw(Txt.Canvas, 0, ImgRect);
+//      Txt.Fill(FillColor, dmSetExceptTransparent, round(Transparency*256));
+//      Txt.Draw(Bmp.Canvas, 0, 0, False);
+////      Bmp.FontHeight := ImgRect.Height;
+//      Bmp.Rectangle(ImgRect, BorderColor, BGRAPixelTransparent, dmLinearBlend);
+////      Bmp.TextOut(0, 0, SCptWatermark, TextColor);
+////      ImageListWatermarkText.StretchDraw(PaintBoxMrkPreview.Canvas, 0, MarkRect);
+//      Bmp.Draw(PaintBoxMrkPreview.Canvas, MarkRect, False);
+//
+//    except
+//    end;
+//    Bmp.Free;
+//    Txt.Free;
+//  end;
+//end;
+//
 procedure TMainDialog.ProgressBarPaint(Sender: TObject);
 var
   r :TRect;

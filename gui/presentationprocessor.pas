@@ -1,4 +1,4 @@
-unit webprocessor;
+unit presentationprocessor;
 
 {$mode Delphi}{$H+}
 
@@ -7,7 +7,8 @@ interface
 uses
   Classes, SysUtils, Controls, Forms, IniFiles, Generics.Collections,
   Graphics, GetText, DateUtils, Generics.Defaults, FileUtil,
-  GalleryProcessor, Logging, StrUtils, StringArrays;
+  GalleryProcessor, Logging, StrUtils, StringArrays, Settings,
+  PresentationSettings;
 
 type
   TCustomProcessor = class;
@@ -21,7 +22,7 @@ type
 
   TCustomProcessor = class
   private
-    FId :string;              // "slideshow200"
+    FId :string;              // "Slideshow200"
     FTitle :string;           // "Slideshow 2.0"
     FDescription :string;     // "Full-Screen Slideshow"
     FLongDescription :string;         // "Displays a single image and navigates through a list.
@@ -33,6 +34,7 @@ type
     FTemplateFolder :string;
     FTargetFolder :string;
     FFrame :TFrame;
+    FSettings :TSettings;
     function GetIcon: TGraphic;
     function GetPreview: TGraphic;
     function GetFrame :TFrame;
@@ -46,10 +48,11 @@ type
     class function ClassId :string;
     class function Create(const Filename :string) :TCustomProcessor; overload;
     class function Scan(const Folder :string) :TProcessors;
-    procedure SaveSettings(const Section :string; Store :TCustomInifile); virtual; abstract;
-    procedure LoadSettings(const Section :string; Store :TCustomInifile); virtual; abstract;
+    //procedure SaveSettings(const Section :string; Store :TCustomInifile); virtual; abstract;
+    //procedure LoadSettings(const Section :string; Store :TCustomInifile); virtual; abstract;
     procedure Execute; virtual; abstract;
     property Frame :TFrame read GetFrame;
+    property Settings :TSettings read FSettings write FSettings;
     property Id :string read FId;
     property Title :string read FTitle;
     property Description :string read FDescription;
@@ -76,12 +79,11 @@ type
     property ById[Id :string] :TCustomProcessor read GetById;
   end;
 
-  { TWebProcessor }
+  { TPresentationProcessor }
 
-  TWebProcessor = class(TCustomProcessor)
+  TPresentationProcessor = class(TCustomProcessor)
   private
     FProcessor :TProcessor;
-    FTitle :string;
   protected
     function GetFrameClass :TFrameClass; override;
     procedure ParamsToFrame; override;
@@ -92,9 +94,9 @@ type
     procedure Execute; override;
   end;
 
-  { TColorWebProcessor }
+  { TColorPresentationProcessor }
 
-  TColorWebProcessor = class(TWebProcessor)
+  TColorPresentationProcessor = class(TPresentationProcessor)
   private
     FTitleColor :TColor;
     FButtonColor :TColor;
@@ -108,7 +110,7 @@ type
 implementation
 
 uses
-  LazFileUtils, WebProcessorFrm, ColorWebProcessorFrm;
+  LazFileUtils, presentationprocessorfrm, colorpresentationprocessorfrm;
 
 var
   ProcessorClasses :TDictionary<string, TCustomProcessorClass>;
@@ -116,11 +118,11 @@ var
 const
   COMMON_SECTION    = 'Common';
   PROCESSOR_SECTION = 'Processor';
-  WPREXT = 'wpr';
+  PRP = 'prp';
 
 resourcestring
-  SErrMissingWebProcessorClassFmt = 'Missing WebProcessor class entry in ''%s''.';
-  SErrUnregisterWebProcessorFmt = 'Unregistered WebProcessor class ''%s''.';
+  SErrMissingPresentationProcessorClassFmt = 'Missing PresentationProcessor class entry in ''%s''.';
+  SErrUnregisterPresentationProcessorFmt = 'Unregistered PresentationProcessor class ''%s''.';
 
 { TCustomProcessor }
 
@@ -138,7 +140,7 @@ var
 begin
   inherited Create;
   GetLanguageIDs(Lang, FallBackLang);
-  FId               := ChangeFileExt(ExtractFilename(IniFile.Filename), '');
+  FId               := IniFile.ReadString(PROCESSOR_SECTION, 'Id', '');
   FTitle            := IniRead('Title');
   FDescription      := IniRead('Description');
   FLongDescription  := IniRead('LongDescription');
@@ -153,6 +155,7 @@ begin
   FIcon.Free;
   FPreview.Free;
   FFrame.Free;
+  FSettings.Free;
   inherited Destroy;
 end;
 
@@ -198,19 +201,19 @@ end;
 class function TCustomProcessor.Create(const Filename :string): TCustomProcessor;
 var
   IniFile :TCustomIniFile;
-  WebProcessorClass :TCustomProcessorClass;
+  PresentationProcessorClass :TCustomProcessorClass;
   ClassId :string;
   ClassName :string;
 begin
   IniFile := TIniFile.Create(Filename, [ifoStripComments, ifoCaseSensitive, ifoStripQuotes]);
   try
-    ClassId := IniFile.ReadString(PROCESSOR_SECTION, 'Class', 'Web');
+    ClassId := IniFile.ReadString(PROCESSOR_SECTION, 'Class', 'Presentation');
     //if ClassId='<undefined>' then
-    //  raise Exception.CreateFmt(SErrMissingWebProcessorClassFmt, [Filename]);
+    //  raise Exception.CreateFmt(SErrMissingPresentationProcessorClassFmt, [Filename]);
     ClassName := Format('T%sProcessor', [ClassId]);
-    if not ProcessorClasses.TryGetValue(ClassName, WebProcessorClass) then
-      raise Exception.CreateFmt(SErrUnregisterWebProcessorFmt, [ClassName]);
-    result := WebProcessorClass.Create(IniFile);
+    if not ProcessorClasses.TryGetValue(ClassName, PresentationProcessorClass) then
+      raise Exception.CreateFmt(SErrUnregisterPresentationProcessorFmt, [ClassName]);
+    result := PresentationProcessorClass.Create(IniFile);
   except
     IniFile.Free;
     raise;
@@ -221,15 +224,15 @@ class function TCustomProcessor.Scan(const Folder: string): TProcessors;
 var
   WprFilenames :TStringList;
   Filename :string;
-  WebProcessor :TCustomProcessor;
+  PresentationProcessor :TCustomProcessor;
 begin
   result := TProcessors.Create;
-  WprFilenames := FindAllFiles(Folder, '*.'+WPREXT, true);
+  WprFilenames := FindAllFiles(Folder, '*.'+PRP, true);
   try
     for Filename in WprFilenames do begin
       try
-        WebProcessor := TCustomProcessor.Create(Filename);
-        result.Add(WebProcessor);
+        PresentationProcessor := TCustomProcessor.Create(Filename);
+        result.Add(PresentationProcessor);
       except on E :Exception do
         Log(E.Message, llWarning);
       end;
@@ -249,6 +252,7 @@ begin
     if Assigned(FrameClass) then begin
       FFrame := GetFrameClass.Create(nil);
       FFrame.Name := Format('Frame%8.8x', [longint(FFrame)]);
+      ParamsToFrame;
     end;
   end;
   result := FFrame;
@@ -289,7 +293,7 @@ end;
 
 class procedure TProcessors.Register(ProcessorClass: TCustomProcessorClass);
 begin
-  // Assumes TIdWebProcessor
+  // Assumes TIdPresentationProcessor
   ProcessorClasses.Add(ProcessorClass.Classname, ProcessorClass);
 end;
 
@@ -303,30 +307,41 @@ begin
   Sort(TComparer<TCustomProcessor>.Construct(@CompareDate));
 end;
 
-{ TWebProcessor }
+{ TPresentationProcessor }
 
-function TWebProcessor.GetFrameClass: TFrameClass;
+function TPresentationProcessor.GetFrameClass: TFrameClass;
 begin
-  result := TWebProcessorFrame;
+  result := TPresentationProcessorFrame;
 end;
 
-procedure TWebProcessor.ParamsToFrame;
+procedure TPresentationProcessor.ParamsToFrame;
+var
+  s :TPresentationSettings;
 begin
   inherited ParamsToFrame;
-  with Frame as TWebProcessorFrame do begin
-    EditTitle.Text := FProcessor.DocumentVars['TITLE'];
+  if Assigned(FSettings) then begin
+    s := FSettings as TPresentationSettings;
+    with Frame as TPresentationProcessorFrame do begin
+      EditTitle.Text := s.Title; // FProcessor.DocumentVars['TITLE'];
+    end;
   end;
 end;
 
-procedure TWebProcessor.FrameToParams;
+procedure TPresentationProcessor.FrameToParams;
+var
+  s :TPresentationSettings;
 begin
   inherited FrameToParams;
-  with Frame as TWebProcessorFrame do begin
-    FProcessor.DocumentVars['TITLE'] := EditTitle.Text;
+  if Assigned(FSettings) then begin
+    s := FSettings as TPresentationSettings;
+    with Frame as TPresentationProcessorFrame do begin
+      s.Title := EditTitle.Text;
+    end;
+//    FProcessor.DocumentVars['TITLE'] := EditTitle.Text;
   end;
 end;
 
-constructor TWebProcessor.Create(IniFile: TCustomIniFile);
+constructor TPresentationProcessor.Create(IniFile: TCustomIniFile);
 var
   SectionKeys :TStringList;
   Key :string;
@@ -362,18 +377,18 @@ begin
   end;
 end;
 
-destructor TWebProcessor.Destroy;
+destructor TPresentationProcessor.Destroy;
 begin
   FProcessor.Free;
   inherited Destroy;
 end;
 
-function TColorWebProcessor.GetFrameClass: TFrameClass;
+function TColorPresentationProcessor.GetFrameClass: TFrameClass;
 begin
-  result := TColorWebProcessorFrame;
+  result := TColorPresentationProcessorFrame;
 end;
 
-procedure TWebProcessor.Execute;
+procedure TPresentationProcessor.Execute;
 var
   Stats :TProcessor.TStats;
 begin
@@ -382,9 +397,9 @@ begin
   FProcessor.Execute(Stats);
 end;
 
-{ TColorWebProcessor }
+{ TColorPresentationProcessor }
 
-constructor TColorWebProcessor.Create(IniFile: TCustomIniFile);
+constructor TColorPresentationProcessor.Create(IniFile: TCustomIniFile);
 begin
   inherited Create(IniFile);
   FProcessor.DocumentVars.Add('COLOR');
@@ -395,8 +410,8 @@ end;
 initialization
 begin
   ProcessorClasses := TDictionary<string, TCustomProcessorClass>.Create;
-  TProcessors.Register(TWebProcessor);
-  TProcessors.Register(TColorWebProcessor);
+  TProcessors.Register(TPresentationProcessor);
+  TProcessors.Register(TColorPresentationProcessor);
 end;
 
 finalization

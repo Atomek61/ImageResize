@@ -1,4 +1,4 @@
-object WebProcessorFrame: TWebProcessorFrame
+object PresentationProcessorFrame: TPresentationProcessorFrame
   Left = 0
   Height = 126
   Top = 0

@@ -971,10 +971,10 @@ object MainDialog: TMainDialog
               Left = 0
               Height = 172
               Top = 0
-              Width = 312
+              Width = 305
               BevelOuter = bvLowered
-              Color = clWhite
-              ColorOpacity = 128
+              Color = clNone
+              ColorOpacity = 0
               Alignment = taCenter
               OnMouseDown = PaintBoxMrkPreviewMouseDown
               OnMouseMove = PaintBoxMrkPreviewMouseMove
@@ -984,7 +984,7 @@ object MainDialog: TMainDialog
             object Label20: TLabel
               Left = 16
               Height = 16
-              Top = 8
+              Top = 152
               Width = 266
               Alignment = taCenter
               AutoSize = False

@@ -12,9 +12,10 @@ uses
   Interfaces, // this includes the LCL widgetset
   Forms, lazcontrols, maindlg, aboutdlg, mrkeditdlg, imgres, updateutils,
   datetimeutils, threading.dispatcher, EXIFUtils, tags, settingsdlg, settings,
-  animator, logging, presentationdlg, imagesmod, webprocessor,
-  slideshow200webprocessor,
-  galleryprocessor, stringarrays, colorwebprocessorfrm, webprocessorfrm;
+  animator, logging, presentationdlg, imagesmod, presentationprocessor,
+  slideshow200presentationprocessor, galleryprocessor, stringarrays,
+colorpresentationprocessorfrm, presentationprocessorfrm, params, presentationsettings, 
+appsettings;
 
 {$R *.res}
 

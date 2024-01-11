@@ -113,6 +113,9 @@
     </RunParams>
     <RequiredPackages>
       <Item>
+        <PackageName Value="HtmlLabel09"/>
+      </Item>
+      <Item>
         <PackageName Value="richmemo_design"/>
       </Item>
       <Item>
@@ -226,11 +229,11 @@
         <ResourceBaseClass Value="DataModule"/>
       </Unit>
       <Unit>
-        <Filename Value="webprocessor.pas"/>
+        <Filename Value="presentationprocessor.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="slideshow200webprocessor.pas"/>
+        <Filename Value="slideshow200presentationprocessor.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
@@ -242,18 +245,30 @@
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="colorwebprocessorfrm.pas"/>
+        <Filename Value="colorpresentationprocessorfrm.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="ColorWebProcessorFrame"/>
+        <ComponentName Value="ColorPresentationProcessorFrame"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
       </Unit>
       <Unit>
-        <Filename Value="webprocessorfrm.pas"/>
+        <Filename Value="presentationprocessorfrm.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="WebProcessorFrame"/>
+        <ComponentName Value="PresentationProcessorFrame"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\params.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="presentationsettings.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="appsettings.pas"/>
+        <IsPartOfProject Value="True"/>
       </Unit>
     </Units>
   </ProjectOptions>
