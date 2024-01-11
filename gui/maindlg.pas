@@ -135,6 +135,7 @@ type
     ActionNew: TAction;
     ActionAbout: TAction;
     ActionExecute: TAction;
+    ImageListWatermarkText: TBGRAImageList;
     PaintBoxMrkPreview: TBGRAGraphicControl;
     ButtonExecute: TBGRASpeedButton;
     CheckBoxNoCreate: TCheckBox;
@@ -1451,7 +1452,8 @@ begin
     try
       Img.FontHeight := ImgRect.Height;
       Img.Rectangle(ImgRect, BorderColor, BGRAPixelTransparent, dmLinearBlend);
-      Img.TextOut(0, 0, SCptWatermark, TextColor);
+//      Img.TextOut(0, 0, SCptWatermark, TextColor);
+      ImageListWatermarkText.StretchDraw(PaintBoxMrkPreview.Canvas, 0, MarkRect);
       Img.Draw(PaintBoxMrkPreview.Canvas, MarkRect, False);
 
     except
