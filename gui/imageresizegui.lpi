@@ -113,9 +113,6 @@
     </RunParams>
     <RequiredPackages>
       <Item>
-        <PackageName Value="HtmlLabel09"/>
-      </Item>
-      <Item>
         <PackageName Value="richmemo_design"/>
       </Item>
       <Item>
@@ -220,6 +217,7 @@
         <ComponentName Value="PresentationDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <UnitName Value="PresentationDlg"/>
       </Unit>
       <Unit>
         <Filename Value="imagesmod.pas"/>
@@ -260,10 +258,6 @@
       </Unit>
       <Unit>
         <Filename Value="..\src\params.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="presentationsettings.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>

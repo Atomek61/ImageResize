@@ -20,9 +20,9 @@ type
   protected
     procedure Changed;
   public
-    constructor Create; virtual; overload;
     class procedure Register(Value :TSettingsClass);
     class function Create(const Id :string) :TSettings; overload;
+    constructor Create; virtual; overload;
     procedure Defaults; virtual;
     function Compare(const Value :TSettings) :boolean; virtual;
     procedure Assign(const Value :TSettings); virtual;
@@ -37,11 +37,20 @@ type
   TSettingsList = class(TObjectDictionary<string, TSettings>)
   private
     FSectionPrefix :string;
+    FOnChanged :TNotifyEvent;
+    FChangedSettings :TSettings; // Which TSettings has been changed when OnChanged
+    procedure DoChanged;
+    procedure OnSettingsChanged(Sender :TObject);
+  protected
+    procedure KeyNotify(constref AKey: string; ACollectionNotification: TCollectionNotification); override;
   public
     constructor Create(const SectionPrefix :string; OwnsObjects :boolean);
+    procedure Defaults;
     procedure LoadFromIni(Ini :TCustomIniFile);
     procedure SaveToIni(Ini :TCustomIniFile);
     property SectionPrefix :string read FSectionPrefix {write FSectionPrefix whynot};
+    property OnChanged :TNotifyEvent read FOnChanged write FOnChanged;
+    property ChangedSettings :TSettings read FChangedSettings;
   end;
 
 implementation
@@ -108,6 +117,25 @@ end;
 
 { TSettingsList }
 
+procedure TSettingsList.DoChanged;
+begin
+  if Assigned(FOnChanged) then
+    FOnChanged(self);
+end;
+
+procedure TSettingsList.OnSettingsChanged(Sender: TObject);
+begin
+  FChangedSettings := Sender as TSettings;
+  DoChanged;
+end;
+
+procedure TSettingsList.KeyNotify(constref AKey: string; ACollectionNotification: TCollectionNotification);
+begin
+  if ACollectionNotification=cnAdded then
+    self[AKey].OnChanged := self.OnSettingsChanged;
+  inherited KeyNotify(AKey, ACollectionNotification);
+end;
+
 constructor TSettingsList.Create(const SectionPrefix: string; OwnsObjects: boolean);
 const
   OWNERSHIP :array[boolean] of TDictionaryOwnerships = ([], [doOwnsValues]);
@@ -116,12 +144,21 @@ begin
   FSectionPrefix := SectionPrefix;
 end;
 
+procedure TSettingsList.Defaults;
+var
+  Settings :TSettings;
+begin
+  for Settings in self.Values do
+    Settings.Defaults;
+end;
+
 procedure TSettingsList.LoadFromIni(Ini: TCustomIniFile);
 var
   Sections :TStrings;
   Section :string;
   Settings :TSettings;
   Id :string;
+  ClassId :string;
 begin
   Sections := TStringList.Create;
   try
@@ -129,8 +166,10 @@ begin
     for Section in Sections do
       if Section.StartsWith(SectionPrefix+'.') then begin
         Id := Copy(Section, Length(SectionPrefix)+2, Length(Section)-Length(SectionPrefix)-1);
+        ClassId := Ini.ReadString(Section, 'Class', Id);
         if not TryGetValue(Id, Settings) then begin
-          Settings := TSettings.Create(Id);
+          Settings := TSettings.Create(ClassId);
+          Settings.FSection := Section;
           Add(Id, Settings);
         end;
         Settings.LoadFromIni(Ini);

@@ -21,7 +21,7 @@ uses
   LMessages, LCLIntf, Buttons, ImgList, LCLType, LazHelpHTML, BGRABitmap,
   BGRABitmapTypes, BGRASpeedButton, BGRAGraphicControl, BGRAImageList, RichMemo,
   Generics.Collections, mrkeditdlg, WinDirs, updateutils, AppSettings, Logging,
-  LoggingRichMemo, StringArrays, HtmlLabel, PresentationSettings, Settings;
+  LoggingRichMemo, StringArrays, PresentationProcessor, PresentationDlg, Settings;
 
 const
   GUIVER_APP      = 'ImageResize';
@@ -343,6 +343,7 @@ type
     FDialogSettings :TDialogSettings;
     FWorkingDirectory :string;
     FPresentationSettingsList :TSettingsList;
+    FPresentationSettings :TPresentationSettings;
     procedure ChangeCurrentDir(const Path :string);
     function GetAppDataFilename(const Filetitle :string; CanCreate :boolean) :string;
     procedure SetDirty(AValue: boolean);
@@ -383,7 +384,7 @@ var
 implementation
 
 uses
-  math, helpintfs, Windows, FileUtil, tags, presentationdlg, settingsdlg;
+  math, helpintfs, Windows, FileUtil, Tags, SettingsDlg;
 
 const
   SCptRandom        = '<random>';
@@ -555,7 +556,10 @@ begin
   FDialogSettings := TDialogSettings.Create;
   FDialogSettings.Defaults;
 
-  FPresentationSettingsList := TSettingsList.Create(PRESENTATIONSETTINGS_PREFIX, true);
+  FPresentationSettingsList := TSettingsList.Create(PRESENTATIONSECTION, true);
+  FPresentationSettingsList.OnChanged := @ProjectChanged;
+  FPresentationSettings := TPresentationSettings.Create;
+  FPresentationSettings.OnChanged := @ProjectChanged;
 
   // Create Size Buttons
   for i:=0 to High(DEFSIZES) do begin
@@ -692,7 +696,7 @@ end;
 
 procedure TMainDialog.ActionPresentationExecute(Sender: TObject);
 begin
-  PresentationDialog.Show(FPresentationSettingsList);
+  PresentationDialog.Show(FPresentationSettings, FPresentationSettingsList);
 end;
 
 procedure TMainDialog.ActionSourceExecute(Sender: TObject);
@@ -949,11 +953,15 @@ begin
     ActionSrcFilenames.Execute;
     ActionParamSizes.Execute;
 
+    FPresentationSettingsList.Defaults;
+    FPresentationSettings.Defaults;
+
     RequiredStepsUpdate;
     SetTitle(SCptUnnamed);
     FProjectFilename := '';
     ChangeCurrentDir(FWorkingDirectory);
     FIsSave := false;
+
     Dirty := false;
   finally
     ImgResizer.Free;
@@ -1017,7 +1025,7 @@ begin
     CheckBoxNoCreate.Checked              := ReadBool(SETTINGSSECTION, 'NoCreate', DEFAULT_NOCREATE);
     ActionParamSizes.Execute;
   end;
-
+  FPresentationSettings.LoadFromIni(Ini);
   FPresentationSettingsList.LoadFromIni(Ini);
 end;
 
@@ -1064,6 +1072,7 @@ begin
     WriteBool(SETTINGSSECTION, 'ImageInfosEnabled', CheckBoxImageInfosEnabled.Checked);
     WriteBool(SETTINGSSECTION, 'NoCreate', CheckBoxNoCreate.Checked);
   end;
+  FPresentationSettings.SaveToIni(Ini);
   FPresentationSettingsList.SaveToIni(Ini);
 end;
 

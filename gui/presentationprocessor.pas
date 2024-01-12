@@ -7,8 +7,7 @@ interface
 uses
   Classes, SysUtils, Controls, Forms, IniFiles, Generics.Collections,
   Graphics, GetText, DateUtils, Generics.Defaults, FileUtil,
-  GalleryProcessor, Logging, StrUtils, StringArrays, Settings,
-  PresentationSettings;
+  GalleryProcessor, Logging, StrUtils, StringArrays, Settings;
 
 type
   TCustomProcessor = class;
@@ -22,7 +21,7 @@ type
 
   TCustomProcessor = class
   private
-    FId :string;              // "Slideshow200"
+    FId :string;              // From Section: i.e. "Slideshow200"
     FTitle :string;           // "Slideshow 2.0"
     FDescription :string;     // "Full-Screen Slideshow"
     FLongDescription :string;         // "Displays a single image and navigates through a list.
@@ -47,13 +46,13 @@ type
     destructor Destroy; override;
     class function ClassId :string;
     class function Create(const Filename :string) :TCustomProcessor; overload;
-    class function Scan(const Folder :string) :TProcessors;
+    class procedure Scan(const Folder :string; Processors :TProcessors);
     //procedure SaveSettings(const Section :string; Store :TCustomInifile); virtual; abstract;
     //procedure LoadSettings(const Section :string; Store :TCustomInifile); virtual; abstract;
     procedure Execute; virtual; abstract;
+    property Id :string read FId;
     property Frame :TFrame read GetFrame;
     property Settings :TSettings read FSettings write FSettings;
-    property Id :string read FId;
     property Title :string read FTitle;
     property Description :string read FDescription;
     property LongDescription :string read FLongDescription;
@@ -76,6 +75,7 @@ type
     destructor Destroy; override;
     class procedure Register(ProcessorClass :TCustomProcessorClass);
     procedure SortByDate;
+    function IndexOf(const Id :string) :integer;
     property ById[Id :string] :TCustomProcessor read GetById;
   end;
 
@@ -107,6 +107,36 @@ type
     constructor Create(IniFile :TCustomIniFile); override;
   end;
 
+  { TPresentationProcessorSettings }
+
+  TPresentationProcessorSettings = class(TSettings)
+  private
+    FTitle :string;
+    procedure SetTitle(AValue: string);
+  public
+    procedure Defaults; override;
+    function Compare(const Value :TSettings) :boolean; override;
+    procedure Assign(const Value :TSettings); override;
+    procedure SaveToIni(Ini :TCustomIniFile); override;
+    procedure LoadFromIni(Ini :TCustomIniFile); override;
+    property Title :string read FTitle write SetTitle;
+  end;
+
+  { TSlideshow200Settings }
+
+  TSlideshow200Settings = class(TPresentationProcessorSettings)
+  end;
+
+  { TSimple100Settings }
+
+  TSimple100Settings = class(TPresentationProcessorSettings)
+  end;
+
+
+const
+  PRESENTATIONS_FOLDER = 'presentations';
+  PRESENTATIONSECTION = 'Presentation';
+
 implementation
 
 uses
@@ -117,37 +147,44 @@ var
 
 const
   COMMON_SECTION    = 'Common';
-  PROCESSOR_SECTION = 'Processor';
-  PRP = 'prp';
+  PRESESENTATION_INITYPE = 'PRD';
+  PRESENTATIONFILE_EXTENSION = 'prd';
 
 resourcestring
   SErrMissingPresentationProcessorClassFmt = 'Missing PresentationProcessor class entry in ''%s''.';
   SErrUnregisterPresentationProcessorFmt = 'Unregistered PresentationProcessor class ''%s''.';
+  SErrIniValueNotFoundFmt = 'Key ''[%s]%s'' not found in ''%s''.';
 
 { TCustomProcessor }
 
 constructor TCustomProcessor.Create(IniFile :TCustomIniFile);
+const
+  UNDEFINED = '<undefined>';
 var
   Lang, FallbackLang :string;
 
-  function IniRead(const Key :string) :string;
+  function IniRead(const Key :string; MustExist :boolean = false) :string;
+  const
+    DEFAULTS :array[boolean] of string = ('', UNDEFINED);
   begin
-    result := IniFile.ReadString(PROCESSOR_SECTION, Format('%s.%s', [Key, FallbackLang]), '');
-    if result = '' then
-      result := IniFile.ReadString(PROCESSOR_SECTION, Key, '');
+    result := IniFile.ReadString(PRESENTATIONSECTION, Format('%s.%s', [Key, FallbackLang]), UNDEFINED);
+    if result = UNDEFINED then
+      result := IniFile.ReadString(PRESENTATIONSECTION, Key, DEFAULTS[MustExist]);
+    if MustExist and (result = UNDEFINED) then
+      raise Exception.CreateFmt(SErrIniValueNotFoundFmt, [PRESENTATIONSECTION, Key, IniFile.Filename]);
   end;
 
 begin
   inherited Create;
   GetLanguageIDs(Lang, FallBackLang);
-  FId               := IniFile.ReadString(PROCESSOR_SECTION, 'Id', '');
   FTitle            := IniRead('Title');
+  FId               := IniRead('Id', true);
   FDescription      := IniRead('Description');
   FLongDescription  := IniRead('LongDescription');
   FTemplateFolder   := IncludeTrailingPathDelimiter(ExtractFilePath(IniFile.Filename));
-  FDate             := IniFile.ReadDateTime(PROCESSOR_SECTION, 'Date', 0.0);
-  FIconFile         := CreateAbsolutePath(IniFile.ReadString(PROCESSOR_SECTION, 'Icon', ''), FTemplateFolder);
-  FPreviewFile      := CreateAbsolutePath(IniFile.ReadString(PROCESSOR_SECTION, 'Preview', ''), FTemplateFolder);
+  FDate             := IniFile.ReadDateTime(PRESENTATIONSECTION, 'Date', 0.0);
+  FIconFile         := CreateAbsolutePath(IniFile.ReadString(PRESENTATIONSECTION, 'Icon', ''), FTemplateFolder);
+  FPreviewFile      := CreateAbsolutePath(IniFile.ReadString(PRESENTATIONSECTION, 'Preview', ''), FTemplateFolder);
 end;
 
 destructor TCustomProcessor.Destroy;
@@ -207,9 +244,7 @@ var
 begin
   IniFile := TIniFile.Create(Filename, [ifoStripComments, ifoCaseSensitive, ifoStripQuotes]);
   try
-    ClassId := IniFile.ReadString(PROCESSOR_SECTION, 'Class', 'Presentation');
-    //if ClassId='<undefined>' then
-    //  raise Exception.CreateFmt(SErrMissingPresentationProcessorClassFmt, [Filename]);
+    ClassId := IniFile.ReadString(PRESENTATIONSECTION, 'Class', 'Presentation');
     ClassName := Format('T%sProcessor', [ClassId]);
     if not ProcessorClasses.TryGetValue(ClassName, PresentationProcessorClass) then
       raise Exception.CreateFmt(SErrUnregisterPresentationProcessorFmt, [ClassName]);
@@ -220,24 +255,21 @@ begin
   end;
 end;
 
-class function TCustomProcessor.Scan(const Folder: string): TProcessors;
+class procedure TCustomProcessor.Scan(const Folder: string; Processors :TProcessors);
 var
   WprFilenames :TStringList;
   Filename :string;
-  PresentationProcessor :TCustomProcessor;
 begin
-  result := TProcessors.Create;
-  WprFilenames := FindAllFiles(Folder, '*.'+PRP, true);
+  WprFilenames := FindAllFiles(Folder, '*.'+PRESENTATIONFILE_EXTENSION, true);
   try
     for Filename in WprFilenames do begin
       try
-        PresentationProcessor := TCustomProcessor.Create(Filename);
-        result.Add(PresentationProcessor);
+        Processors.Add(TCustomProcessor.Create(Filename));
       except on E :Exception do
         Log(E.Message, llWarning);
       end;
     end;
-    result.SortByDate;
+    Processors.SortByDate;
   finally
     WprFilenames.Free;
   end;
@@ -262,11 +294,11 @@ end;
 
 function TProcessors.GetById(Id : string): TCustomProcessor;
 begin
-  result := FDictionary[Id];
+  if not FDictionary.TryGetValue(Id, result) then
+    result := nil;
 end;
 
-procedure TProcessors.Notify(constref AValue: TCustomProcessor;
-  ACollectionNotification: TCollectionNotification);
+procedure TProcessors.Notify(constref AValue: TCustomProcessor; ACollectionNotification: TCollectionNotification);
 begin
   if Assigned(FDictionary) then begin
     case ACollectionNotification of
@@ -307,6 +339,16 @@ begin
   Sort(TComparer<TCustomProcessor>.Construct(@CompareDate));
 end;
 
+function TProcessors.IndexOf(const Id: string): integer;
+var
+  i :integer;
+begin
+  for i:=0 to Count-1 do
+    if SameText(Id, self[i].Id) then
+      Exit(i);
+  result := -1;
+end;
+
 { TPresentationProcessor }
 
 function TPresentationProcessor.GetFrameClass: TFrameClass;
@@ -316,11 +358,11 @@ end;
 
 procedure TPresentationProcessor.ParamsToFrame;
 var
-  s :TPresentationSettings;
+  s :TPresentationProcessorSettings;
 begin
   inherited ParamsToFrame;
   if Assigned(FSettings) then begin
-    s := FSettings as TPresentationSettings;
+    s := FSettings as TPresentationProcessorSettings;
     with Frame as TPresentationProcessorFrame do begin
       EditTitle.Text := s.Title; // FProcessor.DocumentVars['TITLE'];
     end;
@@ -329,15 +371,15 @@ end;
 
 procedure TPresentationProcessor.FrameToParams;
 var
-  s :TPresentationSettings;
+  s :TPresentationProcessorSettings;
 begin
   inherited FrameToParams;
   if Assigned(FSettings) then begin
-    s := FSettings as TPresentationSettings;
+    s := FSettings as TPresentationProcessorSettings;
     with Frame as TPresentationProcessorFrame do begin
       s.Title := EditTitle.Text;
     end;
-//    FProcessor.DocumentVars['TITLE'] := EditTitle.Text;
+    FProcessor.DocumentVars['TITLE'] := s.Title;
   end;
 end;
 
@@ -360,16 +402,16 @@ var
 begin
   inherited Create(IniFile);
   FProcessor := GalleryProcessor.TProcessor.Create;
-  FProcessor.CopyFiles := MakeAbsoluteList(IniFile.ReadString(PROCESSOR_SECTION, 'Copy', ''));
-  FProcessor.TemplateFiles := MakeAbsoluteList(IniFile.ReadString(PROCESSOR_SECTION, 'Templates', ''));
+  FProcessor.CopyFiles := MakeAbsoluteList(IniFile.ReadString(PRESENTATIONSECTION, 'Copy', ''));
+  FProcessor.TemplateFiles := MakeAbsoluteList(IniFile.ReadString(PRESENTATIONSECTION, 'Templates', ''));
   FProcessor.DocumentVars.Add('TITLE');
   SectionKeys := TStringList.Create;
   try
-    IniFile.ReadSection(PROCESSOR_SECTION, SectionKeys);
+    IniFile.ReadSection(PRESENTATIONSECTION, SectionKeys);
     for Key in SectionKeys do
       if StartsText('Fragment.', Key) then begin
         VarName := Copy(Key, 10, Length(Key)-9);
-        VarValue := IniFile.ReadString(PROCESSOR_SECTION, Key, '');
+        VarValue := IniFile.ReadString(PRESENTATIONSECTION, Key, '');
         FProcessor.ListFragments.Add(VarName, VarValue);
       end;
   finally
@@ -397,6 +439,61 @@ begin
   FProcessor.Execute(Stats);
 end;
 
+{ TPresentationProcessorSettings }
+
+procedure TPresentationProcessorSettings.SetTitle(AValue: string);
+begin
+  if FTitle=AValue then Exit;
+  FTitle:=AValue;
+  Changed;
+end;
+
+procedure TPresentationProcessorSettings.Defaults;
+begin
+  FTitle := '';
+end;
+
+function TPresentationProcessorSettings.Compare(const Value: TSettings): boolean;
+var
+  Settings :TPresentationProcessorSettings;
+begin
+  Settings := Value as TPresentationProcessorSettings;
+  result := FTitle= Settings.Title;
+end;
+
+procedure TPresentationProcessorSettings.Assign(const Value: TSettings);
+var
+  Settings :TPresentationProcessorSettings;
+begin
+  Settings := Value as TPresentationProcessorSettings;
+  Title := Settings.Title;
+end;
+
+procedure TPresentationProcessorSettings.SaveToIni(Ini: TCustomIniFile);
+begin
+  inherited;
+  with Ini do begin
+    WriteString(Section,'Title', Title);
+  end;
+end;
+
+procedure TPresentationProcessorSettings.LoadFromIni(Ini: TCustomIniFile);
+var
+  Value :string;
+
+  function Read(const Name :string) :boolean;
+  begin
+    Value := Ini.ReadString(Section, Name, '?');
+    result := Value<>'?';
+  end;
+
+begin
+  with Ini do begin
+    if Read('Title') then Title := Value;
+  end;
+  inherited;
+end;
+
 { TColorPresentationProcessor }
 
 constructor TColorPresentationProcessor.Create(IniFile: TCustomIniFile);
@@ -412,6 +509,10 @@ begin
   ProcessorClasses := TDictionary<string, TCustomProcessorClass>.Create;
   TProcessors.Register(TPresentationProcessor);
   TProcessors.Register(TColorPresentationProcessor);
+
+//  TSettings.Register(TPresentationProcessorSettings);
+  TSettings.Register(TSimple100Settings);
+  TSettings.Register(TSlideshow200Settings);
 end;
 
 finalization

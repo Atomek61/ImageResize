@@ -463,6 +463,11 @@ msgstr ""
 msgid "Folder missing or does not exist."
 msgstr ""
 
+#: presentationprocessor.serrinivaluenotfoundfmt
+#, object-pascal-format
+msgid "Key '[%s]%s' not found in '%s'."
+msgstr ""
+
 #: presentationprocessor.serrmissingpresentationprocessorclassfmt
 #, object-pascal-format
 msgid "Missing PresentationProcessor class entry in '%s'."
@@ -1467,14 +1472,32 @@ msgstr ""
 msgid "ToolButton9"
 msgstr ""
 
+#: tpresentationdialog.buttoncancel.caption
+msgctxt "tpresentationdialog.buttoncancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tpresentationdialog.buttoncancel.hint
+msgctxt "tpresentationdialog.buttoncancel.hint"
+msgid "Closes tge dialog and discards the settings"
+msgstr ""
+
 #: tpresentationdialog.buttonclose.caption
 msgctxt "tpresentationdialog.buttonclose.caption"
 msgid "Close"
 msgstr ""
 
+#: tpresentationdialog.buttonclose.hint
+msgid "Closes the dialog and saves the settings"
+msgstr ""
+
 #: tpresentationdialog.buttonexecute.caption
 msgctxt "tpresentationdialog.buttonexecute.caption"
 msgid "Create"
+msgstr ""
+
+#: tpresentationdialog.buttonexecute.hint
+msgid "Starts the selected processor to create the presentation."
 msgstr ""
 
 #: tpresentationdialog.caption

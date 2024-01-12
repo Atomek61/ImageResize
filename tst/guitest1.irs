@@ -37,4 +37,5 @@ TagsReportFilename=
 NoCreate=0
 
 [Presentation.Simple100]
+Class=Simple100
 Title=Hallo

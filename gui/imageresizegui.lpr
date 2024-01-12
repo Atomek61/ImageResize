@@ -14,7 +14,7 @@ uses
   datetimeutils, threading.dispatcher, EXIFUtils, tags, settingsdlg, settings,
   animator, logging, presentationdlg, imagesmod, presentationprocessor,
   slideshow200presentationprocessor, galleryprocessor, stringarrays,
-colorpresentationprocessorfrm, presentationprocessorfrm, params, presentationsettings, 
+colorpresentationprocessorfrm, presentationprocessorfrm, params, 
 appsettings;
 
 {$R *.res}

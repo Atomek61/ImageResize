@@ -28,14 +28,14 @@
      showguides="true"
      inkscape:lockguides="true"
      inkscape:zoom="2.587745"
-     inkscape:cx="-73.036563"
+     inkscape:cx="-124.43266"
      inkscape:cy="-6.7626447"
      inkscape:window-width="2401"
      inkscape:window-height="1230"
      inkscape:window-x="52"
      inkscape:window-y="52"
      inkscape:window-maximized="0"
-     inkscape:current-layer="layer2">
+     inkscape:current-layer="svg138">
     <inkscape:grid
        type="xygrid"
        id="grid259"
@@ -146,35 +146,14 @@
        height="76"
        x="32.000004"
        y="36" />
-    <rect
-       style="display:inline;fill:#888a85;fill-opacity:1;stroke-width:0.408248;stroke-linecap:round;stroke-linejoin:round"
-       id="rect11545-7"
-       width="8"
-       height="16.000002"
-       x="100.00001"
-       y="88" />
-    <rect
-       style="display:inline;fill:#888a85;fill-opacity:1;stroke-width:0.408248;stroke-linecap:round;stroke-linejoin:round"
-       id="rect11545-6"
-       width="8"
-       height="16.000002"
-       x="112.00001"
-       y="88" />
   </g>
   <rect
-     style="display:inline;fill:#888a85;fill-opacity:1;stroke-width:0.408248;stroke-linecap:round;stroke-linejoin:round"
-     id="rect11545"
-     width="8"
-     height="16.000002"
-     x="76.000008"
-     y="88" />
-  <rect
-     style="display:inline;fill:#888a85;fill-opacity:1;stroke-width:0.408248;stroke-linecap:round;stroke-linejoin:round"
-     id="rect11545-2"
-     width="8"
-     height="16.000002"
-     x="88.000008"
-     y="88" />
+     style="fill:#3465a4;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
+     id="rect367"
+     width="44"
+     height="12"
+     x="76"
+     y="92" />
   <g
      inkscape:label="Ebene 1"
      inkscape:groupmode="layer"

@@ -1,4 +1,4 @@
-unit presentationdlg;
+unit PresentationDlg;
 
 {$mode ObjFPC}{$H+}
 
@@ -6,17 +6,21 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Buttons,
-  StdCtrls, ExtCtrls, ComCtrls, presentationprocessor, LCLIntf, LCLType, RichMemo,
-  logging, Types, gettext, FileUtil, LoggingRichMemo, Settings;
+  StdCtrls, ExtCtrls, ComCtrls, PresentationProcessor, LCLIntf, LCLType, RichMemo,
+  logging, Types, gettext, FileUtil, LoggingRichMemo, Settings, IniFiles;
 
 type
+
+  TPresentationSettings = class;
 
   { TPresentationDialog }
 
   TPresentationDialog = class(TForm)
+    Bevel4: TBevel;
     ButtonBrowseTargetFolder: TBitBtn;
     ButtonClose: TBitBtn;
     ButtonExecute: TBitBtn;
+    ButtonCancel: TBitBtn;
     EditFolder: TEdit;
     GroupBoxParams: TGroupBox;
     ImagePreview: TImage;
@@ -33,6 +37,7 @@ type
     procedure ButtonExecuteClick(Sender: TObject);
     procedure EditFolderChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
     procedure FormHide(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ListBoxProcessorsClick(Sender: TObject);
@@ -42,18 +47,37 @@ type
     FProcessorIndex :integer;
     FProcessors :TProcessors;
     FOuterLogger :TLogger;
-    FPresentationSettings :TSettingsList;
+    FPresentationSettingsList :TSettingsList;
+    FPresentationSettings :TPresentationSettings;
     function GetProcessor: TCustomProcessor;
     function GetProcessorId: string;
     procedure OnFrameSelected(Sender :TObject);
     procedure SetProcessorId(AValue: string);
     procedure SetProcessorIndex(AValue: integer);
   public
-    procedure Show(PresentationSettings :TSettingsList);
+    procedure Show(PresentationSettings :TPresentationSettings; PresentationSettingsList :TSettingsList);
     procedure Scan;
     property ProcessorId :string read GetProcessorId write SetProcessorId;
     property Processor :TCustomProcessor read GetProcessor;
     property ProcessorIndex :integer read FProcessorIndex write SetProcessorIndex;
+  end;
+
+  { TPresentationSettings }
+
+  TPresentationSettings = class(TSettings)
+  private
+    FProessorId: string;
+    FTargetFolder :string;
+    FProcessorId :string;
+    procedure SetProcessorId(AValue: string);
+    procedure SetTargetFolder(AValue: string);
+  public
+    constructor Create; override;
+    procedure Defaults; override;
+    procedure SaveToIni(Ini :TCustomIniFile); override;
+    procedure LoadFromIni(Ini :TCustomIniFile); override;
+    property TargetFolder :string read FTargetFolder write SetTargetFolder;
+    property ProcessorId :string read FProcessorId write SetProcessorId;
   end;
 
 var
@@ -63,9 +87,6 @@ implementation
 
 uses
     Math, MainDlg;
-
-const
-  PRESENTATIONFOLDER = 'presentation';
 
 resourcestring
   SErrMissingFolder = 'Folder missing or does not exist.';
@@ -77,13 +98,21 @@ resourcestring
 procedure TPresentationDialog.FormCreate(Sender: TObject);
 begin
   FProcessorIndex := -1;
+  FProcessors := TProcessors.Create;
+end;
+
+procedure TPresentationDialog.FormDestroy(Sender: TObject);
+begin
+  FProcessors.Free;
 end;
 
 procedure TPresentationDialog.FormShow(Sender: TObject);
 begin
   Scan;
-  if FProcessors.Count>0 then
-    ProcessorIndex := 0;
+  ProcessorId := FPresentationSettings.ProcessorId;
+  EditFolder.Text := FPresentationSettings.TargetFolder;
+  //if FProcessors.Count>0 then
+  //  ProcessorIndex := 0;
   FOuterLogger := TLogger.SwapDefaultLogger(TRichMemoLogger.Create(MemoMessages));
 end;
 
@@ -148,17 +177,18 @@ begin
   result := FProcessors[ListBoxProcessors.ItemIndex].Id;
 end;
 
+procedure TPresentationDialog.SetProcessorId(AValue: string);
+begin
+  if ProcessorId=AValue then Exit;
+  ProcessorIndex := FProcessors.IndexOf(AValue);
+end;
+
 function TPresentationDialog.GetProcessor: TCustomProcessor;
 begin
   if FProcessorIndex = -1 then
     result := nil
   else
     result := FProcessors[FProcessorIndex];
-end;
-
-procedure TPresentationDialog.SetProcessorId(AValue: string);
-begin
-//  ListBoxProcessors.ItemIndex :=
 end;
 
 procedure TPresentationDialog.SetProcessorIndex(AValue: integer);
@@ -176,10 +206,10 @@ begin
     ImagePreview.Picture.Assign(Processor.Preview);
     if GroupBoxParams.ControlCount>0 then
       GroupBoxParams.Controls[0].Parent := nil;
-    ParamsFrame := Processor.Frame;
-    Log(Processor.Id);
-    if FPresentationSettings.TryGetValue(Processor.Id, Settings) then
+//    Log('Processor.Id='+Processor.Id);
+    if FPresentationSettingsList.TryGetValue(Processor.Id, Settings) then
       Processor.Settings := Settings;
+    ParamsFrame := Processor.Frame;
     if Assigned(ParamsFrame) then begin
       ParamsFrame.Parent := GroupBoxParams;
       ParamsFrame.Align := alTop;
@@ -195,10 +225,14 @@ begin
   end;
 end;
 
-procedure TPresentationDialog.Show(PresentationSettings: TSettingsList);
+procedure TPresentationDialog.Show(PresentationSettings :TPresentationSettings; PresentationSettingsList :TSettingsList);
 begin
   FPresentationSettings := PresentationSettings;
-  ShowModal;
+  FPresentationSettingsList := PresentationSettingsList;
+  if ShowModal<>mrCancel then begin
+    FPresentationSettings.TargetFolder := EditFolder.Text;
+    FPresentationSettings.ProcessorId := ProcessorId;
+  end;
 end;
 
 procedure TPresentationDialog.OnFrameSelected(Sender: TObject);
@@ -211,12 +245,60 @@ var
   wp :TCustomProcessor;
 begin
   ProcessorIndex := -1;
-  Folder := IncludeTrailingPathDelimiter(ExtractFilePath(Application.Exename)+PRESENTATIONFOLDER);
-  FreeAndNil(FProcessors);
-  FProcessors := TPresentationProcessor.Scan(Folder);
+  Folder := IncludeTrailingPathDelimiter(ExtractFilePath(Application.Exename)+PRESENTATIONS_FOLDER);
+  FProcessors.Clear;
+  TPresentationProcessor.Scan(Folder, FProcessors);
   ListBoxProcessors.Items.Clear;
   for wp in FProcessors do
     ListBoxProcessors.Items.Add(wp.Title);
+end;
+
+{ TPresentationSettings }
+
+procedure TPresentationSettings.SetProcessorId(AValue: string);
+begin
+  if FProcessorId=AValue then Exit;
+  FProcessorId := AValue;
+  Changed;
+end;
+
+procedure TPresentationSettings.SetTargetFolder(AValue: string);
+begin
+  if FTargetFolder=AValue then Exit;
+  FTargetFolder := AValue;
+  Changed;
+end;
+
+constructor TPresentationSettings.Create;
+begin
+  inherited Create;
+  Section := PRESENTATIONSECTION;
+end;
+
+procedure TPresentationSettings.Defaults;
+begin
+  inherited Defaults;
+  FTargetFolder := '';
+  FProcessorId := '';
+end;
+
+procedure TPresentationSettings.SaveToIni(Ini: TCustomIniFile);
+begin
+  inherited SaveToIni(Ini);
+  Ini.WriteString(Section, 'TargetFolder', FTargetFolder);
+  Ini.WriteString(Section, 'ProcessorId', FProcessorId);
+end;
+
+procedure TPresentationSettings.LoadFromIni(Ini: TCustomIniFile);
+begin
+  inherited LoadFromIni(Ini);
+  FTargetFolder := Ini.ReadString(Section, 'TargetFolder', '');
+  FProcessorId := Ini.ReadString(Section, 'ProcessorId', '');
+end;
+
+initialization
+begin
+  TSettings.Register(TPresentationSettings);
 end;
 
 end.

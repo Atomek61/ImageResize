@@ -10,13 +10,15 @@ object PresentationDialog: TPresentationDialog
   Constraints.MinHeight = 546
   Constraints.MinWidth = 806
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnHide = FormHide
   OnShow = FormShow
+  ShowHint = True
   LCLVersion = '3.0.0.3'
   object PanelControls: TPanel
     Left = 0
     Height = 44
-    Top = 424
+    Top = 427
     Width = 806
     Align = alTop
     BevelOuter = bvNone
@@ -24,8 +26,9 @@ object PresentationDialog: TPresentationDialog
     ClientWidth = 806
     TabOrder = 1
     object ButtonExecute: TBitBtn
-      Left = 590
+      Left = 482
       Height = 28
+      Hint = 'Starts the selected processor to create the presentation.'
       Top = 8
       Width = 100
       Align = alRight
@@ -38,8 +41,9 @@ object PresentationDialog: TPresentationDialog
       TabOrder = 0
     end
     object ButtonClose: TBitBtn
-      Left = 698
+      Left = 590
       Height = 28
+      Hint = 'Closes the dialog and saves the settings'
       Top = 8
       Width = 100
       Align = alRight
@@ -47,10 +51,26 @@ object PresentationDialog: TPresentationDialog
       BorderSpacing.Around = 8
       Caption = 'Close'
       GlyphShowMode = gsmAlways
-      ModalResult = 11
+      ModalResult = 1
       Images = ImagesModule.ImageList20x20
       ImageIndex = 12
       TabOrder = 1
+    end
+    object ButtonCancel: TBitBtn
+      Left = 698
+      Height = 28
+      Hint = 'Closes tge dialog and discards the settings'
+      Top = 8
+      Width = 100
+      Align = alRight
+      Anchors = [akRight, akBottom]
+      BorderSpacing.Around = 8
+      Cancel = True
+      Caption = 'Cancel'
+      ModalResult = 2
+      Images = ImagesModule.ImageList20x20
+      ImageIndex = 3
+      TabOrder = 2
     end
   end
   object PanelPresentation: TPanel
@@ -59,6 +79,7 @@ object PresentationDialog: TPresentationDialog
     Top = 0
     Width = 806
     Align = alTop
+    BevelOuter = bvNone
     ClientHeight = 424
     ClientWidth = 806
     ParentBackground = False
@@ -132,11 +153,12 @@ object PresentationDialog: TPresentationDialog
     object ButtonBrowseTargetFolder: TBitBtn
       AnchorSideLeft.Control = EditFolder
       AnchorSideLeft.Side = asrBottom
-      Left = 320
+      Left = 314
       Height = 25
       Top = 390
-      Width = 25
+      Width = 30
       Anchors = [akLeft, akBottom]
+      BorderSpacing.Left = 1
       Images = ImagesModule.ImageList20x20
       ImageIndex = 0
       OnClick = ButtonBrowseTargetFolderClick
@@ -148,7 +170,7 @@ object PresentationDialog: TPresentationDialog
       Height = 23
       Hint = 'This folder must contain the images and an .imageinfo file.'
       Top = 391
-      Width = 304
+      Width = 297
       Anchors = [akLeft, akBottom]
       TabOrder = 1
       OnChange = EditFolderChange
@@ -165,12 +187,11 @@ object PresentationDialog: TPresentationDialog
   end
   object MemoMessages: TRichMemo
     Left = 4
-    Height = 70
-    Top = 472
+    Height = 71
+    Top = 471
     Width = 802
     Align = alClient
     BorderSpacing.Left = 4
-    BorderSpacing.Top = 4
     BorderSpacing.Bottom = 4
     BorderStyle = bsNone
     Font.Height = -13
@@ -180,6 +201,16 @@ object PresentationDialog: TPresentationDialog
     ScrollBars = ssVertical
     TabOrder = 2
     ZoomFactor = 1
+  end
+  object Bevel4: TBevel
+    Left = 4
+    Height = 3
+    Top = 424
+    Width = 798
+    Align = alTop
+    BorderSpacing.Left = 4
+    BorderSpacing.Right = 4
+    Shape = bsBottomLine
   end
   object SelectFolderDialog: TSelectDirectoryDialog
     Options = [ofFileMustExist, ofEnableSizing, ofViewDetail]

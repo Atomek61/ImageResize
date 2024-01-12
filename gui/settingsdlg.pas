@@ -67,9 +67,6 @@ resourcestring
 
 implementation
 
-uses
-  maindlg;
-
 {$R *.lfm}
 
 const

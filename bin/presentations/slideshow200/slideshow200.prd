@@ -2,9 +2,9 @@
 Type=PRP
 Version=100
 
-[Processor]
-Class=ColorPresentation
+[Presentation]
 Id=Slideshow200
+Processor=ColorPresentation
 Title=Slideshow 2.0
 Description=Cinematic with navigation
 LongDescription=Simple slideshow for full-screen with HTML, CSS and JavaScript

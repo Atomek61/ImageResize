@@ -5,7 +5,7 @@ unit slideshow200presentationprocessor;
 interface
 
 uses
-  Classes, SysUtils, presentationprocessor, colorpresentationprocessorfrm;
+  Classes, SysUtils, presentationprocessor{, colorpresentationprocessorfrm};
 
 type
   TSlideshow200PresentationProcessor = class(TColorPresentationProcessor)
