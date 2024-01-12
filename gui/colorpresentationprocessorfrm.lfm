@@ -1,61 +1,127 @@
 inherited ColorPresentationProcessorFrame: TColorPresentationProcessorFrame
-  Height = 179
-  ClientHeight = 179
-  DesignLeft = 471
-  DesignTop = 346
-  object Label1: TLabel[2]
-    Left = 16
+  Height = 124
+  Width = 438
+  ClientHeight = 124
+  ClientWidth = 438
+  DesignLeft = 1162
+  DesignTop = 398
+  object LabelTitleColor: TLabel[0]
+    Left = 8
     Height = 15
-    Top = 99
-    Width = 71
-    Caption = 'Button Color:'
-    FocusControl = ColorBoxButtonColor
-  end
-  object ColorBoxButtonColor: TColorBox[3]
-    Left = 136
-    Height = 22
-    Top = 96
-    Width = 128
-    DefaultColorColor = clNone
-    Selected = clNone
-    ItemHeight = 16
-    TabOrder = 2
-  end
-  object Label2: TLabel[4]
-    Left = 16
-    Height = 15
-    Top = 59
-    Width = 57
+    Top = 13
+    Width = 120
+    AutoSize = False
     Caption = 'Title Color:'
-    FocusControl = ColorBoxTitleColor
   end
-  object ColorBoxTitleColor: TColorBox[5]
-    Left = 136
-    Height = 22
-    Top = 56
-    Width = 128
-    DefaultColorColor = clNone
-    Selected = clNone
-    Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbPrettyNames, cbCustomColors]
-    ItemHeight = 16
-    TabOrder = 1
-  end
-  object Label3: TLabel[6]
-    Left = 16
+  object LabelSymbolColor: TLabel[1]
+    Left = 8
     Height = 15
-    Top = 139
-    Width = 99
-    Caption = 'Background Color:'
-    FocusControl = ColorBoxBackgroundColor
+    Top = 53
+    Width = 120
+    AutoSize = False
+    Caption = 'Symbol Color:'
   end
-  object ColorBoxBackgroundColor: TColorBox[7]
-    Left = 136
-    Height = 22
-    Top = 136
-    Width = 128
-    DefaultColorColor = clNone
-    Selected = clNone
-    ItemHeight = 16
+  object LabelBackgroundColor: TLabel[2]
+    Left = 8
+    Height = 15
+    Top = 93
+    Width = 120
+    AutoSize = False
+    Caption = 'Background Color:'
+  end
+  object GroupBox1: TGroupBox[3]
+    Left = 263
+    Height = 105
+    Top = 10
+    Width = 169
+    Caption = 'Preview'
+    ClientHeight = 85
+    ClientWidth = 165
+    ParentBackground = False
+    TabOrder = 0
+    Visible = False
+    object Shape1: TShape
+      Left = 4
+      Height = 81
+      Top = 0
+      Width = 157
+      Align = alClient
+      BorderSpacing.Left = 4
+      BorderSpacing.Right = 4
+      BorderSpacing.Bottom = 4
+      Brush.Color = 15592408
+      Pen.Style = psClear
+    end
+    object Label5: TLabel
+      Left = 0
+      Height = 25
+      Top = 5
+      Width = 165
+      Alignment = taCenter
+      AutoSize = False
+      Caption = 'Label5'
+      Font.Height = -16
+      ParentFont = False
+    end
+    object Image1: TImage
+      Left = 40
+      Height = 42
+      Top = 32
+      Width = 80
+    end
+  end
+  inline ColorFrameTitle: TColorFrame[4]
+    AnchorSideLeft.Control = LabelTitleColor
+    AnchorSideLeft.Side = asrBottom
+    Left = 128
+    Top = 8
+    Width = 120
+    ClientWidth = 120
+    TabOrder = 1
+    inherited PanelColor: TPanel
+      Width = 54
+    end
+    inherited ButtonSelect: TBitBtn
+      Left = 58
+    end
+    inherited ButtonDefaultColor: TBitBtn
+      Left = 89
+    end
+  end
+  inline ColorFrameSymbols: TColorFrame[5]
+    AnchorSideLeft.Control = LabelSymbolColor
+    AnchorSideLeft.Side = asrBottom
+    Left = 128
+    Top = 47
+    Width = 120
+    ClientWidth = 120
     TabOrder = 3
+    inherited PanelColor: TPanel
+      Width = 54
+    end
+    inherited ButtonSelect: TBitBtn
+      Left = 58
+    end
+    inherited ButtonDefaultColor: TBitBtn
+      Left = 89
+    end
+  end
+  inline ColorFrameBackground: TColorFrame[6]
+    AnchorSideLeft.Control = LabelBackgroundColor
+    AnchorSideLeft.Side = asrBottom
+    Left = 128
+    Top = 86
+    Width = 120
+    ClientWidth = 120
+    TabOrder = 2
+    inherited PanelColor: TPanel
+      Width = 54
+    end
+    inherited ButtonSelect: TBitBtn
+      Left = 58
+    end
+    inherited ButtonDefaultColor: TBitBtn
+      Left = 89
+    end
   end
 end

@@ -16,16 +16,17 @@ type
   { TPresentationDialog }
 
   TPresentationDialog = class(TForm)
-    Bevel4: TBevel;
     ButtonBrowseTargetFolder: TBitBtn;
-    ButtonClose: TBitBtn;
+    ButtonOk: TBitBtn;
     ButtonExecute: TBitBtn;
     ButtonCancel: TBitBtn;
-    EditFolder: TEdit;
+    EditTargetFolder: TEdit;
+    EditTargetTitle: TEdit;
     GroupBoxParams: TGroupBox;
     ImagePreview: TImage;
-    Label1: TLabel;
+    LabelTargetFolder: TLabel;
     Label2: TLabel;
+    LabelTargetTitle: TLabel;
     LabelLongDescription: TLabel;
     ListBoxProcessors: TListBox;
     MemoMessages: TRichMemo;
@@ -35,7 +36,7 @@ type
     SelectFolderDialog: TSelectDirectoryDialog;
     procedure ButtonBrowseTargetFolderClick(Sender: TObject);
     procedure ButtonExecuteClick(Sender: TObject);
-    procedure EditFolderChange(Sender: TObject);
+    procedure EditTargetFolderChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormHide(Sender: TObject);
@@ -66,18 +67,20 @@ type
 
   TPresentationSettings = class(TSettings)
   private
-    FProessorId: string;
-    FTargetFolder :string;
     FProcessorId :string;
+    FTargetFolder :string;
+    FTargetTitle :string;
     procedure SetProcessorId(AValue: string);
     procedure SetTargetFolder(AValue: string);
+    procedure SetTargetTitle(AValue: string);
   public
     constructor Create; override;
     procedure Defaults; override;
     procedure SaveToIni(Ini :TCustomIniFile); override;
     procedure LoadFromIni(Ini :TCustomIniFile); override;
-    property TargetFolder :string read FTargetFolder write SetTargetFolder;
     property ProcessorId :string read FProcessorId write SetProcessorId;
+    property TargetFolder :string read FTargetFolder write SetTargetFolder;
+    property TargetTitle :string read FTargetTitle write SetTargetTitle;
   end;
 
 var
@@ -110,7 +113,8 @@ procedure TPresentationDialog.FormShow(Sender: TObject);
 begin
   Scan;
   ProcessorId := FPresentationSettings.ProcessorId;
-  EditFolder.Text := FPresentationSettings.TargetFolder;
+  EditTargetFolder.Text := FPresentationSettings.TargetFolder;
+  EditTargetTitle.Text := FPresentationSettings.TargetTitle;
   //if FProcessors.Count>0 then
   //  ProcessorIndex := 0;
   FOuterLogger := TLogger.SwapDefaultLogger(TRichMemoLogger.Create(MemoMessages));
@@ -123,23 +127,24 @@ end;
 
 procedure TPresentationDialog.ButtonExecuteClick(Sender: TObject);
 begin
-  if (Trim(EditFolder.Text)='') or not DirectoryExists(EditFolder.Text) then
+  if (Trim(EditTargetFolder.Text)='') or not DirectoryExists(EditTargetFolder.Text) then
     raise Exception.Create(SErrMissingFolder);
-  Processor.TargetFolder := EditFolder.Text;
+  Processor.TargetFolder := EditTargetFolder.Text;
+  Processor.TargetTitle := EditTargetTitle.Text;
   Processor.Execute;
 end;
 
-procedure TPresentationDialog.EditFolderChange(Sender: TObject);
+procedure TPresentationDialog.EditTargetFolderChange(Sender: TObject);
 begin
   MainDialog.Dirty := true;
 end;
 
 procedure TPresentationDialog.ButtonBrowseTargetFolderClick(Sender: TObject);
 begin
-  if Trim(EditFolder.Text)<>'' then
-    SelectFolderDialog.InitialDir := EditFolder.Text;
+  if Trim(EditTargetFolder.Text)<>'' then
+    SelectFolderDialog.InitialDir := EditTargetFolder.Text;
   if SelectFolderDialog.Execute then
-    EditFolder.Text := SelectFolderDialog.Filename;
+    EditTargetFolder.Text := SelectFolderDialog.Filename;
 end;
 
 procedure TPresentationDialog.ListBoxProcessorsClick(Sender: TObject);
@@ -230,8 +235,9 @@ begin
   FPresentationSettings := PresentationSettings;
   FPresentationSettingsList := PresentationSettingsList;
   if ShowModal<>mrCancel then begin
-    FPresentationSettings.TargetFolder := EditFolder.Text;
-    FPresentationSettings.ProcessorId := ProcessorId;
+    FPresentationSettings.ProcessorId   := ProcessorId;
+    FPresentationSettings.TargetFolder  := EditTargetFolder.Text;
+    FPresentationSettings.TargetTitle   := EditTargetTitle.Text;
   end;
 end;
 
@@ -269,6 +275,13 @@ begin
   Changed;
 end;
 
+procedure TPresentationSettings.SetTargetTitle(AValue: string);
+begin
+  if FTargetTitle=AValue then Exit;
+  FTargetTitle:=AValue;
+  Changed;
+end;
+
 constructor TPresentationSettings.Create;
 begin
   inherited Create;
@@ -285,15 +298,17 @@ end;
 procedure TPresentationSettings.SaveToIni(Ini: TCustomIniFile);
 begin
   inherited SaveToIni(Ini);
-  Ini.WriteString(Section, 'TargetFolder', FTargetFolder);
   Ini.WriteString(Section, 'ProcessorId', FProcessorId);
+  Ini.WriteString(Section, 'TargetFolder', FTargetFolder);
+  Ini.WriteString(Section, 'TargetTitle', FTargetTitle);
 end;
 
 procedure TPresentationSettings.LoadFromIni(Ini: TCustomIniFile);
 begin
   inherited LoadFromIni(Ini);
-  FTargetFolder := Ini.ReadString(Section, 'TargetFolder', '');
   FProcessorId := Ini.ReadString(Section, 'ProcessorId', '');
+  FTargetFolder := Ini.ReadString(Section, 'TargetFolder', '');
+  FTargetTitle := Ini.ReadString(Section, 'TargetTitle', '');
 end;
 
 initialization

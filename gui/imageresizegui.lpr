@@ -10,12 +10,12 @@ uses
   athreads,
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, lazcontrols, maindlg, aboutdlg, mrkeditdlg, imgres, updateutils,
-  datetimeutils, threading.dispatcher, EXIFUtils, tags, settingsdlg, settings,
-  animator, logging, presentationdlg, imagesmod, presentationprocessor,
-  slideshow200presentationprocessor, galleryprocessor, stringarrays,
-colorpresentationprocessorfrm, presentationprocessorfrm, params, 
-appsettings;
+  Forms, lazcontrols, maindlg, settingsdlg, mrkeditdlg, presentationdlg, aboutdlg, imgres, updateutils,
+  datetimeutils, threading.dispatcher, EXIFUtils, tags, settings,
+  animator, logging, imagesmod, presentationprocessor,
+  slideshow200presentationprocessor, galleryprocessor, stringarrays, appsettings, 
+colorpresentationprocessorfrm, presentationprocessorfrm, 
+colorfrm;
 
 {$R *.res}
 

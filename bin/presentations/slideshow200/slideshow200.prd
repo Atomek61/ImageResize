@@ -4,7 +4,7 @@ Version=100
 
 [Presentation]
 Id=Slideshow200
-Processor=ColorPresentation
+Class=ColorPresentation
 Title=Slideshow 2.0
 Description=Cinematic with navigation
 LongDescription=Simple slideshow for full-screen with HTML, CSS and JavaScript

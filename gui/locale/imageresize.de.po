@@ -669,6 +669,28 @@ msgstr "fehlender Dateiname"
 msgid "more values than tags"
 msgstr "mehr Werte als Tags"
 
+#: tcolorpresentationprocessorframe.groupbox1.caption
+msgid "Preview"
+msgstr ""
+
+#: tcolorpresentationprocessorframe.label5.caption
+msgid "Label5"
+msgstr ""
+
+#: tcolorpresentationprocessorframe.labelbackgroundcolor.caption
+msgctxt "tcolorpresentationprocessorframe.labelbackgroundcolor.caption"
+msgid "Background Color:"
+msgstr ""
+
+#: tcolorpresentationprocessorframe.labelsymbolcolor.caption
+msgid "Symbol Color:"
+msgstr ""
+
+#: tcolorpresentationprocessorframe.labeltitlecolor.caption
+msgctxt "tcolorpresentationprocessorframe.labeltitlecolor.caption"
+msgid "Title Color:"
+msgstr ""
+
 #: threading.dispatcher.scptcancelled
 msgid "Cancelled"
 msgstr "Abgebrochen"
@@ -1573,22 +1595,14 @@ msgstr ""
 
 #: tpresentationdialog.buttoncancel.caption
 #, fuzzy
+#| msgid "Cancel"
 msgctxt "tpresentationdialog.buttoncancel.caption"
-msgid "Cancel"
+msgid "Close"
 msgstr "Abbrechen"
 
 #: tpresentationdialog.buttoncancel.hint
 msgctxt "tpresentationdialog.buttoncancel.hint"
-msgid "Closes tge dialog and discards the settings"
-msgstr ""
-
-#: tpresentationdialog.buttonclose.caption
-msgctxt "tpresentationdialog.buttonclose.caption"
-msgid "Close"
-msgstr "Schließen"
-
-#: tpresentationdialog.buttonclose.hint
-msgid "Closes the dialog and saves the settings"
+msgid "Closes the dialog and discards the settings"
 msgstr ""
 
 #: tpresentationdialog.buttonexecute.caption
@@ -1600,12 +1614,23 @@ msgstr "Erzeugen"
 msgid "Starts the selected processor to create the presentation."
 msgstr ""
 
+#: tpresentationdialog.buttonok.caption
+#, fuzzy
+msgctxt "tpresentationdialog.buttonok.caption"
+msgid "Close"
+msgstr "Schließen"
+
+#: tpresentationdialog.buttonok.hint
+msgctxt "tpresentationdialog.buttonok.hint"
+msgid "Closes the dialog and saves the settings"
+msgstr ""
+
 #: tpresentationdialog.caption
 msgid "Presentation"
 msgstr "Präsentation"
 
-#: tpresentationdialog.editfolder.hint
-msgctxt "tpresentationdialog.editfolder.hint"
+#: tpresentationdialog.edittargetfolder.hint
+msgctxt "tpresentationdialog.edittargetfolder.hint"
 msgid "This folder must contain the images and an .imageinfo file."
 msgstr ""
 
@@ -1613,11 +1638,6 @@ msgstr ""
 msgctxt "tpresentationdialog.groupboxparams.caption"
 msgid "&Settings"
 msgstr "&Einstellungen"
-
-#: tpresentationdialog.label1.caption
-msgctxt "tpresentationdialog.label1.caption"
-msgid "&Folder with Images:"
-msgstr "Bild&ordner:"
 
 #: tpresentationdialog.label2.caption
 msgctxt "tpresentationdialog.label2.caption"
@@ -1628,6 +1648,17 @@ msgstr "&Verfügbare Präsentationen:"
 msgctxt "tpresentationdialog.labellongdescription.caption"
 msgid "<LongDescription>"
 msgstr "<Lange Beschreibung>"
+
+#: tpresentationdialog.labeltargetfolder.caption
+#, fuzzy
+msgctxt "tpresentationdialog.labeltargetfolder.caption"
+msgid "&Folder with Images:"
+msgstr "Bild&ordner:"
+
+#: tpresentationdialog.labeltargettitle.caption
+msgctxt "tpresentationdialog.labeltargettitle.caption"
+msgid "&Title:"
+msgstr ""
 
 #: tsettingsdialog.buttoncancel.caption
 msgctxt "tsettingsdialog.buttoncancel.caption"

@@ -12,8 +12,6 @@ type
   { TPresentationProcessorFrame }
 
   TPresentationProcessorFrame = class(TFrame)
-    EditTitle: TEdit;
-    Label4: TLabel;
   private
 
   public

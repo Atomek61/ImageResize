@@ -32,6 +32,7 @@ type
     FPreview :TPicture;
     FTemplateFolder :string;
     FTargetFolder :string;
+    FTargetTitle :string;
     FFrame :TFrame;
     FSettings :TSettings;
     function GetIcon: TGraphic;
@@ -59,6 +60,7 @@ type
     property Date :TDateTime read FDate;
     property Icon :TGraphic read GetIcon;
     property Preview :TGraphic read GetPreview;
+    property TargetTitle :string read FTargetTitle write FTargetTitle;
     property TargetFolder :string read FTargetFolder write FTargetFolder;
   end;
 
@@ -357,31 +359,32 @@ begin
 end;
 
 procedure TPresentationProcessor.ParamsToFrame;
-var
-  s :TPresentationProcessorSettings;
 begin
-  inherited ParamsToFrame;
-  if Assigned(FSettings) then begin
-    s := FSettings as TPresentationProcessorSettings;
-    with Frame as TPresentationProcessorFrame do begin
-      EditTitle.Text := s.Title; // FProcessor.DocumentVars['TITLE'];
-    end;
-  end;
+//var
+//  s :TPresentationProcessorSettings;
+//begin
+//  inherited ParamsToFrame;
+//  if Assigned(FSettings) then begin
+//    s := FSettings as TPresentationProcessorSettings;
+//    with Frame as TPresentationProcessorFrame do begin
+//      EditTitle.Text := s.Title; // FProcessor.DocumentVars['TITLE'];
+//    end;
+//  end;
 end;
 
 procedure TPresentationProcessor.FrameToParams;
-var
-  s :TPresentationProcessorSettings;
 begin
-  inherited FrameToParams;
-  if Assigned(FSettings) then begin
-    s := FSettings as TPresentationProcessorSettings;
-    with Frame as TPresentationProcessorFrame do begin
-      s.Title := EditTitle.Text;
-    end;
-    FProcessor.DocumentVars['TITLE'] := s.Title;
-  end;
 end;
+//var
+//  s :TPresentationProcessorSettings;
+//  inherited FrameToParams;
+//  if Assigned(FSettings) then begin
+//    s := FSettings as TPresentationProcessorSettings;
+//    with Frame as TPresentationProcessorFrame do begin
+//      s.Title := EditTitle.Text;
+//    end;
+//    FProcessor.DocumentVars['TITLE'] := s.Title;
+//  end;
 
 constructor TPresentationProcessor.Create(IniFile: TCustomIniFile);
 var

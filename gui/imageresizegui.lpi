@@ -257,12 +257,15 @@
         <ResourceBaseClass Value="Frame"/>
       </Unit>
       <Unit>
-        <Filename Value="..\src\params.pas"/>
+        <Filename Value="appsettings.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="appsettings.pas"/>
+        <Filename Value="colorfrm.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="ColorFrame"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
       </Unit>
     </Units>
   </ProjectOptions>

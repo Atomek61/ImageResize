@@ -1,13 +1,13 @@
 object PresentationDialog: TPresentationDialog
   Left = 629
-  Height = 546
+  Height = 562
   Top = 536
   Width = 806
   BorderIcons = [biSystemMenu]
   Caption = 'Presentation'
-  ClientHeight = 546
+  ClientHeight = 562
   ClientWidth = 806
-  Constraints.MinHeight = 546
+  Constraints.MinHeight = 480
   Constraints.MinWidth = 806
   OnCreate = FormCreate
   OnDestroy = FormDestroy
@@ -17,17 +17,17 @@ object PresentationDialog: TPresentationDialog
   LCLVersion = '3.0.0.3'
   object PanelControls: TPanel
     Left = 0
-    Height = 44
-    Top = 427
+    Height = 46
+    Top = 424
     Width = 806
     Align = alTop
     BevelOuter = bvNone
-    ClientHeight = 44
+    ClientHeight = 46
     ClientWidth = 806
     TabOrder = 1
     object ButtonExecute: TBitBtn
       Left = 482
-      Height = 28
+      Height = 30
       Hint = 'Starts the selected processor to create the presentation.'
       Top = 8
       Width = 100
@@ -40,9 +40,9 @@ object PresentationDialog: TPresentationDialog
       OnClick = ButtonExecuteClick
       TabOrder = 0
     end
-    object ButtonClose: TBitBtn
+    object ButtonOk: TBitBtn
       Left = 590
-      Height = 28
+      Height = 30
       Hint = 'Closes the dialog and saves the settings'
       Top = 8
       Width = 100
@@ -53,23 +53,23 @@ object PresentationDialog: TPresentationDialog
       GlyphShowMode = gsmAlways
       ModalResult = 1
       Images = ImagesModule.ImageList20x20
-      ImageIndex = 12
+      ImageIndex = 2
       TabOrder = 1
     end
     object ButtonCancel: TBitBtn
       Left = 698
-      Height = 28
-      Hint = 'Closes tge dialog and discards the settings'
+      Height = 30
+      Hint = 'Closes the dialog and discards the settings'
       Top = 8
       Width = 100
       Align = alRight
       Anchors = [akRight, akBottom]
       BorderSpacing.Around = 8
       Cancel = True
-      Caption = 'Cancel'
+      Caption = 'Close'
       ModalResult = 2
       Images = ImagesModule.ImageList20x20
-      ImageIndex = 3
+      ImageIndex = 14
       TabOrder = 2
     end
   end
@@ -94,9 +94,10 @@ object PresentationDialog: TPresentationDialog
     end
     object ListBoxProcessors: TListBox
       Left = 16
-      Height = 334
+      Height = 341
       Top = 32
       Width = 328
+      Anchors = [akTop, akLeft, akBottom]
       Font.Height = -16
       Font.Style = [fsBold]
       ItemHeight = 64
@@ -142,20 +143,20 @@ object PresentationDialog: TPresentationDialog
       end
     end
     object GroupBoxParams: TGroupBox
-      Left = 360
-      Height = 280
-      Top = 136
+      Left = 359
+      Height = 256
+      Top = 168
       Width = 433
       Anchors = [akTop, akLeft, akRight, akBottom]
       Caption = '&Settings'
       TabOrder = 4
     end
     object ButtonBrowseTargetFolder: TBitBtn
-      AnchorSideLeft.Control = EditFolder
+      AnchorSideLeft.Control = EditTargetFolder
       AnchorSideLeft.Side = asrBottom
       Left = 314
       Height = 25
-      Top = 390
+      Top = 399
       Width = 30
       Anchors = [akLeft, akBottom]
       BorderSpacing.Left = 1
@@ -165,30 +166,47 @@ object PresentationDialog: TPresentationDialog
       Spacing = 0
       TabOrder = 2
     end
-    object EditFolder: TEdit
+    object EditTargetFolder: TEdit
       Left = 16
       Height = 23
       Hint = 'This folder must contain the images and an .imageinfo file.'
-      Top = 391
+      Top = 400
       Width = 297
       Anchors = [akLeft, akBottom]
       TabOrder = 1
-      OnChange = EditFolderChange
+      OnChange = EditTargetFolderChange
     end
-    object Label1: TLabel
+    object LabelTargetFolder: TLabel
       Left = 21
       Height = 15
-      Top = 373
+      Top = 382
       Width = 103
       Anchors = [akLeft, akBottom]
       Caption = '&Folder with Images:'
-      FocusControl = EditFolder
+      FocusControl = EditTargetFolder
+    end
+    object LabelTargetTitle: TLabel
+      Left = 368
+      Height = 15
+      Top = 135
+      Width = 25
+      AutoSize = False
+      Caption = '&Title:'
+      FocusControl = EditTargetTitle
+    end
+    object EditTargetTitle: TEdit
+      Left = 416
+      Height = 23
+      Top = 131
+      Width = 376
+      Anchors = [akTop, akLeft, akRight]
+      TabOrder = 5
     end
   end
   object MemoMessages: TRichMemo
     Left = 4
-    Height = 71
-    Top = 471
+    Height = 88
+    Top = 470
     Width = 802
     Align = alClient
     BorderSpacing.Left = 4
@@ -201,16 +219,6 @@ object PresentationDialog: TPresentationDialog
     ScrollBars = ssVertical
     TabOrder = 2
     ZoomFactor = 1
-  end
-  object Bevel4: TBevel
-    Left = 4
-    Height = 3
-    Top = 424
-    Width = 798
-    Align = alTop
-    BorderSpacing.Left = 4
-    BorderSpacing.Right = 4
-    Shape = bsBottomLine
   end
   object SelectFolderDialog: TSelectDirectoryDialog
     Options = [ofFileMustExist, ofEnableSizing, ofViewDetail]
