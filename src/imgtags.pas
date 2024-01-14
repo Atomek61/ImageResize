@@ -1,20 +1,42 @@
 unit imgtags;
 
-{$mode ObjFPC}{$H+}
+{$mode delphi}
 
 interface
 
 uses
-  Classes, SysUtils, Tags, Logging;
+  Classes, SysUtils, Logging, VarDisplay;
+
+type
+
+  { TImgVarInfo }
+
+  TImgVarInfo = record
+    Name :string;
+    cls :TVarClass;
+    fmt :string;
+    function TagKey :string;
+  end;
+
+const
+  IMGVARINFOS :array[0..4] of TImgVarInfo = (
+    (Name: 'Title';        cls: TStringVar;   fmt: ''),
+    (Name: 'OrgSize';      cls: TByteSizeVar; fmt: ''),
+    (Name: 'OrgWidth';     cls: TIntegerVar;  fmt: ''),
+    (Name: 'OrgHeight';    cls: TIntegerVar;  fmt: ''),
+    (Name: 'FocalLength';  cls: TFloatVar;    fmt: '%.1f mm')
+  );
 
 const
   IMGTITLE_KEY        = 'IMGTITLE';
+  IMGCOPYRIGHT_KEY    = 'IMGCOPYRIGHT';
   IMGTOPICS_KEY       = 'IMGTOPICS';
   IMGTIMESTAMP_KEY    = 'IMGTIMESTAMP';
+  IMGAUTHOR           = 'IMGAUTHOR';
   IMGORGNAME_KEY      = 'IMGORGNAME';
   IMGGEOLOCATION_KEY  = 'IMGGEOLOCATION';
   IMGLOCATION_KEY     = 'IMGLOCATION';
-  IMGORGSIZE_KEY      = 'IMGORGSIZE';
+  IMGORGSIZE_KEY      = 'IMGORGBYTESIZE';
   IMGSIZE_KEY         = 'IMGSIZE';
   IMGWIDTH_KEY        = 'IMGWIDTH';
   IMGHEIGHT_KEY       = 'IMGHEIGHT';
@@ -28,14 +50,14 @@ const
   IMGMAXAPERTURE_KEY  = 'IMGMAXAPERTURE';
   IMGCAMMODEL_KEY     = 'IMGCAMMODEL';
   IMGCAMMAKER_KEY     = 'IMGCAMMAKER';
-
-  IMGVARKEYS = array[0..19] of string = (
-    IMGTITLE_KEY , IMGTOPICS_KEY , IMGTIMESTAMP_KEY , IMGORGNAME_KEY ,
-    IMGGEOLOCATION_KEY , IMGLOCATION_KEY , IMGORGSIZE_KEY , IMGSIZE_KEY , IMGWIDTH_KEY ,
-    IMGHEIGHT_KEY , IMGBYTES_KEY , IMGORIENTATION_KEY , IMGRATIO_KEY , IMGEXPOSURE_KEY ,
-    IMGAPERTURE_KEY , IMGFOCALLENGTH_KEY , IMGISO_KEY , IMGMAXAPERTURE_KEY ,
-    IMGCAMMODEL_KEY , IMGCAMMAKER_KEY
-  );
+//
+//  IMGVARKEYS :array[0..19] of string = (
+//    IMGTITLE_KEY, IMGTOPICS_KEY, IMGTIMESTAMP_KEY, IMGORGNAME_KEY,
+//    IMGGEOLOCATION_KEY, IMGLOCATION_KEY, IMGORGSIZE_KEY, IMGSIZE_KEY,
+//    IMGWIDTH_KEY, IMGHEIGHT_KEY, IMGBYTES_KEY, IMGORIENTATION_KEY, IMGRATIO_KEY,
+//    IMGEXPOSURE_KEY, IMGAPERTURE_KEY, IMGFOCALLENGTH_KEY, IMGISO_KEY,
+//    IMGMAXAPERTURE_KEY, IMGCAMMODEL_KEY, IMGCAMMAKER_KEY
+//  );
 
   LANDSCAPESTR      = 'Landscape';
   PORTRAITSTR       = 'Portrait';
@@ -137,6 +159,13 @@ end;
 function OrientationToStr(Value: TImageOrientation): string;
 begin
   result := IMAGEORIENTATIONS[Value];
+end;
+
+{ TImgVarInfo }
+
+function TImgVarInfo.TagKey: string;
+begin
+  result := 'IMG'+UpperCase(Name);
 end;
 
 //procedure Test;

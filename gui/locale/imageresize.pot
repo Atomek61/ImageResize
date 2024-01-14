@@ -1730,3 +1730,13 @@ msgctxt "tsettingsdialog.labelcores.caption"
 msgid "Cores"
 msgstr ""
 
+#: vardisplay.serrinvalidvarstringfmt
+#, object-pascal-format
+msgid "Cant convert '%s' to variable of type %s."
+msgstr ""
+
+#: vardisplay.serrvarclassnotregisteredfmt
+#, object-pascal-format
+msgid "Variable class '%s' not registered."
+msgstr ""
+

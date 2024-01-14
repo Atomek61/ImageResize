@@ -271,6 +271,15 @@
         <Filename Value="..\src\imgtags.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
+      <Unit>
+        <Filename Value="..\src\vardisplay.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="VarDisplay"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\tagids.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

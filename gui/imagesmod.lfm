@@ -1,8 +1,8 @@
 object ImagesModule: TImagesModule
   OldCreateOrder = False
   Height = 150
-  HorizontalOffset = 420
-  VerticalOffset = 128
+  HorizontalOffset = 560
+  VerticalOffset = 171
   Width = 150
   object ImageList20x20: TImageList
     Height = 20

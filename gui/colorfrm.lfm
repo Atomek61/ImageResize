@@ -6,8 +6,8 @@ object ColorFrame: TColorFrame
   ClientHeight = 28
   ClientWidth = 249
   TabOrder = 0
-  DesignLeft = 576
-  DesignTop = 240
+  DesignLeft = 768
+  DesignTop = 320
   object PanelColor: TPanel
     Left = 131
     Height = 24

@@ -40,13 +40,7 @@ uses
 
 const
   TAGS_FILETITLE      = '.tags';
-
   TAGID_FILENAME     =  'Filename';
-  TAGID_FILETITLE    =  'Filetitle';
-
-  TAGID_TITLE        =  'Title';
-  TAGID_TIMESTAMP    =  'Timestamp';
-  TAGID_COPYRIGHT    =  'Copyright';
 
 type
   TStringDictionary = TDictionary<string, string>;

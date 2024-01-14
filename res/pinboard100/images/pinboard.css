@@ -1,0 +1,43 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed);
+
+:root {
+  --clr: 210;
+}
+
+body {
+  font-family: "Roboto Condensed";
+  color: hsl(var(--clr), 25%, 35%);
+  background-color: hsl(var(--clr), 30%, 90%);
+  background-image: url("shutter.png");
+}
+
+h1 {clear: both; border-color: hsl(var(--clr), 25%, 35%);}
+
+.imagelist {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.imagelist>div {
+  display: inline-block;
+  margin: 20px;
+  box-shadow: 4px 4px 6px gray;
+  padding: 6px 6px 0px 6px;
+  background-color: hsl(60, 25%, 98%);
+}
+
+.imagelist>div>img {margin: 0}
+
+.imagelist>div>div {
+  display: block;
+  margin: -1px 0px 4px 0px;
+  font: 12pt "Roboto Condensed";
+  color: hsl(var(--clr), 0%, 50%);
+  text-align: center;
+}
+
+footer {
+  color: hsl(var(--clr), 50%, 70%);
+  background-image: linear-gradient(hsl(var(--clr), 50%, 25%), hsl(var(--clr), 50%, 15%));
+}

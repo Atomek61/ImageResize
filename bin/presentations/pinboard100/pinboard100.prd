@@ -1,0 +1,20 @@
+[Common]
+Type=PRD
+Version=100
+
+[Presentation]
+Id=Pinboard100
+Processor=Presentation
+Title=Pinboard 1.0
+Description=Simple Pinboard
+Description.de=Einfaches Pinboard
+LongDescription=CSS Flex container. Recomennded for photos.
+LongDescription.de=CSS Flex Container. Empfahlen für Fotos.
+Date=2024-01-01 00:00:00
+Icon=..\icon-pinboard.png
+;Preview=.jpg
+Copy=pinboard.css,shutter.png
+Templates=index.html
+Fragment.IMAGES=<div><img src="%URL%"/><div>%TITLE%</div></div>
+
+

@@ -3,8 +3,8 @@ inherited ColorPresentationProcessorFrame: TColorPresentationProcessorFrame
   Width = 438
   ClientHeight = 124
   ClientWidth = 438
-  DesignLeft = 1162
-  DesignTop = 398
+  DesignLeft = 1549
+  DesignTop = 531
   object GroupBox1: TGroupBox[0]
     Left = 263
     Height = 105
@@ -50,6 +50,8 @@ inherited ColorPresentationProcessorFrame: TColorPresentationProcessorFrame
     Left = 8
     Top = 8
     TabOrder = 1
+    DesignLeft = 576
+    DesignTop = 240
     inherited Label1: TLabel
       Caption = 'Title Color:'
     end
@@ -58,6 +60,8 @@ inherited ColorPresentationProcessorFrame: TColorPresentationProcessorFrame
     Left = 8
     Top = 45
     TabOrder = 2
+    DesignLeft = 576
+    DesignTop = 240
     inherited Label1: TLabel
       Caption = 'Symbols Color:'
     end
@@ -66,6 +70,8 @@ inherited ColorPresentationProcessorFrame: TColorPresentationProcessorFrame
     Left = 8
     Top = 80
     TabOrder = 3
+    DesignLeft = 576
+    DesignTop = 240
     inherited Label1: TLabel
       Caption = 'Background Color:'
     end

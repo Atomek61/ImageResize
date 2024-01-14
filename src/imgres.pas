@@ -52,7 +52,6 @@ resourcestring
   SCptSingleThread  = 'Single';
   SCptMaximumThread = 'Maximum';
 
-
 type
   TTagsSource = (tsEXIF, tsTagsFiles); // Tags from EXIF and/or .tags files
   TTagsSources = set of TTagsSource;
@@ -264,6 +263,9 @@ implementation
 uses
   Math, ZStream, FPWriteJpeg, FPWritePng, FPImage, utils,
   generics.collections, EXIFUtils;
+
+const
+  TAGID_COPYRIGHT = 'Copyright';
 
 resourcestring
   SCptHint                        = 'Hint';

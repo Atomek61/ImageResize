@@ -7,7 +7,7 @@ unit EXIFUtils;
 interface
 
 uses
-  Classes, SysUtils, tags, datetimeutils, StringArrays;
+  Classes, SysUtils, tags, datetimeutils, StringArrays, Logging;
 
 function ReadExifTags(const Filename :string; Tags :TTags; out TagIDs :TStringArray) :boolean;
 procedure WriteExifTags(const Filename :string; Tags :TTags; const TagIDs :TStringArray);
@@ -19,6 +19,16 @@ uses
   dMetadata;
 
 const
+  TAGID_TITLE         = 'Title';
+  TAGID_TIMESTAMP     = 'Timestamp';
+  TAGID_COPYRIGHT     = 'Copyright';
+  TAGID_CAMMAKER      = 'CamMaker';
+  TAGID_CAMMODEL      = 'CamModel';
+  //TAGID_GPSLONGITUDE  = 'Longitude';
+  //TAGID_GPSLATITUDE   = 'Latitude';
+  //TAGID_SIZE          = 'Size';
+  TAGID_ARTIST        = 'Artist';
+
   TAGIDS_SUPPORTED   :array[0..2] of string = (TAGID_TITLE, TAGID_TIMESTAMP, TAGID_COPYRIGHT);
 
 function allSupported(const TagIDs :TStringArray) :boolean;
@@ -39,7 +49,8 @@ function ReadExifTags(const Filename :string; Tags :TTags; out TagIDs :TStringAr
 var
   ImgData :TImgData;
   Timestamp :TDateTime;
-  Value :string;
+  StrValue :string;
+  IntValue :Integer;
 begin
   result := false;
   ImgData := TImgData.Create;
@@ -47,11 +58,12 @@ begin
   try
     ImgData.ProcessFile(Filename);
     if ImgData.HasMetaData then begin
+
       // Title
-      Value := ImgData.ExifObj.ImageDescription;
-      if Value<>'' then begin
+      StrValue := ImgData.ExifObj.ImageDescription;
+      if StrValue<>'' then begin
         TagIDs.Add(TAGID_TITLE);
-        Tags.AddOrSetValue(TAGID_TITLE, Value);
+        Tags.AddOrSetValue(TAGID_TITLE, StrValue);
       end;
 
       // Timestamp
@@ -62,10 +74,17 @@ begin
       end;
 
       // Copyright
-      Value := ImgData.ExifObj.Copyright;
-      if Value<>'' then begin
+      StrValue := ImgData.ExifObj.Copyright;
+      if StrValue<>'' then begin
         TagIDs.Add(TAGID_COPYRIGHT);
-        Tags.AddOrSetValue(TAGID_COPYRIGHT, Value);
+        Tags.AddOrSetValue(TAGID_COPYRIGHT, StrValue);
+      end;
+
+      // Artist
+      StrValue := ImgData.ExifObj.Artist;
+      if StrValue<>'' then begin
+        TagIDs.Add(TAGID_ARTIST);
+        Tags.AddOrSetValue(TAGID_ARTIST, StrValue);
       end;
 
       result := Length(TagIDs)>0;
