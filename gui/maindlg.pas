@@ -173,7 +173,7 @@ type
     EditSrcFolder: TEdit;
     EditSrcMasks: TEdit;
     EditRenTemplate: TComboBox;
-    ComboBoxJpgQuality: TComboBox;
+    ComboBoxJPEGQuality: TComboBox;
     ComboBoxPngCompression: TComboBox;
     EditMrkAlpha: TEdit;
     EditMrkFilename: TEdit;
@@ -387,10 +387,7 @@ uses
   math, helpintfs, Windows, FileUtil, Tags, SettingsDlg;
 
 const
-  SCptRandom        = '<random>';
   SCptSizesDefault  = 'default';
-  SCptSingleThread  = 'single';
-  SCptMaximumThread = 'maximum';
 
 resourcestring
   SCptProcessor                 = 'Processor';
@@ -471,7 +468,7 @@ end;
 
 function StrToShuffleSeed(const Value :string) :integer;
 begin
-  if Value=SCptRandom then
+  if Value=SCptRandomSeed then
     result := 0
   else
     if not TryStrToInt(Value, result) then raise Exception.Create(SErrInvalidShuffleSeed);
@@ -480,7 +477,7 @@ end;
 function ShuffleSeedToStr(Value :integer) :string;
 begin
   if Value<=0 then
-    result := SCptRandom
+    result := SCptRandomSeed
   else
     result := IntToStr(Value);
 end;
@@ -557,9 +554,9 @@ begin
   FDialogSettings.Defaults;
 
   FPresentationSettingsList := TSettingsList.Create(PRESENTATIONSECTION, true);
-  FPresentationSettingsList.OnChanged := @ProjectChanged;
+//  FPresentationSettingsList.OnChanged := @ProjectChanged;
   FPresentationSettings := TPresentationSettings.Create;
-  FPresentationSettings.OnChanged := @ProjectChanged;
+//  FPresentationSettings.OnChanged := @ProjectChanged;
 
   // Create Size Buttons
   for i:=0 to High(DEFSIZES) do begin
@@ -591,6 +588,13 @@ begin
   RadioButtonRenAdvanced.Hint := RENADVANCEDTEMPLATE;
   for Resampling in TResampling do
     ComboBoxResampling.Items.Add(RESAMPLING_STRINGS[Resampling]);
+
+  ComboBoxJPEGQuality.Items[0] := SCptJPEGQualityDefault;
+
+  for i:=0 to High(PNGCOMPRESSION_STRINGS) do
+    ComboBoxPngCompression.Items.Add(PNGCOMPRESSION_STRINGS[i]);
+
+  ComboBoxShuffleSeed.Items[0] := SCptRandomSeed;
 
   FWorkingDirectory := GetCurrentDir;
 end;
@@ -696,7 +700,10 @@ end;
 
 procedure TMainDialog.ActionPresentationExecute(Sender: TObject);
 begin
-  PresentationDialog.Show(FPresentationSettings, FPresentationSettingsList);
+  if PresentationDialog.Execute(FPresentationSettings, FPresentationSettingsList) then begin
+    if FPresentationSettings.Dirty or FPresentationSettingsList.Dirty then
+      Dirty := true;
+  end;
 end;
 
 procedure TMainDialog.ActionSourceExecute(Sender: TObject);
@@ -925,7 +932,7 @@ begin
     EditSrcMasks.Text                   := '*.jpg; *.png';
     EditTargetFolder.Text               := '';
     EditSizes.Text                      := '';
-    ComboBoxJpgQuality.Text             := ImgResizer.JpgQualityToStr(ImgResizer.JpgQuality);
+    ComboBoxJPEGQuality.Text            := ImgResizer.JpgQualityToStr(ImgResizer.JpgQuality);
     ComboBoxPngCompression.Text         := TProcessor.PngCompressionToStr(ImgResizer.PngCompression);
     ComboBoxResampling.Text             := RESAMPLING_STRINGS[DEFAULT_RESAMPLING];
     EditMrkFilename.Text                := '';
@@ -938,7 +945,7 @@ begin
     RadioButtonRenSimple.Checked        := true;
     EditRenTemplate.Text                := DEFAULT_RENFILETEMPLATE;
     CheckBoxShuffle.Checked             := DEFAULT_SHUFFLE;
-    ComboBoxShuffleSeed.Text            := SCptRandom;
+    ComboBoxShuffleSeed.Text            := SCptRandomSeed;
     CheckBoxMrkEnabled.Checked          := false;
     CheckBoxTagsSourceEXIF.Checked      := false;
     CheckBoxTagsSourceTagsFiles.Checked := false;
@@ -998,7 +1005,7 @@ begin
     EditTargetFolder.Text                 := ReadString(SETTINGSSECTION, 'TargetFolder', EditTargetFolder.Text);
     EditSizes.Text                        := ReadString(SETTINGSSECTION, 'Sizes', EditSizes.Text);
     RequiredStepsUpdate;
-    ComboBoxJpgQuality.Text               := ReadString(SETTINGSSECTION, 'JpgOptions.Quality', ComboBoxJpgQuality.Text);
+    ComboBoxJPEGQuality.Text               := ReadString(SETTINGSSECTION, 'JpgOptions.Quality', ComboBoxJPEGQuality.Text);
     ComboBoxPngCompression.Text           := ReadString(SETTINGSSECTION, 'PngOptions.Compression', ComboBoxPngCompression.Text);
     ComboBoxResampling.Text               := ReadString(SETTINGSSECTION, 'Resampling', RESAMPLING_STRINGS[DEFAULT_RESAMPLING]);
     CheckBoxMrkEnabled.Checked            := ReadBool(SETTINGSSECTION, 'MrkEnabled', CheckBoxMrkEnabled.Checked);
@@ -1046,7 +1053,7 @@ begin
     WriteString(SETTINGSSECTION, 'SourceFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, LINESEP));
     WriteString(SETTINGSSECTION, 'Sizes', EditSizes.Text);
     WriteString(SETTINGSSECTION, 'TargetFolder', EditTargetFolder.Text);
-    WriteString(SETTINGSSECTION, 'JpgOptions.Quality', ComboBoxJpgQuality.Text);
+    WriteString(SETTINGSSECTION, 'JpgOptions.Quality', ComboBoxJPEGQuality.Text);
     WriteString(SETTINGSSECTION, 'PngOptions.Compression', ComboBoxPngCompression.Text);
     WriteString(SETTINGSSECTION, 'Resampling', ComboBoxResampling.Text);
     WriteBool(SETTINGSSECTION, 'MrkEnabled', CheckBoxMrkEnabled.Checked);
@@ -1678,7 +1685,7 @@ begin
 
         // Quality
         Processor := TProcessor.Create;
-        if not TProcessor.TryStrToJpgQuality(ComboBoxJpgQuality.Text, IntValue) then
+        if not TProcessor.TryStrToJpgQuality(ComboBoxJPEGQuality.Text, IntValue) then
           raise Exception.Create(SErrInvalidJpgQuality);
         Processor.JpgQuality := IntValue;
         Processor.PngCompression := ComboBoxPngCompression.ItemIndex;

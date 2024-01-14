@@ -5,5 +5,5 @@ object PresentationProcessorFrame: TPresentationProcessorFrame
   Width = 455
   TabOrder = 0
   DesignLeft = 381
-  DesignTop = 136
+  DesignTop = 439
 end

@@ -56,7 +56,7 @@ type
     procedure SetProcessorId(AValue: string);
     procedure SetProcessorIndex(AValue: integer);
   public
-    procedure Show(PresentationSettings :TPresentationSettings; PresentationSettingsList :TSettingsList);
+    function Execute(PresentationSettings :TPresentationSettings; PresentationSettingsList :TSettingsList) :boolean;
     procedure Scan;
     property ProcessorId :string read GetProcessorId write SetProcessorId;
     property Processor :TCustomProcessor read GetProcessor;
@@ -230,11 +230,12 @@ begin
   end;
 end;
 
-procedure TPresentationDialog.Show(PresentationSettings :TPresentationSettings; PresentationSettingsList :TSettingsList);
+function TPresentationDialog.Execute(PresentationSettings :TPresentationSettings; PresentationSettingsList :TSettingsList) :boolean;
 begin
   FPresentationSettings := PresentationSettings;
   FPresentationSettingsList := PresentationSettingsList;
-  if ShowModal<>mrCancel then begin
+  result :=  ShowModal = mrOk;
+  if result then begin
     FPresentationSettings.ProcessorId   := ProcessorId;
     FPresentationSettings.TargetFolder  := EditTargetFolder.Text;
     FPresentationSettings.TargetTitle   := EditTargetTitle.Text;

@@ -248,7 +248,7 @@ object MainDialog: TMainDialog
         Top = 4
         Width = 393
         TabStop = False
-        ActivePage = TabSheetWatermark
+        ActivePage = TabSheetQuality
         Align = alClient
         BorderSpacing.Around = 4
         Images = ImageList32x32
@@ -256,7 +256,7 @@ object MainDialog: TMainDialog
         MultiLine = True
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 2
+        TabIndex = 3
         TabOrder = 1
         Options = [nboMultiLine]
         object TabSheetSizes: TTabSheet
@@ -948,15 +948,15 @@ object MainDialog: TMainDialog
               Top = 8
               Width = 82
               Caption = 'Quality (1..100):'
-              FocusControl = ComboBoxJpgQuality
+              FocusControl = ComboBoxJPEGQuality
               ParentColor = False
             end
-            object ComboBoxJpgQuality: TComboBox
+            object ComboBoxJPEGQuality: TComboBox
               Left = 128
               Height = 23
-              Hint = 'Enter a jpg compression quality from'#13#10#13#10'1 - high compression, poor quality, small image'#13#10'75 - good compression, good quality, medium size'#13#10'100 - low compression, highest quality, large file '#13#10#13#10'It makes not much sense to enter a higher rate, than'#13#10'the original file has.'
+              Hint = 'Enter a JPEG compression quality from'#13#10#13#10'1 - high compression, poor quality, small image'#13#10'75 - good compression, good quality, medium size'#13#10'100 - low compression, highest quality, large file'
               Top = 5
-              Width = 100
+              Width = 120
               ItemHeight = 15
               ItemIndex = 5
               Items.Strings = (
@@ -1001,18 +1001,10 @@ object MainDialog: TMainDialog
               Height = 23
               Hint = 'Select a PNG lossless compression degree.'
               Top = 4
-              Width = 100
+              Width = 120
               ItemHeight = 15
-              ItemIndex = 2
-              Items.Strings = (
-                'none'
-                'fastest'
-                'default'
-                'max'
-              )
               Style = csDropDownList
               TabOrder = 0
-              Text = 'default'
               OnChange = ProjectChanged
             end
           end
@@ -1043,7 +1035,7 @@ object MainDialog: TMainDialog
               Height = 23
               Hint = 'The image quality and the processing'#13#10'speed depend on the algorithm of'#13#10'resampling. Lanczos2 is the default for'#13#10'a good speed and quality.'#13#10'2 means the Lanczos algorithms radius.'
               Top = 5
-              Width = 100
+              Width = 120
               ItemHeight = 15
               Style = csDropDownList
               TabOrder = 0

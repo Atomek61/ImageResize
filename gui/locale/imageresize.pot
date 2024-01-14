@@ -79,19 +79,105 @@ msgstr ""
 
 #: galleryprocessor.smsgstatisticsfmt
 #, object-pascal-format
-msgid "Copied: %d/%d (%.0f%%), Processed: %d/%d (%.0f%%), Solved: %d/%d (%.0f%%), Lists: %d, Rows: %d, Replaced: %d, Elapsed %.1fs."
+msgid "Copied: %d/%d (%.0f%%), processed: %d/%d (%.0f%%), solved: %d/%d (%.0f%%), lists: %d, rows: %d, replaced: %d, elapsed %.1fs."
 msgstr ""
 
 #: imgres.scptabort
 msgid "Abort"
 msgstr ""
 
+#: imgres.scptbestquality
+msgid "Best Quality"
+msgstr ""
+
+#: imgres.scptbicubic
+msgid "Bicubic"
+msgstr ""
+
+#: imgres.scptbox
+msgid "Box"
+msgstr ""
+
+#: imgres.scptcosine
+msgid "Cosine"
+msgstr ""
+
 #: imgres.scptfatal
 msgid "Fatal"
 msgstr ""
 
+#: imgres.scpthalfcosine
+msgid "Half Cosine"
+msgstr ""
+
 #: imgres.scpthint
 msgid "Hint"
+msgstr ""
+
+#: imgres.scptjpegqualitydefault
+msgctxt "imgres.scptjpegqualitydefault"
+msgid "Default"
+msgstr ""
+
+#: imgres.scptlanczos2
+msgid "Lanczos R2"
+msgstr ""
+
+#: imgres.scptlanczos3
+msgid "Lanczos R3"
+msgstr ""
+
+#: imgres.scptlanczos4
+msgid "Lanczos R4"
+msgstr ""
+
+#: imgres.scptlinear
+msgid "Linear"
+msgstr ""
+
+#: imgres.scptmaximumthread
+msgctxt "imgres.scptmaximumthread"
+msgid "Maximum"
+msgstr ""
+
+#: imgres.scptmitchell
+msgid "Mitchell"
+msgstr ""
+
+#: imgres.scptpngcompressiondefault
+msgctxt "imgres.scptpngcompressiondefault"
+msgid "Default"
+msgstr ""
+
+#: imgres.scptpngcompressionfastest
+msgid "Fastest"
+msgstr ""
+
+#: imgres.scptpngcompressionmax
+msgctxt "imgres.scptpngcompressionmax"
+msgid "Maximum"
+msgstr ""
+
+#: imgres.scptpngcompressionnone
+msgid "None"
+msgstr ""
+
+#: imgres.scptrandomseed
+msgctxt "imgres.scptrandomseed"
+msgid "<random>"
+msgstr ""
+
+#: imgres.scptsinglethread
+msgctxt "imgres.scptsinglethread"
+msgid "Single"
+msgstr ""
+
+#: imgres.scptspline
+msgid "Spline"
+msgstr ""
+
+#: imgres.scptstretch
+msgid "Stretch"
 msgstr ""
 
 #: imgres.scptwarning
@@ -240,6 +326,17 @@ msgstr ""
 #: imgres.smsgwritingtagsreportfmt
 #, object-pascal-format
 msgid "Writing Tags Report to '%s'..."
+msgstr ""
+
+#: imgtags.serrinvalidimageorientationfmt
+#, object-pascal-format
+msgid "Invalid image orientation '%s'."
+msgstr ""
+
+#: imgtags.serrinvalidimageratiofmt
+#, object-pascal-format
+msgctxt "imgtags.serrinvalidimageratiofmt"
+msgid "Invalid image format '%s'."
 msgstr ""
 
 #: maindlg.scptcancel
@@ -644,26 +741,30 @@ msgstr ""
 msgid "more values than tags"
 msgstr ""
 
+#: tcolorframe.label1.caption
+msgid "&Color:"
+msgstr ""
+
+#: tcolorpresentationprocessorframe.colorframebackground.label1.caption
+msgctxt "tcolorpresentationprocessorframe.colorframebackground.label1.caption"
+msgid "Background Color:"
+msgstr ""
+
+#: tcolorpresentationprocessorframe.colorframesymbols.label1.caption
+msgid "Symbols Color:"
+msgstr ""
+
+#: tcolorpresentationprocessorframe.colorframetitle.label1.caption
+msgctxt "tcolorpresentationprocessorframe.colorframetitle.label1.caption"
+msgid "Title Color:"
+msgstr ""
+
 #: tcolorpresentationprocessorframe.groupbox1.caption
 msgid "Preview"
 msgstr ""
 
 #: tcolorpresentationprocessorframe.label5.caption
 msgid "Label5"
-msgstr ""
-
-#: tcolorpresentationprocessorframe.labelbackgroundcolor.caption
-msgctxt "tcolorpresentationprocessorframe.labelbackgroundcolor.caption"
-msgid "Background Color:"
-msgstr ""
-
-#: tcolorpresentationprocessorframe.labelsymbolcolor.caption
-msgid "Symbol Color:"
-msgstr ""
-
-#: tcolorpresentationprocessorframe.labeltitlecolor.caption
-msgctxt "tcolorpresentationprocessorframe.labeltitlecolor.caption"
-msgid "Title Color:"
 msgstr ""
 
 #: threading.dispatcher.scptcancelled
@@ -920,29 +1021,23 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: tmaindialog.comboboxjpgquality.hint
+#: tmaindialog.comboboxjpegquality.hint
+msgctxt "tmaindialog.comboboxjpegquality.hint"
 msgid ""
-"Enter a jpg compression quality from\n"
+"Enter a JPEG compression quality from\n"
 "\n"
 "1 - high compression, poor quality, small image\n"
 "75 - good compression, good quality, medium size\n"
-"100 - low compression, highest quality, large file \n"
-"\n"
-"It makes not much sense to enter a higher rate, than\n"
-"the original file has."
+"100 - low compression, highest quality, large file"
 msgstr ""
 
-#: tmaindialog.comboboxjpgquality.text
+#: tmaindialog.comboboxjpegquality.text
+msgctxt "tmaindialog.comboboxjpegquality.text"
 msgid "75"
 msgstr ""
 
 #: tmaindialog.comboboxpngcompression.hint
 msgid "Select a PNG lossless compression degree."
-msgstr ""
-
-#: tmaindialog.comboboxpngcompression.text
-msgctxt "tmaindialog.comboboxpngcompression.text"
-msgid "default"
 msgstr ""
 
 #: tmaindialog.comboboxresampling.hint
@@ -1515,7 +1610,7 @@ msgstr ""
 
 #: tpresentationdialog.buttonok.caption
 msgctxt "tpresentationdialog.buttonok.caption"
-msgid "Close"
+msgid "Ok"
 msgstr ""
 
 #: tpresentationdialog.buttonok.hint
@@ -1529,7 +1624,7 @@ msgstr ""
 
 #: tpresentationdialog.edittargetfolder.hint
 msgctxt "tpresentationdialog.edittargetfolder.hint"
-msgid "This folder must contain the images and an .imageinfo file."
+msgid "This folder must contain the images and an .images file."
 msgstr ""
 
 #: tpresentationdialog.groupboxparams.caption

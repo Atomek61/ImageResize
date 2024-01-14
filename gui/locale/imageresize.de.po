@@ -90,20 +90,106 @@ msgstr "Bearbeite '%s'..."
 
 #: galleryprocessor.smsgstatisticsfmt
 #, object-pascal-format
-msgid "Copied: %d/%d (%.0f%%), Processed: %d/%d (%.0f%%), Solved: %d/%d (%.0f%%), Lists: %d, Rows: %d, Replaced: %d, Elapsed %.1fs."
-msgstr "Kopiert: %d/%d (%.0f%%), Bearbeitet: %d/%d (%.0f%%), Gelöst: %d/%d (%.0f%%), Listen: %d, Zeilen: %d, Ersetzungen: %d, Vergangen %.1fs."
+msgid "Copied: %d/%d (%.0f%%), processed: %d/%d (%.0f%%), solved: %d/%d (%.0f%%), lists: %d, rows: %d, replaced: %d, elapsed %.1fs."
+msgstr "Kopiert: %d/%d (%.0f%%), bearbeitet: %d/%d (%.0f%%), gelöst: %d/%d (%.0f%%), Listen: %d, Zeilen: %d, Ersetzungen: %d, vergangen %.1fs."
 
 #: imgres.scptabort
 msgid "Abort"
 msgstr "Abbruch"
 
+#: imgres.scptbestquality
+msgid "Best Quality"
+msgstr "Beste Qualität"
+
+#: imgres.scptbicubic
+msgid "Bicubic"
+msgstr "Bikubisch"
+
+#: imgres.scptbox
+msgid "Box"
+msgstr "Box"
+
+#: imgres.scptcosine
+msgid "Cosine"
+msgstr "Cosinus"
+
 #: imgres.scptfatal
 msgid "Fatal"
 msgstr "Fatal"
 
+#: imgres.scpthalfcosine
+msgid "Half Cosine"
+msgstr "Halb-Cosinus"
+
 #: imgres.scpthint
 msgid "Hint"
 msgstr "Hinweis"
+
+#: imgres.scptjpegqualitydefault
+msgctxt "imgres.scptjpegqualitydefault"
+msgid "Default"
+msgstr "Voreinstellung"
+
+#: imgres.scptlanczos2
+msgid "Lanczos R2"
+msgstr "Lanczos R2"
+
+#: imgres.scptlanczos3
+msgid "Lanczos R3"
+msgstr "Lanczos R3"
+
+#: imgres.scptlanczos4
+msgid "Lanczos R4"
+msgstr "Lanczos R4"
+
+#: imgres.scptlinear
+msgid "Linear"
+msgstr "Linear"
+
+#: imgres.scptmaximumthread
+msgctxt "imgres.scptmaximumthread"
+msgid "Maximum"
+msgstr "Maximal"
+
+#: imgres.scptmitchell
+msgid "Mitchell"
+msgstr "Mitchell"
+
+#: imgres.scptpngcompressiondefault
+msgctxt "imgres.scptpngcompressiondefault"
+msgid "Default"
+msgstr "Voreinstellung"
+
+#: imgres.scptpngcompressionfastest
+msgid "Fastest"
+msgstr "Schnellste"
+
+#: imgres.scptpngcompressionmax
+msgctxt "imgres.scptpngcompressionmax"
+msgid "Maximum"
+msgstr "Maximal"
+
+#: imgres.scptpngcompressionnone
+msgid "None"
+msgstr "Keine"
+
+#: imgres.scptrandomseed
+msgctxt "imgres.scptrandomseed"
+msgid "<random>"
+msgstr "<zufällig>"
+
+#: imgres.scptsinglethread
+msgctxt "imgres.scptsinglethread"
+msgid "Single"
+msgstr "Single"
+
+#: imgres.scptspline
+msgid "Spline"
+msgstr "Spline"
+
+#: imgres.scptstretch
+msgid "Stretch"
+msgstr "Strecken"
 
 #: imgres.scptwarning
 msgctxt "imgres.scptwarning"
@@ -253,6 +339,17 @@ msgstr "Schreibe EXIF nach '%s'..."
 msgid "Writing Tags Report to '%s'..."
 msgstr "Schreibe Tags Report nach '%s'..."
 
+#: imgtags.serrinvalidimageorientationfmt
+#, object-pascal-format
+msgid "Invalid image orientation '%s'."
+msgstr ""
+
+#: imgtags.serrinvalidimageratiofmt
+#, object-pascal-format
+msgctxt "imgtags.serrinvalidimageratiofmt"
+msgid "Invalid image format '%s'."
+msgstr ""
+
 #: maindlg.scptcancel
 msgctxt "maindlg.scptcancel"
 msgid "Cancel"
@@ -325,7 +422,7 @@ msgstr "<unbenannt>"
 
 #: maindlg.scptwatermark
 msgid "WATERMARK"
-msgstr ""
+msgstr "WATERMARK"
 
 #: maindlg.serratfmt
 #, object-pascal-format
@@ -487,17 +584,17 @@ msgstr "Verzeichnisangabe fehlt oder das Verzeichnis existiert nicht."
 #: presentationprocessor.serrinivaluenotfoundfmt
 #, object-pascal-format
 msgid "Key '[%s]%s' not found in '%s'."
-msgstr ""
+msgstr "Bezeichner '[%s]%s' nicht gefunden in '%s'."
 
 #: presentationprocessor.serrmissingpresentationprocessorclassfmt
 #, object-pascal-format
 msgid "Missing PresentationProcessor class entry in '%s'."
-msgstr ""
+msgstr "Fehlender \"Class\" Eintrag für PresentationProcessor in '%s'."
 
 #: presentationprocessor.serrunregisterpresentationprocessorfmt
 #, object-pascal-format
 msgid "Unregistered PresentationProcessor class '%s'."
-msgstr ""
+msgstr "Unregistrierte PresentationProcessor-Klasse '%s'."
 
 #: settingsdlg.scptbehavior0
 msgctxt "settingsdlg.scptbehavior0"
@@ -669,26 +766,32 @@ msgstr "fehlender Dateiname"
 msgid "more values than tags"
 msgstr "mehr Werte als Tags"
 
+#: tcolorframe.label1.caption
+msgid "&Color:"
+msgstr ""
+
+#: tcolorpresentationprocessorframe.colorframebackground.label1.caption
+#, fuzzy
+msgctxt "tcolorpresentationprocessorframe.colorframebackground.label1.caption"
+msgid "Background Color:"
+msgstr "Hintergrundfarbe:"
+
+#: tcolorpresentationprocessorframe.colorframesymbols.label1.caption
+msgid "Symbols Color:"
+msgstr ""
+
+#: tcolorpresentationprocessorframe.colorframetitle.label1.caption
+#, fuzzy
+msgctxt "tcolorpresentationprocessorframe.colorframetitle.label1.caption"
+msgid "Title Color:"
+msgstr "Farbe des Titels:"
+
 #: tcolorpresentationprocessorframe.groupbox1.caption
 msgid "Preview"
-msgstr ""
+msgstr "Vorschau"
 
 #: tcolorpresentationprocessorframe.label5.caption
 msgid "Label5"
-msgstr ""
-
-#: tcolorpresentationprocessorframe.labelbackgroundcolor.caption
-msgctxt "tcolorpresentationprocessorframe.labelbackgroundcolor.caption"
-msgid "Background Color:"
-msgstr ""
-
-#: tcolorpresentationprocessorframe.labelsymbolcolor.caption
-msgid "Symbol Color:"
-msgstr ""
-
-#: tcolorpresentationprocessorframe.labeltitlecolor.caption
-msgctxt "tcolorpresentationprocessorframe.labeltitlecolor.caption"
-msgid "Title Color:"
 msgstr ""
 
 #: threading.dispatcher.scptcancelled
@@ -960,37 +1063,29 @@ msgstr "Zeitstempel"
 msgid "Title"
 msgstr "Titel"
 
-#: tmaindialog.comboboxjpgquality.hint
+#: tmaindialog.comboboxjpegquality.hint
+msgctxt "tmaindialog.comboboxjpegquality.hint"
 msgid ""
-"Enter a jpg compression quality from\n"
+"Enter a JPEG compression quality from\n"
 "\n"
 "1 - high compression, poor quality, small image\n"
 "75 - good compression, good quality, medium size\n"
-"100 - low compression, highest quality, large file \n"
-"\n"
-"It makes not much sense to enter a higher rate, than\n"
-"the original file has."
+"100 - low compression, highest quality, large file"
 msgstr ""
-"JPEG-Kompressions-Qualität\n"
+"JPEG-Kompressions\n"
 "\n"
 "1- Hohe Kompression, magere Qualität, kleine Dateien\n"
 "75 - Gute Kompression, gute Qualität, mittlere Größe\n"
-"100 - geringe Kompresssion, hohe Qualität, große Datei\n"
-"\n"
-"Es hat keinen Sinn eine höhere Qualität als das Original anzugeben."
+"100 - geringe Kompresssion, hohe Qualität, große Datei"
 
-#: tmaindialog.comboboxjpgquality.text
+#: tmaindialog.comboboxjpegquality.text
+msgctxt "tmaindialog.comboboxjpegquality.text"
 msgid "75"
 msgstr "75"
 
 #: tmaindialog.comboboxpngcompression.hint
 msgid "Select a PNG lossless compression degree."
 msgstr "Wählt eine verlustlose Kompression für PNG."
-
-#: tmaindialog.comboboxpngcompression.text
-msgctxt "tmaindialog.comboboxpngcompression.text"
-msgid "default"
-msgstr "standard"
 
 #: tmaindialog.comboboxresampling.hint
 msgctxt "tmaindialog.comboboxresampling.hint"
@@ -1594,16 +1689,14 @@ msgid "ToolButton9"
 msgstr ""
 
 #: tpresentationdialog.buttoncancel.caption
-#, fuzzy
-#| msgid "Cancel"
 msgctxt "tpresentationdialog.buttoncancel.caption"
 msgid "Close"
-msgstr "Abbrechen"
+msgstr "Schließen"
 
 #: tpresentationdialog.buttoncancel.hint
 msgctxt "tpresentationdialog.buttoncancel.hint"
 msgid "Closes the dialog and discards the settings"
-msgstr ""
+msgstr "Schließt den Dialog und verwirft geänderte Einstellungen"
 
 #: tpresentationdialog.buttonexecute.caption
 msgctxt "tpresentationdialog.buttonexecute.caption"
@@ -1612,18 +1705,17 @@ msgstr "Erzeugen"
 
 #: tpresentationdialog.buttonexecute.hint
 msgid "Starts the selected processor to create the presentation."
-msgstr ""
+msgstr "Startet den ausgewählten Prozessor um die Präsentation zu erzeugen."
 
 #: tpresentationdialog.buttonok.caption
-#, fuzzy
 msgctxt "tpresentationdialog.buttonok.caption"
-msgid "Close"
-msgstr "Schließen"
+msgid "Ok"
+msgstr "Ok"
 
 #: tpresentationdialog.buttonok.hint
 msgctxt "tpresentationdialog.buttonok.hint"
 msgid "Closes the dialog and saves the settings"
-msgstr ""
+msgstr "Schließt den Dialog und übernimmt geänderte Einstellungen"
 
 #: tpresentationdialog.caption
 msgid "Presentation"
@@ -1631,8 +1723,8 @@ msgstr "Präsentation"
 
 #: tpresentationdialog.edittargetfolder.hint
 msgctxt "tpresentationdialog.edittargetfolder.hint"
-msgid "This folder must contain the images and an .imageinfo file."
-msgstr ""
+msgid "This folder must contain the images and an .images file."
+msgstr "Das Verzeichnis enthält die Bilder und eine .images -Datei."
 
 #: tpresentationdialog.groupboxparams.caption
 msgctxt "tpresentationdialog.groupboxparams.caption"
@@ -1650,7 +1742,6 @@ msgid "<LongDescription>"
 msgstr "<Lange Beschreibung>"
 
 #: tpresentationdialog.labeltargetfolder.caption
-#, fuzzy
 msgctxt "tpresentationdialog.labeltargetfolder.caption"
 msgid "&Folder with Images:"
 msgstr "Bild&ordner:"
@@ -1658,7 +1749,7 @@ msgstr "Bild&ordner:"
 #: tpresentationdialog.labeltargettitle.caption
 msgctxt "tpresentationdialog.labeltargettitle.caption"
 msgid "&Title:"
-msgstr ""
+msgstr "&Titel:"
 
 #: tsettingsdialog.buttoncancel.caption
 msgctxt "tsettingsdialog.buttoncancel.caption"

@@ -396,7 +396,7 @@ object SettingsDialog: TSettingsDialog
     Height = 23
     Hint = 'ImageResize uses thread pooling to benefit'#13#10'the full computers power.'#13#10#13#10'The number of threads should be limited'#13#10'to the available number of cores.'
     Top = 16
-    Width = 80
+    Width = 104
     ItemHeight = 15
     ItemIndex = 0
     Items.Strings = (
@@ -407,7 +407,7 @@ object SettingsDialog: TSettingsDialog
     Text = 'Single'
   end
   object LabelCores: TLabel
-    Left = 264
+    Left = 288
     Height = 15
     Top = 19
     Width = 30
@@ -559,6 +559,7 @@ object SettingsDialog: TSettingsDialog
       Anchors = [akRight, akBottom]
       BorderSpacing.Around = 8
       Caption = 'Ok'
+      ModalResult = 1
       Images = ImagesModule.ImageList20x20
       ImageIndex = 2
       TabOrder = 0

@@ -1,29 +1,30 @@
 object ColorFrame: TColorFrame
   Left = 0
-  Height = 27
+  Height = 28
   Top = 0
-  Width = 206
-  ClientHeight = 27
-  ClientWidth = 206
+  Width = 249
+  ClientHeight = 28
+  ClientWidth = 249
   TabOrder = 0
-  DesignLeft = 686
-  DesignTop = 198
+  DesignLeft = 576
+  DesignTop = 240
   object PanelColor: TPanel
-    Left = 2
-    Height = 23
+    Left = 131
+    Height = 24
     Top = 2
-    Width = 140
-    Align = alClient
+    Width = 54
+    Align = alRight
     BorderSpacing.Around = 2
     BevelOuter = bvLowered
     Color = 16248033
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
+    OnClick = PanelColorClick
   end
   object ButtonSelect: TBitBtn
-    Left = 144
-    Height = 25
+    Left = 187
+    Height = 26
     Top = 1
     Width = 30
     Align = alRight
@@ -35,8 +36,8 @@ object ColorFrame: TColorFrame
     TabOrder = 1
   end
   object ButtonDefaultColor: TBitBtn
-    Left = 175
-    Height = 25
+    Left = 218
+    Height = 26
     Top = 1
     Width = 30
     Align = alRight
@@ -46,6 +47,18 @@ object ColorFrame: TColorFrame
     OnClick = ButtonDefaultColorClick
     Spacing = 0
     TabOrder = 2
+  end
+  object Label1: TLabel
+    Left = 4
+    Height = 20
+    Top = 4
+    Width = 123
+    Align = alClient
+    AutoSize = False
+    BorderSpacing.Around = 4
+    Caption = '&Color:'
+    FocusControl = PanelColor
+    Layout = tlCenter
   end
   object ColorDialog: TColorDialog
     Color = clBlack
@@ -71,7 +84,7 @@ object ColorFrame: TColorFrame
       'ColorS=F0FBFF'
       'ColorT=A4A0A0'
     )
-    Left = 8
+    Left = 64
     Top = 8
   end
 end

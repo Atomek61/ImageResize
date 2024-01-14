@@ -30,12 +30,14 @@ type
     procedure LoadFromIni(Ini :TCustomIniFile); virtual;
     property Section :string read FSection write FSection;
     property OnChanged :TNotifyEvent read FOnChanged write FOnChanged;
+    property Dirty :boolean read FDirty;
   end;
 
   { TSettingsList }
 
   TSettingsList = class(TObjectDictionary<string, TSettings>)
   private
+    FDirty :boolean;
     FSectionPrefix :string;
     FOnChanged :TNotifyEvent;
     FChangedSettings :TSettings; // Which TSettings has been changed when OnChanged
@@ -51,6 +53,7 @@ type
     property SectionPrefix :string read FSectionPrefix {write FSectionPrefix whynot};
     property OnChanged :TNotifyEvent read FOnChanged write FOnChanged;
     property ChangedSettings :TSettings read FChangedSettings;
+    property Dirty :boolean read FDirty;
   end;
 
 implementation
@@ -119,6 +122,7 @@ end;
 
 procedure TSettingsList.DoChanged;
 begin
+  FDirty := true;
   if Assigned(FOnChanged) then
     FOnChanged(self);
 end;

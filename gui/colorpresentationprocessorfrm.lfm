@@ -5,31 +5,7 @@ inherited ColorPresentationProcessorFrame: TColorPresentationProcessorFrame
   ClientWidth = 438
   DesignLeft = 1162
   DesignTop = 398
-  object LabelTitleColor: TLabel[0]
-    Left = 8
-    Height = 15
-    Top = 13
-    Width = 120
-    AutoSize = False
-    Caption = 'Title Color:'
-  end
-  object LabelSymbolColor: TLabel[1]
-    Left = 8
-    Height = 15
-    Top = 53
-    Width = 120
-    AutoSize = False
-    Caption = 'Symbol Color:'
-  end
-  object LabelBackgroundColor: TLabel[2]
-    Left = 8
-    Height = 15
-    Top = 93
-    Width = 120
-    AutoSize = False
-    Caption = 'Background Color:'
-  end
-  object GroupBox1: TGroupBox[3]
+  object GroupBox1: TGroupBox[0]
     Left = 263
     Height = 105
     Top = 10
@@ -70,58 +46,28 @@ inherited ColorPresentationProcessorFrame: TColorPresentationProcessorFrame
       Width = 80
     end
   end
-  inline ColorFrameTitle: TColorFrame[4]
-    AnchorSideLeft.Control = LabelTitleColor
-    AnchorSideLeft.Side = asrBottom
-    Left = 128
+  inline ColorFrameTitle: TColorFrame[1]
+    Left = 8
     Top = 8
-    Width = 120
-    ClientWidth = 120
     TabOrder = 1
-    inherited PanelColor: TPanel
-      Width = 54
-    end
-    inherited ButtonSelect: TBitBtn
-      Left = 58
-    end
-    inherited ButtonDefaultColor: TBitBtn
-      Left = 89
+    inherited Label1: TLabel
+      Caption = 'Title Color:'
     end
   end
-  inline ColorFrameSymbols: TColorFrame[5]
-    AnchorSideLeft.Control = LabelSymbolColor
-    AnchorSideLeft.Side = asrBottom
-    Left = 128
-    Top = 47
-    Width = 120
-    ClientWidth = 120
-    TabOrder = 3
-    inherited PanelColor: TPanel
-      Width = 54
-    end
-    inherited ButtonSelect: TBitBtn
-      Left = 58
-    end
-    inherited ButtonDefaultColor: TBitBtn
-      Left = 89
-    end
-  end
-  inline ColorFrameBackground: TColorFrame[6]
-    AnchorSideLeft.Control = LabelBackgroundColor
-    AnchorSideLeft.Side = asrBottom
-    Left = 128
-    Top = 86
-    Width = 120
-    ClientWidth = 120
+  inline ColorFrameSymbols: TColorFrame[2]
+    Left = 8
+    Top = 45
     TabOrder = 2
-    inherited PanelColor: TPanel
-      Width = 54
+    inherited Label1: TLabel
+      Caption = 'Symbols Color:'
     end
-    inherited ButtonSelect: TBitBtn
-      Left = 58
-    end
-    inherited ButtonDefaultColor: TBitBtn
-      Left = 89
+  end
+  inline ColorFrameBackground: TColorFrame[3]
+    Left = 8
+    Top = 80
+    TabOrder = 3
+    inherited Label1: TLabel
+      Caption = 'Background Color:'
     end
   end
 end

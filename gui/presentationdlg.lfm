@@ -49,7 +49,7 @@ object PresentationDialog: TPresentationDialog
       Align = alRight
       Anchors = [akRight, akBottom]
       BorderSpacing.Around = 8
-      Caption = 'Close'
+      Caption = 'Ok'
       GlyphShowMode = gsmAlways
       ModalResult = 1
       Images = ImagesModule.ImageList20x20
@@ -149,7 +149,7 @@ object PresentationDialog: TPresentationDialog
       Width = 433
       Anchors = [akTop, akLeft, akRight, akBottom]
       Caption = '&Settings'
-      TabOrder = 4
+      TabOrder = 5
     end
     object ButtonBrowseTargetFolder: TBitBtn
       AnchorSideLeft.Control = EditTargetFolder
@@ -169,7 +169,7 @@ object PresentationDialog: TPresentationDialog
     object EditTargetFolder: TEdit
       Left = 16
       Height = 23
-      Hint = 'This folder must contain the images and an .imageinfo file.'
+      Hint = 'This folder must contain the images and an .images file.'
       Top = 400
       Width = 297
       Anchors = [akLeft, akBottom]
@@ -200,7 +200,7 @@ object PresentationDialog: TPresentationDialog
       Top = 131
       Width = 376
       Anchors = [akTop, akLeft, akRight]
-      TabOrder = 5
+      TabOrder = 4
     end
   end
   object MemoMessages: TRichMemo

@@ -439,6 +439,7 @@ var
 begin
   FrameToParams;
   FProcessor.TargetFolder := TargetFolder;
+  FProcessor.DocumentVars['TITLE'] := TargetTitle;
   FProcessor.Execute(Stats);
 end;
 

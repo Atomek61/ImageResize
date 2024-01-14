@@ -1,7 +1,7 @@
 {"version":1,"strings":[
-{"hash":20358186,"name":"tcolorpresentationprocessorframe.labeltitlecolor.caption","sourcebytes":[84,105,116,108,101,32,67,111,108,111,114,58],"value":"Title Color:"},
-{"hash":262652906,"name":"tcolorpresentationprocessorframe.labelsymbolcolor.caption","sourcebytes":[83,121,109,98,111,108,32,67,111,108,111,114,58],"value":"Symbol Color:"},
-{"hash":173869098,"name":"tcolorpresentationprocessorframe.labelbackgroundcolor.caption","sourcebytes":[66,97,99,107,103,114,111,117,110,100,32,67,111,108,111,114,58],"value":"Background Color:"},
 {"hash":126668695,"name":"tcolorpresentationprocessorframe.groupbox1.caption","sourcebytes":[80,114,101,118,105,101,119],"value":"Preview"},
-{"hash":86477813,"name":"tcolorpresentationprocessorframe.label5.caption","sourcebytes":[76,97,98,101,108,53],"value":"Label5"}
+{"hash":86477813,"name":"tcolorpresentationprocessorframe.label5.caption","sourcebytes":[76,97,98,101,108,53],"value":"Label5"},
+{"hash":20358186,"name":"tcolorpresentationprocessorframe.colorframetitle.label1.caption","sourcebytes":[84,105,116,108,101,32,67,111,108,111,114,58],"value":"Title Color:"},
+{"hash":79515834,"name":"tcolorpresentationprocessorframe.colorframesymbols.label1.caption","sourcebytes":[83,121,109,98,111,108,115,32,67,111,108,111,114,58],"value":"Symbols Color:"},
+{"hash":173869098,"name":"tcolorpresentationprocessorframe.colorframebackground.label1.caption","sourcebytes":[66,97,99,107,103,114,111,117,110,100,32,67,111,108,111,114,58],"value":"Background Color:"}
 ]}

@@ -61,7 +61,7 @@ resourcestring
   SMsgBuildingLists = 'Building lists...';
   SMsgProcessingTemplateFmt = 'Processing ''%s''...';
   SMsgCopyingFmt = 'Copying ''%s''...';
-  SMsgStatisticsFmt = 'Copied: %d/%d (%.0f%%), Processed: %d/%d (%.0f%%), Solved: %d/%d (%.0f%%), Lists: %d, Rows: %d, Replaced: %d, Elapsed %.1fs.';
+  SMsgStatisticsFmt = 'Copied: %d/%d (%.0f%%), processed: %d/%d (%.0f%%), solved: %d/%d (%.0f%%), lists: %d, rows: %d, replaced: %d, elapsed %.1fs.';
   SMsgFinalOk = 'Ok';
 
 { TProcessor }

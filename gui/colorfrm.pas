@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, ExtCtrls, Buttons, Dialogs, FPImage,
-  System.UITypes, Graphics;
+  System.UITypes, Graphics, StdCtrls, ImagesMod;
 
 type
 
@@ -16,9 +16,11 @@ type
     ButtonSelect: TBitBtn;
     ButtonDefaultColor: TBitBtn;
     ColorDialog: TColorDialog;
+    Label1: TLabel;
     PanelColor: TPanel;
     procedure ButtonDefaultColorClick(Sender: TObject);
     procedure ButtonSelectClick(Sender: TObject);
+    procedure PanelColorClick(Sender: TObject);
   private
     FDefault :TColor;
     function GetSelected: TColor;
@@ -40,6 +42,11 @@ begin
   ColorDialog.Color := Selected;
   if ColorDialog.Execute then
     Selected := ColorDialog.Color;
+end;
+
+procedure TColorFrame.PanelColorClick(Sender: TObject);
+begin
+  ButtonSelectClick(nil);
 end;
 
 procedure TColorFrame.ButtonDefaultColorClick(Sender: TObject);

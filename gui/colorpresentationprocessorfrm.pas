@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, StdCtrls, ColorBox, ExtCtrls,
-  PresentationProcessorFrm, colorfrm, System.UITypes;
+  PresentationProcessorFrm, colorfrm, Graphics, System.UITypes, ImagesMod;
 
 type
 
@@ -18,9 +18,6 @@ type
     ColorFrameBackground: TColorFrame;
     GroupBox1: TGroupBox;
     Image1: TImage;
-    LabelSymbolColor: TLabel;
-    LabelTitleColor: TLabel;
-    LabelBackgroundColor: TLabel;
     Label5: TLabel;
     Shape1: TShape;
   private
@@ -38,9 +35,9 @@ implementation
 constructor TColorPresentationProcessorFrame.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-  ColorFrameTitle.Default := TColorRec.DarkSlateGray;
-  ColorFrameBackground.Default := TColorRec.FireBrick;
-  ColorFrameBackground.Default := TColorRec.PaleTurquoise;
+  ColorFrameTitle.Default := clBlack;
+  ColorFrameSymbols.Default := clRed;
+  ColorFrameBackground.Default := clWhite;
 end;
 
 end.

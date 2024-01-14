@@ -26,6 +26,33 @@ uses
   Classes, SysUtils, StrUtils, Types, BGRABitmap, BGRABitmapTypes,
   threading.dispatcher, tags, logging, StringArrays;
 
+resourcestring
+  SCptStretch     = 'Stretch';
+  SCptBox         = 'Box';
+  SCptLinear      = 'Linear';
+  SCptHalfCosine  = 'Half Cosine';
+  SCptCosine      = 'Cosine';
+  SCptBicubic     = 'Bicubic';
+  SCptMitchell    = 'Mitchell';
+  SCptSpline      = 'Spline';
+  SCptLanczos2    = 'Lanczos R2';
+  SCptLanczos3    = 'Lanczos R3';
+  SCptLanczos4    = 'Lanczos R4';
+  SCptBestQuality = 'Best Quality';
+
+  SCptJPEGQualityDefault     = 'Default';
+
+  SCptPNGCompressionDefault  = 'Default';
+  SCptPNGCompressionNone     = 'None';
+  SCptPNGCompressionFastest  = 'Fastest';
+  SCptPNGCompressionMax      = 'Maximum';
+
+  SCptRandomSeed             = '<random>';
+
+  SCptSingleThread  = 'Single';
+  SCptMaximumThread = 'Maximum';
+
+
 type
   TTagsSource = (tsEXIF, tsTagsFiles); // Tags from EXIF and/or .tags files
   TTagsSources = set of TTagsSource;
@@ -37,11 +64,13 @@ type
 
 const
   RESAMPLING_STRINGS :array[TResampling] of string = (
-    'Stretch', 'Box', 'Linear', 'Half Cosine', 'Cosine', 'Bicubic',
-    'Mitchell', 'Spline', 'Lanczos 2', 'Lanczos 3', 'Lanczos 4', 'Best Quality');
+    SCptStretch, SCptBox, SCptLinear, SCptHalfCosine, SCptCosine, SCptBicubic,
+    SCptMitchell, SCptSpline, SCptLanczos2, SCptLanczos3, SCptLanczos4, SCptBestQuality);
   RESAMPLING_NAMES :array[TResampling] of string = (
     'Stretch', 'Box', 'Linear', 'HalfCosine', 'Cosine', 'Bicubic',
     'Mitchell', 'Spline', 'Lanczos2', 'Lanczos3', 'Lanczos4', 'BestQuality');
+  PNGCOMPRESSION_STRINGS :array[0..3] of string = (SCptPNGCompressionDefault,
+    SCptPNGCompressionNone, SCptPNGCompressionFastest, SCptPNGCompressionMax);
 
 const
   IMGRESVER = '3.3';
@@ -236,14 +265,6 @@ uses
   Math, ZStream, FPWriteJpeg, FPWritePng, FPImage, utils,
   generics.collections, EXIFUtils;
 
-const
-  SCptPNGCompNone    = 'none';
-  SCptPNGCompFastest = 'fastest';
-  SCptPNGCompDefault = 'default';
-  SCptPNGCompMax     = 'max';
-
-  SCptJpgQualityDefault = 'default';
-
 resourcestring
   SCptHint                        = 'Hint';
   SCptWarning                     = 'Warning';
@@ -280,7 +301,6 @@ resourcestring
   SInfResultFmt                   = 'Images: %d, Filter: %s, Sizes: %d, Tasks: %d, Successful: %d, Failed: %d, Elapsed: %.2fs';
   SErrInvalidResamplingFmt        = 'Invalid resampling value ''%s''';
 const
-  PNGCOMPRS :array[0..3] of string = (SCptPNGCompNone, SCptPNGCompFastest, SCptPNGCompDefault, SCptPNGCompMax);
   LEVELSTRS :array[TLevel] of string = (SCptHint, '', SCptWarning, SCptAbort, SCptFatal);
 
 type
@@ -870,8 +890,8 @@ class function TProcessor.TryStrToPngCompression(const Str: string; out Value: i
 var
   i :integer;
 begin
-  for i:=0 to High(PNGCOMPRS) do
-    if SameText(PNGCOMPRS[i], Str) then begin
+  for i:=0 to High(PNGCOMPRESSION_STRINGS) do
+    if SameText(PNGCOMPRESSION_STRINGS[i], Str) then begin
         Value := i;
         Exit(true);
     end;
@@ -880,14 +900,14 @@ end;
 
 class function TProcessor.PngCompressionToStr(const Value :integer) :string;
 begin
-  if (Value<0) or (Value>High(PNGCOMPRS)) then
+  if (Value<0) or (Value>High(PNGCOMPRESSION_STRINGS)) then
     raise Exception.CreateFmt(SErrInvalidPngCompressionFmt, [Value]);
-  result := PNGCOMPRS[Value];
+  result := PNGCOMPRESSION_STRINGS[Value];
 end;
 
 class function TProcessor.TryStrToJpgQuality(const Str :string; out Value :integer) :boolean;
 begin
-  if SameText(Trim(Str), SCptJpgQualityDefault) then begin
+  if SameText(Trim(Str), SCptJPEGQualityDefault) then begin
     Value := DEFAULTJPGQUALITY;
     result := true;
   end else
@@ -899,7 +919,7 @@ begin
   if (Value<1) or (Value>100) then
     raise Exception.CreateFmt(SErrInvalidJpgQualityFmt, [Value]);
   if Value=DEFAULTJPGQUALITY then
-    result := SCptJpgQualityDefault
+    result := SCptJPEGQualityDefault
   else
     result := IntToStr(Value);
 end;

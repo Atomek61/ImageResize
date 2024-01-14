@@ -15,7 +15,7 @@ uses
   animator, logging, imagesmod, presentationprocessor,
   slideshow200presentationprocessor, galleryprocessor, stringarrays, appsettings, 
 colorpresentationprocessorfrm, presentationprocessorfrm, 
-colorfrm;
+colorfrm, imgtags;
 
 {$R *.res}
 
