@@ -1,4 +1,4 @@
-unit colorpresentationprocessorfrm;
+unit colorpresentationmanagerfrm;
 
 {$mode ObjFPC}{$H+}
 
@@ -6,13 +6,13 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, StdCtrls, ColorBox, ExtCtrls,
-  PresentationProcessorFrm, colorfrm, Graphics, System.UITypes, ImagesMod;
+  presentationmanagerfrm, colorfrm, Graphics, System.UITypes, ImagesMod;
 
 type
 
-  { TColorPresentationProcessorFrame }
+  { TColorPresentationmanagerFrame }
 
-  TColorPresentationProcessorFrame = class(TPresentationProcessorFrame)
+  TColorPresentationmanagerFrame = class(TPresentationManagerFrame)
     ColorFrameTitle: TColorFrame;
     ColorFrameSymbols: TColorFrame;
     ColorFrameBackground: TColorFrame;
@@ -30,9 +30,9 @@ implementation
 
 {$R *.lfm}
 
-{ TColorPresentationProcessorFrame }
+{ TColorPresentationmanagerFrame }
 
-constructor TColorPresentationProcessorFrame.Create(AOwner: TComponent);
+constructor TColorPresentationmanagerFrame.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   ColorFrameTitle.Default := clBlack;

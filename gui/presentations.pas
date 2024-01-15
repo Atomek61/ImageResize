@@ -1,4 +1,4 @@
-unit presentationprocessor;
+unit Presentations;
 
 {$mode Delphi}{$H+}
 
@@ -10,16 +10,17 @@ uses
   GalleryProcessor, Logging, StrUtils, StringArrays, Settings;
 
 type
-  TCustomProcessor = class;
-  TCustomProcessorClass = class of TCustomProcessor;
-  TProcessors = class;
+  TCustomManager = class;
+  TCustomManagerClass = class of TCustomManager;
+  TManagers = class;
   TFeature = (wpfDialog);
   TFeatures = set of TFeature;
   TFrameClass = class of TFrame;
 
-  { TCustomProcessor }
+  { TCustomManager }
 
-  TCustomProcessor = class
+  // A TCustomManager encapsulates a representaion of a PresentationManager
+  TCustomManager = class
   private
     FId :string;              // From Section: i.e. "Slideshow200"
     FTitle :string;           // "Slideshow 2.0"
@@ -46,8 +47,8 @@ type
     constructor Create(IniFile :TCustomIniFile); virtual; overload;
     destructor Destroy; override;
     class function ClassId :string;
-    class function Create(const Filename :string) :TCustomProcessor; overload;
-    class procedure Scan(const Folder :string; Processors :TProcessors);
+    class function Create(const Filename :string) :TCustomManager; overload;
+    class procedure Scan(const Folder :string; Managers :TManagers);
     //procedure SaveSettings(const Section :string; Store :TCustomInifile); virtual; abstract;
     //procedure LoadSettings(const Section :string; Store :TCustomInifile); virtual; abstract;
     procedure Execute; virtual; abstract;
@@ -64,26 +65,26 @@ type
     property TargetFolder :string read FTargetFolder write FTargetFolder;
   end;
 
-  { TProcessors }
+  { TManagers }
 
-  TProcessors = class(TObjectList<TCustomProcessor>)
+  TManagers = class(TObjectList<TCustomManager>)
   private
-    FDictionary :TDictionary<string, TCustomProcessor>;
-    function GetById(Id : string): TCustomProcessor;
+    FDictionary :TDictionary<string, TCustomManager>;
+    function GetById(Id : string): TCustomManager;
   protected
-    procedure Notify(constref AValue: TCustomProcessor; ACollectionNotification: TCollectionNotification); override;
+    procedure Notify(constref AValue: TCustomManager; ACollectionNotification: TCollectionNotification); override;
   public
     constructor Create;
     destructor Destroy; override;
-    class procedure Register(ProcessorClass :TCustomProcessorClass);
+    class procedure Register(ManagerClass :TCustomManagerClass);
     procedure SortByDate;
     function IndexOf(const Id :string) :integer;
-    property ById[Id :string] :TCustomProcessor read GetById;
+    property ById[Id :string] :TCustomManager read GetById;
   end;
 
-  { TPresentationProcessor }
+  { TPresentationManager }
 
-  TPresentationProcessor = class(TCustomProcessor)
+  TPresentationManager = class(TCustomManager)
   private
     FProcessor :TProcessor;
   protected
@@ -96,9 +97,9 @@ type
     procedure Execute; override;
   end;
 
-  { TColorPresentationProcessor }
+  { TColorPresentationManager }
 
-  TColorPresentationProcessor = class(TPresentationProcessor)
+  TColorPresentationManager = class(TPresentationManager)
   private
     FTitleColor :TColor;
     FButtonColor :TColor;
@@ -109,9 +110,9 @@ type
     constructor Create(IniFile :TCustomIniFile); override;
   end;
 
-  { TPresentationProcessorSettings }
+  { TPresentationManagerSettings }
 
-  TPresentationProcessorSettings = class(TSettings)
+  TPresentationManagerSettings = class(TSettings)
   private
     FTitle :string;
     procedure SetTitle(AValue: string);
@@ -126,12 +127,12 @@ type
 
   { TSlideshow200Settings }
 
-  TSlideshow200Settings = class(TPresentationProcessorSettings)
+  TSlideshow200Settings = class(TPresentationManagerSettings)
   end;
 
   { TSimple100Settings }
 
-  TSimple100Settings = class(TPresentationProcessorSettings)
+  TSimple100Settings = class(TPresentationManagerSettings)
   end;
 
 
@@ -142,10 +143,10 @@ const
 implementation
 
 uses
-  LazFileUtils, presentationprocessorfrm, colorpresentationprocessorfrm;
+  LazFileUtils, presentationmanagerfrm, colorpresentationmanagerfrm;
 
 var
-  ProcessorClasses :TDictionary<string, TCustomProcessorClass>;
+  ManagerClasses :TDictionary<string, TCustomManagerClass>;
 
 const
   COMMON_SECTION    = 'Common';
@@ -153,13 +154,13 @@ const
   PRESENTATIONFILE_EXTENSION = 'prd';
 
 resourcestring
-  SErrMissingPresentationProcessorClassFmt = 'Missing PresentationProcessor class entry in ''%s''.';
-  SErrUnregisterPresentationProcessorFmt = 'Unregistered PresentationProcessor class ''%s''.';
+  SErrMissingPresentationManagerClassFmt = 'Missing PresentationManager class entry in ''%s''.';
+  SErrUnregisterPresentationManagerFmt = 'Unregistered PresentationManager class ''%s''.';
   SErrIniValueNotFoundFmt = 'Key ''[%s]%s'' not found in ''%s''.';
 
-{ TCustomProcessor }
+{ TCustomManager }
 
-constructor TCustomProcessor.Create(IniFile :TCustomIniFile);
+constructor TCustomManager.Create(IniFile :TCustomIniFile);
 const
   UNDEFINED = '<undefined>';
 var
@@ -189,7 +190,7 @@ begin
   FPreviewFile      := CreateAbsolutePath(IniFile.ReadString(PRESENTATIONSECTION, 'Preview', ''), FTemplateFolder);
 end;
 
-destructor TCustomProcessor.Destroy;
+destructor TCustomManager.Destroy;
 begin
   FIcon.Free;
   FPreview.Free;
@@ -198,12 +199,12 @@ begin
   inherited Destroy;
 end;
 
-class function TCustomProcessor.ClassId: string;
+class function TCustomManager.ClassId: string;
 begin
-  result := Copy(ClassName, 2, Length(ClassName)-9);
+  result := Copy(ClassName, 2, Length(ClassName)-8);
 end;
 
-function TCustomProcessor.GetIcon: TGraphic;
+function TCustomManager.GetIcon: TGraphic;
 begin
   if not Assigned(FIcon) and (FIconFile<>'') then begin
     FIcon := TPicture.Create;
@@ -212,7 +213,7 @@ begin
   result := FIcon.Graphic;
 end;
 
-function TCustomProcessor.GetPreview: TGraphic;
+function TCustomManager.GetPreview: TGraphic;
 begin
   if not Assigned(FPreview) then begin
     FPreview := TPicture.Create;
@@ -222,42 +223,42 @@ begin
   result := FPreview.Graphic;
 end;
 
-function TCustomProcessor.GetFrameClass: TFrameClass;
+function TCustomManager.GetFrameClass: TFrameClass;
 begin
   result := nil;
 end;
 
-procedure TCustomProcessor.ParamsToFrame;
+procedure TCustomManager.ParamsToFrame;
 begin
 
 end;
 
-procedure TCustomProcessor.FrameToParams;
+procedure TCustomManager.FrameToParams;
 begin
 
 end;
 
-class function TCustomProcessor.Create(const Filename :string): TCustomProcessor;
+class function TCustomManager.Create(const Filename :string): TCustomManager;
 var
   IniFile :TCustomIniFile;
-  PresentationProcessorClass :TCustomProcessorClass;
+  PresentationManagerClass :TCustomManagerClass;
   ClassId :string;
   ClassName :string;
 begin
   IniFile := TIniFile.Create(Filename, [ifoStripComments, ifoCaseSensitive, ifoStripQuotes]);
   try
     ClassId := IniFile.ReadString(PRESENTATIONSECTION, 'Class', 'Presentation');
-    ClassName := Format('T%sProcessor', [ClassId]);
-    if not ProcessorClasses.TryGetValue(ClassName, PresentationProcessorClass) then
-      raise Exception.CreateFmt(SErrUnregisterPresentationProcessorFmt, [ClassName]);
-    result := PresentationProcessorClass.Create(IniFile);
+    ClassName := Format('T%sManager', [ClassId]);
+    if not ManagerClasses.TryGetValue(ClassName, PresentationManagerClass) then
+      raise Exception.CreateFmt(SErrUnregisterPresentationManagerFmt, [ClassName]);
+    result := PresentationManagerClass.Create(IniFile);
   except
     IniFile.Free;
     raise;
   end;
 end;
 
-class procedure TCustomProcessor.Scan(const Folder: string; Processors :TProcessors);
+class procedure TCustomManager.Scan(const Folder: string; Managers :TManagers);
 var
   WprFilenames :TStringList;
   Filename :string;
@@ -266,18 +267,18 @@ begin
   try
     for Filename in WprFilenames do begin
       try
-        Processors.Add(TCustomProcessor.Create(Filename));
+        Managers.Add(TCustomManager.Create(Filename));
       except on E :Exception do
         Log(E.Message, llWarning);
       end;
     end;
-    Processors.SortByDate;
+    Managers.SortByDate;
   finally
     WprFilenames.Free;
   end;
 end;
 
-function TCustomProcessor.GetFrame: TFrame;
+function TCustomManager.GetFrame: TFrame;
 var
   FrameClass :TFrameClass;
 begin
@@ -292,15 +293,15 @@ begin
   result := FFrame;
 end;
 
-{ TProcessors }
+{ TManagers }
 
-function TProcessors.GetById(Id : string): TCustomProcessor;
+function TManagers.GetById(Id : string): TCustomManager;
 begin
   if not FDictionary.TryGetValue(Id, result) then
     result := nil;
 end;
 
-procedure TProcessors.Notify(constref AValue: TCustomProcessor; ACollectionNotification: TCollectionNotification);
+procedure TManagers.Notify(constref AValue: TCustomManager; ACollectionNotification: TCollectionNotification);
 begin
   if Assigned(FDictionary) then begin
     case ACollectionNotification of
@@ -313,35 +314,35 @@ begin
   inherited Notify(AValue, ACollectionNotification);
 end;
 
-constructor TProcessors.Create;
+constructor TManagers.Create;
 begin
   inherited Create(false);
-  FDictionary := TDictionary<string, TCustomProcessor>.Create;
+  FDictionary := TDictionary<string, TCustomManager>.Create;
 end;
 
-destructor TProcessors.Destroy;
+destructor TManagers.Destroy;
 begin
   FreeAndNil(FDictionary);
   inherited Destroy;
 end;
 
-class procedure TProcessors.Register(ProcessorClass: TCustomProcessorClass);
+class procedure TManagers.Register(ManagerClass: TCustomManagerClass);
 begin
-  // Assumes TIdPresentationProcessor
-  ProcessorClasses.Add(ProcessorClass.Classname, ProcessorClass);
+  // Assumes TIdPresentationManager
+  ManagerClasses.Add(ManagerClass.Classname, ManagerClass);
 end;
 
-function CompareDate(constref Left, Right :TCustomProcessor) :integer;
+function CompareDate(constref Left, Right :TCustomManager) :integer;
 begin
   result := CompareDateTime(Left.FDate, Right.FDate);
 end;
 
-procedure TProcessors.SortByDate;
+procedure TManagers.SortByDate;
 begin
-  Sort(TComparer<TCustomProcessor>.Construct(@CompareDate));
+  Sort(TComparer<TCustomManager>.Construct(@CompareDate));
 end;
 
-function TProcessors.IndexOf(const Id: string): integer;
+function TManagers.IndexOf(const Id: string): integer;
 var
   i :integer;
 begin
@@ -351,42 +352,42 @@ begin
   result := -1;
 end;
 
-{ TPresentationProcessor }
+{ TPresentationManager }
 
-function TPresentationProcessor.GetFrameClass: TFrameClass;
+function TPresentationManager.GetFrameClass: TFrameClass;
 begin
-  result := TPresentationProcessorFrame;
+  result := TPresentationManagerFrame;
 end;
 
-procedure TPresentationProcessor.ParamsToFrame;
+procedure TPresentationManager.ParamsToFrame;
 begin
 //var
-//  s :TPresentationProcessorSettings;
+//  s :TPresentationManagerSettings;
 //begin
 //  inherited ParamsToFrame;
 //  if Assigned(FSettings) then begin
-//    s := FSettings as TPresentationProcessorSettings;
-//    with Frame as TPresentationProcessorFrame do begin
-//      EditTitle.Text := s.Title; // FProcessor.DocumentVars['TITLE'];
+//    s := FSettings as TPresentationManagerSettings;
+//    with Frame as TPresentationManagerFrame do begin
+//      EditTitle.Text := s.Title; // FManager.DocumentVars['TITLE'];
 //    end;
 //  end;
 end;
 
-procedure TPresentationProcessor.FrameToParams;
+procedure TPresentationManager.FrameToParams;
 begin
 end;
 //var
-//  s :TPresentationProcessorSettings;
+//  s :TPresentationManagerSettings;
 //  inherited FrameToParams;
 //  if Assigned(FSettings) then begin
-//    s := FSettings as TPresentationProcessorSettings;
-//    with Frame as TPresentationProcessorFrame do begin
+//    s := FSettings as TPresentationManagerSettings;
+//    with Frame as TPresentationManagerFrame do begin
 //      s.Title := EditTitle.Text;
 //    end;
 //    FProcessor.DocumentVars['TITLE'] := s.Title;
 //  end;
 
-constructor TPresentationProcessor.Create(IniFile: TCustomIniFile);
+constructor TPresentationManager.Create(IniFile: TCustomIniFile);
 var
   SectionKeys :TStringList;
   Key :string;
@@ -422,18 +423,18 @@ begin
   end;
 end;
 
-destructor TPresentationProcessor.Destroy;
+destructor TPresentationManager.Destroy;
 begin
   FProcessor.Free;
   inherited Destroy;
 end;
 
-function TColorPresentationProcessor.GetFrameClass: TFrameClass;
+function TColorPresentationManager.GetFrameClass: TFrameClass;
 begin
-  result := TColorPresentationProcessorFrame;
+  result := TColorPresentationManagerFrame;
 end;
 
-procedure TPresentationProcessor.Execute;
+procedure TPresentationManager.Execute;
 var
   Stats :TProcessor.TStats;
 begin
@@ -443,37 +444,37 @@ begin
   FProcessor.Execute(Stats);
 end;
 
-{ TPresentationProcessorSettings }
+{ TPresentationManagerSettings }
 
-procedure TPresentationProcessorSettings.SetTitle(AValue: string);
+procedure TPresentationManagerSettings.SetTitle(AValue: string);
 begin
   if FTitle=AValue then Exit;
   FTitle:=AValue;
   Changed;
 end;
 
-procedure TPresentationProcessorSettings.Defaults;
+procedure TPresentationManagerSettings.Defaults;
 begin
   FTitle := '';
 end;
 
-function TPresentationProcessorSettings.Compare(const Value: TSettings): boolean;
+function TPresentationManagerSettings.Compare(const Value: TSettings): boolean;
 var
-  Settings :TPresentationProcessorSettings;
+  Settings :TPresentationManagerSettings;
 begin
-  Settings := Value as TPresentationProcessorSettings;
+  Settings := Value as TPresentationManagerSettings;
   result := FTitle= Settings.Title;
 end;
 
-procedure TPresentationProcessorSettings.Assign(const Value: TSettings);
+procedure TPresentationManagerSettings.Assign(const Value: TSettings);
 var
-  Settings :TPresentationProcessorSettings;
+  Settings :TPresentationManagerSettings;
 begin
-  Settings := Value as TPresentationProcessorSettings;
+  Settings := Value as TPresentationManagerSettings;
   Title := Settings.Title;
 end;
 
-procedure TPresentationProcessorSettings.SaveToIni(Ini: TCustomIniFile);
+procedure TPresentationManagerSettings.SaveToIni(Ini: TCustomIniFile);
 begin
   inherited;
   with Ini do begin
@@ -481,7 +482,7 @@ begin
   end;
 end;
 
-procedure TPresentationProcessorSettings.LoadFromIni(Ini: TCustomIniFile);
+procedure TPresentationManagerSettings.LoadFromIni(Ini: TCustomIniFile);
 var
   Value :string;
 
@@ -498,9 +499,9 @@ begin
   inherited;
 end;
 
-{ TColorPresentationProcessor }
+{ TColorPresentationManager }
 
-constructor TColorPresentationProcessor.Create(IniFile: TCustomIniFile);
+constructor TColorPresentationManager.Create(IniFile: TCustomIniFile);
 begin
   inherited Create(IniFile);
   FProcessor.DocumentVars.Add('COLOR');
@@ -510,18 +511,18 @@ end;
 
 initialization
 begin
-  ProcessorClasses := TDictionary<string, TCustomProcessorClass>.Create;
-  TProcessors.Register(TPresentationProcessor);
-  TProcessors.Register(TColorPresentationProcessor);
+  ManagerClasses := TDictionary<string, TCustomManagerClass>.Create;
+  TManagers.Register(TPresentationManager);
+  TManagers.Register(TColorPresentationManager);
 
-//  TSettings.Register(TPresentationProcessorSettings);
+//  TSettings.Register(TPresentationManagerSettings);
   TSettings.Register(TSimple100Settings);
   TSettings.Register(TSlideshow200Settings);
 end;
 
 finalization
 begin
-  ProcessorClasses.Free;
+  ManagerClasses.Free;
 end;
 
 end.

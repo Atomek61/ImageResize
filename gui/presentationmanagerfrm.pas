@@ -1,4 +1,4 @@
-unit presentationprocessorfrm;
+unit presentationmanagerfrm;
 
 {$mode ObjFPC}{$H+}
 
@@ -9,9 +9,9 @@ uses
 
 type
 
-  { TPresentationProcessorFrame }
+  { TPresentationManagerFrame }
 
-  TPresentationProcessorFrame = class(TFrame)
+  TPresentationManagerFrame = class(TFrame)
   private
 
   public

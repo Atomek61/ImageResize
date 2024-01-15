@@ -21,7 +21,7 @@ uses
   LMessages, LCLIntf, Buttons, ImgList, LCLType, LazHelpHTML, BGRABitmap,
   BGRABitmapTypes, BGRASpeedButton, BGRAGraphicControl, BGRAImageList, RichMemo,
   Generics.Collections, mrkeditdlg, WinDirs, updateutils, AppSettings, Logging,
-  LoggingRichMemo, StringArrays, PresentationProcessor, PresentationDlg, Settings,
+  LoggingRichMemo, StringArrays, presentations, PresentationDlg, Settings,
   tagids;
 
 const

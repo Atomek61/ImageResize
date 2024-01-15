@@ -1,4 +1,4 @@
-inherited ColorPresentationProcessorFrame: TColorPresentationProcessorFrame
+inherited ColorPresentationmanagerFrame: TColorPresentationmanagerFrame
   Height = 124
   Width = 438
   ClientHeight = 124

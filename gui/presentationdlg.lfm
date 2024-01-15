@@ -90,9 +90,9 @@ object PresentationDialog: TPresentationDialog
       Top = 14
       Width = 125
       Caption = '&Available Presentations:'
-      FocusControl = ListBoxProcessors
+      FocusControl = ListBoxManagers
     end
-    object ListBoxProcessors: TListBox
+    object ListBoxManagers: TListBox
       Left = 16
       Height = 341
       Top = 32
@@ -104,8 +104,8 @@ object PresentationDialog: TPresentationDialog
       ParentFont = False
       Style = lbOwnerDrawFixed
       TabOrder = 0
-      OnClick = ListBoxProcessorsClick
-      OnDrawItem = ListBoxProcessorsDrawItem
+      OnClick = ListBoxManagersClick
+      OnDrawItem = ListBoxManagersDrawItem
     end
     object PanelInfo: TPanel
       Left = 360

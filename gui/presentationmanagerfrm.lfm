@@ -1,4 +1,4 @@
-object PresentationProcessorFrame: TPresentationProcessorFrame
+object PresentationManagerFrame: TPresentationManagerFrame
   Left = 0
   Height = 126
   Top = 0

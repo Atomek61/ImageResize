@@ -581,20 +581,21 @@ msgstr "Ungültige Parameter"
 msgid "Folder missing or does not exist."
 msgstr "Verzeichnisangabe fehlt oder das Verzeichnis existiert nicht."
 
-#: presentationprocessor.serrinivaluenotfoundfmt
-#, object-pascal-format
+#: presentations.serrinivaluenotfoundfmt
+#, object-pascal-format, fuzzy
+msgctxt "presentations.serrinivaluenotfoundfmt"
 msgid "Key '[%s]%s' not found in '%s'."
 msgstr "Bezeichner '[%s]%s' nicht gefunden in '%s'."
 
-#: presentationprocessor.serrmissingpresentationprocessorclassfmt
+#: presentations.serrmissingpresentationmanagerclassfmt
 #, object-pascal-format
-msgid "Missing PresentationProcessor class entry in '%s'."
-msgstr "Fehlender \"Class\" Eintrag für PresentationProcessor in '%s'."
+msgid "Missing PresentationManager class entry in '%s'."
+msgstr ""
 
-#: presentationprocessor.serrunregisterpresentationprocessorfmt
+#: presentations.serrunregisterpresentationmanagerfmt
 #, object-pascal-format
-msgid "Unregistered PresentationProcessor class '%s'."
-msgstr "Unregistrierte PresentationProcessor-Klasse '%s'."
+msgid "Unregistered PresentationManager class '%s'."
+msgstr ""
 
 #: settingsdlg.scptbehavior0
 msgctxt "settingsdlg.scptbehavior0"
@@ -770,27 +771,29 @@ msgstr "mehr Werte als Tags"
 msgid "&Color:"
 msgstr ""
 
-#: tcolorpresentationprocessorframe.colorframebackground.label1.caption
-#, fuzzy
-msgctxt "tcolorpresentationprocessorframe.colorframebackground.label1.caption"
+#: tcolorpresentationmanagerframe.colorframebackground.label1.caption
+msgctxt "tcolorpresentationmanagerframe.colorframebackground.label1.caption"
 msgid "Background Color:"
-msgstr "Hintergrundfarbe:"
+msgstr ""
 
-#: tcolorpresentationprocessorframe.colorframesymbols.label1.caption
+#: tcolorpresentationmanagerframe.colorframesymbols.label1.caption
+msgctxt "tcolorpresentationmanagerframe.colorframesymbols.label1.caption"
 msgid "Symbols Color:"
 msgstr ""
 
-#: tcolorpresentationprocessorframe.colorframetitle.label1.caption
-#, fuzzy
-msgctxt "tcolorpresentationprocessorframe.colorframetitle.label1.caption"
+#: tcolorpresentationmanagerframe.colorframetitle.label1.caption
+msgctxt "tcolorpresentationmanagerframe.colorframetitle.label1.caption"
 msgid "Title Color:"
-msgstr "Farbe des Titels:"
+msgstr ""
 
-#: tcolorpresentationprocessorframe.groupbox1.caption
+#: tcolorpresentationmanagerframe.groupbox1.caption
+#, fuzzy
+msgctxt "tcolorpresentationmanagerframe.groupbox1.caption"
 msgid "Preview"
 msgstr "Vorschau"
 
-#: tcolorpresentationprocessorframe.label5.caption
+#: tcolorpresentationmanagerframe.label5.caption
+msgctxt "tcolorpresentationmanagerframe.label5.caption"
 msgid "Label5"
 msgstr ""
 

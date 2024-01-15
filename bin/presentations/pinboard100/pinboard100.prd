@@ -12,7 +12,7 @@ LongDescription=CSS Flex container. Recomennded for photos.
 LongDescription.de=CSS Flex Container. Empfahlen für Fotos.
 Date=2024-01-01 00:00:00
 Icon=..\icon-pinboard.png
-;Preview=.jpg
+Preview=preview.jpg
 Copy=pinboard.css,shutter.png
 Templates=index.html
 Fragment.IMAGES=<div><img src="%URL%"/><div>%TITLE%</div></div>
