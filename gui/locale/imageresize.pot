@@ -1633,7 +1633,7 @@ msgstr ""
 
 #: tpresentationdialog.groupboxparams.caption
 msgctxt "tpresentationdialog.groupboxparams.caption"
-msgid "&Settings"
+msgid "Settin&gs"
 msgstr ""
 
 #: tpresentationdialog.label2.caption
@@ -1648,12 +1648,12 @@ msgstr ""
 
 #: tpresentationdialog.labeltargetfolder.caption
 msgctxt "tpresentationdialog.labeltargetfolder.caption"
-msgid "&Folder with Images:"
+msgid "&Target Folder:"
 msgstr ""
 
 #: tpresentationdialog.labeltargettitle.caption
 msgctxt "tpresentationdialog.labeltargettitle.caption"
-msgid "&Title:"
+msgid "T&itle:"
 msgstr ""
 
 #: tsettingsdialog.buttoncancel.caption

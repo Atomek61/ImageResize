@@ -5,9 +5,10 @@ unit PresentationDlg;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Buttons,
-  StdCtrls, ExtCtrls, ComCtrls, presentations, LCLIntf, LCLType, RichMemo,
-  logging, Types, gettext, FileUtil, LoggingRichMemo, Settings, IniFiles;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Buttons, StdCtrls,
+  ExtCtrls, ComCtrls, presentations, LCLIntf, LCLType, Arrow, ValEdit, RichMemo,
+  logging, Types, gettext, FileUtil, ListFilterEdit, ShortPathEdit,
+  LoggingRichMemo, Settings, IniFiles;
 
 type
 
@@ -34,6 +35,7 @@ type
     PanelInfo: TPanel;
     PanelControls: TPanel;
     SelectFolderDialog: TSelectDirectoryDialog;
+    ValueListEditor1: TValueListEditor;
     procedure ButtonBrowseTargetFolderClick(Sender: TObject);
     procedure ButtonExecuteClick(Sender: TObject);
     procedure EditTargetFolderChange(Sender: TObject);

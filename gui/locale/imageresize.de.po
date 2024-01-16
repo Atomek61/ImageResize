@@ -1730,8 +1730,10 @@ msgid "This folder must contain the images and an .images file."
 msgstr "Das Verzeichnis enthält die Bilder und eine .images -Datei."
 
 #: tpresentationdialog.groupboxparams.caption
+#, fuzzy
+#| msgid "&Settings"
 msgctxt "tpresentationdialog.groupboxparams.caption"
-msgid "&Settings"
+msgid "Settin&gs"
 msgstr "&Einstellungen"
 
 #: tpresentationdialog.label2.caption
@@ -1745,13 +1747,17 @@ msgid "<LongDescription>"
 msgstr "<Lange Beschreibung>"
 
 #: tpresentationdialog.labeltargetfolder.caption
+#, fuzzy
+#| msgid "&Folder with Images:"
 msgctxt "tpresentationdialog.labeltargetfolder.caption"
-msgid "&Folder with Images:"
+msgid "&Target Folder:"
 msgstr "Bild&ordner:"
 
 #: tpresentationdialog.labeltargettitle.caption
+#, fuzzy
+#| msgid "&Title:"
 msgctxt "tpresentationdialog.labeltargettitle.caption"
-msgid "&Title:"
+msgid "T&itle:"
 msgstr "&Titel:"
 
 #: tsettingsdialog.buttoncancel.caption

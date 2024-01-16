@@ -148,8 +148,23 @@ object PresentationDialog: TPresentationDialog
       Top = 168
       Width = 433
       Anchors = [akTop, akLeft, akRight, akBottom]
-      Caption = '&Settings'
+      Caption = 'Settin&gs'
+      ClientHeight = 236
+      ClientWidth = 429
       TabOrder = 5
+      object ValueListEditor1: TValueListEditor
+        Left = 40
+        Height = 100
+        Top = 0
+        Width = 200
+        FixedCols = 0
+        RowCount = 2
+        TabOrder = 0
+        ColWidths = (
+          64
+          132
+        )
+      end
     end
     object ButtonBrowseTargetFolder: TBitBtn
       AnchorSideLeft.Control = EditTargetFolder
@@ -180,9 +195,9 @@ object PresentationDialog: TPresentationDialog
       Left = 21
       Height = 15
       Top = 382
-      Width = 103
+      Width = 71
       Anchors = [akLeft, akBottom]
-      Caption = '&Folder with Images:'
+      Caption = '&Target Folder:'
       FocusControl = EditTargetFolder
     end
     object LabelTargetTitle: TLabel
@@ -191,7 +206,7 @@ object PresentationDialog: TPresentationDialog
       Top = 135
       Width = 25
       AutoSize = False
-      Caption = '&Title:'
+      Caption = 'T&itle:'
       FocusControl = EditTargetTitle
     end
     object EditTargetTitle: TEdit
