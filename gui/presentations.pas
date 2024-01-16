@@ -38,9 +38,7 @@ type
     FSettings :TSettings;
     function GetIcon: TGraphic;
     function GetPreview: TGraphic;
-    function GetFrame :TFrame;
   protected
-    function GetFrameClass :TFrameClass; virtual;
     procedure ParamsToFrame; virtual;
     procedure FrameToParams; virtual;
   public
@@ -53,7 +51,6 @@ type
     //procedure LoadSettings(const Section :string; Store :TCustomInifile); virtual; abstract;
     procedure Execute; virtual; abstract;
     property Id :string read FId;
-    property Frame :TFrame read GetFrame;
     property Settings :TSettings read FSettings write FSettings;
     property Title :string read FTitle;
     property Description :string read FDescription;
@@ -88,7 +85,6 @@ type
   private
     FProcessor :TProcessor;
   protected
-    function GetFrameClass :TFrameClass; override;
     procedure ParamsToFrame; override;
     procedure FrameToParams; override;
   public
@@ -104,8 +100,6 @@ type
     FTitleColor :TColor;
     FButtonColor :TColor;
     FBackgroundColor :TColor;
-  protected
-    function GetFrameClass :TFrameClass; override;
   public
     constructor Create(IniFile :TCustomIniFile); override;
   end;
@@ -117,7 +111,7 @@ type
     FTitle :string;
     procedure SetTitle(AValue: string);
   public
-    procedure Defaults; override;
+    procedure SetDefaults; override;
     function Compare(const Value :TSettings) :boolean; override;
     procedure Assign(const Value :TSettings); override;
     procedure SaveToIni(Ini :TCustomIniFile); override;
@@ -223,11 +217,6 @@ begin
   result := FPreview.Graphic;
 end;
 
-function TCustomManager.GetFrameClass: TFrameClass;
-begin
-  result := nil;
-end;
-
 procedure TCustomManager.ParamsToFrame;
 begin
 
@@ -276,21 +265,6 @@ begin
   finally
     WprFilenames.Free;
   end;
-end;
-
-function TCustomManager.GetFrame: TFrame;
-var
-  FrameClass :TFrameClass;
-begin
-  if not Assigned(FFrame) then begin
-    FrameClass := GetFrameClass;
-    if Assigned(FrameClass) then begin
-      FFrame := GetFrameClass.Create(nil);
-      FFrame.Name := Format('Frame%8.8x', [longint(FFrame)]);
-      ParamsToFrame;
-    end;
-  end;
-  result := FFrame;
 end;
 
 { TManagers }
@@ -353,11 +327,6 @@ begin
 end;
 
 { TPresentationManager }
-
-function TPresentationManager.GetFrameClass: TFrameClass;
-begin
-  result := TPresentationManagerFrame;
-end;
 
 procedure TPresentationManager.ParamsToFrame;
 begin
@@ -429,11 +398,6 @@ begin
   inherited Destroy;
 end;
 
-function TColorPresentationManager.GetFrameClass: TFrameClass;
-begin
-  result := TColorPresentationManagerFrame;
-end;
-
 procedure TPresentationManager.Execute;
 var
   Stats :TProcessor.TStats;
@@ -453,7 +417,7 @@ begin
   Changed;
 end;
 
-procedure TPresentationManagerSettings.Defaults;
+procedure TPresentationManagerSettings.SetDefaults;
 begin
   FTitle := '';
 end;

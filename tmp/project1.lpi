@@ -12,7 +12,6 @@
       <XPManifest>
         <DpiAware Value="True"/>
       </XPManifest>
-      <Icon Value="0"/>
     </General>
     <BuildModes>
       <Item Name="Default" Default="True"/>
@@ -43,7 +42,11 @@
         <UnitName Value="Unit1"/>
       </Unit>
       <Unit>
-        <Filename Value="valueseditor.pas"/>
+        <Filename Value="..\gui\valueseditor.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\inifileshelper.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
     </Units>
@@ -56,6 +59,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
+      <OtherUnitFiles Value="..\gui;..\src"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>

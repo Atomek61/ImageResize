@@ -46,10 +46,10 @@ type
     procedure SetBehavior(AValue: TBehavior);
     procedure OnAnimateChucky(Sender :TObject; Value :double);
   public
-    procedure SetProcessingSettings(Value: TProcessingSettings);
-    procedure GetProcessingSettings(Value :TProcessingSettings);
-    procedure SetDialogSettings(Value: TDialogSettings);
-    procedure GetDialogSettings(Value :TDialogSettings);
+    procedure SetProcessingSettings(Settings: TProcessingSettings);
+    procedure GetProcessingSettings(Settings :TProcessingSettings);
+    procedure SetDialogSettings(Settings: TDialogSettings);
+    procedure GetDialogSettings(Settings :TDialogSettings);
     property Behavior :TBehavior read FBehavior write SetBehavior;
   end;
 
@@ -163,7 +163,7 @@ begin
   ImageChucky.Top := ClientHeight - ChuckyVisibleLines;
 end;
 
-procedure TSettingsDialog.GetProcessingSettings(Value :TProcessingSettings);
+procedure TSettingsDialog.GetProcessingSettings(Settings :TProcessingSettings);
 var
   ThreadsUsed :integer;
 begin
@@ -173,32 +173,32 @@ begin
     ThreadsUsed := 0
   else if not TryStrToInt(ComboBoxThreadsUsed.Text, ThreadsUsed) or (ThreadsUsed<0) then
     raise Exception.CreateFmt(SErrInvalidCoresUsedFmt, [ComboBoxThreadsUsed.Text]);
-  Value.ThreadsUsed := ThreadsUsed;
-  Value.StopOnError := CheckBoxStopOnError.Checked;
+  Settings.ThreadsUsed.Value := ThreadsUsed;
+  Settings.StopOnError.Value := CheckBoxStopOnError.Checked;
 end;
 
-procedure TSettingsDialog.SetDialogSettings(Value: TDialogSettings);
+procedure TSettingsDialog.SetDialogSettings(Settings: TDialogSettings);
 begin
-  CheckBoxAutoSave.Checked := Value.AutoSave;
-  CheckBoxWarnDirty.Checked := Value.WarnDirty;
+  CheckBoxAutoSave.Checked := Settings.AutoSave.Value;
+  CheckBoxWarnDirty.Checked := Settings.WarnDirty.Value;
   CheckBoxAutoSaveClick(nil);
 end;
 
-procedure TSettingsDialog.GetDialogSettings(Value: TDialogSettings);
+procedure TSettingsDialog.GetDialogSettings(Settings: TDialogSettings);
 begin
-  Value.AutoSave := CheckBoxAutoSave.Checked;
-  Value.WarnDirty := CheckBoxWarnDirty.Checked;
+  Settings.AutoSave.Value := CheckBoxAutoSave.Checked;
+  Settings.WarnDirty.Value := CheckBoxWarnDirty.Checked;
 end;
 
-procedure TSettingsDialog.SetProcessingSettings(Value: TProcessingSettings);
+procedure TSettingsDialog.SetProcessingSettings(Settings: TProcessingSettings);
 begin
-  if Value.ThreadsUsed = 0 then
+  if Settings.ThreadsUsed.Value = 0 then
     ComboBoxThreadsUsed.Text := 'Maximum'
-  else if Value.ThreadsUsed = 1 then
+  else if Settings.ThreadsUsed.Value = 1 then
     ComboBoxThreadsUsed.Text := 'Single'
   else
-    ComboBoxThreadsUsed.Text := IntToStr(Value.ThreadsUsed);
-  CheckBoxStopOnError.Checked := Value.StopOnError;
+    ComboBoxThreadsUsed.Text := IntToStr(Settings.ThreadsUsed.Value);
+  CheckBoxStopOnError.Checked := Settings.StopOnError.Value;
 end;
 
 end.

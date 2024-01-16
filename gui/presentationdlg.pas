@@ -6,8 +6,8 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Buttons, StdCtrls,
-  ExtCtrls, ComCtrls, presentations, LCLIntf, LCLType, Arrow, ValEdit, RichMemo,
-  logging, Types, gettext, FileUtil, ListFilterEdit, ShortPathEdit,
+  ExtCtrls, ComCtrls, Presentations, LCLIntf, LCLType, Arrow, ValEdit, RichMemo,
+  Logging, Types, GetText, FileUtil, ListFilterEdit, ShortPathEdit,
   LoggingRichMemo, Settings, IniFiles;
 
 type
@@ -22,12 +22,10 @@ type
     ButtonExecute: TBitBtn;
     ButtonCancel: TBitBtn;
     EditTargetFolder: TEdit;
-    EditTargetTitle: TEdit;
-    GroupBoxParams: TGroupBox;
     ImagePreview: TImage;
+    LabelSettings: TLabel;
     LabelTargetFolder: TLabel;
     Label2: TLabel;
-    LabelTargetTitle: TLabel;
     LabelLongDescription: TLabel;
     ListBoxManagers: TListBox;
     MemoMessages: TRichMemo;
@@ -35,7 +33,7 @@ type
     PanelInfo: TPanel;
     PanelControls: TPanel;
     SelectFolderDialog: TSelectDirectoryDialog;
-    ValueListEditor1: TValueListEditor;
+    ValuesGrid: TValueListEditor;
     procedure ButtonBrowseTargetFolderClick(Sender: TObject);
     procedure ButtonExecuteClick(Sender: TObject);
     procedure EditTargetFolderChange(Sender: TObject);
@@ -71,18 +69,15 @@ type
   private
     FManagerId :string;
     FTargetFolder :string;
-    FTargetTitle :string;
     procedure SetManagerId(AValue: string);
     procedure SetTargetFolder(AValue: string);
-    procedure SetTargetTitle(AValue: string);
   public
     constructor Create; override;
-    procedure Defaults; override;
+    procedure SetDefaults; override;
     procedure SaveToIni(Ini :TCustomIniFile); override;
     procedure LoadFromIni(Ini :TCustomIniFile); override;
     property ManagerId :string read FManagerId write SetManagerId;
     property TargetFolder :string read FTargetFolder write SetTargetFolder;
-    property TargetTitle :string read FTargetTitle write SetTargetTitle;
   end;
 
 var
@@ -116,7 +111,6 @@ begin
   Scan;
   ManagerId := FPresentationSettings.ManagerId;
   EditTargetFolder.Text := FPresentationSettings.TargetFolder;
-  EditTargetTitle.Text := FPresentationSettings.TargetTitle;
   //if FManagers.Count>0 then
   //  ManagerIndex := 0;
   FOuterLogger := TLogger.SwapDefaultLogger(TRichMemoLogger.Create(MemoMessages));
@@ -132,7 +126,6 @@ begin
   if (Trim(EditTargetFolder.Text)='') or not DirectoryExists(EditTargetFolder.Text) then
     raise Exception.Create(SErrMissingFolder);
   Manager.TargetFolder := EditTargetFolder.Text;
-  Manager.TargetTitle := EditTargetTitle.Text;
   Manager.Execute;
 end;
 
@@ -211,23 +204,12 @@ begin
   if Assigned(Manager) then begin
     LabelLongDescription.Caption := Manager.LongDescription;
     ImagePreview.Picture.Assign(Manager.Preview);
-    if GroupBoxParams.ControlCount>0 then
-      GroupBoxParams.Controls[0].Parent := nil;
-//    Log('Manager.Id='+Manager.Id);
     if FPresentationSettingsList.TryGetValue(Manager.Id, Settings) then
       Manager.Settings := Settings;
-    ParamsFrame := Manager.Frame;
-    if Assigned(ParamsFrame) then begin
-      ParamsFrame.Parent := GroupBoxParams;
-      ParamsFrame.Align := alTop;
-      ParamsFrame.Visible := true;
-    end;
     ButtonExecute.Enabled := true;
   end else begin
     LabelLongDescription.Caption := '';
     ImagePreview.Picture := nil;
-    if GroupBoxParams.ControlCount>0 then
-      GroupBoxParams.Controls[0].Hide;
     ButtonExecute.Enabled := false;
   end;
 end;
@@ -240,7 +222,6 @@ begin
   if result then begin
     FPresentationSettings.ManagerId   := ManagerId;
     FPresentationSettings.TargetFolder  := EditTargetFolder.Text;
-    FPresentationSettings.TargetTitle   := EditTargetTitle.Text;
   end;
 end;
 
@@ -278,22 +259,15 @@ begin
   Changed;
 end;
 
-procedure TPresentationSettings.SetTargetTitle(AValue: string);
-begin
-  if FTargetTitle=AValue then Exit;
-  FTargetTitle:=AValue;
-  Changed;
-end;
-
 constructor TPresentationSettings.Create;
 begin
   inherited Create;
   Section := PRESENTATIONSECTION;
 end;
 
-procedure TPresentationSettings.Defaults;
+procedure TPresentationSettings.SetDefaults;
 begin
-  inherited Defaults;
+  inherited;
   FTargetFolder := '';
   FManagerId := '';
 end;
@@ -303,7 +277,6 @@ begin
   inherited SaveToIni(Ini);
   Ini.WriteString(Section, 'ManagerId', FManagerId);
   Ini.WriteString(Section, 'TargetFolder', FTargetFolder);
-  Ini.WriteString(Section, 'TargetTitle', FTargetTitle);
 end;
 
 procedure TPresentationSettings.LoadFromIni(Ini: TCustomIniFile);
@@ -311,7 +284,6 @@ begin
   inherited LoadFromIni(Ini);
   FManagerId := Ini.ReadString(Section, 'ManagerId', '');
   FTargetFolder := Ini.ReadString(Section, 'TargetFolder', '');
-  FTargetTitle := Ini.ReadString(Section, 'TargetTitle', '');
 end;
 
 initialization

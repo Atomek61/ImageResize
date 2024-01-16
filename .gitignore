@@ -3,6 +3,7 @@ backup/
 tst/tst*/
 gui/lib/
 cli/lib/
+tmp/lib/
 bin/locale/
 *.lps
 *.exe

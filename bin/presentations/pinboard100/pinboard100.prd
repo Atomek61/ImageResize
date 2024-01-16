@@ -35,3 +35,12 @@ Caption.de=Header sichtbar
 Class=Boolean
 Default=True
 
+[DocValue.DocStyle]
+Class=PickList
+Caption=Document Style
+Caption.de=Dokumentstil
+Display=Dark, Bright, Black and White
+Display.de=Dunkel, Hell, Schwarzweiß
+PickList=style-dark, style-bright, style-blackwhite
+Default=Dark
+Default.de=Dark

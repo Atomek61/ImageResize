@@ -42,41 +42,14 @@ procedure TForm1.FormCreate(Sender: TObject);
 var
   Ini :TCustomIniFile;
 begin
-  Ini := TIniFile.Create('D:\Mf\Lazarus\ImageResize\bin\presentations\pinboard100\pinboard100.prd');
+  Ini := TIniFile.Create('D:\Mf\Dev\Lazarus\ImageResize\bin\presentations\pinboard100\pinboard100.prd');
   try
-
     FValuesEditor := TValuesEditor.Create;
     FValuesEditor.Load(Ini, 'DocValue');
     FValuesEditor.Bind(ve);
   finally
     Ini.Free;
   end;
-//  ve.InsertRow('Color1', '#0F0F00', true);
-//  ve.InsertRow('Title', 'Ein Sommertag', true);
-//  ve.InsertRow('modus', 'Default', true);
-//  ve.InsertRow('WahrOderNichtWahr', 'True', true);
-//
-//  with ve.ItemProps[0] do begin
-//    EditStyle := esEllipsis;
-////    KeyDesc := 'Ne Farbe eben';
-//  end;
-//
-//  with ve.ItemProps[1] do begin
-//  end;
-//
-//  with ve.ItemProps[2] do begin
-//    EditStyle := esPicklist;
-//    Picklist.Add('Default');
-//    Picklist.Add('Heavy');
-//    Picklist.Add('Super');
-//  end;
-//
-//  with ve.ItemProps[3] do begin
-//    EditStyle := esPicklist;
-//    Picklist.Add('True');
-//    Picklist.Add('False');
-//    ReadOnly := true;
-//  end;
 end;
 
 procedure TForm1.veCheckboxToggled(Sender: TObject; aCol, aRow: Integer;

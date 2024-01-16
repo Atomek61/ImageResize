@@ -7,9 +7,17 @@ interface
 
 uses
   Classes, SysUtils, ValEdit, Dialogs, IniFiles, Generics.Collections, GetText,
-  Graphics, FPImage, RegExpr, Grids, LCLType, StringArrays, IniFilesHelper;
+  Graphics, FPImage, RegExpr, Grids, LCLType;
 
 type
+
+  { TCustomIniFileHelper }
+
+  TCustomIniFileHelper = class helper for TCustomIniFile
+    function StringRead(const Section, Key :string) :string;
+    function ReadLang(const Section, Key, Lang :string) :string; overload;
+    function ReadLang(const Section, Key, Default, Lang :string) :string; overload;
+  end;
 
   TValuesEditor = class;
 
@@ -21,9 +29,11 @@ type
   private
     FId :string;
     FValuesEditor :TValuesEditor;
+//    FItemProp :TItemProp;
   protected
     procedure Bind(ItemProp :TItemProp); virtual;
     property ValuesEditor :TValuesEditor read FValuesEditor;
+//    property ItemProp :TItemProp read FItemProp;
   public
     Caption :string;
     Key :string;
@@ -62,19 +72,6 @@ type
     procedure DrawCell(const Value :string; Canvas :TCanvas; Rect :TRect; State :TGridDrawState); override;
   end;
 
-  { TPickListEditor }
-
-  TPickListEditor = class(TEditor)
-  private
-    FPickList :TStringArray;
-    FDisplayList :TStringArray;
-  protected
-    procedure Bind(ItemProp :TItemProp); override;
-    procedure Load(Ini :TCustomIniFile; const Section :string); override;
-  public
-    constructor Create(const AId :string; AValuesEditor :TValuesEditor); override;
-  end;
-
   TEditorList = TObjectList<TEditor>;
   TEditorDictionary = TDictionary<string, TEditor>;
 
@@ -108,9 +105,9 @@ type
   function WebColorToColor(const Value :string) :TColor;
 
 resourcestring
+  SErrSectionKeyNotFoundFmt = 'Key ''%s'' not found in section ''%s''.';
   SErrEditorClassNotFoundFmt = 'Editor class ''%s'' not registered.';
   SErrInvalidWebColorFmt = 'Invalid web color ''%s''.';
-  SErrPickAndDisplayListsNotMatchingFmt = 'PickList and DisplayList not matching in [%s]';
   SCptTrue = 'True';
   SCptFalse = 'False';
 
@@ -299,34 +296,30 @@ begin
 //  inherited DrawCell(Value, Canvas, Rect, State);
 end;
 
-{ TPickListEditor }
+{ TCustomIniFileHelper }
 
-procedure TPickListEditor.Bind(ItemProp: TItemProp);
-var
-  s :string;
+function TCustomIniFileHelper.StringRead(const Section, Key: string): string;
 begin
-  inherited Bind(ItemProp);
-  ItemProp.EditStyle := esPickList;
-  ItemProp.ReadOnly := true;
-  for s in FDisplayList do
-    ItemProp.PickList.Add(s);
+  result := ReadString(Section, Key, '<<>>');
+  if result = '<<>>' then
+    raise Exception.CreateFmt(SErrSectionKeyNotFoundFmt, [Key, Section]);
 end;
 
-procedure TPickListEditor.Load(Ini: TCustomIniFile; const Section: string);
-var
-  LocStr :string;
+function TCustomIniFileHelper.ReadLang(const Section, Key, Lang: string): string;
 begin
-  inherited Load(Ini, Section);
-  FPickList := Ini.StringRead(Section, 'PickList').Split(',');
-  FDisplayList := Ini.ReadLang(Section, 'Display', ValuesEditor.FLanguage).Split(',');
-  if FPickList.Count<>FDisplayList.Count then
-    raise Exception.CreateFmt(SErrPickAndDisplayListsNotMatchingFmt, [Section]);
+  result := ReadString(Section, Key+'.'+Lang, '<<>>');
+  if result = '<<>>' then
+    result := StringRead(Section, Key);
 end;
 
-constructor TPickListEditor.Create(const AId: string;
-  AValuesEditor: TValuesEditor);
+function TCustomIniFileHelper.ReadLang(const Section, Key, Default, Lang: string): string;
 begin
-  inherited Create(AId, AValuesEditor);
+  result := ReadString(Section, Key+'.'+Lang, '<<>>');
+  if result = '<<>>' then begin
+    result := ReadString(Section, Key, '<<>>');
+    if result = '<<>>' then
+      result := Default;
+  end;
 end;
 
 { TValuesEditor }
@@ -417,34 +410,22 @@ begin
 end;
 
 procedure TValuesEditor.OnButtonClick(Sender: TObject; ACol, ARow: Integer);
-var
-  Index :integer;
 begin
-  Index := ARow-FList.FixedRows;
-  if (Index<0) or (Index>=FEditorList.Count) then Exit;
-  FEditorList[Index].ButtonClick;
+  FEditorList[ARow-1].ButtonClick;
 end;
 
 procedure TValuesEditor.OnDrawCell(Sender: TObject; aCol, aRow: Integer; aRect: TRect; aState: TGridDrawState);
-var
-  Index :integer;
 begin
-  if aCol<>1 then Exit;
-  Index := ARow-FList.FixedRows;
-  if (Index<0) or (Index>=FEditorList.Count) then Exit;
-    FEditorList[Index].DrawCell(FList.Cells[aCol, aRow], FList.Canvas, aRect, aState);
+  if (aCol=1) and (aRow>0) then
+    FEditorList[ARow-1].DrawCell(FList.Cells[aCol, aRow], FList.Canvas, aRect, aState);
 end;
 
 procedure TValuesEditor.OnKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
-var
-  Index :integer;
 begin
-  if FList.Col<>1 then Exit;
-  Index := FList.Row-FList.FixedRows;
-  if (Index<0) or (Index>=FEditorList.Count) then Exit;
-  if (Key = VK_RETURN) and (ssCtrl in Shift) and (FList.ItemProps[Index].EditStyle = esEllipsis) then
-    FEditorList[Index].ButtonClick;
+  if (FList.Row>0) and (FList.Col=1) and (Key = VK_RETURN) and (ssCtrl in Shift) and (FList.ItemProps[FList.Row-1].EditStyle = esEllipsis) then begin
+    FEditorList[FList.Row-1].ButtonClick;
+  end;
 end;
 
 function TValuesEditor.ColorDialog: TColorDialog;
@@ -471,7 +452,6 @@ begin
   TEditor.Register(TStringEditor);
   TEditor.Register(TBooleanEditor);
   TEditor.Register(TWebColorEditor);
-  TEditor.Register(TPickListEditor);
 end
 
 finalization

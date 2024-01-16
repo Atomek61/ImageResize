@@ -549,10 +549,10 @@ begin
   AllowDropFiles := true;
 
   FProcessingSettings := TProcessingSettings.Create;
-  FProcessingSettings.Defaults;
+  FProcessingSettings.SetDefaults;
 
   FDialogSettings := TDialogSettings.Create;
-  FDialogSettings.Defaults;
+  FDialogSettings.SetDefaults;
 
   FPresentationSettingsList := TSettingsList.Create(PRESENTATIONSECTION, true);
 //  FPresentationSettingsList.OnChanged := @ProjectChanged;
@@ -610,7 +610,7 @@ begin
   Log(Format(SCptInfoFmt, [GUIVER_APP, GUIVER_VERSION, GUIVER_DATE, IMGRESVER, TThread.ProcessorCount]), llHint);
 
   LoadSettings;
-  if not FDialogSettings.AutoSave or not LoadLastProject then
+  if not FDialogSettings.AutoSave.Value or not LoadLastProject then
     ActionNew.Execute;
   RequiredStepsUpdate;
 
@@ -649,7 +649,7 @@ end;
 
 procedure TMainDialog.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-  if FDialogSettings.AutoSave then
+  if FDialogSettings.AutoSave.Value then
     SaveLastProject;
   SaveSettings;
 end;
@@ -866,11 +866,11 @@ begin
     Ini.WriteInteger(DIALOGSECTION, 'Height', Height);
     Ini.WriteInteger(DIALOGSECTION, 'PanelControls.Height', PanelControls.Height);
     Ini.WriteString(DIALOGSECTION, 'CurrentDirectory', GetCurrentDir);
-    Ini.WriteBool(DIALOGSECTION, 'AutoSave', FDialogSettings.AutoSave);
-    Ini.WriteBool(DIALOGSECTION, 'WarnDirty', FDialogSettings.WarnDirty);
+    Ini.WriteBool(DIALOGSECTION, 'AutoSave', FDialogSettings.AutoSave.Value);
+    Ini.WriteBool(DIALOGSECTION, 'WarnDirty', FDialogSettings.WarnDirty.Value);
     EraseSection(SETTINGSSECTION);
-    WriteBool(SETTINGSSECTION, 'StopOnError', FProcessingSettings.StopOnError);
-    WriteInteger(SETTINGSSECTION, 'ThreadsUsed', FProcessingSettings.ThreadsUsed);
+    WriteBool(SETTINGSSECTION, 'StopOnError', FProcessingSettings.StopOnError.Value);
+    WriteInteger(SETTINGSSECTION, 'ThreadsUsed', FProcessingSettings.ThreadsUsed.Value);
   finally
     Free;
   end;
@@ -906,13 +906,13 @@ begin
     AHeight := Ini.ReadInteger(DIALOGSECTION, 'PanelControls.Height', PanelControls.Height);
     if AHeight+PanelControls.Top + 16 < ClientHeight then
       PanelControls.Height := AHeight;
-    FDialogSettings.AutoSave := Ini.ReadBool(DIALOGSECTION, 'AutoSave', FDialogSettings.AutoSave);
-    FDialogSettings.WarnDirty := Ini.ReadBool(DIALOGSECTION, 'WarnDirty', FDialogSettings.WarnDirty);
+    FDialogSettings.AutoSave.Text := Ini.ReadString(DIALOGSECTION, 'AutoSave', FDialogSettings.AutoSave.TextDefault);
+    FDialogSettings.WarnDirty.Text := Ini.ReadString(DIALOGSECTION, 'WarnDirty', FDialogSettings.WarnDirty.TextDefault);
     Path := Ini.ReadString(DIALOGSECTION, 'CurrentDirectory', GetCurrentDir);
     if DirectoryExists(Path) then
       ChangeCurrentDir(Path);
-    FProcessingSettings.StopOnError := ReadBool(SETTINGSSECTION, 'StopOnError', FProcessingSettings.StopOnError);
-    FProcessingSettings.ThreadsUsed := ReadInteger(SETTINGSSECTION, 'ThreadsUsed', FProcessingSettings.ThreadsUsed);
+    FProcessingSettings.StopOnError.Text := Ini.ReadString(SETTINGSSECTION, 'StopOnError', FProcessingSettings.StopOnError.TextDefault);
+    FProcessingSettings.ThreadsUsed.Text := Ini.ReadString(SETTINGSSECTION, 'ThreadsUsed', FProcessingSettings.ThreadsUsed.TextDefault);
   finally
     Free;
   end;
@@ -961,8 +961,8 @@ begin
     ActionSrcFilenames.Execute;
     ActionParamSizes.Execute;
 
-    FPresentationSettingsList.Defaults;
-    FPresentationSettings.Defaults;
+    FPresentationSettingsList.SetDefaults;
+    FPresentationSettings.SetDefaults;
 
     RequiredStepsUpdate;
     SetTitle(SCptUnnamed);
@@ -1162,7 +1162,7 @@ function TMainDialog.CheckSave: boolean;
 var
   QueryResult :integer;
 begin
-  if FDialogSettings.WarnDirty and Dirty then begin
+  if FDialogSettings.WarnDirty.Value and Dirty then begin
     QueryResult := Application.MessageBox(PChar(SMsgQuerySave), PChar(SCptQuerySave), MB_ICONQUESTION + MB_YESNOCANCEL);
     case QueryResult of
     IDYES:
@@ -1760,8 +1760,8 @@ begin
         Processor.Sizes := SizesToSizesStr(Sizes);
         Processor.SourceFilenames := SourceFilenames;
         Processor.TargetFolder := TargetFolder;
-        Processor.ThreadCount := FProcessingSettings.ThreadsUsed;
-        Processor.StopOnError := FProcessingSettings.StopOnError;
+        Processor.ThreadCount := FProcessingSettings.ThreadsUsed.Value;
+        Processor.StopOnError := FProcessingSettings.StopOnError.Value;
         Processor.Execute;
 
       except on E :Exception do

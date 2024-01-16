@@ -142,30 +142,6 @@ object PresentationDialog: TPresentationDialog
         Proportional = True
       end
     end
-    object GroupBoxParams: TGroupBox
-      Left = 359
-      Height = 256
-      Top = 168
-      Width = 433
-      Anchors = [akTop, akLeft, akRight, akBottom]
-      Caption = 'Settin&gs'
-      ClientHeight = 236
-      ClientWidth = 429
-      TabOrder = 5
-      object ValueListEditor1: TValueListEditor
-        Left = 40
-        Height = 100
-        Top = 0
-        Width = 200
-        FixedCols = 0
-        RowCount = 2
-        TabOrder = 0
-        ColWidths = (
-          64
-          132
-        )
-      end
-    end
     object ButtonBrowseTargetFolder: TBitBtn
       AnchorSideLeft.Control = EditTargetFolder
       AnchorSideLeft.Side = asrBottom
@@ -200,22 +176,33 @@ object PresentationDialog: TPresentationDialog
       Caption = '&Target Folder:'
       FocusControl = EditTargetFolder
     end
-    object LabelTargetTitle: TLabel
+    object LabelSettings: TLabel
       Left = 368
       Height = 15
-      Top = 135
-      Width = 25
-      AutoSize = False
-      Caption = 'T&itle:'
-      FocusControl = EditTargetTitle
+      Top = 130
+      Width = 40
+      Caption = 'Settin&g:'
     end
-    object EditTargetTitle: TEdit
-      Left = 416
-      Height = 23
-      Top = 131
-      Width = 376
-      Anchors = [akTop, akLeft, akRight]
+    object ValuesGrid: TValueListEditor
+      Left = 360
+      Height = 271
+      Top = 152
+      Width = 432
+      Anchors = [akTop, akLeft, akRight, akBottom]
+      DefaultColWidth = 140
+      DefaultRowHeight = 24
+      FixedCols = 0
+      RowCount = 1
       TabOrder = 4
+      DisplayOptions = [doAutoColResize, doKeyColFixed]
+      TitleCaptions.Strings = (
+        'Name'
+        'Value'
+      )
+      ColWidths = (
+        140
+        288
+      )
     end
   end
   object MemoMessages: TRichMemo

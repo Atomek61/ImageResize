@@ -597,6 +597,41 @@ msgstr ""
 msgid "Unregistered PresentationManager class '%s'."
 msgstr ""
 
+#: settings.scptfalse
+msgctxt "settings.scptfalse"
+msgid "False"
+msgstr ""
+
+#: settings.scpttrue
+msgctxt "settings.scpttrue"
+msgid "True"
+msgstr ""
+
+#: settings.serrassigningfmt
+#, object-pascal-format
+msgid "Cant assign an object of class '%s' to an object of class '%s'."
+msgstr ""
+
+#: settings.serrconverttobooleanfmt
+#, object-pascal-format
+msgid "Cant convert '%s' to boolean."
+msgstr ""
+
+#: settings.serrconverttointegerfmt
+#, object-pascal-format
+msgid "Cant convert '%s' to integer."
+msgstr ""
+
+#: settings.serrinvalidnumberofvaluesfmt
+#, object-pascal-format
+msgid "Invalid number of values '%s', %d expected."
+msgstr ""
+
+#: settings.serrsettingclassnotfoundfmt
+#, object-pascal-format
+msgid "Setting class '%s' from ['%s'] not registered."
+msgstr ""
+
 #: settingsdlg.scptbehavior0
 msgctxt "settingsdlg.scptbehavior0"
 msgid "Standard"
@@ -1729,13 +1764,6 @@ msgctxt "tpresentationdialog.edittargetfolder.hint"
 msgid "This folder must contain the images and an .images file."
 msgstr "Das Verzeichnis enthält die Bilder und eine .images -Datei."
 
-#: tpresentationdialog.groupboxparams.caption
-#, fuzzy
-#| msgid "&Settings"
-msgctxt "tpresentationdialog.groupboxparams.caption"
-msgid "Settin&gs"
-msgstr "&Einstellungen"
-
 #: tpresentationdialog.label2.caption
 msgctxt "tpresentationdialog.label2.caption"
 msgid "&Available Presentations:"
@@ -1746,19 +1774,16 @@ msgctxt "tpresentationdialog.labellongdescription.caption"
 msgid "<LongDescription>"
 msgstr "<Lange Beschreibung>"
 
+#: tpresentationdialog.labelsettings.caption
+msgid "Settin&g:"
+msgstr ""
+
 #: tpresentationdialog.labeltargetfolder.caption
 #, fuzzy
 #| msgid "&Folder with Images:"
 msgctxt "tpresentationdialog.labeltargetfolder.caption"
 msgid "&Target Folder:"
 msgstr "Bild&ordner:"
-
-#: tpresentationdialog.labeltargettitle.caption
-#, fuzzy
-#| msgid "&Title:"
-msgctxt "tpresentationdialog.labeltargettitle.caption"
-msgid "T&itle:"
-msgstr "&Titel:"
 
 #: tsettingsdialog.buttoncancel.caption
 msgctxt "tsettingsdialog.buttoncancel.caption"
@@ -1842,6 +1867,31 @@ msgstr "&Benehmen:"
 msgctxt "tsettingsdialog.labelcores.caption"
 msgid "Cores"
 msgstr "Kerne"
+
+#: valueseditor.scptfalse
+msgctxt "valueseditor.scptfalse"
+msgid "False"
+msgstr ""
+
+#: valueseditor.scpttrue
+msgctxt "valueseditor.scpttrue"
+msgid "True"
+msgstr ""
+
+#: valueseditor.serreditorclassnotfoundfmt
+#, object-pascal-format
+msgid "Editor class '%s' not registered."
+msgstr ""
+
+#: valueseditor.serrinvalidwebcolorfmt
+#, object-pascal-format
+msgid "Invalid web color '%s'."
+msgstr ""
+
+#: valueseditor.serrsectionkeynotfoundfmt
+#, object-pascal-format
+msgid "Key '%s' not found in section '%s'."
+msgstr ""
 
 #: vardisplay.serrinvalidvarstringfmt
 #, object-pascal-format
