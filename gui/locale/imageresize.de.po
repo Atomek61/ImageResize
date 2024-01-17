@@ -1775,7 +1775,7 @@ msgid "<LongDescription>"
 msgstr "<Lange Beschreibung>"
 
 #: tpresentationdialog.labelsettings.caption
-msgid "Settin&g:"
+msgid "Settin&gs:"
 msgstr ""
 
 #: tpresentationdialog.labeltargetfolder.caption

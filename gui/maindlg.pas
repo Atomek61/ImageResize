@@ -864,6 +864,8 @@ begin
     WriteString(COMMONSECTION, 'Version', SETVERSION);
     Ini.WriteInteger(DIALOGSECTION, 'Width', Width);
     Ini.WriteInteger(DIALOGSECTION, 'Height', Height);
+    Ini.WriteInteger(DIALOGSECTION, 'Left', Left);
+    Ini.WriteInteger(DIALOGSECTION, 'Top', Top);
     Ini.WriteInteger(DIALOGSECTION, 'PanelControls.Height', PanelControls.Height);
     Ini.WriteString(DIALOGSECTION, 'CurrentDirectory', GetCurrentDir);
     Ini.WriteBool(DIALOGSECTION, 'AutoSave', FDialogSettings.AutoSave.Value);
@@ -901,6 +903,8 @@ begin
       Log(Format(SLogWarningSettingVersionFmt, [IniVer, SETVERSION]), llWarning);
       Exit;
     end;
+    Top := Ini.ReadInteger(DIALOGSECTION, 'Top', Top);
+    Left := Ini.ReadInteger(DIALOGSECTION, 'Left', Left);
     Width := Ini.ReadInteger(DIALOGSECTION, 'Width', Width);
     Height := Ini.ReadInteger(DIALOGSECTION, 'Height', Height);
     AHeight := Ini.ReadInteger(DIALOGSECTION, 'PanelControls.Height', PanelControls.Height);

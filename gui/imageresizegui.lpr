@@ -15,7 +15,7 @@ uses
   animator, logging, imagesmod, presentations,
   slideshow200presentationmanager, galleryprocessor, stringarrays, appsettings, 
 colorpresentationmanagerfrm, presentationmanagerfrm, 
-colorfrm, valueseditor, imgtags, VarDisplay, tagids;
+colorfrm, valueseditor, imgtags, VarDisplay, tagids, projectsettings;
 
 {$R *.res}
 

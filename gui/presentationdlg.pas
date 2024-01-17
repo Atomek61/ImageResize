@@ -17,6 +17,7 @@ type
   { TPresentationDialog }
 
   TPresentationDialog = class(TForm)
+    Bevel1: TBevel;
     ButtonBrowseTargetFolder: TBitBtn;
     ButtonOk: TBitBtn;
     ButtonExecute: TBitBtn;
@@ -29,6 +30,7 @@ type
     LabelLongDescription: TLabel;
     ListBoxManagers: TListBox;
     MemoMessages: TRichMemo;
+    PanelManagers: TPanel;
     PanelPresentation: TPanel;
     PanelInfo: TPanel;
     PanelControls: TPanel;

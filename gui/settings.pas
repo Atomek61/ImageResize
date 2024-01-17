@@ -69,6 +69,7 @@ type
     procedure SetText(AValue: string); override;
     function GetText :string; override;
   public
+    constructor Create(Settings :TSettings; const Key :string); override;
     class function ClassDefault :string; override;
     function Compare(Setting :TSetting) :boolean; override;
     property Value :integer read FValue write SetValue;
@@ -105,18 +106,17 @@ type
 
   TSettings = class
   private
+    FKey :string; // The Ini-Section
     FLanguage :string;
     FDirty :boolean;
     FOnChanged :TNotifyEvent;
-    FSection :string;
     FSettingList :TSettingList;
     FSettingDict :TSettingDictionary;
   protected
     procedure Changed;
   public
     class procedure Register(Value :TSettingsClass);
-    class function Create(const Id :string) :TSettings; overload;
-    constructor Create; virtual; overload;
+    constructor Create(const Key :string); virtual; overload;
     destructor Destroy; override;
     procedure SetDefaults; virtual;
     function Compare(const Value :TSettings) :boolean; virtual;
@@ -125,7 +125,7 @@ type
     procedure Add(Setting :TSetting);
     procedure SaveToIni(Ini :TCustomIniFile); virtual;
     procedure LoadFromIni(Ini :TCustomIniFile); virtual;
-    property Section :string read FSection write FSection;
+//    property Section :string read FSection write FSection;
     property OnChanged :TNotifyEvent read FOnChanged write FOnChanged;
     property Dirty :boolean read FDirty;
   end;
@@ -190,10 +190,10 @@ begin
     FOnChanged(self);
 end;
 
-constructor TSettings.Create;
+constructor TSettings.Create(const Key :string);
 begin
+  FKey := Key;
   FLanguage := GetLanguageID.LanguageCode;
-  FSection := Copy(ClassName, 2, Length(ClassName)-9);
   FSettingList := TSettingList.Create;
   FSettingDict := TSettingDictionary.Create;
   SetDefaults;
@@ -211,19 +211,19 @@ begin
   SettingsClasses.Add(Value.ClassName, Value);
 end;
 
-class function TSettings.Create(const Id: string): TSettings;
-var
-  ClassName :string;
-  SettingsClass :TSettingsClass;
-begin
-  ClassName := Format('T%sSettings', [Id]);
-  if not SettingsClasses.TryGetValue(ClassName, SettingsClass) then
-    raise Exception.CreateFmt('Settings class ''%s'' not registered.', [ClassName]);
-  result := SettingsClass.Create;
-//Log('%s %s', [ClassName, result.ClassName], llHint);
-  result.FSection := Id;
-end;
-
+//class function TSettings.Create(const Id: string): TSettings;
+//var
+//  ClassName :string;
+//  SettingsClass :TSettingsClass;
+//begin
+//  ClassName := Format('T%sSettings', [Id]);
+//  if not SettingsClasses.TryGetValue(ClassName, SettingsClass) then
+//    raise Exception.CreateFmt('Settings class ''%s'' not registered.', [ClassName]);
+//  result := SettingsClass.Create;
+////Log('%s %s', [ClassName, result.ClassName], llHint);
+//  result.FSection := Id;
+//end;
+//
 procedure TSettings.SetDefaults;
 var
   Setting :TSetting;
@@ -411,6 +411,13 @@ begin
   result := IntToStr(FValue);
 end;
 
+constructor TIntegerSetting.Create(Settings: TSettings; const Key: string);
+begin
+  inherited Create(Settings, Key);
+  FMin := Low(Integer);
+  FMax := High(Integer);
+end;
+
 class function TIntegerSetting.ClassDefault: string;
 begin
   result := '0';
@@ -548,7 +555,7 @@ var
   Sections :TStrings;
   Section :string;
   Settings :TSettings;
-  Id :string;
+  Key :string;
   ClassId :string;
 begin
   Sections := TStringList.Create;
@@ -556,7 +563,7 @@ begin
     Ini.ReadSections(Sections);
     for Section in Sections do
       if Section.StartsWith(SectionPrefix+'.') then begin
-        Id := Copy(Section, Length(SectionPrefix)+2, Length(Section)-Length(SectionPrefix)-1);
+        Key := Copy(Section, Length(SectionPrefix)+2, Length(Section)-Length(SectionPrefix)-1);
         ClassId := Ini.ReadString(Section, 'Class', Id);
         if not TryGetValue(Id, Settings) then begin
           Settings := TSettings.Create(ClassId);
@@ -589,7 +596,6 @@ finalization
 begin
   SettingClasses.Free;
   SettingsClasses.Free;
-
 end;
 
 end.
