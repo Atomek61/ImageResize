@@ -7,7 +7,7 @@
    viewBox="0 0 128 128.00001"
    version="1.1"
    id="svg138"
-   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
    sodipodi:docname="start.svg"
    inkscape:export-filename="img32\start.png"
    inkscape:export-xdpi="24"
@@ -31,8 +31,8 @@
      showguides="true"
      inkscape:lockguides="true"
      inkscape:zoom="7.3192479"
-     inkscape:cx="45.906356"
-     inkscape:cy="66.195326"
+     inkscape:cx="27.803403"
+     inkscape:cy="66.263639"
      inkscape:window-width="2560"
      inkscape:window-height="1417"
      inkscape:window-x="-8"
@@ -72,11 +72,11 @@
        id="linearGradient38"
        inkscape:collect="always">
       <stop
-         style="stop-color:#73d216;stop-opacity:1"
+         style="stop-color:#8ae234;stop-opacity:1"
          offset="0"
          id="stop38" />
       <stop
-         style="stop-color:#4e9a06;stop-opacity:1"
+         style="stop-color:#73d216;stop-opacity:1"
          offset="1"
          id="stop39" />
     </linearGradient>
@@ -122,10 +122,10 @@
        style="color-interpolation-filters:sRGB;"
        inkscape:label="Drop Shadow"
        id="filter38"
-       x="-0.28057049"
-       y="-0.26052975"
-       width="1.7919102"
-       height="1.5943335">
+       x="-0.13545848"
+       y="-0.13017684"
+       width="1.3823316"
+       height="1.2969659">
       <feFlood
          result="flood"
          in="SourceGraphic"
@@ -167,6 +167,42 @@
        r="56.589662"
        gradientTransform="matrix(0.99905829,-0.04338826,0.03534188,0.81378221,9.7277636,15.163618)"
        gradientUnits="userSpaceOnUse" />
+    <filter
+       style="color-interpolation-filters:sRGB;"
+       inkscape:label="Drop Shadow"
+       id="filter850"
+       x="-0.06684876"
+       y="-0.064242271"
+       width="1.2103457"
+       height="1.1730972">
+      <feFlood
+         flood-opacity="0.521569"
+         flood-color="rgb(0,0,0)"
+         result="flood"
+         id="feFlood840" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="in"
+         result="composite1"
+         id="feComposite842" />
+      <feGaussianBlur
+         in="composite1"
+         stdDeviation="3"
+         result="blur"
+         id="feGaussianBlur844" />
+      <feOffset
+         dx="8.25545"
+         dy="5"
+         result="offset"
+         id="feOffset846" />
+      <feComposite
+         in="SourceGraphic"
+         in2="offset"
+         operator="over"
+         result="composite2"
+         id="feComposite848" />
+    </filter>
   </defs>
   <g
      inkscape:groupmode="layer"
@@ -175,13 +211,14 @@
      style="display:inline">
     <path
        id="path1"
-       style="fill:#3465a4;stroke:none;stroke-linecap:round;stroke-linejoin:bevel;paint-order:markers fill stroke"
-       d="M 64 16 A 48 48.000004 0 0 0 16 64 A 48 48.000004 0 0 0 64 112 A 48 48.000004 0 0 0 112 64 A 48 48.000004 0 0 0 64 16 z M 64 28 A 36 35.999996 0 0 1 100 64 A 36 35.999996 0 0 1 64 100 A 36 35.999996 0 0 1 28 64 A 36 35.999996 0 0 1 64 28 z " />
+       style="display:none;fill:#3465a4;stroke:none;stroke-width:1.25;stroke-linecap:round;stroke-linejoin:bevel;paint-order:markers fill stroke"
+       d="M 64,4 A 60,60.000006 0 0 0 4,64 60,60.000006 0 0 0 64,124 60,60.000006 0 0 0 124,64 60,60.000006 0 0 0 64,4 Z m 0,15 A 45,44.999994 0 0 1 109,64 45,44.999994 0 0 1 64,109 45,44.999994 0 0 1 19,64 45,44.999994 0 0 1 64,19 Z" />
     <path
-       style="fill:url(#radialGradient39);stroke-width:8;stroke-linecap:round;stroke-linejoin:bevel;paint-order:markers fill stroke;filter:url(#filter38)"
-       d="M 96,63.999995 44,91.999993 48,64.000003 44,35.999997 Z"
+       style="fill:url(#radialGradient39);stroke-width:8;stroke-linecap:round;stroke-linejoin:bevel;paint-order:markers fill stroke;filter:url(#filter850)"
+       d="m 128.98303,64.19058 c 0,3.999996 -94.288942,59.83293 -102.288942,55.83293 -14.75127,-7.37563 5.311945,-37.268332 5.305914,-56.023506 -0.006,-18.628676 -20.057185,-48.266723 -5.305914,-55.642359 8,-4 102.288942,51.832931 102.288942,55.832935 z"
        id="path4"
-       sodipodi:nodetypes="ccccc" />
+       sodipodi:nodetypes="ssass"
+       transform="matrix(1.0558326,0,0,1.0746346,-8.1844886,-4.9814145)" />
   </g>
   <g
      inkscape:label="Ebene 1"

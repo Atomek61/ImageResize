@@ -5,13 +5,15 @@ unit presentationmanagerfrm;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, StdCtrls;
+  Classes, SysUtils, Forms, Controls, StdCtrls, ValEdit;
 
 type
 
   { TPresentationManagerFrame }
 
   TPresentationManagerFrame = class(TFrame)
+    Label1: TLabel;
+    ValueListEditor: TValueListEditor;
   private
 
   public

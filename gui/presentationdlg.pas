@@ -12,8 +12,6 @@ uses
 
 type
 
-  TPresentationSettings = class;
-
   { TPresentationDialog }
 
   TPresentationDialog = class(TForm)
@@ -24,18 +22,17 @@ type
     ButtonCancel: TBitBtn;
     EditTargetFolder: TEdit;
     ImagePreview: TImage;
-    LabelSettings: TLabel;
     LabelTargetFolder: TLabel;
     Label2: TLabel;
     LabelLongDescription: TLabel;
     ListBoxManagers: TListBox;
     MemoMessages: TRichMemo;
+    PanelManagerFrame: TPanel;
     PanelManagers: TPanel;
     PanelPresentation: TPanel;
     PanelInfo: TPanel;
     PanelControls: TPanel;
     SelectFolderDialog: TSelectDirectoryDialog;
-    ValuesGrid: TValueListEditor;
     procedure ButtonBrowseTargetFolderClick(Sender: TObject);
     procedure ButtonExecuteClick(Sender: TObject);
     procedure EditTargetFolderChange(Sender: TObject);
@@ -50,35 +47,18 @@ type
     FManagerIndex :integer;
     FManagers :TManagers;
     FOuterLogger :TLogger;
-    FPresentationSettingsList :TSettingsList;
-    FPresentationSettings :TPresentationSettings;
+    FManagerFrame :TFrame;
     function GetManager: TCustomManager;
     function GetManagerId: string;
     procedure OnFrameSelected(Sender :TObject);
     procedure SetManagerId(AValue: string);
     procedure SetManagerIndex(AValue: integer);
   public
-    function Execute(PresentationSettings :TPresentationSettings; PresentationSettingsList :TSettingsList) :boolean;
+    function Execute(SettingsList :TSettingsList) :boolean;
     procedure Scan;
     property ManagerId :string read GetManagerId write SetManagerId;
     property Manager :TCustomManager read GetManager;
     property ManagerIndex :integer read FManagerIndex write SetManagerIndex;
-  end;
-
-  { TPresentationSettings }
-
-  TPresentationSettings = class(TSettings)
-  private
-    FManagerId :string;
-    FTargetFolder :string;
-    procedure SetManagerId(AValue: string);
-    procedure SetTargetFolder(AValue: string);
-  public
-    procedure SetDefaults; override;
-    procedure SaveToIni(Ini :TCustomIniFile); override;
-    procedure LoadFromIni(Ini :TCustomIniFile); override;
-    property ManagerId :string read FManagerId write SetManagerId;
-    property TargetFolder :string read FTargetFolder write SetTargetFolder;
   end;
 
 var
@@ -110,8 +90,8 @@ end;
 procedure TPresentationDialog.FormShow(Sender: TObject);
 begin
   Scan;
-  ManagerId := FPresentationSettings.ManagerId;
-  EditTargetFolder.Text := FPresentationSettings.TargetFolder;
+  //ManagerId := FPresentationSettings.ManagerId;
+  //EditTargetFolder.Text := FPresentationSettings.TargetFolder;
   //if FManagers.Count>0 then
   //  ManagerIndex := 0;
   FOuterLogger := TLogger.SwapDefaultLogger(TRichMemoLogger.Create(MemoMessages));
@@ -194,8 +174,7 @@ end;
 
 procedure TPresentationDialog.SetManagerIndex(AValue: integer);
 var
-  ParamsFrame :TFrame;
-  Settings :TSettings;
+  ManagerFrame :TFrame;
 begin
   if FManagerIndex=AValue then Exit;
   if AValue<0 then
@@ -205,8 +184,16 @@ begin
   if Assigned(Manager) then begin
     LabelLongDescription.Caption := Manager.LongDescription;
     ImagePreview.Picture.Assign(Manager.Preview);
-    if FPresentationSettingsList.TryGetValue(Manager.Id, Settings) then
-      Manager.Settings := Settings;
+    ManagerFrame := Manager.Frame;
+    if Assigned(ManagerFrame) then with ManagerFrame do begin
+      Name := Format('SettingsFrame%8.8x', [longint(@ManagerFrame)]);
+      Parent := PanelManagerFrame;
+      Align := alClient;
+      Visible := true;
+    end;
+    if Assigned(FManagerFrame) then
+      FManagerFrame.Visible := False;
+    FManagerFrame := ManagerFrame;
     ButtonExecute.Enabled := true;
   end else begin
     LabelLongDescription.Caption := '';
@@ -215,14 +202,10 @@ begin
   end;
 end;
 
-function TPresentationDialog.Execute(PresentationSettings :TPresentationSettings; PresentationSettingsList :TSettingsList) :boolean;
+function TPresentationDialog.Execute(SettingsList :TSettingsList) :boolean;
 begin
-  FPresentationSettings := PresentationSettings;
-  FPresentationSettingsList := PresentationSettingsList;
   result :=  ShowModal = mrOk;
   if result then begin
-    FPresentationSettings.ManagerId   := ManagerId;
-    FPresentationSettings.TargetFolder  := EditTargetFolder.Text;
   end;
 end;
 
@@ -242,48 +225,6 @@ begin
   ListBoxManagers.Items.Clear;
   for wp in FManagers do
     ListBoxManagers.Items.Add(wp.Title);
-end;
-
-{ TPresentationSettings }
-
-procedure TPresentationSettings.SetManagerId(AValue: string);
-begin
-  if FManagerId=AValue then Exit;
-  FManagerId := AValue;
-  Changed;
-end;
-
-procedure TPresentationSettings.SetTargetFolder(AValue: string);
-begin
-  if FTargetFolder=AValue then Exit;
-  FTargetFolder := AValue;
-  Changed;
-end;
-
-procedure TPresentationSettings.SetDefaults;
-begin
-  inherited;
-  FTargetFolder := '';
-  FManagerId := '';
-end;
-
-procedure TPresentationSettings.SaveToIni(Ini: TCustomIniFile);
-begin
-  inherited SaveToIni(Ini);
-  Ini.WriteString(Section, 'ManagerId', FManagerId);
-  Ini.WriteString(Section, 'TargetFolder', FTargetFolder);
-end;
-
-procedure TPresentationSettings.LoadFromIni(Ini: TCustomIniFile);
-begin
-  inherited LoadFromIni(Ini);
-  FManagerId := Ini.ReadString(Section, 'ManagerId', '');
-  FTargetFolder := Ini.ReadString(Section, 'TargetFolder', '');
-end;
-
-initialization
-begin
-  TSettings.Register(TPresentationSettings);
 end;
 
 end.

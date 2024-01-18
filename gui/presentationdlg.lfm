@@ -1,11 +1,11 @@
 object PresentationDialog: TPresentationDialog
   Left = 839
-  Height = 562
+  Height = 514
   Top = 715
   Width = 806
   BorderIcons = [biSystemMenu]
   Caption = 'Presentation'
-  ClientHeight = 562
+  ClientHeight = 514
   ClientWidth = 806
   Constraints.MinHeight = 480
   Constraints.MinWidth = 806
@@ -93,7 +93,7 @@ object PresentationDialog: TPresentationDialog
       BorderStyle = bsSingle
       ClientHeight = 386
       ClientWidth = 326
-      TabOrder = 3
+      TabOrder = 2
       object ListBoxManagers: TListBox
         Left = 0
         Height = 309
@@ -171,8 +171,9 @@ object PresentationDialog: TPresentationDialog
       AnchorSideBottom.Side = asrBottom
       Left = 761
       Height = 25
-      Top = 32
+      Top = 31
       Width = 30
+      Anchors = [akLeft]
       BorderSpacing.Left = 1
       Images = ImagesModule.ImageList20x20
       ImageIndex = 0
@@ -199,38 +200,19 @@ object PresentationDialog: TPresentationDialog
       Caption = '&Target Folder:'
       FocusControl = EditTargetFolder
     end
-    object LabelSettings: TLabel
-      Left = 368
-      Height = 15
-      Top = 69
-      Width = 45
-      Caption = 'Settin&gs:'
-    end
-    object ValuesGrid: TValueListEditor
-      Left = 360
-      Height = 335
-      Top = 88
-      Width = 432
+    object PanelManagerFrame: TPanel
+      Left = 365
+      Height = 360
+      Top = 64
+      Width = 426
       Anchors = [akTop, akLeft, akRight, akBottom]
-      DefaultColWidth = 140
-      DefaultRowHeight = 24
-      FixedCols = 0
-      RowCount = 1
-      TabOrder = 2
-      DisplayOptions = [doAutoColResize, doKeyColFixed]
-      TitleCaptions.Strings = (
-        'Name'
-        'Value'
-      )
-      ColWidths = (
-        140
-        288
-      )
+      BevelOuter = bvNone
+      TabOrder = 3
     end
   end
   object MemoMessages: TRichMemo
     Left = 4
-    Height = 88
+    Height = 40
     Top = 470
     Width = 802
     Align = alClient

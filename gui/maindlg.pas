@@ -346,7 +346,6 @@ type
     FDialogSettings :TDialogSettings;
     FWorkingDirectory :string;
     FPresentationSettingsList :TSettingsList;
-    FPresentationSettings :TPresentationSettings;
     procedure ChangeCurrentDir(const Path :string);
     function GetAppDataFilename(const Filetitle :string; CanCreate :boolean) :string;
     procedure SetDirty(AValue: boolean);
@@ -557,8 +556,6 @@ begin
   FDialogSettings.SetDefaults;
 
   FPresentationSettingsList := TSettingsList.Create(PRESENTATIONS_GROUP, true);
-//  FPresentationSettingsList.OnChanged := @ProjectChanged;
-  FPresentationSettings := TPresentationSettings.Create;
 //  FPresentationSettings.OnChanged := @ProjectChanged;
 
   // Create Size Buttons
@@ -703,8 +700,8 @@ end;
 
 procedure TMainDialog.ActionPresentationExecute(Sender: TObject);
 begin
-  if PresentationDialog.Execute(FPresentationSettings, FPresentationSettingsList) then begin
-    if FPresentationSettings.Dirty or FPresentationSettingsList.Dirty then
+  if PresentationDialog.Execute(FPresentationSettingsList) then begin
+    if FPresentationSettingsList.Dirty then
       Dirty := true;
   end;
 end;
@@ -968,7 +965,6 @@ begin
     ActionParamSizes.Execute;
 
     FPresentationSettingsList.SetDefaults;
-    FPresentationSettings.SetDefaults;
 
     RequiredStepsUpdate;
     SetTitle(SCptUnnamed);
@@ -1039,8 +1035,7 @@ begin
     CheckBoxNoCreate.Checked              := ReadBool(PROJECT_SECTION, 'NoCreate', DEFAULT_NOCREATE);
     ActionParamSizes.Execute;
   end;
-  FPresentationSettings.LoadFromIni(Ini);
-  FPresentationSettingsList.LoadFromIni(Ini);
+//  FPresentationSettingsList.LoadFromIni(Ini);
 end;
 
 const
@@ -1086,8 +1081,7 @@ begin
     WriteBool(PROJECT_SECTION, 'ImageInfosEnabled', CheckBoxImageInfosEnabled.Checked);
     WriteBool(PROJECT_SECTION, 'NoCreate', CheckBoxNoCreate.Checked);
   end;
-  FPresentationSettings.SaveToIni(Ini);
-  FPresentationSettingsList.SaveToIni(Ini);
+//  FPresentationSettingsList.SaveToIni(Ini);
 end;
 
 function TMainDialog.LoadLastProject: boolean;

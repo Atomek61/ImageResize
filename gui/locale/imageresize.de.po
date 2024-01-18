@@ -622,6 +622,11 @@ msgstr ""
 msgid "Cant convert '%s' to integer."
 msgstr ""
 
+#: settings.serrinvalidpicklistmodefmt
+#, object-pascal-format
+msgid "Invalid picklist mode '%s'."
+msgstr ""
+
 #: settings.serritemscountmismatchfmt
 #, object-pascal-format
 msgid "Number of '%s' display strings mismatch, %d expected"
@@ -804,32 +809,6 @@ msgstr "mehr Werte als Tags"
 
 #: tcolorframe.label1.caption
 msgid "&Color:"
-msgstr ""
-
-#: tcolorpresentationmanagerframe.colorframebackground.label1.caption
-msgctxt "tcolorpresentationmanagerframe.colorframebackground.label1.caption"
-msgid "Background Color:"
-msgstr ""
-
-#: tcolorpresentationmanagerframe.colorframesymbols.label1.caption
-msgctxt "tcolorpresentationmanagerframe.colorframesymbols.label1.caption"
-msgid "Symbols Color:"
-msgstr ""
-
-#: tcolorpresentationmanagerframe.colorframetitle.label1.caption
-msgctxt "tcolorpresentationmanagerframe.colorframetitle.label1.caption"
-msgid "Title Color:"
-msgstr ""
-
-#: tcolorpresentationmanagerframe.groupbox1.caption
-#, fuzzy
-msgctxt "tcolorpresentationmanagerframe.groupbox1.caption"
-msgid "Preview"
-msgstr "Vorschau"
-
-#: tcolorpresentationmanagerframe.label5.caption
-msgctxt "tcolorpresentationmanagerframe.label5.caption"
-msgid "Label5"
 msgstr ""
 
 #: threading.dispatcher.scptcancelled
@@ -1774,16 +1753,16 @@ msgctxt "tpresentationdialog.labellongdescription.caption"
 msgid "<LongDescription>"
 msgstr "<Lange Beschreibung>"
 
-#: tpresentationdialog.labelsettings.caption
-msgid "Settin&gs:"
-msgstr ""
-
 #: tpresentationdialog.labeltargetfolder.caption
 #, fuzzy
 #| msgid "&Folder with Images:"
 msgctxt "tpresentationdialog.labeltargetfolder.caption"
 msgid "&Target Folder:"
 msgstr "Bild&ordner:"
+
+#: tpresentationmanagerframe.label1.caption
+msgid "Settin&gs:"
+msgstr ""
 
 #: tsettingsdialog.buttoncancel.caption
 msgctxt "tsettingsdialog.buttoncancel.caption"
@@ -1867,31 +1846,6 @@ msgstr "&Benehmen:"
 msgctxt "tsettingsdialog.labelcores.caption"
 msgid "Cores"
 msgstr "Kerne"
-
-#: valueseditor.scptfalse
-msgctxt "valueseditor.scptfalse"
-msgid "False"
-msgstr ""
-
-#: valueseditor.scpttrue
-msgctxt "valueseditor.scpttrue"
-msgid "True"
-msgstr ""
-
-#: valueseditor.serreditorclassnotfoundfmt
-#, object-pascal-format
-msgid "Editor class '%s' not registered."
-msgstr ""
-
-#: valueseditor.serrinvalidwebcolorfmt
-#, object-pascal-format
-msgid "Invalid web color '%s'."
-msgstr ""
-
-#: valueseditor.serrsectionkeynotfoundfmt
-#, object-pascal-format
-msgid "Key '%s' not found in section '%s'."
-msgstr ""
 
 #: vardisplay.serrinvalidvarstringfmt
 #, object-pascal-format

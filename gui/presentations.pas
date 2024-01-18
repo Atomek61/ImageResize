@@ -7,7 +7,8 @@ interface
 uses
   Classes, SysUtils, Controls, Forms, IniFiles, Generics.Collections,
   Graphics, GetText, DateUtils, Generics.Defaults, FileUtil,
-  GalleryProcessor, Logging, StrUtils, StringArrays, Settings;
+  GalleryProcessor, Logging, StrUtils, StringArrays, Settings,
+  PresentationManagerFrm, SettingsEditor;
 
 type
   TCustomManager = class;
@@ -19,7 +20,7 @@ type
 
   { TCustomManager }
 
-  // A TCustomManager encapsulates a representaion of a PresentationManager
+  // A TCustomManager encapsulates a representation of a PresentationManager
   TCustomManager = class
   private
     FId :string;              // From Section: i.e. "Slideshow200"
@@ -34,13 +35,12 @@ type
     FTemplateFolder :string;
     FTargetFolder :string;
     FTargetTitle :string;
-    FFrame :TFrame;
-    FSettings :TSettings;
     function GetIcon: TGraphic;
     function GetPreview: TGraphic;
   protected
     procedure ParamsToFrame; virtual;
     procedure FrameToParams; virtual;
+    function GetFrame :TFrame; virtual;
   public
     constructor Create(IniFile :TCustomIniFile); virtual; overload;
     destructor Destroy; override;
@@ -51,7 +51,6 @@ type
     //procedure LoadSettings(const Section :string; Store :TCustomInifile); virtual; abstract;
     procedure Execute; virtual; abstract;
     property Id :string read FId;
-    property Settings :TSettings read FSettings write FSettings;
     property Title :string read FTitle;
     property Description :string read FDescription;
     property LongDescription :string read FLongDescription;
@@ -60,6 +59,7 @@ type
     property Preview :TGraphic read GetPreview;
     property TargetTitle :string read FTargetTitle write FTargetTitle;
     property TargetFolder :string read FTargetFolder write FTargetFolder;
+    property Frame :TFrame read GetFrame;
   end;
 
   { TManagers }
@@ -84,51 +84,18 @@ type
   TPresentationManager = class(TCustomManager)
   private
     FProcessor :TProcessor;
+    FSettings :TSettings;
+    FManagerFrame :TPresentationManagerFrame;
+    FSettingsEditor :TSettingsEditor; // Link between ValuesListEditor on FMangerFrame and FSettings;
   protected
     procedure ParamsToFrame; override;
     procedure FrameToParams; override;
+    function GetFrame :TFrame; override;
   public
     constructor Create(IniFile :TCustomIniFile); override;
     destructor Destroy; override;
     procedure Execute; override;
   end;
-
-  { TColorPresentationManager }
-
-  TColorPresentationManager = class(TPresentationManager)
-  private
-    FTitleColor :TColor;
-    FButtonColor :TColor;
-    FBackgroundColor :TColor;
-  public
-    constructor Create(IniFile :TCustomIniFile); override;
-  end;
-
-  { TPresentationManagerSettings }
-
-  TPresentationManagerSettings = class(TSettings)
-  private
-    FTitle :string;
-    procedure SetTitle(AValue: string);
-  public
-    procedure SetDefaults; override;
-    function Compare(const Value :TSettings) :boolean; override;
-    procedure Assign(const Value :TSettings); override;
-    procedure SaveToIni(Ini :TCustomIniFile); override;
-    procedure LoadFromIni(Ini :TCustomIniFile); override;
-    property Title :string read FTitle write SetTitle;
-  end;
-
-  { TSlideshow200Settings }
-
-  TSlideshow200Settings = class(TPresentationManagerSettings)
-  end;
-
-  { TSimple100Settings }
-
-  TSimple100Settings = class(TPresentationManagerSettings)
-  end;
-
 
 const
   PRESENTATIONS_FOLDER  = 'presentations';
@@ -138,7 +105,7 @@ const
 implementation
 
 uses
-  LazFileUtils, presentationmanagerfrm, colorpresentationmanagerfrm;
+  LazFileUtils;
 
 var
   ManagerClasses :TDictionary<string, TCustomManagerClass>;
@@ -189,8 +156,6 @@ destructor TCustomManager.Destroy;
 begin
   FIcon.Free;
   FPreview.Free;
-  FFrame.Free;
-  FSettings.Free;
   inherited Destroy;
 end;
 
@@ -226,6 +191,11 @@ end;
 procedure TCustomManager.FrameToParams;
 begin
 
+end;
+
+function TCustomManager.GetFrame: TFrame;
+begin
+  result := nil;
 end;
 
 class function TCustomManager.Create(const Filename :string): TCustomManager;
@@ -332,11 +302,11 @@ end;
 procedure TPresentationManager.ParamsToFrame;
 begin
 //var
-//  s :TPresentationManagerSettings;
+//  s :TManagerSettings;
 //begin
 //  inherited ParamsToFrame;
 //  if Assigned(FSettings) then begin
-//    s := FSettings as TPresentationManagerSettings;
+//    s := FSettings as TManagerSettings;
 //    with Frame as TPresentationManagerFrame do begin
 //      EditTitle.Text := s.Title; // FManager.DocumentVars['TITLE'];
 //    end;
@@ -346,16 +316,16 @@ end;
 procedure TPresentationManager.FrameToParams;
 begin
 end;
-//var
-//  s :TPresentationManagerSettings;
-//  inherited FrameToParams;
-//  if Assigned(FSettings) then begin
-//    s := FSettings as TPresentationManagerSettings;
-//    with Frame as TPresentationManagerFrame do begin
-//      s.Title := EditTitle.Text;
-//    end;
-//    FProcessor.DocumentVars['TITLE'] := s.Title;
-//  end;
+
+function TPresentationManager.GetFrame: TFrame;
+begin
+  if not Assigned(FManagerFrame) then begin
+    FManagerFrame := TPresentationManagerFrame.Create(nil);
+    FSettingsEditor := TSettingsEditor.Create;
+    FSettingsEditor.Bind(FSettings, FManagerFrame.ValueListEditor);
+  end;
+  result := FManagerFrame;
+end;
 
 constructor TPresentationManager.Create(IniFile: TCustomIniFile);
 var
@@ -391,11 +361,15 @@ begin
   finally
     SectionKeys.Free;
   end;
+  FSettings := TSettings.Create;
+  FSettings.Load(IniFile, 'Settings');
 end;
 
 destructor TPresentationManager.Destroy;
 begin
   FProcessor.Free;
+  FSettings.Free;
+  FManagerFrame.Free;
   inherited Destroy;
 end;
 
@@ -409,80 +383,10 @@ begin
   FProcessor.Execute(Stats);
 end;
 
-{ TPresentationManagerSettings }
-
-procedure TPresentationManagerSettings.SetTitle(AValue: string);
-begin
-  if FTitle=AValue then Exit;
-  FTitle:=AValue;
-  Changed;
-end;
-
-procedure TPresentationManagerSettings.SetDefaults;
-begin
-  FTitle := '';
-end;
-
-function TPresentationManagerSettings.Compare(const Value: TSettings): boolean;
-var
-  Settings :TPresentationManagerSettings;
-begin
-  Settings := Value as TPresentationManagerSettings;
-  result := FTitle= Settings.Title;
-end;
-
-procedure TPresentationManagerSettings.Assign(const Value: TSettings);
-var
-  Settings :TPresentationManagerSettings;
-begin
-  Settings := Value as TPresentationManagerSettings;
-  Title := Settings.Title;
-end;
-
-procedure TPresentationManagerSettings.SaveToIni(Ini: TCustomIniFile);
-begin
-  inherited;
-  with Ini do begin
-    WriteString(Section,'Title', Title);
-  end;
-end;
-
-procedure TPresentationManagerSettings.LoadFromIni(Ini: TCustomIniFile);
-var
-  Value :string;
-
-  function Read(const Name :string) :boolean;
-  begin
-    Value := Ini.ReadString(Section, Name, '?');
-    result := Value<>'?';
-  end;
-
-begin
-  with Ini do begin
-    if Read('Title') then Title := Value;
-  end;
-  inherited;
-end;
-
-{ TColorPresentationManager }
-
-constructor TColorPresentationManager.Create(IniFile: TCustomIniFile);
-begin
-  inherited Create(IniFile);
-  FProcessor.DocumentVars.Add('COLOR');
-  FProcessor.DocumentVars.Add('SYMBOL-COLOR');
-  FProcessor.DocumentVars.Add('BACKGROUND-COLOR');
-end;
-
 initialization
 begin
   ManagerClasses := TDictionary<string, TCustomManagerClass>.Create;
   TManagers.Register(TPresentationManager);
-  TManagers.Register(TColorPresentationManager);
-
-//  TSettings.Register(TPresentationManagerSettings);
-  TSettings.Register(TSimple100Settings);
-  TSettings.Register(TSlideshow200Settings);
 end;
 
 finalization

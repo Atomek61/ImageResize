@@ -23,21 +23,17 @@ type
     FSettings :TSettings;
     FEditorList :TEditorList;
     FEditorDict :TEditorDictionary;
-    FColorDialog :TColorDialog;
-    procedure OnGetEditText(Sender: TObject; ACol, ARow: Integer; var Value: string);
-    procedure OnSetEditText(Sender: TObject; ACol, ARow: Integer; const Value: string);
+    procedure OnGetCellDisplay(Sender: TObject; ACol, ARow: Integer; var Value: string);
+    procedure OnSetCellDisplay(Sender: TObject; ACol, ARow: Integer; const Value: string);
     procedure OnButtonClick(Sender: TObject; ACol, ARow: Integer);
     procedure OnDrawCell(Sender: TObject; aCol, aRow: Integer; aRect: TRect; aState: TGridDrawState);
     procedure OnKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-  protected
-    function ColorDialog :TColorDialog;
   public
     constructor Create;
     destructor Destroy; override;
     procedure Bind(ASettings :TSettings; AControl :TValueListEditor);
     property Control :TValueListEditor read FControl;
     property Settings :TSettings read FSettings;
-//    property Editors :TEditorDictionary read FEditorDict;
   end;
 
   { TEditor }
@@ -46,27 +42,40 @@ type
   private
     FSettingsEditor :TSettingsEditor;
     FSetting :TSetting;
+    procedure DrawCell(const Display :string; Canvas :TCanvas; Rect :TRect; State :TGridDrawState); virtual;
   protected
-    procedure Bind(ItemProp :TItemProp); virtual;
+    procedure Bind(Index :integer); virtual;
     property SettingsEditor :TSettingsEditor read FSettingsEditor;
-//    property ItemProp :TItemProp read FItemProp;
   public
-    Caption :string;
-    Key :string;
-    Text :string;
-    Default :string;
-    Hint :string;
     ReadOnly :boolean;
     constructor Create(ASetting :TSetting; ASettingsEditor :TSettingsEditor); virtual;
-    class procedure Register(EditorClass :TEditorClass);
+    class function ClassId :string;
+    class procedure Register(const Classes :array of TEditorClass);
     procedure Load(Ini :TCustomIniFile; const Section :string); virtual;
     procedure ButtonClick; virtual;
-    procedure DrawCell(const Value :string; Canvas :TCanvas; Rect :TRect; State :TGridDrawState); virtual;
   end;
 
   // For each TSetting derivate an equivalent exists
-  TStringEdit = class(TEditor)
 
+  { TStringEditor }
+
+  TStringEditor = class(TEditor)
+  protected
+    procedure Bind(Index :integer); override;
+  end;
+
+  { TIntegerEditor }
+
+  TIntegerEditor = class(TStringEditor)
+  protected
+    procedure Bind(Index :integer); override;
+  end;
+
+  { TWebColorEditor }
+
+  TWebColorEditor = class(TIntegerEditor)
+  protected
+    procedure Bind(Index :integer); override;
   end;
 
   TPickEdit = class(TEditor)
@@ -85,11 +94,14 @@ var
 
 constructor TSettingsEditor.Create;
 begin
-
+  FEditorList := TEditorList.Create;
+  FEditorDict := TEditorDictionary.Create;
 end;
 
 destructor TSettingsEditor.Destroy;
 begin
+  FEditorList.Free;
+  FEditorDict.Free;
   inherited Destroy;
 end;
 
@@ -99,30 +111,34 @@ var
   EditorClassName :string;
   EditorClass :TEditorClass;
   Editor :TEditor;
+  i :integer;
 begin
   FControl := AControl;
+  FControl.OnGetEditText := OnGetCellDisplay;
+  FControl.OnSetEditText := OnSetCellDisplay;
   FSettings := ASettings;
   FEditorList.Clear;
   FEditorDict.Clear;
-  FControl.RowCount := Settings.Count;
-  for Setting in Settings.Items do begin
-    EditorClassName := 'T'+Copy(Setting.ClassName, 2, Length(Setting.ClassName)-9)+'Editor';
+  for i:=0 to Settings.Items.Count-1 do begin
+    Setting := Settings.Items[i];
+    EditorClassName := 'T'+Setting.Presentation+'Editor';
     if EditorClasses.TryGetValue(EditorClassName, EditorClass) then begin
+//      FControl.RowCount := Settings.Count + FControl.FixedRows + 1;
       Editor := EditorClass.Create(Setting, self);
     end;
   end;
 end;
 
-procedure TSettingsEditor.OnGetEditText(Sender: TObject; ACol, ARow: Integer;
+procedure TSettingsEditor.OnGetCellDisplay(Sender: TObject; ACol, ARow: Integer;
   var Value: string);
 begin
-
+  Value := FEditorList[ARow-FControl.FixedRows].FSetting.Display;
 end;
 
-procedure TSettingsEditor.OnSetEditText(Sender: TObject; ACol, ARow: Integer;
+procedure TSettingsEditor.OnSetCellDisplay(Sender: TObject; ACol, ARow: Integer;
   const Value: string);
 begin
-
+  FEditorList[ARow-FControl.FixedRows].FSetting.Display := Value;
 end;
 
 procedure TSettingsEditor.OnButtonClick(Sender: TObject; ACol, ARow: Integer);
@@ -130,19 +146,18 @@ begin
 
 end;
 
-procedure TSettingsEditor.OnDrawCell(Sender: TObject; aCol, aRow: Integer;
-  aRect: TRect; aState: TGridDrawState);
+procedure TSettingsEditor.OnDrawCell(Sender: TObject; aCol, aRow: Integer; aRect: TRect; aState: TGridDrawState);
+var
+  Index :integer;
 begin
-
+  if aCol<>1 then Exit;
+  Index := ARow-FControl.FixedRows;
+  if (Index<0) or (Index>=FEditorList.Count) then Exit;
+    FEditorList[Index].DrawCell(FControl.Cells[aCol, aRow], FControl.Canvas, aRect, aState);
 end;
 
 procedure TSettingsEditor.OnKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
-begin
-
-end;
-
-function TSettingsEditor.ColorDialog: TColorDialog;
 begin
 
 end;
@@ -157,17 +172,25 @@ begin
   FSetting := ASetting;
   Index := FSettingsEditor.FEditorList.Add(self);
   FSettingsEditor.FEditorDict.Add(ASetting.Key, self);
-  Bind(FSettingsEditor.Control.ItemProps[Index]);
+  FSettingsEditor.FControl.Strings.Add(FSetting.Caption+'='+FSetting.Display);
+  Bind(Index);
 end;
 
-procedure TEditor.Bind(ItemProp: TItemProp);
+class function TEditor.ClassId: string;
 begin
-
+  result := Copy(ClassName, 2, Length(ClassName)-7);
 end;
 
-class procedure TEditor.Register(EditorClass: TEditorClass);
+procedure TEditor.Bind(Index :integer);
 begin
+end;
 
+class procedure TEditor.Register(const Classes :array of TEditorClass);
+var
+  AClass :TEditorClass;
+begin
+  for AClass in Classes do
+    EditorClasses.Add(AClass.ClassName, AClass);
 end;
 
 procedure TEditor.Load(Ini: TCustomIniFile; const Section: string);
@@ -180,15 +203,42 @@ begin
 
 end;
 
-procedure TEditor.DrawCell(const Value: string; Canvas: TCanvas; Rect: TRect;
-  State: TGridDrawState);
+procedure TEditor.DrawCell(const Display :string; Canvas: TCanvas; Rect: TRect; State: TGridDrawState);
 begin
 
+end;
+
+{ TStringEditor }
+
+procedure TStringEditor.Bind(Index :integer);
+begin
+  inherited;
+  with SettingsEditor.Control do begin
+    ItemProps[Index].EditStyle := esSimple;
+  end;
+end;
+
+{ TIntegerEditor }
+
+procedure TIntegerEditor.Bind(Index: integer);
+begin
+  inherited;
+  with SettingsEditor.Control do begin
+    ItemProps[Index].EditStyle := esSimple;
+  end;
+end;
+
+{ TWebColorEditor }
+
+procedure TWebColorEditor.Bind(Index: integer);
+begin
+  inherited Bind(Index);
 end;
 
 initialization
 begin
   EditorClasses := TEditorClasses.Create;
+  TEditor.Register([TStringEditor, TIntegerEditor, TWebColorEditor]);
 end;
 
 finalization

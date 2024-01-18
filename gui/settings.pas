@@ -21,6 +21,7 @@ type
     FSettings :TSettings;
     FKey :string;
     FTextDefault :string;
+    FPresentation :string; // Hint, how to display
     FOnChanged :TNotifyEvent;
   protected
     procedure Changed;
@@ -32,6 +33,7 @@ type
   public
     class procedure Register(const Classes :array of TSettingClass);
     class function ClassDefault :string; virtual; abstract;
+    class function ClassId :string;
     constructor Create(Settings :TSettings; const Key :string); virtual;
     function Compare(Setting :TSetting) :boolean; virtual;
     procedure Assign(Source :TSetting); virtual;
@@ -42,6 +44,7 @@ type
     property Text :string read GetText write SetText;
     property Display :string read GetDisplay write SetDisplay;
     property TextDefault :string read FTextDefault write FTextDefault;
+    property Presentation :string read FPresentation;
     property OnChanged :TNotifyEvent read FOnChanged write FOnChanged;
   end;
 
@@ -361,7 +364,8 @@ begin
 //  FKey := LastItemAfterDot(Section);
   FCaption := Ini.ReadLang(Section, 'Caption', FSettings.Flanguage);
   FTextDefault := Ini.ReadString(Section, 'Default', ClassDefault);
-  Text := Ini.ReadLang(Section, 'Text', FSettings.Flanguage);
+  Text := Ini.ReadLang(Section, 'Text', '', FSettings.Flanguage);
+  FPresentation := Ini.ReadString(Section, 'Presentation', ClassId);
 end;
 
 procedure TSetting.Changed;
@@ -389,11 +393,16 @@ begin
     SettingClasses.Add(AClass.ClassName, AClass);
 end;
 
+class function TSetting.ClassId: string;
+begin
+  result := Copy(ClassName, 2, Length(ClassName)-8);
+end;
+
 { TStringSetting }
 
 procedure TStringSetting.SetText(const AValue: string);
 begin
-  if AValue=Value then Exit;
+  if AValue=Text then Exit;
   FValue := AValue;
   Changed;
 end;
@@ -439,24 +448,19 @@ end;
 
 procedure TPicklistSetting.SetText(const AValue: string);
 var
-  i :integer;
+  Index :integer;
 begin
-  if Mode=pmList then begin
-    if FTextItems.TryFind(AValue, i, true) then begin
-      FItemIndex := i;
-      inherited SetText(FTextItems[i]);
-    end else begin
-      FItemIndex := -1;
-      inherited SetText('');
-    end;
+  if FTextItems.TryFind(AValue, Index, true) then begin
+    if FItemIndex=Index then Exit;
+    FItemIndex := Index;
+    Changed;
   end else begin
-    if FTextItems.TryFind(AValue, i, true) then begin
-      FItemIndex := i;
-      inherited SetText(FTextItems[i]);
-    end else begin
-      FItemIndex := -1;
-      inherited SetText(AValue);
-    end;
+    if Mode=pmList then begin
+      if FItemIndex=-1 then Exit;
+    end else
+      FValue := AValue;
+    FItemIndex := -1;
+    Changed;
   end;
 end;
 
@@ -491,19 +495,20 @@ begin
 end;
 
 procedure TPicklistSetting.SetDisplay(const AValue: string);
+var
+  Index :integer;
 begin
-  if Mode=pmList then begin
-    if FTextItems.TryFind(AValue, FItemIndex, true) then begin
-      SetText(FTextItems[FItemIndex]);
-    end else begin
-      SetText('');
-    end;
+  if FDisplayItems.TryFind(AValue, Index, true) then begin
+    if FItemIndex=Index then Exit;
+    FItemIndex := Index;
+    Changed;
   end else begin
-    if FTextItems.TryFind(AValue, FItemIndex, true) then begin
-      SetText(FTextItems[FItemIndex]);
-    end else begin
-      SetText(AValue);
-    end;
+    if Mode=pmList then begin
+      if FItemIndex=-1 then Exit;
+    end else
+      FValue := AValue;
+    FItemIndex := -1;
+    Changed;
   end;
 end;
 

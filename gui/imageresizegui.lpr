@@ -13,9 +13,9 @@ uses
   Forms, lazcontrols, maindlg, settingsdlg, mrkeditdlg, presentationdlg, aboutdlg, imgres, updateutils,
   datetimeutils, threading.dispatcher, EXIFUtils, tags, settings,
   animator, logging, imagesmod, presentations,
-  slideshow200presentationmanager, galleryprocessor, stringarrays, appsettings, 
-colorpresentationmanagerfrm, presentationmanagerfrm, 
-colorfrm, valueseditor, imgtags, VarDisplay, tagids, projectsettings, 
+  galleryprocessor, stringarrays, appsettings, 
+presentationmanagerfrm, 
+colorfrm, imgtags, VarDisplay, tagids, projectsettings, 
 settingseditor;
 
 {$R *.res}

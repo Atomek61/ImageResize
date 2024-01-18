@@ -235,23 +235,12 @@
         <UnitName Value="Presentations"/>
       </Unit>
       <Unit>
-        <Filename Value="slideshow200presentationmanager.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
         <Filename Value="galleryprocessor.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="stringarrays.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="colorpresentationmanagerfrm.pas"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="ColorPresentationmanagerFrame"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Frame"/>
       </Unit>
       <Unit>
         <Filename Value="presentationmanagerfrm.pas"/>
@@ -282,10 +271,6 @@
       </Unit>
       <Unit>
         <Filename Value="..\src\tagids.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="valueseditor.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>

@@ -4,7 +4,7 @@ Version=100
 
 [Presentation]
 Id=Slideshow200
-Class=ColorPresentation
+Class=Presentation
 Title=Slideshow 2.0
 Description=Cinematic with navigation
 LongDescription=Simple slideshow for full-screen with HTML, CSS and JavaScript
@@ -16,4 +16,14 @@ Templates=index.html,slideshow.css
 Fragment.IMAGE-LIST=<img class="image-hidden" src="%URL%" alt="%TITLE%"/>
 Fragment.BUTTON-LIST=
 
+[Settings.Title]
+Class=String
+Caption=Title
+Caption.de=Titel
 
+[Settings.Color]
+Class=Integer
+Presentation=WebColor
+Caption=Color
+Caption.de=Farbe
+Text=0

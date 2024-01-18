@@ -17,30 +17,7 @@ Copy=pinboard.css,shutter.png
 Templates=index.html
 Fragment.IMAGES=<div><img src="%URL%"/><div>%TITLE%</div></div>
 
-[DocValue.Color1]
-Class=WebColor
-Caption=Background Color
-Default=#0F0F88
-
-[DocValue.Title]
+[Settings.Title]
+Class=String
 Caption=Title
 Caption.de=Titel
-Class=String
-Default=My Title
-Default.de=Mein Titel
-
-[DocValue.ShowHeader]
-Caption=Show Header
-Caption.de=Header sichtbar
-Class=Boolean
-Default=True
-
-[DocValue.DocStyle]
-Class=PickList
-Caption=Document Style
-Caption.de=Dokumentstil
-Display=Dark, Bright, Black and White
-Display.de=Dunkel, Hell, Schwarzweiß
-PickList=style-dark, style-bright, style-blackwhite
-Default=Dark
-Default.de=Dark

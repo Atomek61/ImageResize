@@ -1,9 +1,46 @@
 object PresentationManagerFrame: TPresentationManagerFrame
   Left = 0
-  Height = 126
+  Height = 171
   Top = 0
-  Width = 455
+  Width = 428
+  ClientHeight = 171
+  ClientWidth = 428
   TabOrder = 0
   DesignLeft = 381
   DesignTop = 439
+  object ValueListEditor: TValueListEditor
+    Left = 0
+    Height = 150
+    Top = 21
+    Width = 428
+    Align = alClient
+    Color = clDefault
+    DefaultColWidth = 120
+    DefaultRowHeight = 24
+    ExtendedSelect = False
+    FixedCols = 0
+    Flat = True
+    RowCount = 1
+    ScrollBars = ssAutoVertical
+    TabOrder = 0
+    DisplayOptions = [doAutoColResize, doKeyColFixed]
+    TitleCaptions.Strings = (
+      'Setting'
+      'Value'
+    )
+    ColWidths = (
+      120
+      307
+    )
+  end
+  object Label1: TLabel
+    Left = 3
+    Height = 15
+    Top = 3
+    Width = 422
+    Align = alTop
+    BorderSpacing.Around = 3
+    Caption = 'Settin&gs:'
+    FocusControl = ValueListEditor
+  end
 end

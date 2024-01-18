@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 456
+  Left = 527
   Height = 240
-  Top = 120
+  Top = 217
   Width = 391
   Caption = 'Form1'
   ClientHeight = 240
@@ -31,16 +31,14 @@ object Form1: TForm1
     Top = 64
     Width = 100
     ItemHeight = 15
-    Style = csDropDownList
     TabOrder = 2
-    OnChange = ComboBoxChange
   end
   object Button2: TButton
     Left = 136
     Height = 25
     Top = 64
     Width = 75
-    Caption = 'Button2'
+    Caption = 'fast'
     TabOrder = 3
     OnClick = Button2Click
   end
@@ -49,7 +47,7 @@ object Form1: TForm1
     Height = 25
     Top = 64
     Width = 75
-    Caption = 'Button3'
+    Caption = '-1'
     TabOrder = 4
     OnClick = Button3Click
   end
@@ -58,7 +56,7 @@ object Form1: TForm1
     Height = 25
     Top = 62
     Width = 75
-    Caption = 'Button4'
+    Caption = 'Hallo'
     TabOrder = 5
     OnClick = Button4Click
   end
@@ -86,5 +84,14 @@ object Form1: TForm1
     Caption = 'Button5'
     TabOrder = 7
     OnClick = Button5Click
+  end
+  object Button6: TButton
+    Left = 136
+    Height = 25
+    Top = 96
+    Width = 75
+    Caption = '2'
+    TabOrder = 8
+    OnClick = Button6Click
   end
 end
