@@ -10,7 +10,8 @@ uses
   athreads,
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, unit1, valueseditor, inifileshelper;
+  Forms, unit1, settingseditor, inifileshelper
+  { you can add units after this };
 
 {$R *.res}
 

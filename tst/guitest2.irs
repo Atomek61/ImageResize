@@ -2,7 +2,7 @@
 Type=IRS
 Version=300
 
-[Settings]
+[Project]
 Description=Simple scaling of PNG and JPEG - all from a folder with wildcards
 Source=Folder
 SourceFolder=srcA\

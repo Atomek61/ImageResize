@@ -33,7 +33,7 @@
      inkscape:window-height="999"
      inkscape:window-x="2617"
      inkscape:window-y="441"
-     inkscape:window-maximized="0"
+     inkscape:window-maximized="1"
      inkscape:current-layer="layer2">
     <inkscape:grid
        type="xygrid"
@@ -86,13 +86,13 @@
     <path
        id="rect24"
        style="fill:#cc0000;stroke-width:8;stroke-linecap:round;stroke-linejoin:bevel;paint-order:markers fill stroke"
-       d="m 52,11.999999 c 2e-6,-10.6666677 24,-10.6666658 24,2e-6 -10e-7,51.999996 -6,79.999992 -6,79.999992 H 58 c 0,0 -6.000008,-27.999998 -6,-79.999994 z"
+       d="m 52,19.999998 c 2e-6,-10.6666673 24,-10.6666654 24,2e-6 -10e-7,51.999996 -6,71.999993 -6,71.999993 H 58 c 0,0 -6.000008,-19.999999 -6,-71.999995 z"
        sodipodi:nodetypes="ssccs" />
     <ellipse
        style="fill:#cc0000;stroke:none;stroke-width:8;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
        id="path24"
-       cx="64"
-       cy="111.99999"
+       cx="64.000008"
+       cy="108"
        rx="12"
        ry="11.999999" />
     <path

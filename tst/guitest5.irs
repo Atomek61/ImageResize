@@ -2,7 +2,7 @@
 Type=IRS
 Version=300
 
-[Settings]
+[Project]
 Description=For each resolution another watermark
 Source=Filenames
 SourceFolder=

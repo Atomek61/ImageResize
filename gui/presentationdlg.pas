@@ -74,7 +74,6 @@ type
     procedure SetManagerId(AValue: string);
     procedure SetTargetFolder(AValue: string);
   public
-    constructor Create; override;
     procedure SetDefaults; override;
     procedure SaveToIni(Ini :TCustomIniFile); override;
     procedure LoadFromIni(Ini :TCustomIniFile); override;
@@ -259,12 +258,6 @@ begin
   if FTargetFolder=AValue then Exit;
   FTargetFolder := AValue;
   Changed;
-end;
-
-constructor TPresentationSettings.Create;
-begin
-  inherited Create;
-  Section := PRESENTATIONSECTION;
 end;
 
 procedure TPresentationSettings.SetDefaults;

@@ -18,7 +18,8 @@ type
   public
     procedure Add(const Value :string);
     procedure Clear;
-    function Contains(const Value: string): boolean;
+    function TryFind(const Value :string; var Index :integer; IgnoreCase :boolean = false) :boolean;
+    function Contains(const Value: string; IgnoreCase :boolean = false): boolean;
     property Count :integer read GetCount write SetCount;
   end;
 
@@ -47,13 +48,31 @@ begin
   self := nil;
 end;
 
-function TStringArrayHelper.Contains(const Value: string): boolean;
+function TStringArrayHelper.TryFind(const Value: string; var Index: integer; IgnoreCase: boolean): boolean;
 var
   i :integer;
 begin
-  for i:=0 to High(self) do
-    if SameText(Value, self[i]) then Exit(true);
+  if IgnoreCase then begin
+    for i:=0 to High(self) do
+      if SameText(Value, self[i]) then begin
+        Index := i;
+        Exit(true);
+      end;
+  end else begin
+    for i:=0 to High(self) do
+      if Value=self[i] then begin
+        Index := i;
+        Exit(true);
+      end;
+  end;
   result := false;
+end;
+
+function TStringArrayHelper.Contains(const Value: string; IgnoreCase: boolean): boolean;
+var
+  Index :integer;
+begin
+  result := TryFind(Value, Index, IgnoreCase);
 end;
 
 end.

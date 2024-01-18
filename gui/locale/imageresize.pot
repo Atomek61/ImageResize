@@ -601,9 +601,9 @@ msgstr ""
 msgid "Cant convert '%s' to integer."
 msgstr ""
 
-#: settings.serrinvalidnumberofvaluesfmt
+#: settings.serritemscountmismatchfmt
 #, object-pascal-format
-msgid "Invalid number of values '%s', %d expected."
+msgid "Number of '%s' display strings mismatch, %d expected"
 msgstr ""
 
 #: settings.serrsettingclassnotfoundfmt

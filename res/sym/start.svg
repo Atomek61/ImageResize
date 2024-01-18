@@ -30,9 +30,9 @@
      showgrid="true"
      showguides="true"
      inkscape:lockguides="true"
-     inkscape:zoom="2.5877449"
-     inkscape:cx="-7.5355185"
-     inkscape:cy="68.59254"
+     inkscape:zoom="7.3192479"
+     inkscape:cx="45.906356"
+     inkscape:cy="66.195326"
      inkscape:window-width="2560"
      inkscape:window-height="1417"
      inkscape:window-x="-8"
@@ -72,11 +72,11 @@
        id="linearGradient38"
        inkscape:collect="always">
       <stop
-         style="stop-color:#78df15;stop-opacity:1;"
+         style="stop-color:#73d216;stop-opacity:1"
          offset="0"
          id="stop38" />
       <stop
-         style="stop-color:#68b80f;stop-opacity:1;"
+         style="stop-color:#4e9a06;stop-opacity:1"
          offset="1"
          id="stop39" />
     </linearGradient>
@@ -122,10 +122,10 @@
        style="color-interpolation-filters:sRGB;"
        inkscape:label="Drop Shadow"
        id="filter38"
-       x="-0.20263424"
-       y="-0.15197569"
-       width="1.5719351"
-       height="1.3466945">
+       x="-0.28057049"
+       y="-0.26052975"
+       width="1.7919102"
+       height="1.5943335">
       <feFlood
          result="flood"
          in="SourceGraphic"
@@ -165,7 +165,7 @@
        fx="62.092785"
        fy="63.322205"
        r="56.589662"
-       gradientTransform="matrix(0.99905829,-0.04338826,0.03534188,0.81378221,-2.2722364,15.163618)"
+       gradientTransform="matrix(0.99905829,-0.04338826,0.03534188,0.81378221,9.7277636,15.163618)"
        gradientUnits="userSpaceOnUse" />
   </defs>
   <g
@@ -174,8 +174,12 @@
      inkscape:label="Dots"
      style="display:inline">
     <path
+       id="path1"
+       style="fill:#3465a4;stroke:none;stroke-linecap:round;stroke-linejoin:bevel;paint-order:markers fill stroke"
+       d="M 64 16 A 48 48.000004 0 0 0 16 64 A 48 48.000004 0 0 0 64 112 A 48 48.000004 0 0 0 112 64 A 48 48.000004 0 0 0 64 16 z M 64 28 A 36 35.999996 0 0 1 100 64 A 36 35.999996 0 0 1 64 100 A 36 35.999996 0 0 1 28 64 A 36 35.999996 0 0 1 64 28 z " />
+    <path
        style="fill:url(#radialGradient39);stroke-width:8;stroke-linecap:round;stroke-linejoin:bevel;paint-order:markers fill stroke;filter:url(#filter38)"
-       d="M 96,63.999998 24,111.99999 32,63.999992 24,15.999996 Z"
+       d="M 96,63.999995 44,91.999993 48,64.000003 44,35.999997 Z"
        id="path4"
        sodipodi:nodetypes="ccccc" />
   </g>

@@ -15,7 +15,7 @@ type
   public
     ThreadsUsed :TIntegerSetting;
     StopOnError :TBooleanSetting;
-    constructor Create; override;
+    constructor Create(const ASection :string); override;
   end;
 
   { TDialogSettings }
@@ -24,36 +24,29 @@ type
   public
     AutoSave :TBooleanSetting;
     WarnDirty :TBooleanSetting;
-    constructor Create; override;
+    constructor Create(const ASection :string); override;
   end;
-
-  //TGUISettings = class(TSettings)
-  //end;
 
 implementation
 
 { TDialogSettings }
 
-constructor TDialogSettings.Create;
+constructor TDialogSettings.Create(const ASection :string);
 begin
-  inherited Create;
+  inherited;
   AutoSave := TBooleanSetting.Create(self, 'AutoSave');
   AutoSave.TextDefault := 'True';
-  Add(AutoSave);
   WarnDirty := TBooleanSetting.Create(self, 'WarnDirty');
-  Add(WarnDirty);
 end;
 
 { TProcessingSettings }
 
-constructor TProcessingSettings.Create;
+constructor TProcessingSettings.Create(const ASection :string);
 begin
-  inherited Create;
+  inherited;
   ThreadsUsed := TIntegerSetting.Create(self, 'ThreadsUsed');
   ThreadsUsed.Min := 0;
-  Add(ThreadsUsed);
   StopOnError := TBooleanSetting.Create(self, 'StopOnError');
-  Add(StopOnError);
 end;
 
 end.

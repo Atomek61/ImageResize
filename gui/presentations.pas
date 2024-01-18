@@ -131,8 +131,9 @@ type
 
 
 const
-  PRESENTATIONS_FOLDER = 'presentations';
-  PRESENTATIONSECTION = 'Presentation';
+  PRESENTATIONS_FOLDER  = 'presentations';
+  PRESENTATION_SECTION  = 'Presentation';
+  PRESENTATIONS_GROUP   = 'Presentation';
 
 implementation
 
@@ -164,11 +165,11 @@ var
   const
     DEFAULTS :array[boolean] of string = ('', UNDEFINED);
   begin
-    result := IniFile.ReadString(PRESENTATIONSECTION, Format('%s.%s', [Key, FallbackLang]), UNDEFINED);
+    result := IniFile.ReadString(PRESENTATION_SECTION, Format('%s.%s', [Key, FallbackLang]), UNDEFINED);
     if result = UNDEFINED then
-      result := IniFile.ReadString(PRESENTATIONSECTION, Key, DEFAULTS[MustExist]);
+      result := IniFile.ReadString(PRESENTATION_SECTION, Key, DEFAULTS[MustExist]);
     if MustExist and (result = UNDEFINED) then
-      raise Exception.CreateFmt(SErrIniValueNotFoundFmt, [PRESENTATIONSECTION, Key, IniFile.Filename]);
+      raise Exception.CreateFmt(SErrIniValueNotFoundFmt, [PRESENTATION_SECTION, Key, IniFile.Filename]);
   end;
 
 begin
@@ -179,9 +180,9 @@ begin
   FDescription      := IniRead('Description');
   FLongDescription  := IniRead('LongDescription');
   FTemplateFolder   := IncludeTrailingPathDelimiter(ExtractFilePath(IniFile.Filename));
-  FDate             := IniFile.ReadDateTime(PRESENTATIONSECTION, 'Date', 0.0);
-  FIconFile         := CreateAbsolutePath(IniFile.ReadString(PRESENTATIONSECTION, 'Icon', ''), FTemplateFolder);
-  FPreviewFile      := CreateAbsolutePath(IniFile.ReadString(PRESENTATIONSECTION, 'Preview', ''), FTemplateFolder);
+  FDate             := IniFile.ReadDateTime(PRESENTATION_SECTION, 'Date', 0.0);
+  FIconFile         := CreateAbsolutePath(IniFile.ReadString(PRESENTATION_SECTION, 'Icon', ''), FTemplateFolder);
+  FPreviewFile      := CreateAbsolutePath(IniFile.ReadString(PRESENTATION_SECTION, 'Preview', ''), FTemplateFolder);
 end;
 
 destructor TCustomManager.Destroy;
@@ -236,7 +237,7 @@ var
 begin
   IniFile := TIniFile.Create(Filename, [ifoStripComments, ifoCaseSensitive, ifoStripQuotes]);
   try
-    ClassId := IniFile.ReadString(PRESENTATIONSECTION, 'Class', 'Presentation');
+    ClassId := IniFile.ReadString(PRESENTATION_SECTION, 'Class', 'Presentation');
     ClassName := Format('T%sManager', [ClassId]);
     if not ManagerClasses.TryGetValue(ClassName, PresentationManagerClass) then
       raise Exception.CreateFmt(SErrUnregisterPresentationManagerFmt, [ClassName]);
@@ -375,16 +376,16 @@ var
 begin
   inherited Create(IniFile);
   FProcessor := GalleryProcessor.TProcessor.Create;
-  FProcessor.CopyFiles := MakeAbsoluteList(IniFile.ReadString(PRESENTATIONSECTION, 'Copy', ''));
-  FProcessor.TemplateFiles := MakeAbsoluteList(IniFile.ReadString(PRESENTATIONSECTION, 'Templates', ''));
+  FProcessor.CopyFiles := MakeAbsoluteList(IniFile.ReadString(PRESENTATION_SECTION, 'Copy', ''));
+  FProcessor.TemplateFiles := MakeAbsoluteList(IniFile.ReadString(PRESENTATION_SECTION, 'Templates', ''));
   FProcessor.DocumentVars.Add('TITLE');
   SectionKeys := TStringList.Create;
   try
-    IniFile.ReadSection(PRESENTATIONSECTION, SectionKeys);
+    IniFile.ReadSection(PRESENTATION_SECTION, SectionKeys);
     for Key in SectionKeys do
       if StartsText('Fragment.', Key) then begin
         VarName := Copy(Key, 10, Length(Key)-9);
-        VarValue := IniFile.ReadString(PRESENTATIONSECTION, Key, '');
+        VarValue := IniFile.ReadString(PRESENTATION_SECTION, Key, '');
         FProcessor.ListFragments.Add(VarName, VarValue);
       end;
   finally

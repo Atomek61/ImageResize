@@ -2,7 +2,7 @@
 Type=IRS
 Version=300
 
-[Settings]
+[Project]
 Description=Testing renaming and all sizes images in a single folder
 Source=Filenames
 SourceFolder=

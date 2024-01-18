@@ -2,7 +2,7 @@
 Type=IRS
 Version=300
 
-[Settings]
+[Project]
 Description=Up-scaling and high JPEG compression, simple stretching
 Source=Filenames
 SourceFolder=srcA\

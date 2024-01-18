@@ -2,7 +2,7 @@
 Type=IRS
 Version=300
 
-[Settings]
+[Project]
 Description=Scaling of PNG and JPEG - watermark test
 Source=Filenames
 SourceFolder=

@@ -2,7 +2,7 @@
 Type=IRS
 Version=300
 
-[Settings]
+[Project]
 Description=Very large watermark
 Source=Folder
 SourceFolder=srcA\

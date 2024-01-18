@@ -46,11 +46,13 @@ const
   SETTYPE         = 'IST';
   SETVERSION      = '100';
 
-  LASTPROJECT_FILENAME = 'lastproject.irs';
-  SETTINGS_FILENAME = 'settings.ini';
-  COMMONSECTION   = 'Common';
-  SETTINGSSECTION = 'Settings';
-  DIALOGSECTION   = 'Dialog';
+  LASTPROJECT_FILENAME  = 'lastproject.irs';
+  SETTINGS_FILENAME     = 'settings.ini';
+
+  COMMON_SECTION        = 'Common';
+  PROJECT_SECTION       = 'Project';
+  PROCESSING_SECTION    = 'Processing';
+  DIALOG_SECTION        = 'Dialog';
 
   MRKRECTRATIO    = 3.0;
 
@@ -554,7 +556,7 @@ begin
   FDialogSettings := TDialogSettings.Create;
   FDialogSettings.SetDefaults;
 
-  FPresentationSettingsList := TSettingsList.Create(PRESENTATIONSECTION, true);
+  FPresentationSettingsList := TSettingsList.Create(PRESENTATIONS_GROUP, true);
 //  FPresentationSettingsList.OnChanged := @ProjectChanged;
   FPresentationSettings := TPresentationSettings.Create;
 //  FPresentationSettings.OnChanged := @ProjectChanged;
@@ -860,19 +862,19 @@ var
 begin
   Ini := TIniFile.Create(GetAppDataFilename(SETTINGS_FILENAME, true));
   with Ini do try
-    WriteString(COMMONSECTION, 'Type', SETTYPE);
-    WriteString(COMMONSECTION, 'Version', SETVERSION);
-    Ini.WriteInteger(DIALOGSECTION, 'Width', Width);
-    Ini.WriteInteger(DIALOGSECTION, 'Height', Height);
-    Ini.WriteInteger(DIALOGSECTION, 'Left', Left);
-    Ini.WriteInteger(DIALOGSECTION, 'Top', Top);
-    Ini.WriteInteger(DIALOGSECTION, 'PanelControls.Height', PanelControls.Height);
-    Ini.WriteString(DIALOGSECTION, 'CurrentDirectory', GetCurrentDir);
-    Ini.WriteBool(DIALOGSECTION, 'AutoSave', FDialogSettings.AutoSave.Value);
-    Ini.WriteBool(DIALOGSECTION, 'WarnDirty', FDialogSettings.WarnDirty.Value);
-    EraseSection(SETTINGSSECTION);
-    WriteBool(SETTINGSSECTION, 'StopOnError', FProcessingSettings.StopOnError.Value);
-    WriteInteger(SETTINGSSECTION, 'ThreadsUsed', FProcessingSettings.ThreadsUsed.Value);
+    WriteString(COMMON_SECTION, 'Type', SETTYPE);
+    WriteString(COMMON_SECTION, 'Version', SETVERSION);
+    Ini.WriteInteger(DIALOG_SECTION, 'Width', Width);
+    Ini.WriteInteger(DIALOG_SECTION, 'Height', Height);
+    Ini.WriteInteger(DIALOG_SECTION, 'Left', Left);
+    Ini.WriteInteger(DIALOG_SECTION, 'Top', Top);
+    Ini.WriteInteger(DIALOG_SECTION, 'PanelControls.Height', PanelControls.Height);
+    Ini.WriteString(DIALOG_SECTION, 'CurrentDirectory', GetCurrentDir);
+    Ini.WriteBool(DIALOG_SECTION, 'AutoSave', FDialogSettings.AutoSave.Value);
+    Ini.WriteBool(DIALOG_SECTION, 'WarnDirty', FDialogSettings.WarnDirty.Value);
+    EraseSection(PROJECT_SECTION);
+    WriteBool(PROJECT_SECTION, 'StopOnError', FProcessingSettings.StopOnError.Value);
+    WriteInteger(PROJECT_SECTION, 'ThreadsUsed', FProcessingSettings.ThreadsUsed.Value);
   finally
     Free;
   end;
@@ -903,20 +905,20 @@ begin
       Log(Format(SLogWarningSettingVersionFmt, [IniVer, SETVERSION]), llWarning);
       Exit;
     end;
-    Top := Ini.ReadInteger(DIALOGSECTION, 'Top', Top);
-    Left := Ini.ReadInteger(DIALOGSECTION, 'Left', Left);
-    Width := Ini.ReadInteger(DIALOGSECTION, 'Width', Width);
-    Height := Ini.ReadInteger(DIALOGSECTION, 'Height', Height);
-    AHeight := Ini.ReadInteger(DIALOGSECTION, 'PanelControls.Height', PanelControls.Height);
+    Top := Ini.ReadInteger(DIALOG_SECTION, 'Top', Top);
+    Left := Ini.ReadInteger(DIALOG_SECTION, 'Left', Left);
+    Width := Ini.ReadInteger(DIALOG_SECTION, 'Width', Width);
+    Height := Ini.ReadInteger(DIALOG_SECTION, 'Height', Height);
+    AHeight := Ini.ReadInteger(DIALOG_SECTION, 'PanelControls.Height', PanelControls.Height);
     if AHeight+PanelControls.Top + 16 < ClientHeight then
       PanelControls.Height := AHeight;
-    FDialogSettings.AutoSave.Text := Ini.ReadString(DIALOGSECTION, 'AutoSave', FDialogSettings.AutoSave.TextDefault);
-    FDialogSettings.WarnDirty.Text := Ini.ReadString(DIALOGSECTION, 'WarnDirty', FDialogSettings.WarnDirty.TextDefault);
-    Path := Ini.ReadString(DIALOGSECTION, 'CurrentDirectory', GetCurrentDir);
+    FDialogSettings.AutoSave.Text := Ini.ReadString(DIALOG_SECTION, 'AutoSave', FDialogSettings.AutoSave.TextDefault);
+    FDialogSettings.WarnDirty.Text := Ini.ReadString(DIALOG_SECTION, 'WarnDirty', FDialogSettings.WarnDirty.TextDefault);
+    Path := Ini.ReadString(DIALOG_SECTION, 'CurrentDirectory', GetCurrentDir);
     if DirectoryExists(Path) then
       ChangeCurrentDir(Path);
-    FProcessingSettings.StopOnError.Text := Ini.ReadString(SETTINGSSECTION, 'StopOnError', FProcessingSettings.StopOnError.TextDefault);
-    FProcessingSettings.ThreadsUsed.Text := Ini.ReadString(SETTINGSSECTION, 'ThreadsUsed', FProcessingSettings.ThreadsUsed.TextDefault);
+    FProcessingSettings.StopOnError.Text := Ini.ReadString(PROJECT_SECTION, 'StopOnError', FProcessingSettings.StopOnError.TextDefault);
+    FProcessingSettings.ThreadsUsed.Text := Ini.ReadString(PROJECT_SECTION, 'ThreadsUsed', FProcessingSettings.ThreadsUsed.TextDefault);
   finally
     Free;
   end;
@@ -999,42 +1001,42 @@ begin
       Exit;
     end;
 
-    if SameText(ReadString(SETTINGSSECTION, 'Source', 'Filenames'), 'Filenames') then
+    if SameText(ReadString(PROJECT_SECTION, 'Source', 'Filenames'), 'Filenames') then
       ActionSrcFilenames.Execute
     else
       ActionSrcFolder.Execute;
-    FProjectDescription                   := ReadString(SETTINGSSECTION, 'Description', '');
-    EditSrcFolder.Text                    := ReadString(SETTINGSSECTION, 'SourceFolder', EditSrcFolder.Text);
-    EditSrcMasks.Text                     := ReadString(SETTINGSSECTION, 'SourceMasks', EditSrcMasks.Text);
-    MemoSrcFilenames.Text                 := ReplaceStr(ReadString(SETTINGSSECTION, 'SourceFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, LINESEP)), LINESEP, #13#10);
-    EditTargetFolder.Text                 := ReadString(SETTINGSSECTION, 'TargetFolder', EditTargetFolder.Text);
-    EditSizes.Text                        := ReadString(SETTINGSSECTION, 'Sizes', EditSizes.Text);
+    FProjectDescription                   := ReadString(PROJECT_SECTION, 'Description', '');
+    EditSrcFolder.Text                    := ReadString(PROJECT_SECTION, 'SourceFolder', EditSrcFolder.Text);
+    EditSrcMasks.Text                     := ReadString(PROJECT_SECTION, 'SourceMasks', EditSrcMasks.Text);
+    MemoSrcFilenames.Text                 := ReplaceStr(ReadString(PROJECT_SECTION, 'SourceFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, LINESEP)), LINESEP, #13#10);
+    EditTargetFolder.Text                 := ReadString(PROJECT_SECTION, 'TargetFolder', EditTargetFolder.Text);
+    EditSizes.Text                        := ReadString(PROJECT_SECTION, 'Sizes', EditSizes.Text);
     RequiredStepsUpdate;
-    ComboBoxJPEGQuality.Text               := ReadString(SETTINGSSECTION, 'JpgOptions.Quality', ComboBoxJPEGQuality.Text);
-    ComboBoxPngCompression.Text           := ReadString(SETTINGSSECTION, 'PngOptions.Compression', ComboBoxPngCompression.Text);
-    ComboBoxResampling.Text               := ReadString(SETTINGSSECTION, 'Resampling', RESAMPLING_STRINGS[DEFAULT_RESAMPLING]);
-    CheckBoxMrkEnabled.Checked            := ReadBool(SETTINGSSECTION, 'MrkEnabled', CheckBoxMrkEnabled.Checked);
-    EditMrkFilename.Text                  := ReadString(SETTINGSSECTION, 'MrkFilename', EditMrkFilename.Text);
-    UpDownMrkSize.Position                := ReadInteger(SETTINGSSECTION, 'MrkSize', UpDownMrkSize.Position);
-    UpDownMrkX.Position                   := ReadInteger(SETTINGSSECTION, 'MrkX', UpDownMrkX.Position);
-    UpDownMrkY.Position                   := ReadInteger(SETTINGSSECTION, 'MrkY', UpDownMrkY.Position);
-    UpDownMrkAlpha.Position               := ReadInteger(SETTINGSSECTION, 'MrkAlpha', UpDownMrkAlpha.Position);
-    CheckBoxRenEnabled.Checked            := ReadBool(SETTINGSSECTION, 'RenEnabled', CheckBoxRenEnabled.Checked);
-    RadioButtonRenSimple.Checked          := ReadBool(SETTINGSSECTION, 'RenSimple', RadioButtonRenSimple.Checked);
-    RadioButtonRenAdvanced.Checked        := ReadBool(SETTINGSSECTION, 'RenAdvanced', RadioButtonRenAdvanced.Checked);
-    RadioButtonRenCustom.Checked          := ReadBool(SETTINGSSECTION, 'RenCustom', RadioButtonRenCustom.Checked);
-    EditRenTemplate.Text                  := ReadString(SETTINGSSECTION, 'RenTemplate', EditRenTemplate.Text);
-    CheckBoxShuffle.Checked               := ReadBool(SETTINGSSECTION, 'Shuffle', CheckBoxShuffle.Checked);
-    ComboBoxShuffleSeed.Text              := ShuffleSeedToStr(ReadInteger(SETTINGSSECTION, 'ShuffleSeed', 0));
-    CheckBoxTagsSourceEXIF.Checked        := ReadBool(SETTINGSSECTION, 'TagsSourceEXIF', CheckBoxTagsSourceEXIF.Checked);
-    CheckBoxTagsSourceTagsFiles.Checked   := ReadBool(SETTINGSSECTION, 'TagsSourceTagsFiles', CheckBoxTagsSourceTagsFiles.Checked);
-    CheckBoxTagTitle.Checked              := ReadBool(SETTINGSSECTION, 'TagTitle', CheckBoxTagTitle.Checked);
-    CheckBoxTagTimestamp.Checked          := ReadBool(SETTINGSSECTION, 'TagTimestamp', CheckBoxTagTimestamp.Checked);
-    CheckBoxTagCopyright.Checked          := ReadBool(SETTINGSSECTION, 'TagCopyright', CheckBoxTagCopyright.Checked);
-    EditCopyright.Text                    := ReadString(SETTINGSSECTION, 'Copyright', EditCopyright.Text);
-    CheckBoxTagsReportEnabled.Checked     := ReadBool(SETTINGSSECTION, 'TagsReportEnabled', CheckBoxTagsReportEnabled.Checked);
-    CheckBoxImageInfosEnabled.Checked     := ReadBool(SETTINGSSECTION, 'ImageInfosEnabled', CheckBoxImageInfosEnabled.Checked);
-    CheckBoxNoCreate.Checked              := ReadBool(SETTINGSSECTION, 'NoCreate', DEFAULT_NOCREATE);
+    ComboBoxJPEGQuality.Text               := ReadString(PROJECT_SECTION, 'JpgOptions.Quality', ComboBoxJPEGQuality.Text);
+    ComboBoxPngCompression.Text           := ReadString(PROJECT_SECTION, 'PngOptions.Compression', ComboBoxPngCompression.Text);
+    ComboBoxResampling.Text               := ReadString(PROJECT_SECTION, 'Resampling', RESAMPLING_STRINGS[DEFAULT_RESAMPLING]);
+    CheckBoxMrkEnabled.Checked            := ReadBool(PROJECT_SECTION, 'MrkEnabled', CheckBoxMrkEnabled.Checked);
+    EditMrkFilename.Text                  := ReadString(PROJECT_SECTION, 'MrkFilename', EditMrkFilename.Text);
+    UpDownMrkSize.Position                := ReadInteger(PROJECT_SECTION, 'MrkSize', UpDownMrkSize.Position);
+    UpDownMrkX.Position                   := ReadInteger(PROJECT_SECTION, 'MrkX', UpDownMrkX.Position);
+    UpDownMrkY.Position                   := ReadInteger(PROJECT_SECTION, 'MrkY', UpDownMrkY.Position);
+    UpDownMrkAlpha.Position               := ReadInteger(PROJECT_SECTION, 'MrkAlpha', UpDownMrkAlpha.Position);
+    CheckBoxRenEnabled.Checked            := ReadBool(PROJECT_SECTION, 'RenEnabled', CheckBoxRenEnabled.Checked);
+    RadioButtonRenSimple.Checked          := ReadBool(PROJECT_SECTION, 'RenSimple', RadioButtonRenSimple.Checked);
+    RadioButtonRenAdvanced.Checked        := ReadBool(PROJECT_SECTION, 'RenAdvanced', RadioButtonRenAdvanced.Checked);
+    RadioButtonRenCustom.Checked          := ReadBool(PROJECT_SECTION, 'RenCustom', RadioButtonRenCustom.Checked);
+    EditRenTemplate.Text                  := ReadString(PROJECT_SECTION, 'RenTemplate', EditRenTemplate.Text);
+    CheckBoxShuffle.Checked               := ReadBool(PROJECT_SECTION, 'Shuffle', CheckBoxShuffle.Checked);
+    ComboBoxShuffleSeed.Text              := ShuffleSeedToStr(ReadInteger(PROJECT_SECTION, 'ShuffleSeed', 0));
+    CheckBoxTagsSourceEXIF.Checked        := ReadBool(PROJECT_SECTION, 'TagsSourceEXIF', CheckBoxTagsSourceEXIF.Checked);
+    CheckBoxTagsSourceTagsFiles.Checked   := ReadBool(PROJECT_SECTION, 'TagsSourceTagsFiles', CheckBoxTagsSourceTagsFiles.Checked);
+    CheckBoxTagTitle.Checked              := ReadBool(PROJECT_SECTION, 'TagTitle', CheckBoxTagTitle.Checked);
+    CheckBoxTagTimestamp.Checked          := ReadBool(PROJECT_SECTION, 'TagTimestamp', CheckBoxTagTimestamp.Checked);
+    CheckBoxTagCopyright.Checked          := ReadBool(PROJECT_SECTION, 'TagCopyright', CheckBoxTagCopyright.Checked);
+    EditCopyright.Text                    := ReadString(PROJECT_SECTION, 'Copyright', EditCopyright.Text);
+    CheckBoxTagsReportEnabled.Checked     := ReadBool(PROJECT_SECTION, 'TagsReportEnabled', CheckBoxTagsReportEnabled.Checked);
+    CheckBoxImageInfosEnabled.Checked     := ReadBool(PROJECT_SECTION, 'ImageInfosEnabled', CheckBoxImageInfosEnabled.Checked);
+    CheckBoxNoCreate.Checked              := ReadBool(PROJECT_SECTION, 'NoCreate', DEFAULT_NOCREATE);
     ActionParamSizes.Execute;
   end;
   FPresentationSettings.LoadFromIni(Ini);
@@ -1048,41 +1050,41 @@ procedure TMainDialog.SaveProjectToIni(Ini :TCustomIniFile);
 begin
   // Navigate to proper "directory":
   with Ini do begin
-    WriteString(COMMONSECTION, 'Type', PRJTYPE);
-    WriteString(COMMONSECTION, 'Version', PRJVERSION);
-    EraseSection(SETTINGSSECTION);
-    WriteString(SETTINGSSECTION, 'Description', FProjectDescription);
-    WriteString(SETTINGSSECTION, 'Source', SRCMODES[ActionSrcFilenames.Checked]);
-    WriteString(SETTINGSSECTION, 'SourceFolder', EditSrcFolder.Text);
-    WriteString(SETTINGSSECTION, 'SourceMasks', EditSrcMasks.Text);
-    WriteString(SETTINGSSECTION, 'SourceFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, LINESEP));
-    WriteString(SETTINGSSECTION, 'Sizes', EditSizes.Text);
-    WriteString(SETTINGSSECTION, 'TargetFolder', EditTargetFolder.Text);
-    WriteString(SETTINGSSECTION, 'JpgOptions.Quality', ComboBoxJPEGQuality.Text);
-    WriteString(SETTINGSSECTION, 'PngOptions.Compression', ComboBoxPngCompression.Text);
-    WriteString(SETTINGSSECTION, 'Resampling', ComboBoxResampling.Text);
-    WriteBool(SETTINGSSECTION, 'MrkEnabled', CheckBoxMrkEnabled.Checked);
-    WriteString(SETTINGSSECTION, 'MrkFilename', EditMrkFilename.Text);
-    WriteString(SETTINGSSECTION, 'MrkSize', EditMrkSize.Text);
-    WriteString(SETTINGSSECTION, 'MrkX', EditMrkX.Text);
-    WriteString(SETTINGSSECTION, 'MrkY', EditMrkY.Text);
-    WriteString(SETTINGSSECTION, 'MrkAlpha', EditMrkAlpha.Text);
-    WriteBool(SETTINGSSECTION, 'RenEnabled', CheckBoxRenEnabled.Checked);
-    WriteBool(SETTINGSSECTION, 'RenSimple', RadioButtonRenSimple.Checked);
-    WriteBool(SETTINGSSECTION, 'RenAdvanced', RadioButtonRenAdvanced.Checked);
-    WriteBool(SETTINGSSECTION, 'RenCustom', RadioButtonRenCustom.Checked);
-    WriteString(SETTINGSSECTION, 'RenTemplate', EditRenTemplate.Text);
-    WriteBool(SETTINGSSECTION, 'Shuffle', CheckBoxShuffle.Checked);
-    WriteInteger(SETTINGSSECTION, 'ShuffleSeed', StrToShuffleSeed(ComboBoxShuffleSeed.Text));
-    WriteBool(SETTINGSSECTION, 'TagsSourceEXIF', CheckBoxTagsSourceEXIF.Checked);
-    WriteBool(SETTINGSSECTION, 'TagsSourceTagsFiles', CheckBoxTagsSourceTagsFiles.Checked);
-    WriteBool(SETTINGSSECTION, 'TagTitle', CheckBoxTagTitle.Checked);
-    WriteBool(SETTINGSSECTION, 'TagTimestamp', CheckBoxTagTimestamp.Checked);
-    WriteBool(SETTINGSSECTION, 'TagCopyright', CheckBoxTagCopyright.Checked);
-    WriteString(SETTINGSSECTION, 'Copyright', EditCopyright.Text);
-    WriteBool(SETTINGSSECTION, 'TagsReportEnabled', CheckBoxTagsReportEnabled.Checked);
-    WriteBool(SETTINGSSECTION, 'ImageInfosEnabled', CheckBoxImageInfosEnabled.Checked);
-    WriteBool(SETTINGSSECTION, 'NoCreate', CheckBoxNoCreate.Checked);
+    WriteString(COMMON_SECTION, 'Type', PRJTYPE);
+    WriteString(COMMON_SECTION, 'Version', PRJVERSION);
+    EraseSection(PROJECT_SECTION);
+    WriteString(PROJECT_SECTION, 'Description', FProjectDescription);
+    WriteString(PROJECT_SECTION, 'Source', SRCMODES[ActionSrcFilenames.Checked]);
+    WriteString(PROJECT_SECTION, 'SourceFolder', EditSrcFolder.Text);
+    WriteString(PROJECT_SECTION, 'SourceMasks', EditSrcMasks.Text);
+    WriteString(PROJECT_SECTION, 'SourceFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, LINESEP));
+    WriteString(PROJECT_SECTION, 'Sizes', EditSizes.Text);
+    WriteString(PROJECT_SECTION, 'TargetFolder', EditTargetFolder.Text);
+    WriteString(PROJECT_SECTION, 'JpgOptions.Quality', ComboBoxJPEGQuality.Text);
+    WriteString(PROJECT_SECTION, 'PngOptions.Compression', ComboBoxPngCompression.Text);
+    WriteString(PROJECT_SECTION, 'Resampling', ComboBoxResampling.Text);
+    WriteBool(PROJECT_SECTION, 'MrkEnabled', CheckBoxMrkEnabled.Checked);
+    WriteString(PROJECT_SECTION, 'MrkFilename', EditMrkFilename.Text);
+    WriteString(PROJECT_SECTION, 'MrkSize', EditMrkSize.Text);
+    WriteString(PROJECT_SECTION, 'MrkX', EditMrkX.Text);
+    WriteString(PROJECT_SECTION, 'MrkY', EditMrkY.Text);
+    WriteString(PROJECT_SECTION, 'MrkAlpha', EditMrkAlpha.Text);
+    WriteBool(PROJECT_SECTION, 'RenEnabled', CheckBoxRenEnabled.Checked);
+    WriteBool(PROJECT_SECTION, 'RenSimple', RadioButtonRenSimple.Checked);
+    WriteBool(PROJECT_SECTION, 'RenAdvanced', RadioButtonRenAdvanced.Checked);
+    WriteBool(PROJECT_SECTION, 'RenCustom', RadioButtonRenCustom.Checked);
+    WriteString(PROJECT_SECTION, 'RenTemplate', EditRenTemplate.Text);
+    WriteBool(PROJECT_SECTION, 'Shuffle', CheckBoxShuffle.Checked);
+    WriteInteger(PROJECT_SECTION, 'ShuffleSeed', StrToShuffleSeed(ComboBoxShuffleSeed.Text));
+    WriteBool(PROJECT_SECTION, 'TagsSourceEXIF', CheckBoxTagsSourceEXIF.Checked);
+    WriteBool(PROJECT_SECTION, 'TagsSourceTagsFiles', CheckBoxTagsSourceTagsFiles.Checked);
+    WriteBool(PROJECT_SECTION, 'TagTitle', CheckBoxTagTitle.Checked);
+    WriteBool(PROJECT_SECTION, 'TagTimestamp', CheckBoxTagTimestamp.Checked);
+    WriteBool(PROJECT_SECTION, 'TagCopyright', CheckBoxTagCopyright.Checked);
+    WriteString(PROJECT_SECTION, 'Copyright', EditCopyright.Text);
+    WriteBool(PROJECT_SECTION, 'TagsReportEnabled', CheckBoxTagsReportEnabled.Checked);
+    WriteBool(PROJECT_SECTION, 'ImageInfosEnabled', CheckBoxImageInfosEnabled.Checked);
+    WriteBool(PROJECT_SECTION, 'NoCreate', CheckBoxNoCreate.Checked);
   end;
   FPresentationSettings.SaveToIni(Ini);
   FPresentationSettingsList.SaveToIni(Ini);

@@ -21,25 +21,28 @@ type
     FSettings :TSettings;
     FKey :string;
     FTextDefault :string;
+    FOnChanged :TNotifyEvent;
   protected
     procedure Changed;
     procedure Load(Ini :TCustomIniFile; const Section :string); virtual;
     function GetDisplay :string; virtual;
     procedure SetDisplay(const AValue :string); virtual;
-    procedure SetText(AValue: string); virtual; abstract;
+    procedure SetText(const AValue: string); virtual; abstract;
     function GetText :string; virtual; abstract;
   public
-    class procedure Register(SettingClass :TSettingClass);
+    class procedure Register(const Classes :array of TSettingClass);
     class function ClassDefault :string; virtual; abstract;
     constructor Create(Settings :TSettings; const Key :string); virtual;
     function Compare(Setting :TSetting) :boolean; virtual;
     procedure Assign(Source :TSetting); virtual;
     procedure SetDefault;
+    property Settings :TSettings read FSettings;
     property Caption :string read FCaption;
     property Key :string read FKey;
     property Text :string read GetText write SetText;
     property Display :string read GetDisplay write SetDisplay;
     property TextDefault :string read FTextDefault write FTextDefault;
+    property OnChanged :TNotifyEvent read FOnChanged write FOnChanged;
   end;
 
   { TStringSetting }
@@ -48,12 +51,38 @@ type
   private
     FValue :string;
   protected
-    procedure SetText(AValue: string); override;
+    procedure SetText(const AValue: string); override;
     function GetText :string; override;
   public
     class function ClassDefault :string; override;
     function Compare(Setting :TSetting) :boolean; override;
     property Value :string read FValue write SetText;
+  end;
+
+  { TPicklistSetting }
+
+  TPicklistSetting = class(TStringSetting)
+  public type
+    TMode = (pmList, pmText);
+  private
+    FItemIndex :integer;
+    FTextItems :TStringArray;
+    FDisplayItems :TStringArray;
+    FMode :TMode;
+    procedure SetItemIndex(AValue: integer);
+  protected
+    procedure Load(Ini :TCustomIniFile; const Section :string); override;
+    procedure SetText(const AValue: string); override;
+    function GetText :string; override;
+    function GetDisplay :string; override;
+    procedure SetDisplay(const AValue: string); override;
+  public
+    constructor Create(Settings :TSettings; const Key :string); override;
+    class function StrToMode(const Str :string) :TMode;
+    property TextItems :TStringArray read FTextItems;
+    property DisplayItems :TStringArray read FDisplayItems;
+    property ItemIndex :integer read FItemIndex write SetItemIndex;
+    property Mode :TMode read FMode write FMode;
   end;
 
   { TIntegerSetting }
@@ -66,7 +95,7 @@ type
     procedure SetValue(AValue: integer);
   protected
     procedure Load(Ini :TCustomIniFile; const Section :string); override;
-    procedure SetText(AValue: string); override;
+    procedure SetText(const AValue: string); override;
     function GetText :string; override;
   public
     constructor Create(Settings :TSettings; const Key :string); override;
@@ -86,7 +115,7 @@ type
     procedure SetValue(AValue: boolean);
   protected
     procedure Load(Ini :TCustomIniFile; const Section :string); override;
-    procedure SetText(AValue: string); override;
+    procedure SetText(const AValue: string); override;
     function GetText :string; override;
     function GetDisplay :string; override;
     procedure SetDisplay(const AValue :string); override;
@@ -104,30 +133,31 @@ type
 
   { TSettings }
 
-  TSettings = class
+  TSettings = class(TSettingDictionary)
   private
-    FKey :string; // The Ini-Section
+    FSection :string; // The Ini-Section
     FLanguage :string;
     FDirty :boolean;
     FOnChanged :TNotifyEvent;
-    FSettingList :TSettingList;
-    FSettingDict :TSettingDictionary;
+    FItems :TSettingList;
   protected
     procedure Changed;
+    function Add(constref Setting :TSetting) :SizeInt;
   public
     class procedure Register(Value :TSettingsClass);
-    constructor Create(const Key :string); virtual; overload;
+    constructor Create(const ASection :string = ''); virtual; overload;
     destructor Destroy; override;
     procedure SetDefaults; virtual;
     function Compare(const Value :TSettings) :boolean; virtual;
     procedure Assign(const Source :TSettings); virtual;
     procedure Load(Ini :TCustomIniFile; const Section :string);
-    procedure Add(Setting :TSetting);
     procedure SaveToIni(Ini :TCustomIniFile); virtual;
     procedure LoadFromIni(Ini :TCustomIniFile); virtual;
-//    property Section :string read FSection write FSection;
+    property Items :TSettingList read FItems;
+    property Section :string read FSection;
     property OnChanged :TNotifyEvent read FOnChanged write FOnChanged;
     property Dirty :boolean read FDirty;
+    property Language :string read FLanguage;
   end;
 
   { TSettingsList }
@@ -135,7 +165,7 @@ type
   TSettingsList = class(TObjectDictionary<string, TSettings>)
   private
     FDirty :boolean;
-    FSectionPrefix :string;
+    FGroup :string; // i.e. [Main.xxxxx] or [Presentation.xxxxx]
     FOnChanged :TNotifyEvent;
     FChangedSettings :TSettings; // Which TSettings has been changed when OnChanged
     procedure DoChanged;
@@ -143,11 +173,11 @@ type
   protected
     procedure KeyNotify(constref AKey: string; ACollectionNotification: TCollectionNotification); override;
   public
-    constructor Create(const SectionPrefix :string; OwnsObjects :boolean);
+    constructor Create(const AGroup :string; OwnsObjects :boolean);
     procedure SetDefaults;
     procedure LoadFromIni(Ini :TCustomIniFile);
     procedure SaveToIni(Ini :TCustomIniFile);
-    property SectionPrefix :string read FSectionPrefix {write FSectionPrefix whynot};
+    property Group :string read FGroup {write FSectionPrefix whynot};
     property OnChanged :TNotifyEvent read FOnChanged write FOnChanged;
     property ChangedSettings :TSettings read FChangedSettings;
     property Dirty :boolean read FDirty;
@@ -161,8 +191,9 @@ resourcestring
   SErrSettingClassNotFoundFmt = 'Setting class ''%s'' from [''%s''] not registered.';
   SErrConvertToIntegerFmt = 'Cant convert ''%s'' to integer.';
   SErrConvertToBooleanFmt = 'Cant convert ''%s'' to boolean.';
-  SErrInvalidNumberOfValuesFmt = 'Invalid number of values ''%s'', %d expected.';
+  SErrItemsCountMismatchFmt = 'Number of ''%s'' display strings mismatch, %d expected';
   SErrAssigningFmt = 'Cant assign an object of class ''%s'' to an object of class ''%s''.';
+  SErrInvalidPicklistModeFmt = 'Invalid picklist mode ''%s''.';
 
 var
   SettingClasses :TDictionary<string, TSettingClass>;
@@ -190,19 +221,21 @@ begin
     FOnChanged(self);
 end;
 
-constructor TSettings.Create(const Key :string);
+constructor TSettings.Create(const ASection :string);
 begin
-  FKey := Key;
+  inherited Create;
+  if ASection<>'' then
+    FSection := ASection
+  else
+    FSection := Copy(ClassName, 2, Length(ClassName)-9);
   FLanguage := GetLanguageID.LanguageCode;
-  FSettingList := TSettingList.Create;
-  FSettingDict := TSettingDictionary.Create;
+  FItems := TSettingList.Create(true);
   SetDefaults;
 end;
 
 destructor TSettings.Destroy;
 begin
-  FSettingDict.Free;
-  FSettingList.Free;
+  FItems.Free;
   inherited Destroy;
 end;
 
@@ -228,7 +261,7 @@ procedure TSettings.SetDefaults;
 var
   Setting :TSetting;
 begin
-  for Setting in FSettingList do
+  for Setting in Items do
     Setting.SetDefault;
 end;
 
@@ -236,10 +269,10 @@ function TSettings.Compare(const Value: TSettings): boolean;
 var
   i :integer;
 begin
-  result := FSettingList.Count = Value.FSettingList.Count;
+  result := Count = Value.Count;
   if result then begin
-    for i:=0 to FSettingList.Count-1 do
-      if not FSettingList[i].Compare(Value.FSettingList[i]) then Exit;
+    for i:=0 to Items.Count-1 do
+      if not Items[i].Compare(Value.Items[i]) then Exit;
   end;
 end;
 
@@ -265,14 +298,13 @@ begin
     SectionDot := Section+'.';
     for SettingSection in Sections do
       if SettingSection.StartsWith(SectionDot, true) then begin
-        SettingKey := Copy(SettingSection, Length(SectionDot)+1, Length(SettingSection)-Length(SectionDot)-1);
+        SettingKey := Copy(SettingSection, Length(SectionDot)+1, Length(SettingSection)-Length(SectionDot));
         SettingClassName := 'T'+Ini.ReadString(SettingSection, 'Class', '')+'Setting';
         if not SettingClasses.TryGetValue(SettingClassName, SettingClass) then
           raise Exception.CreateFmt(SErrSettingClassNotFoundFmt, [SettingClassName, SettingSection]);
         Setting := SettingClass.Create(self, SettingKey);
         try
           Setting.Load(Ini, SettingSection);
-          Add(Setting);
         except
           Setting.Free;
           raise;
@@ -283,10 +315,10 @@ begin
   end;
 end;
 
-procedure TSettings.Add(Setting: TSetting);
+function TSettings.Add(constref Setting: TSetting) :SizeInt;
 begin
-  FSettingDict.Add(Setting.Key, Setting);
-  FSettingList.Add(Setting);
+  inherited Add(Setting.Key, Setting);
+  result := FItems.Add(Setting);
 end;
 
 procedure TSettings.SaveToIni(Ini: TCustomIniFile);
@@ -304,6 +336,7 @@ begin
   FKey := Key;
   FSettings := Settings;
   FTextDefault := ClassDefault;
+  FSettings.Add(self);
 end;
 
 function TSetting.Compare(Setting: TSetting): boolean;
@@ -325,7 +358,7 @@ end;
 
 procedure TSetting.Load(Ini: TCustomIniFile; const Section :string);
 begin
-  FKey := LastItemAfterDot(Section);
+//  FKey := LastItemAfterDot(Section);
   FCaption := Ini.ReadLang(Section, 'Caption', FSettings.Flanguage);
   FTextDefault := Ini.ReadString(Section, 'Default', ClassDefault);
   Text := Ini.ReadLang(Section, 'Text', FSettings.Flanguage);
@@ -334,6 +367,8 @@ end;
 procedure TSetting.Changed;
 begin
   FSettings.Changed;
+  if Assigned(FOnChanged) then
+    FOnChanged(self);
 end;
 
 function TSetting.GetDisplay: string;
@@ -346,14 +381,17 @@ begin
   Text := AValue;
 end;
 
-class procedure TSetting.Register(SettingClass: TSettingClass);
+class procedure TSetting.Register(const Classes :array of TSettingClass);
+var
+  AClass :TSettingClass;
 begin
-  SettingClasses.Add(SettingClass.ClassName, SettingClass);
+  for AClass in Classes do
+    SettingClasses.Add(AClass.ClassName, AClass);
 end;
 
 { TStringSetting }
 
-procedure TStringSetting.SetText(AValue: string);
+procedure TStringSetting.SetText(const AValue: string);
 begin
   if AValue=Value then Exit;
   FValue := AValue;
@@ -375,6 +413,117 @@ begin
   result := inherited Compare(Setting) and (Value = TStringSetting(Setting).Value);
 end;
 
+{ TPicklistSetting }
+
+procedure TPicklistSetting.SetItemIndex(AValue: integer);
+begin
+  if (FItemIndex=AValue) or (FItemIndex<-1) or (FItemIndex>=FTextItems.Count) then Exit;
+  if AValue=-1 then
+    SetText('')
+  else
+    SetText(FTextItems[AValue]);
+end;
+
+procedure TPicklistSetting.Load(Ini: TCustomIniFile; const Section: string);
+var
+  s :string;
+begin
+  s := Ini.StringRead(Section, 'TextItems');
+  FTextItems := s.Split(',');
+  FDisplayItems := Ini.ReadLang(Section, 'DisplayItems', s, Settings.Language).Split(',');
+  FMode := StrToMode(Ini.ReadString(Section, 'Mode', 'Text'));
+  if FTextItems.Count<>FDisplayItems.Count then
+    raise Exception.CreateFmt(SErrItemsCountMismatchFmt, [Section, FTextItems.Count]);
+  inherited Load(Ini, Section);
+end;
+
+procedure TPicklistSetting.SetText(const AValue: string);
+var
+  i :integer;
+begin
+  if Mode=pmList then begin
+    if FTextItems.TryFind(AValue, i, true) then begin
+      FItemIndex := i;
+      inherited SetText(FTextItems[i]);
+    end else begin
+      FItemIndex := -1;
+      inherited SetText('');
+    end;
+  end else begin
+    if FTextItems.TryFind(AValue, i, true) then begin
+      FItemIndex := i;
+      inherited SetText(FTextItems[i]);
+    end else begin
+      FItemIndex := -1;
+      inherited SetText(AValue);
+    end;
+  end;
+end;
+
+function TPicklistSetting.GetText: string;
+begin
+  if Mode=pmList then begin
+    if FItemIndex=-1 then
+      result := ''
+    else
+      result := FTextItems[FItemIndex];
+  end else begin
+    if FItemIndex=-1 then
+      result := inherited GetText
+    else
+      result := FTextItems[FItemIndex];
+  end;
+end;
+
+function TPicklistSetting.GetDisplay: string;
+begin
+  if Mode=pmList then begin
+    if FItemIndex=-1 then
+      result := ''
+    else
+      result := FDisplayItems[FItemIndex];
+  end else begin
+    if FItemIndex=-1 then
+      result := inherited GetDisplay
+    else
+      result := FDisplayItems[FItemIndex];
+  end;
+end;
+
+procedure TPicklistSetting.SetDisplay(const AValue: string);
+begin
+  if Mode=pmList then begin
+    if FTextItems.TryFind(AValue, FItemIndex, true) then begin
+      SetText(FTextItems[FItemIndex]);
+    end else begin
+      SetText('');
+    end;
+  end else begin
+    if FTextItems.TryFind(AValue, FItemIndex, true) then begin
+      SetText(FTextItems[FItemIndex]);
+    end else begin
+      SetText(AValue);
+    end;
+  end;
+end;
+
+constructor TPicklistSetting.Create(Settings: TSettings; const Key: string);
+begin
+  inherited Create(Settings, Key);
+  FMode := pmText;
+  FItemIndex := -1;
+end;
+
+class function TPicklistSetting.StrToMode(const Str: string): TMode;
+begin
+  if SameText('List', Str) then
+    result := pmList
+  else if SameText('Text', Str) then
+    result := pmText
+  else
+    raise Exception.CreateFmt(SErrInvalidPicklistModeFmt, [Str]);
+end;
+
 { TIntegerSetting }
 
 procedure TIntegerSetting.SetValue(AValue: integer);
@@ -391,7 +540,7 @@ begin
   FMax := Ini.ReadInteger(Section, 'Min', high(integer));
 end;
 
-procedure TIntegerSetting.SetText(AValue: string);
+procedure TIntegerSetting.SetText(const AValue: string);
 var
   v :integer;
 begin
@@ -439,19 +588,17 @@ end;
 
 procedure TBooleanSetting.Load(Ini: TCustomIniFile; const Section: string);
 var
-  s :string;
   sa :TStringArray;
 begin
   inherited Load(Ini, Section);
-  s := Ini.ReadLang(Section, 'Displays', FDisplays[False]+','+FDisplays[True], FSettings.FLanguage);
-  sa := s.Split(',');
+  sa := Ini.ReadLang(Section, 'Displays', FDisplays[False]+','+FDisplays[True], FSettings.FLanguage).Split(',');
   if sa.Count<>2 then
-    raise Exception.CreateFmt(SErrInvalidNumberOfValuesFmt, [s, 2]);
+    raise Exception.CreateFmt(SErrItemsCountMismatchFmt, [Section, 2]);
   FDisplays[False] := sa[0];
   FDisplays[True] := sa[1];
 end;
 
-procedure TBooleanSetting.SetText(AValue: string);
+procedure TBooleanSetting.SetText(const AValue: string);
 begin
   if SameText(AValue, BOOLEANSTRINGS[True]) then
     Value := True
@@ -534,12 +681,12 @@ begin
   inherited KeyNotify(AKey, ACollectionNotification);
 end;
 
-constructor TSettingsList.Create(const SectionPrefix: string; OwnsObjects: boolean);
+constructor TSettingsList.Create(const AGroup: string; OwnsObjects: boolean);
 const
   OWNERSHIP :array[boolean] of TDictionaryOwnerships = ([], [doOwnsValues]);
 begin
   inherited Create(OWNERSHIP[OwnsObjects]);
-  FSectionPrefix := SectionPrefix;
+  FGroup := AGroup;
 end;
 
 procedure TSettingsList.SetDefaults;
@@ -555,20 +702,19 @@ var
   Sections :TStrings;
   Section :string;
   Settings :TSettings;
-  Key :string;
+  SettingsSection :string;
   ClassId :string;
 begin
   Sections := TStringList.Create;
   try
     Ini.ReadSections(Sections);
     for Section in Sections do
-      if Section.StartsWith(SectionPrefix+'.') then begin
-        Key := Copy(Section, Length(SectionPrefix)+2, Length(Section)-Length(SectionPrefix)-1);
-        ClassId := Ini.ReadString(Section, 'Class', Id);
-        if not TryGetValue(Id, Settings) then begin
-          Settings := TSettings.Create(ClassId);
-          Settings.FSection := Section;
-          Add(Id, Settings);
+      if Section.StartsWith(Group+'.') then begin
+        SettingsSection := Copy(Section, Length(Group)+2, Length(Section)-Length(Group)-1);
+        ClassId := Ini.ReadString(Section, 'Class', '');
+        if not TryGetValue(ClassId, Settings) then begin
+          Settings := TSettings.Create(SettingsSection);
+          Add(SettingsSection, Settings);
         end;
         Settings.LoadFromIni(Ini);
       end;
@@ -589,7 +735,7 @@ initialization
 begin
   SettingsClasses := TDictionary<string, TSettingsClass>.Create;
   SettingClasses := TDictionary<string, TSettingClass>.Create;
-  TSetting.Register(TStringSetting);
+  TSetting.Register([TStringSetting, TBooleanSetting, TIntegerSetting, TPicklistSetting]);
 end;
 
 finalization
