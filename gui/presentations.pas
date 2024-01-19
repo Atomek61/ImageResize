@@ -44,6 +44,7 @@ type
   public
     constructor Create(IniFile :TCustomIniFile); virtual; overload;
     destructor Destroy; override;
+    class procedure Register(ManagerClass :TCustomManagerClass);
     class function ClassId :string;
     class function Create(const Filename :string) :TCustomManager; overload;
     class procedure Scan(const Folder :string; Managers :TManagers);
@@ -73,7 +74,6 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    class procedure Register(ManagerClass :TCustomManagerClass);
     procedure SortByDate;
     function IndexOf(const Id :string) :integer;
     property ById[Id :string] :TCustomManager read GetById;
@@ -121,6 +121,12 @@ resourcestring
   SErrIniValueNotFoundFmt = 'Key ''[%s]%s'' not found in ''%s''.';
 
 { TCustomManager }
+
+class procedure TCustomManager.Register(ManagerClass: TCustomManagerClass);
+begin
+  // Assumes TIdPresentationManager
+  ManagerClasses.Add(ManagerClass.Classname, ManagerClass);
+end;
 
 constructor TCustomManager.Create(IniFile :TCustomIniFile);
 const
@@ -261,7 +267,7 @@ end;
 
 constructor TManagers.Create;
 begin
-  inherited Create(false);
+  inherited Create(true);
   FDictionary := TDictionary<string, TCustomManager>.Create;
 end;
 
@@ -269,12 +275,6 @@ destructor TManagers.Destroy;
 begin
   FreeAndNil(FDictionary);
   inherited Destroy;
-end;
-
-class procedure TManagers.Register(ManagerClass: TCustomManagerClass);
-begin
-  // Assumes TIdPresentationManager
-  ManagerClasses.Add(ManagerClass.Classname, ManagerClass);
 end;
 
 function CompareDate(constref Left, Right :TCustomManager) :integer;
@@ -370,6 +370,7 @@ begin
   FProcessor.Free;
   FSettings.Free;
   FManagerFrame.Free;
+  FSettingsEditor.Free;
   inherited Destroy;
 end;
 
@@ -386,7 +387,7 @@ end;
 initialization
 begin
   ManagerClasses := TDictionary<string, TCustomManagerClass>.Create;
-  TManagers.Register(TPresentationManager);
+  TCustomManager.Register(TPresentationManager);
 end;
 
 finalization

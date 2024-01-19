@@ -15,7 +15,7 @@ object PresentationManagerFrame: TPresentationManagerFrame
     Width = 428
     Align = alClient
     Color = clDefault
-    DefaultColWidth = 120
+    DefaultColWidth = 130
     DefaultRowHeight = 24
     ExtendedSelect = False
     FixedCols = 0
@@ -24,13 +24,14 @@ object PresentationManagerFrame: TPresentationManagerFrame
     ScrollBars = ssAutoVertical
     TabOrder = 0
     DisplayOptions = [doAutoColResize, doKeyColFixed]
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goEditing, goAlwaysShowEditor, goThumbTracking]
     TitleCaptions.Strings = (
       'Setting'
       'Value'
     )
     ColWidths = (
-      120
-      307
+      130
+      297
     )
   end
   object Label1: TLabel

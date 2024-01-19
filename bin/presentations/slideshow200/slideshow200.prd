@@ -24,6 +24,13 @@ Caption.de=Titel
 [Settings.Color]
 Class=Integer
 Presentation=WebColor
-Caption=Color
-Caption.de=Farbe
-Text=0
+Caption=Font Color
+Caption.de=Schriftfarbe
+Text=$FF0F80
+
+[Settings.BackgroundColor]
+Class=Integer
+Presentation=WebColor
+Caption=Background Color
+Caption.de=Hintergrundfarbe
+Text=$FF0F80

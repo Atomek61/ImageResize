@@ -328,17 +328,6 @@ msgstr ""
 msgid "Writing Tags Report to '%s'..."
 msgstr ""
 
-#: imgtags.serrinvalidimageorientationfmt
-#, object-pascal-format
-msgid "Invalid image orientation '%s'."
-msgstr ""
-
-#: imgtags.serrinvalidimageratiofmt
-#, object-pascal-format
-msgctxt "imgtags.serrinvalidimageratiofmt"
-msgid "Invalid image format '%s'."
-msgstr ""
-
 #: maindlg.scptcancel
 msgctxt "maindlg.scptcancel"
 msgid "Cancel"
@@ -1743,13 +1732,9 @@ msgctxt "tsettingsdialog.labelcores.caption"
 msgid "Cores"
 msgstr ""
 
-#: vardisplay.serrinvalidvarstringfmt
+#: webutils.serrinvalidhtmlcolorfmt
 #, object-pascal-format
-msgid "Cant convert '%s' to variable of type %s."
-msgstr ""
-
-#: vardisplay.serrvarclassnotregisteredfmt
-#, object-pascal-format
-msgid "Variable class '%s' not registered."
+msgctxt "webutils.serrinvalidhtmlcolorfmt"
+msgid "Invalid web color '%s'."
 msgstr ""
 

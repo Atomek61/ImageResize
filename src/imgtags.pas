@@ -5,7 +5,7 @@ unit imgtags;
 interface
 
 uses
-  Classes, SysUtils, Logging, VarDisplay;
+  Classes, SysUtils, Logging, vardisplay;
 
 type
 

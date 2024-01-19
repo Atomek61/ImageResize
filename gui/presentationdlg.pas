@@ -90,10 +90,6 @@ end;
 procedure TPresentationDialog.FormShow(Sender: TObject);
 begin
   Scan;
-  //ManagerId := FPresentationSettings.ManagerId;
-  //EditTargetFolder.Text := FPresentationSettings.TargetFolder;
-  //if FManagers.Count>0 then
-  //  ManagerIndex := 0;
   FOuterLogger := TLogger.SwapDefaultLogger(TRichMemoLogger.Create(MemoMessages));
 end;
 
@@ -134,22 +130,22 @@ var
   ManagerIcon :TGraphic;
   hr, hi:integer;
 begin
-  Cnvs := ListBoxManagers.Canvas;
-  Cnvs.Brush.Color := IfThen(odSelected in State, clHighlight, clBtnFace);
-  Cnvs.FillRect(ARect);
-  ManagerIcon := FManagers[Index].Icon;
-  if Assigned(ManagerIcon) then begin
-    hi := ManagerIcon.Height;
-    hr := ARect.Height;
-    Cnvs.Draw(ARect.Left+4, ARect.Top+(hr-hi) div 2, ManagerIcon);
-  end;
-  Cnvs.Font.Color := IfThen(odSelected in State, clHighlightText, clBtnText);
-  Cnvs.Font.Size := 11;
-  Cnvs.Font.Style := [fsBold];
-  Cnvs.TextOut(78, ARect.Top+10, FManagers[Index].Title);
-  Cnvs.Font.Size := 9;
-  Cnvs.Font.Style := [];
-  Cnvs.TextOut(78, ARect.Top+36, FManagers[Index].Description);
+  //Cnvs := ListBoxManagers.Canvas;
+  //Cnvs.Brush.Color := IfThen(odSelected in State, clHighlight, clBtnFace);
+  //Cnvs.FillRect(ARect);
+  //ManagerIcon := FManagers[Index].Icon;
+  //if Assigned(ManagerIcon) then begin
+  //  hi := ManagerIcon.Height;
+  //  hr := ARect.Height;
+  //  Cnvs.Draw(ARect.Left+4, ARect.Top+(hr-hi) div 2, ManagerIcon);
+  //end;
+  //Cnvs.Font.Color := IfThen(odSelected in State, clHighlightText, clBtnText);
+  //Cnvs.Font.Size := 11;
+  //Cnvs.Font.Style := [fsBold];
+  //Cnvs.TextOut(78, ARect.Top+10, FManagers[Index].Title);
+  //Cnvs.Font.Size := 9;
+  //Cnvs.Font.Style := [];
+  //Cnvs.TextOut(78, ARect.Top+36, FManagers[Index].Description);
 end;
 
 function TPresentationDialog.GetManagerId: string;

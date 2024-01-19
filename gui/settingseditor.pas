@@ -5,7 +5,7 @@ unit settingseditor;
 interface
 
 uses
-  Classes, SysUtils, Generics.Collections, Dialogs, Grids, IniFiles, Graphics,
+  Classes, SysUtils, Generics.Collections, Grids, IniFiles, Graphics,
   Settings, ValEdit;
 
 type
@@ -42,17 +42,25 @@ type
   private
     FSettingsEditor :TSettingsEditor;
     FSetting :TSetting;
-    procedure DrawCell(const Display :string; Canvas :TCanvas; Rect :TRect; State :TGridDrawState); virtual;
+    FIndex :integer;
+    FValue :string;
   protected
-    procedure Bind(Index :integer); virtual;
+    procedure Bind(ItemProp :TItemProp); virtual;
+    function GetPresentation: string; virtual;
+    procedure SetPresentation(AValue: string); virtual;
+    procedure DrawCell(Canvas :TCanvas; Rect :TRect; State :TGridDrawState); virtual;
+    procedure ButtonClick; virtual;
+    procedure SetCell(const AValue :string);
     property SettingsEditor :TSettingsEditor read FSettingsEditor;
+    property Setting :TSetting read FSetting;
+    property Value :string read FValue write FValue;
+    property Index :integer read FIndex;
   public
     ReadOnly :boolean;
     constructor Create(ASetting :TSetting; ASettingsEditor :TSettingsEditor); virtual;
     class function ClassId :string;
     class procedure Register(const Classes :array of TEditorClass);
     procedure Load(Ini :TCustomIniFile; const Section :string); virtual;
-    procedure ButtonClick; virtual;
   end;
 
   // For each TSetting derivate an equivalent exists
@@ -60,22 +68,12 @@ type
   { TStringEditor }
 
   TStringEditor = class(TEditor)
-  protected
-    procedure Bind(Index :integer); override;
   end;
 
   { TIntegerEditor }
 
   TIntegerEditor = class(TStringEditor)
-  protected
-    procedure Bind(Index :integer); override;
-  end;
-
-  { TWebColorEditor }
-
-  TWebColorEditor = class(TIntegerEditor)
-  protected
-    procedure Bind(Index :integer); override;
+  public
   end;
 
   TPickEdit = class(TEditor)
@@ -116,34 +114,38 @@ begin
   FControl := AControl;
   FControl.OnGetEditText := OnGetCellDisplay;
   FControl.OnSetEditText := OnSetCellDisplay;
+  FControl.OnButtonClick := OnButtonClick;
+  FControl.OnDrawCell    := OnDrawCell;
   FSettings := ASettings;
   FEditorList.Clear;
   FEditorDict.Clear;
   for i:=0 to Settings.Items.Count-1 do begin
     Setting := Settings.Items[i];
     EditorClassName := 'T'+Setting.Presentation+'Editor';
-    if EditorClasses.TryGetValue(EditorClassName, EditorClass) then begin
-//      FControl.RowCount := Settings.Count + FControl.FixedRows + 1;
+    if EditorClasses.TryGetValue(EditorClassName, EditorClass) then
       Editor := EditorClass.Create(Setting, self);
-    end;
   end;
 end;
 
 procedure TSettingsEditor.OnGetCellDisplay(Sender: TObject; ACol, ARow: Integer;
   var Value: string);
 begin
-  Value := FEditorList[ARow-FControl.FixedRows].FSetting.Display;
+  Value := FEditorList[ARow-FControl.FixedRows].GetPresentation;
 end;
 
 procedure TSettingsEditor.OnSetCellDisplay(Sender: TObject; ACol, ARow: Integer;
   const Value: string);
 begin
-  FEditorList[ARow-FControl.FixedRows].FSetting.Display := Value;
+  FEditorList[ARow-FControl.FixedRows].SetPresentation(Value);
 end;
 
 procedure TSettingsEditor.OnButtonClick(Sender: TObject; ACol, ARow: Integer);
+var
+  Index :integer;
 begin
-
+  Index := ARow-FControl.FixedRows;
+  if (Index<0) or (Index>=FEditorList.Count) then Exit;
+  FEditorList[Index].ButtonClick;
 end;
 
 procedure TSettingsEditor.OnDrawCell(Sender: TObject; aCol, aRow: Integer; aRect: TRect; aState: TGridDrawState);
@@ -153,7 +155,7 @@ begin
   if aCol<>1 then Exit;
   Index := ARow-FControl.FixedRows;
   if (Index<0) or (Index>=FEditorList.Count) then Exit;
-    FEditorList[Index].DrawCell(FControl.Cells[aCol, aRow], FControl.Canvas, aRect, aState);
+    FEditorList[Index].DrawCell(FControl.Canvas, aRect, aState);
 end;
 
 procedure TSettingsEditor.OnKeyDown(Sender: TObject; var Key: Word;
@@ -165,24 +167,19 @@ end;
 { TEditor }
 
 constructor TEditor.Create(ASetting: TSetting; ASettingsEditor: TSettingsEditor);
-var
-  Index :integer;
 begin
   FSettingsEditor := ASettingsEditor;
   FSetting := ASetting;
-  Index := FSettingsEditor.FEditorList.Add(self);
+  FIndex := FSettingsEditor.FEditorList.Add(self);
   FSettingsEditor.FEditorDict.Add(ASetting.Key, self);
-  FSettingsEditor.FControl.Strings.Add(FSetting.Caption+'='+FSetting.Display);
-  Bind(Index);
+  FValue := FSetting.Display;
+  FSettingsEditor.FControl.Strings.Add(FSetting.Caption+'='+GetPresentation);
+  Bind(FSettingsEditor.FControl.ItemProps[FIndex]);
 end;
 
 class function TEditor.ClassId: string;
 begin
   result := Copy(ClassName, 2, Length(ClassName)-7);
-end;
-
-procedure TEditor.Bind(Index :integer);
-begin
 end;
 
 class procedure TEditor.Register(const Classes :array of TEditorClass);
@@ -203,42 +200,40 @@ begin
 
 end;
 
-procedure TEditor.DrawCell(const Display :string; Canvas: TCanvas; Rect: TRect; State: TGridDrawState);
+procedure TEditor.SetCell(const AValue: string);
 begin
-
+  SettingsEditor.Control.Values[Setting.Caption] := AValue;
 end;
 
-{ TStringEditor }
-
-procedure TStringEditor.Bind(Index :integer);
+procedure TEditor.Bind(ItemProp :TItemProp);
 begin
-  inherited;
-  with SettingsEditor.Control do begin
-    ItemProps[Index].EditStyle := esSimple;
-  end;
+end;
+
+function TEditor.GetPresentation: string;
+begin
+  result := FValue;
+end;
+
+procedure TEditor.SetPresentation(AValue: string);
+begin
+  FValue := AValue;
+end;
+
+procedure TEditor.DrawCell(Canvas: TCanvas; Rect: TRect; State: TGridDrawState);
+begin
+
 end;
 
 { TIntegerEditor }
 
-procedure TIntegerEditor.Bind(Index: integer);
-begin
-  inherited;
-  with SettingsEditor.Control do begin
-    ItemProps[Index].EditStyle := esSimple;
-  end;
-end;
+{ TStringEditor }
 
-{ TWebColorEditor }
-
-procedure TWebColorEditor.Bind(Index: integer);
-begin
-  inherited Bind(Index);
-end;
+{ TIntegerEditor }
 
 initialization
 begin
   EditorClasses := TEditorClasses.Create;
-  TEditor.Register([TStringEditor, TIntegerEditor, TWebColorEditor]);
+  TEditor.Register([TStringEditor, TIntegerEditor]);
 end;
 
 finalization
