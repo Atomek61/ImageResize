@@ -525,24 +525,6 @@ msgstr ""
 "\n"
 "Wollen Sie die Änderungen speichern?"
 
-#: maindlg.stxtlicense
-msgid ""
-"ImageResize Copyright (c) 2024 Jan Schirrmacher, www.atomek.de\n"
-"\n"
-"Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy and merge copies of the Software, subject to the following conditions:\n"
-"\n"
-"The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n"
-"\n"
-"THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHOR OR COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
-msgstr ""
-"ImageResize Copyright (c) 2024 Jan Schirrmacher, www.atomek.de\n"
-"\n"
-"Hiermit wird jeder Person, die eine Kopie dieser Software und der dazugehörigen Dokumentationsdateien (die „Software“) erhält, kostenlos die Erlaubnis erteilt, uneingeschränkt mit der Software umzugehen, einschließlich, aber nicht beschränkt auf die Rechte zur Nutzung, Vervielfältigung und Zusammenführung von Kopien der Software, vorbehaltlich der folgenden Bedingungen:\n"
-"\n"
-"Der obige Urheberrechtshinweis und dieser Genehmigungshinweis müssen in allen Kopien oder wesentlichen Teilen der Software enthalten sein.\n"
-"\n"
-"DIE SOFTWARE WIRD OHNE MÄNGELGEWÄHR BEREITGESTELLT, OHNE AUSDRÜCKLICHE ODER STILLSCHWEIGENDE GEWÄHRLEISTUNG, EINSCHLIESSLICH, ABER NICHT BESCHRÄNKT AUF GEWÄHRLEISTUNGEN DER MARKTFÄHIGKEIT, EIGNUNG FÜR EINEN BESTIMMTEN ZWECK UND NICHTVERLETZUNG VON RECHTEN DRITTER. DER AUTOR ODER URHEBERRECHTSINHABER IST IN KEINEM FALL HAFTBAR FÜR ANSPRÜCHE, SCHÄDEN ODER SONSTIGE HAFTUNG, OB AUS VERTRAG, UNERLAUBTER HANDLUNG ODER ANDERWEITIG, DIE SICH AUS, AUS ODER IM ZUSAMMENHANG MIT DER SOFTWARE ODER DER NUTZUNG ODER ANDEREN HANDLUNGEN MIT DER SOFTWARE ERGEBEN."
-
 #: maindlg.surlwebhelp
 msgid "http://www.atomek.de/imageresize/hlp35/gui/en"
 msgstr "http://www.atomek.de/imageresize/hlp35/gui/de"
@@ -571,7 +553,7 @@ msgid "Folder missing or does not exist."
 msgstr "Verzeichnisangabe fehlt oder das Verzeichnis existiert nicht."
 
 #: presentations.serrinivaluenotfoundfmt
-#, object-pascal-format, fuzzy
+#, object-pascal-format
 msgctxt "presentations.serrinivaluenotfoundfmt"
 msgid "Key '[%s]%s' not found in '%s'."
 msgstr "Bezeichner '[%s]%s' nicht gefunden in '%s'."
@@ -579,52 +561,62 @@ msgstr "Bezeichner '[%s]%s' nicht gefunden in '%s'."
 #: presentations.serrmissingpresentationmanagerclassfmt
 #, object-pascal-format
 msgid "Missing PresentationManager class entry in '%s'."
-msgstr ""
+msgstr "Fehlender Eintrag der Presentations-Manager-Klasse in '%s'."
 
 #: presentations.serrunregisterpresentationmanagerfmt
 #, object-pascal-format
 msgid "Unregistered PresentationManager class '%s'."
-msgstr ""
+msgstr "Unregistrierte Preäsentations-manager-Klasse '%s'."
 
 #: settings.scptfalse
 msgctxt "settings.scptfalse"
 msgid "False"
-msgstr ""
+msgstr "Falsch"
 
 #: settings.scpttrue
 msgctxt "settings.scpttrue"
 msgid "True"
-msgstr ""
+msgstr "Wahr"
 
-#: settings.serrassigningfmt
+#: settings.serrassignclassfmt
 #, object-pascal-format
-msgid "Cant assign an object of class '%s' to an object of class '%s'."
-msgstr ""
+msgid "Cant assign %s value to %s value."
+msgstr "Kann %s-Werte  nicht zuweisen zu %s."
+
+#: settings.serrassigningsectionfmt
+#, object-pascal-format
+msgid "Cant assign values of [%s] to those of [%s]."
+msgstr "Kann Werte von [%s] zu denen von [%s]."
+
+#: settings.serrassignkeyfmt
+#, object-pascal-format
+msgid "Cant assign value of %s to %s."
+msgstr "Kann Werte von %s nicht zu %s zuweisen."
 
 #: settings.serrconverttobooleanfmt
 #, object-pascal-format
 msgid "Cant convert '%s' to boolean."
-msgstr ""
+msgstr "Kann '%s' nicht in einen Wahrheitswert verwandeln."
 
 #: settings.serrconverttointegerfmt
 #, object-pascal-format
 msgid "Cant convert '%s' to integer."
-msgstr ""
+msgstr "Kann '%s' nicht in eine Ganzzahl verwandeln."
 
 #: settings.serrinvalidpicklistmodefmt
 #, object-pascal-format
 msgid "Invalid picklist mode '%s'."
-msgstr ""
+msgstr "Ungültiger Picklist-Modus '%s'."
 
 #: settings.serritemscountmismatchfmt
 #, object-pascal-format
 msgid "Number of '%s' display strings mismatch, %d expected"
-msgstr ""
+msgstr "Zahl der '%s' Anzeige-Werte stimmt nicht mit der Zahl der Werte (%d) überein."
 
 #: settings.serrsettingclassnotfoundfmt
 #, object-pascal-format
 msgid "Setting class '%s' from ['%s'] not registered."
-msgstr ""
+msgstr "Einstellungs-Klasse '%s' in ['%s'] nicht registriert."
 
 #: settingsdlg.scptbehavior0
 msgctxt "settingsdlg.scptbehavior0"
@@ -798,7 +790,7 @@ msgstr "mehr Werte als Tags"
 
 #: tcolorframe.label1.caption
 msgid "&Color:"
-msgstr ""
+msgstr "&Farbe."
 
 #: threading.dispatcher.scptcancelled
 msgid "Cancelled"
@@ -1180,7 +1172,6 @@ msgid "1"
 msgstr "1"
 
 #: tmaindialog.editrentemplate.hint
-#, fuzzy, badformat
 msgid ""
 "Enter a filename template containing placeholders for special values.\n"
 "This template will be expanded for each resampled image. Insert the\n"
@@ -1743,15 +1734,13 @@ msgid "<LongDescription>"
 msgstr "<Lange Beschreibung>"
 
 #: tpresentationdialog.labeltargetfolder.caption
-#, fuzzy
-#| msgid "&Folder with Images:"
 msgctxt "tpresentationdialog.labeltargetfolder.caption"
 msgid "&Target Folder:"
 msgstr "Bild&ordner:"
 
 #: tpresentationmanagerframe.label1.caption
 msgid "Settin&gs:"
-msgstr ""
+msgstr "Einstellun&gen:"
 
 #: tsettingsdialog.buttoncancel.caption
 msgctxt "tsettingsdialog.buttoncancel.caption"
@@ -1840,5 +1829,4 @@ msgstr "Kerne"
 #, object-pascal-format
 msgctxt "webutils.serrinvalidhtmlcolorfmt"
 msgid "Invalid web color '%s'."
-msgstr ""
-
+msgstr "Ungültige Web-Farbe '%s'."

@@ -32,8 +32,10 @@ type
     constructor Create;
     destructor Destroy; override;
     procedure Bind(ASettings :TSettings; AControl :TValueListEditor);
+    procedure Flush;
     property Control :TValueListEditor read FControl;
     property Settings :TSettings read FSettings;
+    property Editors :TEditorList read FEditorList;
   end;
 
   { TEditor }
@@ -51,6 +53,7 @@ type
     procedure DrawCell(Canvas :TCanvas; Rect :TRect; State :TGridDrawState); virtual;
     procedure ButtonClick; virtual;
     procedure SetCell(const AValue :string);
+    procedure Flush; virtual;
     property SettingsEditor :TSettingsEditor read FSettingsEditor;
     property Setting :TSetting read FSetting;
     property Value :string read FValue write FValue;
@@ -125,6 +128,14 @@ begin
     if EditorClasses.TryGetValue(EditorClassName, EditorClass) then
       Editor := EditorClass.Create(Setting, self);
   end;
+end;
+
+procedure TSettingsEditor.Flush;
+var
+  Editor :TEditor;
+begin
+  for Editor in FEditorList do
+    Editor.Flush;
 end;
 
 procedure TSettingsEditor.OnGetCellDisplay(Sender: TObject; ACol, ARow: Integer;
@@ -203,6 +214,11 @@ end;
 procedure TEditor.SetCell(const AValue: string);
 begin
   SettingsEditor.Control.Values[Setting.Caption] := AValue;
+end;
+
+procedure TEditor.Flush;
+begin
+  FSetting.Display := Value;
 end;
 
 procedure TEditor.Bind(ItemProp :TItemProp);

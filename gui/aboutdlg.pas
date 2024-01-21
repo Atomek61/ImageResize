@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, fphttpclient, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ExtCtrls, Buttons, ComCtrls, ActnList;
+  ExtCtrls, Buttons, ComCtrls, ActnList, LCLType;
 
 type
 
@@ -56,7 +56,7 @@ type
   private
 
   public
-    class function Execute(const Text1, Text2, License :string) :boolean;
+    class function Execute(const Text1, Text2, LicenseResName :string) :boolean;
   end;
 
 implementation
@@ -136,9 +136,10 @@ begin
   OpenURL(APPGITHUBURL);
 end;
 
-class function TAboutDialog.Execute(const Text1, Text2, License: string): boolean;
+class function TAboutDialog.Execute(const Text1, Text2, LicenseResName :string): boolean;
 var
   AboutDialog: TAboutDialog;
+  s :TStream;
 begin
   AboutDialog := TAboutDialog.Create(nil);
   with AboutDialog do try
@@ -146,7 +147,12 @@ begin
     LabelAppVersion.Caption := GUIVER_APP + ' ' + GUIVER_VERSION;
     LabelProcessorVersion.Caption := Text2;
     LabelDependencies.Caption := Format(SCptDependenciesFmt, [laz_version, IntToStr(BGRABitmapVersion), dGlobal.dExifVersion]);
-    MemoLicense.Text := License;
+    s := TResourceStream.Create(HInstance, LicenseResName, RT_RCDATA);
+    try
+      MemoLicense.Lines.LoadFromStream(s);
+    finally
+      s.Free;
+    end;
     ImageMainIcon.Picture.Icon := Application.Icon;
     result := ShowModal = mrOk;
   finally

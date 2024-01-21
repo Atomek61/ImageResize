@@ -93,17 +93,6 @@ resourcestring
   SUrlWebHelp = 'http://www.atomek.de/imageresize/hlp35/gui/en';
   SLocDirHelp = 'hlp\gui\en';
   SCptWatermark ='WATERMARK';
-  STxtLicense =
-'ImageResize Copyright (c) 2024 Jan Schirrmacher, www.atomek.de'#10#10+
-'Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy and merge copies of the Software, subject to the following conditions:'#10#10+
-'The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.'#10#10+
-'THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHOR OR COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.';
-
-//Image Resize Copyright (c) 2024 Jan Schirrmacher, www.atomek.de
-//Hiermit wird jeder Person, die eine Kopie dieser Software und der dazugehörigen Dokumentationsdateien (die „Software“) erhält, kostenlos die Erlaubnis erteilt, uneingeschränkt mit der Software umzugehen, einschließlich, aber nicht beschränkt auf die Rechte zur Nutzung, Vervielfältigung und Zusammenführung von Kopien der Software, vorbehaltlich der folgenden Bedingungen:
-//Der obige Urheberrechtshinweis und dieser Genehmigungshinweis müssen in allen Kopien oder wesentlichen Teilen der Software enthalten sein.
-//DIE SOFTWARE WIRD OHNE MÄNGELGEWÄHR BEREITGESTELLT, OHNE AUSDRÜCKLICHE ODER STILLSCHWEIGENDE GEWÄHRLEISTUNG, EINSCHLIESSLICH, ABER NICHT BESCHRÄNKT AUF GEWÄHRLEISTUNGEN DER MARKTFÄHIGKEIT, EIGNUNG FÜR EINEN BESTIMMTEN ZWECK UND NICHTVERLETZUNG VON RECHTEN DRITTER. DER AUTOR ODER URHEBERRECHTSINHABER IST IN KEINEM FALL HAFTBAR FÜR ANSPRÜCHE, SCHÄDEN ODER SONSTIGE HAFTUNG, OB AUS VERTRAG, UNERLAUBTER HANDLUNG ODER ANDERWEITIG, DIE SICH AUS, AUS ODER IM ZUSAMMENHANG MIT DER SOFTWARE ODER DER NUTZUNG ODER ANDEREN HANDLUNGEN MIT DER SOFTWARE ERGEBEN.
-
 
 type
 
@@ -331,6 +320,7 @@ type
     procedure EditSizesExit(Sender: TObject);
     procedure ProjectChanged(Sender :TObject);
   private
+    FLangCode :string;
     FProjectFilename :string;
     FProjectDescription :string; // From project file
     FAutoExit :boolean;
@@ -541,9 +531,11 @@ var
   LangCode :string;
   Resampling :TResampling;
 begin
-  LangCode := '';
-  if (SysLocale.PriLangId=7) and not (IsSwitch('L', 'LANGUAGE', LangCode) and SameText(LangCode, 'en')) then
-    SetDefaultLang('de');
+  FLangCode := 'en';
+  if (SysLocale.PriLangId=7) and not (IsSwitch('L', 'LANGUAGE', LangCode) and SameText(LangCode, 'en')) then begin
+    FLangCode := 'de';
+    SetDefaultLang(FLangCode);
+  end;
 
   TLogger.DefaultLogger := TRichMemoLogger.Create(MemoMessages);
 
@@ -555,7 +547,7 @@ begin
   FDialogSettings := TDialogSettings.Create;
   FDialogSettings.SetDefaults;
 
-  FPresentationSettingsList := TSettingsList.Create(PRESENTATIONS_GROUP, true);
+  FPresentationSettingsList := TSettingsList.Create;
 //  FPresentationSettings.OnChanged := @ProjectChanged;
 
   // Create Size Buttons
@@ -658,6 +650,334 @@ begin
   FProcessingSettings.Free;
   FDialogSettings.Free;
   FPresentationSettingsList.Free;
+end;
+
+procedure TMainDialog.SaveSettings;
+var
+  Ini :TCustomIniFile;
+begin
+  Ini := TIniFile.Create(GetAppDataFilename(SETTINGS_FILENAME, true));
+  with Ini do try
+    WriteString(COMMON_SECTION, 'Type', SETTYPE);
+    WriteString(COMMON_SECTION, 'Version', SETVERSION);
+    Ini.WriteInteger(DIALOG_SECTION, 'Width', Width);
+    Ini.WriteInteger(DIALOG_SECTION, 'Height', Height);
+    Ini.WriteInteger(DIALOG_SECTION, 'Left', Left);
+    Ini.WriteInteger(DIALOG_SECTION, 'Top', Top);
+    Ini.WriteInteger(DIALOG_SECTION, 'PanelControls.Height', PanelControls.Height);
+    Ini.WriteString(DIALOG_SECTION, 'CurrentDirectory', GetCurrentDir);
+    Ini.WriteBool(DIALOG_SECTION, 'AutoSave', FDialogSettings.AutoSave.Value);
+    Ini.WriteBool(DIALOG_SECTION, 'WarnDirty', FDialogSettings.WarnDirty.Value);
+    EraseSection(PROJECT_SECTION);
+    WriteBool(PROJECT_SECTION, 'StopOnError', FProcessingSettings.StopOnError.Value);
+    WriteInteger(PROJECT_SECTION, 'ThreadsUsed', FProcessingSettings.ThreadsUsed.Value);
+  finally
+    Free;
+  end;
+end;
+
+function TMainDialog.LoadSettings :boolean;
+var
+  Filename :string;
+  Ini :TCustomIniFile;
+  IniVer :string;
+  IniTyp :string;
+  AHeight :integer;
+  Path :string;
+begin
+  Filename := GetAppDataFilename(SETTINGS_FILENAME, false);
+  if not FileExists(Filename) then Exit(false);
+  Ini := TIniFile.Create(Filename);
+  with Ini do try
+    IniTyp := Ini.ReadString('Common', 'Type', 'unknown');
+    result := IniTyp=SETTYPE;
+    if not result then begin
+       Log(SLogCantLoadSettings, llWarning);
+       Exit;
+    end;
+    IniVer := Ini.ReadString('Common', 'Version', '000');
+    result := IniVer=SETVERSION;
+    if not result then begin
+      Log(Format(SLogWarningSettingVersionFmt, [IniVer, SETVERSION]), llWarning);
+      Exit;
+    end;
+    Top := Ini.ReadInteger(DIALOG_SECTION, 'Top', Top);
+    Left := Ini.ReadInteger(DIALOG_SECTION, 'Left', Left);
+    Width := Ini.ReadInteger(DIALOG_SECTION, 'Width', Width);
+    Height := Ini.ReadInteger(DIALOG_SECTION, 'Height', Height);
+    AHeight := Ini.ReadInteger(DIALOG_SECTION, 'PanelControls.Height', PanelControls.Height);
+    if AHeight+PanelControls.Top + 16 < ClientHeight then
+      PanelControls.Height := AHeight;
+    FDialogSettings.AutoSave.Text := Ini.ReadString(DIALOG_SECTION, 'AutoSave', FDialogSettings.AutoSave.DefaultText);
+    FDialogSettings.WarnDirty.Text := Ini.ReadString(DIALOG_SECTION, 'WarnDirty', FDialogSettings.WarnDirty.DefaultText);
+    Path := Ini.ReadString(DIALOG_SECTION, 'CurrentDirectory', GetCurrentDir);
+    if DirectoryExists(Path) then
+      ChangeCurrentDir(Path);
+    FProcessingSettings.StopOnError.Text := Ini.ReadString(PROJECT_SECTION, 'StopOnError', FProcessingSettings.StopOnError.DefaultText);
+    FProcessingSettings.ThreadsUsed.Text := Ini.ReadString(PROJECT_SECTION, 'ThreadsUsed', FProcessingSettings.ThreadsUsed.DefaultText);
+  finally
+    Free;
+  end;
+end;
+
+function TMainDialog.LoadProjectFromIni(Ini :TCustomIniFile) :boolean;
+var
+  IniVer :string;
+  IniTyp :string;
+begin
+  with Ini do begin
+    IniTyp := Ini.ReadString('Common', 'Type', 'unknown');
+    result := IniTyp=PRJTYPE;
+    if not result then begin
+       Log(SLogCantLoadProject, llWarning);
+       Exit;
+    end;
+    IniVer := Ini.ReadString('Common', 'Version', '000');
+    result := (IniVer=PRJVERSION) or (IniVer=PRJVERSION200) or (IniVer=PRJVERSION210);
+    if not result then begin
+      Log(Format(SLogWarningProjectVersionFmt, [IniVer, PRJVERSION]), llWarning);
+      Exit;
+    end;
+
+    if SameText(ReadString(PROJECT_SECTION, 'Source', 'Filenames'), 'Filenames') then
+      ActionSrcFilenames.Execute
+    else
+      ActionSrcFolder.Execute;
+    FProjectDescription                   := ReadString(PROJECT_SECTION, 'Description', '');
+    EditSrcFolder.Text                    := ReadString(PROJECT_SECTION, 'SourceFolder', EditSrcFolder.Text);
+    EditSrcMasks.Text                     := ReadString(PROJECT_SECTION, 'SourceMasks', EditSrcMasks.Text);
+    MemoSrcFilenames.Text                 := ReplaceStr(ReadString(PROJECT_SECTION, 'SourceFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, LINESEP)), LINESEP, #13#10);
+    EditTargetFolder.Text                 := ReadString(PROJECT_SECTION, 'TargetFolder', EditTargetFolder.Text);
+    EditSizes.Text                        := ReadString(PROJECT_SECTION, 'Sizes', EditSizes.Text);
+    RequiredStepsUpdate;
+    ComboBoxJPEGQuality.Text               := ReadString(PROJECT_SECTION, 'JpgOptions.Quality', ComboBoxJPEGQuality.Text);
+    ComboBoxPngCompression.Text           := ReadString(PROJECT_SECTION, 'PngOptions.Compression', ComboBoxPngCompression.Text);
+    ComboBoxResampling.Text               := ReadString(PROJECT_SECTION, 'Resampling', RESAMPLING_STRINGS[DEFAULT_RESAMPLING]);
+    CheckBoxMrkEnabled.Checked            := ReadBool(PROJECT_SECTION, 'MrkEnabled', CheckBoxMrkEnabled.Checked);
+    EditMrkFilename.Text                  := ReadString(PROJECT_SECTION, 'MrkFilename', EditMrkFilename.Text);
+    UpDownMrkSize.Position                := ReadInteger(PROJECT_SECTION, 'MrkSize', UpDownMrkSize.Position);
+    UpDownMrkX.Position                   := ReadInteger(PROJECT_SECTION, 'MrkX', UpDownMrkX.Position);
+    UpDownMrkY.Position                   := ReadInteger(PROJECT_SECTION, 'MrkY', UpDownMrkY.Position);
+    UpDownMrkAlpha.Position               := ReadInteger(PROJECT_SECTION, 'MrkAlpha', UpDownMrkAlpha.Position);
+    CheckBoxRenEnabled.Checked            := ReadBool(PROJECT_SECTION, 'RenEnabled', CheckBoxRenEnabled.Checked);
+    RadioButtonRenSimple.Checked          := ReadBool(PROJECT_SECTION, 'RenSimple', RadioButtonRenSimple.Checked);
+    RadioButtonRenAdvanced.Checked        := ReadBool(PROJECT_SECTION, 'RenAdvanced', RadioButtonRenAdvanced.Checked);
+    RadioButtonRenCustom.Checked          := ReadBool(PROJECT_SECTION, 'RenCustom', RadioButtonRenCustom.Checked);
+    EditRenTemplate.Text                  := ReadString(PROJECT_SECTION, 'RenTemplate', EditRenTemplate.Text);
+    CheckBoxShuffle.Checked               := ReadBool(PROJECT_SECTION, 'Shuffle', CheckBoxShuffle.Checked);
+    ComboBoxShuffleSeed.Text              := ShuffleSeedToStr(ReadInteger(PROJECT_SECTION, 'ShuffleSeed', 0));
+    CheckBoxTagsSourceEXIF.Checked        := ReadBool(PROJECT_SECTION, 'TagsSourceEXIF', CheckBoxTagsSourceEXIF.Checked);
+    CheckBoxTagsSourceTagsFiles.Checked   := ReadBool(PROJECT_SECTION, 'TagsSourceTagsFiles', CheckBoxTagsSourceTagsFiles.Checked);
+    CheckBoxTagTitle.Checked              := ReadBool(PROJECT_SECTION, 'TagTitle', CheckBoxTagTitle.Checked);
+    CheckBoxTagTimestamp.Checked          := ReadBool(PROJECT_SECTION, 'TagTimestamp', CheckBoxTagTimestamp.Checked);
+    CheckBoxTagCopyright.Checked          := ReadBool(PROJECT_SECTION, 'TagCopyright', CheckBoxTagCopyright.Checked);
+    EditCopyright.Text                    := ReadString(PROJECT_SECTION, 'Copyright', EditCopyright.Text);
+    CheckBoxTagsReportEnabled.Checked     := ReadBool(PROJECT_SECTION, 'TagsReportEnabled', CheckBoxTagsReportEnabled.Checked);
+    CheckBoxImageInfosEnabled.Checked     := ReadBool(PROJECT_SECTION, 'ImageInfosEnabled', CheckBoxImageInfosEnabled.Checked);
+    CheckBoxNoCreate.Checked              := ReadBool(PROJECT_SECTION, 'NoCreate', DEFAULT_NOCREATE);
+    ActionParamSizes.Execute;
+  end;
+  FPresentationSettingsList.LoadFromIni(Ini, PRESENTATIONS_GROUP);
+end;
+
+const
+  SRCMODES :array[boolean] of string = ('Folder', 'Filenames');
+
+procedure TMainDialog.SaveProjectToIni(Ini :TCustomIniFile);
+begin
+  // Navigate to proper "directory":
+  with Ini do begin
+    WriteString(COMMON_SECTION, 'Type', PRJTYPE);
+    WriteString(COMMON_SECTION, 'Version', PRJVERSION);
+    EraseSection(PROJECT_SECTION);
+    WriteString(PROJECT_SECTION, 'Description', FProjectDescription);
+    WriteString(PROJECT_SECTION, 'Source', SRCMODES[ActionSrcFilenames.Checked]);
+    WriteString(PROJECT_SECTION, 'SourceFolder', EditSrcFolder.Text);
+    WriteString(PROJECT_SECTION, 'SourceMasks', EditSrcMasks.Text);
+    WriteString(PROJECT_SECTION, 'SourceFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, LINESEP));
+    WriteString(PROJECT_SECTION, 'Sizes', EditSizes.Text);
+    WriteString(PROJECT_SECTION, 'TargetFolder', EditTargetFolder.Text);
+    WriteString(PROJECT_SECTION, 'JpgOptions.Quality', ComboBoxJPEGQuality.Text);
+    WriteString(PROJECT_SECTION, 'PngOptions.Compression', ComboBoxPngCompression.Text);
+    WriteString(PROJECT_SECTION, 'Resampling', ComboBoxResampling.Text);
+    WriteBool(PROJECT_SECTION, 'MrkEnabled', CheckBoxMrkEnabled.Checked);
+    WriteString(PROJECT_SECTION, 'MrkFilename', EditMrkFilename.Text);
+    WriteString(PROJECT_SECTION, 'MrkSize', EditMrkSize.Text);
+    WriteString(PROJECT_SECTION, 'MrkX', EditMrkX.Text);
+    WriteString(PROJECT_SECTION, 'MrkY', EditMrkY.Text);
+    WriteString(PROJECT_SECTION, 'MrkAlpha', EditMrkAlpha.Text);
+    WriteBool(PROJECT_SECTION, 'RenEnabled', CheckBoxRenEnabled.Checked);
+    WriteBool(PROJECT_SECTION, 'RenSimple', RadioButtonRenSimple.Checked);
+    WriteBool(PROJECT_SECTION, 'RenAdvanced', RadioButtonRenAdvanced.Checked);
+    WriteBool(PROJECT_SECTION, 'RenCustom', RadioButtonRenCustom.Checked);
+    WriteString(PROJECT_SECTION, 'RenTemplate', EditRenTemplate.Text);
+    WriteBool(PROJECT_SECTION, 'Shuffle', CheckBoxShuffle.Checked);
+    WriteInteger(PROJECT_SECTION, 'ShuffleSeed', StrToShuffleSeed(ComboBoxShuffleSeed.Text));
+    WriteBool(PROJECT_SECTION, 'TagsSourceEXIF', CheckBoxTagsSourceEXIF.Checked);
+    WriteBool(PROJECT_SECTION, 'TagsSourceTagsFiles', CheckBoxTagsSourceTagsFiles.Checked);
+    WriteBool(PROJECT_SECTION, 'TagTitle', CheckBoxTagTitle.Checked);
+    WriteBool(PROJECT_SECTION, 'TagTimestamp', CheckBoxTagTimestamp.Checked);
+    WriteBool(PROJECT_SECTION, 'TagCopyright', CheckBoxTagCopyright.Checked);
+    WriteString(PROJECT_SECTION, 'Copyright', EditCopyright.Text);
+    WriteBool(PROJECT_SECTION, 'TagsReportEnabled', CheckBoxTagsReportEnabled.Checked);
+    WriteBool(PROJECT_SECTION, 'ImageInfosEnabled', CheckBoxImageInfosEnabled.Checked);
+    WriteBool(PROJECT_SECTION, 'NoCreate', CheckBoxNoCreate.Checked);
+  end;
+  FPresentationSettingsList.SaveToIni(Ini, PRESENTATIONS_GROUP);
+end;
+
+function TMainDialog.LoadLastProject: boolean;
+var
+  Ini :TIniFile;
+  Filename :string;
+begin
+  Filename := GetAppDataFilename(LASTPROJECT_FILENAME, false);
+  if not FileExists(Filename) then Exit(false);
+  Ini := TIniFile.Create(Filename);
+  try
+    result := LoadProjectFromIni(Ini);
+  finally
+    Ini.Free;
+  end;
+  if result then begin
+    FIsSave := false;
+    Dirty := false;
+    SetTitle(SCptLastProject);
+  end;
+end;
+
+procedure TMainDialog.SaveLastProject;
+var
+  Ini :TIniFile;
+begin
+  Ini := TIniFile.Create(GetAppDataFilename(LASTPROJECT_FILENAME, true));
+  try
+    SaveProjectToIni(Ini);
+  finally
+    Ini.Free;
+  end;
+end;
+
+function TMainDialog.LoadProjectFromFile(const Filename: string) :boolean;
+var
+  Ini :TIniFile;
+begin
+  if not FileExists(Filename) then
+    raise Exception.CreateFmt(SCptFileNotFoundFmt, [Filename]);
+  Ini := TIniFile.Create(Filename);
+  try
+    result := LoadProjectFromIni(Ini);
+    if result then begin
+      FProjectFilename := Filename;
+      SetTitle(''''+Filename+'''');
+      Log(Format(SMsgProjectLoadedFromFmt, [Filename]), llHint);
+      if FProjectDescription<>'' then
+        Log(Format(SMsgProjectDescriptionFmt, [FProjectDescription]), llNews);
+      ChangeCurrentDir(ExtractFilePath(Filename));
+      FIsSave := true;
+      Dirty := false;
+    end;
+  finally
+     Ini.Free;
+  end;
+end;
+
+procedure TMainDialog.SaveProjectToFile(const Filename: string);
+var
+  Ini :TIniFile;
+begin
+  Ini := TIniFile.Create(Filename);
+  try
+    SaveProjectToIni(Ini);
+    FProjectFilename := Filename;
+    SetTitle(''''+Filename+'''');
+    ChangeCurrentDir(ExtractFilePath(Filename));
+    Log(Format(SMsgProjectSavedToFmt, [Filename]), llHint);
+    FIsSave := true;
+    Dirty := false;
+  finally
+    Ini.Free;
+  end;
+end;
+
+function TMainDialog.CheckSave: boolean;
+var
+  QueryResult :integer;
+begin
+  if FDialogSettings.WarnDirty.Value and Dirty then begin
+    QueryResult := Application.MessageBox(PChar(SMsgQuerySave), PChar(SCptQuerySave), MB_ICONQUESTION + MB_YESNOCANCEL);
+    case QueryResult of
+    IDYES:
+      begin
+        ActionSave.Execute;
+        result := FIsSave;
+      end;
+    IDNO:
+      result := true;
+    IDCANCEL:
+      result := false;
+    else
+      result := false;
+    end;
+  end else
+    result := true;
+end;
+
+procedure TMainDialog.ActionNewExecute(Sender: TObject);
+var
+  ImgResizer :TProcessor;
+begin
+  if not CheckSave then Exit;
+  MemoMessages.Lines.Clear;
+  ImgResizer := TProcessor.Create;
+  try
+    MemoSrcFilenames.Lines.Clear;
+    FProjectDescription                 := '';
+    ActionSrcFilenames.Checked          := true;
+    EditSrcFolder.Text                  := '';
+    EditSrcMasks.Text                   := '*.jpg; *.png';
+    EditTargetFolder.Text               := '';
+    EditSizes.Text                      := '';
+    ComboBoxJPEGQuality.Text            := ImgResizer.JpgQualityToStr(ImgResizer.JpgQuality);
+    ComboBoxPngCompression.Text         := TProcessor.PngCompressionToStr(ImgResizer.PngCompression);
+    ComboBoxResampling.Text             := RESAMPLING_STRINGS[DEFAULT_RESAMPLING];
+    EditMrkFilename.Text                := '';
+    UpDownMrkSize.Position              := round(ImgResizer.MrkSize);
+    UpDownMrkX.Position                 := round(ImgResizer.MrkX);
+    UpDownMrkY.Position                 := round(ImgResizer.MrkY);
+    UpDownMrkAlpha.Position             := round(ImgResizer.MrkAlpha);
+    FIsSave                             := false;
+    CheckBoxRenEnabled.Checked          := ImgResizer.RenEnabled;
+    RadioButtonRenSimple.Checked        := true;
+    EditRenTemplate.Text                := DEFAULT_RENFILETEMPLATE;
+    CheckBoxShuffle.Checked             := DEFAULT_SHUFFLE;
+    ComboBoxShuffleSeed.Text            := SCptRandomSeed;
+    CheckBoxMrkEnabled.Checked          := false;
+    CheckBoxTagsSourceEXIF.Checked      := false;
+    CheckBoxTagsSourceTagsFiles.Checked := false;
+    CheckBoxTagTitle.Checked            := false;
+    CheckBoxTagTimestamp.Checked        := false;
+    CheckBoxTagCopyright.Checked        := false;
+    EditCopyright.Text                  := '';
+    CheckBoxTagsReportEnabled.Checked   := false;
+    CheckBoxImageInfosEnabled.Checked   := false;
+    CheckBoxNoCreate.Checked            := false;
+
+    ActionSrcFilenames.Execute;
+    ActionParamSizes.Execute;
+
+    FPresentationSettingsList.Clear;
+
+    RequiredStepsUpdate;
+    SetTitle(SCptUnnamed);
+    FProjectFilename := '';
+    ChangeCurrentDir(FWorkingDirectory);
+    FIsSave := false;
+
+    Dirty := false;
+  finally
+    ImgResizer.Free;
+  end;
 end;
 
 procedure TMainDialog.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -851,334 +1171,6 @@ begin
       Exit;
     end;
   ActionExecute.Enabled := true;
-end;
-
-procedure TMainDialog.SaveSettings;
-var
-  Ini :TCustomIniFile;
-begin
-  Ini := TIniFile.Create(GetAppDataFilename(SETTINGS_FILENAME, true));
-  with Ini do try
-    WriteString(COMMON_SECTION, 'Type', SETTYPE);
-    WriteString(COMMON_SECTION, 'Version', SETVERSION);
-    Ini.WriteInteger(DIALOG_SECTION, 'Width', Width);
-    Ini.WriteInteger(DIALOG_SECTION, 'Height', Height);
-    Ini.WriteInteger(DIALOG_SECTION, 'Left', Left);
-    Ini.WriteInteger(DIALOG_SECTION, 'Top', Top);
-    Ini.WriteInteger(DIALOG_SECTION, 'PanelControls.Height', PanelControls.Height);
-    Ini.WriteString(DIALOG_SECTION, 'CurrentDirectory', GetCurrentDir);
-    Ini.WriteBool(DIALOG_SECTION, 'AutoSave', FDialogSettings.AutoSave.Value);
-    Ini.WriteBool(DIALOG_SECTION, 'WarnDirty', FDialogSettings.WarnDirty.Value);
-    EraseSection(PROJECT_SECTION);
-    WriteBool(PROJECT_SECTION, 'StopOnError', FProcessingSettings.StopOnError.Value);
-    WriteInteger(PROJECT_SECTION, 'ThreadsUsed', FProcessingSettings.ThreadsUsed.Value);
-  finally
-    Free;
-  end;
-end;
-
-function TMainDialog.LoadSettings :boolean;
-var
-  Filename :string;
-  Ini :TCustomIniFile;
-  IniVer :string;
-  IniTyp :string;
-  AHeight :integer;
-  Path :string;
-begin
-  Filename := GetAppDataFilename(SETTINGS_FILENAME, false);
-  if not FileExists(Filename) then Exit(false);
-  Ini := TIniFile.Create(Filename);
-  with Ini do try
-    IniTyp := Ini.ReadString('Common', 'Type', 'unknown');
-    result := IniTyp=SETTYPE;
-    if not result then begin
-       Log(SLogCantLoadSettings, llWarning);
-       Exit;
-    end;
-    IniVer := Ini.ReadString('Common', 'Version', '000');
-    result := IniVer=SETVERSION;
-    if not result then begin
-      Log(Format(SLogWarningSettingVersionFmt, [IniVer, SETVERSION]), llWarning);
-      Exit;
-    end;
-    Top := Ini.ReadInteger(DIALOG_SECTION, 'Top', Top);
-    Left := Ini.ReadInteger(DIALOG_SECTION, 'Left', Left);
-    Width := Ini.ReadInteger(DIALOG_SECTION, 'Width', Width);
-    Height := Ini.ReadInteger(DIALOG_SECTION, 'Height', Height);
-    AHeight := Ini.ReadInteger(DIALOG_SECTION, 'PanelControls.Height', PanelControls.Height);
-    if AHeight+PanelControls.Top + 16 < ClientHeight then
-      PanelControls.Height := AHeight;
-    FDialogSettings.AutoSave.Text := Ini.ReadString(DIALOG_SECTION, 'AutoSave', FDialogSettings.AutoSave.TextDefault);
-    FDialogSettings.WarnDirty.Text := Ini.ReadString(DIALOG_SECTION, 'WarnDirty', FDialogSettings.WarnDirty.TextDefault);
-    Path := Ini.ReadString(DIALOG_SECTION, 'CurrentDirectory', GetCurrentDir);
-    if DirectoryExists(Path) then
-      ChangeCurrentDir(Path);
-    FProcessingSettings.StopOnError.Text := Ini.ReadString(PROJECT_SECTION, 'StopOnError', FProcessingSettings.StopOnError.TextDefault);
-    FProcessingSettings.ThreadsUsed.Text := Ini.ReadString(PROJECT_SECTION, 'ThreadsUsed', FProcessingSettings.ThreadsUsed.TextDefault);
-  finally
-    Free;
-  end;
-end;
-
-procedure TMainDialog.ActionNewExecute(Sender: TObject);
-var
-  ImgResizer :TProcessor;
-begin
-  if not CheckSave then Exit;
-  MemoMessages.Lines.Clear;
-  ImgResizer := TProcessor.Create;
-  try
-    MemoSrcFilenames.Lines.Clear;
-    FProjectDescription                 := '';
-    ActionSrcFilenames.Checked          := true;
-    EditSrcFolder.Text                  := '';
-    EditSrcMasks.Text                   := '*.jpg; *.png';
-    EditTargetFolder.Text               := '';
-    EditSizes.Text                      := '';
-    ComboBoxJPEGQuality.Text            := ImgResizer.JpgQualityToStr(ImgResizer.JpgQuality);
-    ComboBoxPngCompression.Text         := TProcessor.PngCompressionToStr(ImgResizer.PngCompression);
-    ComboBoxResampling.Text             := RESAMPLING_STRINGS[DEFAULT_RESAMPLING];
-    EditMrkFilename.Text                := '';
-    UpDownMrkSize.Position              := round(ImgResizer.MrkSize);
-    UpDownMrkX.Position                 := round(ImgResizer.MrkX);
-    UpDownMrkY.Position                 := round(ImgResizer.MrkY);
-    UpDownMrkAlpha.Position             := round(ImgResizer.MrkAlpha);
-    FIsSave                             := false;
-    CheckBoxRenEnabled.Checked          := ImgResizer.RenEnabled;
-    RadioButtonRenSimple.Checked        := true;
-    EditRenTemplate.Text                := DEFAULT_RENFILETEMPLATE;
-    CheckBoxShuffle.Checked             := DEFAULT_SHUFFLE;
-    ComboBoxShuffleSeed.Text            := SCptRandomSeed;
-    CheckBoxMrkEnabled.Checked          := false;
-    CheckBoxTagsSourceEXIF.Checked      := false;
-    CheckBoxTagsSourceTagsFiles.Checked := false;
-    CheckBoxTagTitle.Checked            := false;
-    CheckBoxTagTimestamp.Checked        := false;
-    CheckBoxTagCopyright.Checked        := false;
-    EditCopyright.Text                  := '';
-    CheckBoxTagsReportEnabled.Checked   := false;
-    CheckBoxImageInfosEnabled.Checked   := false;
-    CheckBoxNoCreate.Checked            := false;
-
-    ActionSrcFilenames.Execute;
-    ActionParamSizes.Execute;
-
-    FPresentationSettingsList.SetDefaults;
-
-    RequiredStepsUpdate;
-    SetTitle(SCptUnnamed);
-    FProjectFilename := '';
-    ChangeCurrentDir(FWorkingDirectory);
-    FIsSave := false;
-
-    Dirty := false;
-  finally
-    ImgResizer.Free;
-  end;
-end;
-
-function TMainDialog.LoadProjectFromIni(Ini :TCustomIniFile) :boolean;
-var
-  IniVer :string;
-  IniTyp :string;
-begin
-  with Ini do begin
-    IniTyp := Ini.ReadString('Common', 'Type', 'unknown');
-    result := IniTyp=PRJTYPE;
-    if not result then begin
-       Log(SLogCantLoadProject, llWarning);
-       Exit;
-    end;
-    IniVer := Ini.ReadString('Common', 'Version', '000');
-    result := (IniVer=PRJVERSION) or (IniVer=PRJVERSION200) or (IniVer=PRJVERSION210);
-    if not result then begin
-      Log(Format(SLogWarningProjectVersionFmt, [IniVer, PRJVERSION]), llWarning);
-      Exit;
-    end;
-
-    if SameText(ReadString(PROJECT_SECTION, 'Source', 'Filenames'), 'Filenames') then
-      ActionSrcFilenames.Execute
-    else
-      ActionSrcFolder.Execute;
-    FProjectDescription                   := ReadString(PROJECT_SECTION, 'Description', '');
-    EditSrcFolder.Text                    := ReadString(PROJECT_SECTION, 'SourceFolder', EditSrcFolder.Text);
-    EditSrcMasks.Text                     := ReadString(PROJECT_SECTION, 'SourceMasks', EditSrcMasks.Text);
-    MemoSrcFilenames.Text                 := ReplaceStr(ReadString(PROJECT_SECTION, 'SourceFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, LINESEP)), LINESEP, #13#10);
-    EditTargetFolder.Text                 := ReadString(PROJECT_SECTION, 'TargetFolder', EditTargetFolder.Text);
-    EditSizes.Text                        := ReadString(PROJECT_SECTION, 'Sizes', EditSizes.Text);
-    RequiredStepsUpdate;
-    ComboBoxJPEGQuality.Text               := ReadString(PROJECT_SECTION, 'JpgOptions.Quality', ComboBoxJPEGQuality.Text);
-    ComboBoxPngCompression.Text           := ReadString(PROJECT_SECTION, 'PngOptions.Compression', ComboBoxPngCompression.Text);
-    ComboBoxResampling.Text               := ReadString(PROJECT_SECTION, 'Resampling', RESAMPLING_STRINGS[DEFAULT_RESAMPLING]);
-    CheckBoxMrkEnabled.Checked            := ReadBool(PROJECT_SECTION, 'MrkEnabled', CheckBoxMrkEnabled.Checked);
-    EditMrkFilename.Text                  := ReadString(PROJECT_SECTION, 'MrkFilename', EditMrkFilename.Text);
-    UpDownMrkSize.Position                := ReadInteger(PROJECT_SECTION, 'MrkSize', UpDownMrkSize.Position);
-    UpDownMrkX.Position                   := ReadInteger(PROJECT_SECTION, 'MrkX', UpDownMrkX.Position);
-    UpDownMrkY.Position                   := ReadInteger(PROJECT_SECTION, 'MrkY', UpDownMrkY.Position);
-    UpDownMrkAlpha.Position               := ReadInteger(PROJECT_SECTION, 'MrkAlpha', UpDownMrkAlpha.Position);
-    CheckBoxRenEnabled.Checked            := ReadBool(PROJECT_SECTION, 'RenEnabled', CheckBoxRenEnabled.Checked);
-    RadioButtonRenSimple.Checked          := ReadBool(PROJECT_SECTION, 'RenSimple', RadioButtonRenSimple.Checked);
-    RadioButtonRenAdvanced.Checked        := ReadBool(PROJECT_SECTION, 'RenAdvanced', RadioButtonRenAdvanced.Checked);
-    RadioButtonRenCustom.Checked          := ReadBool(PROJECT_SECTION, 'RenCustom', RadioButtonRenCustom.Checked);
-    EditRenTemplate.Text                  := ReadString(PROJECT_SECTION, 'RenTemplate', EditRenTemplate.Text);
-    CheckBoxShuffle.Checked               := ReadBool(PROJECT_SECTION, 'Shuffle', CheckBoxShuffle.Checked);
-    ComboBoxShuffleSeed.Text              := ShuffleSeedToStr(ReadInteger(PROJECT_SECTION, 'ShuffleSeed', 0));
-    CheckBoxTagsSourceEXIF.Checked        := ReadBool(PROJECT_SECTION, 'TagsSourceEXIF', CheckBoxTagsSourceEXIF.Checked);
-    CheckBoxTagsSourceTagsFiles.Checked   := ReadBool(PROJECT_SECTION, 'TagsSourceTagsFiles', CheckBoxTagsSourceTagsFiles.Checked);
-    CheckBoxTagTitle.Checked              := ReadBool(PROJECT_SECTION, 'TagTitle', CheckBoxTagTitle.Checked);
-    CheckBoxTagTimestamp.Checked          := ReadBool(PROJECT_SECTION, 'TagTimestamp', CheckBoxTagTimestamp.Checked);
-    CheckBoxTagCopyright.Checked          := ReadBool(PROJECT_SECTION, 'TagCopyright', CheckBoxTagCopyright.Checked);
-    EditCopyright.Text                    := ReadString(PROJECT_SECTION, 'Copyright', EditCopyright.Text);
-    CheckBoxTagsReportEnabled.Checked     := ReadBool(PROJECT_SECTION, 'TagsReportEnabled', CheckBoxTagsReportEnabled.Checked);
-    CheckBoxImageInfosEnabled.Checked     := ReadBool(PROJECT_SECTION, 'ImageInfosEnabled', CheckBoxImageInfosEnabled.Checked);
-    CheckBoxNoCreate.Checked              := ReadBool(PROJECT_SECTION, 'NoCreate', DEFAULT_NOCREATE);
-    ActionParamSizes.Execute;
-  end;
-//  FPresentationSettingsList.LoadFromIni(Ini);
-end;
-
-const
-  SRCMODES :array[boolean] of string = ('Folder', 'Filenames');
-
-procedure TMainDialog.SaveProjectToIni(Ini :TCustomIniFile);
-begin
-  // Navigate to proper "directory":
-  with Ini do begin
-    WriteString(COMMON_SECTION, 'Type', PRJTYPE);
-    WriteString(COMMON_SECTION, 'Version', PRJVERSION);
-    EraseSection(PROJECT_SECTION);
-    WriteString(PROJECT_SECTION, 'Description', FProjectDescription);
-    WriteString(PROJECT_SECTION, 'Source', SRCMODES[ActionSrcFilenames.Checked]);
-    WriteString(PROJECT_SECTION, 'SourceFolder', EditSrcFolder.Text);
-    WriteString(PROJECT_SECTION, 'SourceMasks', EditSrcMasks.Text);
-    WriteString(PROJECT_SECTION, 'SourceFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, LINESEP));
-    WriteString(PROJECT_SECTION, 'Sizes', EditSizes.Text);
-    WriteString(PROJECT_SECTION, 'TargetFolder', EditTargetFolder.Text);
-    WriteString(PROJECT_SECTION, 'JpgOptions.Quality', ComboBoxJPEGQuality.Text);
-    WriteString(PROJECT_SECTION, 'PngOptions.Compression', ComboBoxPngCompression.Text);
-    WriteString(PROJECT_SECTION, 'Resampling', ComboBoxResampling.Text);
-    WriteBool(PROJECT_SECTION, 'MrkEnabled', CheckBoxMrkEnabled.Checked);
-    WriteString(PROJECT_SECTION, 'MrkFilename', EditMrkFilename.Text);
-    WriteString(PROJECT_SECTION, 'MrkSize', EditMrkSize.Text);
-    WriteString(PROJECT_SECTION, 'MrkX', EditMrkX.Text);
-    WriteString(PROJECT_SECTION, 'MrkY', EditMrkY.Text);
-    WriteString(PROJECT_SECTION, 'MrkAlpha', EditMrkAlpha.Text);
-    WriteBool(PROJECT_SECTION, 'RenEnabled', CheckBoxRenEnabled.Checked);
-    WriteBool(PROJECT_SECTION, 'RenSimple', RadioButtonRenSimple.Checked);
-    WriteBool(PROJECT_SECTION, 'RenAdvanced', RadioButtonRenAdvanced.Checked);
-    WriteBool(PROJECT_SECTION, 'RenCustom', RadioButtonRenCustom.Checked);
-    WriteString(PROJECT_SECTION, 'RenTemplate', EditRenTemplate.Text);
-    WriteBool(PROJECT_SECTION, 'Shuffle', CheckBoxShuffle.Checked);
-    WriteInteger(PROJECT_SECTION, 'ShuffleSeed', StrToShuffleSeed(ComboBoxShuffleSeed.Text));
-    WriteBool(PROJECT_SECTION, 'TagsSourceEXIF', CheckBoxTagsSourceEXIF.Checked);
-    WriteBool(PROJECT_SECTION, 'TagsSourceTagsFiles', CheckBoxTagsSourceTagsFiles.Checked);
-    WriteBool(PROJECT_SECTION, 'TagTitle', CheckBoxTagTitle.Checked);
-    WriteBool(PROJECT_SECTION, 'TagTimestamp', CheckBoxTagTimestamp.Checked);
-    WriteBool(PROJECT_SECTION, 'TagCopyright', CheckBoxTagCopyright.Checked);
-    WriteString(PROJECT_SECTION, 'Copyright', EditCopyright.Text);
-    WriteBool(PROJECT_SECTION, 'TagsReportEnabled', CheckBoxTagsReportEnabled.Checked);
-    WriteBool(PROJECT_SECTION, 'ImageInfosEnabled', CheckBoxImageInfosEnabled.Checked);
-    WriteBool(PROJECT_SECTION, 'NoCreate', CheckBoxNoCreate.Checked);
-  end;
-//  FPresentationSettingsList.SaveToIni(Ini);
-end;
-
-function TMainDialog.LoadLastProject: boolean;
-var
-  Ini :TIniFile;
-  Filename :string;
-begin
-  Filename := GetAppDataFilename(LASTPROJECT_FILENAME, false);
-  if not FileExists(Filename) then Exit(false);
-  Ini := TIniFile.Create(Filename);
-  try
-    result := LoadProjectFromIni(Ini);
-  finally
-    Ini.Free;
-  end;
-  if result then begin
-    FIsSave := false;
-    Dirty := false;
-    SetTitle(SCptLastProject);
-  end;
-end;
-
-procedure TMainDialog.SaveLastProject;
-var
-  Ini :TIniFile;
-begin
-  Ini := TIniFile.Create(GetAppDataFilename(LASTPROJECT_FILENAME, true));
-  try
-    SaveProjectToIni(Ini);
-  finally
-    Ini.Free;
-  end;
-end;
-
-function TMainDialog.LoadProjectFromFile(const Filename: string) :boolean;
-var
-  Ini :TIniFile;
-begin
-  if not FileExists(Filename) then
-    raise Exception.CreateFmt(SCptFileNotFoundFmt, [Filename]);
-  Ini := TIniFile.Create(Filename);
-  try
-    result := LoadProjectFromIni(Ini);
-    if result then begin
-      FProjectFilename := Filename;
-      SetTitle(''''+Filename+'''');
-      Log(Format(SMsgProjectLoadedFromFmt, [Filename]), llHint);
-      if FProjectDescription<>'' then
-        Log(Format(SMsgProjectDescriptionFmt, [FProjectDescription]), llNews);
-      ChangeCurrentDir(ExtractFilePath(Filename));
-      FIsSave := true;
-      Dirty := false;
-    end;
-  finally
-     Ini.Free;
-  end;
-end;
-
-procedure TMainDialog.SaveProjectToFile(const Filename: string);
-var
-  Ini :TIniFile;
-begin
-  Ini := TIniFile.Create(Filename);
-  try
-    SaveProjectToIni(Ini);
-    FProjectFilename := Filename;
-    SetTitle(''''+Filename+'''');
-    ChangeCurrentDir(ExtractFilePath(Filename));
-    Log(Format(SMsgProjectSavedToFmt, [Filename]), llHint);
-    FIsSave := true;
-    Dirty := false;
-  finally
-    Ini.Free;
-  end;
-end;
-
-function TMainDialog.CheckSave: boolean;
-var
-  QueryResult :integer;
-begin
-  if FDialogSettings.WarnDirty.Value and Dirty then begin
-    QueryResult := Application.MessageBox(PChar(SMsgQuerySave), PChar(SCptQuerySave), MB_ICONQUESTION + MB_YESNOCANCEL);
-    case QueryResult of
-    IDYES:
-      begin
-        ActionSave.Execute;
-        result := FIsSave;
-      end;
-    IDNO:
-      result := true;
-    IDCANCEL:
-      result := false;
-    else
-      result := false;
-    end;
-  end else
-    result := true;
 end;
 
 procedure TMainDialog.FormDropFiles(Sender: TObject; const FileNames: array of String);
@@ -1582,7 +1574,7 @@ end;
 
 procedure TMainDialog.ActionAboutExecute(Sender: TObject);
 begin
-  TAboutDialog.Execute(IMGRESGUICPR, SCptProcessor + ' ' +IMGRESVER, STxtLicense);
+  TAboutDialog.Execute(IMGRESGUICPR, SCptProcessor + ' ' +IMGRESVER, 'LICENSE_'+UpperCase(FLangCode));
 end;
 
 procedure TMainDialog.ActionEditWatermarkExecute(Sender: TObject);

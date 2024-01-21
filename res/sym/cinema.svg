@@ -9,9 +9,9 @@
    id="svg138"
    inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
    sodipodi:docname="cinema.svg"
-   inkscape:export-filename="img48\slideshow.png"
-   inkscape:export-xdpi="36"
-   inkscape:export-ydpi="36"
+   inkscape:export-filename="img32\cinema.png"
+   inkscape:export-xdpi="24"
+   inkscape:export-ydpi="24"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -30,25 +30,21 @@
      showgrid="true"
      showguides="true"
      inkscape:lockguides="true"
-     inkscape:zoom="3.659624"
-     inkscape:cx="29.374602"
-     inkscape:cy="90.173198"
-     inkscape:window-width="2560"
-     inkscape:window-height="1401"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:zoom="3.6596241"
+     inkscape:cx="10.656832"
+     inkscape:cy="111.07698"
+     inkscape:window-width="2069"
+     inkscape:window-height="1230"
+     inkscape:window-x="182"
+     inkscape:window-y="171"
      inkscape:window-maximized="0"
-     inkscape:current-layer="layer3">
+     inkscape:current-layer="layer1">
     <inkscape:grid
        type="xygrid"
        id="grid259"
        empspacing="4"
        originx="0"
-       originy="0"
-       spacingy="1"
-       spacingx="1"
-       units="px"
-       visible="true" />
+       originy="0" />
     <inkscape:grid
        type="xygrid"
        id="grid261"
@@ -57,9 +53,7 @@
        color="#e5001f"
        opacity="0.14901961"
        originx="0"
-       originy="0"
-       units="px"
-       visible="true" />
+       originy="0" />
     <sodipodi:guide
        position="-68,64.000005"
        orientation="0,-1"
@@ -75,16 +69,26 @@
      id="defs135">
     <linearGradient
        inkscape:collect="always"
-       id="linearGradient4801">
+       id="linearGradient868">
       <stop
-         style="stop-color:#2e3436;stop-opacity:1;"
+         style="stop-color:#d3d7cf;stop-opacity:1"
          offset="0"
-         id="stop4797" />
+         id="stop864" />
       <stop
-         style="stop-color:#888a85;stop-opacity:1"
+         style="stop-color:#2e3436;stop-opacity:1"
          offset="1"
-         id="stop4799" />
+         id="stop866" />
     </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient868"
+       id="linearGradient870"
+       x1="64"
+       y1="96"
+       x2="64"
+       y2="0"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1,0,0,1.1666666,0,8)" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient1611"
@@ -93,7 +97,8 @@
        y1="88"
        x2="64"
        y2="16.000002"
-       gradientUnits="userSpaceOnUse" />
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.3963534,0,0,1.0909091,1.6304047,-1.4545458)" />
     <linearGradient
        inkscape:collect="always"
        id="linearGradient1611">
@@ -114,7 +119,8 @@
        y1="64"
        x2="64.000008"
        y2="112"
-       gradientUnits="userSpaceOnUse" />
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.4015984,0,0,1,1.6304047,8.7272793)" />
     <linearGradient
        inkscape:collect="always"
        id="linearGradient1687">
@@ -127,119 +133,102 @@
          offset="1"
          id="stop1685" />
     </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient4801"
-       id="linearGradient4803"
-       x1="64"
-       y1="40"
-       x2="72"
-       y2="96"
-       gradientUnits="userSpaceOnUse" />
   </defs>
   <g
+     inkscape:label="Ebene 1"
      inkscape:groupmode="layer"
-     id="layer3"
-     inkscape:label="Dots"
-     style="display:inline">
+     id="layer1">
     <rect
-       style="fill:url(#linearGradient4803);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;fill-opacity:1"
-       id="rect751"
+       style="fill:url(#linearGradient870);fill-opacity:1;stroke:none;stroke-width:2.16024;stroke-linecap:round;stroke-linejoin:round"
+       id="rect285"
        width="128"
-       height="96.000008"
+       height="112"
        x="0"
-       y="16.000002" />
-    <rect
-       style="fill:#a40000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
-       id="rect1025"
-       width="12"
-       height="88"
-       x="0"
-       y="16.000002" />
-    <rect
-       style="display:inline;fill:#a40000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
-       id="rect1025-9"
-       width="12"
-       height="88"
-       x="116"
-       y="16.000002" />
-    <g
-       inkscape:groupmode="layer"
-       id="layer2"
-       inkscape:label="Layer 1" />
-    <rect
-       style="fill:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
-       id="rect828"
-       width="128"
-       height="24"
-       x="0"
-       y="88" />
+       y="8" />
     <ellipse
-       style="display:inline;fill:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
-       id="path1248-6-9"
-       cx="84"
-       cy="88"
-       rx="5.9999995"
-       ry="8" />
-    <ellipse
-       style="display:inline;fill:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
-       id="path1248-6-2"
-       cx="104"
-       cy="88.000008"
-       rx="5.9999995"
-       ry="8" />
-    <ellipse
-       style="fill:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
-       id="path1248"
-       cx="26"
-       cy="88"
-       rx="5.9999995"
-       ry="8" />
-    <ellipse
-       style="display:inline;fill:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
-       id="path1248-6"
-       cx="48.000004"
-       cy="88"
-       rx="5.9999995"
-       ry="8" />
-    <ellipse
-       style="display:inline;fill:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
-       id="path1248-6-8"
-       cx="64"
-       cy="88"
-       rx="5.9999995"
-       ry="8" />
+       style="fill:#000000;fill-opacity:1;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
+       id="path6852-8"
+       cx="28"
+       cy="90.000008"
+       rx="8"
+       ry="10" />
     <g
        id="g801"
        style="display:inline"
-       transform="matrix(0.44687494,0,0,0.45833329,35.400004,16.666666)">
+       transform="matrix(0.44687494,0,0,0.45833329,23.271413,16.666666)">
       <rect
-         style="fill:url(#linearGradient1681);fill-opacity:1;stroke-linecap:round;stroke-linejoin:round"
+         style="fill:url(#linearGradient1681);fill-opacity:1;stroke-width:1.23421;stroke-linecap:round;stroke-linejoin:round"
          id="rect3673"
-         width="128.00002"
-         height="96.000008"
-         x="0"
+         width="178.73326"
+         height="104.72728"
+         x="1.6304047"
          y="16.000002"
          inkscape:export-filename="img256\imglarge.png"
          inkscape:export-xdpi="192"
          inkscape:export-ydpi="192" />
       <path
-         style="fill:url(#linearGradient1689);fill-opacity:1;stroke-linecap:round;stroke-linejoin:round"
-         d="M 0,80.000005 C 64.000004,24 64.000004,112 128,72 v 40 l -128,1e-5 z"
+         style="fill:url(#linearGradient1689);fill-opacity:1;stroke-width:1.18389;stroke-linecap:round;stroke-linejoin:round"
+         d="M 1.6304047,88.727284 C 91.332706,32.727279 91.332706,120.72728 181.03499,80.727279 v 40.000001 l -179.4045853,1e-5 z"
          id="path3781"
          sodipodi:nodetypes="ccccc" />
+      <rect
+         style="fill:#ffffff;fill-opacity:0.464646;stroke:none;stroke-width:4.61203;stroke-linecap:round;stroke-linejoin:round"
+         id="rect2329"
+         width="178.73326"
+         height="104.72728"
+         x="1.6304047"
+         y="16.000004" />
       <g
          id="g1522"
-         style="fill:#fce94f">
+         style="display:inline;fill:#fce94f"
+         transform="translate(43.175475,8.2127803)">
         <path
            id="path411"
            style="display:inline;fill:#fce94f;stroke-width:3.46709;stroke-linecap:round;stroke-linejoin:round"
            d="m 94.94283,24.764711 0.02518,7.160431 A 9.919211,9.9192096 0 0 0 93.447198,33.80243 L 86.354575,35.53248 92,40 a 9.919211,9.9192096 0 0 0 0.499836,2.317065 l -3.080381,6.64316 6.95701,-1.615747 a 9.919211,9.9192096 0 0 0 2.177579,1.042292 l 3.274106,6.54823 3.09782,-6.493984 a 9.919211,9.9192096 0 0 0 2.16983,-0.999671 l 7.14106,1.51888 -3.1385,-6.453299 a 9.919211,9.9192096 0 0 0 0.53858,-2.319003 l 5.6648,-4.655443 -6.9667,-1.563438 a 9.919211,9.9192096 0 0 0 -1.51306,-1.937345 l -0.10852,-7.266986 -5.56213,4.469457 a 9.919211,9.9192096 0 0 0 -1.32321,-0.08912 9.919211,9.9192096 0 0 0 -1.08491,0.106557 z" />
       </g>
     </g>
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
+       id="rect6412"
+       width="128"
+       height="28"
+       x="0"
+       y="92" />
+    <ellipse
+       style="fill:#000000;fill-opacity:1;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
+       id="path6852"
+       cx="4"
+       cy="90"
+       rx="8"
+       ry="10" />
+    <ellipse
+       style="fill:#000000;fill-opacity:1;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
+       id="path6852-8-3"
+       cx="76"
+       cy="90.000008"
+       rx="8"
+       ry="10" />
+    <ellipse
+       style="fill:#000000;fill-opacity:1;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
+       id="path6852-7"
+       cx="52"
+       cy="90"
+       rx="8"
+       ry="10" />
+    <ellipse
+       style="fill:#000000;fill-opacity:1;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
+       id="path6852-8-1"
+       cx="124"
+       cy="90.000015"
+       rx="8"
+       ry="10" />
+    <ellipse
+       style="fill:#000000;fill-opacity:1;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
+       id="path6852-9"
+       cx="100"
+       cy="90.000008"
+       rx="8"
+       ry="10" />
   </g>
-  <g
-     inkscape:label="Ebene 1"
-     inkscape:groupmode="layer"
-     id="layer1" />
 </svg>

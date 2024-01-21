@@ -35,12 +35,10 @@ type
     FTemplateFolder :string;
     FTargetFolder :string;
     FTargetTitle :string;
+    FPresentationSettings :TSettings;
     function GetIcon: TGraphic;
     function GetPreview: TGraphic;
   protected
-    procedure ParamsToFrame; virtual;
-    procedure FrameToParams; virtual;
-    function GetFrame :TFrame; virtual;
   public
     constructor Create(IniFile :TCustomIniFile); virtual; overload;
     destructor Destroy; override;
@@ -48,9 +46,10 @@ type
     class function ClassId :string;
     class function Create(const Filename :string) :TCustomManager; overload;
     class procedure Scan(const Folder :string; Managers :TManagers);
-    //procedure SaveSettings(const Section :string; Store :TCustomInifile); virtual; abstract;
-    //procedure LoadSettings(const Section :string; Store :TCustomInifile); virtual; abstract;
-    procedure Execute; virtual; abstract;
+    function ShowFrame(Parent :TWinControl) :TFrame; virtual;
+    procedure StoreSettings; virtual; // Before Execution or before closing the dialog
+    procedure HideFrame; virtual;
+    procedure Execute; virtual;
     property Id :string read FId;
     property Title :string read FTitle;
     property Description :string read FDescription;
@@ -60,7 +59,7 @@ type
     property Preview :TGraphic read GetPreview;
     property TargetTitle :string read FTargetTitle write FTargetTitle;
     property TargetFolder :string read FTargetFolder write FTargetFolder;
-    property Frame :TFrame read GetFrame;
+    property PresentationSettings :TSettings read FPresentationSettings;
   end;
 
   { TManagers }
@@ -76,6 +75,7 @@ type
     destructor Destroy; override;
     procedure SortByDate;
     function IndexOf(const Id :string) :integer;
+    function TryFind(const Id :string; out Manager :TCustomManager) :boolean;
     property ById[Id :string] :TCustomManager read GetById;
   end;
 
@@ -84,13 +84,12 @@ type
   TPresentationManager = class(TCustomManager)
   private
     FProcessor :TProcessor;
-    FSettings :TSettings;
     FManagerFrame :TPresentationManagerFrame;
     FSettingsEditor :TSettingsEditor; // Link between ValuesListEditor on FMangerFrame and FSettings;
   protected
-    procedure ParamsToFrame; override;
-    procedure FrameToParams; override;
-    function GetFrame :TFrame; override;
+    function ShowFrame(Parent :TWinControl) :TFrame; override;
+    procedure StoreSettings; override;
+    procedure HideFrame; override;
   public
     constructor Create(IniFile :TCustomIniFile); override;
     destructor Destroy; override;
@@ -156,12 +155,16 @@ begin
   FDate             := IniFile.ReadDateTime(PRESENTATION_SECTION, 'Date', 0.0);
   FIconFile         := CreateAbsolutePath(IniFile.ReadString(PRESENTATION_SECTION, 'Icon', ''), FTemplateFolder);
   FPreviewFile      := CreateAbsolutePath(IniFile.ReadString(PRESENTATION_SECTION, 'Preview', ''), FTemplateFolder);
+
+  FPresentationSettings := TSettings.Create(FId);
+  FPresentationSettings.Load(IniFile, 'Settings');
 end;
 
 destructor TCustomManager.Destroy;
 begin
   FIcon.Free;
   FPreview.Free;
+  FPresentationSettings.Free;
   inherited Destroy;
 end;
 
@@ -189,19 +192,24 @@ begin
   result := FPreview.Graphic;
 end;
 
-procedure TCustomManager.ParamsToFrame;
-begin
-
-end;
-
-procedure TCustomManager.FrameToParams;
-begin
-
-end;
-
-function TCustomManager.GetFrame: TFrame;
+function TCustomManager.ShowFrame(Parent :TWinControl): TFrame;
 begin
   result := nil;
+end;
+
+procedure TCustomManager.StoreSettings;
+begin
+
+end;
+
+procedure TCustomManager.HideFrame;
+begin
+  StoreSettings;
+end;
+
+procedure TCustomManager.Execute;
+begin
+  StoreSettings;
 end;
 
 class function TCustomManager.Create(const Filename :string): TCustomManager;
@@ -218,9 +226,8 @@ begin
     if not ManagerClasses.TryGetValue(ClassName, PresentationManagerClass) then
       raise Exception.CreateFmt(SErrUnregisterPresentationManagerFmt, [ClassName]);
     result := PresentationManagerClass.Create(IniFile);
-  except
+  finally
     IniFile.Free;
-    raise;
   end;
 end;
 
@@ -274,7 +281,7 @@ end;
 destructor TManagers.Destroy;
 begin
   FreeAndNil(FDictionary);
-  inherited Destroy;
+  inherited;
 end;
 
 function CompareDate(constref Left, Right :TCustomManager) :integer;
@@ -297,34 +304,39 @@ begin
   result := -1;
 end;
 
+function TManagers.TryFind(const Id: string; out Manager: TCustomManager
+  ): boolean;
+begin
+  result := FDictionary.TryGetValue(Id, Manager);
+end;
+
 { TPresentationManager }
 
-procedure TPresentationManager.ParamsToFrame;
+function TPresentationManager.ShowFrame(Parent :TWinControl) :TFrame;
 begin
-//var
-//  s :TManagerSettings;
-//begin
-//  inherited ParamsToFrame;
-//  if Assigned(FSettings) then begin
-//    s := FSettings as TManagerSettings;
-//    with Frame as TPresentationManagerFrame do begin
-//      EditTitle.Text := s.Title; // FManager.DocumentVars['TITLE'];
-//    end;
-//  end;
-end;
-
-procedure TPresentationManager.FrameToParams;
-begin
-end;
-
-function TPresentationManager.GetFrame: TFrame;
-begin
+  inherited;
   if not Assigned(FManagerFrame) then begin
     FManagerFrame := TPresentationManagerFrame.Create(nil);
+    FManagerFrame.Name := Format('SettingsFrame%p', [@FManagerFrame]);
+    FManagerFrame.Parent := Parent;
     FSettingsEditor := TSettingsEditor.Create;
-    FSettingsEditor.Bind(FSettings, FManagerFrame.ValueListEditor);
+    FSettingsEditor.Bind(PresentationSettings, FManagerFrame.ValueListEditor);
+    FManagerFrame.ValueListEditor.Visible := FSettingsEditor.Editors.Count>0;
   end;
+  FManagerFrame.Visible := true;
   result := FManagerFrame;
+end;
+
+procedure TPresentationManager.StoreSettings;
+begin
+  if Assigned(FSettingsEditor) then
+    FSettingsEditor.Flush;
+end;
+
+procedure TPresentationManager.HideFrame;
+begin
+  inherited;
+  FManagerFrame.Visible := false;
 end;
 
 constructor TPresentationManager.Create(IniFile: TCustomIniFile);
@@ -361,14 +373,11 @@ begin
   finally
     SectionKeys.Free;
   end;
-  FSettings := TSettings.Create;
-  FSettings.Load(IniFile, 'Settings');
 end;
 
 destructor TPresentationManager.Destroy;
 begin
   FProcessor.Free;
-  FSettings.Free;
   FManagerFrame.Free;
   FSettingsEditor.Free;
   inherited Destroy;
@@ -378,7 +387,7 @@ procedure TPresentationManager.Execute;
 var
   Stats :TProcessor.TStats;
 begin
-  FrameToParams;
+  FSettingsEditor.Flush;
   FProcessor.TargetFolder := TargetFolder;
   FProcessor.DocumentVars['TITLE'] := TargetTitle;
   FProcessor.Execute(Stats);

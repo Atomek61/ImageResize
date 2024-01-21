@@ -11,8 +11,6 @@ object PresentationDialog: TPresentationDialog
   Constraints.MinWidth = 806
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  OnHide = FormHide
-  OnShow = FormShow
   ShowHint = True
   LCLVersion = '3.0.0.3'
   object PanelControls: TPanel
@@ -54,6 +52,7 @@ object PresentationDialog: TPresentationDialog
       ModalResult = 1
       Images = ImagesModule.ImageList20x20
       ImageIndex = 2
+      OnClick = ButtonOkClick
       TabOrder = 1
     end
     object ButtonCancel: TBitBtn

@@ -13,6 +13,10 @@
         <DpiAware Value="True"/>
       </XPManifest>
       <Icon Value="0"/>
+      <Resources Count="2">
+        <Resource_0 FileName="..\license.txt" Type="RCDATA" ResourceName="LICENSE_EN"/>
+        <Resource_1 FileName="..\lizenz.txt" Type="RCDATA" ResourceName="LICENSE_DE"/>
+      </Resources>
     </General>
     <i18n>
       <EnableI18N Value="True"/>
@@ -55,8 +59,8 @@
           <Linking>
             <Debugging>
               <DebugInfoType Value="dsDwarf3"/>
-              <UseHeaptrc Value="True"/>
               <TrashVariables Value="True"/>
+              <StripSymbols Value="True"/>
               <UseExternalDbgSyms Value="True"/>
             </Debugging>
             <Options>
@@ -283,6 +287,10 @@
       </Unit>
       <Unit>
         <Filename Value="webcoloreditor.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="license.rc"/>
         <IsPartOfProject Value="True"/>
       </Unit>
     </Units>

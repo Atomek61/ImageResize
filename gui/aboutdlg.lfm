@@ -11,7 +11,7 @@ object AboutDialog: TAboutDialog
   Constraints.MinWidth = 712
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '2.2.6.0'
+  LCLVersion = '3.0.0.3'
   object ButtonClose: TButton
     Left = 615
     Height = 25
@@ -45,10 +45,10 @@ object AboutDialog: TAboutDialog
     Height = 248
     Top = 128
     Width = 699
-    ActivePage = TabSheetUpdate
+    ActivePage = TabSheetLicense
     Anchors = [akTop, akLeft, akRight, akBottom]
     ShowTabs = False
-    TabIndex = 2
+    TabIndex = 0
     TabOrder = 2
     object TabSheetLicense: TTabSheet
       Caption = '&License'

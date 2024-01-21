@@ -35,7 +35,7 @@ constructor TDialogSettings.Create(const ASection :string);
 begin
   inherited;
   AutoSave := TBooleanSetting.Create(self, 'AutoSave');
-  AutoSave.TextDefault := 'True';
+  AutoSave.DefaultText := 'True';
   WarnDirty := TBooleanSetting.Create(self, 'WarnDirty');
 end;
 

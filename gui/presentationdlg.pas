@@ -35,29 +35,23 @@ type
     SelectFolderDialog: TSelectDirectoryDialog;
     procedure ButtonBrowseTargetFolderClick(Sender: TObject);
     procedure ButtonExecuteClick(Sender: TObject);
+    procedure ButtonOkClick(Sender: TObject);
     procedure EditTargetFolderChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure FormHide(Sender: TObject);
-    procedure FormShow(Sender: TObject);
     procedure ListBoxManagersClick(Sender: TObject);
     procedure ListBoxManagersDrawItem(Control: TWinControl; Index: Integer;
       ARect: TRect; State: TOwnerDrawState);
   private
-    FManagerIndex :integer;
     FManagers :TManagers;
+    FManagerIndex :integer;
+    FManager :TCustomManager;
     FOuterLogger :TLogger;
-    FManagerFrame :TFrame;
-    function GetManager: TCustomManager;
-    function GetManagerId: string;
+    procedure SetManagerIndex(Index :Integer);
     procedure OnFrameSelected(Sender :TObject);
-    procedure SetManagerId(AValue: string);
-    procedure SetManagerIndex(AValue: integer);
+    procedure Scan;
   public
     function Execute(SettingsList :TSettingsList) :boolean;
-    procedure Scan;
-    property ManagerId :string read GetManagerId write SetManagerId;
-    property Manager :TCustomManager read GetManager;
     property ManagerIndex :integer read FManagerIndex write SetManagerIndex;
   end;
 
@@ -87,23 +81,22 @@ begin
   FManagers.Free;
 end;
 
-procedure TPresentationDialog.FormShow(Sender: TObject);
-begin
-  Scan;
-  FOuterLogger := TLogger.SwapDefaultLogger(TRichMemoLogger.Create(MemoMessages));
-end;
-
-procedure TPresentationDialog.FormHide(Sender: TObject);
-begin
-  TLogger.SwapDefaultLogger(FOuterLogger).Free;
-end;
-
 procedure TPresentationDialog.ButtonExecuteClick(Sender: TObject);
 begin
   if (Trim(EditTargetFolder.Text)='') or not DirectoryExists(EditTargetFolder.Text) then
     raise Exception.Create(SErrMissingFolder);
-  Manager.TargetFolder := EditTargetFolder.Text;
-  Manager.Execute;
+  if Assigned(FManager) then begin
+    FManager.TargetFolder := EditTargetFolder.Text;
+    FManager.Execute;
+  end;
+end;
+
+procedure TPresentationDialog.ButtonOkClick(Sender: TObject);
+var
+  Manager :TCustomManager;
+begin
+  for Manager in FManagers do
+    Manager.StoreSettings;
 end;
 
 procedure TPresentationDialog.EditTargetFolderChange(Sender: TObject);
@@ -130,78 +123,81 @@ var
   ManagerIcon :TGraphic;
   hr, hi:integer;
 begin
-  //Cnvs := ListBoxManagers.Canvas;
-  //Cnvs.Brush.Color := IfThen(odSelected in State, clHighlight, clBtnFace);
-  //Cnvs.FillRect(ARect);
-  //ManagerIcon := FManagers[Index].Icon;
-  //if Assigned(ManagerIcon) then begin
-  //  hi := ManagerIcon.Height;
-  //  hr := ARect.Height;
-  //  Cnvs.Draw(ARect.Left+4, ARect.Top+(hr-hi) div 2, ManagerIcon);
-  //end;
-  //Cnvs.Font.Color := IfThen(odSelected in State, clHighlightText, clBtnText);
-  //Cnvs.Font.Size := 11;
-  //Cnvs.Font.Style := [fsBold];
-  //Cnvs.TextOut(78, ARect.Top+10, FManagers[Index].Title);
-  //Cnvs.Font.Size := 9;
-  //Cnvs.Font.Style := [];
-  //Cnvs.TextOut(78, ARect.Top+36, FManagers[Index].Description);
+  Cnvs := ListBoxManagers.Canvas;
+  Cnvs.Brush.Color := IfThen(odSelected in State, clHighlight, clBtnFace);
+  Cnvs.FillRect(ARect);
+  ManagerIcon := FManagers[Index].Icon;
+  if Assigned(ManagerIcon) then begin
+    hi := ManagerIcon.Height;
+    hr := ARect.Height;
+    Cnvs.Draw(ARect.Left+4, ARect.Top+(hr-hi) div 2, ManagerIcon);
+  end;
+  Cnvs.Font.Color := IfThen(odSelected in State, clHighlightText, clBtnText);
+  Cnvs.Font.Size := 11;
+  Cnvs.Font.Style := [fsBold];
+  Cnvs.TextOut(78, ARect.Top+10, FManagers[Index].Title);
+  Cnvs.Font.Size := 9;
+  Cnvs.Font.Style := [];
+  Cnvs.TextOut(78, ARect.Top+36, FManagers[Index].Description);
 end;
 
-function TPresentationDialog.GetManagerId: string;
-begin
-  if ListBoxManagers.ItemIndex = -1 then Exit('');
-  result := FManagers[ListBoxManagers.ItemIndex].Id;
-end;
-
-procedure TPresentationDialog.SetManagerId(AValue: string);
-begin
-  if ManagerId=AValue then Exit;
-  ManagerIndex := FManagers.IndexOf(AValue);
-end;
-
-function TPresentationDialog.GetManager: TCustomManager;
-begin
-  if FManagerIndex = -1 then
-    result := nil
-  else
-    result := FManagers[FManagerIndex];
-end;
-
-procedure TPresentationDialog.SetManagerIndex(AValue: integer);
+procedure TPresentationDialog.SetManagerIndex(Index :integer);
 var
-  ManagerFrame :TFrame;
+  Manager :TCustomManager;
 begin
-  if FManagerIndex=AValue then Exit;
-  if AValue<0 then
-    AValue := -1;
-  FManagerIndex := AValue;
-  ListBoxManagers.ItemIndex := AValue;
-  if Assigned(Manager) then begin
+  if FManagerIndex=Index then Exit;
+  if Index<0 then
+    Index := -1;
+  ListBoxManagers.ItemIndex := Index;
+  if Index<>-1 then begin
+    Manager := FManagers[Index];
     LabelLongDescription.Caption := Manager.LongDescription;
     ImagePreview.Picture.Assign(Manager.Preview);
-    ManagerFrame := Manager.Frame;
-    if Assigned(ManagerFrame) then with ManagerFrame do begin
-      Name := Format('SettingsFrame%8.8x', [longint(@ManagerFrame)]);
-      Parent := PanelManagerFrame;
+    with Manager.ShowFrame(PanelManagerFrame) do begin
       Align := alClient;
-      Visible := true;
     end;
-    if Assigned(FManagerFrame) then
-      FManagerFrame.Visible := False;
-    FManagerFrame := ManagerFrame;
     ButtonExecute.Enabled := true;
   end else begin
     LabelLongDescription.Caption := '';
     ImagePreview.Picture := nil;
     ButtonExecute.Enabled := false;
   end;
+  if FManagerIndex<>-1 then begin
+    FManager.HideFrame;
+  end;
+  FManagerIndex := Index;
+  if FManagerIndex=-1 then
+    FManager := nil
+  else
+    FManager := FManagers[Index];
 end;
 
 function TPresentationDialog.Execute(SettingsList :TSettingsList) :boolean;
+var
+  Manager :TCustomManager;
+  Settings :TSettings;
 begin
-  result :=  ShowModal = mrOk;
-  if result then begin
+  FOuterLogger := TLogger.SwapDefaultLogger(TRichMemoLogger.Create(MemoMessages));
+  try
+    if FManagers.Count=0 then
+      Scan;
+    for Settings in SettingsList.Values do begin
+      if FManagers.TryFind(Settings.Section, Manager) then begin
+        Manager.PresentationSettings.Copy(Settings, cmWeak);
+        Manager.PresentationSettings.Dirty := false;
+      end;
+    end;
+    result := ShowModal = mrOk;
+    if result then for Manager in FManagers do
+      if Manager.PresentationSettings.Dirty then begin
+        if not SettingsList.TryGetValue(Manager.PresentationSettings.Section, Settings) then begin
+          Settings := TSettings.Create(Manager.PresentationSettings.Section);
+          SettingsList.Add(Settings.Section, Settings);
+        end;
+//        Settings.Copy(Manager.PresentationSettings, cmDeep);
+      end;
+  finally
+    TLogger.SwapDefaultLogger(FOuterLogger).Free;
   end;
 end;
 
