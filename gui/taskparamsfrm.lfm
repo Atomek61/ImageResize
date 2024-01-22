@@ -1,9 +1,0 @@
-object TaskParamsFrame: TTaskParamsFrame
-  Left = 0
-  Height = 305
-  Top = 0
-  Width = 451
-  TabOrder = 0
-  DesignLeft = 558
-  DesignTop = 246
-end

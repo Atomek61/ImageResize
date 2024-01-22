@@ -27,6 +27,15 @@ type
     constructor Create(const ASection :string); override;
   end;
 
+  { TPresentationSettings }
+
+  TPresentationSettings = class(TSettings)
+  public
+    Id :TStringSetting;
+    TargetFolder :TStringSetting;
+    constructor Create(const ASection :string); override;
+  end;
+
 implementation
 
 { TDialogSettings }
@@ -37,6 +46,15 @@ begin
   AutoSave := TBooleanSetting.Create(self, 'AutoSave');
   AutoSave.DefaultText := 'True';
   WarnDirty := TBooleanSetting.Create(self, 'WarnDirty');
+end;
+
+{ TPresentationSettings }
+
+constructor TPresentationSettings.Create(const ASection: string);
+begin
+  inherited Create(ASection);
+  Id := TStringSetting.Create(self, 'Id');
+  TargetFolder := TStringSetting.Create(self, 'TargetFolder');
 end;
 
 { TProcessingSettings }

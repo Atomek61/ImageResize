@@ -335,7 +335,8 @@ type
     FProcessingSettings :TProcessingSettings;
     FDialogSettings :TDialogSettings;
     FWorkingDirectory :string;
-    FPresentationSettingsList :TSettingsList;
+    FPresentationSettings :TPresentationSettings;
+    FPresentationParamsList :TSettingsList;
     procedure ChangeCurrentDir(const Path :string);
     function GetAppDataFilename(const Filetitle :string; CanCreate :boolean) :string;
     procedure SetDirty(AValue: boolean);
@@ -547,8 +548,8 @@ begin
   FDialogSettings := TDialogSettings.Create;
   FDialogSettings.SetDefaults;
 
-  FPresentationSettingsList := TSettingsList.Create;
-//  FPresentationSettings.OnChanged := @ProjectChanged;
+  FPresentationSettings := TPresentationSettings.Create;
+  FPresentationParamsList := TSettingsList.Create;
 
   // Create Size Buttons
   for i:=0 to High(DEFSIZES) do begin
@@ -649,7 +650,8 @@ procedure TMainDialog.FormDestroy(Sender: TObject);
 begin
   FProcessingSettings.Free;
   FDialogSettings.Free;
-  FPresentationSettingsList.Free;
+  FPresentationSettings.Free;
+  FPresentationParamsList.Free;
 end;
 
 procedure TMainDialog.SaveSettings;
@@ -750,7 +752,7 @@ begin
     EditTargetFolder.Text                 := ReadString(PROJECT_SECTION, 'TargetFolder', EditTargetFolder.Text);
     EditSizes.Text                        := ReadString(PROJECT_SECTION, 'Sizes', EditSizes.Text);
     RequiredStepsUpdate;
-    ComboBoxJPEGQuality.Text               := ReadString(PROJECT_SECTION, 'JpgOptions.Quality', ComboBoxJPEGQuality.Text);
+    ComboBoxJPEGQuality.Text              := ReadString(PROJECT_SECTION, 'JpgOptions.Quality', ComboBoxJPEGQuality.Text);
     ComboBoxPngCompression.Text           := ReadString(PROJECT_SECTION, 'PngOptions.Compression', ComboBoxPngCompression.Text);
     ComboBoxResampling.Text               := ReadString(PROJECT_SECTION, 'Resampling', RESAMPLING_STRINGS[DEFAULT_RESAMPLING]);
     CheckBoxMrkEnabled.Checked            := ReadBool(PROJECT_SECTION, 'MrkEnabled', CheckBoxMrkEnabled.Checked);
@@ -775,9 +777,11 @@ begin
     CheckBoxTagsReportEnabled.Checked     := ReadBool(PROJECT_SECTION, 'TagsReportEnabled', CheckBoxTagsReportEnabled.Checked);
     CheckBoxImageInfosEnabled.Checked     := ReadBool(PROJECT_SECTION, 'ImageInfosEnabled', CheckBoxImageInfosEnabled.Checked);
     CheckBoxNoCreate.Checked              := ReadBool(PROJECT_SECTION, 'NoCreate', DEFAULT_NOCREATE);
+
     ActionParamSizes.Execute;
   end;
-  FPresentationSettingsList.LoadFromIni(Ini, PRESENTATIONS_GROUP);
+  FPresentationSettings.LoadFromIni(Ini);
+  FPresentationParamsList.LoadFromIni(Ini, PRESENTATIONS_GROUP);
 end;
 
 const
@@ -822,8 +826,11 @@ begin
     WriteBool(PROJECT_SECTION, 'TagsReportEnabled', CheckBoxTagsReportEnabled.Checked);
     WriteBool(PROJECT_SECTION, 'ImageInfosEnabled', CheckBoxImageInfosEnabled.Checked);
     WriteBool(PROJECT_SECTION, 'NoCreate', CheckBoxNoCreate.Checked);
+    WriteString(PROJECT_SECTION, 'PresentationId', EditCopyright.Text);
+    WriteString(PROJECT_SECTION, 'Copyright', EditCopyright.Text);
   end;
-  FPresentationSettingsList.SaveToIni(Ini, PRESENTATIONS_GROUP);
+  FPresentationSettings.SaveToIni(Ini);
+  FPresentationParamsList.SaveToIni(Ini, PRESENTATIONS_GROUP);
 end;
 
 function TMainDialog.LoadLastProject: boolean;
@@ -966,7 +973,8 @@ begin
     ActionSrcFilenames.Execute;
     ActionParamSizes.Execute;
 
-    FPresentationSettingsList.Clear;
+    FPresentationSettings.SetDefaults;
+    FPresentationParamsList.Clear;
 
     RequiredStepsUpdate;
     SetTitle(SCptUnnamed);
@@ -1020,8 +1028,8 @@ end;
 
 procedure TMainDialog.ActionPresentationExecute(Sender: TObject);
 begin
-  if PresentationDialog.Execute(FPresentationSettingsList) then begin
-    if FPresentationSettingsList.Dirty then
+  if PresentationDialog.Execute(FPresentationSettings, FPresentationParamsList) then begin
+    if FPresentationSettings.Dirty or FPresentationParamsList.Dirty then
       Dirty := true;
   end;
 end;

@@ -1172,6 +1172,7 @@ msgid "1"
 msgstr "1"
 
 #: tmaindialog.editrentemplate.hint
+#, fuzzy, badformat
 msgid ""
 "Enter a filename template containing placeholders for special values.\n"
 "This template will be expanded for each resampled image. Insert the\n"
@@ -1724,8 +1725,10 @@ msgid "This folder must contain the images and an .images file."
 msgstr "Das Verzeichnis enthält die Bilder und eine .images -Datei."
 
 #: tpresentationdialog.label2.caption
+#, fuzzy
+#| msgid "&Available Presentations:"
 msgctxt "tpresentationdialog.label2.caption"
-msgid "&Available Presentations:"
+msgid "&Available:"
 msgstr "&Verfügbare Präsentationen:"
 
 #: tpresentationdialog.labellongdescription.caption
@@ -1830,3 +1833,4 @@ msgstr "Kerne"
 msgctxt "webutils.serrinvalidhtmlcolorfmt"
 msgid "Invalid web color '%s'."
 msgstr "Ungültige Web-Farbe '%s'."
+

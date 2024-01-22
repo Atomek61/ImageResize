@@ -52,6 +52,8 @@ type
     FD2 :string;
     function GetCount: integer;
     function GetItem(const Key :string): string;
+    function GetKey(Index :integer): string;
+    function GetValue(Index :integer) :string; overload;
     function Next(const Txt :string; var Iterator :TIterator; out Key :string) :boolean;
     procedure SetItem(const Key :string; const Value: string);
   public
@@ -64,9 +66,10 @@ type
     function Replace(const Subject :string; out Replacements :integer) :string;
     function TryGetValue(const Key :string; out Value :string) :boolean;
     function GetValue(const Key :string) :string; overload;
-    function GetValue(Index :integer) :string; overload;
     property Count :integer read GetCount;
     property Items[const Key :string] :string read GetItem write SetItem; default;
+    property Keys[Index :integer] :string read GetKey;
+    property Values[Index :integer] :string read GetValue;
   end;
 
 implementation  // »SIZE«      «SIZE»
@@ -87,6 +90,11 @@ end;
 function TSolver.GetItem(const Key :string): string;
 begin
   result := FDict[Key].Value;
+end;
+
+function TSolver.GetKey(Index : integer): string;
+begin
+  result := FArray[Index].Key;
 end;
 
 procedure TSolver.SetItem(const Key :string; const Value :string);

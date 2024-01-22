@@ -15,4 +15,4 @@ Icon=..\icon-list.png
 ;Preview=.jpg
 Copy=
 Templates=index.html
-Fragment.IMAGES=<img src="%URL%" alt="%TITLE%"/>
+Fragment.IMAGES=<img src="%URL%" alt="%TITLE%"/>%CR%%LF%

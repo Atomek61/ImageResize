@@ -6,9 +6,9 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Buttons, StdCtrls,
-  ExtCtrls, ComCtrls, Presentations, LCLIntf, LCLType, Arrow, ValEdit, RichMemo,
-  Logging, Types, GetText, FileUtil, ListFilterEdit, ShortPathEdit,
-  LoggingRichMemo, Settings, IniFiles;
+  ExtCtrls, ComCtrls, Presentations, LCLIntf, LCLType, RichMemo,
+  Logging, Types, GetText, FileUtil,
+  LoggingRichMemo, Settings, AppSettings;
 
 type
 
@@ -50,9 +50,9 @@ type
     procedure SetManagerIndex(Index :Integer);
     procedure OnFrameSelected(Sender :TObject);
     procedure Scan;
-  public
-    function Execute(SettingsList :TSettingsList) :boolean;
     property ManagerIndex :integer read FManagerIndex write SetManagerIndex;
+  public
+    function Execute(PresentationSettings :TPresentationSettings; ParamsList :TSettingsList) :boolean;
   end;
 
 var
@@ -96,7 +96,7 @@ var
   Manager :TCustomManager;
 begin
   for Manager in FManagers do
-    Manager.StoreSettings;
+    Manager.StoreParams;
 end;
 
 procedure TPresentationDialog.EditTargetFolderChange(Sender: TObject);
@@ -172,30 +172,43 @@ begin
     FManager := FManagers[Index];
 end;
 
-function TPresentationDialog.Execute(SettingsList :TSettingsList) :boolean;
+function TPresentationDialog.Execute(PresentationSettings :TPresentationSettings; ParamsList :TSettingsList) :boolean;
 var
   Manager :TCustomManager;
-  Settings :TSettings;
+  Params :TSettings;
+  Index :integer;
 begin
+
   FOuterLogger := TLogger.SwapDefaultLogger(TRichMemoLogger.Create(MemoMessages));
   try
     if FManagers.Count=0 then
       Scan;
-    for Settings in SettingsList.Values do begin
-      if FManagers.TryFind(Settings.Section, Manager) then begin
-        Manager.PresentationSettings.Copy(Settings, cmWeak);
-        Manager.PresentationSettings.Dirty := false;
+    for Params in ParamsList.Values do begin
+      if FManagers.TryFind(Params.Section, Index) then begin
+        FManagers[Index].Params.Copy(Params, cmWeak);
+        FManagers[Index].Params.Dirty := false;
       end;
     end;
+
+    EditTargetFolder.Text := PresentationSettings.TargetFolder.Text;
+    if FManagers.TryFind(PresentationSettings.Id.Value, Index) then
+      ManagerIndex := Index;
+
     result := ShowModal = mrOk;
-    if result then for Manager in FManagers do
-      if Manager.PresentationSettings.Dirty then begin
-        if not SettingsList.TryGetValue(Manager.PresentationSettings.Section, Settings) then begin
-          Settings := TSettings.Create(Manager.PresentationSettings.Section);
-          SettingsList.Add(Settings.Section, Settings);
+    if result then begin
+      PresentationSettings.TargetFolder.Text := EditTargetFolder.Text;
+      if FManagerIndex<>-1 then
+        PresentationSettings.Id.Text := FManagers[FManagerIndex].Id;
+      for Manager in FManagers do begin
+        if Manager.Params.Dirty then begin
+          if not ParamsList.TryGetValue(Manager.Params.Section, Params) then begin
+            Params := TSettings.Create(Manager.Params.Section);
+            ParamsList.Add(Params.Section, Params);
+          end;
+          Params.Copy(Manager.Params, cmDeep);
         end;
-//        Settings.Copy(Manager.PresentationSettings, cmDeep);
       end;
+    end;
   finally
     TLogger.SwapDefaultLogger(FOuterLogger).Free;
   end;

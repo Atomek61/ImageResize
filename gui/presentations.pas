@@ -35,7 +35,7 @@ type
     FTemplateFolder :string;
     FTargetFolder :string;
     FTargetTitle :string;
-    FPresentationSettings :TSettings;
+    FParams :TSettings;
     function GetIcon: TGraphic;
     function GetPreview: TGraphic;
   protected
@@ -47,7 +47,7 @@ type
     class function Create(const Filename :string) :TCustomManager; overload;
     class procedure Scan(const Folder :string; Managers :TManagers);
     function ShowFrame(Parent :TWinControl) :TFrame; virtual;
-    procedure StoreSettings; virtual; // Before Execution or before closing the dialog
+    procedure StoreParams; virtual; // Before Execution or before closing the dialog
     procedure HideFrame; virtual;
     procedure Execute; virtual;
     property Id :string read FId;
@@ -59,24 +59,15 @@ type
     property Preview :TGraphic read GetPreview;
     property TargetTitle :string read FTargetTitle write FTargetTitle;
     property TargetFolder :string read FTargetFolder write FTargetFolder;
-    property PresentationSettings :TSettings read FPresentationSettings;
+    property Params :TSettings read FParams;
   end;
 
   { TManagers }
 
   TManagers = class(TObjectList<TCustomManager>)
-  private
-    FDictionary :TDictionary<string, TCustomManager>;
-    function GetById(Id : string): TCustomManager;
-  protected
-    procedure Notify(constref AValue: TCustomManager; ACollectionNotification: TCollectionNotification); override;
   public
-    constructor Create;
-    destructor Destroy; override;
     procedure SortByDate;
-    function IndexOf(const Id :string) :integer;
-    function TryFind(const Id :string; out Manager :TCustomManager) :boolean;
-    property ById[Id :string] :TCustomManager read GetById;
+    function TryFind(const Id :string; out Index :integer) :boolean;
   end;
 
   { TPresentationManager }
@@ -85,10 +76,10 @@ type
   private
     FProcessor :TProcessor;
     FManagerFrame :TPresentationManagerFrame;
-    FSettingsEditor :TSettingsEditor; // Link between ValuesListEditor on FMangerFrame and FSettings;
+    FParamsEditor :TSettingsEditor; // Link between ValuesListEditor on FMangerFrame and FParams;
   protected
     function ShowFrame(Parent :TWinControl) :TFrame; override;
-    procedure StoreSettings; override;
+    procedure StoreParams; override;
     procedure HideFrame; override;
   public
     constructor Create(IniFile :TCustomIniFile); override;
@@ -156,15 +147,15 @@ begin
   FIconFile         := CreateAbsolutePath(IniFile.ReadString(PRESENTATION_SECTION, 'Icon', ''), FTemplateFolder);
   FPreviewFile      := CreateAbsolutePath(IniFile.ReadString(PRESENTATION_SECTION, 'Preview', ''), FTemplateFolder);
 
-  FPresentationSettings := TSettings.Create(FId);
-  FPresentationSettings.Load(IniFile, 'Settings');
+  FParams := TSettings.Create(FId);
+  FParams.Load(IniFile, 'Settings');
 end;
 
 destructor TCustomManager.Destroy;
 begin
   FIcon.Free;
   FPreview.Free;
-  FPresentationSettings.Free;
+  FParams.Free;
   inherited Destroy;
 end;
 
@@ -197,19 +188,19 @@ begin
   result := nil;
 end;
 
-procedure TCustomManager.StoreSettings;
+procedure TCustomManager.StoreParams;
 begin
 
 end;
 
 procedure TCustomManager.HideFrame;
 begin
-  StoreSettings;
+  StoreParams;
 end;
 
 procedure TCustomManager.Execute;
 begin
-  StoreSettings;
+  StoreParams;
 end;
 
 class function TCustomManager.Create(const Filename :string): TCustomManager;
@@ -253,37 +244,6 @@ end;
 
 { TManagers }
 
-function TManagers.GetById(Id : string): TCustomManager;
-begin
-  if not FDictionary.TryGetValue(Id, result) then
-    result := nil;
-end;
-
-procedure TManagers.Notify(constref AValue: TCustomManager; ACollectionNotification: TCollectionNotification);
-begin
-  if Assigned(FDictionary) then begin
-    case ACollectionNotification of
-    cnAdded:
-      FDictionary.Add(AValue.Id, AValue);
-    cnRemoved, cnExtracted:
-      FDictionary.Remove(AValue.Id);
-    end;
-  end;
-  inherited Notify(AValue, ACollectionNotification);
-end;
-
-constructor TManagers.Create;
-begin
-  inherited Create(true);
-  FDictionary := TDictionary<string, TCustomManager>.Create;
-end;
-
-destructor TManagers.Destroy;
-begin
-  FreeAndNil(FDictionary);
-  inherited;
-end;
-
 function CompareDate(constref Left, Right :TCustomManager) :integer;
 begin
   result := CompareDateTime(Left.FDate, Right.FDate);
@@ -294,43 +254,37 @@ begin
   Sort(TComparer<TCustomManager>.Construct(@CompareDate));
 end;
 
-function TManagers.IndexOf(const Id: string): integer;
+function TManagers.TryFind(const Id: string; out Index :integer): boolean;
 var
   i :integer;
 begin
   for i:=0 to Count-1 do
-    if SameText(Id, self[i].Id) then
-      Exit(i);
-  result := -1;
-end;
-
-function TManagers.TryFind(const Id: string; out Manager: TCustomManager
-  ): boolean;
-begin
-  result := FDictionary.TryGetValue(Id, Manager);
+    if SameText(self[i].Id, Id) then begin
+      Index := i;
+      Exit(true);
+    end;
+  result := false;
 end;
 
 { TPresentationManager }
 
 function TPresentationManager.ShowFrame(Parent :TWinControl) :TFrame;
 begin
-  inherited;
   if not Assigned(FManagerFrame) then begin
     FManagerFrame := TPresentationManagerFrame.Create(nil);
-    FManagerFrame.Name := Format('SettingsFrame%p', [@FManagerFrame]);
+    FManagerFrame.Name := Format('ParamsFrame%8.8p', [@FManagerFrame]);
     FManagerFrame.Parent := Parent;
-    FSettingsEditor := TSettingsEditor.Create;
-    FSettingsEditor.Bind(PresentationSettings, FManagerFrame.ValueListEditor);
-    FManagerFrame.ValueListEditor.Visible := FSettingsEditor.Editors.Count>0;
+    FParamsEditor := TSettingsEditor.Create;
+    FParamsEditor.Bind(Params, FManagerFrame.ValueListEditor);
   end;
-  FManagerFrame.Visible := true;
+  FManagerFrame.Visible := FParamsEditor.Editors.Count>0;
   result := FManagerFrame;
 end;
 
-procedure TPresentationManager.StoreSettings;
+procedure TPresentationManager.StoreParams;
 begin
-  if Assigned(FSettingsEditor) then
-    FSettingsEditor.Flush;
+  if Assigned(FParamsEditor) then
+    FParamsEditor.Flush;
 end;
 
 procedure TPresentationManager.HideFrame;
@@ -379,7 +333,7 @@ destructor TPresentationManager.Destroy;
 begin
   FProcessor.Free;
   FManagerFrame.Free;
-  FSettingsEditor.Free;
+  FParamsEditor.Free;
   inherited Destroy;
 end;
 
@@ -387,7 +341,7 @@ procedure TPresentationManager.Execute;
 var
   Stats :TProcessor.TStats;
 begin
-  FSettingsEditor.Flush;
+  FParamsEditor.Flush;
   FProcessor.TargetFolder := TargetFolder;
   FProcessor.DocumentVars['TITLE'] := TargetTitle;
   FProcessor.Execute(Stats);

@@ -158,8 +158,8 @@ object PresentationDialog: TPresentationDialog
       Left = 21
       Height = 15
       Top = 14
-      Width = 125
-      Caption = '&Available Presentations:'
+      Width = 51
+      Caption = '&Available:'
       FocusControl = ListBoxManagers
     end
     object ButtonBrowseTargetFolder: TBitBtn
@@ -191,7 +191,7 @@ object PresentationDialog: TPresentationDialog
       OnChange = EditTargetFolderChange
     end
     object LabelTargetFolder: TLabel
-      Left = 365
+      Left = 368
       Height = 15
       Top = 14
       Width = 71

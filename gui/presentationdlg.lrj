@@ -7,7 +7,7 @@
 {"hash":70378227,"name":"tpresentationdialog.buttoncancel.hint","sourcebytes":[67,108,111,115,101,115,32,116,104,101,32,100,105,97,108,111,103,32,97,110,100,32,100,105,115,99,97,114,100,115,32,116,104,101,32,115,101,116,116,105,110,103,115],"value":"Closes the dialog and discards the settings"},
 {"hash":4863637,"name":"tpresentationdialog.buttoncancel.caption","sourcebytes":[67,108,111,115,101],"value":"Close"},
 {"hash":194472654,"name":"tpresentationdialog.labellongdescription.caption","sourcebytes":[60,76,111,110,103,68,101,115,99,114,105,112,116,105,111,110,62],"value":"<LongDescription>"},
-{"hash":226039226,"name":"tpresentationdialog.label2.caption","sourcebytes":[38,65,118,97,105,108,97,98,108,101,32,80,114,101,115,101,110,116,97,116,105,111,110,115,58],"value":"&Available Presentations:"},
+{"hash":859658,"name":"tpresentationdialog.label2.caption","sourcebytes":[38,65,118,97,105,108,97,98,108,101,58],"value":"&Available:"},
 {"hash":209330606,"name":"tpresentationdialog.edittargetfolder.hint","sourcebytes":[84,104,105,115,32,102,111,108,100,101,114,32,109,117,115,116,32,99,111,110,116,97,105,110,32,116,104,101,32,105,109,97,103,101,115,32,97,110,100,32,97,110,32,46,105,109,97,103,101,115,32,102,105,108,101,46],"value":"This folder must contain the images and an .images file."},
 {"hash":99566010,"name":"tpresentationdialog.labeltargetfolder.caption","sourcebytes":[38,84,97,114,103,101,116,32,70,111,108,100,101,114,58],"value":"&Target Folder:"}
 ]}

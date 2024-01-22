@@ -21,7 +21,8 @@ type
     FCopyFiles :TStringArray;       // Template files - .html, .js, .css or whatever
     FFilesTags :TFilesTags;         // Table with tags for each image file, usually from .images file in folder
     FListFragments :TStringDictionary;  // List fragments - each List, built by the FListSolver uses one
-    FDocumentVars :TSolver;           // Global Vars like TITLE, DATE, OWNER, IMG-LIST, NAV-LIST
+    FGlobalVars :TSolver;           // Global Vars like CR, LF
+    FDocumentVars :TSolver;         // Global Vars like TITLE, DATE, OWNER, IMG-LIST, NAV-LIST
   public type
     TStats = record
       FilesToCopy :integer;           // Number of files to be copied
@@ -72,6 +73,9 @@ begin
   FFilesTags := TFilesTags.Create;
   FListFragments := TStringDictionary.Create;
   FDocumentVars := TSolver.Create(FDelimiters);
+  FGlobalVars := TSolver.Create(FDelimiters);
+  FGlobalVars.Add('CR', #13);
+  FGlobalVars.Add('LF', #10);
 end;
 
 destructor TProcessor.Destroy;
@@ -79,6 +83,7 @@ begin
   FFilesTags.Free;
   FListFragments.Free;
   FDocumentVars.Free;
+  FGlobalVars.Free;
   inherited Destroy;
 end;
 
@@ -98,7 +103,7 @@ var
   TemplateFilename :string;
   SourceFilename :string;
   TargetFilename :string;
-  i :integer;
+  i, j :integer;
   Tags :TTags;
   Key, Value :string;
   Fragment :TPair<string, string>;
@@ -148,9 +153,12 @@ begin
 
       // 3. Iterate over the images and build the lists
       Log(SMsgBuildingLists, llInfo);
+      // Prepare the array of lists
       for Fragment in FListFragments do
         Lists.Add(Fragment.Key, '');
+      // Iterate over the images
       for i:=0 to FFilesTags.Filenames.Count-1 do begin
+        // Build the Listvars for each image
         ListVars.Clear;
         ListVars.Add('INDEX', IntToStr(i));
         ListVars.Add('URL', ExtractFilename(FFilesTags.Filenames[i]));
@@ -159,6 +167,9 @@ begin
           if not Tags.TryGetValue(Key, Value) then Value := '';
           ListVars.Add(UpperCase(Key), Value);
         end;
+        // Add the global vars
+        for j:=0 to FGlobalVars.Count-1 do
+          ListVars.Add(FGlobalVars.Keys[j], FGlobalVars.Values[j]);
         for Fragment in FListFragments do
           ListVars.Add(Fragment.Key, Fragment.Value);
         ListVars.Solve(SolverStats);

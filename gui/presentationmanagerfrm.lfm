@@ -14,17 +14,17 @@ object PresentationManagerFrame: TPresentationManagerFrame
     Top = 21
     Width = 428
     Align = alClient
-    Color = clDefault
     DefaultColWidth = 130
     DefaultRowHeight = 24
     ExtendedSelect = False
     FixedCols = 0
     Flat = True
+    ParentColor = True
     RowCount = 1
     ScrollBars = ssAutoVertical
     TabOrder = 0
     DisplayOptions = [doAutoColResize, doKeyColFixed]
-    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goEditing, goAlwaysShowEditor, goThumbTracking]
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goEditing, goRowSelect, goAlwaysShowEditor, goThumbTracking]
     TitleCaptions.Strings = (
       'Setting'
       'Value'

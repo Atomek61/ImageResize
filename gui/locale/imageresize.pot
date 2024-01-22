@@ -1636,7 +1636,7 @@ msgstr ""
 
 #: tpresentationdialog.label2.caption
 msgctxt "tpresentationdialog.label2.caption"
-msgid "&Available Presentations:"
+msgid "&Available:"
 msgstr ""
 
 #: tpresentationdialog.labellongdescription.caption

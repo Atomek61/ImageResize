@@ -7,7 +7,7 @@
    viewBox="0 0 128 128.00001"
    version="1.1"
    id="svg138"
-   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
    sodipodi:docname="checked.svg"
    inkscape:export-filename="img32\checked.png"
    inkscape:export-xdpi="24"
@@ -30,8 +30,8 @@
      showguides="true"
      inkscape:lockguides="true"
      inkscape:zoom="7.3192481"
-     inkscape:cx="73.026627"
-     inkscape:cy="60.115465"
+     inkscape:cx="73.09494"
+     inkscape:cy="60.183778"
      inkscape:window-width="2560"
      inkscape:window-height="1417"
      inkscape:window-x="-8"
@@ -222,6 +222,13 @@
      id="layer3"
      inkscape:label="Dots"
      style="display:inline">
+    <ellipse
+       style="display:inline;fill:#3465a4;fill-opacity:0.185965;stroke-width:1.16667;stroke-linecap:round;stroke-linejoin:bevel;paint-order:markers fill stroke"
+       id="path1"
+       cx="64"
+       cy="63.999996"
+       rx="56"
+       ry="55.999996" />
     <path
        style="fill:#4e9a06;fill-opacity:1;stroke:none;stroke-width:19.6364;stroke-linecap:square;stroke-linejoin:round"
        d="M 109.33327,11.513316 C 82.66779,28.767447 55.7215,64.43182 46.363636,82 41.784318,73.724644 30.9672,60.550847 21.818181,52.545455 L 12.000002,67.272727 C 28.880709,82.043347 36.56463,108.78667 36.56463,108.78667 l 18.780629,0.65199 c 0,0 26.441043,-56.712159 64.654741,-81.43866 z"

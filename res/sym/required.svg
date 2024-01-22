@@ -7,7 +7,7 @@
    viewBox="0 0 128 128.00001"
    version="1.1"
    id="svg138"
-   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
    sodipodi:docname="required.svg"
    inkscape:export-filename="img32\required.png"
    inkscape:export-xdpi="24"
@@ -30,8 +30,8 @@
      showguides="true"
      inkscape:lockguides="true"
      inkscape:zoom="5.17549"
-     inkscape:cx="50.719835"
-     inkscape:cy="71.104379"
+     inkscape:cx="50.816444"
+     inkscape:cy="71.200988"
      inkscape:window-width="2560"
      inkscape:window-height="1417"
      inkscape:window-x="-32000"
@@ -73,20 +73,17 @@
   <defs
      id="defs135" />
   <g
-     inkscape:label="Ring"
-     inkscape:groupmode="layer"
-     id="layer1"
-     style="display:none" />
-  <g
-     inkscape:label="Ring Kopie"
-     inkscape:groupmode="layer"
-     id="g5"
-     style="display:none" />
-  <g
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Exclamation"
      style="display:inline">
+    <ellipse
+       style="display:inline;fill:#3465a4;fill-opacity:0.185965;stroke-width:1.16667;stroke-linecap:round;stroke-linejoin:bevel;paint-order:markers fill stroke"
+       id="path1"
+       cx="64.000008"
+       cy="63.999996"
+       rx="56"
+       ry="55.999996" />
     <path
        id="rect24"
        style="fill:#cc0000;stroke-width:8.59259;stroke-linecap:round;stroke-linejoin:bevel;paint-order:markers fill stroke"
@@ -96,12 +93,8 @@
        style="display:inline;fill:#cc0000;stroke:none;stroke-width:8.59259;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
        id="path24"
        cx="64.000008"
-       cy="107.11111"
+       cy="111.1111"
        rx="12.888888"
        ry="12.888887" />
-    <path
-       id="path25"
-       style="display:none;fill:#3465a4;stroke:none;stroke-width:8;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
-       d="M 44,20.371094 A 48.000008,47.999996 0 0 0 16,64 48.000008,47.999996 0 0 0 44.492188,107.82422 20,19.999998 0 0 1 50.523438,97.263672 36,35.999996 0 0 1 28,64 36,35.999996 0 0 1 44,34.164062 Z m 40,0.0059 V 34.083984 A 36,35.999996 0 0 1 100,64 36,35.999996 0 0 1 77.589844,97.332031 20,19.999998 0 0 1 83.552734,107.82031 48.000008,47.999996 0 0 0 112,64 48.000008,47.999996 0 0 0 84,20.376953 Z" />
   </g>
 </svg>
