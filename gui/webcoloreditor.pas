@@ -39,9 +39,9 @@ procedure TWebColorEditor.DrawCell(Canvas: TCanvas; Rect: TRect; State: TGridDra
 begin
   with Canvas do begin
     Brush.Color := StrToInt(Value);
-    Rect.Left := Rect.Right - Rect.Height*3;
+    Rect.Left := Rect.Right - Rect.Height*2;
     dec(Rect.Right, 3);
-    inc(Rect.Top, 2); dec(Rect.Bottom, 2);
+    inc(Rect.Top, 2); dec(Rect.Bottom, 3);
     FillRect(Rect);
   end;
 end;

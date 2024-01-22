@@ -17,6 +17,7 @@ type
   TPresentationDialog = class(TForm)
     Bevel1: TBevel;
     ButtonBrowseTargetFolder: TBitBtn;
+    ButtonTargetFromDoc: TBitBtn;
     ButtonOk: TBitBtn;
     ButtonExecute: TBitBtn;
     ButtonCancel: TBitBtn;
@@ -36,6 +37,7 @@ type
     procedure ButtonBrowseTargetFolderClick(Sender: TObject);
     procedure ButtonExecuteClick(Sender: TObject);
     procedure ButtonOkClick(Sender: TObject);
+    procedure ButtonTargetFromDocClick(Sender: TObject);
     procedure EditTargetFolderChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -97,6 +99,11 @@ var
 begin
   for Manager in FManagers do
     Manager.StoreParams;
+end;
+
+procedure TPresentationDialog.ButtonTargetFromDocClick(Sender: TObject);
+begin
+  EditTargetFolder.Text := MainDialog.EditTargetFolder.Text;
 end;
 
 procedure TPresentationDialog.EditTargetFolderChange(Sender: TObject);
@@ -192,7 +199,8 @@ begin
 
     EditTargetFolder.Text := PresentationSettings.TargetFolder.Text;
     if FManagers.TryFind(PresentationSettings.Id.Value, Index) then
-      ManagerIndex := Index;
+      ManagerIndex := Index
+    else ManagerIndex := 0;
 
     result := ShowModal = mrOk;
     if result then begin

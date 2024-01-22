@@ -1649,6 +1649,10 @@ msgctxt "tpresentationdialog.labeltargetfolder.caption"
 msgid "&Target Folder:"
 msgstr ""
 
+#: tpresentationdialog.panelmanagerframe.caption
+msgid "This presentation has no settings"
+msgstr ""
+
 #: tpresentationmanagerframe.label1.caption
 msgid "Settin&gs:"
 msgstr ""

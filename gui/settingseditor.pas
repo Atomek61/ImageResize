@@ -163,7 +163,7 @@ procedure TSettingsEditor.OnDrawCell(Sender: TObject; aCol, aRow: Integer; aRect
 var
   Index :integer;
 begin
-  if aCol<>1 then Exit;
+  if aCol<>0 then Exit;
   Index := ARow-FControl.FixedRows;
   if (Index<0) or (Index>=FEditorList.Count) then Exit;
     FEditorList[Index].DrawCell(FControl.Canvas, aRect, aState);

@@ -23,10 +23,10 @@ type
   // A TCustomManager encapsulates a representation of a PresentationManager
   TCustomManager = class
   private
-    FId :string;              // From Section: i.e. "Slideshow200"
-    FTitle :string;           // "Slideshow 2.0"
-    FDescription :string;     // "Full-Screen Slideshow"
-    FLongDescription :string;         // "Displays a single image and navigates through a list.
+    FId :string;                  // From Section: i.e. "Slideshow200"
+    FTitle :string;               // "Slideshow 2.0"
+    FDescription :string;         // "Full-Screen Slideshow"
+    FLongDescription :string;     // "Displays a single image and navigates through a list.
     FDate :TDateTime;
     FIconFile :string;
     FIcon :TPicture;
@@ -34,7 +34,6 @@ type
     FPreview :TPicture;
     FTemplateFolder :string;
     FTargetFolder :string;
-    FTargetTitle :string;
     FParams :TSettings;
     function GetIcon: TGraphic;
     function GetPreview: TGraphic;
@@ -57,7 +56,6 @@ type
     property Date :TDateTime read FDate;
     property Icon :TGraphic read GetIcon;
     property Preview :TGraphic read GetPreview;
-    property TargetTitle :string read FTargetTitle write FTargetTitle;
     property TargetFolder :string read FTargetFolder write FTargetFolder;
     property Params :TSettings read FParams;
   end;
@@ -340,10 +338,18 @@ end;
 procedure TPresentationManager.Execute;
 var
   Stats :TProcessor.TStats;
+  Setting :TSetting;
 begin
   FParamsEditor.Flush;
   FProcessor.TargetFolder := TargetFolder;
-  FProcessor.DocumentVars['TITLE'] := TargetTitle;
+  FProcessor.DocumentVars.Load('PRESENTATIONID', Id);
+  FProcessor.DocumentVars.Load('PRESENTATIONTITLE',Title);
+
+  // Make Params available to the Processor
+  for Setting in Params.Items do begin
+    FProcessor.DocumentVars.Load(Setting.Key, Setting.Text);
+  end;
+
   FProcessor.Execute(Stats);
 end;
 

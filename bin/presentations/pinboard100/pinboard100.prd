@@ -1,4 +1,4 @@
-[Common]
+﻿[Common]
 Type=PRD
 Version=100
 
@@ -15,9 +15,14 @@ Icon=..\icon-pinboard.png
 Preview=preview.jpg
 Copy=pinboard.css,shutter.png
 Templates=index.html
-Fragment.IMAGES=<div><img src="%URL%"/><div>%TITLE%</div></div>
+Fragment.IMAGES=<div><img src="%URL%"/><div>%TITLE%</div></div>%CR%%LF%
 
 [Settings.Title]
 Class=String
 Caption=Title
 Caption.de=Titel
+
+[Settings.Copyright]
+Class=String
+Caption=Copyright
+Caption.de=Urheberhinweis

@@ -61,6 +61,7 @@ type
     destructor Destroy; override;
     procedure Clear;
     procedure Add(const Key :string; const Value :string = '');
+    procedure Load(const Key :string; const Value :string);
     procedure Reload(Index :integer; const Value :string);
     function Solve(out Stats :TStats) :boolean;
     function Replace(const Subject :string; out Replacements :integer) :string;
@@ -142,6 +143,16 @@ begin
     raise;
   end;
   FArray.Add(Rec);
+end;
+
+procedure TSolver.Load(const Key: string; const Value: string);
+var
+  Rec :TRec;
+begin
+  if FDict.TryGetValue(Key, Rec) then
+    Rec.Value := Value
+  else
+    Add(Key, Value);
 end;
 
 procedure TSolver.Reload(Index: integer; const Value: string);

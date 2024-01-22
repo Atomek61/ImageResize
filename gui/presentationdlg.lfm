@@ -1,13 +1,13 @@
 object PresentationDialog: TPresentationDialog
   Left = 883
-  Height = 514
+  Height = 580
   Top = 450
   Width = 806
   BorderIcons = [biSystemMenu]
   Caption = 'Presentation'
-  ClientHeight = 514
+  ClientHeight = 580
   ClientWidth = 806
-  Constraints.MinHeight = 480
+  Constraints.MinHeight = 580
   Constraints.MinWidth = 806
   OnCreate = FormCreate
   OnDestroy = FormDestroy
@@ -92,7 +92,7 @@ object PresentationDialog: TPresentationDialog
       BorderStyle = bsSingle
       ClientHeight = 386
       ClientWidth = 326
-      TabOrder = 2
+      TabOrder = 0
       object ListBoxManagers: TListBox
         Left = 0
         Height = 309
@@ -165,12 +165,11 @@ object PresentationDialog: TPresentationDialog
     object ButtonBrowseTargetFolder: TBitBtn
       AnchorSideLeft.Control = EditTargetFolder
       AnchorSideLeft.Side = asrBottom
-      AnchorSideTop.Control = EditTargetFolder
       AnchorSideBottom.Control = EditTargetFolder
       AnchorSideBottom.Side = asrBottom
-      Left = 761
+      Left = 733
       Height = 25
-      Top = 31
+      Top = 33
       Width = 30
       Anchors = [akLeft]
       BorderSpacing.Left = 1
@@ -178,16 +177,16 @@ object PresentationDialog: TPresentationDialog
       ImageIndex = 0
       OnClick = ButtonBrowseTargetFolderClick
       Spacing = 0
-      TabOrder = 1
+      TabOrder = 2
     end
     object EditTargetFolder: TEdit
       Left = 365
       Height = 23
       Hint = 'This folder must contain the images and an .images file.'
-      Top = 32
-      Width = 395
+      Top = 34
+      Width = 367
       Anchors = [akTop, akLeft, akRight]
-      TabOrder = 0
+      TabOrder = 1
       OnChange = EditTargetFolderChange
     end
     object LabelTargetFolder: TLabel
@@ -206,12 +205,31 @@ object PresentationDialog: TPresentationDialog
       Width = 426
       Anchors = [akTop, akLeft, akRight, akBottom]
       BevelOuter = bvNone
+      Caption = 'This presentation has no settings'
+      Font.Color = clGrayText
+      ParentFont = False
       TabOrder = 3
+    end
+    object ButtonTargetFromDoc: TBitBtn
+      AnchorSideLeft.Control = EditTargetFolder
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideBottom.Side = asrBottom
+      Left = 763
+      Height = 25
+      Top = 33
+      Width = 30
+      Anchors = [akLeft]
+      BorderSpacing.Left = 31
+      Images = ImagesModule.ImageList20x20
+      ImageIndex = 15
+      OnClick = ButtonTargetFromDocClick
+      Spacing = 0
+      TabOrder = 4
     end
   end
   object MemoMessages: TRichMemo
     Left = 4
-    Height = 40
+    Height = 106
     Top = 470
     Width = 802
     Align = alClient

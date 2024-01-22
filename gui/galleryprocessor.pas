@@ -42,6 +42,7 @@ type
     procedure Clear;
     function Execute(out Stats :TStats) :boolean;
     property TargetFolder :string read FTargetFolder write FTargetFolder;
+    property GlobalVars :TSolver read FGlobalVars;
     property DocumentVars :TSolver read FDocumentVars;
     property ListFragments :TStringDictionary read FListFragments;
     property CopyFiles :TStringArray read FCopyFiles write FCopyFiles;
@@ -76,6 +77,7 @@ begin
   FGlobalVars := TSolver.Create(FDelimiters);
   FGlobalVars.Add('CR', #13);
   FGlobalVars.Add('LF', #10);
+  FGlobalVars.Add('CRLF', #13#10);
 end;
 
 destructor TProcessor.Destroy;

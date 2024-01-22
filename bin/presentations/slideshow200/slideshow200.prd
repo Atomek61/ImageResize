@@ -13,7 +13,7 @@ Icon=..\icon-slideshow.png
 Preview=slideshow-preview.jpg
 Copy=slideshow.js
 Templates=index.html,slideshow.css
-Fragment.IMAGE-LIST=<img class="image-hidden" src="%URL%" alt="%TITLE%"/>
+Fragment.IMAGES=<img class="image-hidden" src="%URL%" alt="%TITLE%"/>%CRLF%
 Fragment.BUTTON-LIST=
 
 [Settings.Title]
