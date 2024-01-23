@@ -37,7 +37,7 @@ type
       Elapsed :integer;               // ms
     end;
   public
-    constructor Create; virtual;
+    constructor Create(const Delimiters :TDelimiters); virtual;
     destructor Destroy; override;
     procedure Clear;
     function Execute(out Stats :TStats) :boolean;
@@ -47,7 +47,7 @@ type
     property ListFragments :TStringDictionary read FListFragments;
     property CopyFiles :TStringArray read FCopyFiles write FCopyFiles;
     property TemplateFiles :TStringArray read FTemplateFiles write FTemplateFiles;
-    property Delimiters :TDelimiters read FDelimiters write FDelimiters;
+    property Delimiters :TDelimiters read FDelimiters;
 
   end;
 
@@ -68,9 +68,9 @@ resourcestring
 
 { TProcessor }
 
-constructor TProcessor.Create;
+constructor TProcessor.Create(const Delimiters :TDelimiters);
 begin
-  FDelimiters := PERCENTDELIMITERS;
+  FDelimiters := Delimiters;
   FFilesTags := TFilesTags.Create;
   FListFragments := TStringDictionary.Create;
   FDocumentVars := TSolver.Create(FDelimiters);

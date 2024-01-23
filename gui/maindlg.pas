@@ -52,7 +52,8 @@ const
   COMMON_SECTION        = 'Common';
   PROJECT_SECTION       = 'Project';
   PROCESSING_SECTION    = 'Processing';
-  DIALOG_SECTION        = 'Dialog';
+  MAINDIALOG_SECTION    = 'MainDialog';
+  PRESDIALOG_SECTION    = 'PresentationDialog';
 
   MRKRECTRATIO    = 3.0;
 
@@ -662,14 +663,24 @@ begin
   with Ini do try
     WriteString(COMMON_SECTION, 'Type', SETTYPE);
     WriteString(COMMON_SECTION, 'Version', SETVERSION);
-    Ini.WriteInteger(DIALOG_SECTION, 'Width', Width);
-    Ini.WriteInteger(DIALOG_SECTION, 'Height', Height);
-    Ini.WriteInteger(DIALOG_SECTION, 'Left', Left);
-    Ini.WriteInteger(DIALOG_SECTION, 'Top', Top);
-    Ini.WriteInteger(DIALOG_SECTION, 'PanelControls.Height', PanelControls.Height);
-    Ini.WriteString(DIALOG_SECTION, 'CurrentDirectory', GetCurrentDir);
-    Ini.WriteBool(DIALOG_SECTION, 'AutoSave', FDialogSettings.AutoSave.Value);
-    Ini.WriteBool(DIALOG_SECTION, 'WarnDirty', FDialogSettings.WarnDirty.Value);
+
+    Ini.WriteInteger(MAINDIALOG_SECTION, 'Width', Width);
+    Ini.WriteInteger(MAINDIALOG_SECTION, 'Height', Height);
+    Ini.WriteInteger(MAINDIALOG_SECTION, 'Left', Left);
+    Ini.WriteInteger(MAINDIALOG_SECTION, 'Top', Top);
+    Ini.WriteInteger(MAINDIALOG_SECTION, 'PanelControls.Height', PanelControls.Height);
+    Ini.WriteString(MAINDIALOG_SECTION, 'CurrentDirectory', GetCurrentDir);
+    Ini.WriteBool(MAINDIALOG_SECTION, 'AutoSave', FDialogSettings.AutoSave.Value);
+    Ini.WriteBool(MAINDIALOG_SECTION, 'WarnDirty', FDialogSettings.WarnDirty.Value);
+
+    with PresentationDialog do begin
+      Ini.WriteInteger(PRESDIALOG_SECTION, 'Top', Top);
+      Ini.WriteInteger(PRESDIALOG_SECTION, 'Left', Left);
+      Ini.WriteInteger(PRESDIALOG_SECTION, 'Width', Width);
+      Ini.WriteInteger(PRESDIALOG_SECTION, 'Height', Height);
+      Ini.WriteInteger(PRESDIALOG_SECTION, 'PanelMain.Height', PanelMain.Height);
+    end;
+
     EraseSection(PROJECT_SECTION);
     WriteBool(PROJECT_SECTION, 'StopOnError', FProcessingSettings.StopOnError.Value);
     WriteInteger(PROJECT_SECTION, 'ThreadsUsed', FProcessingSettings.ThreadsUsed.Value);
@@ -703,18 +714,30 @@ begin
       Log(Format(SLogWarningSettingVersionFmt, [IniVer, SETVERSION]), llWarning);
       Exit;
     end;
-    Top := Ini.ReadInteger(DIALOG_SECTION, 'Top', Top);
-    Left := Ini.ReadInteger(DIALOG_SECTION, 'Left', Left);
-    Width := Ini.ReadInteger(DIALOG_SECTION, 'Width', Width);
-    Height := Ini.ReadInteger(DIALOG_SECTION, 'Height', Height);
-    AHeight := Ini.ReadInteger(DIALOG_SECTION, 'PanelControls.Height', PanelControls.Height);
+
+    Top     := Ini.ReadInteger(MAINDIALOG_SECTION, 'Top', Top);
+    Left    := Ini.ReadInteger(MAINDIALOG_SECTION, 'Left', Left);
+    Width   := Ini.ReadInteger(MAINDIALOG_SECTION, 'Width', Width);
+    Height  := Ini.ReadInteger(MAINDIALOG_SECTION, 'Height', Height);
+    AHeight := Ini.ReadInteger(MAINDIALOG_SECTION, 'PanelControls.Height', PanelControls.Height);
     if AHeight+PanelControls.Top + 16 < ClientHeight then
       PanelControls.Height := AHeight;
-    FDialogSettings.AutoSave.Text := Ini.ReadString(DIALOG_SECTION, 'AutoSave', FDialogSettings.AutoSave.DefaultText);
-    FDialogSettings.WarnDirty.Text := Ini.ReadString(DIALOG_SECTION, 'WarnDirty', FDialogSettings.WarnDirty.DefaultText);
-    Path := Ini.ReadString(DIALOG_SECTION, 'CurrentDirectory', GetCurrentDir);
+    FDialogSettings.AutoSave.Text := Ini.ReadString(MAINDIALOG_SECTION, 'AutoSave', FDialogSettings.AutoSave.DefaultText);
+    FDialogSettings.WarnDirty.Text := Ini.ReadString(MAINDIALOG_SECTION, 'WarnDirty', FDialogSettings.WarnDirty.DefaultText);
+    Path := Ini.ReadString(MAINDIALOG_SECTION, 'CurrentDirectory', GetCurrentDir);
     if DirectoryExists(Path) then
       ChangeCurrentDir(Path);
+
+    with PresentationDialog do begin
+      Top     := Ini.ReadInteger(PRESDIALOG_SECTION, 'Top', Top);
+      Left    := Ini.ReadInteger(PRESDIALOG_SECTION, 'Left', Left);
+      Width   := Ini.ReadInteger(PRESDIALOG_SECTION, 'Width', Width);
+      Height  := Ini.ReadInteger(PRESDIALOG_SECTION, 'Height', Height);
+      AHeight := Ini.ReadInteger(PRESDIALOG_SECTION, 'PanelMain.Height', PanelMain.Height);
+      if AHeight+PanelMain.Top + 16 < ClientHeight then
+        PanelMain.Height := AHeight;
+    end;
+
     FProcessingSettings.StopOnError.Text := Ini.ReadString(PROJECT_SECTION, 'StopOnError', FProcessingSettings.StopOnError.DefaultText);
     FProcessingSettings.ThreadsUsed.Text := Ini.ReadString(PROJECT_SECTION, 'ThreadsUsed', FProcessingSettings.ThreadsUsed.DefaultText);
   finally

@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, Controls, Forms, IniFiles, Generics.Collections,
   Graphics, GetText, DateUtils, Generics.Defaults, FileUtil,
   GalleryProcessor, Logging, StrUtils, StringArrays, Settings,
-  PresentationManagerFrm, SettingsEditor;
+  PresentationManagerFrm, SettingsEditor, TemplateEngine;
 
 type
   TCustomManager = class;
@@ -35,6 +35,7 @@ type
     FTemplateFolder :string;
     FTargetFolder :string;
     FParams :TSettings;
+    FDelimiters :TDelimiters;
     function GetIcon: TGraphic;
     function GetPreview: TGraphic;
   protected
@@ -58,6 +59,7 @@ type
     property Preview :TGraphic read GetPreview;
     property TargetFolder :string read FTargetFolder write FTargetFolder;
     property Params :TSettings read FParams;
+    property Delimiters :TDelimiters read FDelimiters;
   end;
 
   { TManagers }
@@ -75,13 +77,14 @@ type
     FProcessor :TProcessor;
     FManagerFrame :TPresentationManagerFrame;
     FParamsEditor :TSettingsEditor; // Link between ValuesListEditor on FMangerFrame and FParams;
-  protected
+    FWebResource :string; // Entry for the web browser
+  public
     function ShowFrame(Parent :TWinControl) :TFrame; override;
     procedure StoreParams; override;
     procedure HideFrame; override;
-  public
     constructor Create(IniFile :TCustomIniFile); override;
     destructor Destroy; override;
+    property WebResource :string read FWebResource;
     procedure Execute; override;
   end;
 
@@ -99,12 +102,12 @@ var
   ManagerClasses :TDictionary<string, TCustomManagerClass>;
 
 const
-  COMMON_SECTION    = 'Common';
-  PRESESENTATION_INITYPE = 'PRD';
+//  COMMON_SECTION    = 'Common';
+//  PRESESENTATION_INITYPE = 'PRD';
   PRESENTATIONFILE_EXTENSION = 'prd';
 
 resourcestring
-  SErrMissingPresentationManagerClassFmt = 'Missing PresentationManager class entry in ''%s''.';
+//  SErrMissingPresentationManagerClassFmt = 'Missing PresentationManager class entry in ''%s''.';
   SErrUnregisterPresentationManagerFmt = 'Unregistered PresentationManager class ''%s''.';
   SErrIniValueNotFoundFmt = 'Key ''[%s]%s'' not found in ''%s''.';
 
@@ -144,6 +147,7 @@ begin
   FDate             := IniFile.ReadDateTime(PRESENTATION_SECTION, 'Date', 0.0);
   FIconFile         := CreateAbsolutePath(IniFile.ReadString(PRESENTATION_SECTION, 'Icon', ''), FTemplateFolder);
   FPreviewFile      := CreateAbsolutePath(IniFile.ReadString(PRESENTATION_SECTION, 'Preview', ''), FTemplateFolder);
+  FDelimiters       := TDelimiters.StrToDelimiters(IniFile.ReadString(PRESENTATION_SECTION, 'Delimiters', PERCENTDELIMITERS.toString));
 
   FParams := TSettings.Create(FId);
   FParams.Load(IniFile, 'Settings');
@@ -309,10 +313,15 @@ var
 
 begin
   inherited Create(IniFile);
-  FProcessor := GalleryProcessor.TProcessor.Create;
+  FProcessor := GalleryProcessor.TProcessor.Create(Delimiters);
   FProcessor.CopyFiles := MakeAbsoluteList(IniFile.ReadString(PRESENTATION_SECTION, 'Copy', ''));
   FProcessor.TemplateFiles := MakeAbsoluteList(IniFile.ReadString(PRESENTATION_SECTION, 'Templates', ''));
   FProcessor.DocumentVars.Add('TITLE');
+  FWebResource := IniFile.ReadString(PRESENTATION_SECTION, 'WebResource', '');
+  if FWebResource = '' then begin
+    if FProcessor.TemplateFiles.Count>0 then
+      FWebResource := ExtractFileName(FProcessor.TemplateFiles[0]);
+  end;
   SectionKeys := TStringList.Create;
   try
     IniFile.ReadSection(PRESENTATION_SECTION, SectionKeys);

@@ -538,15 +538,15 @@ msgstr ""
 msgid "Folder missing or does not exist."
 msgstr ""
 
+#: presentationdlg.serrshowwebresourcefmt
+#, object-pascal-format
+msgid "Cant open resource '%s'."
+msgstr ""
+
 #: presentations.serrinivaluenotfoundfmt
 #, object-pascal-format
 msgctxt "presentations.serrinivaluenotfoundfmt"
 msgid "Key '[%s]%s' not found in '%s'."
-msgstr ""
-
-#: presentations.serrmissingpresentationmanagerclassfmt
-#, object-pascal-format
-msgid "Missing PresentationManager class entry in '%s'."
 msgstr ""
 
 #: presentations.serrunregisterpresentationmanagerfmt
@@ -731,11 +731,6 @@ msgstr ""
 msgid "&Version"
 msgstr ""
 
-#: taboutdialog.toolbar.caption
-msgctxt "taboutdialog.toolbar.caption"
-msgid "ToolBar"
-msgstr ""
-
 #: tags.serrasterisk
 msgid "first row cannot contain a *"
 msgstr ""
@@ -772,6 +767,10 @@ msgstr ""
 
 #: tcolorframe.label1.caption
 msgid "&Color:"
+msgstr ""
+
+#: tform1.caption
+msgid "Form1"
 msgstr ""
 
 #: threading.dispatcher.scptcancelled
@@ -1355,60 +1354,12 @@ msgstr ""
 msgid "Save Tags Report as"
 msgstr ""
 
-#: tmaindialog.tabsheetquality.caption
-msgid "Quality"
-msgstr ""
-
-#: tmaindialog.tabsheetrenaming.caption
-msgctxt "tmaindialog.tabsheetrenaming.caption"
-msgid "Renaming"
-msgstr ""
-
-#: tmaindialog.tabsheetsizes.caption
-msgctxt "tmaindialog.tabsheetsizes.caption"
-msgid "Sizes"
-msgstr ""
-
 #: tmaindialog.tabsheetsrcfilenames.caption
 msgid "TabSheetSrcFilenames"
 msgstr ""
 
 #: tmaindialog.tabsheetsrcfolder.caption
 msgid "TabSheetSrcFolder"
-msgstr ""
-
-#: tmaindialog.tabsheettagging.caption
-msgid "Tagging"
-msgstr ""
-
-#: tmaindialog.tabsheetwatermark.caption
-msgctxt "tmaindialog.tabsheetwatermark.caption"
-msgid "Watermark"
-msgstr ""
-
-#: tmaindialog.toolbar.caption
-msgctxt "tmaindialog.toolbar.caption"
-msgid "ToolBar"
-msgstr ""
-
-#: tmaindialog.toolbarparameters.caption
-msgid "ToolBarParameters"
-msgstr ""
-
-#: tmaindialog.toolbarsrc.caption
-msgid "ToolBarSrc"
-msgstr ""
-
-#: tmaindialog.toolbutton1.caption
-msgid "ToolButton1"
-msgstr ""
-
-#: tmaindialog.toolbutton5.caption
-msgid "ToolButton5"
-msgstr ""
-
-#: tmaindialog.toolbutton8.caption
-msgid "ToolButton8"
 msgstr ""
 
 #: tmaindialog.toolbuttonabout.hint
@@ -1583,17 +1534,8 @@ msgstr ""
 msgid "Save Watermark Image"
 msgstr ""
 
-#: tmrkeditdialog.toolbar.caption
-msgctxt "tmrkeditdialog.toolbar.caption"
-msgid "ToolBar"
-msgstr ""
-
-#: tmrkeditdialog.toolbutton7.caption
-msgid "ToolButton7"
-msgstr ""
-
-#: tmrkeditdialog.toolbutton9.caption
-msgid "ToolButton9"
+#: tpresentationdialog.buttonbrowsetargetfolder.hint
+msgid "Browse for the source/target folder of the resulting presentation"
 msgstr ""
 
 #: tpresentationdialog.buttoncancel.caption
@@ -1608,21 +1550,35 @@ msgstr ""
 
 #: tpresentationdialog.buttonexecute.caption
 msgctxt "tpresentationdialog.buttonexecute.caption"
-msgid "Create"
+msgid "&Create"
 msgstr ""
 
 #: tpresentationdialog.buttonexecute.hint
+msgctxt "tpresentationdialog.buttonexecute.hint"
 msgid "Starts the selected processor to create the presentation."
 msgstr ""
 
 #: tpresentationdialog.buttonok.caption
 msgctxt "tpresentationdialog.buttonok.caption"
-msgid "Ok"
+msgid "&Ok"
 msgstr ""
 
 #: tpresentationdialog.buttonok.hint
 msgctxt "tpresentationdialog.buttonok.hint"
 msgid "Closes the dialog and saves the settings"
+msgstr ""
+
+#: tpresentationdialog.buttontargetfromdoc.hint
+msgid "Copies the current target folder from the main dialog."
+msgstr ""
+
+#: tpresentationdialog.buttonwebshow.caption
+msgid "&Show"
+msgstr ""
+
+#: tpresentationdialog.buttonwebshow.hint
+msgctxt "tpresentationdialog.buttonwebshow.hint"
+msgid "Shows the presentation in your systems web browser."
 msgstr ""
 
 #: tpresentationdialog.caption
@@ -1634,19 +1590,19 @@ msgctxt "tpresentationdialog.edittargetfolder.hint"
 msgid "This folder must contain the images and an .images file."
 msgstr ""
 
-#: tpresentationdialog.label2.caption
-msgctxt "tpresentationdialog.label2.caption"
-msgid "&Available:"
-msgstr ""
-
 #: tpresentationdialog.labellongdescription.caption
 msgctxt "tpresentationdialog.labellongdescription.caption"
 msgid "<LongDescription>"
 msgstr ""
 
+#: tpresentationdialog.labelmanagers.caption
+msgctxt "tpresentationdialog.labelmanagers.caption"
+msgid "&Available:"
+msgstr ""
+
 #: tpresentationdialog.labeltargetfolder.caption
 msgctxt "tpresentationdialog.labeltargetfolder.caption"
-msgid "&Target Folder:"
+msgid "&Folder with Images:"
 msgstr ""
 
 #: tpresentationdialog.panelmanagerframe.caption

@@ -1,8 +1,5 @@
 {"version":1,"strings":[
 {"hash":214968418,"name":"tmrkeditdialog.caption","sourcebytes":[87,97,116,101,114,109,97,114,107,32,73,109,97,103,101,32,69,100,105,116,111,114],"value":"Watermark Image Editor"},
-{"hash":191236306,"name":"tmrkeditdialog.toolbar.caption","sourcebytes":[84,111,111,108,66,97,114],"value":"ToolBar"},
-{"hash":160486423,"name":"tmrkeditdialog.toolbutton7.caption","sourcebytes":[84,111,111,108,66,117,116,116,111,110,55],"value":"ToolButton7"},
-{"hash":160486425,"name":"tmrkeditdialog.toolbutton9.caption","sourcebytes":[84,111,111,108,66,117,116,116,111,110,57],"value":"ToolButton9"},
 {"hash":59111475,"name":"tmrkeditdialog.checkboxoutline.hint","sourcebytes":[84,104,105,110,32,98,111,114,100,101,114,32,97,114,111,117,110,100,32,116,104,101,32,116,101,120,116,32,108,101,116,116,101,114,115],"value":"Thin border around the text letters"},
 {"hash":113979413,"name":"tmrkeditdialog.checkboxoutline.caption","sourcebytes":[79,117,116,108,105,110,101],"value":"Outline"},
 {"hash":94272359,"name":"tmrkeditdialog.checkboxshadow.caption","sourcebytes":[83,104,97,100,111,119],"value":"Shadow"},

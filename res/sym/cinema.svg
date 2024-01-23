@@ -31,13 +31,13 @@
      showguides="true"
      inkscape:lockguides="true"
      inkscape:zoom="7.3192482"
-     inkscape:cx="40.304686"
+     inkscape:cx="40.441312"
      inkscape:cy="72.616748"
-     inkscape:window-width="2560"
-     inkscape:window-height="1417"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1"
+     inkscape:window-width="2214"
+     inkscape:window-height="1237"
+     inkscape:window-x="104"
+     inkscape:window-y="104"
+     inkscape:window-maximized="0"
      inkscape:current-layer="layer1">
     <inkscape:grid
        type="xygrid"
@@ -194,13 +194,10 @@
        height="16"
        x="0"
        y="96.000008" />
-    <ellipse
-       style="fill:#555753;stroke:none;stroke-linecap:round;stroke-linejoin:bevel;paint-order:markers fill stroke"
+    <path
        id="path3"
-       cx="4"
-       cy="95.999992"
-       rx="8"
-       ry="7.9999995" />
+       style="fill:#555753;stroke:none;stroke-linecap:round;stroke-linejoin:bevel;paint-order:markers fill stroke"
+       d="M 4 88 A 8 7.9999995 0 0 0 0 89.091797 L 0 102.9082 A 8 7.9999995 0 0 0 4 104 A 8 7.9999995 0 0 0 12 96 A 8 7.9999995 0 0 0 4 88 z " />
     <ellipse
        style="fill:#555753;stroke:none;stroke-linecap:round;stroke-linejoin:bevel;paint-order:markers fill stroke"
        id="path3-6"
@@ -229,12 +226,9 @@
        cy="95.999992"
        rx="8"
        ry="7.9999995" />
-    <ellipse
-       style="fill:#555753;stroke:none;stroke-linecap:round;stroke-linejoin:bevel;paint-order:markers fill stroke"
+    <path
        id="path3-6-1"
-       cx="124"
-       cy="95.999992"
-       rx="8"
-       ry="7.9999995" />
+       style="fill:#555753;stroke:none;stroke-linecap:round;stroke-linejoin:bevel;paint-order:markers fill stroke"
+       d="M 124 88 A 8 7.9999995 0 0 0 116 96 A 8 7.9999995 0 0 0 124 104 A 8 7.9999995 0 0 0 128 102.9082 L 128 89.074219 A 8 7.9999995 0 0 0 124 88 z " />
   </g>
 </svg>

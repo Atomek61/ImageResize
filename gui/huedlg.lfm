@@ -1,0 +1,35 @@
+object Form1: TForm1
+  Left = 418
+  Height = 108
+  Top = 728
+  Width = 290
+  Caption = 'Form1'
+  ClientHeight = 108
+  ClientWidth = 290
+  LCLVersion = '3.0.0.3'
+  Visible = True
+  object HueColorPicker: THColorPicker
+    Left = 8
+    Height = 24
+    Top = 8
+    Width = 267
+    SelectedColor = clAqua
+    NewArrowStyle = True
+    ShowHint = True
+    ParentShowHint = False
+    TabOrder = 0
+    OnChange = HueColorPickerChange
+    Hue = 180
+    Luminance = 128
+    HintFormat = 'Hue: %value (selected)'
+  end
+  object PanelSelectedColor: TPanel
+    Left = 16
+    Height = 26
+    Top = 40
+    Width = 26
+    BevelOuter = bvLowered
+    ParentColor = False
+    TabOrder = 1
+  end
+end

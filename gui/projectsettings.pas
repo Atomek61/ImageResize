@@ -2,6 +2,8 @@ unit projectsettings;
 
 {$mode ObjFPC}{$H+}
 
+Currently not used
+
 interface
 
 uses

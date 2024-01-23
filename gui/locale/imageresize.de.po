@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: aboutdlg.scptavailable
 msgid "Available"
@@ -71,7 +71,7 @@ msgstr "Baue Listen..."
 #: galleryprocessor.smsgcopyingfmt
 #, object-pascal-format
 msgid "Copying '%s'..."
-msgstr "kopiere '%s'..."
+msgstr "Kopiere '%s'..."
 
 #: galleryprocessor.smsgfinalok
 msgctxt "galleryprocessor.smsgfinalok"
@@ -552,16 +552,16 @@ msgstr "Ungültige Parameter"
 msgid "Folder missing or does not exist."
 msgstr "Verzeichnisangabe fehlt oder das Verzeichnis existiert nicht."
 
+#: presentationdlg.serrshowwebresourcefmt
+#, object-pascal-format
+msgid "Cant open resource '%s'."
+msgstr "Kann Ressource '%s' nicht öffnen."
+
 #: presentations.serrinivaluenotfoundfmt
 #, object-pascal-format
 msgctxt "presentations.serrinivaluenotfoundfmt"
 msgid "Key '[%s]%s' not found in '%s'."
 msgstr "Bezeichner '[%s]%s' nicht gefunden in '%s'."
-
-#: presentations.serrmissingpresentationmanagerclassfmt
-#, object-pascal-format
-msgid "Missing PresentationManager class entry in '%s'."
-msgstr "Fehlender Eintrag der Presentations-Manager-Klasse in '%s'."
 
 #: presentations.serrunregisterpresentationmanagerfmt
 #, object-pascal-format
@@ -749,11 +749,6 @@ msgstr "&Update"
 msgid "&Version"
 msgstr "&Version"
 
-#: taboutdialog.toolbar.caption
-msgctxt "taboutdialog.toolbar.caption"
-msgid "ToolBar"
-msgstr ""
-
 #: tags.serrasterisk
 msgid "first row cannot contain a *"
 msgstr "erste Zeile darf nicht den * enthalten"
@@ -791,6 +786,10 @@ msgstr "mehr Werte als Tags"
 #: tcolorframe.label1.caption
 msgid "&Color:"
 msgstr "&Farbe."
+
+#: tform1.caption
+msgid "Form1"
+msgstr ""
 
 #: threading.dispatcher.scptcancelled
 msgid "Cancelled"
@@ -1172,15 +1171,16 @@ msgid "1"
 msgstr "1"
 
 #: tmaindialog.editrentemplate.hint
+#, fuzzy, badformat
 msgid ""
 "Enter a filename template containing placeholders for special values.\n"
 "This template will be expanded for each resampled image. Insert the\n"
 "%SIZE% placeholder to enable multiple sizes in a common folder."
 msgstr ""
 "Geben Sie eine Dateinamen-Vorlage ein, die Platzhalter für bestimmte\n"
-"Werte enthält. Die Vorlage wird für jede skalierte Datei evaluiert. Fügen\n"
-"Sie den %SIZE%-Platzhalter ein, um mehrere Größen eines Bildes in\n"
-"einem gemeinsamen Verzeichnis zu erzeugen."
+"Werte enthält. Die Vorlage wird für jede skalierte Datei ausgewertet.\n"
+"Fügen Sie den %SIZE%-Platzhalter ein, um mehrere Größen eines Bildes\n"
+"in einem gemeinsamen Verzeichnis erzeugen zu können."
 
 #: tmaindialog.editsizes.hint
 msgid ""
@@ -1440,60 +1440,12 @@ msgstr "1 Einfach - ein Verzeichnis für jede Größe"
 msgid "Save Tags Report as"
 msgstr "Tags Report speichern als"
 
-#: tmaindialog.tabsheetquality.caption
-msgid "Quality"
-msgstr "Qualität"
-
-#: tmaindialog.tabsheetrenaming.caption
-msgctxt "tmaindialog.tabsheetrenaming.caption"
-msgid "Renaming"
-msgstr "Umbennen"
-
-#: tmaindialog.tabsheetsizes.caption
-msgctxt "tmaindialog.tabsheetsizes.caption"
-msgid "Sizes"
-msgstr "Größen"
-
 #: tmaindialog.tabsheetsrcfilenames.caption
 msgid "TabSheetSrcFilenames"
 msgstr ""
 
 #: tmaindialog.tabsheetsrcfolder.caption
 msgid "TabSheetSrcFolder"
-msgstr ""
-
-#: tmaindialog.tabsheettagging.caption
-msgid "Tagging"
-msgstr "Taggen"
-
-#: tmaindialog.tabsheetwatermark.caption
-msgctxt "tmaindialog.tabsheetwatermark.caption"
-msgid "Watermark"
-msgstr "Wasserzeichen"
-
-#: tmaindialog.toolbar.caption
-msgctxt "tmaindialog.toolbar.caption"
-msgid "ToolBar"
-msgstr ""
-
-#: tmaindialog.toolbarparameters.caption
-msgid "ToolBarParameters"
-msgstr ""
-
-#: tmaindialog.toolbarsrc.caption
-msgid "ToolBarSrc"
-msgstr ""
-
-#: tmaindialog.toolbutton1.caption
-msgid "ToolButton1"
-msgstr ""
-
-#: tmaindialog.toolbutton5.caption
-msgid "ToolButton5"
-msgstr ""
-
-#: tmaindialog.toolbutton8.caption
-msgid "ToolButton8"
 msgstr ""
 
 #: tmaindialog.toolbuttonabout.hint
@@ -1672,18 +1624,9 @@ msgstr "Qualität:"
 msgid "Save Watermark Image"
 msgstr "Wasserzeichen speichern"
 
-#: tmrkeditdialog.toolbar.caption
-msgctxt "tmrkeditdialog.toolbar.caption"
-msgid "ToolBar"
-msgstr ""
-
-#: tmrkeditdialog.toolbutton7.caption
-msgid "ToolButton7"
-msgstr ""
-
-#: tmrkeditdialog.toolbutton9.caption
-msgid "ToolButton9"
-msgstr ""
+#: tpresentationdialog.buttonbrowsetargetfolder.hint
+msgid "Browse for the source/target folder of the resulting presentation"
+msgstr "Wählen Sie das Verzeichnis mit den Bildern aus, das auch das Ergebnis der Präsentation enthalten wird."
 
 #: tpresentationdialog.buttoncancel.caption
 msgctxt "tpresentationdialog.buttoncancel.caption"
@@ -1696,23 +1639,39 @@ msgid "Closes the dialog and discards the settings"
 msgstr "Schließt den Dialog und verwirft geänderte Einstellungen"
 
 #: tpresentationdialog.buttonexecute.caption
+#, fuzzy
+#| msgid "Create"
 msgctxt "tpresentationdialog.buttonexecute.caption"
-msgid "Create"
+msgid "&Create"
 msgstr "Erzeugen"
 
 #: tpresentationdialog.buttonexecute.hint
+msgctxt "tpresentationdialog.buttonexecute.hint"
 msgid "Starts the selected processor to create the presentation."
 msgstr "Startet den ausgewählten Prozessor um die Präsentation zu erzeugen."
 
 #: tpresentationdialog.buttonok.caption
 msgctxt "tpresentationdialog.buttonok.caption"
-msgid "Ok"
-msgstr "Ok"
+msgid "&Ok"
+msgstr "&Ok"
 
 #: tpresentationdialog.buttonok.hint
 msgctxt "tpresentationdialog.buttonok.hint"
 msgid "Closes the dialog and saves the settings"
 msgstr "Schließt den Dialog und übernimmt geänderte Einstellungen"
+
+#: tpresentationdialog.buttontargetfromdoc.hint
+msgid "Copies the current target folder from the main dialog."
+msgstr "Kopiert das Zielverzeichnis des Hauptdialoges hierher"
+
+#: tpresentationdialog.buttonwebshow.caption
+msgid "&Show"
+msgstr "&Show"
+
+#: tpresentationdialog.buttonwebshow.hint
+msgctxt "tpresentationdialog.buttonwebshow.hint"
+msgid "Shows the presentation in your systems web browser."
+msgstr "Startet den ausgewählten Prozessor um die Präsentation zu erzeugen."
 
 #: tpresentationdialog.caption
 msgid "Presentation"
@@ -1723,20 +1682,20 @@ msgctxt "tpresentationdialog.edittargetfolder.hint"
 msgid "This folder must contain the images and an .images file."
 msgstr "Das Verzeichnis enthält die Bilder und eine .images -Datei."
 
-#: tpresentationdialog.label2.caption
-msgctxt "tpresentationdialog.label2.caption"
-msgid "&Available:"
-msgstr "&Verfügbar:"
-
 #: tpresentationdialog.labellongdescription.caption
 msgctxt "tpresentationdialog.labellongdescription.caption"
 msgid "<LongDescription>"
 msgstr "<Lange Beschreibung>"
 
+#: tpresentationdialog.labelmanagers.caption
+msgctxt "tpresentationdialog.labelmanagers.caption"
+msgid "&Available:"
+msgstr "&Verfügbar:"
+
 #: tpresentationdialog.labeltargetfolder.caption
 msgctxt "tpresentationdialog.labeltargetfolder.caption"
-msgid "&Target Folder:"
-msgstr "Bild&ordner:"
+msgid "&Folder with Images:"
+msgstr "&Bildordner:"
 
 #: tpresentationdialog.panelmanagerframe.caption
 msgid "This presentation has no settings"
@@ -1834,3 +1793,4 @@ msgstr "Kerne"
 msgctxt "webutils.serrinvalidhtmlcolorfmt"
 msgid "Invalid web color '%s'."
 msgstr "Ungültige Web-Farbe '%s'."
+

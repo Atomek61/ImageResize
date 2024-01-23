@@ -1,16 +1,22 @@
 unit templateengine;
 
 {$mode delphi}
+{$advancedrecords ON}
 
 interface
 
 uses
-  Classes, SysUtils, Generics.Collections;
+  Classes, SysUtils, Generics.Collections, StrUtils;
 
 type
 
+  { TDelimiters }
+
   TDelimiters = record
     Del1, Del2 :string;
+    function toString :string;
+    class function TryStrToDelimiters(const Value :string; out Delimiters :TDelimiters) :boolean; static;
+    class function StrToDelimiters(const Value :string) :TDelimiters; static;
   end;
 
   const
@@ -43,6 +49,7 @@ type
       Subject :string;
       i0, i1 :integer;
       function Next(out Key :string) :boolean;
+      procedure NoMatch; // If Key is not that what you wanted, then search from i0+1
       constructor Create(Solver :TSolver; const Subject :string);
     end;
   private
@@ -75,11 +82,33 @@ type
 
 implementation  // »SIZE«      «SIZE»
 
-uses
-  StrUtils;
-
 resourcestring
   SErrVarNotFoundFmt = 'Variable ''%s'' not found in VarSolver.';
+  SErrInvalidDelimitersFmt = 'Invalid delimiters ''%s''.';
+
+{ TDelimiters }
+
+function TDelimiters.toString: string;
+begin
+  result := Del1+','+Del2;
+end;
+
+class function TDelimiters.TryStrToDelimiters(const Value: string; out Delimiters: TDelimiters): boolean;
+var
+  s :TStringArray;
+begin
+  s := Value.Split(',');
+  if Length(s)<>2 then Exit(false);
+  Delimiters.Del1 := Trim(s[0]);
+  Delimiters.Del2 := Trim(s[1]);
+  result := (Delimiters.Del1<>'') and (Delimiters.Del2<>'');
+end;
+
+class function TDelimiters.StrToDelimiters(const Value: string): TDelimiters;
+begin
+  if not TryStrToDelimiters(Value, result) then
+    raise Exception.CreateFmt(SErrInvalidDelimitersFmt, [Value]);
+end;
 
 { TSolver }
 
@@ -228,7 +257,8 @@ begin
       inc(Replacements);
       result := result + Copy(Subject, p, Iterator.i0-p) + Rec.Value;
       p := Iterator.i1+Length(FD2);
-    end;
+    end else
+      Iterator.NoMatch;
   end;
   if Replacements>0 then
     result := result + Copy(Subject, p, Length(Subject)-p+1)
@@ -282,6 +312,11 @@ begin
     if result then
       Key := Copy(Subject, i0+Length(Solver.FD1), i1-i0-Length(Solver.FD1));
   end;
+end;
+
+procedure TSolver.TIterator.NoMatch;
+begin
+  i1 := i0 + Length(Solver.FD1);
 end;
 
 constructor TSolver.TIterator.Create(Solver: TSolver; const Subject :string);

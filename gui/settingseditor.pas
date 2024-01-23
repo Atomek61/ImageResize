@@ -5,7 +5,7 @@ unit settingseditor;
 interface
 
 uses
-  Classes, SysUtils, Generics.Collections, Grids, IniFiles, Graphics,
+  Classes, SysUtils, LCLType, Generics.Collections, Grids, IniFiles, Graphics,
   Settings, ValEdit;
 
 type
@@ -119,6 +119,7 @@ begin
   FControl.OnSetEditText := OnSetCellDisplay;
   FControl.OnButtonClick := OnButtonClick;
   FControl.OnDrawCell    := OnDrawCell;
+  FControl.OnKeyDown     := OnKeyDown;
   FSettings := ASettings;
   FEditorList.Clear;
   FEditorDict.Clear;
@@ -166,13 +167,14 @@ begin
   if aCol<>0 then Exit;
   Index := ARow-FControl.FixedRows;
   if (Index<0) or (Index>=FEditorList.Count) then Exit;
-    FEditorList[Index].DrawCell(FControl.Canvas, aRect, aState);
+  FEditorList[Index].DrawCell(FControl.Canvas, aRect, aState);
 end;
 
 procedure TSettingsEditor.OnKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-
+  if (Key=VK_RETURN) and (Shift = [ssCtrl]) then
+    OnButtonClick(Sender, FControl.Col, FControl.Row);
 end;
 
 { TEditor }

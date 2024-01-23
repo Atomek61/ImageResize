@@ -13,8 +13,8 @@ LongDescription.de=CSS Flex Container. Empfahlen für Fotos.
 Date=2024-01-01 00:00:00
 Icon=..\icon-pinboard.png
 Preview=preview.jpg
-Copy=pinboard.css,shutter.png
-Templates=index.html
+Copy=shutter.png
+Templates=index.html,pinboard.css
 Fragment.IMAGES=<div><img src="%URL%"/><div>%TITLE%</div></div>%CR%%LF%
 
 [Settings.Title]
@@ -26,3 +26,17 @@ Caption.de=Titel
 Class=String
 Caption=Copyright
 Caption.de=Urheberhinweis
+
+[Settings.Color]
+Class=Integer
+Presentation=WebColor
+Caption=Font Color
+Caption.de=Schriftfarbe
+Text=$E4EBDA
+
+[Settings.BackgroundColor]
+Class=Integer
+Presentation=WebColor
+Caption=Background Color
+Caption.de=Hintergrundfarbe
+Text=$36361B

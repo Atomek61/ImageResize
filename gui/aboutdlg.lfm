@@ -208,7 +208,6 @@ object AboutDialog: TAboutDialog
     AutoSize = True
     ButtonHeight = 60
     ButtonWidth = 80
-    Caption = 'ToolBar'
     Images = ImageList
     ShowCaptions = True
     TabOrder = 1

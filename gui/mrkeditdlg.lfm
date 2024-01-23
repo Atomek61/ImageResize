@@ -2852,7 +2852,6 @@ object MrkEditDialog: TMrkEditDialog
     AutoSize = True
     ButtonHeight = 60
     ButtonWidth = 60
-    Caption = 'ToolBar'
     EdgeBorders = []
     Images = ImageList32x32
     ShowCaptions = True
@@ -2891,7 +2890,6 @@ object MrkEditDialog: TMrkEditDialog
       Left = 241
       Height = 60
       Top = 0
-      Caption = 'ToolButton7'
       Style = tbsSeparator
     end
     object ToolButton8: TToolButton
@@ -2903,7 +2901,6 @@ object MrkEditDialog: TMrkEditDialog
       Left = 392
       Height = 60
       Top = 0
-      Caption = 'ToolButton9'
       Style = tbsSeparator
     end
   end

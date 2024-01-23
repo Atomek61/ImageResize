@@ -15,8 +15,8 @@ uses
   animator, logging, imagesmod, presentations,
   galleryprocessor, stringarrays, appsettings, 
 presentationmanagerfrm, 
-colorfrm, tagids, webutils, projectsettings,
-settingseditor, webcolors, webcoloreditor;
+colorfrm, tagids, webutils,
+settingseditor, webcolors, webcoloreditor, huedlg;
 
 {$R *.res}
 
@@ -29,6 +29,7 @@ begin
   Application.CreateForm(TSettingsDialog, SettingsDialog);
   Application.CreateForm(TPresentationDialog, PresentationDialog);
   Application.CreateForm(TImagesModule, ImagesModule);
+  Application.CreateForm(TForm1, Form1);
   Application.Run;
   end.
 

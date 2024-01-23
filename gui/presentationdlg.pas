@@ -15,29 +15,31 @@ type
   { TPresentationDialog }
 
   TPresentationDialog = class(TForm)
-    Bevel1: TBevel;
     ButtonBrowseTargetFolder: TBitBtn;
+    ButtonExecute: TBitBtn;
     ButtonTargetFromDoc: TBitBtn;
     ButtonOk: TBitBtn;
-    ButtonExecute: TBitBtn;
+    ButtonWebShow: TBitBtn;
     ButtonCancel: TBitBtn;
     EditTargetFolder: TEdit;
     ImagePreview: TImage;
     LabelTargetFolder: TLabel;
-    Label2: TLabel;
+    LabelManagers: TLabel;
     LabelLongDescription: TLabel;
     ListBoxManagers: TListBox;
     MemoMessages: TRichMemo;
+    PanelMain: TPanel;
     PanelManagerFrame: TPanel;
-    PanelManagers: TPanel;
     PanelPresentation: TPanel;
     PanelInfo: TPanel;
     PanelControls: TPanel;
     SelectFolderDialog: TSelectDirectoryDialog;
+    Splitter1: TSplitter;
     procedure ButtonBrowseTargetFolderClick(Sender: TObject);
     procedure ButtonExecuteClick(Sender: TObject);
     procedure ButtonOkClick(Sender: TObject);
     procedure ButtonTargetFromDocClick(Sender: TObject);
+    procedure ButtonWebShowClick(Sender: TObject);
     procedure EditTargetFolderChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -67,7 +69,7 @@ uses
 
 resourcestring
   SErrMissingFolder = 'Folder missing or does not exist.';
-
+  SErrShowWebResourceFmt = 'Cant open resource ''%s''.';
 {$R *.lfm}
 
 { TPresentationDialog }
@@ -104,6 +106,22 @@ end;
 procedure TPresentationDialog.ButtonTargetFromDocClick(Sender: TObject);
 begin
   EditTargetFolder.Text := MainDialog.EditTargetFolder.Text;
+end;
+
+procedure TPresentationDialog.ButtonWebShowClick(Sender: TObject);
+var
+  Manager :TPresentationManager;
+  DocURL :string;
+begin
+  if (ManagerIndex=-1) or not (
+      FManagers[ManagerIndex] is TPresentationManager
+      and (Trim(EditTargetFolder.Text)<>''
+  )) then Exit;
+  Manager := FManagers[ManagerIndex] as TPresentationManager;
+  if Manager.WebResource = '' then Exit;
+  DocURL := IncludeTrailingPathDelimiter(EditTargetFolder.Text)+Manager.WebResource;
+  if not OpenDocument(DocURL) then
+    Log(SErrShowWebResourceFmt, [DocURL], llWarning);
 end;
 
 procedure TPresentationDialog.EditTargetFolderChange(Sender: TObject);
@@ -163,11 +181,11 @@ begin
     with Manager.ShowFrame(PanelManagerFrame) do begin
       Align := alClient;
     end;
-    ButtonExecute.Enabled := true;
+    ButtonWebShow.Enabled := true;
   end else begin
     LabelLongDescription.Caption := '';
     ImagePreview.Picture := nil;
-    ButtonExecute.Enabled := false;
+    ButtonWebShow.Enabled := false;
   end;
   if FManagerIndex<>-1 then begin
     FManager.HideFrame;

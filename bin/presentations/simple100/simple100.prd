@@ -5,6 +5,7 @@ Version=100
 [Presentation]
 Id=Simple100
 Processor=Presentation
+VarDelimiters=%,%
 Title=Simple 1.0
 Description=Simple HTML IMG-Tags
 Description.de=Einfach mit HTML und IMG-Tags

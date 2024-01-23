@@ -118,6 +118,9 @@
     </RunParams>
     <RequiredPackages>
       <Item>
+        <PackageName Value="mbColorLibLaz"/>
+      </Item>
+      <Item>
         <PackageName Value="LazControlDsgn"/>
       </Item>
       <Item>
@@ -270,10 +273,6 @@
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="projectsettings.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
         <Filename Value="settingseditor.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
@@ -292,6 +291,13 @@
       <Unit>
         <Filename Value="license.rc"/>
         <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="huedlg.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
       </Unit>
     </Units>
   </ProjectOptions>

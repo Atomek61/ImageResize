@@ -5,6 +5,7 @@ object PresentationManagerFrame: TPresentationManagerFrame
   Width = 428
   ClientHeight = 171
   ClientWidth = 428
+  Font.Color = clWindowText
   ParentFont = False
   TabOrder = 0
   DesignLeft = 381
