@@ -48,14 +48,16 @@
       <Unit>
         <Filename Value="..\src\imgres.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="100"/>
-        <CursorPos X="46" Y="118"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="763"/>
+        <CursorPos X="27" Y="781"/>
         <UsageCount Value="200"/>
         <Bookmarks Count="2">
           <Item0 Y="403"/>
           <Item1 Y="730" ID="1"/>
         </Bookmarks>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\updateutils.pas"/>
@@ -142,11 +144,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="PresentationDlg"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="4"/>
-        <CursorPos X="134" Y="25"/>
+        <CursorPos X="26" Y="25"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="imagesmod.pas"/>
@@ -162,10 +163,9 @@
         <Filename Value="presentations.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Presentations"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="-1"/>
         <CursorPos Y="2"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="galleryprocessor.pas"/>
@@ -196,11 +196,10 @@
       <Unit>
         <Filename Value="appsettings.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="6"/>
-        <CursorPos X="46" Y="20"/>
-        <UsageCount Value="175"/>
-        <Loaded Value="True"/>
+        <CursorPos Y="20"/>
+        <UsageCount Value="178"/>
       </Unit>
       <Unit>
         <Filename Value="colorfrm.pas"/>
@@ -211,14 +210,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="33"/>
         <CursorPos Y="72"/>
-        <UsageCount Value="157"/>
+        <UsageCount Value="160"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\tagids.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos Y="14"/>
-        <UsageCount Value="142"/>
+        <UsageCount Value="145"/>
       </Unit>
       <Unit>
         <Filename Value="settingseditor.pas"/>
@@ -226,21 +225,21 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="108"/>
         <CursorPos X="39" Y="122"/>
-        <UsageCount Value="106"/>
+        <UsageCount Value="109"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\webutils.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="17" Y="11"/>
-        <UsageCount Value="93"/>
+        <UsageCount Value="96"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\webcolors.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="13" Y="39"/>
-        <UsageCount Value="93"/>
+        <UsageCount Value="96"/>
       </Unit>
       <Unit>
         <Filename Value="webcoloreditor.pas"/>
@@ -248,13 +247,13 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="10"/>
         <CursorPos Y="19"/>
-        <UsageCount Value="85"/>
+        <UsageCount Value="88"/>
       </Unit>
       <Unit>
         <Filename Value="license.rc"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="59"/>
+        <UsageCount Value="62"/>
         <DefaultSyntaxHighlighter Value="None"/>
       </Unit>
       <Unit>
@@ -263,12 +262,9 @@
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="8"/>
-        <CursorPos X="32" Y="36"/>
-        <UsageCount Value="22"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos Y="22"/>
+        <UsageCount Value="25"/>
       </Unit>
       <Unit>
         <Filename Value="projectsettings.pas"/>
@@ -606,11 +602,10 @@
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\lcl\include\control.inc"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="5718"/>
-        <CursorPos X="32" Y="5741"/>
-        <UsageCount Value="26"/>
-        <Loaded Value="True"/>
+        <CursorPos X="8" Y="5741"/>
+        <UsageCount Value="27"/>
       </Unit>
       <Unit>
         <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\bgrabitmap-master\bgrabitmap\bgrabitmaptypes.pas"/>
@@ -1212,145 +1207,94 @@
       </Unit>
       <Unit>
         <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\mbColorLib\HColorPicker.pas"/>
-        <EditorIndex Value="3"/>
-        <UsageCount Value="10"/>
-        <Loaded Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="14"/>
+        <CursorPos X="14" Y="35"/>
+        <UsageCount Value="11"/>
       </Unit>
       <Unit>
         <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\mbColorLib\mbTrackBarPicker.pas"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="876"/>
-        <CursorPos Y="894"/>
-        <UsageCount Value="10"/>
-        <Loaded Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="145"/>
+        <CursorPos X="18" Y="183"/>
+        <UsageCount Value="11"/>
       </Unit>
       <Unit>
         <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\mbColorLib\HTMLColors.pas"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="133"/>
         <CursorPos X="18" Y="135"/>
+        <UsageCount Value="11"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\mbColorLib\mbcolorconv.pas"/>
+        <UnitName Value="mbColorConv"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="3" Y="133"/>
+        <UsageCount Value="11"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\mbColorLib\mbColorPreview.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="26"/>
+        <CursorPos X="19" Y="30"/>
+        <UsageCount Value="11"/>
+      </Unit>
+      <Unit>
+        <Filename Value="custompickdlg.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="CustomPickDialog"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="8" Y="28"/>
+        <UsageCount Value="23"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\res\pinboard100\target360\.images"/>
+        <EditorIndex Value="-1"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="None"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="29">
+    <JumpHistory HistoryIndex="9">
       <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="72" TopLine="24"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="863" Column="27" TopLine="842"/>
       </Position>
       <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1222" TopLine="1201"/>
+        <Filename Value="..\src\imgres.pas"/>
       </Position>
       <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="347" TopLine="313"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="185" Column="14" TopLine="151"/>
       </Position>
       <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="665" TopLine="656"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="253" Column="62" TopLine="220"/>
       </Position>
       <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="46" Column="13" TopLine="31"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="477" Column="37" TopLine="443"/>
       </Position>
       <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="715" TopLine="674"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="486" Column="37" TopLine="452"/>
       </Position>
       <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="55" Column="69" TopLine="34"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="577" Column="35" TopLine="543"/>
       </Position>
       <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="347" TopLine="323"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="592" Column="35" TopLine="558"/>
       </Position>
       <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="726" TopLine="681"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="636" Column="12" TopLine="601"/>
       </Position>
       <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="739" TopLine="692"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="738" TopLine="698"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="676" Column="27" TopLine="653"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="55" Column="3" TopLine="31"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="670" Column="21" TopLine="653"/>
-      </Position>
-      <Position>
-        <Filename Value="presentations.pas"/>
-        <Caret Line="311" Column="78" TopLine="298"/>
-      </Position>
-      <Position>
-        <Filename Value="presentations.pas"/>
-      </Position>
-      <Position>
-        <Filename Value="presentations.pas"/>
-        <Caret Line="377" TopLine="329"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="26" Column="134" TopLine="4"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="25" Column="134" TopLine="4"/>
-      </Position>
-      <Position>
-        <Filename Value="huedlg.pas"/>
-      </Position>
-      <Position>
-        <Filename Value="huedlg.pas"/>
-        <Caret Line="24" Column="30" TopLine="8"/>
-      </Position>
-      <Position>
-        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\mbColorLib\HColorPicker.pas"/>
-        <Caret Line="27" TopLine="7"/>
-      </Position>
-      <Position>
-        <Filename Value="huedlg.pas"/>
-        <Caret Line="25" Column="30" TopLine="8"/>
-      </Position>
-      <Position>
-        <Filename Value="huedlg.pas"/>
-        <Caret Line="18" Column="13" TopLine="14"/>
-      </Position>
-      <Position>
-        <Filename Value="huedlg.pas"/>
-        <Caret Line="37" TopLine="8"/>
-      </Position>
-      <Position>
-        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\mbColorLib\mbTrackBarPicker.pas"/>
-        <Caret Line="893" TopLine="876"/>
-      </Position>
-      <Position>
-        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\mbColorLib\mbTrackBarPicker.pas"/>
-        <Caret Line="894" TopLine="876"/>
-      </Position>
-      <Position>
-        <Filename Value="huedlg.pas"/>
-        <Caret Line="36" Column="32" TopLine="8"/>
-      </Position>
-      <Position>
-        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\mbColorLib\HColorPicker.pas"/>
-        <Caret Line="158" Column="36" TopLine="143"/>
-      </Position>
-      <Position>
-        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\mbColorLib\HColorPicker.pas"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="733" Column="17" TopLine="698"/>
       </Position>
     </JumpHistory>
     <RunParams>

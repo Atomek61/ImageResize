@@ -787,6 +787,14 @@ msgstr "mehr Werte als Tags"
 msgid "&Color:"
 msgstr "&Farbe."
 
+#: tcustompickdialog.bitbtn1.caption
+msgid "BitBtn1"
+msgstr ""
+
+#: tcustompickdialog.caption
+msgid "CustomPickDialog"
+msgstr ""
+
 #: tform1.caption
 msgid "Form1"
 msgstr ""

@@ -1,0 +1,54 @@
+[Common]
+Type=IRS
+Version=300
+
+[Presentation]
+Id=
+TargetFolder=
+
+[Project]
+Description=
+Source=Filenames
+SourceFolder=
+SourceMasks=*.jpg; *.png
+SourceFilenames=images\org\DSC03481.jpg|images\org\DSC03485.jpg|images\org\DSC03797.jpg|images\org\DSC03806.jpg|images\org\DSC03812.jpg|images\org\DSC03852.jpg|
+Sizes=360
+TargetFolder=.\target%SIZE%\
+JpgOptions.Quality=Voreinstellung
+PngOptions.Compression=Schnellste
+Resampling=Lanczos R2
+MrkEnabled=0
+MrkFilename=
+MrkSize=20
+MrkX=98
+MrkY=98
+MrkAlpha=50
+RenEnabled=0
+RenSimple=1
+RenAdvanced=0
+RenCustom=0
+RenTemplate=img%INDEX:1,3%.%FILEEXT%
+Shuffle=0
+ShuffleSeed=0
+TagsSourceEXIF=0
+TagsSourceTagsFiles=1
+TagTitle=0
+TagTimestamp=0
+TagCopyright=0
+Copyright=
+TagsReportEnabled=0
+ImageInfosEnabled=1
+NoCreate=1
+PresentationId=
+
+[Presentation.Slideshow200]
+Title=Grün und Lilab
+Color=4313405
+BackgroundColor=16715648
+
+[Presentation.Pinboard100]
+Title=Meine Momy
+
+[Presentation.Simple100]
+Class=Simple100
+Title=Hallo

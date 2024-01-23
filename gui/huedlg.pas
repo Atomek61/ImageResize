@@ -6,8 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, ExtCtrls,
-  BGRAGraphicControl, BCMaterialProgressBarMarquee, BCMaterialSpinEdit,
-  BCMaterialFloatSpinEdit, HColorPicker;
+  HColorPicker, mbColorPreview, mbColorConv, Logging;
 
 type
 
@@ -15,7 +14,7 @@ type
 
   TForm1 = class(TForm)
     HueColorPicker: THColorPicker;
-    PanelSelectedColor: TPanel;
+    ColorPreviewSelected: TmbColorPreview;
     procedure HueColorPickerChange(Sender: TObject);
   private
 
@@ -34,7 +33,8 @@ implementation
 
 procedure TForm1.HueColorPickerChange(Sender: TObject);
 begin
-  PanelSelectedColor.Color := HueColorPicker.Value;
+//  Log('Color %8.8x', [HueColorPicker.Hue]);
+  ColorPreviewSelected.Color := HSLToColor(HueColorPicker.Hue/360.0, 1.0, 0.5);
 end;
 
 end.

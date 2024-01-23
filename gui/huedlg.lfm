@@ -1,10 +1,10 @@
 object Form1: TForm1
   Left = 418
-  Height = 108
+  Height = 145
   Top = 728
   Width = 290
   Caption = 'Form1'
-  ClientHeight = 108
+  ClientHeight = 145
   ClientWidth = 290
   LCLVersion = '3.0.0.3'
   Visible = True
@@ -13,7 +13,7 @@ object Form1: TForm1
     Height = 24
     Top = 8
     Width = 267
-    SelectedColor = clAqua
+    SelectedColor = 16776961
     NewArrowStyle = True
     ShowHint = True
     ParentShowHint = False
@@ -23,13 +23,10 @@ object Form1: TForm1
     Luminance = 128
     HintFormat = 'Hue: %value (selected)'
   end
-  object PanelSelectedColor: TPanel
-    Left = 16
-    Height = 26
+  object ColorPreviewSelected: TmbColorPreview
+    Left = 8
+    Height = 32
     Top = 40
-    Width = 26
-    BevelOuter = bvLowered
-    ParentColor = False
-    TabOrder = 1
+    Width = 68
   end
 end

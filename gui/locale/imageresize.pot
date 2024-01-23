@@ -769,6 +769,14 @@ msgstr ""
 msgid "&Color:"
 msgstr ""
 
+#: tcustompickdialog.bitbtn1.caption
+msgid "BitBtn1"
+msgstr ""
+
+#: tcustompickdialog.caption
+msgid "CustomPickDialog"
+msgstr ""
+
 #: tform1.caption
 msgid "Form1"
 msgstr ""

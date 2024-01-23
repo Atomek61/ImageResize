@@ -16,7 +16,7 @@ uses
   galleryprocessor, stringarrays, appsettings, 
 presentationmanagerfrm, 
 colorfrm, tagids, webutils,
-settingseditor, webcolors, webcoloreditor, huedlg;
+settingseditor, webcolors, webcoloreditor, huedlg, custompickdlg;
 
 {$R *.res}
 
@@ -29,7 +29,6 @@ begin
   Application.CreateForm(TSettingsDialog, SettingsDialog);
   Application.CreateForm(TPresentationDialog, PresentationDialog);
   Application.CreateForm(TImagesModule, ImagesModule);
-  Application.CreateForm(TForm1, Form1);
   Application.Run;
   end.
 

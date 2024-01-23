@@ -1,0 +1,4 @@
+{"version":1,"strings":[
+{"hash":80331367,"name":"tcustompickdialog.caption","sourcebytes":[67,117,115,116,111,109,80,105,99,107,68,105,97,108,111,103],"value":"CustomPickDialog"},
+{"hash":151558993,"name":"tcustompickdialog.bitbtn1.caption","sourcebytes":[66,105,116,66,116,110,49],"value":"BitBtn1"}
+]}

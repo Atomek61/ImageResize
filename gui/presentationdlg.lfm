@@ -67,7 +67,7 @@ object PresentationDialog: TPresentationDialog
         AnchorSideBottom.Control = ListBoxManagers
         Left = 21
         Height = 15
-        Top = 6
+        Top = 22
         Width = 51
         Anchors = [akLeft, akBottom]
         BorderSpacing.Left = 3
@@ -78,12 +78,11 @@ object PresentationDialog: TPresentationDialog
       object ButtonBrowseTargetFolder: TBitBtn
         AnchorSideLeft.Control = EditTargetFolder
         AnchorSideLeft.Side = asrBottom
-        AnchorSideTop.Control = EditTargetFolder
         AnchorSideBottom.Side = asrBottom
         Left = 588
         Height = 25
         Hint = 'Browse for the source/target folder of the resulting presentation'
-        Top = 24
+        Top = 39
         Width = 30
         BorderSpacing.Left = 1
         Images = ImagesModule.ImageList20x20
@@ -96,7 +95,7 @@ object PresentationDialog: TPresentationDialog
         Left = 357
         Height = 23
         Hint = 'This folder must contain the images and an .images file.'
-        Top = 24
+        Top = 40
         Width = 230
         Anchors = [akTop, akLeft, akRight]
         TabOrder = 2
@@ -107,7 +106,7 @@ object PresentationDialog: TPresentationDialog
         AnchorSideBottom.Control = EditTargetFolder
         Left = 360
         Height = 15
-        Top = 6
+        Top = 22
         Width = 103
         Anchors = [akLeft, akBottom]
         BorderSpacing.Left = 3
@@ -116,10 +115,10 @@ object PresentationDialog: TPresentationDialog
         FocusControl = EditTargetFolder
       end
       object PanelManagerFrame: TPanel
-        Left = 360
-        Height = 255
-        Top = 56
-        Width = 288
+        Left = 357
+        Height = 247
+        Top = 64
+        Width = 291
         Anchors = [akTop, akLeft, akRight, akBottom]
         BevelOuter = bvNone
         Caption = 'This presentation has no settings'
@@ -130,12 +129,11 @@ object PresentationDialog: TPresentationDialog
       object ButtonTargetFromDoc: TBitBtn
         AnchorSideLeft.Control = EditTargetFolder
         AnchorSideLeft.Side = asrBottom
-        AnchorSideTop.Control = EditTargetFolder
         AnchorSideBottom.Side = asrBottom
         Left = 618
         Height = 25
         Hint = 'Copies the current target folder from the main dialog.'
-        Top = 24
+        Top = 39
         Width = 30
         BorderSpacing.Left = 31
         Images = ImagesModule.ImageList20x20
@@ -146,8 +144,8 @@ object PresentationDialog: TPresentationDialog
       end
       object ListBoxManagers: TListBox
         Left = 18
-        Height = 200
-        Top = 24
+        Height = 184
+        Top = 40
         Width = 326
         Anchors = [akTop, akLeft, akBottom]
         Font.Height = -16
@@ -168,9 +166,7 @@ object PresentationDialog: TPresentationDialog
         BevelOuter = bvNone
         ClientHeight = 80
         ClientWidth = 326
-        Color = clWindow
         ParentBackground = False
-        ParentColor = False
         TabOrder = 1
         object LabelLongDescription: TLabel
           Left = 4
@@ -198,13 +194,14 @@ object PresentationDialog: TPresentationDialog
     end
     object PanelControls: TPanel
       Left = 652
-      Height = 314
-      Top = 0
+      Height = 282
+      Top = 32
       Width = 126
       Align = alRight
       Anchors = []
+      BorderSpacing.Top = 32
       BevelOuter = bvNone
-      ClientHeight = 314
+      ClientHeight = 282
       ClientWidth = 126
       TabOrder = 1
       object ButtonWebShow: TBitBtn
@@ -227,7 +224,7 @@ object PresentationDialog: TPresentationDialog
         Left = 8
         Height = 30
         Hint = 'Closes the dialog and saves the settings'
-        Top = 238
+        Top = 214
         Width = 110
         Align = alBottom
         Anchors = []
@@ -243,11 +240,12 @@ object PresentationDialog: TPresentationDialog
         Left = 8
         Height = 30
         Hint = 'Closes the dialog and discards the settings'
-        Top = 276
+        Top = 252
         Width = 110
         Align = alBottom
         Anchors = []
-        BorderSpacing.Around = 8
+        BorderSpacing.Left = 8
+        BorderSpacing.Right = 8
         Cancel = True
         Caption = 'Close'
         ModalResult = 2

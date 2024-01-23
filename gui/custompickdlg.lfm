@@ -1,0 +1,28 @@
+object CustomPickDialog: TCustomPickDialog
+  Left = 526
+  Height = 119
+  Top = 216
+  Width = 311
+  Caption = 'CustomPickDialog'
+  ClientHeight = 119
+  ClientWidth = 311
+  LCLVersion = '3.0.0.3'
+  object PanelControls: TPanel
+    Left = 0
+    Height = 31
+    Top = 88
+    Width = 311
+    Align = alBottom
+    ClientHeight = 31
+    ClientWidth = 311
+    TabOrder = 0
+    object BitBtn1: TBitBtn
+      Left = 112
+      Height = 30
+      Top = 1
+      Width = 75
+      Caption = 'BitBtn1'
+      TabOrder = 0
+    end
+  end
+end

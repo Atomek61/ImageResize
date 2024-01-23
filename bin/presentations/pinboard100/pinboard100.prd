@@ -8,8 +8,8 @@ Processor=Presentation
 Title=Pinboard 1.0
 Description=Simple Pinboard
 Description.de=Einfaches Pinboard
-LongDescription=CSS Flex container. Recomennded for photos.
-LongDescription.de=CSS Flex Container. Empfahlen für Fotos.
+LongDescription=CSS Flex container. Recommended for medium size photos (400px).
+LongDescription.de=CSS Flex Container. Empfohlen für Fotos mittlerer Größe (400px).
 Date=2024-01-01 00:00:00
 Icon=..\icon-pinboard.png
 Preview=preview.jpg
@@ -40,3 +40,10 @@ Presentation=WebColor
 Caption=Background Color
 Caption.de=Hintergrundfarbe
 Text=$36361B
+
+[Settings.CardColor]
+Class=Integer
+Presentation=WebColor
+Caption=Card Background
+Caption.de=Kartenfarbe
+Text=$FFFFFF

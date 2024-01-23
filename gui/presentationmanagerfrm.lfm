@@ -16,7 +16,7 @@ object PresentationManagerFrame: TPresentationManagerFrame
     Top = 21
     Width = 428
     Align = alClient
-    DefaultColWidth = 160
+    DefaultColWidth = 180
     DefaultRowHeight = 24
     ExtendedSelect = False
     FixedCols = 0
@@ -32,8 +32,8 @@ object PresentationManagerFrame: TPresentationManagerFrame
       'Value'
     )
     ColWidths = (
-      160
-      267
+      180
+      247
     )
   end
   object Label1: TLabel
