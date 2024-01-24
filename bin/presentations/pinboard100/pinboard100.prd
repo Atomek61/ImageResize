@@ -15,31 +15,32 @@ Icon=..\icon-pinboard.png
 Preview=preview.jpg
 Copy=shutter.png
 Templates=index.html,pinboard.css
-Fragment.IMAGES=<div><img src="%URL%"/><div>%TITLE%</div></div>%CR%%LF%
+Fragment.IMAGES=<figure><img src="%URL%"/><figcaption>%TITLE%</figcaption></figure>%CRLF%
 
 [Settings.Title]
 Class=String
 Caption=Title
 Caption.de=Titel
 
+[Settings.With]
+Class=Integer
+Min=0
+Max=1000
+Text=400
+Caption=Card Width
+Caption.de=Kartenbreite
+
 [Settings.Copyright]
 Class=String
 Caption=Copyright
-Caption.de=Urheberhinweis
+Caption.de=Urheberrechtshinweis
 
-[Settings.Color]
+[Settings.FontColor]
 Class=Integer
 Presentation=WebColor
 Caption=Font Color
 Caption.de=Schriftfarbe
-Text=$E4EBDA
-
-[Settings.BackgroundColor]
-Class=Integer
-Presentation=WebColor
-Caption=Background Color
-Caption.de=Hintergrundfarbe
-Text=$36361B
+Text=$000000
 
 [Settings.CardColor]
 Class=Integer
@@ -47,3 +48,18 @@ Presentation=WebColor
 Caption=Card Background
 Caption.de=Kartenfarbe
 Text=$FFFFFF
+
+[Settings.HeaderColor]
+Class=Integer
+Presentation=WebColor
+Caption=Header Color
+Caption.de=Titelleistenfarbe
+Text=$836238
+
+[Settings.BackgroundColor]
+Class=Integer
+Presentation=WebColor
+Caption=Background Color
+Caption.de=Hintergrundfarbe
+Text=$E4EBDA
+

@@ -64,9 +64,8 @@ type
     procedure LoadFromFile(const Filename :string; ImplicitFilenames :boolean);
   public
     procedure Clear; override;
-    //procedure Add(const Filename :string); overload;
-    //procedure Add(Filenames :TStrings); overload;
-    procedure LoadFromTagsFiles(const Filenames :TStringArray);
+    procedure Prepare(const Filenames :TStringArray);
+    procedure LoadFromTags;
     procedure SaveToFile(const LstFilename :string; const TagKeys :TStringArray; Options :TSaveOptions = []);
     procedure SaveToImagesFile(const ImagesFilename :string; const TagKeys :TStringArray; Size :integer);
     procedure LoadFromImagesFile(const ImagesFilename :string);
@@ -226,27 +225,34 @@ begin
   end;
 end;
 
-procedure TFilesTags.LoadFromTagsFiles(const Filenames :TStringArray);
+procedure TFilesTags.Prepare(const Filenames :TStringArray);
+var
+  Filename :string;
+begin
+  Clear;
+
+  // Create a tags dictionary for all the files
+  for Filename in Filenames do begin
+    FFilenames.Add(Filename);
+    Add(Filename, TTags.Create);
+  end;
+end;
+
+procedure TFilesTags.LoadFromTags;
 var
   Filename :string;
   Path :string;
   TagsFilename :string;
   UniqueTagsFiles :TUniqueStrings;
 begin
-  Clear;
   UniqueTagsFiles := TUniqueStrings.Create;
   try
-    // Create a tags dictionary for all the files
-    for Filename in Filenames do begin
-      FFilenames.Add(Filename);
-      Add(Filename, TTags.Create);
-    end;
     // Look for .tags files in every folder where a file is, but take care not to
     // load tags twice
     for Filename in Filenames do begin
       Path := IncludeTrailingPathDelimiter(ExtractFilePath(Filename));
       TagsFilename := Path + TAGS_FILETITLE;
-      if not UniqueTagsFiles.contains(TagsFilename) and FileExists(TagsFilename) then begin
+      if not UniqueTagsFiles.Contains(TagsFilename) and FileExists(TagsFilename) then begin
         UniqueTagsFiles.Add(TagsFilename);
         LoadFromFile(TagsFilename, false);
       end;

@@ -13,7 +13,6 @@ LongDescription=For demo purpose. Simply lists all images with an IMG tag, witho
 LongDescription.de=Zur Demonstration. Listet einfach alle Bilder mit einem IMG-Tag, ohne Styles.
 Date=2024-01-01 00:00:00
 Icon=..\icon-list.png
-;Preview=.jpg
-Copy=
+Preview=preview.jpg
 Templates=index.html
 Fragment.IMAGES=<img src="%URL%" alt="%TITLE%"/>%CR%%LF%

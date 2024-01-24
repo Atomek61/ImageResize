@@ -1,48 +1,43 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto+Condensed);
-
 body {
-  font: 18pt "Roboto Condensed";
-  color: darkgreen;
-  background-color:lightgreen;
-  background-image: url("shutter.png");
+  font: 10pt "Roboto Condensed";
+  margin: 0;
+  background-color: rgb(168, 206, 242);
+  color:rgb(24, 34, 52);
+}
+
+header, footer {
+  font-size: 18pt;
+  padding: 1em;
+  color: rgb(168, 206, 242);
+  background-color:rgb(24, 34, 52);
 }
 
 header {
-  background-color: seagreen;
+  font-size: 18pt;
 }
 
-h1 {clear: both;}
-
-.ximagelist {
+.images {
   display: flex;
-  justify-content: space-around;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  background-image: url("shutter.png");
 }
 
-.imagelist>div {
+figure {
   width: 400px;
-  aspect-ratio:3/2;
-  margin: 20px;
-  box-shadow: 4px 4px 6px gray;
-  padding: 6px 6px 0px 6px;
-  background-color: white;
+  padding: 8px;
+  background-color:white;
+  box-shadow: 8px 8px 8px gray;
+  border-radius: 4px;
+  xtransform: rotate(3deg);
 }
 
 img {
-  xdisplay: display;
-  width: 90%;
-  object-fit:contain;
-  margin: 0;
-}
-
-.imagelist>div>div {
-  display: block;
-  position: relative;
-  top: 85%;
-  text-align: center;
-  margin: -1px 0px 4px 0px;
+  width: 100%;
 }
 
 footer {
-  background-color: seagreen;
+  font-size: 12pt;
 }

@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, Controls, Forms, IniFiles, Generics.Collections,
   Graphics, GetText, DateUtils, Generics.Defaults, FileUtil,
   GalleryProcessor, Logging, StrUtils, StringArrays, Settings,
-  PresentationManagerFrm, SettingsEditor, TemplateEngine;
+  PresentationManagerFrm, SettingsEditor, TemplateEngine, WebUtils;
 
 type
   TCustomManager = class;
@@ -98,8 +98,12 @@ implementation
 uses
   LazFileUtils;
 
+type
+  TSettingPresentationFn = function(Setting :TSetting) :string;
+
 var
   ManagerClasses :TDictionary<string, TCustomManagerClass>;
+  SettingPresentationFns :TDictionary<string, TSettingPresentationFn>;
 
 const
 //  COMMON_SECTION    = 'Common';
@@ -348,6 +352,8 @@ procedure TPresentationManager.Execute;
 var
   Stats :TProcessor.TStats;
   Setting :TSetting;
+  ValuePresentation :string;
+  SettingPresentationFn :TSettingPresentationFn;
 begin
   FParamsEditor.Flush;
   FProcessor.TargetFolder := TargetFolder;
@@ -356,20 +362,33 @@ begin
 
   // Make Params available to the Processor
   for Setting in Params.Items do begin
-    FProcessor.DocumentVars.Load(Setting.Key, Setting.Text);
+    if SettingPresentationFns.TryGetValue(Setting.Presentation, SettingPresentationFn) then
+      ValuePresentation := SettingPresentationFn(Setting)
+    else
+      ValuePresentation := Setting.Text;
+    FProcessor.DocumentVars.Load(UpperCase(Setting.Key), ValuePresentation);
   end;
 
   FProcessor.Execute(Stats);
+end;
+
+function AsWebColor(Setting :TSetting) :string;
+begin
+  result := ColorToHTMLColor((Setting as TIntegerSetting).Value);
 end;
 
 initialization
 begin
   ManagerClasses := TDictionary<string, TCustomManagerClass>.Create;
   TCustomManager.Register(TPresentationManager);
+
+  SettingPresentationFns := TDictionary<string, TSettingPresentationFn>.Create;
+  SettingPresentationFns.Add('WebColor', @AsWebColor);
 end;
 
 finalization
 begin
+  SettingPresentationFns.Free;
   ManagerClasses.Free;
 end;
 

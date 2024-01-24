@@ -1,43 +1,43 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed);
-
-:root {
-  --clr: 210;
+﻿@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed);
+body {
+  font: 10pt "Roboto Condensed";
+  margin: 0;
+  background-color: %BACKGROUNDCOLOR%;
+  color: %FONTCOLOR%;
 }
 
-body {
-  font-family: "Roboto Condensed";
-  color: hsl(var(--clr), 25%, 35%);
-  background-color: hsl(var(--clr), 30%, 90%);
+header, footer {
+  font-size: 18pt;
+  padding: 1em;
+  color: %BACKGROUNDCOLOR%;
+  background-color:%HEADERCOLOR%;
+}
+
+header {
+  font-size: 18pt;
+}
+
+.images {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
   background-image: url("shutter.png");
 }
 
-h1 {clear: both; border-color: hsl(var(--clr), 25%, 35%);}
-
-.imagelist {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
+figure {
+  width: %WIDTH%px;
+  padding: 8px;
+  background-color:%CARDCOLOR%;
+  box-shadow: 8px 8px 8px gray;
+  border-radius: 4px;
+  _transform: rotate(3deg);
 }
 
-.imagelist>div {
-  display: inline-block;
-  margin: 20px;
-  box-shadow: 4px 4px 6px gray;
-  padding: 6px 6px 0px 6px;
-  background-color: hsl(60, 25%, 98%);
-}
-
-.imagelist>div>img {margin: 0}
-
-.imagelist>div>div {
-  display: block;
-  margin: -1px 0px 4px 0px;
-  font: 12pt "Roboto Condensed";
-  color: hsl(var(--clr), 0%, 50%);
-  text-align: center;
+img {
+  width: 100%;
 }
 
 footer {
-  color: hsl(var(--clr), 50%, 70%);
-  background-image: linear-gradient(hsl(var(--clr), 50%, 25%), hsl(var(--clr), 50%, 15%));
+  font-size: 12pt;
 }

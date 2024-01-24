@@ -930,7 +930,6 @@ begin
   SettingsClasses := TDictionary<string, TSettingsClass>.Create;
   SettingClasses := TDictionary<string, TSettingClass>.Create;
   TSetting.Register([TStringSetting, TBooleanSetting, TIntegerSetting, TPicklistSetting]);
-//  Test;
 end;
 
 finalization

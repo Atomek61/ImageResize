@@ -764,10 +764,11 @@ begin
     // Check if the tags database is required
     Exer.TagsRequired := (FTagsSources<>[]) or (Length(FTagKeys)>0);
     if Exer.TagsRequired then begin
-      // Load Tags
+      Exer.FilesTags.Prepare(Exer.SourceFilenames);
       if tsTagsFiles in FTagsSources then begin
+        // Load from .tags
         Print(SMsgLoadingTags);
-        Exer.FilesTags.LoadFromTagsFiles(Exer.SourceFilenames);
+        Exer.FilesTags.LoadFromTags;
       end;
     end;
 
