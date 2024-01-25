@@ -580,41 +580,109 @@ msgstr "Wahr"
 
 #: settings.serrassignclassfmt
 #, object-pascal-format
+msgctxt "settings.serrassignclassfmt"
 msgid "Cant assign %s value to %s value."
 msgstr "Kann %s-Werte  nicht zuweisen zu %s."
 
 #: settings.serrassigningsectionfmt
 #, object-pascal-format
+msgctxt "settings.serrassigningsectionfmt"
 msgid "Cant assign values of [%s] to those of [%s]."
 msgstr "Kann Werte von [%s] zu denen von [%s]."
 
 #: settings.serrassignkeyfmt
 #, object-pascal-format
+msgctxt "settings.serrassignkeyfmt"
 msgid "Cant assign value of %s to %s."
 msgstr "Kann Werte von %s nicht zu %s zuweisen."
 
 #: settings.serrconverttobooleanfmt
 #, object-pascal-format
+msgctxt "settings.serrconverttobooleanfmt"
 msgid "Cant convert '%s' to boolean."
 msgstr "Kann '%s' nicht in einen Wahrheitswert verwandeln."
 
 #: settings.serrconverttointegerfmt
 #, object-pascal-format
+msgctxt "settings.serrconverttointegerfmt"
 msgid "Cant convert '%s' to integer."
 msgstr "Kann '%s' nicht in eine Ganzzahl verwandeln."
 
 #: settings.serrinvalidpicklistmodefmt
 #, object-pascal-format
+msgctxt "settings.serrinvalidpicklistmodefmt"
 msgid "Invalid picklist mode '%s'."
 msgstr "Ungültiger Picklist-Modus '%s'."
 
 #: settings.serritemscountmismatchfmt
 #, object-pascal-format
+msgctxt "settings.serritemscountmismatchfmt"
 msgid "Number of '%s' display strings mismatch, %d expected"
 msgstr "Zahl der '%s' Anzeige-Werte stimmt nicht mit der Zahl der Werte (%d) überein."
 
 #: settings.serrsettingclassnotfoundfmt
 #, object-pascal-format
+msgctxt "settings.serrsettingclassnotfoundfmt"
+msgid "Setting class '%s' from ['%s'] not registered."
+msgstr "Einstellungs-Klasse '%s' in ['%s'] nicht registriert."
+
+#: settings2.scptfalse
+#, fuzzy
+msgctxt "settings2.scptfalse"
+msgid "False"
+msgstr "Falsch"
+
+#: settings2.scpttrue
+#, fuzzy
+msgctxt "settings2.scpttrue"
+msgid "True"
+msgstr "Wahr"
+
+#: settings2.serrassignclassfmt
+#, object-pascal-format, fuzzy
+msgctxt "settings2.serrassignclassfmt"
+msgid "Cant assign %s value to %s value."
+msgstr "Kann %s-Werte  nicht zuweisen zu %s."
+
+#: settings2.serrassigningsectionfmt
+#, object-pascal-format, fuzzy
+msgctxt "settings2.serrassigningsectionfmt"
+msgid "Cant assign values of [%s] to those of [%s]."
+msgstr "Kann Werte von [%s] zu denen von [%s]."
+
+#: settings2.serrassignkeyfmt
+#, object-pascal-format, fuzzy
+msgctxt "settings2.serrassignkeyfmt"
+msgid "Cant assign value of %s to %s."
+msgstr "Kann Werte von %s nicht zu %s zuweisen."
+
+#: settings2.serrconverttobooleanfmt
+#, object-pascal-format, fuzzy
+msgctxt "settings2.serrconverttobooleanfmt"
+msgid "Cant convert '%s' to boolean."
+msgstr "Kann '%s' nicht in einen Wahrheitswert verwandeln."
+
+#: settings2.serrconverttointegerfmt
+#, object-pascal-format, fuzzy
+msgctxt "settings2.serrconverttointegerfmt"
+msgid "Cant convert '%s' to integer."
+msgstr "Kann '%s' nicht in eine Ganzzahl verwandeln."
+
+#: settings2.serrinvalidpicklistmodefmt
+#, object-pascal-format, fuzzy
+msgctxt "settings2.serrinvalidpicklistmodefmt"
+msgid "Invalid picklist mode '%s'."
+msgstr "Ungültiger Picklist-Modus '%s'."
+
+#: settings2.serritemscountmismatchfmt
+#, object-pascal-format, fuzzy
+msgctxt "settings2.serritemscountmismatchfmt"
+msgid "Number of '%s' display strings mismatch, %d expected"
+msgstr "Zahl der '%s' Anzeige-Werte stimmt nicht mit der Zahl der Werte (%d) überein."
+
+#: settings2.serrsettingclassnotfoundfmt
+#, object-pascal-format, fuzzy
+msgctxt "settings2.serrsettingclassnotfoundfmt"
 msgid "Setting class '%s' from ['%s'] not registered."
 msgstr "Einstellungs-Klasse '%s' in ['%s'] nicht registriert."
 
