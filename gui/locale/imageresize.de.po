@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.3.1\n"
 
 #: aboutdlg.scptavailable
 msgid "Available"
@@ -787,14 +787,6 @@ msgstr "mehr Werte als Tags"
 msgid "&Color:"
 msgstr "&Farbe."
 
-#: tcustompickdialog.bitbtn1.caption
-msgid "BitBtn1"
-msgstr ""
-
-#: tcustompickdialog.caption
-msgid "CustomPickDialog"
-msgstr ""
-
 #: tform1.caption
 msgid "Form1"
 msgstr ""
@@ -1411,8 +1403,8 @@ msgid "Source Images"
 msgstr "Quelldateien"
 
 #: tmaindialog.labelstep2.caption
-msgid "Scaling and other Settings"
-msgstr "Skalierung und andere Einstellungen"
+msgid "Sizes and other Settings"
+msgstr "Größen und andere Einstellungen"
 
 #: tmaindialog.labelstep3.caption
 msgid "Target &Folder"
@@ -1447,14 +1439,6 @@ msgstr "1 Einfach - ein Verzeichnis für jede Größe"
 #: tmaindialog.saveasdialogtagsreport.title
 msgid "Save Tags Report as"
 msgstr "Tags Report speichern als"
-
-#: tmaindialog.tabsheetsrcfilenames.caption
-msgid "TabSheetSrcFilenames"
-msgstr ""
-
-#: tmaindialog.tabsheetsrcfolder.caption
-msgid "TabSheetSrcFolder"
-msgstr ""
 
 #: tmaindialog.toolbuttonabout.hint
 msgid "License and Vendor Infos"
@@ -1647,11 +1631,9 @@ msgid "Closes the dialog and discards the settings"
 msgstr "Schließt den Dialog und verwirft geänderte Einstellungen"
 
 #: tpresentationdialog.buttonexecute.caption
-#, fuzzy
-#| msgid "Create"
 msgctxt "tpresentationdialog.buttonexecute.caption"
 msgid "&Create"
-msgstr "Erzeugen"
+msgstr "&Erzeugen"
 
 #: tpresentationdialog.buttonexecute.hint
 msgctxt "tpresentationdialog.buttonexecute.hint"

@@ -215,7 +215,7 @@ object PresentationDialog: TPresentationDialog
         BorderSpacing.Around = 8
         Caption = '&Show'
         Layout = blGlyphTop
-        Images = MainDialog.ImageList32x32
+        Images = ImagesModule.ImageList32x32
         ImageIndex = 26
         OnClick = ButtonWebShowClick
         TabOrder = 1
@@ -265,7 +265,7 @@ object PresentationDialog: TPresentationDialog
         Caption = '&Create'
         Default = True
         Layout = blGlyphTop
-        Images = MainDialog.ImageList32x32
+        Images = ImagesModule.ImageList32x32
         ImageIndex = 25
         OnClick = ButtonExecuteClick
         TabOrder = 0

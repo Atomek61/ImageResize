@@ -299,12 +299,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
-      <Unit>
-        <Filename Value="custompickdlg.pas"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="CustomPickDialog"/>
-        <ResourceBaseClass Value="Form"/>
-      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

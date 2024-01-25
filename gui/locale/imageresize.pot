@@ -769,14 +769,6 @@ msgstr ""
 msgid "&Color:"
 msgstr ""
 
-#: tcustompickdialog.bitbtn1.caption
-msgid "BitBtn1"
-msgstr ""
-
-#: tcustompickdialog.caption
-msgid "CustomPickDialog"
-msgstr ""
-
 #: tform1.caption
 msgid "Form1"
 msgstr ""
@@ -1328,7 +1320,7 @@ msgid "Source Images"
 msgstr ""
 
 #: tmaindialog.labelstep2.caption
-msgid "Scaling and other Settings"
+msgid "Sizes and other Settings"
 msgstr ""
 
 #: tmaindialog.labelstep3.caption
@@ -1360,14 +1352,6 @@ msgstr ""
 
 #: tmaindialog.saveasdialogtagsreport.title
 msgid "Save Tags Report as"
-msgstr ""
-
-#: tmaindialog.tabsheetsrcfilenames.caption
-msgid "TabSheetSrcFilenames"
-msgstr ""
-
-#: tmaindialog.tabsheetsrcfolder.caption
-msgid "TabSheetSrcFolder"
 msgstr ""
 
 #: tmaindialog.toolbuttonabout.hint

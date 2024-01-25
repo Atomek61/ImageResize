@@ -681,7 +681,7 @@ procedure TIntegerSetting.Load(Ini: TCustomIniFile; const Section: string);
 begin
   inherited Load(Ini, Section);
   FMin := Ini.ReadInteger(Section, 'Min', low(integer));
-  FMax := Ini.ReadInteger(Section, 'Min', high(integer));
+  FMax := Ini.ReadInteger(Section, 'Max', high(integer));
 end;
 
 procedure TIntegerSetting.SetText(const AValue: string);

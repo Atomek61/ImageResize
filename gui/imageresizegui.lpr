@@ -16,7 +16,7 @@ uses
   galleryprocessor, stringarrays, appsettings, 
 presentationmanagerfrm, 
 colorfrm, tagids, webutils,
-settingseditor, webcolors, webcoloreditor, huedlg, custompickdlg;
+settingseditor, webcolors, webcoloreditor, huedlg;
 
 {$R *.res}
 

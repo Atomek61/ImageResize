@@ -9,6 +9,14 @@ uses
 
 type
 
+  { TProjectSettings }
+
+  TProjectSettings = class(TSettings)
+  public
+    constructor Create(const ASection :string); override;
+  end;
+
+
   { TProcessingSettings }
 
   TProcessingSettings = class(TSettings)
@@ -55,6 +63,13 @@ begin
   inherited Create(ASection);
   Id := TStringSetting.Create(self, 'Id');
   TargetFolder := TStringSetting.Create(self, 'TargetFolder');
+end;
+
+{ TProjectSettings }
+
+constructor TProjectSettings.Create(const ASection: string);
+begin
+  inherited Create(ASection);
 end;
 
 { TProcessingSettings }

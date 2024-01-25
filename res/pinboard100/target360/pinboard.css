@@ -1,16 +1,16 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed);
+﻿@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed);
 body {
   font: 10pt "Roboto Condensed";
   margin: 0;
-  background-color: rgb(168, 206, 242);
-  color:rgb(24, 34, 52);
+  background-color: #DAEBE4;
+  color: #000000;
 }
 
 header, footer {
   font-size: 18pt;
   padding: 1em;
-  color: rgb(168, 206, 242);
-  background-color:rgb(24, 34, 52);
+  color: #DAEBE4;
+  background-color:#386283;
 }
 
 header {
@@ -26,12 +26,12 @@ header {
 }
 
 figure {
-  width: 400px;
+  width: %WIDTH%px;
   padding: 8px;
-  background-color:white;
+  background-color:#FFFFFF;
   box-shadow: 8px 8px 8px gray;
   border-radius: 4px;
-  xtransform: rotate(3deg);
+  _transform: rotate(3deg);
 }
 
 img {

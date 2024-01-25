@@ -128,7 +128,9 @@ type
     ActionNew: TAction;
     ActionAbout: TAction;
     ActionExecute: TAction;
-    ImageListWatermarkText: TBGRAImageList;
+    ImageStep1: TImage;
+    ImageStep2: TImage;
+    ImageStep3: TImage;
     PaintBoxMrkPreview: TBGRAGraphicControl;
     ButtonExecute: TBGRASpeedButton;
     CheckBoxNoCreate: TCheckBox;
@@ -187,7 +189,6 @@ type
     GroupBoxPngOptions: TGroupBox;
     HTMLBrowserHelpViewer: THTMLBrowserHelpViewer;
     HTMLHelpDatabase: THTMLHelpDatabase;
-    ImageList32x32: TImageList;
     Label1: TLabel;
     Label10: TLabel;
     Label11: TLabel;
@@ -220,9 +221,6 @@ type
     PageControlParams: TPageControl;
     PanelPreview: TPanel;
     ProgressBar: TPaintBox;
-    PaintBoxStep1: TPaintBox;
-    PaintBoxStep2: TPaintBox;
-    PaintBoxStep3: TPaintBox;
     PanelDestination: TPanel;
     PanelParams: TPanel;
     PanelSource: TPanel;
@@ -316,7 +314,6 @@ type
       WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
     procedure PaintBoxMrkPreviewPaint(Sender: TObject);
     procedure ProgressBarPaint(Sender: TObject);
-    procedure PaintBoxStep1Paint(Sender: TObject);
     procedure TimerProgressBarOffTimer(Sender: TObject);
     procedure EditSizesExit(Sender: TObject);
     procedure ProjectChanged(Sender :TObject);
@@ -1190,12 +1187,12 @@ end;
 procedure TMainDialog.DoRequiredStepsChanged(Index: integer);
 var
   Required :boolean;
+const
+  IMGIDXS :array[boolean] of integer = (23, 22);
 begin
-  case Index of
-  1: PaintBoxStep1.Invalidate;
-  2: PaintBoxStep2.Invalidate;
-  3: PaintBoxStep3.Invalidate;
-  end;
+  ImageStep1.ImageIndex := IMGIDXS[FRequiredSteps[1]];
+  ImageStep2.ImageIndex := IMGIDXS[FRequiredSteps[2]];
+  ImageStep3.ImageIndex := IMGIDXS[FRequiredSteps[3]];
   for Required in FRequiredSteps do
     if Required then begin
       ActionExecute.Enabled := false;
@@ -1551,14 +1548,6 @@ begin
     Brush.Color := STYLECOLOR_LIGHT2;
     FillRect(r);
   end;
-end;
-
-procedure TMainDialog.PaintBoxStep1Paint(Sender: TObject);
-var
-  PaintBox :TPaintBox;
-begin
-  PaintBox := Sender as TPaintBox;
-  ImageList32x32.Draw(PaintBox.Canvas, 0, 0, IfThen(FRequiredSteps[PaintBox.Tag], IMAGEINDEX_REQUIRED, IMAGEINDEX_NOTREQUIRED));
 end;
 
 procedure TMainDialog.EditTargetFolderChange(Sender: TObject);
