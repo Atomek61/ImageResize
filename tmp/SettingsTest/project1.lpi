@@ -43,11 +43,11 @@
         <UnitName Value="Unit1"/>
       </Unit>
       <Unit>
-        <Filename Value="..\..\gui\settings2.pas"/>
+        <Filename Value="..\..\src\inifileshelper.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="..\..\src\inifileshelper.pas"/>
+        <Filename Value="..\..\gui\settings.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
     </Units>
@@ -60,7 +60,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\..\gui;..\..\src;..\..\lib"/>
+      <OtherUnitFiles Value="..\..\src;..\..\lib;..\..\gui"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>

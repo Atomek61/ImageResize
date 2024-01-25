@@ -554,16 +554,6 @@ msgstr ""
 msgid "Unregistered PresentationManager class '%s'."
 msgstr ""
 
-#: settings.scptfalse
-msgctxt "settings.scptfalse"
-msgid "False"
-msgstr ""
-
-#: settings.scpttrue
-msgctxt "settings.scpttrue"
-msgid "True"
-msgstr ""
-
 #: settings.serrassignclassfmt
 #, object-pascal-format
 msgctxt "settings.serrassignclassfmt"
@@ -588,85 +578,22 @@ msgctxt "settings.serrconverttobooleanfmt"
 msgid "Cant convert '%s' to boolean."
 msgstr ""
 
-#: settings.serrconverttointegerfmt
+#: settings.serrconverttoint32fmt
 #, object-pascal-format
-msgctxt "settings.serrconverttointegerfmt"
-msgid "Cant convert '%s' to integer."
+msgid "Cant convert '%s' to an Int32."
 msgstr ""
 
-#: settings.serrinvalidpicklistmodefmt
-#, object-pascal-format
-msgctxt "settings.serrinvalidpicklistmodefmt"
-msgid "Invalid picklist mode '%s'."
+#: settings.serrinvalidpicklist
+msgid "Invalid picklist."
 msgstr ""
 
-#: settings.serritemscountmismatchfmt
-#, object-pascal-format
-msgctxt "settings.serritemscountmismatchfmt"
-msgid "Number of '%s' display strings mismatch, %d expected"
+#: settings.serrinvalidpicklistdisplay
+msgid "Invalid picklist display."
 msgstr ""
 
 #: settings.serrsettingclassnotfoundfmt
 #, object-pascal-format
 msgctxt "settings.serrsettingclassnotfoundfmt"
-msgid "Setting class '%s' from ['%s'] not registered."
-msgstr ""
-
-#: settings2.scptfalse
-msgctxt "settings2.scptfalse"
-msgid "False"
-msgstr ""
-
-#: settings2.scpttrue
-msgctxt "settings2.scpttrue"
-msgid "True"
-msgstr ""
-
-#: settings2.serrassignclassfmt
-#, object-pascal-format
-msgctxt "settings2.serrassignclassfmt"
-msgid "Cant assign %s value to %s value."
-msgstr ""
-
-#: settings2.serrassigningsectionfmt
-#, object-pascal-format
-msgctxt "settings2.serrassigningsectionfmt"
-msgid "Cant assign values of [%s] to those of [%s]."
-msgstr ""
-
-#: settings2.serrassignkeyfmt
-#, object-pascal-format
-msgctxt "settings2.serrassignkeyfmt"
-msgid "Cant assign value of %s to %s."
-msgstr ""
-
-#: settings2.serrconverttobooleanfmt
-#, object-pascal-format
-msgctxt "settings2.serrconverttobooleanfmt"
-msgid "Cant convert '%s' to boolean."
-msgstr ""
-
-#: settings2.serrconverttointegerfmt
-#, object-pascal-format
-msgctxt "settings2.serrconverttointegerfmt"
-msgid "Cant convert '%s' to integer."
-msgstr ""
-
-#: settings2.serrinvalidpicklistmodefmt
-#, object-pascal-format
-msgctxt "settings2.serrinvalidpicklistmodefmt"
-msgid "Invalid picklist mode '%s'."
-msgstr ""
-
-#: settings2.serritemscountmismatchfmt
-#, object-pascal-format
-msgctxt "settings2.serritemscountmismatchfmt"
-msgid "Number of '%s' display strings mismatch, %d expected"
-msgstr ""
-
-#: settings2.serrsettingclassnotfoundfmt
-#, object-pascal-format
-msgctxt "settings2.serrsettingclassnotfoundfmt"
 msgid "Setting class '%s' from ['%s'] not registered."
 msgstr ""
 

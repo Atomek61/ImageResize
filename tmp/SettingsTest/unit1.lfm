@@ -62,14 +62,14 @@ object Form1: TForm1
     OnChange = ComboBox1Change
   end
   object Label3: TLabel
-    Left = 48
+    Left = 40
     Height = 15
     Top = 181
     Width = 34
     Caption = 'Label3'
   end
   object Label4: TLabel
-    Left = 48
+    Left = 40
     Height = 15
     Top = 229
     Width = 34
@@ -87,7 +87,7 @@ object Form1: TForm1
   object Button1: TButton
     Left = 88
     Height = 25
-    Top = 296
+    Top = 336
     Width = 75
     Caption = 'Save'
     TabOrder = 5
@@ -96,10 +96,34 @@ object Form1: TForm1
   object Button2: TButton
     Left = 88
     Height = 25
-    Top = 327
+    Top = 367
     Width = 75
     Caption = 'Load'
     TabOrder = 6
     OnClick = Button2Click
+  end
+  object Button3: TButton
+    Left = 88
+    Height = 25
+    Top = 304
+    Width = 75
+    Caption = 'Default'
+    TabOrder = 7
+    OnClick = Button3Click
+  end
+  object Panel1: TPanel
+    Left = 256
+    Height = 24
+    Top = 303
+    Width = 50
+    BevelOuter = bvLowered
+    TabOrder = 8
+  end
+  object Label5: TLabel
+    Left = 224
+    Height = 15
+    Top = 312
+    Width = 25
+    Caption = 'Dirty'
   end
 end

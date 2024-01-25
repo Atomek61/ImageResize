@@ -73,9 +73,9 @@ type
   TStringEditor = class(TEditor)
   end;
 
-  { TIntegerEditor }
+  { TInt32Editor }
 
-  TIntegerEditor = class(TStringEditor)
+  TInt32Editor = class(TStringEditor)
   public
   end;
 
@@ -185,7 +185,7 @@ begin
   FSetting := ASetting;
   FIndex := FSettingsEditor.FEditorList.Add(self);
   FSettingsEditor.FEditorDict.Add(ASetting.Key, self);
-  FValue := FSetting.Display;
+  FValue := FSetting.AsDisplay;
   FSettingsEditor.FControl.Strings.Add(FSetting.Caption+'='+GetPresentation);
   Bind(FSettingsEditor.FControl.ItemProps[FIndex]);
 end;
@@ -220,7 +220,7 @@ end;
 
 procedure TEditor.Flush;
 begin
-  FSetting.Display := Value;
+  FSetting.AsDisplay := Value;
 end;
 
 procedure TEditor.Bind(ItemProp :TItemProp);
@@ -242,16 +242,16 @@ begin
 
 end;
 
-{ TIntegerEditor }
+{ TInt32Editor }
 
 { TStringEditor }
 
-{ TIntegerEditor }
+{ TInt32Editor }
 
 initialization
 begin
   EditorClasses := TEditorClasses.Create;
-  TEditor.Register([TStringEditor, TIntegerEditor]);
+  TEditor.Register([TStringEditor, TInt32Editor]);
 end;
 
 finalization

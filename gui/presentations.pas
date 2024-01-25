@@ -154,7 +154,7 @@ begin
   FDelimiters       := TDelimiters.StrToDelimiters(IniFile.ReadString(PRESENTATION_SECTION, 'Delimiters', PERCENTDELIMITERS.toString));
 
   FParams := TSettings.Create(FId);
-  FParams.Load(IniFile, 'Settings');
+  FParams.LoadDef(IniFile, 'Settings');
 end;
 
 destructor TCustomManager.Destroy;
@@ -365,7 +365,7 @@ begin
     if SettingPresentationFns.TryGetValue(Setting.Presentation, SettingPresentationFn) then
       ValuePresentation := SettingPresentationFn(Setting)
     else
-      ValuePresentation := Setting.Text;
+      ValuePresentation := Setting.AsDisplay;
     FProcessor.DocumentVars.Load(UpperCase(Setting.Key), ValuePresentation);
   end;
 
@@ -374,7 +374,7 @@ end;
 
 function AsWebColor(Setting :TSetting) :string;
 begin
-  result := ColorToHTMLColor((Setting as TIntegerSetting).Value);
+  result := ColorToHTMLColor((Setting as TInt32Setting).Value);
 end;
 
 initialization

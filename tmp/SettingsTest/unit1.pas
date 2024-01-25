@@ -5,8 +5,8 @@ unit Unit1;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, IniFiles,
-  settings2;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
+  IniFiles, settings;
 
 type
 
@@ -15,6 +15,7 @@ type
   TForm1 = class(TForm)
     Button1: TButton;
     Button2: TButton;
+    Button3: TButton;
     CheckBox1: TCheckBox;
     ComboBox1: TComboBox;
     ComboBox2: TComboBox;
@@ -24,8 +25,11 @@ type
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
+    Label5: TLabel;
+    Panel1: TPanel;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
     procedure CheckBox1Click(Sender: TObject);
     procedure ComboBox1Change(Sender: TObject);
     procedure ComboBox2Change(Sender: TObject);
@@ -40,6 +44,7 @@ type
     procedure OnTumbSettingChanged(Sender :TObject);
     procedure OnSexSettingChanged(Sender :TObject);
     procedure OnWeatherSettingChanged(Sender :TObject);
+    procedure OnSettingsChanged(Sender :TObject);
   public
 
   end;
@@ -94,6 +99,8 @@ begin
   ComboBox2.Text := Weather.AsDisplay;
   FSettings['Weather'].OnChanged := @OnWeatherSettingChanged;
 
+  FSettings.OnChanged := @OnSettingsChanged;
+
 end;
 
 procedure TForm1.Edit1Change(Sender: TObject);
@@ -129,6 +136,11 @@ begin
   finally
     Ini.Free;
   end;
+end;
+
+procedure TForm1.Button3Click(Sender: TObject);
+begin
+  FSettings.SetDefaults;
 end;
 
 procedure TForm1.ComboBox1Change(Sender: TObject);
@@ -174,6 +186,15 @@ end;
 procedure TForm1.OnWeatherSettingChanged(Sender: TObject);
 begin
   ComboBox2.Text := (Sender as TPicktextSetting).AsDisplay;
+end;
+
+procedure TForm1.OnSettingsChanged(Sender: TObject);
+begin
+  if FSettings.Dirty then
+    Panel1.Color := clRed
+  else
+    Panel1.Color := clDefault;
+
 end;
 
 end.

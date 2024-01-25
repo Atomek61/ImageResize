@@ -215,16 +215,16 @@ begin
       end;
     end;
 
-    EditTargetFolder.Text := PresentationSettings.TargetFolder.Text;
+    EditTargetFolder.Text := PresentationSettings.TargetFolder.AsDisplay;
     if FManagers.TryFind(PresentationSettings.Id.Value, Index) then
       ManagerIndex := Index
     else ManagerIndex := 0;
 
     result := ShowModal = mrOk;
     if result then begin
-      PresentationSettings.TargetFolder.Text := EditTargetFolder.Text;
+      PresentationSettings.TargetFolder.AsText := EditTargetFolder.Text;
       if FManagerIndex<>-1 then
-        PresentationSettings.Id.Text := FManagers[FManagerIndex].Id;
+        PresentationSettings.Id.AsText := FManagers[FManagerIndex].Id;
       for Manager in FManagers do begin
         if Manager.Params.Dirty then begin
           if not ParamsList.TryGetValue(Manager.Params.Section, Params) then begin

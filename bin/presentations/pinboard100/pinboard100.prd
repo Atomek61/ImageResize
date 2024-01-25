@@ -22,13 +22,13 @@ Class=String
 Caption=Title
 Caption.de=Titel
 
-[Settings.With]
-Class=Integer
+[Settings.Width]
+Class=Int32
 Min=0
 Max=1000
-Text=400
 Caption=Card Width
 Caption.de=Kartenbreite
+Default=400
 
 [Settings.Copyright]
 Class=String
@@ -36,30 +36,30 @@ Caption=Copyright
 Caption.de=Urheberrechtshinweis
 
 [Settings.FontColor]
-Class=Integer
+Class=Int32
 Presentation=WebColor
 Caption=Font Color
 Caption.de=Schriftfarbe
-Text=$000000
+Default=$000000
 
 [Settings.CardColor]
-Class=Integer
+Class=Int32
 Presentation=WebColor
 Caption=Card Background
 Caption.de=Kartenfarbe
-Text=$FFFFFF
+Default=$FFFFFF
 
 [Settings.HeaderColor]
-Class=Integer
+Class=Int32
 Presentation=WebColor
 Caption=Header Color
 Caption.de=Titelleistenfarbe
-Text=$836238
+Default=$836238
 
 [Settings.BackgroundColor]
-Class=Integer
+Class=Int32
 Presentation=WebColor
 Caption=Background Color
 Caption.de=Hintergrundfarbe
-Text=$E4EBDA
+Default=$E4EBDA
 

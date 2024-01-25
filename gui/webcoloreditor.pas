@@ -11,7 +11,7 @@ type
 
   { TWebColorEditor }
 
-  TWebColorEditor = class(TIntegerEditor)
+  TWebColorEditor = class(TInt32Editor)
   private
     FLock :boolean;
   protected

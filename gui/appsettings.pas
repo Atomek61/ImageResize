@@ -25,16 +25,16 @@ type
     ResamplingFilter    :TPickListSetting;
     MrkEnabled          :TBooleanSetting;
     MrkFilename         :TStringSetting;
-    MrkSize             :TIntegerSetting;
-    MrkX                :TIntegerSetting;
-    MrkY                :TIntegerSetting;
-    MrkAlpha            :TIntegerSetting;
+    MrkSize             :TInt32Setting;
+    MrkX                :TInt32Setting;
+    MrkY                :TInt32Setting;
+    MrkAlpha            :TInt32Setting;
     RenEnabled          :TBooleanSetting;
     RenSimple           :TBooleanSetting;
     RenMode             :TPicklistSetting;
     RenTemplate         :TStringSetting;
     Shuffle             :TBooleanSetting;
-    ShuffleSeed         :TIntegerSetting;
+    ShuffleSeed         :TInt32Setting;
     TagsSourceEXIF      :TBooleanSetting;
     TagsSourceTagsFiles :TBooleanSetting;
     TagTitle            :TBooleanSetting;
@@ -53,7 +53,7 @@ type
 
   TProcessingSettings = class(TSettings)
   public
-    ThreadsUsed :TIntegerSetting;
+    ThreadsUsed :TInt32Setting;
     StopOnError :TBooleanSetting;
     constructor Create(const ASection :string); override;
   end;
@@ -84,7 +84,7 @@ constructor TDialogSettings.Create(const ASection :string);
 begin
   inherited;
   AutoSave := TBooleanSetting.Create(self, 'AutoSave');
-  AutoSave.DefaultText := 'True';
+  AutoSave.Default := True;
   WarnDirty := TBooleanSetting.Create(self, 'WarnDirty');
 end;
 
@@ -114,16 +114,16 @@ begin
   ResamplingFilter    := TPickListSetting.Create(self,  'ResamplingFilter');
   MrkEnabled          := TBooleanSetting.Create(self,   'MrkEnabled');
   MrkFilename         := TStringSetting.Create(self,    'MrkFilename');
-  MrkSize             := TIntegerSetting.Create(self,   'MrkSize');
-  MrkX                := TIntegerSetting.Create(self,   'MrkX');
-  MrkY                := TIntegerSetting.Create(self,   'MrkY');
-  MrkAlpha            := TIntegerSetting.Create(self,   'MrkAlpha');
+  MrkSize             := TInt32Setting.Create(self,   'MrkSize');
+  MrkX                := TInt32Setting.Create(self,   'MrkX');
+  MrkY                := TInt32Setting.Create(self,   'MrkY');
+  MrkAlpha            := TInt32Setting.Create(self,   'MrkAlpha');
   RenEnabled          := TBooleanSetting.Create(self,   'RenEnabled');
   RenSimple           := TBooleanSetting.Create(self,   'RenSimple');
   RenMode             := TPicklistSetting.Create(self,  'RenMode');
   RenTemplate         := TStringSetting.Create(self,    'RenTemplate');
   Shuffle             := TBooleanSetting.Create(self,   'Shuffle');
-  ShuffleSeed         := TIntegerSetting.Create(self,   'ShuffleSeed');
+  ShuffleSeed         := TInt32Setting.Create(self,   'ShuffleSeed');
   TagsSourceEXIF      := TBooleanSetting.Create(self,   'TagsSourceEXIF');
   TagsSourceTagsFiles := TBooleanSetting.Create(self,   'TagsSourceTagsFiles');
   TagTitle            := TBooleanSetting.Create(self,   'TagTitle');
@@ -141,7 +141,7 @@ end;
 constructor TProcessingSettings.Create(const ASection :string);
 begin
   inherited;
-  ThreadsUsed := TIntegerSetting.Create(self, 'ThreadsUsed');
+  ThreadsUsed := TInt32Setting.Create(self, 'ThreadsUsed');
   ThreadsUsed.Min := 0;
   StopOnError := TBooleanSetting.Create(self, 'StopOnError');
 end;

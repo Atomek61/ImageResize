@@ -23,15 +23,15 @@ Caption=Title
 Caption.de=Titel
 
 [Settings.Color]
-Class=Integer
+Class=Int32
 Presentation=WebColor
 Caption=Font Color
 Caption.de=Schriftfarbe
-Text=$E4EBDA
+Default=$E4EBDA
 
 [Settings.BackgroundColor]
-Class=Integer
+Class=Int32
 Presentation=WebColor
 Caption=Background Color
 Caption.de=Hintergrundfarbe
-Text=$36361B
+Default=$36361B

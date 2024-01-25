@@ -26,8 +26,8 @@ uses
 
 const
   GUIVER_APP      = 'ImageResize';
-  GUIVER_VERSION  = '3.6';
-  GUIVER_DATE     = '2024-01-01';
+  GUIVER_VERSION  = '4.0';
+  GUIVER_DATE     = '2024-01-25';
 
   GUIVER          :TVersionManifest = (App: GUIVER_APP; Version: GUIVER_VERSION; Date: GUIVER_DATE; Hint: '');
 
@@ -41,7 +41,8 @@ const
   PRJTYPE         = 'IRS';
   PRJVERSION200   = '200';
   PRJVERSION210   = '210';
-  PRJVERSION      = '300';
+  PRJVERSION300   = '300';
+  PRJVERSION      = '400';
 
   SETTYPE         = 'IST';
   SETVERSION      = '100';
@@ -719,8 +720,8 @@ begin
     AHeight := Ini.ReadInteger(MAINDIALOG_SECTION, 'PanelControls.Height', PanelControls.Height);
     if AHeight+PanelControls.Top + 16 < ClientHeight then
       PanelControls.Height := AHeight;
-    FDialogSettings.AutoSave.Text := Ini.ReadString(MAINDIALOG_SECTION, 'AutoSave', FDialogSettings.AutoSave.DefaultText);
-    FDialogSettings.WarnDirty.Text := Ini.ReadString(MAINDIALOG_SECTION, 'WarnDirty', FDialogSettings.WarnDirty.DefaultText);
+    FDialogSettings.AutoSave.AsText := Ini.ReadString(MAINDIALOG_SECTION, 'AutoSave', 'True');
+    FDialogSettings.WarnDirty.AsText := Ini.ReadString(MAINDIALOG_SECTION, 'WarnDirty', 'False');
     Path := Ini.ReadString(MAINDIALOG_SECTION, 'CurrentDirectory', GetCurrentDir);
     if DirectoryExists(Path) then
       ChangeCurrentDir(Path);
@@ -735,8 +736,8 @@ begin
         PanelMain.Height := AHeight;
     end;
 
-    FProcessingSettings.StopOnError.Text := Ini.ReadString(PROJECT_SECTION, 'StopOnError', FProcessingSettings.StopOnError.DefaultText);
-    FProcessingSettings.ThreadsUsed.Text := Ini.ReadString(PROJECT_SECTION, 'ThreadsUsed', FProcessingSettings.ThreadsUsed.DefaultText);
+    FProcessingSettings.StopOnError.AsText := Ini.ReadString(PROJECT_SECTION, 'StopOnError', 'False');
+    FProcessingSettings.ThreadsUsed.AsText := Ini.ReadString(PROJECT_SECTION, 'ThreadsUsed', '0');
   finally
     Free;
   end;
@@ -800,8 +801,8 @@ begin
 
     ActionParamSizes.Execute;
   end;
-  FPresentationSettings.LoadFromIni(Ini);
-  FPresentationParamsList.LoadFromIni(Ini, PRESENTATIONS_GROUP);
+  FPresentationSettings.Load(Ini);
+  FPresentationParamsList.Load(Ini, PRESENTATIONS_GROUP);
 end;
 
 const
@@ -848,8 +849,8 @@ begin
     WriteBool(PROJECT_SECTION, 'NoCreate', CheckBoxNoCreate.Checked);
     WriteString(PROJECT_SECTION, 'PresentationId', EditCopyright.Text);
   end;
-  FPresentationSettings.SaveToIni(Ini);
-  FPresentationParamsList.SaveToIni(Ini, PRESENTATIONS_GROUP);
+  FPresentationSettings.Save(Ini);
+  FPresentationParamsList.Save(Ini, PRESENTATIONS_GROUP);
 end;
 
 function TMainDialog.LoadLastProject: boolean;
