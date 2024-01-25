@@ -18,9 +18,8 @@
         <ComponentName Value="MainDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="484"/>
-        <CursorPos X="19" Y="33"/>
+        <TopLine Value="776"/>
+        <CursorPos Y="804"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -108,10 +107,12 @@
       <Unit>
         <Filename Value="settings.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="666"/>
-        <CursorPos X="30" Y="683"/>
+        <EditorIndex Value="1"/>
+        <WindowIndex Value="1"/>
+        <TopLine Value="436"/>
+        <CursorPos X="67" Y="476"/>
         <UsageCount Value="200"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\animator.pas"/>
@@ -193,8 +194,9 @@
         <Filename Value="appsettings.pas"/>
         <IsPartOfProject Value="True"/>
         <WindowIndex Value="1"/>
-        <CursorPos Y="13"/>
-        <UsageCount Value="186"/>
+        <TopLine Value="96"/>
+        <CursorPos X="13" Y="31"/>
+        <UsageCount Value="189"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -206,20 +208,20 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="6"/>
         <CursorPos X="50" Y="40"/>
-        <UsageCount Value="168"/>
+        <UsageCount Value="171"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\tagids.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos Y="14"/>
-        <UsageCount Value="153"/>
+        <UsageCount Value="156"/>
       </Unit>
       <Unit>
         <Filename Value="settingseditor.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="117"/>
+        <UsageCount Value="120"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\webutils.pas"/>
@@ -227,27 +229,27 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="7"/>
         <CursorPos Y="35"/>
-        <UsageCount Value="104"/>
+        <UsageCount Value="107"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\webcolors.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="13" Y="39"/>
-        <UsageCount Value="104"/>
+        <UsageCount Value="107"/>
       </Unit>
       <Unit>
         <Filename Value="webcoloreditor.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="47" Y="6"/>
-        <UsageCount Value="96"/>
+        <UsageCount Value="99"/>
       </Unit>
       <Unit>
         <Filename Value="license.rc"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="70"/>
+        <UsageCount Value="73"/>
         <DefaultSyntaxHighlighter Value="None"/>
       </Unit>
       <Unit>
@@ -258,7 +260,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <CursorPos Y="22"/>
-        <UsageCount Value="33"/>
+        <UsageCount Value="36"/>
       </Unit>
       <Unit>
         <Filename Value="custompickdlg.pas"/>
@@ -872,7 +874,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="163"/>
         <CursorPos Y="180"/>
-        <UsageCount Value="59"/>
+        <UsageCount Value="58"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\classes\stringl.inc"/>
@@ -1255,44 +1257,21 @@
         <UsageCount Value="10"/>
         <DefaultSyntaxHighlighter Value="LFM"/>
       </Unit>
+      <Unit>
+        <Filename Value="settings2.pas"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="2"/>
+        <WindowIndex Value="1"/>
+        <CursorPos X="30" Y="8"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+      </Unit>
     </Units>
-    <JumpHistory HistoryIndex="17">
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="754" Column="20" TopLine="754"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="754" Column="20" TopLine="754"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="753" Column="20" TopLine="753"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1560" Column="3" TopLine="1539"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1559" Column="3" TopLine="1538"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1560" Column="3" TopLine="1539"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1559" Column="3" TopLine="1538"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1560" Column="3" TopLine="1539"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1559" Column="3" TopLine="1538"/>
-      </Position>
+    <General>
+      <ActiveWindowIndexAtStart Value="1"/>
+    </General>
+    <JumpHistory HistoryIndex="29">
       <Position>
         <Filename Value="maindlg.pas"/>
         <Caret Line="1553" TopLine="1538"/>
@@ -1328,6 +1307,89 @@
       <Position>
         <Filename Value="appsettings.pas"/>
         <Caret Line="72" Column="3" TopLine="44"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="495" Column="41" TopLine="484"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="125" Column="15" TopLine="90"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="126" Column="15" TopLine="91"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="297" TopLine="263"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1590" Column="3" TopLine="1587"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="351" TopLine="332"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="916" Column="3" TopLine="910"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="347" TopLine="328"/>
+      </Position>
+      <Position>
+        <Filename Value="appsettings.pas"/>
+        <Caret Line="17"/>
+      </Position>
+      <Position>
+        <Filename Value="appsettings.pas"/>
+        <Caret Line="16" Column="25" TopLine="10"/>
+      </Position>
+      <Position>
+        <Filename Value="appsettings.pas"/>
+        <Caret Line="48" TopLine="7"/>
+      </Position>
+      <Position>
+        <Filename Value="appsettings.pas"/>
+        <Caret Line="137" TopLine="96"/>
+      </Position>
+      <Position>
+        <Filename Value="appsettings.pas"/>
+        <Caret Line="124" Column="70" TopLine="96"/>
+      </Position>
+      <Position>
+        <Filename Value="appsettings.pas"/>
+        <Caret Line="134" Column="48" TopLine="98"/>
+      </Position>
+      <Position>
+        <Filename Value="appsettings.pas"/>
+        <Caret Line="31" Column="13" TopLine="96"/>
+      </Position>
+      <Position>
+        <Filename Value="settings.pas"/>
+        <Caret Line="103" TopLine="83"/>
+      </Position>
+      <Position>
+        <Filename Value="settings.pas"/>
+        <Caret Line="566" Column="7" TopLine="560"/>
+      </Position>
+      <Position>
+        <Filename Value="settings2.pas"/>
+        <Caret Line="85" TopLine="38"/>
+      </Position>
+      <Position>
+        <Filename Value="settings.pas"/>
+        <Caret Line="96" Column="29" TopLine="75"/>
+      </Position>
+      <Position>
+        <Filename Value="settings.pas"/>
+        <Caret Line="273" Column="38" TopLine="233"/>
       </Position>
     </JumpHistory>
     <RunParams>

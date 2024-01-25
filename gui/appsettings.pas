@@ -13,6 +13,38 @@ type
 
   TProjectSettings = class(TSettings)
   public
+    Description         :TStringSetting;
+    SourceMode          :TPicklistSetting;
+    SourceFolder        :TStringSetting;
+    SourceMasks         :TStringSetting;
+    SourceFilenames     :TStringSetting;
+    Sizes               :TStringSetting;
+    TargetFolder        :TStringSetting;
+    JPEGQuality         :TPicklistSetting;
+    PNGCompression      :TPicklistSetting;
+    ResamplingFilter    :TPickListSetting;
+    MrkEnabled          :TBooleanSetting;
+    MrkFilename         :TStringSetting;
+    MrkSize             :TIntegerSetting;
+    MrkX                :TIntegerSetting;
+    MrkY                :TIntegerSetting;
+    MrkAlpha            :TIntegerSetting;
+    RenEnabled          :TBooleanSetting;
+    RenSimple           :TBooleanSetting;
+    RenMode             :TPicklistSetting;
+    RenTemplate         :TStringSetting;
+    Shuffle             :TBooleanSetting;
+    ShuffleSeed         :TIntegerSetting;
+    TagsSourceEXIF      :TBooleanSetting;
+    TagsSourceTagsFiles :TBooleanSetting;
+    TagTitle            :TBooleanSetting;
+    TagTimestamp        :TBooleanSetting;
+    TagCopyright        :TBooleanSetting;
+    Copyright           :TStringSetting;
+    TagsReportEnabled   :TBooleanSetting;
+    ImageInfosEnabled   :TBooleanSetting;
+    NoCreate            :TBooleanSetting;
+    PresentationId      :TStringSetting;
     constructor Create(const ASection :string); override;
   end;
 
@@ -70,6 +102,38 @@ end;
 constructor TProjectSettings.Create(const ASection: string);
 begin
   inherited Create(ASection);
+  Description         := TStringSetting.Create(self,    'Description');
+  SourceMode          := TPicklistSetting.Create(self,  'SourceMode');
+  SourceFolder        := TStringSetting.Create(self,    'SourceFolder');
+  SourceMasks         := TStringSetting.Create(self,    'SourceMasks');
+  SourceFilenames     := TStringSetting.Create(self,    'SourceFilenames');
+  Sizes               := TStringSetting.Create(self,    'Sizes');
+  TargetFolder        := TStringSetting.Create(self,    'TargetFolder');
+  JPEGQuality         := TPicklistSetting.Create(self,  'JPEGQuality');
+  PNGCompression      := TPicklistSetting.Create(self,  'PNGCompression');
+  ResamplingFilter    := TPickListSetting.Create(self,  'ResamplingFilter');
+  MrkEnabled          := TBooleanSetting.Create(self,   'MrkEnabled');
+  MrkFilename         := TStringSetting.Create(self,    'MrkFilename');
+  MrkSize             := TIntegerSetting.Create(self,   'MrkSize');
+  MrkX                := TIntegerSetting.Create(self,   'MrkX');
+  MrkY                := TIntegerSetting.Create(self,   'MrkY');
+  MrkAlpha            := TIntegerSetting.Create(self,   'MrkAlpha');
+  RenEnabled          := TBooleanSetting.Create(self,   'RenEnabled');
+  RenSimple           := TBooleanSetting.Create(self,   'RenSimple');
+  RenMode             := TPicklistSetting.Create(self,  'RenMode');
+  RenTemplate         := TStringSetting.Create(self,    'RenTemplate');
+  Shuffle             := TBooleanSetting.Create(self,   'Shuffle');
+  ShuffleSeed         := TIntegerSetting.Create(self,   'ShuffleSeed');
+  TagsSourceEXIF      := TBooleanSetting.Create(self,   'TagsSourceEXIF');
+  TagsSourceTagsFiles := TBooleanSetting.Create(self,   'TagsSourceTagsFiles');
+  TagTitle            := TBooleanSetting.Create(self,   'TagTitle');
+  TagTimestamp        := TBooleanSetting.Create(self,   'TagTimestamp');
+  TagCopyright        := TBooleanSetting.Create(self,   'TagCopyright');
+  Copyright           := TStringSetting.Create(self,    'Copyright');
+  TagsReportEnabled   := TBooleanSetting.Create(self,   'TagsReportEnabled');
+  ImageInfosEnabled   := TBooleanSetting.Create(self,   'ImageInfosEnabled');
+  NoCreate            := TBooleanSetting.Create(self,   'NoCreate');
+  PresentationId      := TStringSetting.Create(self,    'PresentationId');
 end;
 
 { TProcessingSettings }

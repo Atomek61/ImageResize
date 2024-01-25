@@ -847,7 +847,6 @@ begin
     WriteBool(PROJECT_SECTION, 'ImageInfosEnabled', CheckBoxImageInfosEnabled.Checked);
     WriteBool(PROJECT_SECTION, 'NoCreate', CheckBoxNoCreate.Checked);
     WriteString(PROJECT_SECTION, 'PresentationId', EditCopyright.Text);
-    WriteString(PROJECT_SECTION, 'Copyright', EditCopyright.Text);
   end;
   FPresentationSettings.SaveToIni(Ini);
   FPresentationParamsList.SaveToIni(Ini, PRESENTATIONS_GROUP);
