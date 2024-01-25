@@ -6,7 +6,7 @@ unit stringarrays;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, StrUtils;
 
 type
   { TStringArrayHelper }
@@ -20,6 +20,8 @@ type
     procedure Clear;
     function TryFind(const Value :string; var Index :integer; IgnoreCase :boolean = false) :boolean;
     function Contains(const Value: string; IgnoreCase :boolean = false): boolean;
+//    procedure Split(const Str :string; Separator :char = ',');
+//    procedure Join
     property Count :integer read GetCount write SetCount;
   end;
 
@@ -75,5 +77,10 @@ begin
   result := TryFind(Value, Index, IgnoreCase);
 end;
 
+//procedure TStringArrayHelper.Split(const Str: string);
+//begin
+//
+//end;
+//
 end.
 
