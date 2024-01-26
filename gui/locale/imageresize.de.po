@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: aboutdlg.scptavailable
 msgid "Available"
@@ -221,6 +221,12 @@ msgstr "Unglültiger INDEX placeholder '%s'"
 msgid "Invalid INDEX start '%s'"
 msgstr "Ungültiger INDEX Start '%s'"
 
+#: imgres.serrinvalidinterpolationfmt
+#, object-pascal-format
+msgctxt "imgres.serrinvalidinterpolationfmt"
+msgid "Invalid interpolation name '%s'"
+msgstr "Ungültiger Name der Interpolation - '%s'"
+
 #: imgres.serrinvalidjpgqualityfmt
 #, object-pascal-format
 msgid "Invalid JPEG quality %d (1..100 expected)"
@@ -239,11 +245,6 @@ msgstr "Ungültige PNG-Kompression %d (0..3 erwartet)"
 #, object-pascal-format
 msgid "Invalid renaming parameter '%s'"
 msgstr "Ungültiger Umbennennungs-Parameter '%s'"
-
-#: imgres.serrinvalidresamplingfmt
-#, object-pascal-format
-msgid "Invalid resampling value '%s'"
-msgstr "Ungültiger Resampling-Wert '%s'"
 
 #: imgres.serrinvalidsizesfmt
 #, object-pascal-format
@@ -595,15 +596,15 @@ msgstr "Kann '%s' nicht in einen Wahrheitswert verwandeln."
 #: settings.serrconverttoint32fmt
 #, object-pascal-format
 msgid "Cant convert '%s' to an Int32."
-msgstr ""
+msgstr "Kann '%s nicht in einen Int32 wandeln."
 
 #: settings.serrinvalidpicklist
 msgid "Invalid picklist."
-msgstr ""
+msgstr "Ungültige Pickliste."
 
 #: settings.serrinvalidpicklistdisplay
 msgid "Invalid picklist display."
-msgstr ""
+msgstr "Ungültiger Anzeigewert der Pickliste."
 
 #: settings.serrsettingclassnotfoundfmt
 #, object-pascal-format
@@ -1053,6 +1054,19 @@ msgstr "Zeitstempel"
 msgid "Title"
 msgstr "Titel"
 
+#: tmaindialog.comboboxinterpolation.hint
+msgid ""
+"When resampling an image the interpolation algorithm\n"
+"controls speed and quality of the processing.\n"
+"Lanczos R2 is the default algorithm. R2 means the Lanczos pixel radius.\n"
+"The choice of an algorithm also depends on up- or down-scaling. RTFM."
+msgstr ""
+"Beim Skalieren eines Bildes bestimmt der Interpolations-Algorithmus\n"
+"die Geschwindigkeit und die Qualität des Prozesses.\n"
+"Lanczos R2 ist der voreingestellte Algorithmus. R2 ist dabei der\vPixelradius des Lanczos-Filters.\n"
+"Die Wahl der Interpolation hängt auch davon ab, ob herauf oder herunter skaliert wird.\n"
+"RTFM."
+
 #: tmaindialog.comboboxjpegquality.hint
 msgctxt "tmaindialog.comboboxjpegquality.hint"
 msgid ""
@@ -1076,21 +1090,6 @@ msgstr "75"
 #: tmaindialog.comboboxpngcompression.hint
 msgid "Select a PNG lossless compression degree."
 msgstr "Wählt eine verlustlose Kompression für PNG."
-
-#: tmaindialog.comboboxresampling.hint
-msgctxt "tmaindialog.comboboxresampling.hint"
-msgid ""
-"The image quality and the processing\n"
-"speed depend on the algorithm of\n"
-"resampling. Lanczos2 is the default for\n"
-"a good speed and quality.\n"
-"2 means the Lanczos algorithms radius."
-msgstr ""
-"Die Qualität der Bilder und die Ausführungs-\n"
-"Geschwindigkeit hängen vom Algorithmus\n"
-"des Resamplings ab. Lanczos2 ist die Voreinstellung\n"
-"für gute Geschwindigkeit und Qualität.\n"
-"2 ist der Radius des Lanczos-Algorithmus."
 
 #: tmaindialog.comboboxshuffleseed.hint
 msgid "Enter a number, lets say 1000, to create always the same mixed order or 0 for shuffeling always randomly."
@@ -1164,7 +1163,7 @@ msgid "1"
 msgstr "1"
 
 #: tmaindialog.editrentemplate.hint
-#, fuzzy, badformat
+#, fuzzy
 msgid ""
 "Enter a filename template containing placeholders for special values.\n"
 "This template will be expanded for each resampled image. Insert the\n"
@@ -1229,6 +1228,10 @@ msgstr ""
 "Sie verwenden ein gängiges Bildbearbeitungsprogramm, wie RawTherapee,\n"
 "Lightroom oder Photoshop."
 
+#: tmaindialog.groupboxinterpolation.caption
+msgid "Interpolation"
+msgstr "Interpolation"
+
 #: tmaindialog.groupboxjpgoptions.caption
 msgid "JPEG"
 msgstr "JPEG"
@@ -1248,11 +1251,6 @@ msgstr "PNG"
 #: tmaindialog.groupboxrename.caption
 msgid "Strategy"
 msgstr "Strategie"
-
-#: tmaindialog.groupboxresampling.caption
-msgctxt "tmaindialog.groupboxresampling.caption"
-msgid "Resampling"
-msgstr "Resampling"
 
 #: tmaindialog.groupboxshuffle.caption
 msgid "Shuffle"
@@ -1776,4 +1774,3 @@ msgstr "Kerne"
 msgctxt "webutils.serrinvalidhtmlcolorfmt"
 msgid "Invalid web color '%s'."
 msgstr "Ungültige Web-Farbe '%s'."
-

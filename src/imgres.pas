@@ -56,18 +56,20 @@ type
   TTagsSource = (tsEXIF, tsTagsFiles); // Tags from EXIF and/or .tags files
   TTagsSources = set of TTagsSource;
   TScalingDirection = (sdUpScaling, sdNoscaling, sdDownScaling);
-  TResampling = (rsStretch, rsBox, rsLinear, rsHalfCosine, rsCosine, rsBicubic,
-    rsMitchell, rsSpline, rsLanczos2, rsLanczos3, rsLanczos4, rsBestQuality);
+  TInterpolation = (ipStretch, ipBox, ipLinear, ipHalfCosine, ipCosine, ipBicubic,
+    ipMitchell, ipSpline, ipLanczos2, ipLanczos3, ipLanczos4, ipBestQuality);
   TTagsReport = (trTagsReport, trImages);
   TTagsReports = set of TTagsReport;
 
 const
-  RESAMPLING_STRINGS :array[TResampling] of string = (
+  INTERPOLATION_STRINGS :array[TInterpolation] of string = (
     SCptStretch, SCptBox, SCptLinear, SCptHalfCosine, SCptCosine, SCptBicubic,
     SCptMitchell, SCptSpline, SCptLanczos2, SCptLanczos3, SCptLanczos4, SCptBestQuality);
-  RESAMPLING_NAMES :array[TResampling] of string = (
+
+  INTERPOLATION_NAMES :array[TInterpolation] of string = (
     'Stretch', 'Box', 'Linear', 'HalfCosine', 'Cosine', 'Bicubic',
     'Mitchell', 'Spline', 'Lanczos2', 'Lanczos3', 'Lanczos4', 'BestQuality');
+
   PNGCOMPRESSION_STRINGS :array[0..3] of string = (SCptPNGCompressionDefault,
     SCptPNGCompressionNone, SCptPNGCompressionFastest, SCptPNGCompressionMax);
 
@@ -80,7 +82,7 @@ const
 
   DEFAULTPNGCOMPRESSION     = 2;
   DEFAULTJPGQUALITY         = 75;
-  DEFAULT_RESAMPLING        = rsLanczos2;
+  DEFAULT_INTERPOLATION     = ipLanczos2;
   DEFAULTMRKSIZE            = 20.0;
   DEFAULTMRKX               = 98.0;
   DEFAULTMRKY               = 98.0;
@@ -179,7 +181,7 @@ type
     FShuffle          :boolean;
     FShuffleSeed      :integer;
     FTagsSources      :TTagsSources;
-    FTagKeys           :TStringArray; // 'Copyright',
+    FTagKeys          :TStringArray; // 'Copyright',
     FCopyright        :string;
     FTagsReports      :TTagsReports;
     FNoCreate         :boolean;
@@ -188,11 +190,11 @@ type
     FOnPrint :TPrintEvent;
     FOnProgress :TProgressEvent;
     function GetTargetFiletemplate: string;
-    function GetResampling: TResampling;
+    function GetInterpolation: TInterpolation;
     function GetSizes: string;
     function GetSourceFilenames: TStrings;
     procedure SetTargetFiletemplate(AValue: string);
-    procedure SetResampling(AValue: TResampling);
+    procedure SetInterpolation(AValue: TInterpolation);
     procedure SetMrkFilename(AValue: string);
     procedure SetSizes(AValue: string);
     procedure SetJpgQuality(AValue: integer);
@@ -224,10 +226,10 @@ type
     class function RenameParamsToStr(const Params :TRenameParams) :string;
     class function TryStrToTagsSources(const Str :string; out Value :TTagsSources) :boolean;
     class function TryStrToTagsReports(const Str :string; out Value :TTagsReports) :boolean;
-    class function TryStrToResampling(const Str :string; out Value :TResampling) :boolean;
-    class function StrToResampling(const Str :string) :TResampling;
-    class function TryNameToResampling(const Str :string; out Value :TResampling) :boolean;
-    class function NameToResampling(const Str :string) :TResampling;
+    class function TryStrToInterpolation(const Str :string; out Value :TInterpolation) :boolean;
+    class function StrToInterpolation(const Str :string) :TInterpolation;
+    class function TryNameToInterpolation(const Str :string; out Value :TInterpolation) :boolean;
+    class function NameToInterpolation(const Str :string) :TInterpolation;
 
     property SourceFilenames :TStrings read GetSourceFilenames write SetSourceFilenames;
     property TargetFolder :string read FTargetFolder write SetTargetFolder;
@@ -235,7 +237,7 @@ type
     property Sizes :string read GetSizes write SetSizes;
     property JpgQuality :integer read FJpgQuality write SetJpgQuality;
     property PngCompression :integer read FPngCompression write SetPngCompression;
-    property Resampling :TResampling read GetResampling write SetResampling;
+    property Interpolation :TInterpolation read GetInterpolation write SetInterpolation;
     property MrkFilename :string read FMrkFilename write SetMrkFilename; // if msFile
     property MrkSize :single read FMrkSize write SetMrkSize;
     property MrkX :single read FMrkX write SetMrkX;
@@ -301,7 +303,7 @@ resourcestring
   SErrInvalidINDEXParamCountFmt   = 'Invalid INDEX parameter count ''%s'' (2 expected)';
   SErrInvalidPlaceholder          = 'Unknown or invalid placeholder';
   SInfResultFmt                   = 'Images: %d, Filter: %s, Sizes: %d, Tasks: %d, Successful: %d, Failed: %d, Elapsed: %.2fs';
-  SErrInvalidResamplingFmt        = 'Invalid resampling value ''%s''';
+  SErrInvalidInterpolationFmt     = 'Invalid interpolation name ''%s''';
 const
   LEVELSTRS :array[TLevel] of string = (SCptHint, '', SCptWarning, SCptAbort, SCptFatal);
 
@@ -566,7 +568,7 @@ begin
           // %SIZE%
           SizeStr := IntToStr(Size);
           TargetFiletitleExt := Format(Processor.FRen.FmtStr,
-            [TargetFiletitle, TargetFileExt, IndexStr, SizeStr, RESAMPLING_NAMES[Processor.Resampling]]);
+            [TargetFiletitle, TargetFileExt, IndexStr, SizeStr, INTERPOLATION_NAMES[Processor.Interpolation]]);
         end else
           TargetFiletitleExt := ExtractFilename(SourceFilename);
 
@@ -615,7 +617,7 @@ begin
   FSizes            := nil;
   FJpgQuality       := DEFAULTJPGQUALITY;
   FPngCompression   := DEFAULTPNGCOMPRESSION;
-  Resampling        := DEFAULT_RESAMPLING;
+  Interpolation        := DEFAULT_INTERPOLATION;
   FMrkFilename      := '';
   FMrkSize          := DEFAULTMRKSIZE;
   FMrkX             := DEFAULTMRKX;
@@ -874,7 +876,7 @@ begin
     end;
 
     if Assigned(FOnPrint) then with Dispatcher.Stats do
-      FOnPrint(self, Format(SInfResultFmt, [n, RESAMPLING_STRINGS[Resampling], m, TaskCount, Successful, Failed, Elapsed/1000.0]), llNews);
+      FOnPrint(self, Format(SInfResultFmt, [n, INTERPOLATION_STRINGS[Interpolation], m, TaskCount, Successful, Failed, Elapsed/1000.0]), llNews);
 
   finally
     Dispatcher.Free;
@@ -1042,40 +1044,40 @@ begin
   result := true;
 end;
 
-class function TProcessor.TryStrToResampling(const Str: string; out Value: TResampling): boolean;
+class function TProcessor.TryStrToInterpolation(const Str: string; out Value: TInterpolation): boolean;
 var
-  i :TResampling;
+  i :TInterpolation;
 begin
-  for i:=Low(TResampling) to High(TResampling) do
-    if SameText(Str, RESAMPLING_STRINGS[i]) then begin
+  for i:=Low(TInterpolation) to High(TInterpolation) do
+    if SameText(Str, INTERPOLATION_STRINGS[i]) then begin
       Value := i;
       Exit(true);
     end;
   result := false;
 end;
 
-class function TProcessor.StrToResampling(const Str: string): TResampling;
+class function TProcessor.StrToInterpolation(const Str: string): TInterpolation;
 begin
-  if not TryStrToResampling(Str, result) then
-    raise Exception.CreateFmt(SErrInvalidResamplingFmt, [Str]);
+  if not TryStrToInterpolation(Str, result) then
+    raise Exception.CreateFmt(SErrInvalidInterpolationFmt, [Str]);
 end;
 
-class function TProcessor.TryNameToResampling(const Str :string; out Value :TResampling) :boolean;
+class function TProcessor.TryNameToInterpolation(const Str :string; out Value :TInterpolation) :boolean;
 var
-  i :TResampling;
+  i :TInterpolation;
 begin
-  for i:=Low(TResampling) to High(TResampling) do
-    if SameText(Str, RESAMPLING_NAMES[i]) then begin
+  for i:=Low(TInterpolation) to High(TInterpolation) do
+    if SameText(Str, INTERPOLATION_NAMES[i]) then begin
       Value := i;
       Exit(true);
     end;
   result := false;
 end;
 
-class function TProcessor.NameToResampling(const Str :string) :TResampling;
+class function TProcessor.NameToInterpolation(const Str :string) :TInterpolation;
 begin
-  if not TryNameToResampling(Str, result) then
-    raise Exception.CreateFmt(SErrInvalidResamplingFmt, [Str]);
+  if not TryNameToInterpolation(Str, result) then
+    raise Exception.CreateFmt(SErrInvalidInterpolationFmt, [Str]);
 end;
 
 procedure TProcessor.SetSizes(AValue :string);
@@ -1094,12 +1096,12 @@ begin
   result := RenameParamsToStr(FRen);
 end;
 
-function TProcessor.GetResampling: TResampling;
+function TProcessor.GetInterpolation: TInterpolation;
 begin
   if FResampleMode = rmSimpleStretch then
-    result := rsStretch
+    result := ipStretch
   else
-    result := TResampling(integer(FResampleFilter)+1);
+    result := TInterpolation(integer(FResampleFilter)+1);
 end;
 
 function TProcessor.GetSourceFilenames: TStrings;
@@ -1117,9 +1119,9 @@ begin
   FRen := Params;
 end;
 
-procedure TProcessor.SetResampling(AValue: TResampling);
+procedure TProcessor.SetInterpolation(AValue: TInterpolation);
 begin
-  if AValue=rsStretch then begin
+  if AValue=ipStretch then begin
     FResampleMode := rmSimpleStretch;
     FResampleFilter := rfLanczos2;
   end else begin

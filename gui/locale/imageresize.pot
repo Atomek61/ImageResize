@@ -210,6 +210,12 @@ msgstr ""
 msgid "Invalid INDEX start '%s'"
 msgstr ""
 
+#: imgres.serrinvalidinterpolationfmt
+#, object-pascal-format
+msgctxt "imgres.serrinvalidinterpolationfmt"
+msgid "Invalid interpolation name '%s'"
+msgstr ""
+
 #: imgres.serrinvalidjpgqualityfmt
 #, object-pascal-format
 msgid "Invalid JPEG quality %d (1..100 expected)"
@@ -227,11 +233,6 @@ msgstr ""
 #: imgres.serrinvalidrenamingparamfmt
 #, object-pascal-format
 msgid "Invalid renaming parameter '%s'"
-msgstr ""
-
-#: imgres.serrinvalidresamplingfmt
-#, object-pascal-format
-msgid "Invalid resampling value '%s'"
 msgstr ""
 
 #: imgres.serrinvalidsizesfmt
@@ -1020,6 +1021,14 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
+#: tmaindialog.comboboxinterpolation.hint
+msgid ""
+"When resampling an image the interpolation algorithm\n"
+"controls speed and quality of the processing.\n"
+"Lanczos R2 is the default algorithm. R2 means the Lanczos pixel radius.\n"
+"The choice of an algorithm also depends on up- or down-scaling. RTFM."
+msgstr ""
+
 #: tmaindialog.comboboxjpegquality.hint
 msgctxt "tmaindialog.comboboxjpegquality.hint"
 msgid ""
@@ -1037,16 +1046,6 @@ msgstr ""
 
 #: tmaindialog.comboboxpngcompression.hint
 msgid "Select a PNG lossless compression degree."
-msgstr ""
-
-#: tmaindialog.comboboxresampling.hint
-msgctxt "tmaindialog.comboboxresampling.hint"
-msgid ""
-"The image quality and the processing\n"
-"speed depend on the algorithm of\n"
-"resampling. Lanczos2 is the default for\n"
-"a good speed and quality.\n"
-"2 means the Lanczos algorithms radius."
 msgstr ""
 
 #: tmaindialog.comboboxshuffleseed.hint
@@ -1157,6 +1156,10 @@ msgid ""
 "Windows Explorer or with a photo editor like RawTherapee."
 msgstr ""
 
+#: tmaindialog.groupboxinterpolation.caption
+msgid "Interpolation"
+msgstr ""
+
 #: tmaindialog.groupboxjpgoptions.caption
 msgid "JPEG"
 msgstr ""
@@ -1175,11 +1178,6 @@ msgstr ""
 
 #: tmaindialog.groupboxrename.caption
 msgid "Strategy"
-msgstr ""
-
-#: tmaindialog.groupboxresampling.caption
-msgctxt "tmaindialog.groupboxresampling.caption"
-msgid "Resampling"
 msgstr ""
 
 #: tmaindialog.groupboxshuffle.caption

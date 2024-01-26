@@ -1,30 +1,33 @@
 [Common]
 Type=IRS
-Version=300
+Version=400
+
+[Presentation]
+Id=
+TargetFolder=
 
 [Project]
-Description=Simple scaling of PNG and JPEG - all from a folder with wildcards
 Source=Folder
-SourceFolder=srcA\
-SourceMasks=*.jpg;*.png
+SourceFolder=.\srcA\
+SourceMasks=*.jpg; *.png
 SourceFilenames=
-Sizes=640, 800
-TargetFolder=tst2_%SIZE%
-JpgOptions.Quality=default
-PngOptions.Compression=default
-Resampling=Lanczos 2
+Sizes=640, 960
+TargetFolder=.\tst2\size%SIZE%
+JPEGQuality=Voreinstellung
+PNGCompression=Schnellste
+Interpolation=Lanczos R2
 MrkEnabled=0
 MrkFilename=
 MrkSize=20
-MrkX=2
-MrkY=2
+MrkX=98
+MrkY=98
 MrkAlpha=50
 RenEnabled=0
 RenSimple=1
 RenAdvanced=0
 RenCustom=0
 RenTemplate=img%INDEX:1,3%.%FILEEXT%
-Shuffle=0
+ShuffleEnabled=0
 ShuffleSeed=0
 TagsSourceEXIF=0
 TagsSourceTagsFiles=0
@@ -33,4 +36,5 @@ TagTimestamp=0
 TagCopyright=0
 Copyright=
 TagsReportEnabled=0
-TagsReportFilename=
+ImageInfosEnabled=0
+NoCreate=0

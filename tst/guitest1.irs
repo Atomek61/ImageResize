@@ -1,30 +1,38 @@
 [Common]
 Type=IRS
-Version=300
+Version=400
+
+[Presentation.Simple100]
+Class=Simple100
+Title=Hallo
+
+[Presentation]
+Id=
+TargetFolder=
 
 [Project]
-Description=Simple down-scaling of 4 PNG and JPEG files to 2 sizes
+Description=Up- and down-scaling of JPEG and PNG files.
 Source=Filenames
 SourceFolder=
-SourceMasks=*.jpg;*.png
-SourceFilenames=srcA\img1.png|srcA\img2.jpg|srcA\img3.jpg|srcA\img4.png|
-Sizes=120, 240
-TargetFolder=tst1\img%SIZE%
-JpgOptions.Quality=default
-PngOptions.Compression=default
-Resampling=Lanczos 2
+SourceMasks=*.jpg; *.png
+SourceFilenames=.\srcA\img1.png|.\srcA\img2.jpg|.\srcA\img3.jpg|.\srcA\img4.png|
+Sizes=960
+TargetFolder=.\tst1
+JPEGQuality=Voreinstellung
+PNGCompression=Schnellste
+Interpolation=Lanczos R2
 MrkEnabled=0
 MrkFilename=
 MrkSize=20
-MrkX=2
-MrkY=2
+MrkX=98
+MrkY=98
 MrkAlpha=50
 RenEnabled=0
 RenSimple=1
 RenAdvanced=0
 RenCustom=0
 RenTemplate=img%INDEX:1,3%.%FILEEXT%
-Shuffle=0
+ShuffleEnabled=0
 ShuffleSeed=0
 TagsSourceEXIF=0
 TagsSourceTagsFiles=0
@@ -33,9 +41,5 @@ TagTimestamp=0
 TagCopyright=0
 Copyright=
 TagsReportEnabled=0
-TagsReportFilename=
+ImageInfosEnabled=0
 NoCreate=0
-
-[Presentation.Simple100]
-Class=Simple100
-Title=Hallo

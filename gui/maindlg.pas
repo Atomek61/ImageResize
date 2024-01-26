@@ -19,7 +19,7 @@ uses
   LCLTranslator, Classes, Types, SysUtils, Forms, Controls, Graphics, Dialogs,
   StdCtrls, ComCtrls, ActnList, ExtCtrls, imgres, aboutdlg, inifiles, strutils,
   LMessages, LCLIntf, Buttons, ImgList, LCLType, LazHelpHTML, BGRABitmap,
-  BGRABitmapTypes, BGRASpeedButton, BGRAGraphicControl, BGRAImageList, RichMemo,
+  BGRABitmapTypes, BGRASpeedButton, BGRAGraphicControl, RichMemo,
   Generics.Collections, mrkeditdlg, WinDirs, updateutils, AppSettings, Logging,
   LoggingRichMemo, StringArrays, presentations, PresentationDlg, Settings,
   tagids;
@@ -163,7 +163,7 @@ type
     CheckBoxRenEnabled: TCheckBox;
     CheckBoxMrkEnabled: TCheckBox;
     CheckBoxShuffle: TCheckBox;
-    ComboBoxResampling: TComboBox;
+    ComboBoxInterpolation: TComboBox;
     ComboBoxShuffleSeed: TComboBox;
     EditCopyright: TEdit;
     EditSrcFolder: TEdit;
@@ -178,7 +178,7 @@ type
     EditMrkY: TEdit;
     EditSizes: TEdit;
     EditTargetFolder: TEdit;
-    GroupBoxResampling: TGroupBox;
+    GroupBoxInterpolation: TGroupBox;
     GroupBoxTagsReport: TGroupBox;
     GroupBoxTagsSource: TGroupBox;
     GroupBoxEXIFTagging: TGroupBox;
@@ -376,7 +376,7 @@ var
 implementation
 
 uses
-  math, helpintfs, Windows, FileUtil, Tags, SettingsDlg;
+  math, helpintfs, Windows, FileUtil, SettingsDlg;
 
 const
   SCptSizesDefault  = 'default';
@@ -529,7 +529,7 @@ var
   Button :TToolButton;
   Cpt :string;
   LangCode :string;
-  Resampling :TResampling;
+  Interpolation :TInterpolation;
 begin
   FLangCode := 'en';
   if (SysLocale.PriLangId=7) and not (IsSwitch('L', 'LANGUAGE', LangCode) and SameText(LangCode, 'en')) then begin
@@ -578,8 +578,8 @@ begin
   ToolBarSizeButtons.ButtonHeight := ToolBarSizeButtons.ClientHeight div 4;
   RadioButtonRenSimple.Hint := RENSIMPLETEMPLATE;
   RadioButtonRenAdvanced.Hint := RENADVANCEDTEMPLATE;
-  for Resampling in TResampling do
-    ComboBoxResampling.Items.Add(RESAMPLING_STRINGS[Resampling]);
+  for Interpolation in TInterpolation do
+    ComboBoxInterpolation.Items.Add(INTERPOLATION_STRINGS[Interpolation]);
 
   ComboBoxJPEGQuality.Items[0] := SCptJPEGQualityDefault;
 
@@ -766,38 +766,39 @@ begin
       ActionSrcFilenames.Execute
     else
       ActionSrcFolder.Execute;
-    FProjectDescription                   := ReadString(PROJECT_SECTION, 'Description', '');
-    EditSrcFolder.Text                    := ReadString(PROJECT_SECTION, 'SourceFolder', EditSrcFolder.Text);
-    EditSrcMasks.Text                     := ReadString(PROJECT_SECTION, 'SourceMasks', EditSrcMasks.Text);
+    FProjectDescription                   := ReadString(PROJECT_SECTION,  'Description', '');
+    ActionSrcFilenames.Checked            := SameText(ReadString(PROJECT_SECTION, 'Source', 'Filenames'), 'Filenames');
+    EditSrcFolder.Text                    := ReadString(PROJECT_SECTION,  'SourceFolder', EditSrcFolder.Text);
+    EditSrcMasks.Text                     := ReadString(PROJECT_SECTION,  'SourceMasks', EditSrcMasks.Text);
     MemoSrcFilenames.Text                 := ReplaceStr(ReadString(PROJECT_SECTION, 'SourceFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, LINESEP)), LINESEP, #13#10);
-    EditTargetFolder.Text                 := ReadString(PROJECT_SECTION, 'TargetFolder', EditTargetFolder.Text);
-    EditSizes.Text                        := ReadString(PROJECT_SECTION, 'Sizes', EditSizes.Text);
+    EditSizes.Text                        := ReadString(PROJECT_SECTION,  'Sizes', EditSizes.Text);
+    EditTargetFolder.Text                 := ReadString(PROJECT_SECTION,  'TargetFolder', EditTargetFolder.Text);
     RequiredStepsUpdate;
-    ComboBoxJPEGQuality.Text              := ReadString(PROJECT_SECTION, 'JpgOptions.Quality', ComboBoxJPEGQuality.Text);
-    ComboBoxPngCompression.Text           := ReadString(PROJECT_SECTION, 'PngOptions.Compression', ComboBoxPngCompression.Text);
-    ComboBoxResampling.Text               := ReadString(PROJECT_SECTION, 'Resampling', RESAMPLING_STRINGS[DEFAULT_RESAMPLING]);
-    CheckBoxMrkEnabled.Checked            := ReadBool(PROJECT_SECTION, 'MrkEnabled', CheckBoxMrkEnabled.Checked);
-    EditMrkFilename.Text                  := ReadString(PROJECT_SECTION, 'MrkFilename', EditMrkFilename.Text);
+    ComboBoxJPEGQuality.Text              := ReadString(PROJECT_SECTION,  'JPEGQuality', ComboBoxJPEGQuality.Text);
+    ComboBoxPngCompression.Text           := ReadString(PROJECT_SECTION,  'PNGCompression', ComboBoxPngCompression.Text);
+    ComboBoxInterpolation.Text            := ReadString(PROJECT_SECTION,  'Interpolation', INTERPOLATION_STRINGS[DEFAULT_INTERPOLATION]);
+    CheckBoxMrkEnabled.Checked            := ReadBool(PROJECT_SECTION,    'MrkEnabled', CheckBoxMrkEnabled.Checked);
+    EditMrkFilename.Text                  := ReadString(PROJECT_SECTION,  'MrkFilename', EditMrkFilename.Text);
     UpDownMrkSize.Position                := ReadInteger(PROJECT_SECTION, 'MrkSize', UpDownMrkSize.Position);
     UpDownMrkX.Position                   := ReadInteger(PROJECT_SECTION, 'MrkX', UpDownMrkX.Position);
     UpDownMrkY.Position                   := ReadInteger(PROJECT_SECTION, 'MrkY', UpDownMrkY.Position);
     UpDownMrkAlpha.Position               := ReadInteger(PROJECT_SECTION, 'MrkAlpha', UpDownMrkAlpha.Position);
-    CheckBoxRenEnabled.Checked            := ReadBool(PROJECT_SECTION, 'RenEnabled', CheckBoxRenEnabled.Checked);
-    RadioButtonRenSimple.Checked          := ReadBool(PROJECT_SECTION, 'RenSimple', RadioButtonRenSimple.Checked);
-    RadioButtonRenAdvanced.Checked        := ReadBool(PROJECT_SECTION, 'RenAdvanced', RadioButtonRenAdvanced.Checked);
-    RadioButtonRenCustom.Checked          := ReadBool(PROJECT_SECTION, 'RenCustom', RadioButtonRenCustom.Checked);
-    EditRenTemplate.Text                  := ReadString(PROJECT_SECTION, 'RenTemplate', EditRenTemplate.Text);
-    CheckBoxShuffle.Checked               := ReadBool(PROJECT_SECTION, 'Shuffle', CheckBoxShuffle.Checked);
+    CheckBoxRenEnabled.Checked            := ReadBool(PROJECT_SECTION,    'RenEnabled', CheckBoxRenEnabled.Checked);
+    RadioButtonRenSimple.Checked          := ReadBool(PROJECT_SECTION,    'RenSimple', RadioButtonRenSimple.Checked);
+    RadioButtonRenAdvanced.Checked        := ReadBool(PROJECT_SECTION,    'RenAdvanced', RadioButtonRenAdvanced.Checked);
+    RadioButtonRenCustom.Checked          := ReadBool(PROJECT_SECTION,    'RenCustom', RadioButtonRenCustom.Checked);
+    EditRenTemplate.Text                  := ReadString(PROJECT_SECTION,  'RenTemplate', EditRenTemplate.Text);
+    CheckBoxShuffle.Checked               := ReadBool(PROJECT_SECTION,    'ShuffleEnabled', CheckBoxShuffle.Checked);
     ComboBoxShuffleSeed.Text              := ShuffleSeedToStr(ReadInteger(PROJECT_SECTION, 'ShuffleSeed', 0));
-    CheckBoxTagsSourceEXIF.Checked        := ReadBool(PROJECT_SECTION, 'TagsSourceEXIF', CheckBoxTagsSourceEXIF.Checked);
-    CheckBoxTagsSourceTagsFiles.Checked   := ReadBool(PROJECT_SECTION, 'TagsSourceTagsFiles', CheckBoxTagsSourceTagsFiles.Checked);
-    CheckBoxTagTitle.Checked              := ReadBool(PROJECT_SECTION, 'TagTitle', CheckBoxTagTitle.Checked);
-    CheckBoxTagTimestamp.Checked          := ReadBool(PROJECT_SECTION, 'TagTimestamp', CheckBoxTagTimestamp.Checked);
-    CheckBoxTagCopyright.Checked          := ReadBool(PROJECT_SECTION, 'TagCopyright', CheckBoxTagCopyright.Checked);
-    EditCopyright.Text                    := ReadString(PROJECT_SECTION, 'Copyright', EditCopyright.Text);
-    CheckBoxTagsReportEnabled.Checked     := ReadBool(PROJECT_SECTION, 'TagsReportEnabled', CheckBoxTagsReportEnabled.Checked);
-    CheckBoxImageInfosEnabled.Checked     := ReadBool(PROJECT_SECTION, 'ImageInfosEnabled', CheckBoxImageInfosEnabled.Checked);
-    CheckBoxNoCreate.Checked              := ReadBool(PROJECT_SECTION, 'NoCreate', DEFAULT_NOCREATE);
+    CheckBoxTagsSourceEXIF.Checked        := ReadBool(PROJECT_SECTION,    'TagsSourceEXIF', CheckBoxTagsSourceEXIF.Checked);
+    CheckBoxTagsSourceTagsFiles.Checked   := ReadBool(PROJECT_SECTION,    'TagsSourceTagsFiles', CheckBoxTagsSourceTagsFiles.Checked);
+    CheckBoxTagTitle.Checked              := ReadBool(PROJECT_SECTION,    'TagTitle', CheckBoxTagTitle.Checked);
+    CheckBoxTagTimestamp.Checked          := ReadBool(PROJECT_SECTION,    'TagTimestamp', CheckBoxTagTimestamp.Checked);
+    CheckBoxTagCopyright.Checked          := ReadBool(PROJECT_SECTION,    'TagCopyright', CheckBoxTagCopyright.Checked);
+    EditCopyright.Text                    := ReadString(PROJECT_SECTION,  'Copyright', EditCopyright.Text);
+    CheckBoxTagsReportEnabled.Checked     := ReadBool(PROJECT_SECTION,    'TagsReportEnabled', CheckBoxTagsReportEnabled.Checked);
+    CheckBoxImageInfosEnabled.Checked     := ReadBool(PROJECT_SECTION,    'ImageInfosEnabled', CheckBoxImageInfosEnabled.Checked);
+    CheckBoxNoCreate.Checked              := ReadBool(PROJECT_SECTION,    'NoCreate', DEFAULT_NOCREATE);
 
     ActionParamSizes.Execute;
   end;
@@ -815,39 +816,38 @@ begin
     WriteString(COMMON_SECTION, 'Type', PRJTYPE);
     WriteString(COMMON_SECTION, 'Version', PRJVERSION);
     EraseSection(PROJECT_SECTION);
-    WriteString(PROJECT_SECTION, 'Description', FProjectDescription);
-    WriteString(PROJECT_SECTION, 'Source', SRCMODES[ActionSrcFilenames.Checked]);
-    WriteString(PROJECT_SECTION, 'SourceFolder', EditSrcFolder.Text);
-    WriteString(PROJECT_SECTION, 'SourceMasks', EditSrcMasks.Text);
-    WriteString(PROJECT_SECTION, 'SourceFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, LINESEP));
-    WriteString(PROJECT_SECTION, 'Sizes', EditSizes.Text);
-    WriteString(PROJECT_SECTION, 'TargetFolder', EditTargetFolder.Text);
-    WriteString(PROJECT_SECTION, 'JpgOptions.Quality', ComboBoxJPEGQuality.Text);
-    WriteString(PROJECT_SECTION, 'PngOptions.Compression', ComboBoxPngCompression.Text);
-    WriteString(PROJECT_SECTION, 'Resampling', ComboBoxResampling.Text);
-    WriteBool(PROJECT_SECTION, 'MrkEnabled', CheckBoxMrkEnabled.Checked);
-    WriteString(PROJECT_SECTION, 'MrkFilename', EditMrkFilename.Text);
-    WriteString(PROJECT_SECTION, 'MrkSize', EditMrkSize.Text);
-    WriteString(PROJECT_SECTION, 'MrkX', EditMrkX.Text);
-    WriteString(PROJECT_SECTION, 'MrkY', EditMrkY.Text);
-    WriteString(PROJECT_SECTION, 'MrkAlpha', EditMrkAlpha.Text);
-    WriteBool(PROJECT_SECTION, 'RenEnabled', CheckBoxRenEnabled.Checked);
-    WriteBool(PROJECT_SECTION, 'RenSimple', RadioButtonRenSimple.Checked);
-    WriteBool(PROJECT_SECTION, 'RenAdvanced', RadioButtonRenAdvanced.Checked);
-    WriteBool(PROJECT_SECTION, 'RenCustom', RadioButtonRenCustom.Checked);
-    WriteString(PROJECT_SECTION, 'RenTemplate', EditRenTemplate.Text);
-    WriteBool(PROJECT_SECTION, 'Shuffle', CheckBoxShuffle.Checked);
+//    WriteString(PROJECT_SECTION,  'Description', FProjectDescription);
+    WriteString(PROJECT_SECTION,  'Source', SRCMODES[ActionSrcFilenames.Checked]);
+    WriteString(PROJECT_SECTION,  'SourceFolder', EditSrcFolder.Text);
+    WriteString(PROJECT_SECTION,  'SourceMasks', EditSrcMasks.Text);
+    WriteString(PROJECT_SECTION,  'SourceFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, LINESEP));
+    WriteString(PROJECT_SECTION,  'Sizes', EditSizes.Text);
+    WriteString(PROJECT_SECTION,  'TargetFolder', EditTargetFolder.Text);
+    WriteString(PROJECT_SECTION,  'JPEGQuality', ComboBoxJPEGQuality.Text);
+    WriteString(PROJECT_SECTION,  'PNGCompression', ComboBoxPngCompression.Text);
+    WriteString(PROJECT_SECTION,  'Interpolation', ComboBoxInterpolation.Text);
+    WriteBool(PROJECT_SECTION,    'MrkEnabled', CheckBoxMrkEnabled.Checked);
+    WriteString(PROJECT_SECTION,  'MrkFilename', EditMrkFilename.Text);
+    WriteString(PROJECT_SECTION,  'MrkSize', EditMrkSize.Text);
+    WriteString(PROJECT_SECTION,  'MrkX', EditMrkX.Text);
+    WriteString(PROJECT_SECTION,  'MrkY', EditMrkY.Text);
+    WriteString(PROJECT_SECTION,  'MrkAlpha', EditMrkAlpha.Text);
+    WriteBool(PROJECT_SECTION,    'RenEnabled', CheckBoxRenEnabled.Checked);
+    WriteBool(PROJECT_SECTION,    'RenSimple', RadioButtonRenSimple.Checked);
+    WriteBool(PROJECT_SECTION,    'RenAdvanced', RadioButtonRenAdvanced.Checked);
+    WriteBool(PROJECT_SECTION,    'RenCustom', RadioButtonRenCustom.Checked);
+    WriteString(PROJECT_SECTION,  'RenTemplate', EditRenTemplate.Text);
+    WriteBool(PROJECT_SECTION,    'ShuffleEnabled', CheckBoxShuffle.Checked);
     WriteInteger(PROJECT_SECTION, 'ShuffleSeed', StrToShuffleSeed(ComboBoxShuffleSeed.Text));
-    WriteBool(PROJECT_SECTION, 'TagsSourceEXIF', CheckBoxTagsSourceEXIF.Checked);
-    WriteBool(PROJECT_SECTION, 'TagsSourceTagsFiles', CheckBoxTagsSourceTagsFiles.Checked);
-    WriteBool(PROJECT_SECTION, 'TagTitle', CheckBoxTagTitle.Checked);
-    WriteBool(PROJECT_SECTION, 'TagTimestamp', CheckBoxTagTimestamp.Checked);
-    WriteBool(PROJECT_SECTION, 'TagCopyright', CheckBoxTagCopyright.Checked);
-    WriteString(PROJECT_SECTION, 'Copyright', EditCopyright.Text);
-    WriteBool(PROJECT_SECTION, 'TagsReportEnabled', CheckBoxTagsReportEnabled.Checked);
-    WriteBool(PROJECT_SECTION, 'ImageInfosEnabled', CheckBoxImageInfosEnabled.Checked);
-    WriteBool(PROJECT_SECTION, 'NoCreate', CheckBoxNoCreate.Checked);
-    WriteString(PROJECT_SECTION, 'PresentationId', EditCopyright.Text);
+    WriteBool(PROJECT_SECTION,    'TagsSourceEXIF', CheckBoxTagsSourceEXIF.Checked);
+    WriteBool(PROJECT_SECTION,    'TagsSourceTagsFiles', CheckBoxTagsSourceTagsFiles.Checked);
+    WriteBool(PROJECT_SECTION,    'TagTitle', CheckBoxTagTitle.Checked);
+    WriteBool(PROJECT_SECTION,    'TagTimestamp', CheckBoxTagTimestamp.Checked);
+    WriteBool(PROJECT_SECTION,    'TagCopyright', CheckBoxTagCopyright.Checked);
+    WriteString(PROJECT_SECTION,  'Copyright', EditCopyright.Text);
+    WriteBool(PROJECT_SECTION,    'TagsReportEnabled', CheckBoxTagsReportEnabled.Checked);
+    WriteBool(PROJECT_SECTION,    'ImageInfosEnabled', CheckBoxImageInfosEnabled.Checked);
+    WriteBool(PROJECT_SECTION,    'NoCreate', CheckBoxNoCreate.Checked);
   end;
   FPresentationSettings.Save(Ini);
   FPresentationParamsList.Save(Ini, PRESENTATIONS_GROUP);
@@ -967,7 +967,7 @@ begin
     EditSizes.Text                      := '';
     ComboBoxJPEGQuality.Text            := ImgResizer.JpgQualityToStr(ImgResizer.JpgQuality);
     ComboBoxPngCompression.Text         := TProcessor.PngCompressionToStr(ImgResizer.PngCompression);
-    ComboBoxResampling.Text             := RESAMPLING_STRINGS[DEFAULT_RESAMPLING];
+    ComboBoxInterpolation.Text             := INTERPOLATION_STRINGS[DEFAULT_INTERPOLATION];
     EditMrkFilename.Text                := '';
     UpDownMrkSize.Position              := round(ImgResizer.MrkSize);
     UpDownMrkX.Position                 := round(ImgResizer.MrkX);
@@ -1702,7 +1702,7 @@ begin
           raise Exception.Create(SErrInvalidJpgQuality);
         Processor.JpgQuality := IntValue;
         Processor.PngCompression := ComboBoxPngCompression.ItemIndex;
-        Processor.Resampling := TResampling(ComboBoxResampling.ItemIndex);
+        Processor.Interpolation := TInterpolation(ComboBoxInterpolation.ItemIndex);
 
         // Rename
         if CheckBoxRenEnabled.Checked then begin

@@ -1010,7 +1010,7 @@ object MainDialog: TMainDialog
               OnChange = ProjectChanged
             end
           end
-          object GroupBoxResampling: TGroupBox
+          object GroupBoxInterpolation: TGroupBox
             Left = 4
             Height = 65
             Top = 4
@@ -1019,7 +1019,7 @@ object MainDialog: TMainDialog
             HelpKeyword = 'HTML/index.html#quality-resampling'
             Align = alTop
             BorderSpacing.Around = 4
-            Caption = 'Resampling'
+            Caption = 'Interpolation'
             ClientHeight = 45
             ClientWidth = 373
             TabOrder = 0
@@ -1029,13 +1029,13 @@ object MainDialog: TMainDialog
               Top = 8
               Width = 57
               Caption = 'Algorithm:'
-              FocusControl = ComboBoxResampling
+              FocusControl = ComboBoxInterpolation
               ParentColor = False
             end
-            object ComboBoxResampling: TComboBox
+            object ComboBoxInterpolation: TComboBox
               Left = 128
               Height = 23
-              Hint = 'The image quality and the processing'#13#10'speed depend on the algorithm of'#13#10'resampling. Lanczos2 is the default for'#13#10'a good speed and quality.'#13#10'2 means the Lanczos algorithms radius.'
+              Hint = 'When resampling an image the interpolation algorithm'#13#10'controls speed and quality of the processing.'#13#10'Lanczos R2 is the default algorithm. R2 means the Lanczos pixel radius.'#13#10'The choice of an algorithm also depends on up- or down-scaling. RTFM.'
               Top = 5
               Width = 120
               ItemHeight = 15
