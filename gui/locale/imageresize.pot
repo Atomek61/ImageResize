@@ -114,6 +114,11 @@ msgstr ""
 msgid "Hint"
 msgstr ""
 
+#: imgres.scptinterpolationdefault
+msgctxt "imgres.scptinterpolationdefault"
+msgid "Default"
+msgstr ""
+
 #: imgres.scptjpegqualitydefault
 msgctxt "imgres.scptjpegqualitydefault"
 msgid "Default"
@@ -164,7 +169,7 @@ msgstr ""
 
 #: imgres.scptrandomseed
 msgctxt "imgres.scptrandomseed"
-msgid "<random>"
+msgid "Random"
 msgstr ""
 
 #: imgres.scptsinglethread
@@ -216,9 +221,9 @@ msgctxt "imgres.serrinvalidinterpolationfmt"
 msgid "Invalid interpolation name '%s'"
 msgstr ""
 
-#: imgres.serrinvalidjpgqualityfmt
+#: imgres.serrinvalidjpegqualityfmt
 #, object-pascal-format
-msgid "Invalid JPEG quality %d (1..100 expected)"
+msgid "Invalid JPEG quality %s (1..100 expected)"
 msgstr ""
 
 #: imgres.serrinvalidplaceholder
@@ -227,7 +232,12 @@ msgstr ""
 
 #: imgres.serrinvalidpngcompressionfmt
 #, object-pascal-format
-msgid "Invalid png compression %d (0..3 expected)"
+msgid "Invalid PNG compression %d (0..3 expected)"
+msgstr ""
+
+#: imgres.serrinvalidpngcompressionnamefmt
+#, object-pascal-format
+msgid "Invalid PNG compression %s (Default, None, Fastest or Maximum expected)"
 msgstr ""
 
 #: imgres.serrinvalidrenamingparamfmt
@@ -1037,11 +1047,6 @@ msgid ""
 "1 - high compression, poor quality, small image\n"
 "75 - good compression, good quality, medium size\n"
 "100 - low compression, highest quality, large file"
-msgstr ""
-
-#: tmaindialog.comboboxjpegquality.text
-msgctxt "tmaindialog.comboboxjpegquality.text"
-msgid "75"
 msgstr ""
 
 #: tmaindialog.comboboxpngcompression.hint

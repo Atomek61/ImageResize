@@ -83,12 +83,12 @@ object MainDialog: TMainDialog
         Top = 70
         Width = 384
         TabStop = False
-        ActivePage = TabSheetSrcFilenames
+        ActivePage = TabSheetSrcFolder
         Align = alClient
         BorderSpacing.Around = 4
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 0
+        TabIndex = 1
         TabOrder = 1
         object TabSheetSrcFilenames: TTabSheet
           ClientHeight = 286
@@ -255,14 +255,14 @@ object MainDialog: TMainDialog
         Top = 4
         Width = 393
         TabStop = False
-        ActivePage = TabSheetQuality
+        ActivePage = TabSheetRenaming
         Align = alClient
         BorderSpacing.Around = 4
         ImagesWidth = 32
         MultiLine = True
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 3
+        TabIndex = 1
         TabOrder = 1
         Options = [nboMultiLine]
         object TabSheetSizes: TTabSheet
@@ -960,19 +960,7 @@ object MainDialog: TMainDialog
               Top = 5
               Width = 120
               ItemHeight = 15
-              ItemIndex = 5
-              Items.Strings = (
-                'default'
-                '1'
-                '10'
-                '25'
-                '50'
-                '75'
-                '90'
-                '100'
-              )
               TabOrder = 0
-              Text = '75'
               OnChange = ProjectChanged
             end
           end
@@ -995,10 +983,10 @@ object MainDialog: TMainDialog
               Top = 8
               Width = 73
               Caption = 'Compression:'
-              FocusControl = ComboBoxPngCompression
+              FocusControl = ComboBoxPNGCompression
               ParentColor = False
             end
-            object ComboBoxPngCompression: TComboBox
+            object ComboBoxPNGCompression: TComboBox
               Left = 128
               Height = 23
               Hint = 'Select a PNG lossless compression degree.'
@@ -1297,14 +1285,14 @@ object MainDialog: TMainDialog
     end
     object PanelDestination: TPanel
       Left = 200
-      Height = 52
+      Height = 51
       Top = 416
       Width = 485
       HelpType = htKeyword
       HelpKeyword = 'HTML/index.html#dstfolder'
       Anchors = [akLeft, akRight, akBottom]
       BevelOuter = bvNone
-      ClientHeight = 52
+      ClientHeight = 51
       ClientWidth = 485
       ParentBackground = False
       ParentColor = False

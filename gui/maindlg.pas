@@ -170,7 +170,7 @@ type
     EditSrcMasks: TEdit;
     EditRenTemplate: TComboBox;
     ComboBoxJPEGQuality: TComboBox;
-    ComboBoxPngCompression: TComboBox;
+    ComboBoxPNGCompression: TComboBox;
     EditMrkAlpha: TEdit;
     EditMrkFilename: TEdit;
     EditMrkSize: TEdit;
@@ -530,6 +530,7 @@ var
   Cpt :string;
   LangCode :string;
   Interpolation :TInterpolation;
+  Item :string;
 begin
   FLangCode := 'en';
   if (SysLocale.PriLangId=7) and not (IsSwitch('L', 'LANGUAGE', LangCode) and SameText(LangCode, 'en')) then begin
@@ -578,13 +579,17 @@ begin
   ToolBarSizeButtons.ButtonHeight := ToolBarSizeButtons.ClientHeight div 4;
   RadioButtonRenSimple.Hint := RENSIMPLETEMPLATE;
   RadioButtonRenAdvanced.Hint := RENADVANCEDTEMPLATE;
+
   for Interpolation in TInterpolation do
     ComboBoxInterpolation.Items.Add(INTERPOLATION_STRINGS[Interpolation]);
 
-  ComboBoxJPEGQuality.Items[0] := SCptJPEGQualityDefault;
+  ComboBoxJPEGQuality.Items.Clear;
+  for Item in JPEGQUALITY_STRINGS do
+    ComboBoxJPEGQuality.Items.Add(Item);
 
-  for i:=0 to High(PNGCOMPRESSION_STRINGS) do
-    ComboBoxPngCompression.Items.Add(PNGCOMPRESSION_STRINGS[i]);
+  ComboBoxPNGCompression.Items.Clear;
+  for Item in PNGCOMPRESSION_STRINGS do
+    ComboBoxPNGCompression.Items.Add(Item);
 
   ComboBoxShuffleSeed.Items[0] := SCptRandomSeed;
 
@@ -601,8 +606,10 @@ begin
   Log(Format(SCptInfoFmt, [GUIVER_APP, GUIVER_VERSION, GUIVER_DATE, IMGRESVER, TThread.ProcessorCount]), llHint);
 
   LoadSettings;
-  if not FDialogSettings.AutoSave.Value or not LoadLastProject then
-    ActionNew.Execute;
+  ActionNew.Execute;
+  if FDialogSettings.AutoSave.Value then
+    LoadLastProject;
+
   RequiredStepsUpdate;
 
   FAutoExit := IsSwitch('X', 'AUTOEXIT');
@@ -747,6 +754,7 @@ function TMainDialog.LoadProjectFromIni(Ini :TCustomIniFile) :boolean;
 var
   IniVer :string;
   IniTyp :string;
+  Value :integer;
 begin
   with Ini do begin
     IniTyp := Ini.ReadString('Common', 'Type', 'unknown');
@@ -762,21 +770,22 @@ begin
       Exit;
     end;
 
+    FProjectDescription                   := ReadString(PROJECT_SECTION,  'Description', '');
     if SameText(ReadString(PROJECT_SECTION, 'Source', 'Filenames'), 'Filenames') then
       ActionSrcFilenames.Execute
     else
       ActionSrcFolder.Execute;
-    FProjectDescription                   := ReadString(PROJECT_SECTION,  'Description', '');
-    ActionSrcFilenames.Checked            := SameText(ReadString(PROJECT_SECTION, 'Source', 'Filenames'), 'Filenames');
+//    ActionSrcFilenames.Checked            := SameText(ReadString(PROJECT_SECTION, 'Source', 'Filenames'), 'Filenames');
     EditSrcFolder.Text                    := ReadString(PROJECT_SECTION,  'SourceFolder', EditSrcFolder.Text);
     EditSrcMasks.Text                     := ReadString(PROJECT_SECTION,  'SourceMasks', EditSrcMasks.Text);
     MemoSrcFilenames.Text                 := ReplaceStr(ReadString(PROJECT_SECTION, 'SourceFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, LINESEP)), LINESEP, #13#10);
     EditSizes.Text                        := ReadString(PROJECT_SECTION,  'Sizes', EditSizes.Text);
     EditTargetFolder.Text                 := ReadString(PROJECT_SECTION,  'TargetFolder', EditTargetFolder.Text);
     RequiredStepsUpdate;
-    ComboBoxJPEGQuality.Text              := ReadString(PROJECT_SECTION,  'JPEGQuality', ComboBoxJPEGQuality.Text);
-    ComboBoxPngCompression.Text           := ReadString(PROJECT_SECTION,  'PNGCompression', ComboBoxPngCompression.Text);
-    ComboBoxInterpolation.Text            := ReadString(PROJECT_SECTION,  'Interpolation', INTERPOLATION_STRINGS[DEFAULT_INTERPOLATION]);
+    ComboBoxInterpolation.ItemIndex       := integer(TProcessor.NameToInterpolation(ReadString(PROJECT_SECTION,  'Interpolation', INTERPOLATION_NAMES[DEFAULT_INTERPOLATION])));
+    Value := ReadInteger(PROJECT_SECTION,  'JPEGQuality', TProcessor.StrToJPEGQuality(ComboBoxJPEGQuality.Text));
+    if Value = DEFAULTJPEGQUALITY then ComboBoxJPEGQuality.ItemIndex := 0 else ComboBoxJPEGQuality.Text := IntToStr(Value);
+    ComboBoxPNGCompression.ItemIndex      := TProcessor.NameToPNGCompression(ReadString(PROJECT_SECTION,  'PNGCompression', PNGCOMPRESSION_NAMES[ComboBoxPNGCompression.ItemIndex]));
     CheckBoxMrkEnabled.Checked            := ReadBool(PROJECT_SECTION,    'MrkEnabled', CheckBoxMrkEnabled.Checked);
     EditMrkFilename.Text                  := ReadString(PROJECT_SECTION,  'MrkFilename', EditMrkFilename.Text);
     UpDownMrkSize.Position                := ReadInteger(PROJECT_SECTION, 'MrkSize', UpDownMrkSize.Position);
@@ -810,22 +819,28 @@ const
   SRCMODES :array[boolean] of string = ('Folder', 'Filenames');
 
 procedure TMainDialog.SaveProjectToIni(Ini :TCustomIniFile);
+var
+  Value :integer;
 begin
   // Navigate to proper "directory":
   with Ini do begin
     WriteString(COMMON_SECTION, 'Type', PRJTYPE);
     WriteString(COMMON_SECTION, 'Version', PRJVERSION);
     EraseSection(PROJECT_SECTION);
-//    WriteString(PROJECT_SECTION,  'Description', FProjectDescription);
+    WriteString(PROJECT_SECTION,  'Description', FProjectDescription);
     WriteString(PROJECT_SECTION,  'Source', SRCMODES[ActionSrcFilenames.Checked]);
     WriteString(PROJECT_SECTION,  'SourceFolder', EditSrcFolder.Text);
     WriteString(PROJECT_SECTION,  'SourceMasks', EditSrcMasks.Text);
     WriteString(PROJECT_SECTION,  'SourceFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, LINESEP));
     WriteString(PROJECT_SECTION,  'Sizes', EditSizes.Text);
     WriteString(PROJECT_SECTION,  'TargetFolder', EditTargetFolder.Text);
-    WriteString(PROJECT_SECTION,  'JPEGQuality', ComboBoxJPEGQuality.Text);
-    WriteString(PROJECT_SECTION,  'PNGCompression', ComboBoxPngCompression.Text);
-    WriteString(PROJECT_SECTION,  'Interpolation', ComboBoxInterpolation.Text);
+    WriteString(PROJECT_SECTION,  'Interpolation', INTERPOLATION_NAMES[TInterpolation(ComboBoxInterpolation.ItemIndex)]);
+    Value := TProcessor.StrToJPEGQuality(ComboBoxJPEGQuality.Text);
+    if Value = DEFAULTJPEGQUALITY then
+      WriteString(PROJECT_SECTION, 'JPEGQuality', JPEGQUALITY_NAMES[0])
+    else
+      WriteInteger(PROJECT_SECTION, 'JPEGQuality', Value);
+    WriteString(PROJECT_SECTION,  'PNGCompression', PNGCOMPRESSION_NAMES[ComboBoxPNGCompression.ItemIndex]);
     WriteBool(PROJECT_SECTION,    'MrkEnabled', CheckBoxMrkEnabled.Checked);
     WriteString(PROJECT_SECTION,  'MrkFilename', EditMrkFilename.Text);
     WriteString(PROJECT_SECTION,  'MrkSize', EditMrkSize.Text);
@@ -849,7 +864,8 @@ begin
     WriteBool(PROJECT_SECTION,    'ImageInfosEnabled', CheckBoxImageInfosEnabled.Checked);
     WriteBool(PROJECT_SECTION,    'NoCreate', CheckBoxNoCreate.Checked);
   end;
-  FPresentationSettings.Save(Ini);
+  if FPresentationSettings.Dirty then
+    FPresentationSettings.Save(Ini);
   FPresentationParamsList.Save(Ini, PRESENTATIONS_GROUP);
 end;
 
@@ -965,9 +981,9 @@ begin
     EditSrcMasks.Text                   := '*.jpg; *.png';
     EditTargetFolder.Text               := '';
     EditSizes.Text                      := '';
-    ComboBoxJPEGQuality.Text            := ImgResizer.JpgQualityToStr(ImgResizer.JpgQuality);
-    ComboBoxPngCompression.Text         := TProcessor.PngCompressionToStr(ImgResizer.PngCompression);
-    ComboBoxInterpolation.Text             := INTERPOLATION_STRINGS[DEFAULT_INTERPOLATION];
+    ComboBoxJPEGQuality.ItemIndex       := 0;
+    ComboBoxPNGCompression.ItemIndex    := 0;
+    ComboBoxInterpolation.ItemIndex     := 0;
     EditMrkFilename.Text                := '';
     UpDownMrkSize.Position              := round(ImgResizer.MrkSize);
     UpDownMrkX.Position                 := round(ImgResizer.MrkX);
@@ -1698,14 +1714,15 @@ begin
 
         // Quality
         Processor := TProcessor.Create;
-        if not TProcessor.TryStrToJpgQuality(ComboBoxJPEGQuality.Text, IntValue) then
+        if not TProcessor.TryStrToJPEGQuality(ComboBoxJPEGQuality.Text, IntValue) then
           raise Exception.Create(SErrInvalidJpgQuality);
-        Processor.JpgQuality := IntValue;
-        Processor.PngCompression := ComboBoxPngCompression.ItemIndex;
+        Processor.JPEGQuality := IntValue;
+        Processor.PngCompression := ComboBoxPNGCompression.ItemIndex;
         Processor.Interpolation := TInterpolation(ComboBoxInterpolation.ItemIndex);
 
         // Rename
-        if CheckBoxRenEnabled.Checked then begin
+        Processor.RenEnabled := CheckBoxRenEnabled.Checked;
+        if Processor.RenEnabled then begin
           if RadioButtonRenSimple.Checked then
             Processor.TargetFiletemplate := RENSIMPLETEMPLATE
           else if RadioButtonRenAdvanced.Checked then
@@ -1714,6 +1731,7 @@ begin
             Processor.TargetFiletemplate := EditRenTemplate.Text;
         end else
           Processor.TargetFiletemplate := '';
+
         Processor.Shuffle := CheckBoxShuffle.Checked;
         Processor.ShuffleSeed := StrToShuffleSeed(ComboBoxShuffleSeed.Text);
 
@@ -1758,16 +1776,15 @@ begin
         // NoCreate flag
         Processor.NoCreate := CheckBoxNoCreate.Checked;
 
-        // Hook the processor
-        Processor.OnPrint := @OnPrint;
-        Processor.OnProgress := @OnProgress;
-
-        // warn, if %SIZE% placeholder is not contained either in
+        // stop, if %SIZE% placeholder is not contained either in
         // TargetFolder nor in FileTemplate
         TargetFolder := EditTargetFolder.Text;
         if (Length(Sizes)>1) and (Pos('%SIZE%', TargetFolder)=0)
          and not (Processor.RenEnabled and (Pos('%SIZE%', Processor.TargetFiletemplate)>0)) then
           raise Exception.Create(SErrEnterPlaceholder);
+        // Hook the processor
+        Processor.OnPrint := @OnPrint;
+        Processor.OnProgress := @OnProgress;
 
         Processor.Sizes := SizesToSizesStr(Sizes);
         Processor.SourceFilenames := SourceFilenames;

@@ -40,6 +40,8 @@ resourcestring
   SCptLanczos4    = 'Lanczos R4';
   SCptBestQuality = 'Best Quality';
 
+  SCptInterpolationDefault   = 'Default';
+
   SCptJPEGQualityDefault     = 'Default';
 
   SCptPNGCompressionDefault  = 'Default';
@@ -47,7 +49,7 @@ resourcestring
   SCptPNGCompressionFastest  = 'Fastest';
   SCptPNGCompressionMax      = 'Maximum';
 
-  SCptRandomSeed             = '<random>';
+  SCptRandomSeed             = 'Random';
 
   SCptSingleThread  = 'Single';
   SCptMaximumThread = 'Maximum';
@@ -56,19 +58,28 @@ type
   TTagsSource = (tsEXIF, tsTagsFiles); // Tags from EXIF and/or .tags files
   TTagsSources = set of TTagsSource;
   TScalingDirection = (sdUpScaling, sdNoscaling, sdDownScaling);
-  TInterpolation = (ipStretch, ipBox, ipLinear, ipHalfCosine, ipCosine, ipBicubic,
+  TInterpolation = (ipDefault, ipStretch, ipBox, ipLinear, ipHalfCosine, ipCosine, ipBicubic,
     ipMitchell, ipSpline, ipLanczos2, ipLanczos3, ipLanczos4, ipBestQuality);
   TTagsReport = (trTagsReport, trImages);
   TTagsReports = set of TTagsReport;
 
 const
-  INTERPOLATION_STRINGS :array[TInterpolation] of string = (
+  INTERPOLATION_NAMES :array[TInterpolation] of string = ('Default',
+    'Stretch', 'Box', 'Linear', 'HalfCosine', 'Cosine', 'Bicubic',
+    'Mitchell', 'Spline', 'Lanczos2', 'Lanczos3', 'Lanczos4', 'BestQuality');
+
+  INTERPOLATION_STRINGS :array[TInterpolation] of string = (SCptInterpolationDefault,
     SCptStretch, SCptBox, SCptLinear, SCptHalfCosine, SCptCosine, SCptBicubic,
     SCptMitchell, SCptSpline, SCptLanczos2, SCptLanczos3, SCptLanczos4, SCptBestQuality);
 
-  INTERPOLATION_NAMES :array[TInterpolation] of string = (
-    'Stretch', 'Box', 'Linear', 'HalfCosine', 'Cosine', 'Bicubic',
-    'Mitchell', 'Spline', 'Lanczos2', 'Lanczos3', 'Lanczos4', 'BestQuality');
+  JPEGQUALITY_NAMES :array[0..7] of string = ('Default',
+    '1', '10', '25', '50', '75', '90', '100');
+
+  JPEGQUALITY_STRINGS :array[0..7] of string = (SCptJPEGQualityDefault,
+    '1', '10', '25', '50', '75', '90', '100');
+
+  PNGCOMPRESSION_NAMES :array[0..3] of string = ('Default', 'None',
+    'Fastest', 'Maximum');
 
   PNGCOMPRESSION_STRINGS :array[0..3] of string = (SCptPNGCompressionDefault,
     SCptPNGCompressionNone, SCptPNGCompressionFastest, SCptPNGCompressionMax);
@@ -81,7 +92,7 @@ const
   IMAGEINFOSFILETITLE       = '.images';
 
   DEFAULTPNGCOMPRESSION     = 2;
-  DEFAULTJPGQUALITY         = 75;
+  DEFAULTJPEGQUALITY        = 75;
   DEFAULT_INTERPOLATION     = ipLanczos2;
   DEFAULTMRKSIZE            = 20.0;
   DEFAULTMRKX               = 98.0;
@@ -165,8 +176,8 @@ type
     FSourceFilenames  :TStrings;
     FTargetFolder     :string;
     FSizes            :TSizes;
-    FJpgQuality       :integer;
-    FPngCompression   :integer;
+    FJPEGQuality       :integer;
+    FPNGCompression   :integer;
     FResampleMode     :TResampleMode;
     FResampleFilter   :TResampleFilter;
     FMrkFilename      :string;
@@ -197,8 +208,8 @@ type
     procedure SetInterpolation(AValue: TInterpolation);
     procedure SetMrkFilename(AValue: string);
     procedure SetSizes(AValue: string);
-    procedure SetJpgQuality(AValue: integer);
-    procedure SetPngCompression(AValue: integer);
+    procedure SetJPEGQuality(AValue: integer);
+    procedure SetPNGCompression(AValue: integer);
     procedure SetMrkSize(AValue: single);
     procedure SetMrkX(AValue: single);
     procedure SetMrkY(AValue: single);
@@ -218,25 +229,27 @@ type
     class function GetVersion: string;
     function Execute :boolean;
     procedure Cancel;
-    class function TryStrToPngCompression(const Str :string; out Value :integer) :boolean;
-    class function PngCompressionToStr(const Value :integer) :string;
-    class function TryStrToJpgQuality(const Str :string; out Value :integer) :boolean;
-    class function JpgQualityToStr(const Value :integer) :string;
+    class function TryStrToInterpolation(const Str :string; out Value :TInterpolation) :boolean;
+    class function StrToInterpolation(const Str :string) :TInterpolation;
+    class function TryNameToInterpolation(const Name :string; out Value :TInterpolation) :boolean;
+    class function NameToInterpolation(const Name :string) :TInterpolation;
+    class function TryNameToPNGCompression(const Name :string; out Value :integer) :boolean;
+    class function NameToPNGCompression(const Name :string) :integer;
+    class function PNGCompressionToName(const Value :integer) :string;
+    class function TryStrToJPEGQuality(const Str :string; out Value :integer) :boolean;
+    class function StrToJPEGQuality(const Str :string) :integer;
+    class function JPEGQualityToStr(Value :integer) :string;
     class function TryStrToRenameParams(const Str :string; out Params :TRenameParams; out ErrStr :string) :boolean;
     class function RenameParamsToStr(const Params :TRenameParams) :string;
     class function TryStrToTagsSources(const Str :string; out Value :TTagsSources) :boolean;
     class function TryStrToTagsReports(const Str :string; out Value :TTagsReports) :boolean;
-    class function TryStrToInterpolation(const Str :string; out Value :TInterpolation) :boolean;
-    class function StrToInterpolation(const Str :string) :TInterpolation;
-    class function TryNameToInterpolation(const Str :string; out Value :TInterpolation) :boolean;
-    class function NameToInterpolation(const Str :string) :TInterpolation;
 
     property SourceFilenames :TStrings read GetSourceFilenames write SetSourceFilenames;
     property TargetFolder :string read FTargetFolder write SetTargetFolder;
     property TargetFiletemplate :string read GetTargetFiletemplate write SetTargetFiletemplate;
     property Sizes :string read GetSizes write SetSizes;
-    property JpgQuality :integer read FJpgQuality write SetJpgQuality;
-    property PngCompression :integer read FPngCompression write SetPngCompression;
+    property JPEGQuality :integer read FJPEGQuality write SetJPEGQuality;
+    property PNGCompression :integer read FPNGCompression write SetPNGCompression;
     property Interpolation :TInterpolation read GetInterpolation write SetInterpolation;
     property MrkFilename :string read FMrkFilename write SetMrkFilename; // if msFile
     property MrkSize :single read FMrkSize write SetMrkSize;
@@ -259,6 +272,7 @@ type
 
 function TrySizesStrToSizes(const Str :string; out Values :TSizes) :boolean;
 function SizesToSizesStr(const Sizes :TSizes) :string;
+//function TryJPEGQualityNameToIndex(const Name :string; out Index :integer) :boolean;
 
 implementation
 
@@ -294,8 +308,9 @@ resourcestring
   SErrMissingSizes                = 'Missing sizes.';
   SErrInvalidSizesFmt             = 'Invalid sizes ''%s''';
   SErrMultipleSizes               = 'Multiple sizes but placeholder %SIZE% not found in either folder or filename template';
-  SErrInvalidPngCompressionFmt    = 'Invalid png compression %d (0..3 expected)';
-  SErrInvalidJpgQualityFmt        = 'Invalid JPEG quality %d (1..100 expected)';
+  SErrInvalidPNGCompressionFmt    = 'Invalid PNG compression %d (0..3 expected)';
+  SErrInvalidPNGCompressionNameFmt= 'Invalid PNG compression %s (Default, None, Fastest or Maximum expected)';
+  SErrInvalidJPEGQualityFmt       = 'Invalid JPEG quality %s (1..100 expected)';
   SErrInvalidRenamingParamFmt     = 'Invalid renaming parameter ''%s''';
   SErrInvalidINDEXPlaceholderFmt  = 'Invalid INDEX placeholder parameters ''%s''';
   SErrInvalidINDEXStartFmt        = 'Invalid INDEX start ''%s''';
@@ -361,6 +376,18 @@ begin
   result := IntToStr(Sizes[0]);
   for i:=1 to High(Sizes) do
     result := result + ', ' + IntToStr(Sizes[i]);
+end;
+
+function TryJPEGQualityNameToIndex(const Name :string; out Index :integer) :boolean;
+var
+  i :integer;
+begin
+  for i:=0 to High(JPEGQUALITY_NAMES) do
+    if SameText(JPEGQUALITY_NAMES[i], Name) then begin
+      Index := i;
+      Exit(true);
+    end;
+  result := false;
 end;
 
 function ExtractExt(const Filename :string) :string;
@@ -480,7 +507,7 @@ begin
             // Jpg-options
             Writer := TFPWriterJPEG.Create;
             with TFPWriterJPEG(Writer) do
-              CompressionQuality := TFPJPEGCompressionQuality(Processor.JpgQuality);
+              CompressionQuality := TFPJPEGCompressionQuality(Processor.JPEGQuality);
           end;
 
         end else if IsPNG(SourceFilename) then begin
@@ -489,7 +516,7 @@ begin
             // Png-options
             Writer := TFPWriterPNG.Create;
             with TFPWriterPNG(Writer) do
-              CompressionLevel := ZStream.TCompressionLevel(Processor.PngCompression);
+              CompressionLevel := ZStream.TCompressionLevel(Processor.PNGCompression);
           end;
 
         end else
@@ -615,8 +642,8 @@ constructor TProcessor.Create;
 begin
   FSourceFilenames     := TStringList.Create;
   FSizes            := nil;
-  FJpgQuality       := DEFAULTJPGQUALITY;
-  FPngCompression   := DEFAULTPNGCOMPRESSION;
+  FJPEGQuality       := DEFAULTJPEGQUALITY;
+  FPNGCompression   := DEFAULTPNGCOMPRESSION;
   Interpolation        := DEFAULT_INTERPOLATION;
   FMrkFilename      := '';
   FMrkSize          := DEFAULTMRKSIZE;
@@ -778,7 +805,7 @@ begin
     m := Length(FSizes);
 
     // Check, if multiple sizes, then either %SIZE% must be in folder or in renamed filename
-    Exer.IsTargetFileRenamingStrategy := FRen.Enabled and (Pos('%3:', FRen.FmtStr)>0);
+    Exer.IsTargetFileRenamingStrategy := FRen.Enabled and (Pos('%SIZE%', FRen.FmtStr)>0);
     if Length(FSizes)>1 then begin
       Exer.IsMultipleTargetFolderStrategy := Pos('%SIZE%', FTargetFolder)>0;
       if not Exer.IsMultipleTargetFolderStrategy and not Exer.IsTargetFileRenamingStrategy then
@@ -891,40 +918,56 @@ begin
   FCancel := true;
 end;
 
-class function TProcessor.TryStrToPngCompression(const Str: string; out Value: integer): boolean;
+class function TProcessor.TryNameToPNGCompression(const Name: string; out Value: integer): boolean;
 var
   i :integer;
 begin
-  for i:=0 to High(PNGCOMPRESSION_STRINGS) do
-    if SameText(PNGCOMPRESSION_STRINGS[i], Str) then begin
+  for i:=0 to High(PNGCOMPRESSION_NAMES) do
+    if SameText(PNGCOMPRESSION_NAMES[i], Name) then begin
         Value := i;
         Exit(true);
     end;
   result := false;
 end;
 
-class function TProcessor.PngCompressionToStr(const Value :integer) :string;
+class function TProcessor.NameToPNGCompression(const Name: string): integer;
 begin
-  if (Value<0) or (Value>High(PNGCOMPRESSION_STRINGS)) then
-    raise Exception.CreateFmt(SErrInvalidPngCompressionFmt, [Value]);
-  result := PNGCOMPRESSION_STRINGS[Value];
+  if not TryNameToPNGCompression(Name, result) then
+    raise Exception.CreateFmt(SErrInvalidPNGCompressionNameFmt, [Name]);
+
 end;
 
-class function TProcessor.TryStrToJpgQuality(const Str :string; out Value :integer) :boolean;
+class function TProcessor.PNGCompressionToName(const Value :integer) :string;
 begin
-  if SameText(Trim(Str), SCptJPEGQualityDefault) then begin
-    Value := DEFAULTJPGQUALITY;
+  if (Value<0) or (Value>High(PNGCOMPRESSION_NAMES)) then
+    raise Exception.CreateFmt(SErrInvalidPNGCompressionFmt, [Value]);
+  result := PNGCOMPRESSION_NAMES[Value];
+end;
+
+class function TProcessor.TryStrToJPEGQuality(const Str :string; out Value :integer) :boolean;
+begin
+  result := TryStrToInt(Str, Value);
+  if not result then begin
+    Value := DEFAULTJPEGQUALITY;
     result := true;
-  end else
-    result := TryStrToInt(Str, Value) and (Value>=1) and (Value<=100);
+  end else begin
+    if Value<1 then Value := 1;
+    if Value>100 then Value := 100;
+  end;
 end;
 
-class function TProcessor.JpgQualityToStr(const Value :integer) :string;
+class function TProcessor.StrToJPEGQuality(const Str: string): integer;
 begin
-  if (Value<1) or (Value>100) then
-    raise Exception.CreateFmt(SErrInvalidJpgQualityFmt, [Value]);
-  if Value=DEFAULTJPGQUALITY then
-    result := SCptJPEGQualityDefault
+  if not TryStrToJPEGQuality(Str, result) then
+    raise Exception.CreateFmt(SErrInvalidJPEGQUalityFmt, [Str]);
+end;
+
+class function TProcessor.JPEGQualityToStr(Value :integer) :string;
+begin
+  if Value<1 then Value := 1;
+  if Value>100 then Value := 100;
+  if Value=DEFAULTJPEGQUALITY then
+    result := JPEGQUALITY_NAMES[0]
   else
     result := IntToStr(Value);
 end;
@@ -1062,22 +1105,22 @@ begin
     raise Exception.CreateFmt(SErrInvalidInterpolationFmt, [Str]);
 end;
 
-class function TProcessor.TryNameToInterpolation(const Str :string; out Value :TInterpolation) :boolean;
+class function TProcessor.TryNameToInterpolation(const Name :string; out Value :TInterpolation) :boolean;
 var
   i :TInterpolation;
 begin
   for i:=Low(TInterpolation) to High(TInterpolation) do
-    if SameText(Str, INTERPOLATION_NAMES[i]) then begin
+    if SameText(Name, INTERPOLATION_NAMES[i]) then begin
       Value := i;
       Exit(true);
     end;
   result := false;
 end;
 
-class function TProcessor.NameToInterpolation(const Str :string) :TInterpolation;
+class function TProcessor.NameToInterpolation(const Name :string) :TInterpolation;
 begin
-  if not TryNameToInterpolation(Str, result) then
-    raise Exception.CreateFmt(SErrInvalidInterpolationFmt, [Str]);
+  if not TryNameToInterpolation(Name, result) then
+    raise Exception.CreateFmt(SErrInvalidInterpolationFmt, [Name]);
 end;
 
 procedure TProcessor.SetSizes(AValue :string);
@@ -1121,12 +1164,22 @@ end;
 
 procedure TProcessor.SetInterpolation(AValue: TInterpolation);
 begin
-  if AValue=ipStretch then begin
-    FResampleMode := rmSimpleStretch;
-    FResampleFilter := rfLanczos2;
-  end else begin
-    FResampleMode := rmFineResample;
-    FResampleFilter := TResampleFilter(integer(AValue)-1);
+  case AValue of
+  ipDefault:
+    begin
+      FResampleMode := rmSimpleStretch;
+      FResampleFilter := rfBestQuality;
+    end;
+  ipStretch:
+    begin
+      FResampleMode := rmSimpleStretch;
+      FResampleFilter := rfLanczos2;
+    end;
+  else
+    begin
+      FResampleMode := rmFineResample;
+      FResampleFilter := TResampleFilter(integer(AValue)-2);
+    end;
   end;
 end;
 
@@ -1137,20 +1190,20 @@ begin
   FMrkFilenameDependsOnSize := Pos('%SIZE%', AValue)>0;
 end;
 
-procedure TProcessor.SetJpgQuality(AValue: integer);
+procedure TProcessor.SetJPEGQuality(AValue: integer);
 begin
-  if FJpgQuality=AValue then Exit;
-  if (AValue<1) or (AValue>100) then
-    raise Exception.CreateFmt(SErrInvalidJpgQualityFmt, [AValue]);
-  FJpgQuality:=AValue;
+  if AValue<1 then AValue := 1;
+  if AValue>100 then AValue := 100;
+  if FJPEGQuality=AValue then Exit;
+  FJPEGQuality:=AValue;
 end;
 
-procedure TProcessor.SetPngCompression(AValue: integer);
+procedure TProcessor.SetPNGCompression(AValue: integer);
 begin
-  if FPngCompression=AValue then Exit;
+  if FPNGCompression=AValue then Exit;
   if (AValue<0) or (AValue>3) then
     raise Exception.CreateFmt(SErrInvalidPNGCompressionFmt, [AValue]);
-  FPngCompression:=AValue;
+  FPNGCompression:=AValue;
 end;
 
 procedure TProcessor.SetMrkSize(AValue: single);

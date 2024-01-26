@@ -2,25 +2,17 @@
 Type=IRS
 Version=400
 
-[Presentation.Simple100]
-Class=Simple100
-Title=Hallo
-
-[Presentation]
-Id=
-TargetFolder=
-
 [Project]
-Description=Up- and down-scaling of JPEG and PNG files.
+Description=4 Images - JPEG and PNG - up- and down-scaling
 Source=Filenames
 SourceFolder=
 SourceMasks=*.jpg; *.png
 SourceFilenames=.\srcA\img1.png|.\srcA\img2.jpg|.\srcA\img3.jpg|.\srcA\img4.png|
 Sizes=960
 TargetFolder=.\tst1
-JPEGQuality=Voreinstellung
-PNGCompression=Schnellste
-Interpolation=Lanczos R2
+Interpolation=Default
+JPEGQuality=Default
+PNGCompression=Default
 MrkEnabled=0
 MrkFilename=
 MrkSize=20

@@ -125,6 +125,11 @@ msgstr "Halb-Cosinus"
 msgid "Hint"
 msgstr "Hinweis"
 
+#: imgres.scptinterpolationdefault
+msgctxt "imgres.scptinterpolationdefault"
+msgid "Default"
+msgstr "Voreinstellung"
+
 #: imgres.scptjpegqualitydefault
 msgctxt "imgres.scptjpegqualitydefault"
 msgid "Default"
@@ -175,8 +180,8 @@ msgstr "Keine"
 
 #: imgres.scptrandomseed
 msgctxt "imgres.scptrandomseed"
-msgid "<random>"
-msgstr "<zufällig>"
+msgid "Random"
+msgstr "Zufällig"
 
 #: imgres.scptsinglethread
 msgctxt "imgres.scptsinglethread"
@@ -227,10 +232,10 @@ msgctxt "imgres.serrinvalidinterpolationfmt"
 msgid "Invalid interpolation name '%s'"
 msgstr "Ungültiger Name der Interpolation - '%s'"
 
-#: imgres.serrinvalidjpgqualityfmt
+#: imgres.serrinvalidjpegqualityfmt
 #, object-pascal-format
-msgid "Invalid JPEG quality %d (1..100 expected)"
-msgstr "Ungültige JPEG Qualität '%d' (1..100 erwartet)"
+msgid "Invalid JPEG quality %s (1..100 expected)"
+msgstr "Ungültige JPEG-Qualität %s (Voreinstellung oder 1..100) erwartet."
 
 #: imgres.serrinvalidplaceholder
 msgid "Unknown or invalid placeholder"
@@ -238,8 +243,13 @@ msgstr "Unbekannter oder ungültiger Platzhalter"
 
 #: imgres.serrinvalidpngcompressionfmt
 #, object-pascal-format
-msgid "Invalid png compression %d (0..3 expected)"
+msgid "Invalid PNG compression %d (0..3 expected)"
 msgstr "Ungültige PNG-Kompression %d (0..3 erwartet)"
+
+#: imgres.serrinvalidpngcompressionnamefmt
+#, object-pascal-format
+msgid "Invalid PNG compression %s (Default, None, Fastest or Maximum expected)"
+msgstr "Ungültige PNG-Kompression %s (Voreinstellung, Keine, Schnellste oder Maximal erwartet)."
 
 #: imgres.serrinvalidrenamingparamfmt
 #, object-pascal-format
@@ -970,7 +980,7 @@ msgstr "ImageResize"
 
 #: tmaindialog.checkboximageinfosenabled.caption
 msgid "Create Presentation Infos (.images)"
-msgstr "Erzeuge Infos für Präsentationen (.Images)"
+msgstr "Erzeuge Infos für Präsentationen (.images)"
 
 #: tmaindialog.checkboximageinfosenabled.hint
 msgid ""
@@ -1063,7 +1073,7 @@ msgid ""
 msgstr ""
 "Beim Skalieren eines Bildes bestimmt der Interpolations-Algorithmus\n"
 "die Geschwindigkeit und die Qualität des Prozesses.\n"
-"Lanczos R2 ist der voreingestellte Algorithmus. R2 ist dabei der\vPixelradius des Lanczos-Filters.\n"
+"Lanczos R2 ist der voreingestellte Algorithmus. R2 ist dabei dervPixelradius des Lanczos-Filters.\n"
 "Die Wahl der Interpolation hängt auch davon ab, ob herauf oder herunter skaliert wird.\n"
 "RTFM."
 
@@ -1081,11 +1091,6 @@ msgstr ""
 "1- Hohe Kompression, magere Qualität, kleine Dateien\n"
 "75 - Gute Kompression, gute Qualität, mittlere Größe\n"
 "100 - geringe Kompresssion, hohe Qualität, große Datei"
-
-#: tmaindialog.comboboxjpegquality.text
-msgctxt "tmaindialog.comboboxjpegquality.text"
-msgid "75"
-msgstr "75"
 
 #: tmaindialog.comboboxpngcompression.hint
 msgid "Select a PNG lossless compression degree."
@@ -1366,7 +1371,7 @@ msgid ""
 "  d - number of digits"
 msgstr ""
 "%SIZE:n,d%\n"
-"  n - Start index\n"
+"  n - Startindex\n"
 "  d - Stellenzahl"
 
 #: tmaindialog.labelhintplaceholder2.caption
@@ -1421,7 +1426,7 @@ msgstr "2 Fortgeschritten - alle Dateien in ein Verzeichnis"
 
 #: tmaindialog.radiobuttonrencustom.caption
 msgid "3 Custom"
-msgstr "3 Benutzer"
+msgstr "3 Angepasst"
 
 #: tmaindialog.radiobuttonrensimple.caption
 msgid "1 Simple - a folder for each size"
