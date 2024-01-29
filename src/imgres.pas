@@ -805,7 +805,7 @@ begin
     m := Length(FSizes);
 
     // Check, if multiple sizes, then either %SIZE% must be in folder or in renamed filename
-    Exer.IsTargetFileRenamingStrategy := FRen.Enabled and (Pos('%SIZE%', FRen.FmtStr)>0);
+    Exer.IsTargetFileRenamingStrategy := FRen.Enabled and (Pos('%3:s', FRen.FmtStr)>0);
     if Length(FSizes)>1 then begin
       Exer.IsMultipleTargetFolderStrategy := Pos('%SIZE%', FTargetFolder)>0;
       if not Exer.IsMultipleTargetFolderStrategy and not Exer.IsTargetFileRenamingStrategy then
@@ -1007,8 +1007,8 @@ begin
   Params.IndexStart := 1;
   ParamCount := 0;
   if Length(Str)>0 then begin
-    // %FILENAME%, %FILEEXT%, %INDEX:N,W%, %SIZE%
-    // %0:s        %1:s       %2:s         %3:s
+    // %FILENAME%, %FILEEXT%, %INDEX:N,W%, %SIZE%, %FILTER%
+    // %0:s        %1:s       %2:s         %3:s    %4:s
     // Default: img%2:s.%1:s
     Params.FmtStr := Str;
     if IsPlaceholder('FILEEXT', i) then

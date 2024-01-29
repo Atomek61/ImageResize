@@ -9,7 +9,7 @@ uses
 
 type
 
-  { TProjectSettings }
+  { TProjectSettings }  // Not yet in charge
 
   TProjectSettings = class(TSettings)
   public
@@ -64,6 +64,7 @@ type
   public
     AutoSave :TBooleanSetting;
     WarnDirty :TBooleanSetting;
+    RelPathes :TBooleanSetting;
     constructor Create(const ASection :string); override;
   end;
 
@@ -86,6 +87,8 @@ begin
   AutoSave := TBooleanSetting.Create(self, 'AutoSave');
   AutoSave.Default := True;
   WarnDirty := TBooleanSetting.Create(self, 'WarnDirty');
+  RelPathes := TBooleanSetting.Create(self, 'RelPathes');
+  RelPathes.Value := true;
 end;
 
 { TPresentationSettings }

@@ -3,18 +3,18 @@ Type=IRS
 Version=400
 
 [Project]
-Description=All *.jpg from a folder, resampled to 2 sizes in different folders
-Source=Folder
-SourceFolder=.\srcA
-SourceMasks=*.jpg;
-SourceFilenames=.\srcA\img1.png|.\srcA\imgX.jpg|.\srcA\img3.jpg|.\srcA\img4.png|
-Sizes=48, 480
-TargetFolder=.\tst2\img%SIZE%
+Description=
+Source=Filenames
+SourceFolder=
+SourceMasks=*.jpg;*.png
+SourceFilenames=srcA\PM5544.png|srcA\tstimg1.jpg|srcA\tstimg2.png|srcA\tstimg3.png|
+Sizes=
+TargetFolder=tstx
 Interpolation=Default
 JPEGQuality=Default
 PNGCompression=Default
 MrkEnabled=0
-MrkFilename=
+MrkFilename=watermarks\wwwatomekde.png
 MrkSize=20
 MrkX=98
 MrkY=98

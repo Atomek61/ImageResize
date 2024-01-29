@@ -1,7 +1,7 @@
 object MainDialog: TMainDialog
-  Left = 766
+  Left = 1224
   Height = 680
-  Top = 254
+  Top = 167
   Width = 900
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'ImageResize'
@@ -83,12 +83,12 @@ object MainDialog: TMainDialog
         Top = 70
         Width = 384
         TabStop = False
-        ActivePage = TabSheetSrcFolder
+        ActivePage = TabSheetSrcFilenames
         Align = alClient
         BorderSpacing.Around = 4
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 1
+        TabIndex = 0
         TabOrder = 1
         object TabSheetSrcFilenames: TTabSheet
           ClientHeight = 286
@@ -101,7 +101,7 @@ object MainDialog: TMainDialog
             Width = 364
             Anchors = [akTop, akLeft, akRight, akBottom]
             ScrollBars = ssAutoVertical
-            TabOrder = 2
+            TabOrder = 0
             WordWrap = False
             OnChange = MemoSrcFilenamesChange
           end
@@ -133,7 +133,7 @@ object MainDialog: TMainDialog
             ImageIndex = 9
             OnClick = ButtonBrowseSrcFilesClick
             Spacing = 0
-            TabOrder = 0
+            TabOrder = 1
           end
           object ButtonClearSrcFiles: TBitBtn
             AnchorSideRight.Control = MemoSrcFilenames
@@ -150,7 +150,7 @@ object MainDialog: TMainDialog
             ImageIndex = 8
             OnClick = ButtonClearSrcFilesClick
             Spacing = 0
-            TabOrder = 1
+            TabOrder = 2
           end
           object LabelSourceFileListMessage: TLabel
             AnchorSideTop.Control = MemoSrcFilenames
@@ -255,14 +255,14 @@ object MainDialog: TMainDialog
         Top = 4
         Width = 393
         TabStop = False
-        ActivePage = TabSheetRenaming
+        ActivePage = TabSheetQuality
         Align = alClient
         BorderSpacing.Around = 4
         ImagesWidth = 32
         MultiLine = True
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 1
+        TabIndex = 3
         TabOrder = 1
         Options = [nboMultiLine]
         object TabSheetSizes: TTabSheet
@@ -956,7 +956,7 @@ object MainDialog: TMainDialog
             object ComboBoxJPEGQuality: TComboBox
               Left = 128
               Height = 23
-              Hint = 'Enter a JPEG compression quality from'#13#10#13#10'1 - high compression, poor quality, small image'#13#10'75 - good compression, good quality, medium size'#13#10'100 - low compression, highest quality, large file'
+              Hint = 'Enter a JPEG quality from'#13#10#13#10'1 - poor quality but high compression, small image'#13#10'75 - good compression, good quality, medium size'#13#10'100 - low compression, highest quality, large file'
               Top = 5
               Width = 120
               ItemHeight = 15
@@ -989,7 +989,7 @@ object MainDialog: TMainDialog
             object ComboBoxPNGCompression: TComboBox
               Left = 128
               Height = 23
-              Hint = 'Select a PNG lossless compression degree.'
+              Hint = 'Select a PNG lossless compression degree.'#13#10'Its always lossless but a tradeoff between size and processing time.'#13#10'The higher the compression, the higher the compressing/decompressing time.'
               Top = 4
               Width = 120
               ItemHeight = 15
@@ -1456,24 +1456,18 @@ object MainDialog: TMainDialog
       Top = 0
       Action = ActionSave
     end
-    object ToolButton5: TToolButton
-      Left = 649
-      Height = 64
-      Top = 0
-      Style = tbsSeparator
-    end
     object ToolButtonExecute: TToolButton
       Left = 401
       Top = 0
       Action = ActionExecute
     end
     object ToolButtonHelp: TToolButton
-      Left = 662
+      Left = 654
       Top = 0
       Action = ActionHelp
     end
     object ToolButton8: TToolButton
-      Left = 657
+      Left = 649
       Height = 64
       Top = 0
       Style = tbsDivider
@@ -1484,7 +1478,7 @@ object MainDialog: TMainDialog
       Action = ActionEditWatermark
     end
     object ToolButtonAbout: TToolButton
-      Left = 742
+      Left = 734
       Hint = 'License and Vendor Infos'
       Top = 0
       Action = ActionAbout

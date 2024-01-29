@@ -464,7 +464,7 @@ msgid "Missing source filenames"
 msgstr ""
 
 #: maindlg.serrmissingsourcefolder
-msgid "Missing source folder"
+msgid "Source folder not found"
 msgstr ""
 
 #: maindlg.slocdirhelp
@@ -1042,15 +1042,18 @@ msgstr ""
 #: tmaindialog.comboboxjpegquality.hint
 msgctxt "tmaindialog.comboboxjpegquality.hint"
 msgid ""
-"Enter a JPEG compression quality from\n"
+"Enter a JPEG quality from\n"
 "\n"
-"1 - high compression, poor quality, small image\n"
+"1 - poor quality but high compression, small image\n"
 "75 - good compression, good quality, medium size\n"
 "100 - low compression, highest quality, large file"
 msgstr ""
 
 #: tmaindialog.comboboxpngcompression.hint
-msgid "Select a PNG lossless compression degree."
+msgid ""
+"Select a PNG lossless compression degree.\n"
+"Its always lossless but a tradeoff between size and processing time.\n"
+"The higher the compression, the higher the compressing/decompressing time."
 msgstr ""
 
 #: tmaindialog.comboboxshuffleseed.hint
@@ -1624,6 +1627,16 @@ msgstr ""
 msgid ""
 "Always save the current settings in a hidden file,\n"
 "so it is available on the next start."
+msgstr ""
+
+#: tsettingsdialog.checkboxrelpathes.caption
+msgctxt "tsettingsdialog.checkboxrelpathes.caption"
+msgid "Save relative Pathes"
+msgstr ""
+
+#: tsettingsdialog.checkboxrelpathes.hint
+msgctxt "tsettingsdialog.checkboxrelpathes.hint"
+msgid "Pathes will be saved relative to the project file"
 msgstr ""
 
 #: tsettingsdialog.checkboxstoponerror.caption

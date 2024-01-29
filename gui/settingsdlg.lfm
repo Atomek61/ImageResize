@@ -1,6 +1,6 @@
 object SettingsDialog: TSettingsDialog
   Left = 872
-  Height = 245
+  Height = 284
   Top = 601
   Width = 429
   HelpType = htKeyword
@@ -8,7 +8,7 @@ object SettingsDialog: TSettingsDialog
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Settings'
-  ClientHeight = 245
+  ClientHeight = 284
   ClientWidth = 429
   DoubleBuffered = False
   OnCreate = FormCreate
@@ -445,7 +445,7 @@ object SettingsDialog: TSettingsDialog
     Left = 112
     Height = 19
     Hint = 'Always save the current settings in a hidden file,'#13#10'so it is available on the next start.'
-    Top = 136
+    Top = 132
     Width = 71
     Caption = '&Auto Save'
     TabOrder = 3
@@ -455,7 +455,7 @@ object SettingsDialog: TSettingsDialog
     Left = 112
     Height = 19
     Hint = 'Makes sure that unsaved changes will not be lost, when loading a new project.'
-    Top = 160
+    Top = 156
     Width = 88
     Caption = 'Saving &Query'
     TabOrder = 4
@@ -484,7 +484,7 @@ object SettingsDialog: TSettingsDialog
   object Bevel4: TBevel
     Left = 4
     Height = 3
-    Top = 198
+    Top = 237
     Width = 421
     Align = alBottom
     BorderSpacing.Left = 4
@@ -494,13 +494,13 @@ object SettingsDialog: TSettingsDialog
   object PanelControls: TPanel
     Left = 0
     Height = 44
-    Top = 201
+    Top = 240
     Width = 429
     Align = alBottom
     BevelOuter = bvNone
     ClientHeight = 44
     ClientWidth = 429
-    TabOrder = 5
+    TabOrder = 6
     object ButtonOk: TBitBtn
       Left = 213
       Height = 28
@@ -531,6 +531,22 @@ object SettingsDialog: TSettingsDialog
       ImageIndex = 3
       TabOrder = 1
     end
+  end
+  object Bevel2: TBevel
+    Left = 112
+    Height = 8
+    Top = 192
+    Width = 312
+    Shape = bsTopLine
+  end
+  object CheckBoxRelPathes: TCheckBox
+    Left = 112
+    Height = 19
+    Hint = 'Pathes will be saved relative to the project file'
+    Top = 208
+    Width = 121
+    Caption = 'Save relative Pathes'
+    TabOrder = 5
   end
   object TimerChucky: TTimer
     Enabled = False

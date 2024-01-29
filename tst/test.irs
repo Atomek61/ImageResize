@@ -3,13 +3,13 @@ Type=IRS
 Version=400
 
 [Project]
-Description=4 Images - JPEG and PNG - up- and down-scaling
+Description=
 Source=Filenames
 SourceFolder=
-SourceMasks=*.jpg; *.png
-SourceFilenames=.\srcA\img1.png|.\srcA\img2.jpg|.\srcA\img3.jpg|.\srcA\img4.png|
-Sizes=960
-TargetFolder=.\tst1
+SourceMasks=*.jpg;*.png
+SourceFilenames=srcA\PM5544.png|srcA\tstimg1.jpg|srcA\tstimg2.png|srcA\tstimg3.png|
+Sizes=
+TargetFolder=
 Interpolation=Default
 JPEGQuality=Default
 PNGCompression=Default

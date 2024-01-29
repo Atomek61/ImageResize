@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.3.1\n"
 
 #: aboutdlg.scptavailable
 msgid "Available"
@@ -475,7 +475,7 @@ msgid "Missing source filenames"
 msgstr "Fehlende Quelldateinamen"
 
 #: maindlg.serrmissingsourcefolder
-msgid "Missing source folder"
+msgid "Source folder not found"
 msgstr "Fehlendes Quellverzeichnis"
 
 #: maindlg.slocdirhelp
@@ -1080,21 +1080,27 @@ msgstr ""
 #: tmaindialog.comboboxjpegquality.hint
 msgctxt "tmaindialog.comboboxjpegquality.hint"
 msgid ""
-"Enter a JPEG compression quality from\n"
+"Enter a JPEG quality from\n"
 "\n"
-"1 - high compression, poor quality, small image\n"
+"1 - poor quality but high compression, small image\n"
 "75 - good compression, good quality, medium size\n"
 "100 - low compression, highest quality, large file"
 msgstr ""
 "JPEG-Kompressions\n"
 "\n"
-"1- Hohe Kompression, magere Qualität, kleine Dateien\n"
+"1- Magere Qualität, hohe Kompression und kleine Dateien\n"
 "75 - Gute Kompression, gute Qualität, mittlere Größe\n"
 "100 - geringe Kompresssion, hohe Qualität, große Datei"
 
 #: tmaindialog.comboboxpngcompression.hint
-msgid "Select a PNG lossless compression degree."
-msgstr "Wählt eine verlustlose Kompression für PNG."
+msgid ""
+"Select a PNG lossless compression degree.\n"
+"Its always lossless but a tradeoff between size and processing time.\n"
+"The higher the compression, the higher the compressing/decompressing time."
+msgstr ""
+"Wähle eine verlustlose Kompression für PNG.\n"
+"Sie ist immer verlustfrei aber eine Abwägung zwischen Dateigröße und Verarbeitungszeit.\n"
+"Je höher die Kompression, desto größer der Rechenaufwand"
 
 #: tmaindialog.comboboxshuffleseed.hint
 msgid "Enter a number, lets say 1000, to create always the same mixed order or 0 for shuffeling always randomly."
@@ -1168,7 +1174,7 @@ msgid "1"
 msgstr "1"
 
 #: tmaindialog.editrentemplate.hint
-#, fuzzy
+#, fuzzy, badformat
 msgid ""
 "Enter a filename template containing placeholders for special values.\n"
 "This template will be expanded for each resampled image. Insert the\n"
@@ -1716,6 +1722,16 @@ msgid ""
 "so it is available on the next start."
 msgstr "Sichert die aktuellen Einstellungen in einer versteckten Datei, sodass sie beim nächsten Start wieder zur Verfügung stehen."
 
+#: tsettingsdialog.checkboxrelpathes.caption
+msgctxt "tsettingsdialog.checkboxrelpathes.caption"
+msgid "Save relative Pathes"
+msgstr ""
+
+#: tsettingsdialog.checkboxrelpathes.hint
+msgctxt "tsettingsdialog.checkboxrelpathes.hint"
+msgid "Pathes will be saved relative to the project file"
+msgstr ""
+
 #: tsettingsdialog.checkboxstoponerror.caption
 msgctxt "tsettingsdialog.checkboxstoponerror.caption"
 msgid "&Stop on Error"
@@ -1779,3 +1795,4 @@ msgstr "Kerne"
 msgctxt "webutils.serrinvalidhtmlcolorfmt"
 msgid "Invalid web color '%s'."
 msgstr "Ungültige Web-Farbe '%s'."
+

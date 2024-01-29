@@ -157,6 +157,7 @@ type
     procedure SetDefault; override;
     procedure LoadDef(Ini :TCustomIniFile; const Section :string); override;
   public
+    constructor Create(Settings :TSettings; const Key :string); override;
     class function ClassDefault :string; override;
     function IsEqual(Other :TSetting) :boolean; override;
     procedure Assign(Source :TSetting); override;
@@ -759,6 +760,13 @@ begin
   FValue := FDefault;
   FMin := Ini.ReadInteger(Section, 'Min', Low(Int32));
   FMax := Ini.ReadInteger(Section, 'Max', High(Int32));
+end;
+
+constructor TInt32Setting.Create(Settings: TSettings; const Key: string);
+begin
+  inherited;
+  FMin := Low(Int32);
+  FMax := High(Int32);
 end;
 
 class function TInt32Setting.ClassDefault: string;

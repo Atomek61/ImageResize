@@ -16,9 +16,11 @@ type
 
   TSettingsDialog = class(TForm)
     Bevel1: TBevel;
+    Bevel2: TBevel;
     Bevel4: TBevel;
     ButtonCancel: TBitBtn;
     ButtonOk: TBitBtn;
+    CheckBoxRelPathes: TCheckBox;
     CheckBoxWarnDirty: TCheckBox;
     CheckBoxAutoSave: TCheckBox;
     CheckBoxStopOnError: TCheckBox;
@@ -89,6 +91,7 @@ begin
   ComboBoxBehavior.ItemIndex := integer(bhStandard);
   CheckBoxAutoSave.Checked := false;
   CheckBoxWarnDirty.Checked := true;
+  CheckBoxRelPathes.Checked := true;
   FBehaviorLocked := false;
   ImageChucky.Top := ClientHeight;
 end;
@@ -181,6 +184,7 @@ procedure TSettingsDialog.SetDialogSettings(Settings: TDialogSettings);
 begin
   CheckBoxAutoSave.Checked := Settings.AutoSave.Value;
   CheckBoxWarnDirty.Checked := Settings.WarnDirty.Value;
+  CheckBoxRelPathes.Checked := Settings.RelPathes.Value;
   CheckBoxAutoSaveClick(nil);
 end;
 
@@ -188,6 +192,7 @@ procedure TSettingsDialog.GetDialogSettings(Settings: TDialogSettings);
 begin
   Settings.AutoSave.Value := CheckBoxAutoSave.Checked;
   Settings.WarnDirty.Value := CheckBoxWarnDirty.Checked;
+  Settings.RelPathes.Value := CheckBoxRelPathes.Checked;
 end;
 
 procedure TSettingsDialog.SetProcessingSettings(Settings: TProcessingSettings);

@@ -22,7 +22,7 @@ uses
   BGRABitmapTypes, BGRASpeedButton, BGRAGraphicControl, RichMemo,
   Generics.Collections, mrkeditdlg, WinDirs, updateutils, AppSettings, Logging,
   LoggingRichMemo, StringArrays, presentations, PresentationDlg, Settings,
-  tagids;
+  TagIds;
 
 const
   GUIVER_APP      = 'ImageResize';
@@ -52,7 +52,7 @@ const
 
   COMMON_SECTION        = 'Common';
   PROJECT_SECTION       = 'Project';
-  PROCESSING_SECTION    = 'Processing';
+  PROCESSING_SECTION    = 'Processor';
   MAINDIALOG_SECTION    = 'MainDialog';
   PRESDIALOG_SECTION    = 'PresentationDialog';
 
@@ -64,6 +64,7 @@ const
 
   RENSIMPLETEMPLATE   = 'img%INDEX:1,3%.%FILEEXT%';
   RENADVANCEDTEMPLATE = 'img%INDEX:1,3%_%SIZE%.%FILEEXT%';
+  DEFAULT_SRCMASK     = '*.jpg;*.png';
 
   THUMBNAILIMGMAX = 240;
   DOCIMGMAX       = 960;
@@ -259,7 +260,6 @@ type
     ToolButtonOpen: TToolButton;
     ToolButtonSaveAs: TToolButton;
     ToolButtonSave: TToolButton;
-    ToolButton5: TToolButton;
     ToolButtonExecute: TToolButton;
     ToolButtonHelp: TToolButton;
     ToolButton8: TToolButton;
@@ -345,7 +345,7 @@ type
     function LoadSettings :boolean;
     procedure SaveSettings;
     function LoadProjectFromIni(Ini :TCustomIniFile) :boolean;
-    procedure SaveProjectToIni(Ini :TCustomIniFile);
+    procedure SaveProjectToIni(Ini :TCustomIniFile; SavePathAsIs :boolean);
     function LoadLastProject :boolean;
     procedure SaveLastProject;
     function LoadProjectFromFile(const Filename :string) :boolean;
@@ -365,6 +365,7 @@ type
     function MouseToMrkSpace(X, Y :integer; out Value :TSize) :boolean;
     function CalcMarkRect(out Rect :TRect) :boolean;
     function HasFocus(Control :TWinControl) :boolean;
+    function MakePathProjectRelative(const Filename :string) :string;
   public
     property RequiredSteps[Index :integer] :boolean read GetRequiredSteps write SetRequiredSteps;
     property Dirty :boolean read FIsDirty write SetDirty;
@@ -407,7 +408,7 @@ resourcestring
   SMsgProjectLoadedFromFmt      = 'Project ''%s'' loaded';
   SCptSourceFilesFmt            = '%d source files';
   SErrMissingSourceFilenames    = 'Missing source filenames';
-  SErrMissingSourceFolder       = 'Missing source folder';
+  SErrMissingSourceFolder       = 'Source folder not found';
   SErrMissingDestinationFolder  = 'Missing target folder';
   SErrInvalidSizes              = 'Invalid Sizes string';
   SErrInvalidJpgQuality         = 'Invalid JPEG quality';
@@ -432,6 +433,13 @@ begin
     Subject := Subject.Parent;
   end;
   result := false;
+end;
+
+function TMainDialog.MakePathProjectRelative(const Filename: string): string;
+begin
+  //if FProjectFilename = '' then
+  //  raise Exception.Create(SMsgSaveProjectFirst);
+  result := ExtractRelativePath(ExtractFilePath(ExpandFilename(FProjectFilename)), Filename);
 end;
 
 procedure MoveChecked(ActionList :TActionList; Delta :integer);
@@ -675,8 +683,8 @@ begin
     Ini.WriteInteger(MAINDIALOG_SECTION, 'Top', Top);
     Ini.WriteInteger(MAINDIALOG_SECTION, 'PanelControls.Height', PanelControls.Height);
     Ini.WriteString(MAINDIALOG_SECTION, 'CurrentDirectory', GetCurrentDir);
-    Ini.WriteBool(MAINDIALOG_SECTION, 'AutoSave', FDialogSettings.AutoSave.Value);
-    Ini.WriteBool(MAINDIALOG_SECTION, 'WarnDirty', FDialogSettings.WarnDirty.Value);
+
+    FDialogSettings.Save(Ini, MAINDIALOG_SECTION);
 
     with PresentationDialog do begin
       Ini.WriteInteger(PRESDIALOG_SECTION, 'Top', Top);
@@ -686,9 +694,7 @@ begin
       Ini.WriteInteger(PRESDIALOG_SECTION, 'PanelMain.Height', PanelMain.Height);
     end;
 
-    EraseSection(PROJECT_SECTION);
-    WriteBool(PROJECT_SECTION, 'StopOnError', FProcessingSettings.StopOnError.Value);
-    WriteInteger(PROJECT_SECTION, 'ThreadsUsed', FProcessingSettings.ThreadsUsed.Value);
+    FProcessingSettings.Save(Ini, PROCESSING_SECTION);
   finally
     Free;
   end;
@@ -727,11 +733,12 @@ begin
     AHeight := Ini.ReadInteger(MAINDIALOG_SECTION, 'PanelControls.Height', PanelControls.Height);
     if AHeight+PanelControls.Top + 16 < ClientHeight then
       PanelControls.Height := AHeight;
-    FDialogSettings.AutoSave.AsText := Ini.ReadString(MAINDIALOG_SECTION, 'AutoSave', 'True');
-    FDialogSettings.WarnDirty.AsText := Ini.ReadString(MAINDIALOG_SECTION, 'WarnDirty', 'False');
+    //FDialogSettings.AutoSave.AsText := Ini.ReadString(MAINDIALOG_SECTION, 'AutoSave', 'True');
+    //FDialogSettings.WarnDirty.AsText := Ini.ReadString(MAINDIALOG_SECTION, 'WarnDirty', 'False');
     Path := Ini.ReadString(MAINDIALOG_SECTION, 'CurrentDirectory', GetCurrentDir);
     if DirectoryExists(Path) then
       ChangeCurrentDir(Path);
+    FDialogSettings.Load(Ini, MAINDIALOG_SECTION, lmStrict);
 
     with PresentationDialog do begin
       Top     := Ini.ReadInteger(PRESDIALOG_SECTION, 'Top', Top);
@@ -743,8 +750,9 @@ begin
         PanelMain.Height := AHeight;
     end;
 
-    FProcessingSettings.StopOnError.AsText := Ini.ReadString(PROJECT_SECTION, 'StopOnError', 'False');
-    FProcessingSettings.ThreadsUsed.AsText := Ini.ReadString(PROJECT_SECTION, 'ThreadsUsed', '0');
+    FProcessingSettings.Load(Ini, PROCESSING_SECTION);
+    //FProcessingSettings.StopOnError.AsText := Ini.ReadString(PROJECT_SECTION, 'StopOnError', 'False');
+    //FProcessingSettings.ThreadsUsed.AsText := Ini.ReadString(PROJECT_SECTION, 'ThreadsUsed', '0');
   finally
     Free;
   end;
@@ -818,9 +826,28 @@ end;
 const
   SRCMODES :array[boolean] of string = ('Folder', 'Filenames');
 
-procedure TMainDialog.SaveProjectToIni(Ini :TCustomIniFile);
+procedure TMainDialog.SaveProjectToIni(Ini :TCustomIniFile; SavePathAsIs :boolean);
 var
   Value :integer;
+
+  function ProcessFilenames(Filenames :TStrings) :string;
+  var
+    i :integer;
+  begin
+    if not SavePathAsIs  and FDialogSettings.RelPathes.Value then begin
+      for i:=0 to Filenames.Count-1 do
+        Filenames[i] := MakePathProjectRelative(Filenames[i]);
+    end;
+    result := ReplaceStr(MemoSrcFilenames.Text, #13#10, LINESEP)
+  end;
+
+  function ProcessFilename(Edit :TEdit) :string;
+  begin
+    if not SavePathAsIs  and FDialogSettings.RelPathes.Value then
+      Edit.Text := MakePathProjectRelative(Edit.Text);
+    result := Edit.Text;
+  end;
+
 begin
   // Navigate to proper "directory":
   with Ini do begin
@@ -831,9 +858,9 @@ begin
     WriteString(PROJECT_SECTION,  'Source', SRCMODES[ActionSrcFilenames.Checked]);
     WriteString(PROJECT_SECTION,  'SourceFolder', EditSrcFolder.Text);
     WriteString(PROJECT_SECTION,  'SourceMasks', EditSrcMasks.Text);
-    WriteString(PROJECT_SECTION,  'SourceFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, LINESEP));
+    WriteString(PROJECT_SECTION,  'SourceFilenames', ProcessFilenames(MemoSrcFilenames.Lines));
     WriteString(PROJECT_SECTION,  'Sizes', EditSizes.Text);
-    WriteString(PROJECT_SECTION,  'TargetFolder', EditTargetFolder.Text);
+    WriteString(PROJECT_SECTION,  'TargetFolder', ProcessFilename(EditTargetFolder));
     WriteString(PROJECT_SECTION,  'Interpolation', INTERPOLATION_NAMES[TInterpolation(ComboBoxInterpolation.ItemIndex)]);
     Value := TProcessor.StrToJPEGQuality(ComboBoxJPEGQuality.Text);
     if Value = DEFAULTJPEGQUALITY then
@@ -842,7 +869,7 @@ begin
       WriteInteger(PROJECT_SECTION, 'JPEGQuality', Value);
     WriteString(PROJECT_SECTION,  'PNGCompression', PNGCOMPRESSION_NAMES[ComboBoxPNGCompression.ItemIndex]);
     WriteBool(PROJECT_SECTION,    'MrkEnabled', CheckBoxMrkEnabled.Checked);
-    WriteString(PROJECT_SECTION,  'MrkFilename', EditMrkFilename.Text);
+    WriteString(PROJECT_SECTION,  'MrkFilename', ProcessFilename(EditMrkFilename));
     WriteString(PROJECT_SECTION,  'MrkSize', EditMrkSize.Text);
     WriteString(PROJECT_SECTION,  'MrkX', EditMrkX.Text);
     WriteString(PROJECT_SECTION,  'MrkY', EditMrkY.Text);
@@ -895,7 +922,7 @@ var
 begin
   Ini := TIniFile.Create(GetAppDataFilename(LASTPROJECT_FILENAME, true));
   try
-    SaveProjectToIni(Ini);
+    SaveProjectToIni(Ini, True);
   finally
     Ini.Free;
   end;
@@ -931,8 +958,8 @@ var
 begin
   Ini := TIniFile.Create(Filename);
   try
-    SaveProjectToIni(Ini);
     FProjectFilename := Filename;
+    SaveProjectToIni(Ini, False);
     SetTitle(''''+Filename+'''');
     ChangeCurrentDir(ExtractFilePath(Filename));
     Log(Format(SMsgProjectSavedToFmt, [Filename]), llHint);
@@ -978,7 +1005,7 @@ begin
     FProjectDescription                 := '';
     ActionSrcFilenames.Checked          := true;
     EditSrcFolder.Text                  := '';
-    EditSrcMasks.Text                   := '*.jpg; *.png';
+    EditSrcMasks.Text                   := DEFAULT_SRCMASK;
     EditTargetFolder.Text               := '';
     EditSizes.Text                      := '';
     ComboBoxJPEGQuality.ItemIndex       := 0;
@@ -1653,6 +1680,20 @@ begin
     (Sender as TProcessor).Cancel;
 end;
 
+//function CompareFilenames(List: TStringList; Index1, Index2: Integer): Integer;
+//var
+//  L, R :string;
+//begin
+//  L := ExtractFilename(List[Index1]);
+//  R := ExtractFilename(List[Index2]);
+//  result := CompareStr(L, R);
+//  if result=0 then begin
+//    L := ExtractFilePath(List[Index1]);
+//    R := ExtractFilePath(List[Index2]);
+//    result := CompareStr(L, R);
+//  end;
+//end;
+//
 procedure TMainDialog.ActionExecuteExecute(Sender: TObject);
 var
   Sizes :TIntegerDynArray;
@@ -1691,13 +1732,16 @@ begin
       try
         // Source filenames
         if ActionSrcFilenames.Checked then begin
+          // Source Filenames
           if (MemoSrcFilenames.Text='') then
             raise Exception.Create(SErrMissingSourceFilenames);
           SourceFilenames.Assign(MemoSrcFilenames.Lines);
         end else begin
+          // Source Folder
           if (EditSrcFolder.Text='') or not DirectoryExists(EditSrcFolder.Text) then
               raise Exception.Create(SErrMissingSourceFolder);
           FindAllFiles(SourceFilenames, EditSrcFolder.Text, EditSrcMasks.Text, false);
+          // SourceFilenames.CustomSort(@CompareFilenames);
         end;
 
         // Destination folder
@@ -1721,8 +1765,7 @@ begin
         Processor.Interpolation := TInterpolation(ComboBoxInterpolation.ItemIndex);
 
         // Rename
-        Processor.RenEnabled := CheckBoxRenEnabled.Checked;
-        if Processor.RenEnabled then begin
+        if CheckBoxRenEnabled.Checked then begin
           if RadioButtonRenSimple.Checked then
             Processor.TargetFiletemplate := RENSIMPLETEMPLATE
           else if RadioButtonRenAdvanced.Checked then
