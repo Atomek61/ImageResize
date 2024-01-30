@@ -33,7 +33,7 @@ Default=400
 [Settings.Copyright]
 Class=String
 Caption=Copyright
-Caption.de=Urheberrechtshinweis
+Caption.de=Urheberhinweis
 
 [Settings.FontColor]
 Class=Int32

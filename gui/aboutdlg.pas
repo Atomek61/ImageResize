@@ -5,7 +5,7 @@ unit aboutdlg;
 interface
 
 uses
-  Classes, SysUtils, fphttpclient, Forms, Controls, Graphics, Dialogs, StdCtrls,
+  Classes, SysUtils, fphttpClient, Forms, Controls, Graphics, Dialogs, StdCtrls,
   ExtCtrls, Buttons, ComCtrls, ActnList, LCLType;
 
 type
@@ -99,7 +99,7 @@ begin
     LabelAvailability.Font.Color := clDefault;
     LabelAvailability.Caption := SMsgChecking;
     Application.ProcessMessages;
-    UpdateManifest.AsString := FPHTTPClient.Get(GUIVERURL);
+    UpdateManifest.AsString := FPHTTPClient.SimpleGet(GUIVERURL);
     with UpdateManifest do
       LabelLatest.Caption := SCptAvailable+#10+#10+App+#10+Version+#10+Date+#10+Hint;
     if UpdateManifest.App<>GUIVER.App then
@@ -145,7 +145,7 @@ begin
     LabelImgresGuiCpr.Caption := Text1;
     LabelAppVersion.Caption := GUIVER_APP + ' ' + GUIVER_VERSION;
     LabelProcessorVersion.Caption := Text2;
-    LabelDependencies.Caption := Format(SCptDependenciesFmt, [laz_version, IntToStr(BGRABitmapVersion), dGlobal.dExifVersion]);
+    LabelDependencies.Caption := Format(SCptDependenciesFmt, [laz_version, BGRABitmapVersionStr, dGlobal.dExifVersion]);
     s := TResourceStream.Create(HInstance, LicenseResName, RT_RCDATA);
     try
       MemoLicense.Lines.LoadFromStream(s);

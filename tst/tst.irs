@@ -2,14 +2,18 @@
 Type=IRS
 Version=400
 
+[Presentation]
+Id=Slideshow200
+TargetFolder=
+
 [Project]
 Description=
-Source=Filenames
-SourceFolder=
+Source=Folder
+SourceFolder=srcB\src1
 SourceMasks=*.jpg;*.png
 SourceFilenames=srcB\src1\DSC04236.jpg|srcB\src1\DSC04242.jpg|srcB\src1\DSC04258.jpg|
-Sizes=480
-TargetFolder=tstX
+Sizes=
+TargetFolder=
 Interpolation=Default
 JPEGQuality=Default
 PNGCompression=Default
@@ -35,7 +39,3 @@ Copyright=
 TagsReportEnabled=0
 ImageInfosEnabled=0
 NoCreate=0
-
-[Presentation]
-Id=Slideshow200
-TargetFolder=tstX

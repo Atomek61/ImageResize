@@ -358,8 +358,8 @@ msgstr "Abbrechen"
 #: maindlg.scptdependenciesfmt
 #, object-pascal-format
 msgctxt "maindlg.scptdependenciesfmt"
-msgid "Build with Lazarus %s, BGRABitmap %s, dExif %s"
-msgstr "Compiliert mit Lazarus %s, BGRABitmap %s, dExif %s"
+msgid "Build with Lazarus %s, BGRABitmap %s, dExif %s, RichMemo"
+msgstr "Erzeugt mit Lazarus %s, BGRABitmap %s, dExif %s, RichMemo"
 
 #: maindlg.scptexecute
 msgctxt "maindlg.scptexecute"
@@ -787,10 +787,6 @@ msgstr "mehr Werte als Tags"
 msgid "&Color:"
 msgstr "&Farbe."
 
-#: tform1.caption
-msgid "Form1"
-msgstr ""
-
 #: threading.dispatcher.scptcancelled
 msgid "Cancelled"
 msgstr "Abgebrochen"
@@ -884,7 +880,7 @@ msgstr "&Taggen"
 
 #: tmaindialog.actionparamtagging.hint
 msgid "Enables copying of certain EXIF tags or tags a copyright note."
-msgstr "Ermöglicht das Übertragen bestimmter EXIF-Metainformationen oder hängt ein gemeinsames Copyright an die erzeugten Dateien."
+msgstr "Ermöglicht das Übertragen bestimmter EXIF-Metainformationen oder hängt ein gemeinsames Urheberrecht (Copyright) an die erzeugten Dateien."
 
 #: tmaindialog.actionparamwatermark.caption
 msgctxt "tmaindialog.actionparamwatermark.caption"
@@ -1027,7 +1023,7 @@ msgstr "Bewirkt, dass die Zieldateinamen zufällig gemischt werden."
 
 #: tmaindialog.checkboxtagcopyright.caption
 msgid "Copyright"
-msgstr "Copyright"
+msgstr "Urheberrecht (Copyright)"
 
 #: tmaindialog.checkboxtagsreportenabled.caption
 msgctxt "tmaindialog.checkboxtagsreportenabled.caption"
@@ -1170,7 +1166,7 @@ msgid "1"
 msgstr "1"
 
 #: tmaindialog.editrentemplate.hint
-#, fuzzy, badformat
+#, fuzzy
 msgid ""
 "Enter a filename template containing placeholders for special values.\n"
 "This template will be expanded for each resampled image. Insert the\n"
@@ -1463,7 +1459,7 @@ msgstr "Hilfe"
 
 #: tmrkeditdialog.actioninsertcopyright.caption
 msgid "ActionInsertCopyright"
-msgstr "Copyright"
+msgstr "Urheberrecht"
 
 #: tmrkeditdialog.actionnew.caption
 msgctxt "tmrkeditdialog.actionnew.caption"
@@ -1721,12 +1717,12 @@ msgstr "Sichert die aktuellen Einstellungen in einer versteckten Datei, sodass s
 #: tsettingsdialog.checkboxrelpathes.caption
 msgctxt "tsettingsdialog.checkboxrelpathes.caption"
 msgid "Save relative Pathes"
-msgstr ""
+msgstr "Relative Pfade beim Speichern"
 
 #: tsettingsdialog.checkboxrelpathes.hint
 msgctxt "tsettingsdialog.checkboxrelpathes.hint"
 msgid "Pathes will be saved relative to the project file"
-msgstr ""
+msgstr "Pfade werden relativ zur Projektdatei gespeichert"
 
 #: tsettingsdialog.checkboxstoponerror.caption
 msgctxt "tsettingsdialog.checkboxstoponerror.caption"
@@ -1791,4 +1787,3 @@ msgstr "Kerne"
 msgctxt "webutils.serrinvalidhtmlcolorfmt"
 msgid "Invalid web color '%s'."
 msgstr "Ungültige Web-Farbe '%s'."
-

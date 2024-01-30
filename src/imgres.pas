@@ -27,6 +27,7 @@ uses
   threading.dispatcher, tags, logging, StringArrays;
 
 resourcestring
+  SCptInterpolationDefault   = 'Default';
   SCptStretch     = 'Stretch';
   SCptBox         = 'Box';
   SCptLinear      = 'Linear';
@@ -39,8 +40,6 @@ resourcestring
   SCptLanczos3    = 'Lanczos R3';
   SCptLanczos4    = 'Lanczos R4';
   SCptBestQuality = 'Best Quality';
-
-  SCptInterpolationDefault   = 'Default';
 
   SCptJPEGQualityDefault     = 'Default';
 
@@ -1144,7 +1143,7 @@ begin
   if FResampleMode = rmSimpleStretch then
     result := ipStretch
   else
-    result := TInterpolation(integer(FResampleFilter)+1);
+    result := TInterpolation(integer(FResampleFilter)+2);
 end;
 
 function TProcessor.GetSourceFilenames: TStrings;
@@ -1167,7 +1166,7 @@ begin
   case AValue of
   ipDefault:
     begin
-      FResampleMode := rmSimpleStretch;
+      FResampleMode := rmFineResample;
       FResampleFilter := rfBestQuality;
     end;
   ipStretch:

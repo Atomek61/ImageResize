@@ -347,7 +347,7 @@ msgstr ""
 #: maindlg.scptdependenciesfmt
 #, object-pascal-format
 msgctxt "maindlg.scptdependenciesfmt"
-msgid "Build with Lazarus %s, BGRABitmap %s, dExif %s"
+msgid "Build with Lazarus %s, BGRABitmap %s, dExif %s, RichMemo"
 msgstr ""
 
 #: maindlg.scptexecute
@@ -767,10 +767,6 @@ msgstr ""
 
 #: tcolorframe.label1.caption
 msgid "&Color:"
-msgstr ""
-
-#: tform1.caption
-msgid "Form1"
 msgstr ""
 
 #: threading.dispatcher.scptcancelled

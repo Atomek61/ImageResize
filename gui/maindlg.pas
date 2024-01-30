@@ -91,7 +91,7 @@ const
   LOGCOLORS :array[llHint..llCrash] of TColor = (clGray, clDarkGray, clGreen, clOrange, clMaroon, clRed);
 
 resourcestring
-  SCptDependenciesFmt = 'Build with Lazarus %s, BGRABitmap %s, dExif %s';
+  SCptDependenciesFmt = 'Build with Lazarus %s, BGRABitmap %s, dExif %s, RichMemo';
   SUrlWebHelp = 'http://www.atomek.de/imageresize/hlp35/gui/en';
   SLocDirHelp = 'hlp\gui\en';
 
@@ -600,11 +600,9 @@ var
   LocHelpDir :string;
 begin
 
-  // Show initial message in Message log
-  Log(Format(SCptInfoFmt, [GUIVER_APP, GUIVER_VERSION, GUIVER_DATE, IMGRESVER, TThread.ProcessorCount]), llNews);
-
   LoadSettings;
   ActionNew.Execute;
+
   if FDialogSettings.AutoSave.Value then
     LoadLastProject;
 
@@ -834,7 +832,7 @@ var
     result := ReplaceStr(Filenames.Text, #13#10, LINESEP)
   end;
 
-  function ProcessFilename(Edit :TEdit) :string;
+  function HandleFilenameRefs(Edit :TEdit) :string;
   var
     CurrentDir :string;
     ProjectDir :string;
@@ -853,42 +851,42 @@ begin
     WriteString(COMMON_SECTION, 'Type', PRJTYPE);
     WriteString(COMMON_SECTION, 'Version', PRJVERSION);
     EraseSection(PROJECT_SECTION);
-    WriteString(PROJECT_SECTION,  'Description', FProjectDescription);
-    WriteString(PROJECT_SECTION,  'Source', SRCMODES[ActionSrcFilenames.Checked]);
-    WriteString(PROJECT_SECTION,  'SourceFolder', EditSrcFolder.Text);
-    WriteString(PROJECT_SECTION,  'SourceMasks', EditSrcMasks.Text);
+    WriteString(PROJECT_SECTION,  'Description',    FProjectDescription);
+    WriteString(PROJECT_SECTION,  'Source',         SRCMODES[ActionSrcFilenames.Checked]);
+    WriteString(PROJECT_SECTION,  'SourceFolder',   HandleFilenameRefs(EditSrcFolder));
+    WriteString(PROJECT_SECTION,  'SourceMasks',    EditSrcMasks.Text);
     WriteString(PROJECT_SECTION,  'SourceFilenames', HandleFilenameRefs(MemoSrcFilenames.Lines));
-    WriteString(PROJECT_SECTION,  'Sizes', EditSizes.Text);
-    WriteString(PROJECT_SECTION,  'TargetFolder', ProcessFilename(EditTargetFolder));
-    WriteString(PROJECT_SECTION,  'Interpolation', INTERPOLATION_NAMES[TInterpolation(ComboBoxInterpolation.ItemIndex)]);
+    WriteString(PROJECT_SECTION,  'Sizes',          EditSizes.Text);
+    WriteString(PROJECT_SECTION,  'TargetFolder',   HandleFilenameRefs(EditTargetFolder));
+    WriteString(PROJECT_SECTION,  'Interpolation',  INTERPOLATION_NAMES[TInterpolation(ComboBoxInterpolation.ItemIndex)]);
     Value := TProcessor.StrToJPEGQuality(ComboBoxJPEGQuality.Text);
     if Value = DEFAULTJPEGQUALITY then
-      WriteString(PROJECT_SECTION, 'JPEGQuality', JPEGQUALITY_NAMES[0])
+      WriteString(PROJECT_SECTION, 'JPEGQuality',   JPEGQUALITY_NAMES[0])
     else
-      WriteInteger(PROJECT_SECTION, 'JPEGQuality', Value);
+      WriteInteger(PROJECT_SECTION, 'JPEGQuality',  Value);
     WriteString(PROJECT_SECTION,  'PNGCompression', PNGCOMPRESSION_NAMES[ComboBoxPNGCompression.ItemIndex]);
-    WriteBool(PROJECT_SECTION,    'MrkEnabled', CheckBoxMrkEnabled.Checked);
-    WriteString(PROJECT_SECTION,  'MrkFilename', ProcessFilename(EditMrkFilename));
-    WriteString(PROJECT_SECTION,  'MrkSize', EditMrkSize.Text);
-    WriteString(PROJECT_SECTION,  'MrkX', EditMrkX.Text);
-    WriteString(PROJECT_SECTION,  'MrkY', EditMrkY.Text);
-    WriteString(PROJECT_SECTION,  'MrkAlpha', EditMrkAlpha.Text);
-    WriteBool(PROJECT_SECTION,    'RenEnabled', CheckBoxRenEnabled.Checked);
-    WriteBool(PROJECT_SECTION,    'RenSimple', RadioButtonRenSimple.Checked);
-    WriteBool(PROJECT_SECTION,    'RenAdvanced', RadioButtonRenAdvanced.Checked);
-    WriteBool(PROJECT_SECTION,    'RenCustom', RadioButtonRenCustom.Checked);
-    WriteString(PROJECT_SECTION,  'RenTemplate', EditRenTemplate.Text);
+    WriteBool(PROJECT_SECTION,    'MrkEnabled',     CheckBoxMrkEnabled.Checked);
+    WriteString(PROJECT_SECTION,  'MrkFilename',    HandleFilenameRefs(EditMrkFilename));
+    WriteString(PROJECT_SECTION,  'MrkSize',        EditMrkSize.Text);
+    WriteString(PROJECT_SECTION,  'MrkX',           EditMrkX.Text);
+    WriteString(PROJECT_SECTION,  'MrkY',           EditMrkY.Text);
+    WriteString(PROJECT_SECTION,  'MrkAlpha',       EditMrkAlpha.Text);
+    WriteBool(PROJECT_SECTION,    'RenEnabled',     CheckBoxRenEnabled.Checked);
+    WriteBool(PROJECT_SECTION,    'RenSimple',      RadioButtonRenSimple.Checked);
+    WriteBool(PROJECT_SECTION,    'RenAdvanced',    RadioButtonRenAdvanced.Checked);
+    WriteBool(PROJECT_SECTION,    'RenCustom',      RadioButtonRenCustom.Checked);
+    WriteString(PROJECT_SECTION,  'RenTemplate',    EditRenTemplate.Text);
     WriteBool(PROJECT_SECTION,    'ShuffleEnabled', CheckBoxShuffle.Checked);
-    WriteInteger(PROJECT_SECTION, 'ShuffleSeed', StrToShuffleSeed(ComboBoxShuffleSeed.Text));
+    WriteInteger(PROJECT_SECTION, 'ShuffleSeed',    StrToShuffleSeed(ComboBoxShuffleSeed.Text));
     WriteBool(PROJECT_SECTION,    'TagsSourceEXIF', CheckBoxTagsSourceEXIF.Checked);
     WriteBool(PROJECT_SECTION,    'TagsSourceTagsFiles', CheckBoxTagsSourceTagsFiles.Checked);
-    WriteBool(PROJECT_SECTION,    'TagTitle', CheckBoxTagTitle.Checked);
-    WriteBool(PROJECT_SECTION,    'TagTimestamp', CheckBoxTagTimestamp.Checked);
-    WriteBool(PROJECT_SECTION,    'TagCopyright', CheckBoxTagCopyright.Checked);
-    WriteString(PROJECT_SECTION,  'Copyright', EditCopyright.Text);
+    WriteBool(PROJECT_SECTION,    'TagTitle',       CheckBoxTagTitle.Checked);
+    WriteBool(PROJECT_SECTION,    'TagTimestamp',   CheckBoxTagTimestamp.Checked);
+    WriteBool(PROJECT_SECTION,    'TagCopyright',   CheckBoxTagCopyright.Checked);
+    WriteString(PROJECT_SECTION,  'Copyright',      EditCopyright.Text);
     WriteBool(PROJECT_SECTION,    'TagsReportEnabled', CheckBoxTagsReportEnabled.Checked);
     WriteBool(PROJECT_SECTION,    'ImageInfosEnabled', CheckBoxImageInfosEnabled.Checked);
-    WriteBool(PROJECT_SECTION,    'NoCreate', CheckBoxNoCreate.Checked);
+    WriteBool(PROJECT_SECTION,    'NoCreate',       CheckBoxNoCreate.Checked);
   end;
   if FPresentationSettings.Dirty then
     FPresentationSettings.Save(Ini);
@@ -1040,10 +1038,13 @@ begin
     RequiredStepsUpdate;
     SetTitle(SCptUnnamed);
     FProjectFilename := '';
-//    ChangeCurrentDir(FWorkingDirectory);
     FIsSave := false;
-
     Dirty := false;
+
+    // Show initial message in Message log
+    MemoMessages.Clear;
+    Log(Format(SCptInfoFmt, [GUIVER_APP, GUIVER_VERSION, GUIVER_DATE, IMGRESVER, TThread.ProcessorCount]), llNews);
+
   finally
     ImgResizer.Free;
   end;

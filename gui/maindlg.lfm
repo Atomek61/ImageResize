@@ -83,12 +83,12 @@ object MainDialog: TMainDialog
         Top = 70
         Width = 384
         TabStop = False
-        ActivePage = TabSheetSrcFilenames
+        ActivePage = TabSheetSrcFolder
         Align = alClient
         BorderSpacing.Around = 4
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 0
+        TabIndex = 1
         TabOrder = 1
         object TabSheetSrcFilenames: TTabSheet
           ClientHeight = 286
@@ -213,7 +213,7 @@ object MainDialog: TMainDialog
             AnchorSideLeft.Control = EditSrcMasks
             AnchorSideBottom.Control = EditSrcMasks
             Left = 11
-            Height = 16
+            Height = 13
             Top = 72
             Width = 72
             Anchors = [akTop, akLeft, akBottom]
@@ -227,9 +227,8 @@ object MainDialog: TMainDialog
             Left = 8
             Height = 23
             Hint = 'Semicolon separated list of wildcards - filename templates with ? and * placeholders.'
-            Top = 91
-            Width = 336
-            Anchors = [akTop, akLeft, akRight]
+            Top = 88
+            Width = 112
             TabOrder = 2
             Text = '*.jpg;*.png'
             OnChange = ProjectChanged
@@ -255,14 +254,14 @@ object MainDialog: TMainDialog
         Top = 4
         Width = 393
         TabStop = False
-        ActivePage = TabSheetQuality
+        ActivePage = TabSheetTagging
         Align = alClient
         BorderSpacing.Around = 4
         ImagesWidth = 32
         MultiLine = True
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 3
+        TabIndex = 4
         TabOrder = 1
         Options = [nboMultiLine]
         object TabSheetSizes: TTabSheet
@@ -1040,57 +1039,75 @@ object MainDialog: TMainDialog
           ClientWidth = 385
           object GroupBoxEXIFTagging: TGroupBox
             Left = 4
-            Height = 152
+            Height = 158
             Hint = 'Define which EXIF tags are to be copied from the origin to the resampled images.'#13#10'This option is valid only for JPEG files.'#13#10'To change the EXIF tags of your source images, you can change them in the'#13#10'Windows Explorer or with a photo editor like RawTherapee.'
-            Top = 82
+            Top = 80
             Width = 377
             HelpType = htKeyword
             HelpKeyword = 'HTML/index.html#tagging-exif'
             Align = alTop
+            AutoSize = True
             BorderSpacing.Around = 4
+            BorderSpacing.InnerBorder = 9
             Caption = 'EXIF Tagging'
-            ClientHeight = 132
+            ClientHeight = 138
             ClientWidth = 373
             TabOrder = 1
             object CheckBoxTagTitle: TCheckBox
+              AnchorSideLeft.Control = GroupBoxEXIFTagging
+              AnchorSideTop.Control = GroupBoxEXIFTagging
               Left = 9
               Height = 19
-              Top = 4
+              Top = 3
               Width = 40
+              BorderSpacing.Left = 9
+              BorderSpacing.Top = 3
               Caption = 'Title'
               TabOrder = 0
               OnChange = ProjectChanged
             end
             object CheckBoxTagTimestamp: TCheckBox
+              AnchorSideLeft.Control = GroupBoxEXIFTagging
+              AnchorSideTop.Control = CheckBoxTagTitle
               Left = 9
               Height = 19
-              Top = 28
+              Top = 27
               Width = 77
+              BorderSpacing.Left = 9
+              BorderSpacing.Top = 24
               Caption = 'Timestamp'
               TabOrder = 1
               OnChange = ProjectChanged
             end
             object CheckBoxTagCopyright: TCheckBox
+              AnchorSideLeft.Control = GroupBoxEXIFTagging
+              AnchorSideTop.Control = CheckBoxTagTimestamp
               Left = 9
               Height = 19
-              Top = 52
+              Top = 51
               Width = 71
+              BorderSpacing.Left = 9
+              BorderSpacing.Top = 24
               Caption = 'Copyright'
               TabOrder = 2
               OnChange = ProjectChanged
             end
             object Label17: TLabel
-              Left = 96
+              AnchorSideLeft.Control = CheckBoxTagTitle
+              AnchorSideTop.Control = CheckBoxTagTitle
+              Left = 109
               Height = 15
-              Top = 6
+              Top = 5
               Width = 126
+              BorderSpacing.Left = 100
+              BorderSpacing.Top = 2
               Caption = '(EXIF ImageDescription)'
               ParentColor = False
             end
             object EditCopyright: TEdit
               Left = 32
               Height = 23
-              Top = 101
+              Top = 96
               Width = 286
               Anchors = [akTop, akLeft, akRight]
               TabOrder = 3
@@ -1101,7 +1118,7 @@ object MainDialog: TMainDialog
               AnchorSideLeft.Side = asrBottom
               Left = 346
               Height = 25
-              Top = 100
+              Top = 95
               Width = 25
               Layout = blGlyphTop
               Images = ImagesModule.ImageList20x20
@@ -1111,21 +1128,26 @@ object MainDialog: TMainDialog
               TabOrder = 5
             end
             object Label7: TLabel
-              Left = 32
+              AnchorSideLeft.Control = EditCopyright
+              AnchorSideBottom.Control = EditCopyright
+              Left = 35
               Height = 15
-              Top = 80
+              Top = 78
               Width = 102
+              Anchors = [akLeft, akBottom]
+              BorderSpacing.Left = 3
+              BorderSpacing.Bottom = 3
               Caption = 'Overwrite with this:'
               ParentColor = False
             end
             object ButtonClearCopyright: TBitBtn
               AnchorSideLeft.Control = EditCopyright
               AnchorSideLeft.Side = asrBottom
+              AnchorSideBottom.Side = asrBottom
               Left = 319
               Height = 25
-              Top = 100
+              Top = 95
               Width = 27
-              Anchors = [akLeft, akBottom]
               BorderSpacing.Left = 1
               Images = ImagesModule.ImageList20x20
               ImageIndex = 8
@@ -1136,34 +1158,44 @@ object MainDialog: TMainDialog
           end
           object GroupBoxTagsReport: TGroupBox
             Left = 4
-            Height = 83
+            Height = 72
             Hint = 'A Tags Report is a list of filenames and tags, which may be usefull for creating'#13#10'a slideshow.'
-            Top = 238
+            Top = 242
             Width = 377
             HelpType = htKeyword
             HelpKeyword = 'HTML/index.html#tagging-tagsreport'
             Align = alTop
+            AutoSize = True
             BorderSpacing.Around = 4
             Caption = 'Tags Reporting'
-            ClientHeight = 63
+            ClientHeight = 52
             ClientWidth = 373
             TabOrder = 2
             object CheckBoxTagsReportEnabled: TCheckBox
+              AnchorSideLeft.Control = GroupBoxTagsReport
+              AnchorSideTop.Control = GroupBoxTagsReport
               Left = 9
               Height = 19
               Hint = 'A .tagsreport file contains all the gathered tags of all origin images.'#13#10#13#10'The source may be the EXIF tags or from .tags files.'
-              Top = 5
+              Top = 3
               Width = 185
+              BorderSpacing.Left = 9
+              BorderSpacing.Top = 3
               Caption = 'Create Tags Report (.tagsreport)'
               TabOrder = 0
               OnChange = ProjectChanged
             end
             object CheckBoxImageInfosEnabled: TCheckBox
+              AnchorSideLeft.Control = GroupBoxTagsReport
+              AnchorSideTop.Control = CheckBoxTagsReportEnabled
               Left = 9
               Height = 19
               Hint = 'The Slideshow Afterburner requires such files with the'#13#10'names and titles of the images to be displayed.'
-              Top = 33
+              Top = 27
               Width = 202
+              BorderSpacing.Left = 9
+              BorderSpacing.Top = 24
+              BorderSpacing.Bottom = 6
               Caption = 'Create Presentation Infos (.images)'
               TabOrder = 1
               OnChange = ProjectChanged
@@ -1171,32 +1203,42 @@ object MainDialog: TMainDialog
           end
           object GroupBoxTagsSource: TGroupBox
             Left = 4
-            Height = 74
+            Height = 72
             Hint = 'Tags can be read from the original files EXIF of from .tags files in each origins folder.'#13#10'The latter ones do override the origins EXIF source.'
             Top = 4
             Width = 377
             HelpType = htKeyword
             HelpKeyword = 'HTML/index.html#tagging-source'
             Align = alTop
+            AutoSize = True
             BorderSpacing.Around = 4
             Caption = 'Tags Source'
-            ClientHeight = 54
+            ClientHeight = 52
             ClientWidth = 373
             TabOrder = 0
             object CheckBoxTagsSourceEXIF: TCheckBox
+              AnchorSideLeft.Control = GroupBoxTagsSource
+              AnchorSideTop.Control = GroupBoxTagsSource
               Left = 9
               Height = 19
-              Top = 5
+              Top = 3
               Width = 197
+              BorderSpacing.Left = 9
+              BorderSpacing.Top = 3
               Caption = 'Use origins EXIF meta information'
               TabOrder = 0
               OnChange = ProjectChanged
             end
             object CheckBoxTagsSourceTagsFiles: TCheckBox
+              AnchorSideLeft.Control = GroupBoxTagsSource
+              AnchorSideTop.Control = CheckBoxTagsSourceEXIF
               Left = 9
               Height = 19
-              Top = 28
+              Top = 27
               Width = 237
+              BorderSpacing.Left = 9
+              BorderSpacing.Top = 24
+              BorderSpacing.Bottom = 6
               Caption = 'Search for .tags files in each origins folder'
               TabOrder = 1
               OnChange = ProjectChanged
@@ -1589,6 +1631,7 @@ object MainDialog: TMainDialog
     Top = 624
   end
   object BrowseTargetFolder: TSelectDirectoryDialog
+    Options = [ofNoTestFileCreate, ofEnableSizing]
     Left = 48
     Top = 624
   end

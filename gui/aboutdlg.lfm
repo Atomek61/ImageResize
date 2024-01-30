@@ -173,15 +173,16 @@ object AboutDialog: TAboutDialog
       end
       object LabelLatest: TLabel
         Left = 464
-        Height = 128
+        Height = 160
         Top = 72
         Width = 128
         Anchors = [akTop, akLeft, akRight]
         AutoSize = False
-        Font.Color = clBtnShadow
+        Font.Color = clNavy
         Font.Height = -12
         ParentColor = False
         ParentFont = False
+        WordWrap = True
       end
     end
   end
