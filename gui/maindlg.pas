@@ -17,35 +17,37 @@ interface
 
 uses
   LCLTranslator, Classes, Types, SysUtils, Forms, Controls, Graphics, Dialogs,
-  StdCtrls, ComCtrls, ActnList, ExtCtrls, imgres, aboutdlg, inifiles, strutils,
+  StdCtrls, ComCtrls, ActnList, ExtCtrls, imgres, AboutDlg, IniFiles, StrUtils,
   LMessages, LCLIntf, Buttons, ImgList, LCLType, LazHelpHTML, BGRABitmap,
   BGRABitmapTypes, BGRASpeedButton, BGRAGraphicControl, RichMemo,
-  Generics.Collections, mrkeditdlg, WinDirs, updateutils, AppSettings, Logging,
-  LoggingRichMemo, StringArrays, presentations, PresentationDlg, Settings,
-  TagIds;
+  Generics.Collections, MrkEditDlg, WinDirs, UpdateUtils, AppSettings, Logging,
+  LoggingRichMemo, StringArrays, Presentations, PresentationDlg, Settings,
+  TagIds, LazFileUtils;
 
 const
-  GUIVER_APP      = 'ImageResize';
-  GUIVER_VERSION  = '4.0';
-  GUIVER_DATE     = '2024-01-25';
+  LM_RUN                = LM_USER + 1;
 
-  GUIVER          :TVersionManifest = (App: GUIVER_APP; Version: GUIVER_VERSION; Date: GUIVER_DATE; Hint: '');
+  GUIVER_APP            = 'ImageResize';
+  GUIVER_VERSION        = '4.0';
+  GUIVER_DATE           = '2024-01-25';
 
-  APPWEBURL       = 'www.atomek.de/imageresize/index.html';
-  APPDOWNLOADURL  = 'www.atomek.de/imageresize/download/InstallImageResize.zip';
-  APPGITHUBURL    = 'https://github.com/Atomek61/ImageResize';
-  GUIVERURL       = 'https://www.atomek.de/imageresize/download/version.manifest';
+  GUIVER                :TVersionManifest = (App: GUIVER_APP; Version: GUIVER_VERSION; Date: GUIVER_DATE; Hint: '');
 
-  IMGRESGUICPR    = 'ImageResize ' + GUIVER_VERSION + ' © 2024 Jan Schirrmacher, www.atomek.de';
+  APPWEBURL             = 'www.atomek.de/imageresize/index.html';
+  APPDOWNLOADURL        = 'www.atomek.de/imageresize/download/InstallImageResize.zip';
+  APPGITHUBURL          = 'https://github.com/Atomek61/ImageResize';
+  GUIVERURL             = 'https://www.atomek.de/imageresize/download/version.manifest';
 
-  PRJTYPE         = 'IRS';
-  PRJVERSION200   = '200';
-  PRJVERSION210   = '210';
-  PRJVERSION300   = '300';
-  PRJVERSION      = '400';
+  IMGRESGUICPR          = 'ImageResize ' + GUIVER_VERSION + ' © 2024 Jan Schirrmacher, www.atomek.de';
 
-  SETTYPE         = 'IST';
-  SETVERSION      = '100';
+  PRJTYPE               = 'IRS';
+  PRJVERSION200         = '200';
+  PRJVERSION210         = '210';
+  PRJVERSION300         = '300';
+  PRJVERSION            = '400';
+
+  SETTYPE               = 'IST';
+  SETVERSION            = '100';
 
   LASTPROJECT_FILENAME  = 'lastproject.irs';
   SETTINGS_FILENAME     = 'settings.ini';
@@ -56,38 +58,35 @@ const
   MAINDIALOG_SECTION    = 'MainDialog';
   PRESDIALOG_SECTION    = 'PresentationDialog';
 
-  MRKRECTRATIO    = 3.0;
+  RENSIMPLETEMPLATE     = 'img%INDEX:1,3%.%FILEEXT%';
+  RENADVANCEDTEMPLATE   = 'img%INDEX:1,3%_%SIZE%.%FILEEXT%';
+  DEFAULT_SRCMASK       = '*.jpg;*.png';
 
-  LINESEP         = '|';
+  THUMBNAILIMGMAX       = 240;
+  DOCIMGMAX             = 960;
+  DEFAULTSIZE           = 640;
 
-  LM_RUN          = LM_USER + 1;
+  SIZEBTNHINTFMT        = '%s - %dpx';
 
-  RENSIMPLETEMPLATE   = 'img%INDEX:1,3%.%FILEEXT%';
-  RENADVANCEDTEMPLATE = 'img%INDEX:1,3%_%SIZE%.%FILEEXT%';
-  DEFAULT_SRCMASK     = '*.jpg;*.png';
+  MRKRECTRATIO          = 3.0;
+  LINESEP               = '|';
 
-  THUMBNAILIMGMAX = 240;
-  DOCIMGMAX       = 960;
-  DEFAULTSIZE     = 640;
+  IMGIDX_START          = 5;
+  IMGIDX_CANCEL         = 6;
+  IMGIDX_DIRTY          = 4;
+  IMGIDX_SAVE           = 2;
+  IMGIDX_IMGTHUMBNAIL   = 9;
+  IMGIDX_IMGDOCUMENT    = 10;
+  IMGIDX_IMGSCREEN      = 11;
+  IMGIDX_REQUIRED       = 22;
+  IMGIDX_NOTREQUIRED    = 23;
 
-  SIZEBTNHINTFMT  = '%s - %dpx';
+  clOrange              = $3d69a6;
+  clDarkGray            = $403040;
 
-  IMAGEINDEX_START        = 5;
-  IMAGEINDEX_CANCEL       = 6;
-  IMAGEINDEX_DIRTY        = 4;
-  IMAGEINDEX_SAVE         = 2;
-  IMAGEINDEX_IMGTHUMBNAIL = 9;
-  IMAGEINDEX_IMGDOCUMENT  = 10;
-  IMAGEINDEX_IMGSCREEN    = 11;
-  IMAGEINDEX_REQUIRED     = 22;
-  IMAGEINDEX_NOTREQUIRED  = 23;
-
-  clOrange = $3d69a6;
-  clDarkGray = $403040;
-
-  STYLECOLOR_LIGHT  = $00F1DDC9;
-  STYLECOLOR_LIGHT2 = $00E6C09B;
-  STYLECOLOR_DARK   = $00D59453;
+  STYLECOLOR_LIGHT      = $00F1DDC9;
+  STYLECOLOR_LIGHT2     = $00E6C09B;
+  STYLECOLOR_DARK       = $00D59453;
 
   LOGCOLORS :array[llHint..llCrash] of TColor = (clGray, clDarkGray, clGreen, clOrange, clMaroon, clRed);
 
@@ -95,7 +94,6 @@ resourcestring
   SCptDependenciesFmt = 'Build with Lazarus %s, BGRABitmap %s, dExif %s';
   SUrlWebHelp = 'http://www.atomek.de/imageresize/hlp35/gui/en';
   SLocDirHelp = 'hlp\gui\en';
-  SCptWatermark ='WATERMARK';
 
 type
 
@@ -345,7 +343,7 @@ type
     function LoadSettings :boolean;
     procedure SaveSettings;
     function LoadProjectFromIni(Ini :TCustomIniFile) :boolean;
-    procedure SaveProjectToIni(Ini :TCustomIniFile; SavePathAsIs :boolean);
+    procedure SaveProjectToIni(Ini :TCustomIniFile; SavePathesAsIs :boolean);
     function LoadLastProject :boolean;
     procedure SaveLastProject;
     function LoadProjectFromFile(const Filename :string) :boolean;
@@ -365,7 +363,6 @@ type
     function MouseToMrkSpace(X, Y :integer; out Value :TSize) :boolean;
     function CalcMarkRect(out Rect :TRect) :boolean;
     function HasFocus(Control :TWinControl) :boolean;
-    function MakePathProjectRelative(const Filename :string) :string;
   public
     property RequiredSteps[Index :integer] :boolean read GetRequiredSteps write SetRequiredSteps;
     property Dirty :boolean read FIsDirty write SetDirty;
@@ -433,13 +430,6 @@ begin
     Subject := Subject.Parent;
   end;
   result := false;
-end;
-
-function TMainDialog.MakePathProjectRelative(const Filename: string): string;
-begin
-  //if FProjectFilename = '' then
-  //  raise Exception.Create(SMsgSaveProjectFirst);
-  result := ExtractRelativePath(ExtractFilePath(ExpandFilename(FProjectFilename)), Filename);
 end;
 
 procedure MoveChecked(ActionList :TActionList; Delta :integer);
@@ -573,11 +563,11 @@ begin
 
     Button.Hint := Format(SIZEBTNHINTFMT, [Cpt, DEFSIZES[i]]);
     if DEFSIZES[i]<=THUMBNAILIMGMAX then
-        Button.ImageIndex := IMAGEINDEX_IMGTHUMBNAIL
+        Button.ImageIndex := IMGIDX_IMGTHUMBNAIL
     else if DEFSIZES[i]<=DOCIMGMAX then
-      Button.ImageIndex := IMAGEINDEX_IMGDOCUMENT
+      Button.ImageIndex := IMGIDX_IMGDOCUMENT
     else
-      Button.ImageIndex := IMAGEINDEX_IMGSCREEN;
+      Button.ImageIndex := IMGIDX_IMGSCREEN;
     Button.Style := tbsCheck;
     Button.Tag := DEFSIZES[i];
     Button.OnClick := @SizeButtonClick;
@@ -611,7 +601,7 @@ var
 begin
 
   // Show initial message in Message log
-  Log(Format(SCptInfoFmt, [GUIVER_APP, GUIVER_VERSION, GUIVER_DATE, IMGRESVER, TThread.ProcessorCount]), llHint);
+  Log(Format(SCptInfoFmt, [GUIVER_APP, GUIVER_VERSION, GUIVER_DATE, IMGRESVER, TThread.ProcessorCount]), llNews);
 
   LoadSettings;
   ActionNew.Execute;
@@ -733,8 +723,6 @@ begin
     AHeight := Ini.ReadInteger(MAINDIALOG_SECTION, 'PanelControls.Height', PanelControls.Height);
     if AHeight+PanelControls.Top + 16 < ClientHeight then
       PanelControls.Height := AHeight;
-    //FDialogSettings.AutoSave.AsText := Ini.ReadString(MAINDIALOG_SECTION, 'AutoSave', 'True');
-    //FDialogSettings.WarnDirty.AsText := Ini.ReadString(MAINDIALOG_SECTION, 'WarnDirty', 'False');
     Path := Ini.ReadString(MAINDIALOG_SECTION, 'CurrentDirectory', GetCurrentDir);
     if DirectoryExists(Path) then
       ChangeCurrentDir(Path);
@@ -751,8 +739,6 @@ begin
     end;
 
     FProcessingSettings.Load(Ini, PROCESSING_SECTION);
-    //FProcessingSettings.StopOnError.AsText := Ini.ReadString(PROJECT_SECTION, 'StopOnError', 'False');
-    //FProcessingSettings.ThreadsUsed.AsText := Ini.ReadString(PROJECT_SECTION, 'ThreadsUsed', '0');
   finally
     Free;
   end;
@@ -826,25 +812,38 @@ end;
 const
   SRCMODES :array[boolean] of string = ('Folder', 'Filenames');
 
-procedure TMainDialog.SaveProjectToIni(Ini :TCustomIniFile; SavePathAsIs :boolean);
+procedure TMainDialog.SaveProjectToIni(Ini :TCustomIniFile; SavePathesAsIs :boolean);
 var
   Value :integer;
 
-  function ProcessFilenames(Filenames :TStrings) :string;
+  function HandleFilenameRefs(Filenames :TStrings) :string;
   var
     i :integer;
+    Filename :string;
+    CurrentDir :string;
+    ProjectDir :string;
   begin
-    if not SavePathAsIs  and FDialogSettings.RelPathes.Value then begin
-      for i:=0 to Filenames.Count-1 do
-        Filenames[i] := MakePathProjectRelative(Filenames[i]);
+    if FDialogSettings.RelPathes.Value and not SavePathesAsIs then begin
+      CurrentDir := GetCurrentDir;
+      ProjectDir := ExtractFilePath(Ini.Filename);
+      for i:=0 to Filenames.Count-1 do begin
+        Filename := CreateAbsolutePath(Filenames[i], CurrentDir);
+        Filenames[i] := CreateRelativePath(Filename, ProjectDir);
+      end;
     end;
-    result := ReplaceStr(MemoSrcFilenames.Text, #13#10, LINESEP)
+    result := ReplaceStr(Filenames.Text, #13#10, LINESEP)
   end;
 
   function ProcessFilename(Edit :TEdit) :string;
+  var
+    CurrentDir :string;
+    ProjectDir :string;
   begin
-    if not SavePathAsIs  and FDialogSettings.RelPathes.Value then
-      Edit.Text := MakePathProjectRelative(Edit.Text);
+    if FDialogSettings.RelPathes.Value and not SavePathesAsIs then begin
+      CurrentDir := GetCurrentDir;
+      ProjectDir := ExtractFilePath(Ini.Filename);
+      Edit.Text := CreateRelativePath(CreateAbsolutePath(Edit.Text, CurrentDir), ProjectDir);
+    end;
     result := Edit.Text;
   end;
 
@@ -858,7 +857,7 @@ begin
     WriteString(PROJECT_SECTION,  'Source', SRCMODES[ActionSrcFilenames.Checked]);
     WriteString(PROJECT_SECTION,  'SourceFolder', EditSrcFolder.Text);
     WriteString(PROJECT_SECTION,  'SourceMasks', EditSrcMasks.Text);
-    WriteString(PROJECT_SECTION,  'SourceFilenames', ProcessFilenames(MemoSrcFilenames.Lines));
+    WriteString(PROJECT_SECTION,  'SourceFilenames', HandleFilenameRefs(MemoSrcFilenames.Lines));
     WriteString(PROJECT_SECTION,  'Sizes', EditSizes.Text);
     WriteString(PROJECT_SECTION,  'TargetFolder', ProcessFilename(EditTargetFolder));
     WriteString(PROJECT_SECTION,  'Interpolation', INTERPOLATION_NAMES[TInterpolation(ComboBoxInterpolation.ItemIndex)]);
@@ -958,11 +957,11 @@ var
 begin
   Ini := TIniFile.Create(Filename);
   try
-    FProjectFilename := Filename;
     SaveProjectToIni(Ini, False);
-    SetTitle(''''+Filename+'''');
-    ChangeCurrentDir(ExtractFilePath(Filename));
-    Log(Format(SMsgProjectSavedToFmt, [Filename]), llHint);
+    FProjectFilename := Filename;
+    SetTitle(''''+FProjectFilename+'''');
+    ChangeCurrentDir(ExtractFilePath(FProjectFilename));
+    Log(Format(SMsgProjectSavedToFmt, [FProjectFilename]), llHint);
     FIsSave := true;
     Dirty := false;
   finally
@@ -998,7 +997,6 @@ var
   ImgResizer :TProcessor;
 begin
   if not CheckSave then Exit;
-  MemoMessages.Lines.Clear;
   ImgResizer := TProcessor.Create;
   try
     MemoSrcFilenames.Lines.Clear;
@@ -1042,7 +1040,7 @@ begin
     RequiredStepsUpdate;
     SetTitle(SCptUnnamed);
     FProjectFilename := '';
-    ChangeCurrentDir(FWorkingDirectory);
+//    ChangeCurrentDir(FWorkingDirectory);
     FIsSave := false;
 
     Dirty := false;
@@ -1210,7 +1208,7 @@ procedure TMainDialog.SetDirty(AValue: boolean);
 begin
   if FIsDirty=AValue then Exit;
   FIsDirty:=AValue;
-  ActionSave.ImageIndex := IfThen(Dirty, IMAGEINDEX_DIRTY, IMAGEINDEX_SAVE);
+  ActionSave.ImageIndex := IfThen(Dirty, IMGIDX_DIRTY, IMGIDX_SAVE);
 //  PanelDirtyIndicator.Color := INDICATORCOLORS[Dirty];
 end;
 

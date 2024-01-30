@@ -420,10 +420,6 @@ msgstr "ImageResize - "
 msgid "<unnamed>"
 msgstr "<unbenannt>"
 
-#: maindlg.scptwatermark
-msgid "WATERMARK"
-msgstr "WATERMARK"
-
 #: maindlg.serratfmt
 #, object-pascal-format
 msgid "Error at %.0f%% - %s"
