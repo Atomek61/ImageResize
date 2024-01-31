@@ -19,7 +19,8 @@ unit settings;
 interface
 
 uses
-  Classes, SysUtils, StrUtils, Generics.Collections, IniFiles, IniFilesHelper, StringArrays;
+  Classes, SysUtils, StrUtils, Generics.Collections, IniFiles, IniFilesHelper,
+  StringArrays, Language;
 
 type
   TCopyMode = (cmValues, cmWeak, cmStrong, cmDeep);
@@ -308,7 +309,7 @@ begin
     FSection := ASection
   else
     FSection := System.Copy(ClassName, 2, Length(ClassName)-9);
-  FLangCode := GetLanguageID.LanguageCode;
+  FLangCode := TLanguage.Code; //GetLanguageID.LanguageCode;
   FItems := TSettingList.Create(true);
   SetDefaults;
   FChanged := False;

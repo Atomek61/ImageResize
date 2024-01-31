@@ -22,7 +22,7 @@ uses
   BGRABitmapTypes, BGRASpeedButton, BGRAGraphicControl, RichMemo,
   Generics.Collections, MrkEditDlg, WinDirs, UpdateUtils, AppSettings, Logging,
   LoggingRichMemo, StringArrays, Presentations, PresentationDlg, Settings,
-  TagIds, LazFileUtils;
+  TagIds, LazFileUtils, Translations, Language;
 
 const
   LM_RUN                = LM_USER + 1;
@@ -317,7 +317,6 @@ type
     procedure EditSizesExit(Sender: TObject);
     procedure ProjectChanged(Sender :TObject);
   private
-    FLangCode :string;
     FProjectFilename :string;
     FProjectDescription :string; // From project file
     FAutoExit :boolean;
@@ -526,15 +525,16 @@ var
   i :integer;
   Button :TToolButton;
   Cpt :string;
-  LangCode :string;
+  LangCode, ExpliciteLangCode :string;
   Interpolation :TInterpolation;
   Item :string;
 begin
-  FLangCode := 'en';
-  if (SysLocale.PriLangId=7) and not (IsSwitch('L', 'LANGUAGE', LangCode) and SameText(LangCode, 'en')) then begin
-    FLangCode := 'de';
-    SetDefaultLang(FLangCode);
-  end;
+  if IsSwitch('L', 'LANGUAGE', ExpliciteLangCode) then
+    LangCode := LowerCase(ExpliciteLangCode)
+  else
+    LangCode := LowerCase(GetLanguageId.CountryCode);
+  TLanguage.SetCode(LangCode);
+  SetDefaultLang(TLanguage.Code);
 
   TLogger.DefaultLogger := TRichMemoLogger.Create(MemoMessages);
 
@@ -1636,7 +1636,7 @@ end;
 
 procedure TMainDialog.ActionAboutExecute(Sender: TObject);
 begin
-  TAboutDialog.Execute(IMGRESGUICPR, SCptProcessor + ' ' +IMGRESVER, 'LICENSE_'+UpperCase(FLangCode));
+  TAboutDialog.Execute(IMGRESGUICPR, SCptProcessor + ' ' +IMGRESVER, 'LICENSE_'+TLanguage.Code);
 end;
 
 procedure TMainDialog.ActionEditWatermarkExecute(Sender: TObject);

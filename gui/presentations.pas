@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, Controls, Forms, IniFiles, Generics.Collections,
   Graphics, GetText, DateUtils, Generics.Defaults, FileUtil,
   GalleryProcessor, Logging, StrUtils, StringArrays, Settings,
-  PresentationManagerFrm, SettingsEditor, TemplateEngine, WebUtils;
+  PresentationManagerFrm, SettingsEditor, TemplateEngine, WebUtils, Language;
 
 type
   TCustomManager = class;
@@ -126,14 +126,12 @@ end;
 constructor TCustomManager.Create(IniFile :TCustomIniFile);
 const
   UNDEFINED = '<undefined>';
-var
-  Lang, FallbackLang :string;
 
   function IniRead(const Key :string; MustExist :boolean = false) :string;
   const
     DEFAULTS :array[boolean] of string = ('', UNDEFINED);
   begin
-    result := IniFile.ReadString(PRESENTATION_SECTION, Format('%s.%s', [Key, FallbackLang]), UNDEFINED);
+    result := IniFile.ReadString(PRESENTATION_SECTION, Format('%s.%s', [Key, TLanguage.Code]), UNDEFINED);
     if result = UNDEFINED then
       result := IniFile.ReadString(PRESENTATION_SECTION, Key, DEFAULTS[MustExist]);
     if MustExist and (result = UNDEFINED) then
@@ -142,7 +140,7 @@ var
 
 begin
   inherited Create;
-  GetLanguageIDs(Lang, FallBackLang);
+
   FTitle            := IniRead('Title');
   FId               := IniRead('Id', true);
   FDescription      := IniRead('Description');
