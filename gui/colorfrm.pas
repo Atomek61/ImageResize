@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, ExtCtrls, Buttons, Dialogs, FPImage,
-  System.UITypes, Graphics, StdCtrls, ImagesMod;
+  Graphics, StdCtrls;
 
 type
 

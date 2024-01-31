@@ -163,6 +163,7 @@ begin
         // Build the Listvars for each image
         ListVars.Clear;
         ListVars.Add('INDEX', IntToStr(i));
+        ListVars.Add('COUNT', IntToStr(FFilesTags.Filenames.Count));
         ListVars.Add('URL', ExtractFilename(FFilesTags.Filenames[i]));
         Tags := FFilesTags[FFilesTags.Filenames[i]];
         for Key in FFilesTags.TagKeys do begin

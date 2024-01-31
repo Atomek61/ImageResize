@@ -1,5 +1,5 @@
 ﻿#define PROGNAME "ImageResize"
-#define PROGVER "3.5"
+#define PROGVER "4.0"
 
 #define PROGEXE "ImageResize.exe"
 
@@ -35,7 +35,9 @@ Filename: {app}\ImageResize.exe; Description: "Start {#PROGNAME} now"; Flags: po
 
 [Files]
 Source: bin\ImageResize.exe; DestDir: "{app}"; 
+Source: bin\*.dll; DestDir: "{app}"; 
 Source: bin\locale\*.po; DestDir: "{app}\locale"; 
+Source: bin\presentations\*.*; DestDir: "{app}";
 Source: bin\imgres.exe; DestDir: "{win}"; Tasks: installconsoleapp; 
 Source: hlp\*.*; DestDir: "{app}\hlp"; Flags: recursesubdirs; Tasks: localhelp; 
 

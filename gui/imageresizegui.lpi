@@ -11,6 +11,8 @@
       <UseXPManifest Value="True"/>
       <XPManifest>
         <DpiAware Value="True"/>
+        <TextName Value="Atomek.ImageResize.GUI"/>
+        <TextDesc Value="Rescales JPEG and PNG images"/>
       </XPManifest>
       <Icon Value="0"/>
       <Resources Count="2">

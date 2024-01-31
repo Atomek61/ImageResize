@@ -19,7 +19,7 @@ type
     procedure SetAsString(const AValue: string);
     procedure SetUint32(AValue: UInt32);
   public
-    class operator >(const Op1, Op2 :TVersion) :boolean;
+//    class operator >(const Op1, Op2 :TVersion) :boolean;
     constructor Create(const str :string);
     property AsString :string read GetAsString write SetAsString;
     property AsUInt32 :UInt32 read GetAsUInt32 write SetUint32;
@@ -42,7 +42,7 @@ type
   private
     function GetAsDateTime: TDateTime;
     function GetAsString: string;
-    function GetVersion: TVersion;
+//    function GetVersion: TVersion;
     procedure SetAsString(const AValue: string);
   public
     App :string;
@@ -52,7 +52,7 @@ type
     constructor Create(const AApp, AVersion, ADate, AHint :string);
     property AsString :string read GetAsString write SetAsString;
     property AsDateTime :TDateTime read GetAsDateTime;
-    property AsVersion :TVersion read GetVersion;
+//    property AsVersion :TVersion read GetVersion;
   end;
 
 implementation
@@ -84,11 +84,11 @@ begin
   result := 'App='+App+CRLF+'Version='+Version+CRLF+'Date='+Date+CRLF+'Hint='+Hint+CRLF;
 end;
 
-function TVersionManifest.GetVersion: TVersion;
-begin
-
-end;
-
+//function TVersionManifest.GetVersion: TVersion;
+//begin
+//
+//end;
+//
 procedure TVersionManifest.SetAsString(const AValue: string);
 var
   s :TStringList;
@@ -161,17 +161,17 @@ begin
   Build := (AValue and $000000FF);
 end;
 
-class operator TVersion.>(const Op1, Op2: TVersion): boolean;
-var
-  i :integer;
-begin
-  for i:=0 to High(Op1.AsArray) do begin
-//    if AsArray[0]
-    //if
-    //result := Op1
-  end;
-end;
-
+//class operator TVersion.>(const Op1, Op2: TVersion): boolean;
+//var
+//  i :integer;
+//begin
+//  for i:=0 to High(Op1.AsArray) do begin
+////    if AsArray[0]
+//    //if
+//    //result := Op1
+//  end;
+//end;
+//
 constructor TVersion.Create(const str: string);
 begin
   self.AsString := str;

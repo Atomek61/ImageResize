@@ -228,7 +228,7 @@ type
 implementation
 
 uses
-  Translations, WebUtils, Graphics;
+  WebUtils, Graphics;
 
 resourcestring
   SErrSettingClassNotFoundFmt = 'Setting class ''%s'' from [''%s''] not registered.';

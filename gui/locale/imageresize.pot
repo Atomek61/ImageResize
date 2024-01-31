@@ -1684,6 +1684,14 @@ msgctxt "tsettingsdialog.labelcores.caption"
 msgid "Cores"
 msgstr ""
 
+#: tsettingsdialog.labelprocessing.caption
+msgid "Processing"
+msgstr ""
+
+#: tsettingsdialog.labelsaving.caption
+msgid "Saving"
+msgstr ""
+
 #: webutils.serrinvalidhtmlcolorfmt
 #, object-pascal-format
 msgctxt "webutils.serrinvalidhtmlcolorfmt"

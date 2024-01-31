@@ -7,7 +7,7 @@
    viewBox="0 0 6.35 6.35"
    version="1.1"
    id="svg5526"
-   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
    sodipodi:docname="sizes.svg"
    inkscape:export-filename="..\png48\icon.png"
    inkscape:export-xdpi="192"
@@ -30,14 +30,14 @@
      showgrid="true"
      showguides="true"
      inkscape:zoom="29.276992"
-     inkscape:cx="8.2146417"
-     inkscape:cy="17.231962"
+     inkscape:cx="12.706223"
+     inkscape:cy="15.507058"
      inkscape:window-width="1846"
      inkscape:window-height="1230"
      inkscape:window-x="475"
      inkscape:window-y="171"
      inkscape:window-maximized="0"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g9"
      inkscape:lockguides="true">
     <inkscape:grid
        type="xygrid"
@@ -48,7 +48,8 @@
        spacingx="0.26458333"
        spacingy="0.26458333"
        enabled="true"
-       visible="true" />
+       visible="true"
+       units="px" />
     <sodipodi:guide
        position="-3.4395833,5.8208333"
        orientation="0,-1"
@@ -79,13 +80,6 @@
        orientation="1,0"
        id="guide6022"
        inkscape:locked="true" />
-    <inkscape:grid
-       type="xygrid"
-       id="grid294"
-       dotted="true"
-       empspacing="1"
-       originx="0.13229167"
-       originy="0.13229167" />
   </sodipodi:namedview>
   <defs
      id="defs5523">
@@ -153,7 +147,8 @@
        y1="0.19733393"
        x2="5.7414584"
        y2="1.8642091"
-       gradientUnits="userSpaceOnUse" />
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(6.6675001)" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient1160"
@@ -162,7 +157,8 @@
        y1="1.2391309"
        x2="6.3665366"
        y2="3.218545"
-       gradientUnits="userSpaceOnUse" />
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(6.6675001)" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient1168"
@@ -171,7 +167,8 @@
        y1="2.9060059"
        x2="5.5330987"
        y2="4.1561623"
-       gradientUnits="userSpaceOnUse" />
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(6.6675001)" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient1218"
@@ -180,32 +177,114 @@
        y1="2.0725684"
        x2="4.0745831"
        y2="3.3227246"
-       gradientUnits="userSpaceOnUse" />
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(6.6675001)" />
   </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Ebene 2"
+     style="display:none">
+    <path
+       style="fill:#be960e;fill-opacity:1;stroke-width:4.23333;stroke-linejoin:bevel;paint-order:markers fill stroke"
+       d="M 0.79374994,2.6458332 V 0.26458332 H 5.5562497 V 1.5874999 H 2.1166665 V 2.6458332 H 0.79374994"
+       id="path4" />
+    <path
+       style="fill:#edba12;fill-opacity:1;stroke-width:4.23333;stroke-linejoin:bevel;paint-order:markers fill stroke"
+       d="m 2.3812498,2.6458332 v -0.79375 H 6.3499997 V 4.4979163 H 5.2916663 V 3.7041664 H 3.175 l -3e-7,-1.0583332 H 2.3812498"
+       id="path5" />
+    <path
+       style="fill:#f1c841;fill-opacity:1;stroke-width:4.23333;stroke-linejoin:bevel;paint-order:markers fill stroke"
+       d="M 1.8520832,5.2916663 H 3.175 l -3e-7,-1.3229166 H 5.027083 V 6.0854163 H 1.8520832 Z"
+       id="path6" />
+    <rect
+       style="fill:#f4d671;fill-opacity:1;stroke-width:4.23333;stroke-linejoin:bevel;paint-order:markers fill stroke"
+       id="rect6"
+       width="2.9104164"
+       height="2.1166666"
+       x="0"
+       y="2.9104164" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="g9"
+     inkscape:label="Ebene 2 Kopie">
+    <path
+       style="fill:#be960e;fill-opacity:1;stroke-width:4.23333;stroke-linejoin:bevel;paint-order:markers fill stroke"
+       d="M 0.79374994,0.26458332 H 5.5562497 l 0,1.05833328 -3.7041665,0 V 2.3812499 H 0.79374996 Z"
+       id="path7"
+       sodipodi:nodetypes="ccccccc" />
+    <path
+       style="fill:#edba12;fill-opacity:1;stroke-width:4.23333;stroke-linejoin:bevel;paint-order:markers fill stroke"
+       d="m 2.3812498,1.8520832 h 3.9687499 v 2.6458331 l -0.79375,1e-7 V 3.7041665 l -2.1166664,-10e-8 -10e-8,-1.3229165 H 2.3812499 Z"
+       id="path8"
+       sodipodi:nodetypes="ccccccccc" />
+    <path
+       style="fill:#f1c841;fill-opacity:1;stroke-width:4.23333;stroke-linejoin:bevel;paint-order:markers fill stroke"
+       d="m 1.8520829,5.5562496 1.5875003,1e-7 0,-1.3229165 1.5874999,-10e-8 -10e-8,1.8520832 H 1.8520832 Z"
+       id="path9"
+       sodipodi:nodetypes="ccccccc" />
+    <rect
+       style="fill:#f4d671;stroke-width:4.23333;stroke-linejoin:bevel;paint-order:markers fill stroke;fill-opacity:1"
+       id="rect9"
+       width="2.9104164"
+       height="2.1166666"
+       x="0"
+       y="2.9104164" />
+  </g>
   <g
      inkscape:label="Ebene 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="matrix(1.2698412,0,0,1.2698412,-3.5865737,0.54316723)">
+     transform="matrix(1.2698412,0,0,1.2698412,-3.5865737,0.54316723)"
+     style="display:none">
     <path
        id="rect2561"
        style="fill:url(#linearGradient1220);fill-opacity:1;stroke-width:0.228246"
-       d="m 3.0327863,2.0725684 v 1.2501563 l 1.8752345,0 0,-1.2501563 z"
+       d="M 9.7002863,2.0725683 V 3.3227246 H 11.575521 V 2.0725683 Z"
        sodipodi:nodetypes="ccccc" />
     <path
        id="rect2561-8"
        style="fill:url(#linearGradient1170);fill-opacity:1;stroke-width:0.294665"
-       d="m 5.1163802,2.906006 v 0.6250781 l -0.8334376,0 V 4.1561622 H 6.3665365 V 2.906006 Z"
+       d="M 11.78388,2.9060059 V 3.531084 h -0.833437 v 0.6250781 h 2.083594 V 2.9060059 Z"
        sodipodi:nodetypes="ccccccc" />
     <path
        id="rect2561-8-2"
        style="fill:url(#linearGradient1162);fill-opacity:1;stroke-width:0.360889"
-       d="M 4.491302,1.2391309 V 1.864209 l 0.6250782,0 v 0.8334375 l 1.4585157,0 V 3.5310841 H 7.6166928 V 1.2391309 Z"
+       d="m 11.158802,1.2391308 v 0.6250781 h 0.625078 v 0.8334375 h 1.458516 V 3.531084 h 1.041797 V 1.2391308 Z"
        sodipodi:nodetypes="ccccccccc" />
     <path
        id="rect2561-8-5"
-       style="fill:url(#linearGradient1030);stroke-width:0.456492;fill-opacity:1"
-       d="m 3.6578644,-0.01102542 1e-7,1.87523442 H 4.2829426 V 1.0307715 h 2.7086721 l -1e-7,-1.04179692 z"
+       style="fill:url(#linearGradient1030);fill-opacity:1;stroke-width:0.456492"
+       d="m 10.325364,-0.01102555 10e-7,1.87523445 h 0.625078 V 1.0307714 h 2.708672 v -1.04179695 z"
        sodipodi:nodetypes="ccccccc" />
+    <rect
+       style="fill:#cc0000;stroke-width:3.33375;stroke-linejoin:bevel;paint-order:markers fill stroke"
+       id="rect1"
+       width="3.750469"
+       height="2.5003126"
+       x="3.4495051"
+       y="-0.21938485" />
+    <rect
+       style="fill:#73d216;stroke-width:3.33375;stroke-linejoin:bevel;paint-order:markers fill stroke"
+       id="rect2"
+       width="3.1253908"
+       height="2.0835936"
+       x="4.6996608"
+       y="1.0307716" />
+    <rect
+       style="fill:#3465a4;stroke-width:3.33375;stroke-linejoin:bevel;paint-order:markers fill stroke"
+       id="rect3"
+       width="2.5003126"
+       height="1.666875"
+       x="4.2829423"
+       y="2.6976466" />
+    <rect
+       style="fill:#fcaf3e;stroke-width:3.33375;stroke-linejoin:bevel;paint-order:markers fill stroke"
+       id="rect4"
+       width="2.2919531"
+       height="1.666875"
+       x="2.8244271"
+       y="1.8642088" />
   </g>
 </svg>

@@ -193,7 +193,6 @@ function TSolver.Solve(out Stats: TStats): boolean;
 var
   Iterator :TIterator;
   l, r, d :TRec;
-  q :string;
   Key :string;
   found :boolean;
   Dependencies :integer;

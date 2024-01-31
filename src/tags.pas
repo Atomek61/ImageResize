@@ -4,7 +4,7 @@ unit tags;
 {$modeswitch typehelpers}
 {$modeSwitch advancedRecords}
 
-// An TFilesTags dictionary contains a dictionary of tags for a list of files.
+// A TFilesTags dictionary contains a dictionary of tags for a list of files.
 //
 // First of all, add a list of full qualified filenames. For each of them,
 // a tags dictionary will be created.
@@ -21,7 +21,8 @@ unit tags;
 //
 // - The file is UTF-8 encoded, with BOM
 // - The first column is always "Filename"
-// - Only the file title is to be stored
+// - The files name has no path
+// - The other columns are free and optional
 // - The order of rows has no meaning
 // - The headers tagIds are free, only Filename is mandatory
 // - The column order is free, only Filename is always first
@@ -269,9 +270,7 @@ var
   Filename, Key :string;
   Tags :TTags;
   Pair :TPair<string, string>;
-  i :integer;
   BasePath :string;
-  Value :string;
 
   function GetField(const TagKey :string) :string;
   begin
@@ -330,7 +329,6 @@ var
   BasePath :string;
   TargetFilename :string;
   Key :string;
-  Value :string;
 
   function GetField(const TagKey :string) :string;
   begin
@@ -362,8 +360,6 @@ begin
 end;
 
 procedure TFilesTags.LoadFromImagesFile(const ImagesFilename: string);
-var
-  FileTitle :string;
 begin
   Clear;
   LoadFromFile(ImagesFilename, true);

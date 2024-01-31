@@ -29,9 +29,11 @@ type
     Image1: TImage;
     Image2: TImage;
     ImageChucky: TImage;
+    LabelProcessing: TLabel;
     LabelBehavior: TLabel;
     Label8: TLabel;
     LabelCores: TLabel;
+    LabelSaving: TLabel;
     PanelControls: TPanel;
     TimerChucky: TTimer;
     procedure CheckBoxAutoSaveClick(Sender: TObject);

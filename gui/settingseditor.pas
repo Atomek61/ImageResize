@@ -111,7 +111,6 @@ var
   Setting :TSetting;
   EditorClassName :string;
   EditorClass :TEditorClass;
-  Editor :TEditor;
   i :integer;
 begin
   FControl := AControl;
@@ -127,7 +126,7 @@ begin
     Setting := Settings.Items[i];
     EditorClassName := 'T'+Setting.Presentation+'Editor';
     if EditorClasses.TryGetValue(EditorClassName, EditorClass) then
-      Editor := EditorClass.Create(Setting, self);
+      EditorClass.Create(Setting, self);
   end;
 end;
 

@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: aboutdlg.scptavailable
 msgid "Available"
@@ -785,7 +785,7 @@ msgstr "mehr Werte als Tags"
 
 #: tcolorframe.label1.caption
 msgid "&Color:"
-msgstr "&Farbe."
+msgstr "&Farbe:"
 
 #: threading.dispatcher.scptcancelled
 msgid "Cancelled"
@@ -1064,9 +1064,10 @@ msgid ""
 "The choice of an algorithm also depends on up- or down-scaling. RTFM."
 msgstr ""
 "Beim Skalieren eines Bildes bestimmt der Interpolations-Algorithmus\n"
-"die Geschwindigkeit und die Qualität des Prozesses.\n"
-"Lanczos R2 ist der voreingestellte Algorithmus. R2 ist dabei dervPixelradius des Lanczos-Filters.\n"
-"Die Wahl der Interpolation hängt auch davon ab, ob herauf oder herunter skaliert wird.\n"
+"die Geschwindigkeit und die Qualität des Prozesses, abhängig auch davon ab,\n"
+"ob herauf oder herunter skaliert wird.\n"
+"Die Voreinstellung bedeutet Lanczos R2 beim . R2 ist dabei dervPixelradius des Lanczos-Filters.\n"
+"\n"
 "RTFM."
 
 #: tmaindialog.comboboxjpegquality.hint
@@ -1092,7 +1093,7 @@ msgid ""
 msgstr ""
 "Wähle eine verlustlose Kompression für PNG.\n"
 "Sie ist immer verlustfrei aber eine Abwägung zwischen Dateigröße und Verarbeitungszeit.\n"
-"Je höher die Kompression, desto größer der Rechenaufwand"
+"Je höher die Kompression, desto größer der Rechenaufwand."
 
 #: tmaindialog.comboboxshuffleseed.hint
 msgid "Enter a number, lets say 1000, to create always the same mixed order or 0 for shuffeling always randomly."
@@ -1506,7 +1507,7 @@ msgstr "&Öffnen"
 msgid ""
 "Open an existing .was file which contains\n"
 "Watermark settings."
-msgstr "Ein existierende .was-Datei öffnen mit Wasserzeichen-einstellungen "
+msgstr "Eine existierende .was-Datei öffnen mit Wasserzeichen|Einstellungen."
 
 #: tmrkeditdialog.actionsave.caption
 msgctxt "tmrkeditdialog.actionsave.caption"
@@ -1612,7 +1613,7 @@ msgstr "Wasserzeichen speichern"
 
 #: tpresentationdialog.buttonbrowsetargetfolder.hint
 msgid "Browse for the source/target folder of the resulting presentation"
-msgstr "Wählen Sie das Verzeichnis mit den Bildern aus, das auch das Ergebnis der Präsentation enthalten wird."
+msgstr "Wählen Sie das Verzeichnis mit den Bildern aus, das auch das Ergebnis der Präsentation enthalten wird"
 
 #: tpresentationdialog.buttoncancel.caption
 msgctxt "tpresentationdialog.buttoncancel.caption"
@@ -1646,7 +1647,7 @@ msgstr "Schließt den Dialog und übernimmt geänderte Einstellungen"
 
 #: tpresentationdialog.buttontargetfromdoc.hint
 msgid "Copies the current target folder from the main dialog."
-msgstr "Kopiert das Zielverzeichnis des Hauptdialoges hierher"
+msgstr "Kopiert das Zielverzeichnis des Hauptdialoges hierher."
 
 #: tpresentationdialog.buttonwebshow.caption
 msgid "&Show"
@@ -1781,6 +1782,14 @@ msgstr "&Benehmen:"
 msgctxt "tsettingsdialog.labelcores.caption"
 msgid "Cores"
 msgstr "Kerne"
+
+#: tsettingsdialog.labelprocessing.caption
+msgid "Processing"
+msgstr "Verarbeitung"
+
+#: tsettingsdialog.labelsaving.caption
+msgid "Saving"
+msgstr "Speichern"
 
 #: webutils.serrinvalidhtmlcolorfmt
 #, object-pascal-format
