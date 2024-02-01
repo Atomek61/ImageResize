@@ -1,0 +1,30 @@
+Document Domain
+---------------
+
+DOCTITLE
+DOCCOPYRIGHT
+DOCTIMESTAMP
+DOCxxxxx          Depending on the settings defined in presentation definition file .prd
+
+Original Image Domain
+---------------------
+
+ORGWIDTH          Original image width
+ORGHEIGHT         Original image height
+ORGSIZE           The larger of ORGWIDTH and ORGHEIGHT
+ORGRATIO          3/4, 2/3, 16/9,...
+ORGFILENAME       DSC02385.jpg
+ORGBYTES          120234
+ORGBYTESIZE       12MB, 1.2KB,...
+
+Scaled Image Domain
+-------------------
+
+IMGWIDTH          Scaled width
+IMGHEIGHT         Scaled height
+IMGSIZE           The larger of width and height
+IMGRATIO          3/4, 2/3, 16/9
+IMGFILENAME
+IMGINDEX          0, 1, 2, ...
+IMGNUMBER         1, 2, 3, ...
+IMGCOUNT          n

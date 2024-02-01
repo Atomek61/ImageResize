@@ -60,9 +60,10 @@
       <Unit>
         <Filename Value="..\src\imgres.pas"/>
         <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="4"/>
-        <TopLine Value="16"/>
-        <CursorPos X="43" Y="40"/>
+        <TopLine Value="118"/>
+        <CursorPos X="31" Y="174"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit>
@@ -92,8 +93,8 @@
         <Filename Value="..\src\tags.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="13"/>
-        <TopLine Value="342"/>
-        <CursorPos Y="363"/>
+        <TopLine Value="20"/>
+        <CursorPos Y="69"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
       </Unit>
@@ -164,9 +165,8 @@
         <ComponentName Value="ImagesModule"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="12"/>
-        <CursorPos X="24" Y="22"/>
+        <CursorPos X="24" Y="8"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -264,18 +264,18 @@
         <Loaded Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="license.rc"/>
-        <EditorIndex Value="-1"/>
-        <UsageCount Value="162"/>
-        <DefaultSyntaxHighlighter Value="None"/>
-      </Unit>
-      <Unit>
         <Filename Value="..\src\language.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="20"/>
         <CursorPos X="22" Y="34"/>
         <UsageCount Value="34"/>
         <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="license.rc"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="162"/>
+        <DefaultSyntaxHighlighter Value="None"/>
       </Unit>
       <Unit>
         <Filename Value="huedlg.pas"/>
@@ -1328,10 +1328,6 @@
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="348" Column="24" TopLine="389"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
         <Caret Line="1627" TopLine="1620"/>
       </Position>
       <Position>
@@ -1372,6 +1368,10 @@
         <Filename Value="C:\lazarus\lcl\graphics.pp"/>
         <Caret Line="1695" Column="35" TopLine="1669"/>
       </Position>
+      <Position>
+        <Filename Value="..\src\tags.pas"/>
+        <Caret Line="309" Column="49" TopLine="301"/>
+      </Position>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>
@@ -1388,7 +1388,7 @@
       <List Name="LaunchingApplication" Type="File" Count="1">
         <Item1 Value="C:\WINDOWS\system32\cmd.exe /C ${TargetCmdLine}"/>
       </List>
-      <List Name="CommandLineParameters" Count="20">
+      <List Name="CommandLineParameters" Count="19">
         <Item1 Value="-L EN"/>
         <Item2 Value="-LANGUAGE en"/>
         <Item3 Value="-LANGUAGE DE"/>
@@ -1409,7 +1409,6 @@
         <Item18 Value="EN"/>
         <Item19 Value="/E"/>
       </List>
-      <List Name="WorkingDirectory" Type="File" Count="1"/>
     </HistoryLists>
   </ProjectSession>
   <Debugging>
