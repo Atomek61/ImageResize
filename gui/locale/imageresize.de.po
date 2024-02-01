@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.3.1\n"
 
 #: aboutdlg.scptavailable
 msgid "Available"
@@ -136,16 +136,16 @@ msgid "Default"
 msgstr "Voreinstellung"
 
 #: imgres.scptlanczos2
-msgid "Lanczos R2"
-msgstr "Lanczos R2"
+msgid "Lanczos 2px Radius"
+msgstr "Lanczos 2px-Radius"
 
 #: imgres.scptlanczos3
-msgid "Lanczos R3"
-msgstr "Lanczos R3"
+msgid "Lanczos 3px Radius"
+msgstr "Lanczos 3px-Radius"
 
 #: imgres.scptlanczos4
-msgid "Lanczos R4"
-msgstr "Lanczos R4"
+msgid "Lanczos 4px Radius"
+msgstr "Lanczos 4px-Radius"
 
 #: imgres.scptlinear
 msgid "Linear"
@@ -1059,15 +1059,15 @@ msgstr "Titel"
 #: tmaindialog.comboboxinterpolation.hint
 msgid ""
 "When resampling an image the interpolation algorithm\n"
-"controls speed and quality of the processing.\n"
-"Lanczos R2 is the default algorithm. R2 means the Lanczos pixel radius.\n"
-"The choice of an algorithm also depends on up- or down-scaling. RTFM."
+"controls processing speed and resulting quality.\n"
+"The default means Mitchell for down-scaling and Spline for up-scaling.\n"
+"The choice of an algorithm also depends on up- or down-scaling.\n"
+"RTFM."
 msgstr ""
 "Beim Skalieren eines Bildes bestimmt der Interpolations-Algorithmus\n"
-"die Geschwindigkeit und die Qualität des Prozesses, abhängig auch davon ab,\n"
-"ob herauf oder herunter skaliert wird.\n"
-"Die Voreinstellung bedeutet Lanczos R2 beim . R2 ist dabei dervPixelradius des Lanczos-Filters.\n"
-"\n"
+"die Verarbeitungsgeschwindigkeit und die Qualität des Ergebnisses.\n"
+"Die Voreinstellung bedeutet Mitchell beim herauf- und Spline beim\n"
+"herunterskalieren.\n"
 "RTFM."
 
 #: tmaindialog.comboboxjpegquality.hint
@@ -1167,7 +1167,6 @@ msgid "1"
 msgstr "1"
 
 #: tmaindialog.editrentemplate.hint
-#, fuzzy
 msgid ""
 "Enter a filename template containing placeholders for special values.\n"
 "This template will be expanded for each resampled image. Insert the\n"

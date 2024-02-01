@@ -16,8 +16,8 @@
       </XPManifest>
       <Icon Value="0"/>
       <Resources Count="2">
-        <Resource_0 FileName="..\license.txt" Type="RCDATA" ResourceName="LICENSE_EN"/>
-        <Resource_1 FileName="..\lizenz.txt" Type="RCDATA" ResourceName="LICENSE_DE"/>
+        <Resource_0 FileName="..\license.en.txt" Type="RCDATA" ResourceName="LICENSE_EN"/>
+        <Resource_1 FileName="..\license.de.txt" Type="RCDATA" ResourceName="LICENSE_DE"/>
       </Resources>
     </General>
     <i18n>
@@ -26,9 +26,8 @@
     </i18n>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
-      <MajorVersionNr Value="3"/>
-      <MinorVersionNr Value="5"/>
-      <StringTable FileDescription="Image Resampler" LegalCopyright="© 2023 Jan Schirrmacher, www.atomek.de"/>
+      <MajorVersionNr Value="4"/>
+      <StringTable Comments="Scales images down for web galleries" CompanyName="www.atomek.de" FileDescription="ImageResize" LegalCopyright="© 2024 Jan Schirrmacher, www.atomek.de"/>
     </VersionInfo>
     <BuildModes>
       <Item Name="Default" Default="True"/>
@@ -90,10 +89,15 @@
             <OtherUnitFiles Value="..\src"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
             <Optimizations>
-              <OptimizationLevel Value="4"/>
+              <OptimizationLevel Value="3"/>
             </Optimizations>
           </CodeGeneration>
           <Linking>
@@ -108,6 +112,11 @@
               </Win32>
             </Options>
           </Linking>
+          <Other>
+            <Verbosity>
+              <ShowHints Value="False"/>
+            </Verbosity>
+          </Other>
         </CompilerOptions>
       </Item>
     </BuildModes>
@@ -285,10 +294,6 @@
       </Unit>
       <Unit>
         <Filename Value="webcoloreditor.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="license.rc"/>
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>

@@ -36,9 +36,9 @@ resourcestring
   SCptBicubic     = 'Bicubic';
   SCptMitchell    = 'Mitchell';
   SCptSpline      = 'Spline';
-  SCptLanczos2    = 'Lanczos R2';
-  SCptLanczos3    = 'Lanczos R3';
-  SCptLanczos4    = 'Lanczos R4';
+  SCptLanczos2    = 'Lanczos 2px Radius';
+  SCptLanczos3    = 'Lanczos 3px Radius';
+  SCptLanczos4    = 'Lanczos 4px Radius';
   SCptBestQuality = 'Best Quality';
 
   SCptJPEGQualityDefault     = 'Default';

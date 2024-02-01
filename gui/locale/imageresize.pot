@@ -125,15 +125,15 @@ msgid "Default"
 msgstr ""
 
 #: imgres.scptlanczos2
-msgid "Lanczos R2"
+msgid "Lanczos 2px Radius"
 msgstr ""
 
 #: imgres.scptlanczos3
-msgid "Lanczos R3"
+msgid "Lanczos 3px Radius"
 msgstr ""
 
 #: imgres.scptlanczos4
-msgid "Lanczos R4"
+msgid "Lanczos 4px Radius"
 msgstr ""
 
 #: imgres.scptlinear
@@ -1026,9 +1026,10 @@ msgstr ""
 #: tmaindialog.comboboxinterpolation.hint
 msgid ""
 "When resampling an image the interpolation algorithm\n"
-"controls speed and quality of the processing.\n"
-"Lanczos R2 is the default algorithm. R2 means the Lanczos pixel radius.\n"
-"The choice of an algorithm also depends on up- or down-scaling. RTFM."
+"controls processing speed and resulting quality.\n"
+"The default means Mitchell for down-scaling and Spline for up-scaling.\n"
+"The choice of an algorithm also depends on up- or down-scaling.\n"
+"RTFM."
 msgstr ""
 
 #: tmaindialog.comboboxjpegquality.hint

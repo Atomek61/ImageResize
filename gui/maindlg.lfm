@@ -254,14 +254,14 @@ object MainDialog: TMainDialog
         Top = 4
         Width = 393
         TabStop = False
-        ActivePage = TabSheetTagging
+        ActivePage = TabSheetQuality
         Align = alClient
         BorderSpacing.Around = 4
         ImagesWidth = 32
         MultiLine = True
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 4
+        TabIndex = 3
         TabOrder = 1
         Options = [nboMultiLine]
         object TabSheetSizes: TTabSheet
@@ -1022,9 +1022,10 @@ object MainDialog: TMainDialog
             object ComboBoxInterpolation: TComboBox
               Left = 128
               Height = 23
-              Hint = 'When resampling an image the interpolation algorithm'#13#10'controls speed and quality of the processing.'#13#10'Lanczos R2 is the default algorithm. R2 means the Lanczos pixel radius.'#13#10'The choice of an algorithm also depends on up- or down-scaling. RTFM.'
+              Hint = 'When resampling an image the interpolation algorithm'#13#10'controls processing speed and resulting quality.'#13#10'The default means Mitchell for down-scaling and Spline for up-scaling.'#13#10'The choice of an algorithm also depends on up- or down-scaling.'#13#10'RTFM.'
               Top = 5
-              Width = 120
+              Width = 152
+              DropDownCount = 13
               ItemHeight = 15
               Style = csDropDownList
               TabOrder = 0
@@ -1399,7 +1400,7 @@ object MainDialog: TMainDialog
       Left = 700
       Height = 37
       Top = 421
-      Width = 194
+      Width = 188
       Action = ActionExecute
       Anchors = [akRight, akBottom]
       Flat = True

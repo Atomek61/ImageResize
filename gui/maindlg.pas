@@ -38,7 +38,7 @@ const
   APPGITHUBURL          = 'https://github.com/Atomek61/ImageResize';
   GUIVERURL             = 'https://www.atomek.de/imageresize/download/version.manifest';
 
-  IMGRESGUICPR          = 'ImageResize ' + GUIVER_VERSION + ' © 2024 Jan Schirrmacher, www.atomek.de';
+  IMGRESGUICPR          =  GUIVER_APP+' '+GUIVER_VERSION+' © 2024 Jan Schirrmacher, www.atomek.de';
 
   PRJTYPE               = 'IRS';
   PRJVERSION200         = '200';
@@ -1611,7 +1611,7 @@ end;
 
 procedure TMainDialog.EditSizesKeyPress(Sender: TObject; var Key: char);
 const
-  INTLISTKEYS :string = '0123456789, ';
+  INTLISTKEYS :string = '0123456789, '+#8;
 begin
   if Key=#13 then begin
     UpdateRequiredStep(2);
