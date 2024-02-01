@@ -24,7 +24,7 @@ interface
 
 uses
   Classes, SysUtils, StrUtils, Types, BGRABitmap, BGRABitmapTypes,
-  threading.dispatcher, tags, logging, StringArrays;
+  threading.dispatcher, Tags, Logging, StringArrays;
 
 resourcestring
   SCptInterpolationDefault   = 'Default';
@@ -84,11 +84,11 @@ const
     SCptPNGCompressionNone, SCptPNGCompressionFastest, SCptPNGCompressionMax);
 
 const
-  IMGRESVER = '3.3';
+  IMGRESVER = '4.0';
   IMGRESCPR = 'imgres '+IMGRESVER+' © 2024 Jan Schirrmacher, www.atomek.de';
 
   TAGSREPORTFILETITLE       = '.tagsreport';
-  IMAGEINFOSFILETITLE       = '.images';
+  IMAGEINFOSFILETITLE       = '.imgtags';
 
   DEFAULTPNGCOMPRESSION     = 2;
   DEFAULTJPEGQUALITY        = 75;
@@ -108,7 +108,6 @@ const
   DEFAULT_SHUFFLESEED       = 0;
   DEFAULT_FILETAGS          = nil;
   DEFAULT_COPYRIGHT         = '';
-  DEFAULT_TAGSFMT           = '.images%d';
   DEFAULT_TAGSSOURCES       = [];
   DEFAULT_TAGSREPORTS       = [];
   DEFAULT_NOCREATE          = false;
@@ -119,7 +118,6 @@ type
 
   TSizes = array of integer;
 
-//  TPrintEvent = procedure(Sender :TObject; const Line :string) of object;
   TPrintEvent = procedure(Sender :TObject; const Line :string; Level :TLogLevel = llInfo) of object;
   TProgressEvent = procedure(Sender :TObject; Progress :single) of object;
 

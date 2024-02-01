@@ -10,6 +10,11 @@ uses
   GalleryProcessor, Logging, StrUtils, StringArrays, Settings,
   PresentationManagerFrm, SettingsEditor, TemplateEngine, WebUtils, Language;
 
+const
+  SYSPRESENTATIONAPP      = 'ImageResize Presentation';
+  SYSPRESENTATIONVENDOR   = 'www.atomek.de';
+  SYSPRESENTATIONVERSION  = '250201';
+
 type
   TCustomManager = class;
   TCustomManagerClass = class of TCustomManager;
@@ -34,7 +39,7 @@ type
     FPreview :TPicture;
     FTemplateFolder :string;
     FTargetFolder :string;
-    FParams :TSettings;
+    FSettings :TSettings;
     FDelimiters :TDelimiters;
     function GetIcon: TGraphic;
     function GetPreview: TGraphic;
@@ -58,7 +63,7 @@ type
     property Icon :TGraphic read GetIcon;
     property Preview :TGraphic read GetPreview;
     property TargetFolder :string read FTargetFolder write FTargetFolder;
-    property Params :TSettings read FParams;
+    property Settings :TSettings read FSettings;
     property Delimiters :TDelimiters read FDelimiters;
   end;
 
@@ -76,7 +81,7 @@ type
   private
     FProcessor :TProcessor;
     FManagerFrame :TPresentationManagerFrame;
-    FParamsEditor :TSettingsEditor; // Link between ValuesListEditor on FMangerFrame and FParams;
+    FParamsEditor :TSettingsEditor; // Link between ValuesListEditor on FMangerFrame and FSettings;
     FWebResource :string; // Entry for the web browser
   public
     function ShowFrame(Parent :TWinControl) :TFrame; override;
@@ -151,15 +156,15 @@ begin
   FPreviewFile      := CreateAbsolutePath(IniFile.ReadString(PRESENTATION_SECTION, 'Preview', ''), FTemplateFolder);
   FDelimiters       := TDelimiters.StrToDelimiters(IniFile.ReadString(PRESENTATION_SECTION, 'Delimiters', PERCENTDELIMITERS.toString));
 
-  FParams := TSettings.Create(FId);
-  FParams.LoadDef(IniFile, 'Settings');
+  FSettings := TSettings.Create(FId);
+  FSettings.LoadDef(IniFile, 'Settings');
 end;
 
 destructor TCustomManager.Destroy;
 begin
   FIcon.Free;
   FPreview.Free;
-  FParams.Free;
+  FSettings.Free;
   inherited Destroy;
 end;
 
@@ -279,7 +284,7 @@ begin
     FManagerFrame.Name := Format('ParamsFrame%8.8p', [@FManagerFrame]);
     FManagerFrame.Parent := Parent;
     FParamsEditor := TSettingsEditor.Create;
-    FParamsEditor.Bind(Params, FManagerFrame.ValueListEditor);
+    FParamsEditor.Bind(Settings, FManagerFrame.ValueListEditor);
   end;
   FManagerFrame.Visible := FParamsEditor.Editors.Count>0;
   result := FManagerFrame;
@@ -318,7 +323,7 @@ begin
   FProcessor := GalleryProcessor.TProcessor.Create(Delimiters);
   FProcessor.CopyFiles := MakeAbsoluteList(IniFile.ReadString(PRESENTATION_SECTION, 'Copy', ''));
   FProcessor.TemplateFiles := MakeAbsoluteList(IniFile.ReadString(PRESENTATION_SECTION, 'Templates', ''));
-  FProcessor.DocumentVars.Add('TITLE');
+  FProcessor.DocVars.Add('TITLE');
   FWebResource := IniFile.ReadString(PRESENTATION_SECTION, 'WebResource', '');
   if FWebResource = '' then begin
     if FProcessor.TemplateFiles.Count>0 then
@@ -355,16 +360,21 @@ var
 begin
   FParamsEditor.Flush;
   FProcessor.TargetFolder := TargetFolder;
-  FProcessor.DocumentVars.Load('PRESENTATIONID', Id);
-  FProcessor.DocumentVars.Load('PRESENTATIONTITLE',Title);
+  FProcessor.DocVars.Load('SYSPRESENTATIONID', Id);
+  FProcessor.DocVars.Load('SYSPRESENTATIONTITLE', Title);
+  with FProcessor.SysVars do begin
+    Load('SYSPRESENTATIONAPP', SYSPRESENTATIONAPP);
+    Load('SYSPRESENTATIONVENDOR', SYSPRESENTATIONVENDOR);
+    Load('SYSPRESENTATIONVERSION', SYSPRESENTATIONVERSION);
+  end;
 
-  // Make Params available to the Processor
-  for Setting in Params.Items do begin
+  // Make Settings available to the Processor
+  for Setting in Settings.Items do begin
     if SettingPresentationFns.TryGetValue(Setting.Presentation, SettingPresentationFn) then
       ValuePresentation := SettingPresentationFn(Setting)
     else
       ValuePresentation := Setting.AsDisplay;
-    FProcessor.DocumentVars.Load(UpperCase(Setting.Key), ValuePresentation);
+    FProcessor.DocVars.Load('DOC'+UpperCase(Setting.Key), ValuePresentation);
   end;
 
   FProcessor.Execute(Stats);

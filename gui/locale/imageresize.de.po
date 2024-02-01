@@ -971,7 +971,9 @@ msgid "ImageResize"
 msgstr "ImageResize"
 
 #: tmaindialog.checkboximageinfosenabled.caption
-msgid "Create Presentation Infos (.images)"
+#, fuzzy
+#| msgid "Create Presentation Infos (.images)"
+msgid "Create Presentation Infos (.imgtags)"
 msgstr "Erzeuge Infos für Präsentationen (.images)"
 
 #: tmaindialog.checkboximageinfosenabled.hint
@@ -1167,6 +1169,7 @@ msgid "1"
 msgstr "1"
 
 #: tmaindialog.editrentemplate.hint
+#, fuzzy, badformat
 msgid ""
 "Enter a filename template containing placeholders for special values.\n"
 "This template will be expanded for each resampled image. Insert the\n"
@@ -1795,3 +1798,4 @@ msgstr "Speichern"
 msgctxt "webutils.serrinvalidhtmlcolorfmt"
 msgid "Invalid web color '%s'."
 msgstr "Ungültige Web-Farbe '%s'."
+

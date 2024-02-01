@@ -200,7 +200,7 @@ end;
 function TPresentationDialog.Execute(PresentationSettings :TPresentationSettings; ParamsList :TSettingsList) :boolean;
 var
   Manager :TCustomManager;
-  Params :TSettings;
+  Settings :TSettings;
   Index :integer;
 begin
 
@@ -208,10 +208,10 @@ begin
   try
     if FManagers.Count=0 then
       Scan;
-    for Params in ParamsList.Values do begin
-      if FManagers.TryFind(Params.Section, Index) then begin
-        FManagers[Index].Params.Copy(Params, cmWeak);
-        FManagers[Index].Params.Dirty := false;
+    for Settings in ParamsList.Values do begin
+      if FManagers.TryFind(Settings.Section, Index) then begin
+        FManagers[Index].Settings.Copy(Settings, cmWeak);
+        FManagers[Index].Settings.Dirty := false;
       end;
     end;
 
@@ -226,12 +226,12 @@ begin
       if FManagerIndex<>-1 then
         PresentationSettings.Id.AsText := FManagers[FManagerIndex].Id;
       for Manager in FManagers do begin
-        if Manager.Params.Dirty then begin
-          if not ParamsList.TryGetValue(Manager.Params.Section, Params) then begin
-            Params := TSettings.Create(Manager.Params.Section);
-            ParamsList.Add(Params.Section, Params);
+        if Manager.Settings.Dirty then begin
+          if not ParamsList.TryGetValue(Manager.Settings.Section, Settings) then begin
+            Settings := TSettings.Create(Manager.Settings.Section);
+            ParamsList.Add(Settings.Section, Settings);
           end;
-          Params.Copy(Manager.Params, cmDeep);
+          Settings.Copy(Manager.Settings, cmDeep);
         end;
       end;
     end;

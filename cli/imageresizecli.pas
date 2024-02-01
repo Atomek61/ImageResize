@@ -11,8 +11,8 @@ uses
   { you can add units after this } fileutil, utils, imgres, generics.collections;
 
 const
-  IMGRESCLIVER = '3.3';
-  IMGRESCLICPR = 'imgres CLI '+IMGRESCLIVER+' for engine '+IMGRESVER+' (c) 2023 Jan Schirrmacher, www.atomek.de';
+  IMGRESCLIVER = '4.0';
+  IMGRESCLICPR = 'imgres CLI '+IMGRESCLIVER+' for engine '+IMGRESVER+' (c) 2024 Jan Schirrmacher, www.atomek.de';
 
   INTROSTR = 'Free tool for JPEG and PNG quality resampling.';
   USAGESTR = '  Usage: imgres filename folder size {-option [param]}';
@@ -29,9 +29,9 @@ const
     'Options:'#10#10+
     'short long            parameter   comment'#10+
     '-----------------------------------------'#10+
-    '   -j -jpgquality     1..100     A quality from 1 to 100 percent (default is 75)'#10+
+    '   -j -jpegquality    1..100     A quality from 1 to 100 percent (default is 75)'#10+
     '   -p -pngcompression degree     None|Fastest|Default|max'#10+
-    '   -f -filter         filter     Stretch, Box, Linear, HalfCosine, Cosine, Bicubic, Mitchell, Spline,'#10+
+    '   -i -interpolation  name       Stretch, Box, Linear, HalfCosine, Cosine, Bicubic, Mitchell, Spline,'#10+
     '                                 Lanczos2, Lanczos3, Lanczos4, BestQuality'#10+
     '                                 Default is Lanczos2.'#10+
     '   -r -rename         template   Rename files by a template with placeholders.'#10+
@@ -110,9 +110,9 @@ var
   Param :string;
   Sizes :TSizes;
   Quiet :boolean;
-  JpgQuality :integer;
-  PngCompression :integer;
-  Resampling :TResampling;
+  JPEGQuality :integer;
+  PNGCompression :integer;
+  Interpolation :TInterpolation;
   TargetFolder :string;
   TargetFileTemplate :string;
   SourceFolder :string;
@@ -131,7 +131,7 @@ var
   Shuffle :boolean;
   ShuffleSeed :integer;
   TagsSources :TTagsSources;
-  TagIDs :TTagIDs;
+  TagKeys :TStringArray;
   Copyright :string;
   TagsReports :TTagsReports;
   NoCreate :boolean;
@@ -164,31 +164,31 @@ begin
   Processor := TProcessor.Create;
   try
 
-    // JpgQuality
-    Param := GetOptionValue('j', 'jpgquality');
+    // JPEGQuality
+    Param := GetOptionValue('j', 'jpegquality');
     if Param<>'' then begin
-      if not TryStrToInt(Param, JpgQuality) or (JpgQuality<1) or (JpgQuality>100) then
-        raise Exception.CreateFmt('Invalid jpgquality ''%s'', 1..100 expected.', [Param]);
+      if not TryStrToInt(Param, JPEGQuality) or (JPEGQuality<1) or (JPEGQuality>100) then
+        raise Exception.CreateFmt('Invalid jpegquality ''%s'', 1..100 expected.', [Param]);
       inc(OptionCount, 2);
     end else
-      JpgQuality := Processor.JpgQuality;
+      JPEGQuality := Processor.JPEGQuality;
 
-    // PngCompression
+    // PNGCompression
     Param := GetOptionValue('p', 'pngcompression');
     if Param<>'' then begin
-      if not TProcessor.TryStrToPngCompression(Param, PngCompression) then
+      if not TProcessor.TryNameToPNGCompression(Param, PNGCompression) then
         raise Exception.CreateFmt('Invalid pngcompression ''%s'', none, fastes, default or max expected.', [Param]);
       inc(OptionCount, 2);
     end else
-      PngCompression := Processor.PngCompression;
+      PNGCompression := Processor.PNGCompression;
 
     // Filter
-    Param := GetOptionValue('f', 'filter');
+    Param := GetOptionValue('i', 'interpolation');
     if Param<>'' then begin
-      Resampling := TProcessor.NameToResampling(Param);
+      Interpolation := TProcessor.NameToInterpolation(Param);
       inc(OptionCount, 2);
     end else
-      Resampling := Processor.Resampling;
+      Interpolation := Processor.Interpolation;
 
     // Watermark "C:\Folder\mark%SIZE%.png:-1.0,-1.0:50.0"
     MrkFilename := '';
@@ -228,11 +228,11 @@ begin
     end;
 
     // EXIF Tags
-    TagIDs := nil;
+    TagKeys := nil;
     Param := GetOptionValue('e', 'exif');
     if Param<>'' then begin
-      TagIDs := StrToStringArray(Param, ',');
-      if (Length(TagIDs)=0) or not allSupported(TagIDs) then
+      TagKeys := StrToStringArray(Param, ',');
+      if (Length(TagKeys)=0) or not allSupported(TagKeys) then
         raise Exception.CreateFmt('Invalid tags ''%s'', list of special tags expected - Title, Timestamp and Copyright.', [Param]);
       inc(OptionCount, 2);
     end;
@@ -341,9 +341,9 @@ begin
     Processor.SourceFilenames := SourceFilenames;
     Processor.TargetFolder := TargetFolder;
     Processor.Sizes := SizesToSizesStr(Sizes);
-    Processor.JpgQuality := JpgQuality;
-    Processor.PngCompression := PngCompression;
-    Processor.Resampling := Resampling;
+    Processor.JPEGQuality := JPEGQuality;
+    Processor.PNGCompression := PNGCompression;
+    Processor.Interpolation := Interpolation;
     Processor.MrkFilename := MrkFilename;
     Processor.MrkSize := MrkSize;
     Processor.MrkX := MrkX;
@@ -355,7 +355,7 @@ begin
     Processor.Shuffle := Shuffle;
     Processor.ShuffleSeed := ShuffleSeed;
     Processor.TagsSources := TagsSources;
-    Processor.TagIDs := TagIDs;
+    Processor.TagKeys := TagKeys;
     Processor.Copyright := Copyright;
     Processor.TagsReports := TagsReports;
     Processor.NoCreate := NoCreate;

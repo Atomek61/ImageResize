@@ -947,7 +947,7 @@ msgid "ImageResize"
 msgstr ""
 
 #: tmaindialog.checkboximageinfosenabled.caption
-msgid "Create Presentation Infos (.images)"
+msgid "Create Presentation Infos (.imgtags)"
 msgstr ""
 
 #: tmaindialog.checkboximageinfosenabled.hint

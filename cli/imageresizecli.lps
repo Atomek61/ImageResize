@@ -4,19 +4,22 @@
     <PathDelim Value="\"/>
     <Version Value="12"/>
     <BuildModes Active="Debug"/>
-    <Units Count="96">
+    <Units Count="97">
       <Unit0>
         <Filename Value="imageresizecli.pas"/>
         <IsPartOfProject Value="True"/>
-        <CursorPos X="22" Y="14"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="280"/>
+        <CursorPos X="23" Y="187"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="..\src\imgres.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="19"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="232"/>
+        <CursorPos X="17" Y="264"/>
         <ExtraEditorCount Value="1"/>
         <ExtraEditor1>
           <EditorIndex Value="-1"/>
@@ -32,13 +35,15 @@
       <Unit2>
         <Filename Value="..\src\utils.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="-1"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="82" Y="11"/>
         <UsageCount Value="201"/>
+        <Loaded Value="True"/>
       </Unit2>
       <Unit3>
         <Filename Value="..\src\generics.queue.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="5"/>
         <TopLine Value="5"/>
         <CursorPos X="12" Y="38"/>
         <UsageCount Value="200"/>
@@ -59,15 +64,16 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="46"/>
         <CursorPos X="48" Y="53"/>
-        <UsageCount Value="95"/>
+        <UsageCount Value="96"/>
       </Unit5>
       <Unit6>
         <Filename Value="..\src\tags.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="66"/>
-        <CursorPos X="36" Y="82"/>
-        <UsageCount Value="91"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="24"/>
+        <CursorPos X="8" Y="48"/>
+        <UsageCount Value="92"/>
+        <Loaded Value="True"/>
       </Unit6>
       <Unit7>
         <Filename Value="..\src\filestags.pas"/>
@@ -561,7 +567,7 @@
       <Unit74>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\packages\fcl-base\src\custapp.pp"/>
         <UnitName Value="CustApp"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="7"/>
         <TopLine Value="54"/>
         <CursorPos X="14" Y="75"/>
         <UsageCount Value="13"/>
@@ -612,10 +618,11 @@
       <Unit81>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\packages\rtl-generics\src\generics.collections.pas"/>
         <UnitName Value="Generics.Collections"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="1160"/>
-        <CursorPos X="20" Y="1186"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="119"/>
+        <CursorPos X="52" Y="144"/>
         <UsageCount Value="38"/>
+        <Loaded Value="True"/>
       </Unit81>
       <Unit82>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\classes\classesh.inc"/>
@@ -696,9 +703,7 @@
       <Unit93>
         <Filename Value="C:\lazarus\components\lazutils\fileutil.pas"/>
         <UnitName Value="FileUtil"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="160"/>
+        <EditorIndex Value="3"/>
         <UsageCount Value="25"/>
         <Loaded Value="True"/>
       </Unit93>
@@ -717,127 +722,131 @@
         <CursorPos Y="884"/>
         <UsageCount Value="14"/>
       </Unit95>
+      <Unit96>
+        <Filename Value="..\src\stringarrays.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="21"/>
+      </Unit96>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="331" TopLine="311"/>
+        <Caret Line="134" Column="22" TopLine="110"/>
       </Position1>
       <Position2>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="332" TopLine="311"/>
       </Position2>
       <Position3>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="331" TopLine="311"/>
+        <Caret Line="134" Column="9" TopLine="92"/>
       </Position3>
       <Position4>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="336" TopLine="311"/>
+        <Caret Line="231" Column="11" TopLine="190"/>
       </Position4>
       <Position5>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="340" TopLine="313"/>
+        <Caret Line="234" Column="13" TopLine="193"/>
       </Position5>
       <Position6>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="341" TopLine="314"/>
+        <Caret Line="134" Column="6" TopLine="105"/>
       </Position6>
       <Position7>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="342" TopLine="315"/>
+        <Caret Line="234" TopLine="190"/>
       </Position7>
       <Position8>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="343" TopLine="316"/>
+        <Caret Line="202" Column="21" TopLine="190"/>
       </Position8>
       <Position9>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="344" TopLine="317"/>
+        <Caret Line="134" Column="23" TopLine="105"/>
       </Position9>
       <Position10>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="345" TopLine="318"/>
+        <Caret Line="173" Column="27" TopLine="150"/>
       </Position10>
       <Position11>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="346" TopLine="319"/>
+        <Caret Line="138" Column="3" TopLine="114"/>
       </Position11>
       <Position12>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="347" TopLine="320"/>
+        <Caret Line="174" Column="32" TopLine="150"/>
       </Position12>
       <Position13>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="348" TopLine="321"/>
+        <Caret Line="179" Column="48" TopLine="155"/>
       </Position13>
       <Position14>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="349" TopLine="322"/>
+        <Caret Line="344" Column="35" TopLine="320"/>
       </Position14>
       <Position15>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="350" TopLine="323"/>
+        <Caret Line="345" Column="15" TopLine="320"/>
       </Position15>
       <Position16>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="351" TopLine="324"/>
       </Position16>
       <Position17>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="352" TopLine="325"/>
+        <Caret Line="345" Column="47" TopLine="304"/>
       </Position17>
       <Position18>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="353" TopLine="326"/>
+        <Caret Line="343" Column="36" TopLine="320"/>
       </Position18>
       <Position19>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="354" TopLine="327"/>
       </Position19>
       <Position20>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="355" TopLine="328"/>
+        <Caret Line="169" Column="48" TopLine="133"/>
       </Position20>
       <Position21>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="356" TopLine="329"/>
       </Position21>
       <Position22>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="357" TopLine="330"/>
+        <Caret Line="180" TopLine="132"/>
       </Position22>
       <Position23>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="358" TopLine="331"/>
+        <Caret Line="358" Column="21" TopLine="334"/>
       </Position23>
       <Position24>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="359" TopLine="332"/>
+        <Caret Line="134" Column="3" TopLine="110"/>
       </Position24>
       <Position25>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="360" TopLine="333"/>
+        <Caret Line="357" Column="26" TopLine="334"/>
       </Position25>
       <Position26>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="375" TopLine="350"/>
+        <Caret Line="138" Column="3" TopLine="114"/>
       </Position26>
       <Position27>
         <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="652" TopLine="635"/>
+        <Caret Line="264" Column="17" TopLine="232"/>
       </Position27>
       <Position28>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="355" Column="27" TopLine="350"/>
+        <Caret Line="355" Column="25" TopLine="334"/>
       </Position28>
       <Position29>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="641" Column="32" TopLine="635"/>
+        <Filename Value="imageresizecli.pas"/>
       </Position29>
       <Position30>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="14" Column="22"/>
+        <Caret Line="331" Column="58" TopLine="317"/>
       </Position30>
     </JumpHistory>
     <RunParams>
@@ -894,6 +903,13 @@
         <WatchKind Value="wpkWrite"/>
         <Source Value="imageresizecli.pas"/>
         <Line Value="149"/>
+      </Item>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="imageresizecli.pas"/>
+        <Line Value="115"/>
       </Item>
     </BreakPoints>
     <Watches>

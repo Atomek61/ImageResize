@@ -254,14 +254,14 @@ object MainDialog: TMainDialog
         Top = 4
         Width = 393
         TabStop = False
-        ActivePage = TabSheetQuality
+        ActivePage = TabSheetTagging
         Align = alClient
         BorderSpacing.Around = 4
         ImagesWidth = 32
         MultiLine = True
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 3
+        TabIndex = 4
         TabOrder = 1
         Options = [nboMultiLine]
         object TabSheetSizes: TTabSheet
@@ -1193,11 +1193,11 @@ object MainDialog: TMainDialog
               Height = 19
               Hint = 'The Slideshow Afterburner requires such files with the'#13#10'names and titles of the images to be displayed.'
               Top = 27
-              Width = 202
+              Width = 207
               BorderSpacing.Left = 9
               BorderSpacing.Top = 24
               BorderSpacing.Bottom = 6
-              Caption = 'Create Presentation Infos (.images)'
+              Caption = 'Create Presentation Infos (.imgtags)'
               TabOrder = 1
               OnChange = ProjectChanged
             end

@@ -1,4 +1,4 @@
-unit tags;
+unit Tags;
 
 {$mode Delphi}
 {$modeswitch typehelpers}
@@ -37,7 +37,7 @@ unit tags;
 interface
 
 uses
-  Classes, SysUtils, generics.collections, StringArrays;
+  Classes, SysUtils, Generics.Collections, StringArrays;
 
 const
   TAGS_FILETITLE      = '.tags';

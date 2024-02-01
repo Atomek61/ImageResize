@@ -13,7 +13,7 @@ uses
   Forms, lazcontrols, maindlg, settingsdlg, mrkeditdlg, presentationdlg, aboutdlg, imgres, updateutils,
   datetimeutils, threading.dispatcher, EXIFUtils, tags, settings,
   animator, logging, imagesmod, presentations,
-  galleryprocessor, stringarrays, appsettings, 
+  galleryprocessor, appsettings, 
 presentationmanagerfrm, 
 colorfrm, tagids, webutils,
 settingseditor, webcolors, webcoloreditor, language;

@@ -1,3 +1,13 @@
+System Domain
+------------
+
+SYSCR
+SYSLF
+SYSCRLF
+SYSPRESENTATIONAPP
+SYSPRESENTATIONVENDOR
+SYSPRESENTATIONVERSION
+
 Document Domain
 ---------------
 
@@ -20,11 +30,13 @@ ORGBYTESIZE       12MB, 1.2KB,...
 Scaled Image Domain
 -------------------
 
+IMGTITLE          Schöner Leuchtturm
+IMGCOPYRIGHT      (c) 2024 atomek.de
+IMGFILENAME       img001.jpg
+IMGINDEX          0, 1, 2, ...
+IMGNUMBER         1, 2, 3, ...
+IMGCOUNT          n
 IMGWIDTH          Scaled width
 IMGHEIGHT         Scaled height
 IMGSIZE           The larger of width and height
 IMGRATIO          3/4, 2/3, 16/9
-IMGFILENAME
-IMGINDEX          0, 1, 2, ...
-IMGNUMBER         1, 2, 3, ...
-IMGCOUNT          n

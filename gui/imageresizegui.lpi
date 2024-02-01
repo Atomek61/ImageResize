@@ -201,6 +201,7 @@
       <Unit>
         <Filename Value="..\src\tags.pas"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="Tags"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\exifutils.pas"/>
@@ -252,10 +253,6 @@
       </Unit>
       <Unit>
         <Filename Value="galleryprocessor.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="stringarrays.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>

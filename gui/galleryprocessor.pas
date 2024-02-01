@@ -21,8 +21,8 @@ type
     FCopyFiles :TStringArray;       // Template files - .html, .js, .css or whatever
     FFilesTags :TFilesTags;         // Table with tags for each image file, usually from .images file in folder
     FListFragments :TStringDictionary;  // List fragments - each List, built by the FListSolver uses one
-    FGlobalVars :TSolver;           // Global Vars like CR, LF
-    FDocumentVars :TSolver;         // Global Vars like TITLE, DATE, OWNER, IMG-LIST, NAV-LIST
+    FSysVars :TSolver;           // Global Vars like CR, LF
+    FDocVars :TSolver;              // Global Vars like TITLE, DATE, OWNER, IMG-LIST, NAV-LIST
   public type
     TStats = record
       FilesToCopy :integer;           // Number of files to be copied
@@ -42,8 +42,8 @@ type
     procedure Clear;
     function Execute(out Stats :TStats) :boolean;
     property TargetFolder :string read FTargetFolder write FTargetFolder;
-    property GlobalVars :TSolver read FGlobalVars;
-    property DocumentVars :TSolver read FDocumentVars;
+    property SysVars :TSolver read FSysVars;
+    property DocVars :TSolver read FDocVars;
     property ListFragments :TStringDictionary read FListFragments;
     property CopyFiles :TStringArray read FCopyFiles write FCopyFiles;
     property TemplateFiles :TStringArray read FTemplateFiles write FTemplateFiles;
@@ -52,7 +52,7 @@ type
   end;
 
 const
-  DOTIMAGESFILETITLE = '.images';
+  DOTIMAGESFILETITLE = '.imgtags';
 
 implementation
 
@@ -73,19 +73,21 @@ begin
   FDelimiters := Delimiters;
   FFilesTags := TFilesTags.Create;
   FListFragments := TStringDictionary.Create;
-  FDocumentVars := TSolver.Create(FDelimiters);
-  FGlobalVars := TSolver.Create(FDelimiters);
-  FGlobalVars.Add('CR', #13);
-  FGlobalVars.Add('LF', #10);
-  FGlobalVars.Add('CRLF', #13#10);
+  FDocVars := TSolver.Create(FDelimiters);
+  FSysVars := TSolver.Create(FDelimiters);
+  with FSysVars do begin
+    Load('SYSCR', #13);
+    Load('SYSLF', #10);
+    Load('SYSCRLF', #13#10);
+  end;
 end;
 
 destructor TProcessor.Destroy;
 begin
   FFilesTags.Free;
   FListFragments.Free;
-  FDocumentVars.Free;
-  FGlobalVars.Free;
+  FDocVars.Free;
+  FSysVars.Free;
   inherited Destroy;
 end;
 
@@ -95,7 +97,7 @@ begin
   FTemplateFiles.Clear;
   FCopyFiles.Clear;
   FListFragments.Clear;
-  FDocumentVars.Clear;
+  FDocVars.Clear;
 end;
 
 function TProcessor.Execute(out Stats :TStats) :boolean;
@@ -111,7 +113,7 @@ var
   Fragment :TPair<string, string>;
   List :TPair<string, string>;
   SolverStats :TSolver.TStats;
-  ListVars :TSolver;
+  ImgVars :TSolver;
   FileSource :TStringList;
   Filename, FileText :string;
   Replacements :integer;
@@ -127,7 +129,7 @@ var
 
 begin
   Lists := TStringDictionary.Create;
-  ListVars := TSolver.Create(FDelimiters);
+  ImgVars := TSolver.Create(FDelimiters);
   FileSource := TStringList.Create;
   Stats := Default(TStats);
   t0 := TThread.GetTickCount64;
@@ -160,38 +162,39 @@ begin
         Lists.Add(Fragment.Key, '');
       // Iterate over the images
       for i:=0 to FFilesTags.Filenames.Count-1 do begin
-        // Build the Listvars for each image
-        ListVars.Clear;
-        ListVars.Add('INDEX', IntToStr(i));
-        ListVars.Add('COUNT', IntToStr(FFilesTags.Filenames.Count));
-        ListVars.Add('URL', ExtractFilename(FFilesTags.Filenames[i]));
+        // Build the ImgVars for each image
+        ImgVars.Clear;
+        ImgVars.Add('IMGINDEX', IntToStr(i));
+        ImgVars.Add('IMGNUMBER', IntToStr(i+1));
+        ImgVars.Add('IMGCOUNT', IntToStr(FFilesTags.Filenames.Count));
+        ImgVars.Add('IMGFILENAME', ExtractFilename(FFilesTags.Filenames[i]));
         Tags := FFilesTags[FFilesTags.Filenames[i]];
         for Key in FFilesTags.TagKeys do begin
           if not Tags.TryGetValue(Key, Value) then Value := '';
-          ListVars.Add(UpperCase(Key), Value);
+          ImgVars.Load('IMG'+UpperCase(Key), Value);
         end;
         // Add the global vars
-        for j:=0 to FGlobalVars.Count-1 do
-          ListVars.Add(FGlobalVars.Keys[j], FGlobalVars.Values[j]);
+        for j:=0 to FSysVars.Count-1 do
+          ImgVars.Load(FSysVars.Keys[j], FSysVars.Values[j]);
         for Fragment in FListFragments do
-          ListVars.Add(Fragment.Key, Fragment.Value);
-        ListVars.Solve(SolverStats);
+          ImgVars.Load(Fragment.Key, Fragment.Value);
+        ImgVars.Solve(SolverStats);
         inc(Stats.Dependencies, SolverStats.LeftDependencies + SolverStats.Solved);
         inc(Stats.Solved, SolverStats.Solved);
         for Fragment in FListFragments do
-          Lists[Fragment.Key] := Lists[Fragment.Key] + ListVars[Fragment.Key];
+          Lists[Fragment.Key] := Lists[Fragment.Key] + ImgVars[Fragment.Key];
       end;
 
       // 4. Add the builded lists as global variables
       for List in Lists do
-        FDocumentVars[List.Key] := List.Value;
+        FDocVars['DOC'+List.Key] := List.Value;
 
       // 5. Load the template files and replace the global var
       for TemplateFilename in FTemplateFiles do begin
         TargetFilename := TargetFolder+ExtractFilename(TemplateFilename);
         Log(SMsgProcessingTemplateFmt, [ExtractFilename(TemplateFilename)], llInfo);
         FileSource.LoadFromFile(TemplateFilename, TEncoding.UTF8);
-        FileText := FDocumentVars.Replace(FileSource.Text, Replacements);
+        FileText := FDocVars.Replace(FileSource.Text, Replacements);
         inc(Stats.Replacements, Replacements);
         FileSource.Text := FileText;
         FileSource.SaveToFile(TargetFilename, TEncoding.UTF8);
@@ -209,7 +212,7 @@ begin
 
     finally
       Lists.Free;
-      ListVars.Free;
+      ImgVars.Free;
       FileSource.Free;
     end;
     result := true;
