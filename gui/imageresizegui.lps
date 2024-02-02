@@ -229,7 +229,7 @@
       <Unit>
         <Filename Value="..\src\webutils.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="7"/>
         <CursorPos Y="18"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
@@ -727,10 +727,11 @@
       </Unit>
       <Unit>
         <Filename Value="..\src\templateengine.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="46"/>
-        <CursorPos X="15" Y="71"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="160"/>
+        <CursorPos Y="181"/>
         <UsageCount Value="65"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\classes\stringl.inc"/>
@@ -790,7 +791,7 @@
       <Unit>
         <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgrabitmap.pas"/>
         <UnitName Value="BGRABitmap"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="8"/>
         <TopLine Value="60"/>
         <CursorPos X="13" Y="79"/>
         <UsageCount Value="22"/>
@@ -1171,8 +1172,8 @@
       <Unit>
         <Filename Value="..\src\stringarrays.pas"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="58"/>
-        <CursorPos X="43" Y="87"/>
+        <TopLine Value="14"/>
+        <CursorPos Y="33"/>
         <UsageCount Value="11"/>
         <Loaded Value="True"/>
       </Unit>
@@ -1196,62 +1197,6 @@
       </Unit>
     </Units>
     <JumpHistory HistoryIndex="29">
-      <Position>
-        <Filename Value="..\src\stringarrays.pas"/>
-        <Caret Line="84" TopLine="58"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\stringarrays.pas"/>
-        <Caret Line="85" TopLine="58"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\stringarrays.pas"/>
-        <Caret Line="87" Column="43" TopLine="58"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="627" TopLine="612"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="906" TopLine="883"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\tags.pas"/>
-        <Caret Line="77" TopLine="58"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="906" TopLine="868"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="600" TopLine="583"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="601" TopLine="583"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="621" Column="26" TopLine="592"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="900" Column="23" TopLine="886"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\tags.pas"/>
-        <Caret Line="78" TopLine="59"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="896" Column="34" TopLine="844"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="435" Column="40" TopLine="423"/>
-      </Position>
       <Position>
         <Filename Value="..\src\imgres.pas"/>
         <Caret Line="39" TopLine="39"/>
@@ -1315,6 +1260,62 @@
       <Position>
         <Filename Value="galleryprocessor.pas"/>
         <Caret Line="43" TopLine="24"/>
+      </Position>
+      <Position>
+        <Filename Value="galleryprocessor.pas"/>
+        <Caret Line="161" TopLine="142"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\stringarrays.pas"/>
+        <Caret Line="33" TopLine="14"/>
+      </Position>
+      <Position>
+        <Filename Value="galleryprocessor.pas"/>
+        <Caret Line="161" TopLine="142"/>
+      </Position>
+      <Position>
+        <Filename Value="galleryprocessor.pas"/>
+        <Caret Line="163" TopLine="142"/>
+      </Position>
+      <Position>
+        <Filename Value="galleryprocessor.pas"/>
+        <Caret Line="164" TopLine="142"/>
+      </Position>
+      <Position>
+        <Filename Value="galleryprocessor.pas"/>
+        <Caret Line="165" TopLine="142"/>
+      </Position>
+      <Position>
+        <Filename Value="galleryprocessor.pas"/>
+        <Caret Line="166" TopLine="142"/>
+      </Position>
+      <Position>
+        <Filename Value="galleryprocessor.pas"/>
+        <Caret Line="167" TopLine="142"/>
+      </Position>
+      <Position>
+        <Filename Value="galleryprocessor.pas"/>
+        <Caret Line="168" TopLine="142"/>
+      </Position>
+      <Position>
+        <Filename Value="galleryprocessor.pas"/>
+        <Caret Line="169" TopLine="142"/>
+      </Position>
+      <Position>
+        <Filename Value="galleryprocessor.pas"/>
+        <Caret Line="170" TopLine="142"/>
+      </Position>
+      <Position>
+        <Filename Value="galleryprocessor.pas"/>
+        <Caret Line="171" TopLine="142"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\templateengine.pas"/>
+        <Caret Line="180" TopLine="160"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\templateengine.pas"/>
+        <Caret Line="181" TopLine="160"/>
       </Position>
     </JumpHistory>
     <RunParams>
@@ -1398,13 +1399,6 @@
         <WatchKind Value="wpkWrite"/>
         <Source Value="presentations.pas"/>
         <Line Value="148"/>
-      </Item>
-      <Item>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="galleryprocessor.pas"/>
-        <Line Value="161"/>
       </Item>
     </BreakPoints>
   </Debugging>
