@@ -78,8 +78,10 @@ object PresentationDialog: TPresentationDialog
       object ButtonBrowseTargetFolder: TBitBtn
         AnchorSideLeft.Control = EditTargetFolder
         AnchorSideLeft.Side = asrBottom
+        AnchorSideTop.Control = EditTargetFolder
+        AnchorSideTop.Side = asrCenter
         AnchorSideBottom.Side = asrBottom
-        Left = 588
+        Left = 590
         Height = 25
         Hint = 'Browse for the source/target folder of the resulting presentation'
         Top = 39
@@ -94,9 +96,9 @@ object PresentationDialog: TPresentationDialog
       object EditTargetFolder: TEdit
         Left = 357
         Height = 23
-        Hint = 'This folder must contain the images and an .images file.'
+        Hint = 'This folder must contain the images and an .imgtags file.'
         Top = 40
-        Width = 230
+        Width = 232
         Anchors = [akTop, akLeft, akRight]
         TabOrder = 2
         OnChange = EditTargetFolderChange
@@ -129,8 +131,10 @@ object PresentationDialog: TPresentationDialog
       object ButtonTargetFromDoc: TBitBtn
         AnchorSideLeft.Control = EditTargetFolder
         AnchorSideLeft.Side = asrBottom
+        AnchorSideTop.Control = EditTargetFolder
+        AnchorSideTop.Side = asrCenter
         AnchorSideBottom.Side = asrBottom
-        Left = 618
+        Left = 620
         Height = 25
         Hint = 'Copies the current target folder from the main dialog.'
         Top = 39

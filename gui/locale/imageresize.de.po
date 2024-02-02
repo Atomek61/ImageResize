@@ -972,14 +972,18 @@ msgstr "ImageResize"
 
 #: tmaindialog.checkboximageinfosenabled.caption
 #, fuzzy
-#| msgid "Create Presentation Infos (.images)"
-msgid "Create Presentation Infos (.imgtags)"
-msgstr "Erzeuge Infos für Präsentationen (.images)"
+#| msgid "Create Presentation Infos (.imgtags)"
+msgid "Presentation Infos (.imgtags)"
+msgstr "Erzeuge Infos für Präsentationen (.imgtags)"
 
 #: tmaindialog.checkboximageinfosenabled.hint
+#, fuzzy
+#| msgid ""
+#| "The Slideshow Afterburner requires such files with the\n"
+#| "names and titles of the images to be displayed."
 msgid ""
-"The Slideshow Afterburner requires such files with the\n"
-"names and titles of the images to be displayed."
+"The Presentation afterburner requires such files with \n"
+"names, titles and other information about the images."
 msgstr ""
 "Der Slideshow Afterburner benötigt eine solche Datei mit\n"
 "Dateinamen und Titeln der Bilder für die Anzeige."
@@ -1028,8 +1032,10 @@ msgid "Copyright"
 msgstr "Urheberrecht (Copyright)"
 
 #: tmaindialog.checkboxtagsreportenabled.caption
+#, fuzzy
+#| msgid "Create Tags Report (.tagsreport)"
 msgctxt "tmaindialog.checkboxtagsreportenabled.caption"
-msgid "Create Tags Report (.tagsreport)"
+msgid "Tags Report (.tagsreport)"
 msgstr "Erzeuge Tags Report (.tagsreport)"
 
 #: tmaindialog.checkboxtagsreportenabled.hint
@@ -1262,25 +1268,14 @@ msgstr "Strategie"
 msgid "Shuffle"
 msgstr "Mischen"
 
-#: tmaindialog.groupboxtagsreport.caption
-msgctxt "tmaindialog.groupboxtagsreport.caption"
-msgid "Tags Reporting"
-msgstr "Tags Report"
-
-#: tmaindialog.groupboxtagsreport.hint
-msgctxt "tmaindialog.groupboxtagsreport.hint"
-msgid ""
-"A Tags Report is a list of filenames and tags, which may be usefull for creating\n"
-"a slideshow."
+#: tmaindialog.groupboxtagsloading.caption
+msgctxt "tmaindialog.groupboxtagsloading.caption"
+msgid "Tags Loading"
 msgstr ""
-"Ein Tags Report ist eine Liste von Dateinamen und Tags, welche\n"
-"nützlich für die Erzeugung einer Slideshow sein können."
 
-#: tmaindialog.groupboxtagssource.caption
-msgid "Tags Source"
-msgstr "Tags Quellen"
-
-#: tmaindialog.groupboxtagssource.hint
+#: tmaindialog.groupboxtagsloading.hint
+#, fuzzy
+msgctxt "tmaindialog.groupboxtagsloading.hint"
 msgid ""
 "Tags can be read from the original files EXIF of from .tags files in each origins folder.\n"
 "The latter ones do override the origins EXIF source."
@@ -1288,6 +1283,21 @@ msgstr ""
 "Tags können aus den EXIF Metainformationen der originalen Bilddateien übertragen werden\n"
 "oder sie werden aus .tags-Dateien aus den Ursprungsverzeichnissen geladen.\n"
 "Letztere überschreiben ggf. die ursprünglichen EXIF-Tags."
+
+#: tmaindialog.groupboxtagssaving.caption
+msgctxt "tmaindialog.groupboxtagssaving.caption"
+msgid "Tags Saving"
+msgstr ""
+
+#: tmaindialog.groupboxtagssaving.hint
+#, fuzzy
+msgctxt "tmaindialog.groupboxtagssaving.hint"
+msgid ""
+"A Tags Report is a list of filenames and tags, which may be usefull for creating\n"
+"a slideshow."
+msgstr ""
+"Ein Tags Report ist eine Liste von Dateinamen und Tags, welche\n"
+"nützlich für die Erzeugung einer Slideshow sein können."
 
 #: tmaindialog.label1.caption
 msgid "Source Files:"
@@ -1333,6 +1343,11 @@ msgstr "(EXIF ImageDescription)"
 msgid "File Selection:"
 msgstr "Dateiauswahl:"
 
+#: tmaindialog.label2.caption
+msgctxt "tmaindialog.label2.caption"
+msgid "Overwrite with this:"
+msgstr ""
+
 #: tmaindialog.label20.caption
 msgid "Click or drag the watermark"
 msgstr "Klicken oder ziehen Sie das Wasserzeichen"
@@ -1356,10 +1371,6 @@ msgstr "Qualität (1..100):"
 #: tmaindialog.label6.caption
 msgid "Compression:"
 msgstr "Kompression:"
-
-#: tmaindialog.label7.caption
-msgid "Overwrite with this:"
-msgstr "Überschreibe mit diesem:"
 
 #: tmaindialog.label9.caption
 msgid "Horizontal:"
@@ -1666,8 +1677,8 @@ msgstr "Präsentation"
 
 #: tpresentationdialog.edittargetfolder.hint
 msgctxt "tpresentationdialog.edittargetfolder.hint"
-msgid "This folder must contain the images and an .images file."
-msgstr "Das Verzeichnis enthält die Bilder und eine .images -Datei."
+msgid "This folder must contain the images and an .imgtags file."
+msgstr "Das Verzeichnis enthält die Bilder und eine .imgtags -Datei."
 
 #: tpresentationdialog.labellongdescription.caption
 msgctxt "tpresentationdialog.labellongdescription.caption"

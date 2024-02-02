@@ -2,15 +2,15 @@
 body {
   font: 10pt "Roboto Condensed";
   margin: 0;
-  background-color: %DOCBACKGROUNDCOLOR%;
-  color: %DOCFONTCOLOR%;
+  background-color: %BACKGROUNDCOLOR%;
+  color: %FONTCOLOR%;
 }
 
 header, footer {
   font-size: 18pt;
   padding: 1em;
-  color: %DOCBACKGROUNDCOLOR%;
-  background-color:%DOCHEADERCOLOR%;
+  color: %BACKGROUNDCOLOR%;
+  background-color:%HEADERCOLOR%;
 }
 
 header {
@@ -26,9 +26,9 @@ header {
 }
 
 figure {
-  width: %DOCWIDTH%px;
+  width: %WIDTH%px;
   padding: 8px;
-  background-color:%DOCCARDCOLOR%;
+  background-color:%CARDCOLOR%;
   box-shadow: 8px 8px 8px gray;
   border-radius: 4px;
   _transform: rotate(3deg);

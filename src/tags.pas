@@ -61,15 +61,15 @@ type
     FTagKeys :TStringArray;
     // One call for two sources: .tags files or .images file.
     // 1. If .tags, then load with LoadFromTagsFile with a given image file list
-    // 2. If .images, then load with LoadFromImagesFile with a given .image file (Filenames will be created from this file)
+    // 2. If .images, then load with LoadFromImgTagsFile with a given .image file (Filenames will be created from this file)
     procedure LoadFromFile(const Filename :string; ImplicitFilenames :boolean);
   public
     procedure Clear; override;
     procedure Prepare(const Filenames :TStringArray);
     procedure LoadFromTags;
     procedure SaveToFile(const LstFilename :string; const TagKeys :TStringArray; Options :TSaveOptions = []);
-    procedure SaveToImagesFile(const ImagesFilename :string; const TagKeys :TStringArray; Size :integer);
-    procedure LoadFromImagesFile(const ImagesFilename :string);
+    procedure SaveToImgTagsFile(const ImagesFilename :string; const TagKeys :TStringArray; Size :integer);
+    procedure LoadFromImgTagsFile(const ImagesFilename :string);
     property TagKeys :TStringArray read FTagKeys;
     property Filenames :TStringArray read FFilenames;
   end;
@@ -320,7 +320,7 @@ begin
   end;
 end;
 
-procedure TFilesTags.SaveToImagesFile(const ImagesFilename: string; const TagKeys :TStringArray; Size: integer);
+procedure TFilesTags.SaveToImgTagsFile(const ImagesFilename: string; const TagKeys :TStringArray; Size: integer);
 var
   i :integer;
   Tags :TTags;
@@ -359,7 +359,7 @@ begin
   end;
 end;
 
-procedure TFilesTags.LoadFromImagesFile(const ImagesFilename: string);
+procedure TFilesTags.LoadFromImgTagsFile(const ImagesFilename: string);
 begin
   Clear;
   LoadFromFile(ImagesFilename, true);

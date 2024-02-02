@@ -360,12 +360,12 @@ var
 begin
   FParamsEditor.Flush;
   FProcessor.TargetFolder := TargetFolder;
-  FProcessor.DocVars.Load('SYSPRESENTATIONID', Id);
-  FProcessor.DocVars.Load('SYSPRESENTATIONTITLE', Title);
+  FProcessor.DocVars.Load('PRESENTATIONID', Id);
+  FProcessor.DocVars.Load('PRESENTATIONTITLE', Title);
   with FProcessor.SysVars do begin
-    Load('SYSPRESENTATIONAPP', SYSPRESENTATIONAPP);
-    Load('SYSPRESENTATIONVENDOR', SYSPRESENTATIONVENDOR);
-    Load('SYSPRESENTATIONVERSION', SYSPRESENTATIONVERSION);
+    Load('PRESENTATIONAPP', SYSPRESENTATIONAPP);
+    Load('PRESENTATIONVENDOR', SYSPRESENTATIONVENDOR);
+    Load('PRESENTATIONVERSION', SYSPRESENTATIONVERSION);
   end;
 
   // Make Settings available to the Processor
@@ -374,7 +374,7 @@ begin
       ValuePresentation := SettingPresentationFn(Setting)
     else
       ValuePresentation := Setting.AsDisplay;
-    FProcessor.DocVars.Load('DOC'+UpperCase(Setting.Key), ValuePresentation);
+    FProcessor.DocVars.Load(UpperCase(Setting.Key), ValuePresentation);
   end;
 
   FProcessor.Execute(Stats);

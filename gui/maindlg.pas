@@ -131,6 +131,7 @@ type
     ImageStep1: TImage;
     ImageStep2: TImage;
     ImageStep3: TImage;
+    Label2: TLabel;
     PaintBoxMrkPreview: TBGRAGraphicControl;
     ButtonExecute: TBGRASpeedButton;
     CheckBoxNoCreate: TCheckBox;
@@ -178,8 +179,8 @@ type
     EditSizes: TEdit;
     EditTargetFolder: TEdit;
     GroupBoxInterpolation: TGroupBox;
-    GroupBoxTagsReport: TGroupBox;
-    GroupBoxTagsSource: TGroupBox;
+    GroupBoxTagsSaving: TGroupBox;
+    GroupBoxTagsLoading: TGroupBox;
     GroupBoxEXIFTagging: TGroupBox;
     GroupBoxMrkFilename: TGroupBox;
     GroupBoxShuffle: TGroupBox;
@@ -199,7 +200,6 @@ type
     Label16: TLabel;
     Label17: TLabel;
     Label21: TLabel;
-    Label7: TLabel;
     LabelHintPlaceholder1: TLabel;
     LabelShuffleSeed: TLabel;
     Label18: TLabel;
@@ -1812,7 +1812,7 @@ begin
           Processor.Copyright := '';
         TagsReports := [];
         if CheckBoxTagsReportEnabled.Checked then include(TagsReports, trTagsReport);
-        if CheckBoxImageInfosEnabled.Checked then include(TagsReports, trImages);
+        if CheckBoxImageInfosEnabled.Checked then include(TagsReports, trImgTags);
         Processor.TagsReports := TagsReports;
 
         // NoCreate flag

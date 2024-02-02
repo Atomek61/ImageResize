@@ -947,13 +947,13 @@ msgid "ImageResize"
 msgstr ""
 
 #: tmaindialog.checkboximageinfosenabled.caption
-msgid "Create Presentation Infos (.imgtags)"
+msgid "Presentation Infos (.imgtags)"
 msgstr ""
 
 #: tmaindialog.checkboximageinfosenabled.hint
 msgid ""
-"The Slideshow Afterburner requires such files with the\n"
-"names and titles of the images to be displayed."
+"The Presentation afterburner requires such files with \n"
+"names, titles and other information about the images."
 msgstr ""
 
 #: tmaindialog.checkboxmrkenabled.caption
@@ -997,7 +997,7 @@ msgstr ""
 
 #: tmaindialog.checkboxtagsreportenabled.caption
 msgctxt "tmaindialog.checkboxtagsreportenabled.caption"
-msgid "Create Tags Report (.tagsreport)"
+msgid "Tags Report (.tagsreport)"
 msgstr ""
 
 #: tmaindialog.checkboxtagsreportenabled.hint
@@ -1185,26 +1185,28 @@ msgstr ""
 msgid "Shuffle"
 msgstr ""
 
-#: tmaindialog.groupboxtagsreport.caption
-msgctxt "tmaindialog.groupboxtagsreport.caption"
-msgid "Tags Reporting"
+#: tmaindialog.groupboxtagsloading.caption
+msgctxt "tmaindialog.groupboxtagsloading.caption"
+msgid "Tags Loading"
 msgstr ""
 
-#: tmaindialog.groupboxtagsreport.hint
-msgctxt "tmaindialog.groupboxtagsreport.hint"
-msgid ""
-"A Tags Report is a list of filenames and tags, which may be usefull for creating\n"
-"a slideshow."
-msgstr ""
-
-#: tmaindialog.groupboxtagssource.caption
-msgid "Tags Source"
-msgstr ""
-
-#: tmaindialog.groupboxtagssource.hint
+#: tmaindialog.groupboxtagsloading.hint
+msgctxt "tmaindialog.groupboxtagsloading.hint"
 msgid ""
 "Tags can be read from the original files EXIF of from .tags files in each origins folder.\n"
 "The latter ones do override the origins EXIF source."
+msgstr ""
+
+#: tmaindialog.groupboxtagssaving.caption
+msgctxt "tmaindialog.groupboxtagssaving.caption"
+msgid "Tags Saving"
+msgstr ""
+
+#: tmaindialog.groupboxtagssaving.hint
+msgctxt "tmaindialog.groupboxtagssaving.hint"
+msgid ""
+"A Tags Report is a list of filenames and tags, which may be usefull for creating\n"
+"a slideshow."
 msgstr ""
 
 #: tmaindialog.label1.caption
@@ -1251,6 +1253,11 @@ msgstr ""
 msgid "File Selection:"
 msgstr ""
 
+#: tmaindialog.label2.caption
+msgctxt "tmaindialog.label2.caption"
+msgid "Overwrite with this:"
+msgstr ""
+
 #: tmaindialog.label20.caption
 msgid "Click or drag the watermark"
 msgstr ""
@@ -1273,10 +1280,6 @@ msgstr ""
 
 #: tmaindialog.label6.caption
 msgid "Compression:"
-msgstr ""
-
-#: tmaindialog.label7.caption
-msgid "Overwrite with this:"
 msgstr ""
 
 #: tmaindialog.label9.caption
@@ -1571,7 +1574,7 @@ msgstr ""
 
 #: tpresentationdialog.edittargetfolder.hint
 msgctxt "tpresentationdialog.edittargetfolder.hint"
-msgid "This folder must contain the images and an .images file."
+msgid "This folder must contain the images and an .imgtags file."
 msgstr ""
 
 #: tpresentationdialog.labellongdescription.caption

@@ -76,9 +76,9 @@ begin
   FDocVars := TSolver.Create(FDelimiters);
   FSysVars := TSolver.Create(FDelimiters);
   with FSysVars do begin
-    Load('SYSCR', #13);
-    Load('SYSLF', #10);
-    Load('SYSCRLF', #13#10);
+    Load('CR', #13);
+    Load('LF', #10);
+    Load('CRLF', #13#10);
   end;
 end;
 
@@ -152,7 +152,7 @@ begin
       if not FileExists(ImagesFilename) then
         raise Exception.CreateFmt(SErrDotImagesNotFoundFmt, [ImagesFilename]);
       Log(SMsgLoadingDotImagesFmt, [ImagesFilename], llInfo);
-      FFilesTags.LoadFromImagesFile(ImagesFilename);
+      FFilesTags.LoadFromImgTagsFile(ImagesFilename);
       Stats.ItemsPerList := FFilesTags.Filenames.Count;
 
       // 3. Iterate over the images and build the lists
@@ -187,7 +187,7 @@ begin
 
       // 4. Add the builded lists as global variables
       for List in Lists do
-        FDocVars['DOC'+List.Key] := List.Value;
+        FDocVars[List.Key] := List.Value;
 
       // 5. Load the template files and replace the global var
       for TemplateFilename in FTemplateFiles do begin

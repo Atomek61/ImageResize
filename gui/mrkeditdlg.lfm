@@ -3000,11 +3000,14 @@ object MrkEditDialog: TMrkEditDialog
       Shape = bsTopLine
     end
     object ButtonInsertCopyright: TBitBtn
-      Left = 618
+      AnchorSideLeft.Control = EditText
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = EditText
+      AnchorSideTop.Side = asrCenter
+      Left = 617
       Height = 25
       Top = 2
-      Width = 25
-      Anchors = [akTop, akRight]
+      Width = 27
       Images = ImagesModule.ImageList20x20
       ImageIndex = 4
       OnClick = ButtonInsertCopyrightClick

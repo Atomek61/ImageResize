@@ -4,12 +4,12 @@ Version=400
 
 [Presentation]
 Id=Pinboard100
-TargetFolder=tst2
+TargetFolder=txtX
 
 [Presentation.Pinboard100]
-Title=Wyk auf Föhr
-Width=360
-Copyright=(c) 2023 Jan Schirrmacher
+Title=Header
+Width=400
+Copyright=Footer
 FontColor=0
 CardColor=16777215
 HeaderColor=8610360
@@ -20,9 +20,9 @@ Description=
 Source=Filenames
 SourceFolder=
 SourceMasks=*.jpg;*.png
-SourceFilenames=srcB\src1\DSC04236.jpg|srcB\src1\DSC04242.jpg|srcB\src1\DSC04258.jpg|srcB\src2\DSC04262.jpg|srcB\src2\DSC04264.jpg|srcB\src2\DSC04288.jpg|srcB\src2\src3\DSC04293.jpg|srcB\src2\src3\DSC04314.jpg|srcB\src2\src3\DSC04318.jpg|srcB\src2\src3\DSC04321.jpg|
+SourceFilenames=srcF\DSC04752.jpg|srcF\DSC04757.jpg|srcF\DSC04770.jpg|
 Sizes=360
-TargetFolder=tst2
+TargetFolder=txtX
 Interpolation=Default
 JPEGQuality=Default
 PNGCompression=Default
@@ -39,8 +39,8 @@ RenCustom=0
 RenTemplate=img%INDEX:1,3%.%FILEEXT%
 ShuffleEnabled=0
 ShuffleSeed=0
-TagsSourceEXIF=1
-TagsSourceTagsFiles=1
+TagsSourceEXIF=0
+TagsSourceTagsFiles=0
 TagTitle=0
 TagTimestamp=0
 TagCopyright=0

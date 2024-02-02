@@ -59,7 +59,7 @@ type
   TScalingDirection = (sdUpScaling, sdNoscaling, sdDownScaling);
   TInterpolation = (ipDefault, ipStretch, ipBox, ipLinear, ipHalfCosine, ipCosine, ipBicubic,
     ipMitchell, ipSpline, ipLanczos2, ipLanczos3, ipLanczos4, ipBestQuality);
-  TTagsReport = (trTagsReport, trImages);
+  TTagsReport = (trTagsReport, trImgTags);
   TTagsReports = set of TTagsReport;
 
 const
@@ -140,9 +140,9 @@ type
 
     // Needed while processing
 
-    { TExecutionRessources }
+    { TProcessorResources }
 
-    TExecutionRessources = class // Temporary process global ressources while processing
+    TProcessorResources = class // Temporary process global ressources while processing
       IsMultipleTargetFolderStrategy :boolean;
       IsTargetFileRenamingStrategy :boolean;
       SourceFilenames :TStringArray; // After Shaking
@@ -155,15 +155,15 @@ type
       destructor Destroy; override;
     end;
 
-    { TResampleTask }
+    { TImageTask }
 
-    TResampleTask = class(TCustomTask) // Each image is a task
+    TImageTask = class(TCustomTask) // Each image is a task
     protected
       function Execute(Context :TContext) :boolean; override;
       function GetTaskSteps :integer; override;
     public
       Processor :TProcessor;
-      ProcRes :TExecutionRessources;
+      ProcRes :TProcessorResources;
       SourceFilename :string;
       SourceFileIndex :integer;
       FileTags :TTags;
@@ -407,14 +407,14 @@ begin
   result := UpperCase(ExtractFileExt(Filename)) = '.PNG'
 end;
 
-{ TProcessor.TExecutionRessources }
+{ TProcessor.TProcessorResources }
 
-constructor TProcessor.TExecutionRessources.Create;
+constructor TProcessor.TProcessorResources.Create;
 begin
   FilesTags := TFilesTags.Create;
 end;
 
-destructor TProcessor.TExecutionRessources.Destroy;
+destructor TProcessor.TProcessorResources.Destroy;
 var
   i :integer;
 begin
@@ -424,9 +424,9 @@ begin
   inherited;
 end;
 
-{ TProcessor.TResampleTask }
+{ TProcessor.TImageTask }
 
-function TProcessor.TResampleTask.Execute(Context: TContext): boolean;
+function TProcessor.TImageTask.Execute(Context: TContext): boolean;
 var
   SourceImg :TBGRABitmap;
   TargetFolder :string;
@@ -450,6 +450,7 @@ var
   TagKey :string;
   MsgScalingFmt :string;
   MsgScalingLevel :TLevel;
+  SizeKey :string;
 begin
 
   result := false;
@@ -457,7 +458,6 @@ begin
     Exit;
 
   SourceImg := nil;
-  //FileTags.Clear;
 
   // Source File
   try
@@ -471,7 +471,7 @@ begin
     Progress(1);
 
     if (tsEXIF in Processor.FTagsSources) and IsJPEG(SourceFilename) then begin
-      // Load EXIF
+      // Add EXIF tags to FileTags
       Print(Format(SMsgReadingExifFmt, [SourceFilename]));
       ExifTags := TTags.Create;
       try
@@ -604,8 +604,11 @@ begin
           TargetImg.SaveToFile(TargetFilename, Writer);
 
         // Store TargetFilename in FileTags
-        if ProcRes.TagsRequired then
-          FileTags.Add(IntToStr(Size), TargetFilename);
+        if ProcRes.TagsRequired then begin
+          SizeKey := IntToStr(Size);
+          FileTags.Add(SizeKey, TargetFilename);
+
+        end;
 
       finally
         Writer.Free;
@@ -628,7 +631,7 @@ begin
   end;
 end;
 
-function TProcessor.TResampleTask.GetTaskSteps: integer;
+function TProcessor.TImageTask.GetTaskSteps: integer;
 begin
   result := 1 + 3*Length(Processor.FSizes);
 end;
@@ -734,14 +737,14 @@ end;
 
 function TProcessor.Execute :boolean;
 var
-  Exer :TExecutionRessources;
-  Task :TResampleTask;
+  ProcRes :TProcessorResources;
+  Task :TImageTask;
   Tasks :TTasks;
   Dispatcher :TDispatcher;
   i, j, n, m :integer;
   Item :string;
   TagsFilename :string;
-  ImageInfosFilename :string;
+  ImgTagsFilename :string;
 begin
   // Check main parameters
   if FSourceFilenames.Count=0 then
@@ -751,7 +754,7 @@ begin
     raise Exception.Create(SErrMissingSizes);
 
   FCancel     := false;
-  Exer        := TExecutionRessources.Create;
+  ProcRes     := TProcessorResources.Create;
   Tasks       := TTasks.Create;
   Dispatcher  := TDispatcher.Create;
   try
@@ -761,9 +764,9 @@ begin
 
     // Build list of SourceFilenames with absolute paths
     n := FSourceFilenames.Count;
-    SetLength(Exer.SourceFilenames, n);
+    SetLength(ProcRes.SourceFilenames, n);
     for i:=0 to n-1 do
-      Exer.SourceFilenames[i] := ExpandFilename(FSourceFilenames[i]);
+      ProcRes.SourceFilenames[i] := ExpandFilename(FSourceFilenames[i]);
 
     // If the files list has to be shuffled
     if FShuffle then begin
@@ -771,9 +774,9 @@ begin
       if FShuffleSeed=0 then Randomize else RandSeed := FShuffleSeed;
       for i:=0 to n-1 do begin
         j := Random(n);
-        Item := Exer.SourceFilenames[i];
-        Exer.SourceFilenames[i] := Exer.SourceFilenames[j];
-        Exer.SourceFilenames[j] := Item;
+        Item := ProcRes.SourceFilenames[i];
+        ProcRes.SourceFilenames[i] := ProcRes.SourceFilenames[j];
+        ProcRes.SourceFilenames[j] := Item;
       end;
     end;
 
@@ -788,13 +791,13 @@ begin
       FTagKeys.Add(TAGID_COPYRIGHT);
 
     // Check if the tags database is required
-    Exer.TagsRequired := (FTagsSources<>[]) or (Length(FTagKeys)>0);
-    if Exer.TagsRequired then begin
-      Exer.FilesTags.Prepare(Exer.SourceFilenames);
+    ProcRes.TagsRequired := (FTagsSources<>[]) or (Length(FTagKeys)>0);
+    if ProcRes.TagsRequired then begin
+      ProcRes.FilesTags.Prepare(ProcRes.SourceFilenames);
       if tsTagsFiles in FTagsSources then begin
         // Load from .tags
         Print(SMsgLoadingTags);
-        Exer.FilesTags.LoadFromTags;
+        ProcRes.FilesTags.LoadFromTags;
       end;
     end;
 
@@ -802,71 +805,71 @@ begin
     m := Length(FSizes);
 
     // Check, if multiple sizes, then either %SIZE% must be in folder or in renamed filename
-    Exer.IsTargetFileRenamingStrategy := FRen.Enabled and (Pos('%3:s', FRen.FmtStr)>0);
+    ProcRes.IsTargetFileRenamingStrategy := FRen.Enabled and (Pos('%3:s', FRen.FmtStr)>0);
     if Length(FSizes)>1 then begin
-      Exer.IsMultipleTargetFolderStrategy := Pos('%SIZE%', FTargetFolder)>0;
-      if not Exer.IsMultipleTargetFolderStrategy and not Exer.IsTargetFileRenamingStrategy then
+      ProcRes.IsMultipleTargetFolderStrategy := Pos('%SIZE%', FTargetFolder)>0;
+      if not ProcRes.IsMultipleTargetFolderStrategy and not ProcRes.IsTargetFileRenamingStrategy then
         raise Exception.Create(SErrMultipleSizes);
     end else begin
-      Exer.IsMultipleTargetFolderStrategy := Pos('%SIZE%', FTargetFolder)>0;
+      ProcRes.IsMultipleTargetFolderStrategy := Pos('%SIZE%', FTargetFolder)>0;
     end;
 
     // Create Destination Folders
-    SetLength(Exer.TargetFolders, m);
-    if Exer.IsMultipleTargetFolderStrategy then
+    SetLength(ProcRes.TargetFolders, m);
+    if ProcRes.IsMultipleTargetFolderStrategy then
       for i:=0 to m-1 do
-        Exer.TargetFolders[i] := IncludeTrailingPathDelimiter(ExpandFilename(ReplaceStr(FTargetFolder, '%SIZE%', IntToStr(FSizes[i]))))
+        ProcRes.TargetFolders[i] := IncludeTrailingPathDelimiter(ExpandFilename(ReplaceStr(FTargetFolder, '%SIZE%', IntToStr(FSizes[i]))))
     else
       for i:=0 to m-1 do
-        Exer.TargetFolders[i] := IncludeTrailingPathDelimiter(ExpandFilename(FTargetFolder));
+        ProcRes.TargetFolders[i] := IncludeTrailingPathDelimiter(ExpandFilename(FTargetFolder));
     for i:=0 to m-1 do begin
-      Print(Format(SMsgCreatingFolderFmt, [Exer.TargetFolders[i]]));
+      Print(Format(SMsgCreatingFolderFmt, [ProcRes.TargetFolders[i]]));
       if not FNoCreate then
-        ForceDirectories(Exer.TargetFolders[i]);
+        ForceDirectories(ProcRes.TargetFolders[i]);
     end;
 
-    // Delete .images
+    // Delete .imgtags
     // Depending on the Strategies IsMultipleTargetFolders and IsTargetFileRenamingStrategy
     // there a 3 tactics of storing .images
     for i:=0 to m-1 do begin
-      if Exer.IsMultipleTargetFolderStrategy or not Exer.IsTargetFileRenamingStrategy then
-        ImageInfosFilename := Exer.TargetFolders[i]+IMAGEINFOSFILETITLE
+      if ProcRes.IsMultipleTargetFolderStrategy or not ProcRes.IsTargetFileRenamingStrategy then
+        ImgTagsFilename := ProcRes.TargetFolders[i]+IMAGEINFOSFILETITLE
       else
-        ImageInfosFilename := Exer.TargetFolders[i]+IMAGEINFOSFILETITLE+IntToStr(FSizes[i]);
-      if FileExists(ImageInfosFilename) then begin
-        Print(Format(SMsgDeletingImageInfosFmt, [ImageInfosFilename]));
-        DeleteFile(ImageInfosFilename);
+        ImgTagsFilename := ProcRes.TargetFolders[i]+IMAGEINFOSFILETITLE+IntToStr(FSizes[i]);
+      if FileExists(ImgTagsFilename) then begin
+        Print(Format(SMsgDeletingImageInfosFmt, [ImgTagsFilename]));
+        DeleteFile(ImgTagsFilename);
       end;
     end;
 
     // Load MrkImages...
     if FMrkFilename='' then begin
-      SetLength(Exer.MrkImages, 0);
+      SetLength(ProcRes.MrkImages, 0);
     end else begin
       if FMrkFilenameDependsOnSize then begin
-        SetLength(Exer.MrkImages, m);
+        SetLength(ProcRes.MrkImages, m);
         for i:=0 to m-1 do begin
           Item := ReplaceStr(FMrkFilename, '%SIZE%', IntToStr(FSizes[i]));
           Print(Format(SMsgLoadMrkFileFmt, [ExtractFilename(Item)]));
-          Exer.MrkImages[i] := TBGRABitmap.Create(Item);
+          ProcRes.MrkImages[i] := TBGRABitmap.Create(Item);
         end;
       end else begin
-        SetLength(Exer.MrkImages, 1);
+        SetLength(ProcRes.MrkImages, 1);
         Print(Format(SMsgLoadMrkFileFmt, [ExtractFilename(FMrkFilename)]));
-        Exer.MrkImages[0] := TBGRABitmap.Create(FMrkFilename);
+        ProcRes.MrkImages[0] := TBGRABitmap.Create(FMrkFilename);
       end;
     end;
 
     // For each SourceFilename create a task and prepare the tasks parameters
     Tasks.Capacity := n;
     for i:=0 to n-1 do begin
-      Task := TResampleTask.Create;
+      Task := TImageTask.Create;
       Task.Processor := self;
-      Task.ProcRes := Exer;
-      Task.SourceFilename := Exer.SourceFilenames[i];
+      Task.ProcRes := ProcRes;
+      Task.SourceFilename := ProcRes.SourceFilenames[i];
       Task.SourceFileIndex := i;
-      if Exer.TagsRequired then
-        Exer.FilesTags.TryGetValue(Task.SourceFilename, Task.FileTags);
+      if ProcRes.TagsRequired then
+        ProcRes.FilesTags.TryGetValue(Task.SourceFilename, Task.FileTags);
       Tasks.Add(Task);
     end;
 
@@ -878,24 +881,24 @@ begin
     result := Dispatcher.Execute(Tasks);
 
     if trTagsReport in FTagsReports then begin
-      if Exer.IsMultipleTargetFolderStrategy then
+      if ProcRes.IsMultipleTargetFolderStrategy then
         TagsFilename := GetParentDirectory(FTargetFolder)+TAGSREPORTFILETITLE
       else
         TagsFilename := TargetFolder+TAGSREPORTFILETITLE;
       Print(Format(SMsgWritingTagsReportFmt, [TagsFilename]));
       ForceDirectories(ExtractFilePath(TagsFilename));
-      Exer.FilesTags.SaveToFile(TagsFilename, Exer.FilesTags.TagKeys, [soRelative]);
+      ProcRes.FilesTags.SaveToFile(TagsFilename, ProcRes.FilesTags.TagKeys, [soRelative]);
     end;
 
-    if trImages in FTagsReports then begin
+    if trImgTags in FTagsReports then begin
       for i:=0 to m-1 do begin
-        if Exer.IsMultipleTargetFolderStrategy or not Exer.IsTargetFileRenamingStrategy then
-          ImageInfosFilename := Exer.TargetFolders[i]+IMAGEINFOSFILETITLE
+        if ProcRes.IsMultipleTargetFolderStrategy or not ProcRes.IsTargetFileRenamingStrategy then
+          ImgTagsFilename := ProcRes.TargetFolders[i]+IMAGEINFOSFILETITLE
         else
-          ImageInfosFilename := Exer.TargetFolders[i]+IMAGEINFOSFILETITLE+IntToStr(FSizes[i]);
-        Print(Format(SMsgWritingTagsReportFmt, [ImageInfosFilename]));
-        ForceDirectories(ExtractFilePath(ImageInfosFilename));
-        Exer.FilesTags.SaveToImagesFile(ImageInfosFilename, Exer.FilesTags.TagKeys, FSizes[i]);
+          ImgTagsFilename := ProcRes.TargetFolders[i]+IMAGEINFOSFILETITLE+IntToStr(FSizes[i]);
+        Print(Format(SMsgWritingTagsReportFmt, [ImgTagsFilename]));
+        ForceDirectories(ExtractFilePath(ImgTagsFilename));
+        ProcRes.FilesTags.SaveToImgTagsFile(ImgTagsFilename, ProcRes.FilesTags.TagKeys, FSizes[i]);
       end;
     end;
 
@@ -905,7 +908,7 @@ begin
   finally
     Dispatcher.Free;
     Tasks.Free;
-    Exer.Free;
+    ProcRes.Free;
   end;
 
 end;
@@ -1079,7 +1082,7 @@ begin
   Items := StrToStringArray(Str, ',');
   for Item in Items do
     if SameText(Item, 'TAGSREPORT') then include(Value, trTagsReport)
-    else if SameText(Item, 'IMAGES') then include(Value, trImages)
+    else if SameText(Item, 'IMAGES') then include(Value, trImgTags)
     else Exit(false);
   result := true;
 end;
