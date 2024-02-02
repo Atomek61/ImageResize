@@ -15,7 +15,7 @@ Icon=..\icon-pinboard.png
 Preview=preview.jpg
 Copy=shutter.png
 Templates=index.html,pinboard.css
-Fragment.IMAGES=<figure><img src="%IMGFILENAME%"/><figcaption>%IMGTITLE%</figcaption></figure>%CRLF%
+Fragment.IMAGES=<figure><img src="%IMGFILENAME%"/><figcaption>%IMGTITLE% (%IMGORGFILENAME%)</figcaption></figure>%CRLF%
 
 [Settings.Title]
 Class=String

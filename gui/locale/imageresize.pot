@@ -43,14 +43,14 @@ msgstr ""
 msgid "Invalid format for datetime '%s'."
 msgstr ""
 
-#: galleryprocessor.serrdirnotfoundfmt
-#, object-pascal-format
-msgid "Directory '%s' not found."
-msgstr ""
-
 #: galleryprocessor.serrdotimagesnotfoundfmt
 #, object-pascal-format
 msgid "Tags file '%s' not found."
+msgstr ""
+
+#: galleryprocessor.serrimgtagsnotfoundfmt
+#, object-pascal-format
+msgid ".imgtags file '%s' not found."
 msgstr ""
 
 #: galleryprocessor.smsgbuildinglists
@@ -69,7 +69,7 @@ msgstr ""
 
 #: galleryprocessor.smsgloadingdotimagesfmt
 #, object-pascal-format
-msgid "Loading image infos '%s'..."
+msgid "Loading image tags '%s'..."
 msgstr ""
 
 #: galleryprocessor.smsgprocessingtemplatefmt
@@ -541,8 +541,8 @@ msgstr ""
 msgid "Invalid parameters"
 msgstr ""
 
-#: presentationdlg.serrmissingfolder
-msgid "Folder missing or does not exist."
+#: presentationdlg.serrmissingimgtags
+msgid ".imgtags file not found."
 msgstr ""
 
 #: presentationdlg.serrshowwebresourcefmt
@@ -1572,9 +1572,8 @@ msgstr ""
 msgid "Presentation"
 msgstr ""
 
-#: tpresentationdialog.edittargetfolder.hint
-msgctxt "tpresentationdialog.edittargetfolder.hint"
-msgid "This folder must contain the images and an .imgtags file."
+#: tpresentationdialog.editimgtagsfilename.hint
+msgid "The .imagetags file has important infomation how to create the presentation."
 msgstr ""
 
 #: tpresentationdialog.labellongdescription.caption
@@ -1589,7 +1588,11 @@ msgstr ""
 
 #: tpresentationdialog.labeltargetfolder.caption
 msgctxt "tpresentationdialog.labeltargetfolder.caption"
-msgid "&Folder with Images:"
+msgid ".&imgtags File:"
+msgstr ""
+
+#: tpresentationdialog.openimgtagsdialog.title
+msgid "Open .imgtags File"
 msgstr ""
 
 #: tpresentationdialog.panelmanagerframe.caption

@@ -24,8 +24,8 @@ ORGHEIGHT         Original image height
 ORGSIZE           The larger of ORGWIDTH and ORGHEIGHT
 ORGRATIO          3/4, 2/3, 16/9,...
 ORGFILENAME       DSC02385.jpg
-ORGBYTES          120234
-ORGBYTESIZE       12MB, 1.2KB,...
+ORGFILESIZE       120234
+ORGFILESIZEPRETTY 12MB, 1.2KB,...
 
 Scaled Image Domain
 -------------------

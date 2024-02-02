@@ -16,7 +16,7 @@ type
   TProcessor = class
   private
     FDelimiters :TDelimiters;
-    FTargetFolder :string;          // Folder with images and meta info in .images file
+    FImgTagsFilename :string;          // Folder with images and meta info in .images file
     FTemplateFiles :TStringArray;   // Template files - .html, .js, .css or whatever
     FCopyFiles :TStringArray;       // Template files - .html, .js, .css or whatever
     FFilesTags :TFilesTags;         // Table with tags for each image file, usually from .images file in folder
@@ -41,7 +41,7 @@ type
     destructor Destroy; override;
     procedure Clear;
     function Execute(out Stats :TStats) :boolean;
-    property TargetFolder :string read FTargetFolder write FTargetFolder;
+    property ImgTagsFilename :string read FImgTagsFilename write FImgTagsFilename;
     property SysVars :TSolver read FSysVars;
     property DocVars :TSolver read FDocVars;
     property ListFragments :TStringDictionary read FListFragments;
@@ -57,9 +57,9 @@ const
 implementation
 
 resourcestring
-  SErrDirNotFoundFmt = 'Directory ''%s'' not found.';
+  SErrImgTagsNotFoundFmt = '.imgtags file ''%s'' not found.';
   SErrDotImagesNotFoundFmt = 'Tags file ''%s'' not found.';
-  SMsgLoadingDotImagesFmt = 'Loading image infos ''%s''...';
+  SMsgLoadingDotImagesFmt = 'Loading image tags ''%s''...';
   SMsgBuildingLists = 'Building lists...';
   SMsgProcessingTemplateFmt = 'Processing ''%s''...';
   SMsgCopyingFmt = 'Copying ''%s''...';
@@ -93,7 +93,7 @@ end;
 
 procedure TProcessor.Clear;
 begin
-  FTargetFolder := '';
+  FImgTagsFilename := '';
   FTemplateFiles.Clear;
   FCopyFiles.Clear;
   FListFragments.Clear;
@@ -102,11 +102,11 @@ end;
 
 function TProcessor.Execute(out Stats :TStats) :boolean;
 var
-  ImagesFilename :string;
   Lists :TStringDictionary;
   TemplateFilename :string;
   SourceFilename :string;
   TargetFilename :string;
+  TargetFolder :string; // Same as ImgTagsFilename
   i, j :integer;
   Tags :TTags;
   Key, Value :string;
@@ -143,16 +143,13 @@ begin
       Stats.ItemsPerList := ListFragments.Count;
 
       // 1. Check the parameters
-      FTargetFolder := IncludeTrailingPathDelimiter(FTargetFolder);
-      if not DirectoryExists(FTargetFolder) then
-        raise Exception.CreateFmt(SErrDirNotFoundFmt, [FTargetFolder]);
+      if not FileExists(FImgTagsFilename) then
+        raise Exception.CreateFmt(SErrImgTagsNotFoundFmt, [FImgTagsFilename]);
+      TargetFolder := ExtractFilePath(FImgTagsFilename);
 
       // 2. Load the tags of the .images file
-      ImagesFilename := FTargetFolder + DOTIMAGESFILETITLE;
-      if not FileExists(ImagesFilename) then
-        raise Exception.CreateFmt(SErrDotImagesNotFoundFmt, [ImagesFilename]);
-      Log(SMsgLoadingDotImagesFmt, [ImagesFilename], llInfo);
-      FFilesTags.LoadFromImgTagsFile(ImagesFilename);
+      Log(SMsgLoadingDotImagesFmt, [FImgTagsFilename], llInfo);
+      FFilesTags.LoadFromImgTagsFile(FImgTagsFilename);
       Stats.ItemsPerList := FFilesTags.Filenames.Count;
 
       // 3. Iterate over the images and build the lists
@@ -204,7 +201,7 @@ begin
       // 6. Copy some files
       for SourceFilename in FCopyFiles do begin
         Filename := ExtractFilename(SourceFilename);
-        TargetFilename := FTargetFolder+Filename;
+        TargetFilename := TargetFolder+Filename;
         Log(SMsgCopyingFmt, [Filename], llInfo);
         CopyFile(SourceFilename, TargetFilename);
         inc(Stats.FilesCopied);

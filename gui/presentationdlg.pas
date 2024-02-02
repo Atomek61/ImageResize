@@ -21,26 +21,26 @@ type
     ButtonOk: TBitBtn;
     ButtonWebShow: TBitBtn;
     ButtonCancel: TBitBtn;
-    EditTargetFolder: TEdit;
+    EditImgTagsFilename: TEdit;
     ImagePreview: TImage;
     LabelTargetFolder: TLabel;
     LabelManagers: TLabel;
     LabelLongDescription: TLabel;
     ListBoxManagers: TListBox;
     MemoMessages: TRichMemo;
+    OpenImgTagsDialog: TOpenDialog;
     PanelMain: TPanel;
     PanelManagerFrame: TPanel;
     PanelPresentation: TPanel;
     PanelInfo: TPanel;
     PanelControls: TPanel;
-    SelectFolderDialog: TSelectDirectoryDialog;
     Splitter1: TSplitter;
     procedure ButtonBrowseTargetFolderClick(Sender: TObject);
     procedure ButtonExecuteClick(Sender: TObject);
     procedure ButtonOkClick(Sender: TObject);
     procedure ButtonTargetFromDocClick(Sender: TObject);
     procedure ButtonWebShowClick(Sender: TObject);
-    procedure EditTargetFolderChange(Sender: TObject);
+    procedure EditImgTagsFilenameChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure ListBoxManagersClick(Sender: TObject);
@@ -68,7 +68,7 @@ uses
     Math, MainDlg;
 
 resourcestring
-  SErrMissingFolder = 'Folder missing or does not exist.';
+  SErrMissingImgTags = '.imgtags file not found.';
   SErrShowWebResourceFmt = 'Cant open resource ''%s''.';
 {$R *.lfm}
 
@@ -87,10 +87,10 @@ end;
 
 procedure TPresentationDialog.ButtonExecuteClick(Sender: TObject);
 begin
-  if (Trim(EditTargetFolder.Text)='') or not DirectoryExists(EditTargetFolder.Text) then
-    raise Exception.Create(SErrMissingFolder);
+  if (Trim(EditImgTagsFilename.Text)='') or not FileExists(EditImgTagsFilename.Text) then
+    raise Exception.Create(SErrMissingImgTags);
   if Assigned(FManager) then begin
-    FManager.TargetFolder := EditTargetFolder.Text;
+    FManager.ImgTagsFilename := EditImgTagsFilename.Text;
     FManager.Execute;
   end;
 end;
@@ -105,7 +105,7 @@ end;
 
 procedure TPresentationDialog.ButtonTargetFromDocClick(Sender: TObject);
 begin
-  EditTargetFolder.Text := MainDialog.EditTargetFolder.Text;
+  EditImgTagsFilename.Text := MainDialog.EditTargetFolder.Text;
 end;
 
 procedure TPresentationDialog.ButtonWebShowClick(Sender: TObject);
@@ -115,26 +115,26 @@ var
 begin
   if (ManagerIndex=-1) or not (
       FManagers[ManagerIndex] is TPresentationManager
-      and (Trim(EditTargetFolder.Text)<>''
+      and (Trim(EditImgTagsFilename.Text)<>''
   )) then Exit;
   Manager := FManagers[ManagerIndex] as TPresentationManager;
   if Manager.WebResource = '' then Exit;
-  DocURL := IncludeTrailingPathDelimiter(EditTargetFolder.Text)+Manager.WebResource;
+  DocURL := ExtractFilePath(EditImgTagsFilename.Text)+Manager.WebResource;
   if not OpenDocument(DocURL) then
     Log(SErrShowWebResourceFmt, [DocURL], llWarning);
 end;
 
-procedure TPresentationDialog.EditTargetFolderChange(Sender: TObject);
+procedure TPresentationDialog.EditImgTagsFilenameChange(Sender: TObject);
 begin
   MainDialog.Dirty := true;
 end;
 
 procedure TPresentationDialog.ButtonBrowseTargetFolderClick(Sender: TObject);
 begin
-  if Trim(EditTargetFolder.Text)<>'' then
-    SelectFolderDialog.InitialDir := EditTargetFolder.Text;
-  if SelectFolderDialog.Execute then
-    EditTargetFolder.Text := SelectFolderDialog.Filename;
+  if Trim(EditImgTagsFilename.Text)<>'' then
+    OpenImgTagsDialog.InitialDir := ExtractFilePath(EditImgTagsFilename.Text);
+  if OpenImgTagsDialog.Execute then
+    EditImgTagsFilename.Text := OpenImgTagsDialog.Filename;
 end;
 
 procedure TPresentationDialog.ListBoxManagersClick(Sender: TObject);
@@ -215,14 +215,14 @@ begin
       end;
     end;
 
-    EditTargetFolder.Text := PresentationSettings.TargetFolder.AsDisplay;
+    EditImgTagsFilename.Text := PresentationSettings.ImgTagsFilename.AsDisplay;
     if FManagers.TryFind(PresentationSettings.Id.Value, Index) then
       ManagerIndex := Index
     else ManagerIndex := 0;
 
     result := ShowModal = mrOk;
     if result then begin
-      PresentationSettings.TargetFolder.AsText := EditTargetFolder.Text;
+      PresentationSettings.ImgTagsFilename.AsText := EditImgTagsFilename.Text;
       if FManagerIndex<>-1 then
         PresentationSettings.Id.AsText := FManagers[FManagerIndex].Id;
       for Manager in FManagers do begin

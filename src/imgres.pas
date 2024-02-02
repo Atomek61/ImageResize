@@ -24,7 +24,7 @@ interface
 
 uses
   Classes, SysUtils, StrUtils, Types, BGRABitmap, BGRABitmapTypes,
-  threading.dispatcher, Tags, Logging, StringArrays;
+  threading.dispatcher, Tags, Logging, StringArrays, FileUtil;
 
 resourcestring
   SCptInterpolationDefault   = 'Default';
@@ -450,7 +450,7 @@ var
   TagKey :string;
   MsgScalingFmt :string;
   MsgScalingLevel :TLevel;
-  SizeKey :string;
+  FileSize :Int64;
 begin
 
   result := false;
@@ -466,6 +466,7 @@ begin
     // Load source file...
     Print(Format(SMsgLoadingFmt, [SourceFilename]));
     SourceImg := TBGRABitmap.Create(SourceFilename);
+    SourceSize := TSize.Create(SourceImg.Width, SourceImg.Height);
 
     if Context.Cancelled then Exit;
     Progress(1);
@@ -486,6 +487,16 @@ begin
 
     if Processor.FCopyright<>'' then
       FileTags.AddOrSetValue(TAGID_COPYRIGHT, Processor.FCopyright);
+
+    // If a report will be written, then add tags
+    if ProcRes.TagsRequired then begin
+      FileTags.AddOrSetValue('OrgWidth', IntToStr(SourceSize.cx));
+      FileTags.AddOrSetValue('OrgHeight', IntToStr(SourceSize.cy));
+      FileTags.AddOrSetValue('OrgSize', IntToStr(IfThen(SourceSize.cx>SourceSize.cy, SourceSize.cx, SourceSize.cy)));
+      FileTags.AddOrSetValue('OrgFilename', ExtractFilename(SourceFilename));
+      FileSize := FileUtil.FileSize(SourceFilename);
+      FileTags.AddOrSetValue('OrgFilesize', IntToStr(FileSize));
+    end;
 
     ////////////////////////////////////////////////////
     // Big SIZE loop
@@ -521,7 +532,6 @@ begin
 
         // Calculate new size
         Size := Processor.FSizes[i];
-        SourceSize := TSize.Create(SourceImg.Width, SourceImg.Height);
         TargetSize := CalcResamplingSize(SourceSize, Size);
 
         // Scaling direction
@@ -603,12 +613,11 @@ begin
         if not Processor.FNoCreate then
           TargetImg.SaveToFile(TargetFilename, Writer);
 
-        // Store TargetFilename in FileTags
-        if ProcRes.TagsRequired then begin
-          SizeKey := IntToStr(Size);
-          FileTags.Add(SizeKey, TargetFilename);
-
-        end;
+        // In the tags list of this file, make a column with the size as key and the relative filename as value
+        // After the size-loop the FileTags row has a marker for each size the origin was resampled to.
+        // At the end of the process, for each size, the Processor writes a row in the .imgtags file, where such a flag exists
+        if ProcRes.TagsRequired then
+          FileTags.Add(IntToStr(Size), ExtractFilename(TargetFilename));
 
       finally
         Writer.Free;
@@ -890,6 +899,7 @@ begin
       ProcRes.FilesTags.SaveToFile(TagsFilename, ProcRes.FilesTags.TagKeys, [soRelative]);
     end;
 
+    // Save .imgtags
     if trImgTags in FTagsReports then begin
       for i:=0 to m-1 do begin
         if ProcRes.IsMultipleTargetFolderStrategy or not ProcRes.IsTargetFileRenamingStrategy then
@@ -898,7 +908,8 @@ begin
           ImgTagsFilename := ProcRes.TargetFolders[i]+IMAGEINFOSFILETITLE+IntToStr(FSizes[i]);
         Print(Format(SMsgWritingTagsReportFmt, [ImgTagsFilename]));
         ForceDirectories(ExtractFilePath(ImgTagsFilename));
-        ProcRes.FilesTags.SaveToImgTagsFile(ImgTagsFilename, ProcRes.FilesTags.TagKeys, FSizes[i]);
+//        ProcRes.FilesTags.SaveToImgTagsFile(ImgTagsFilename, ProcRes.FilesTags.TagKeys, FSizes[i]);
+        ProcRes.FilesTags.SaveAllToImgTagsFile(ImgTagsFilename, FSizes[i]);
       end;
     end;
 

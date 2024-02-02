@@ -21,7 +21,7 @@ type
     function TryFind(const Value :string; var Index :integer; IgnoreCase :boolean = false) :boolean;
     function Contains(const Value: string; IgnoreCase :boolean = false): boolean;
 //    procedure Split(const Str :string; Separator :char = ',');
-//    procedure Join
+    function Join(const Delimiter :string) :string;
     property Count :integer read GetCount write SetCount;
   end;
 
@@ -75,6 +75,16 @@ var
   Index :integer;
 begin
   result := TryFind(Value, Index, IgnoreCase);
+end;
+
+function TStringArrayHelper.Join(const Delimiter: string): string;
+var
+  i :integer;
+begin
+  if Count = 0 then Exit('');
+  result := self[0];
+  for i:=1 to Count-1 do
+    result := result + Delimiter + self[i];
 end;
 
 //procedure TStringArrayHelper.Split(const Str: string);

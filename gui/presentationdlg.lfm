@@ -76,9 +76,9 @@ object PresentationDialog: TPresentationDialog
         FocusControl = ListBoxManagers
       end
       object ButtonBrowseTargetFolder: TBitBtn
-        AnchorSideLeft.Control = EditTargetFolder
+        AnchorSideLeft.Control = EditImgTagsFilename
         AnchorSideLeft.Side = asrBottom
-        AnchorSideTop.Control = EditTargetFolder
+        AnchorSideTop.Control = EditImgTagsFilename
         AnchorSideTop.Side = asrCenter
         AnchorSideBottom.Side = asrBottom
         Left = 590
@@ -88,33 +88,33 @@ object PresentationDialog: TPresentationDialog
         Width = 30
         BorderSpacing.Left = 1
         Images = ImagesModule.ImageList20x20
-        ImageIndex = 0
+        ImageIndex = 9
         OnClick = ButtonBrowseTargetFolderClick
         Spacing = 0
         TabOrder = 3
       end
-      object EditTargetFolder: TEdit
+      object EditImgTagsFilename: TEdit
         Left = 357
         Height = 23
-        Hint = 'This folder must contain the images and an .imgtags file.'
+        Hint = 'The .imagetags file has important infomation how to create the presentation.'
         Top = 40
         Width = 232
         Anchors = [akTop, akLeft, akRight]
         TabOrder = 2
-        OnChange = EditTargetFolderChange
+        OnChange = EditImgTagsFilenameChange
       end
       object LabelTargetFolder: TLabel
-        AnchorSideLeft.Control = EditTargetFolder
-        AnchorSideBottom.Control = EditTargetFolder
+        AnchorSideLeft.Control = EditImgTagsFilename
+        AnchorSideBottom.Control = EditImgTagsFilename
         Left = 360
         Height = 15
         Top = 22
-        Width = 103
+        Width = 70
         Anchors = [akLeft, akBottom]
         BorderSpacing.Left = 3
         BorderSpacing.Bottom = 3
-        Caption = '&Folder with Images:'
-        FocusControl = EditTargetFolder
+        Caption = '.&imgtags File:'
+        FocusControl = EditImgTagsFilename
       end
       object PanelManagerFrame: TPanel
         Left = 357
@@ -129,9 +129,9 @@ object PresentationDialog: TPresentationDialog
         TabOrder = 5
       end
       object ButtonTargetFromDoc: TBitBtn
-        AnchorSideLeft.Control = EditTargetFolder
+        AnchorSideLeft.Control = EditImgTagsFilename
         AnchorSideLeft.Side = asrBottom
-        AnchorSideTop.Control = EditTargetFolder
+        AnchorSideTop.Control = EditImgTagsFilename
         AnchorSideTop.Side = asrCenter
         AnchorSideBottom.Side = asrBottom
         Left = 620
@@ -210,9 +210,9 @@ object PresentationDialog: TPresentationDialog
       TabOrder = 1
       object ButtonWebShow: TBitBtn
         Left = 8
-        Height = 74
+        Height = 68
         Hint = 'Shows the presentation in your systems web browser.'
-        Top = 84
+        Top = 76
         Width = 110
         Align = alTop
         Anchors = []
@@ -259,7 +259,7 @@ object PresentationDialog: TPresentationDialog
       end
       object ButtonExecute: TBitBtn
         Left = 8
-        Height = 68
+        Height = 60
         Hint = 'Starts the selected processor to create the presentation.'
         Top = 8
         Width = 110
@@ -276,9 +276,10 @@ object PresentationDialog: TPresentationDialog
       end
     end
   end
-  object SelectFolderDialog: TSelectDirectoryDialog
+  object OpenImgTagsDialog: TOpenDialog
+    Title = 'Open .imgtags File'
     Options = [ofFileMustExist, ofEnableSizing, ofViewDetail]
-    Left = 280
-    Top = 432
+    Left = 512
+    Top = 16
   end
 end

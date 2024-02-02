@@ -54,15 +54,15 @@ msgstr "Ungültige Zeitangabe '%s'."
 msgid "Invalid format for datetime '%s'."
 msgstr "Ungültiges Fomat für Datum/Zeit '%s'."
 
-#: galleryprocessor.serrdirnotfoundfmt
-#, object-pascal-format
-msgid "Directory '%s' not found."
-msgstr "Verzeichnis '%s' nicht gefunden."
-
 #: galleryprocessor.serrdotimagesnotfoundfmt
 #, object-pascal-format
 msgid "Tags file '%s' not found."
 msgstr "Tags-Datei '%s' nicht gefunden..."
+
+#: galleryprocessor.serrimgtagsnotfoundfmt
+#, object-pascal-format
+msgid ".imgtags file '%s' not found."
+msgstr ""
 
 #: galleryprocessor.smsgbuildinglists
 msgid "Building lists..."
@@ -79,8 +79,9 @@ msgid "Ok"
 msgstr "Ok"
 
 #: galleryprocessor.smsgloadingdotimagesfmt
-#, object-pascal-format
-msgid "Loading image infos '%s'..."
+#, object-pascal-format, fuzzy
+#| msgid "Loading image infos '%s'..."
+msgid "Loading image tags '%s'..."
 msgstr "Lade Bildinformationen '%s'..."
 
 #: galleryprocessor.smsgprocessingtemplatefmt
@@ -555,9 +556,9 @@ msgstr "Unerwarteter Dateityp (%s erwartet)"
 msgid "Invalid parameters"
 msgstr "Ungültige Parameter"
 
-#: presentationdlg.serrmissingfolder
-msgid "Folder missing or does not exist."
-msgstr "Verzeichnisangabe fehlt oder das Verzeichnis existiert nicht."
+#: presentationdlg.serrmissingimgtags
+msgid ".imgtags file not found."
+msgstr ""
 
 #: presentationdlg.serrshowwebresourcefmt
 #, object-pascal-format
@@ -1675,10 +1676,9 @@ msgstr "Startet den ausgewählten Prozessor um die Präsentation zu erzeugen."
 msgid "Presentation"
 msgstr "Präsentation"
 
-#: tpresentationdialog.edittargetfolder.hint
-msgctxt "tpresentationdialog.edittargetfolder.hint"
-msgid "This folder must contain the images and an .imgtags file."
-msgstr "Das Verzeichnis enthält die Bilder und eine .imgtags -Datei."
+#: tpresentationdialog.editimgtagsfilename.hint
+msgid "The .imagetags file has important infomation how to create the presentation."
+msgstr ""
 
 #: tpresentationdialog.labellongdescription.caption
 msgctxt "tpresentationdialog.labellongdescription.caption"
@@ -1691,9 +1691,15 @@ msgid "&Available:"
 msgstr "&Verfügbar:"
 
 #: tpresentationdialog.labeltargetfolder.caption
+#, fuzzy
+#| msgid "&Folder with Images:"
 msgctxt "tpresentationdialog.labeltargetfolder.caption"
-msgid "&Folder with Images:"
+msgid ".&imgtags File:"
 msgstr "&Bildordner:"
+
+#: tpresentationdialog.openimgtagsdialog.title
+msgid "Open .imgtags File"
+msgstr ""
 
 #: tpresentationdialog.panelmanagerframe.caption
 msgid "This presentation has no settings"

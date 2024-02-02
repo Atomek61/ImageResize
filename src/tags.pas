@@ -45,9 +45,15 @@ const
 
 type
   TStringDictionary = TDictionary<string, string>;
-  TTags = TStringDictionary; // Tags of a source file
+
+  { TTags }
+
+  TTags = class(TStringDictionary)
+  public
+    procedure SaveToFile(const Filename :string);
+  end; // Tags of a source file
+
   TFilesTagsDictionary = TObjectDictionary<string, TTags>; // Directory/.tags
-  TFileTags = TPair<string, TTags>;
   TUniqueStrings = THashSet<string>;
 
   { TFilesTags }
@@ -59,17 +65,18 @@ type
   private
     FFilenames :TStringArray; // Contains the Filenames in the order they where added
     FTagKeys :TStringArray;
-    // One call for two sources: .tags files or .images file.
+    // One call for two purposes: .tags files or .imgtags file.
     // 1. If .tags, then load with LoadFromTagsFile with a given image file list
-    // 2. If .images, then load with LoadFromImgTagsFile with a given .image file (Filenames will be created from this file)
+    // 2. If .imgtags, then load with LoadFromImgTagsFile with a given .imgtags file (Filenames will be created from this file)
     procedure LoadFromFile(const Filename :string; ImplicitFilenames :boolean);
   public
     procedure Clear; override;
     procedure Prepare(const Filenames :TStringArray);
     procedure LoadFromTags;
     procedure SaveToFile(const LstFilename :string; const TagKeys :TStringArray; Options :TSaveOptions = []);
-    procedure SaveToImgTagsFile(const ImagesFilename :string; const TagKeys :TStringArray; Size :integer);
-    procedure LoadFromImgTagsFile(const ImagesFilename :string);
+    procedure SaveToImgTagsFile(const ImgTagsFilename :string; const TagKeys :TStringArray; Size :integer);
+    procedure SaveAllToImgTagsFile(const ImgTagsFilename :string; Size :integer);
+    procedure LoadFromImgTagsFile(const ImgTagsFilename :string);
     property TagKeys :TStringArray read FTagKeys;
     property Filenames :TStringArray read FFilenames;
   end;
@@ -117,6 +124,34 @@ begin
     if Value[i]=',' then Exit(Quoted(Value));
   end;
   result := Value;
+end;
+
+{ TTags }
+
+procedure TTags.SaveToFile(const Filename: string);
+var
+  s :TStringList;
+  Line :string;
+  KeyArray :TStringArray;
+  i :integer;
+begin
+  s := TStringList.Create;
+  try
+    s.WriteBOM := true;
+    KeyArray := Keys.ToArray;
+    s.Add(KeyArray.Join(', '));
+    Line := '';
+    for i:=0 to KeyArray.Count-1 do begin
+      Line := Line + self[KeyArray[i]];
+      if i<KeyArray.Count-1 then
+        Line := Line + ', ';
+    end;
+    s.Add(Line);
+    s.SaveToFile(Filename, TEncoding.UTF8);
+  finally
+    s.Free;
+  end;
+
 end;
 
 { TFilesTags }
@@ -320,7 +355,7 @@ begin
   end;
 end;
 
-procedure TFilesTags.SaveToImgTagsFile(const ImagesFilename: string; const TagKeys :TStringArray; Size: integer);
+procedure TFilesTags.SaveToImgTagsFile(const ImgTagsFilename: string; const TagKeys :TStringArray; Size: integer);
 var
   i :integer;
   Tags :TTags;
@@ -329,6 +364,7 @@ var
   BasePath :string;
   TargetFilename :string;
   Key :string;
+  SizeStr :string;
 
   function GetField(const TagKey :string) :string;
   begin
@@ -339,7 +375,7 @@ var
   end;
 
 begin
-  BasePath := ExpandFilename(ExtractFilePath(ImagesFilename));
+  BasePath := ExpandFilename(ExtractFilePath(ImgTagsFilename));
   s := TStringList.Create;
   try
     s.WriteBOM := true;
@@ -347,22 +383,43 @@ begin
     for Key in TagKeys do
       Line := Line + ', ' + Key;
     s.Add(Line);
-    for i:=0 to FFilenames.Count-1 do if TryGetValue(FFilenames[i], Tags) and Tags.TryGetValue(IntToStr(Size), TargetFilename) then begin
+    SizeStr := IntToStr(Size);
+    // Create a line for each Filename, which has Tags for the required size
+    for i:=0 to FFilenames.Count-1 do if TryGetValue(FFilenames[i], Tags) and Tags.TryGetValue(SizeStr, TargetFilename) then begin
       Line := ExtractRelativePath(BasePath, TargetFilename);
       for Key in TagKeys do
         Line := Line + GetField(Key);
       s.Add(Line);
     end;
-    s.SaveToFile(ImagesFilename, TEncoding.UTF8);
+    s.SaveToFile(ImgTagsFilename, TEncoding.UTF8);
   finally
     s.Free;
   end;
 end;
 
-procedure TFilesTags.LoadFromImgTagsFile(const ImagesFilename: string);
+procedure TFilesTags.SaveAllToImgTagsFile(const ImgTagsFilename: string; Size: integer);
+var
+  UniqueKeys :TUniqueStrings;
+  AllKeys :TStringArray;
+  Key :string;
+  i, n :integer;
+  Tags :TTags;
+begin
+  UniqueKeys := TUniqueStrings.Create;
+  // Merge all Keys, which are not sizes (integers to mark a written size)
+  for i:=0 to FFilenames.Count-1 do
+    if TryGetValue(FFilenames[i], Tags) then
+      for Key in Tags.Keys do
+        if not TryStrToInt(Key, n) then
+          UniqueKeys.Add(Key);
+  AllKeys := UniqueKeys.ToArray;
+  SaveToImgTagsFile(ImgTagsFilename, AllKeys, Size);
+end;
+
+procedure TFilesTags.LoadFromImgTagsFile(const ImgTagsFilename: string);
 begin
   Clear;
-  LoadFromFile(ImagesFilename, true);
+  LoadFromFile(ImgTagsFilename, true);
 end;
 
 //procedure test;

@@ -73,7 +73,7 @@ type
   TPresentationSettings = class(TSettings)
   public
     Id :TStringSetting;
-    TargetFolder :TStringSetting;
+    ImgTagsFilename :TStringSetting;
     constructor Create(const ASection :string); override;
   end;
 
@@ -97,7 +97,7 @@ constructor TPresentationSettings.Create(const ASection: string);
 begin
   inherited Create(ASection);
   Id := TStringSetting.Create(self, 'Id');
-  TargetFolder := TStringSetting.Create(self, 'TargetFolder');
+  ImgTagsFilename := TStringSetting.Create(self, 'ImgTagsFilename');
 end;
 
 { TProjectSettings }

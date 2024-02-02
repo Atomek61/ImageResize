@@ -38,7 +38,7 @@ type
     FPreviewFile :string;
     FPreview :TPicture;
     FTemplateFolder :string;
-    FTargetFolder :string;
+    FImgTagsFilename :string;
     FSettings :TSettings;
     FDelimiters :TDelimiters;
     function GetIcon: TGraphic;
@@ -62,7 +62,7 @@ type
     property Date :TDateTime read FDate;
     property Icon :TGraphic read GetIcon;
     property Preview :TGraphic read GetPreview;
-    property TargetFolder :string read FTargetFolder write FTargetFolder;
+    property ImgTagsFilename :string read FImgTagsFilename write FImgTagsFilename;
     property Settings :TSettings read FSettings;
     property Delimiters :TDelimiters read FDelimiters;
   end;
@@ -359,7 +359,7 @@ var
   SettingPresentationFn :TSettingPresentationFn;
 begin
   FParamsEditor.Flush;
-  FProcessor.TargetFolder := TargetFolder;
+  FProcessor.ImgTagsFilename := ImgTagsFilename;
   FProcessor.DocVars.Load('PRESENTATIONID', Id);
   FProcessor.DocVars.Load('PRESENTATIONTITLE', Title);
   with FProcessor.SysVars do begin
