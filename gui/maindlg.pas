@@ -1672,27 +1672,11 @@ procedure TMainDialog.OnProgress(Sender: TObject; Progress: single);
 begin
   FProgress := Progress;
   ProgressBar.Invalidate;
-//  ProgressBar.Position := round(Progress*100.0);
   Application.ProcessMessages;
-//  Sleep(500);
   if FCancelled then
     (Sender as TProcessor).Cancel;
 end;
 
-//function CompareFilenames(List: TStringList; Index1, Index2: Integer): Integer;
-//var
-//  L, R :string;
-//begin
-//  L := ExtractFilename(List[Index1]);
-//  R := ExtractFilename(List[Index2]);
-//  result := CompareStr(L, R);
-//  if result=0 then begin
-//    L := ExtractFilePath(List[Index1]);
-//    R := ExtractFilePath(List[Index2]);
-//    result := CompareStr(L, R);
-//  end;
-//end;
-//
 procedure TMainDialog.ActionExecuteExecute(Sender: TObject);
 var
   Sizes :TIntegerDynArray;
@@ -1740,7 +1724,6 @@ begin
           if (EditSrcFolder.Text='') or not DirectoryExists(EditSrcFolder.Text) then
               raise Exception.Create(SErrMissingSourceFolder);
           FindAllFiles(SourceFilenames, EditSrcFolder.Text, EditSrcMasks.Text, false);
-          // SourceFilenames.CustomSort(@CompareFilenames);
         end;
 
         // Destination folder

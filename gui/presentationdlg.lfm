@@ -83,7 +83,7 @@ object PresentationDialog: TPresentationDialog
         AnchorSideBottom.Side = asrBottom
         Left = 590
         Height = 25
-        Hint = 'Browse for the source/target folder of the resulting presentation'
+        Hint = 'Select the .imgtags file in the folder of the images to be dispayed.'
         Top = 39
         Width = 30
         BorderSpacing.Left = 1
@@ -96,7 +96,7 @@ object PresentationDialog: TPresentationDialog
       object EditImgTagsFilename: TEdit
         Left = 357
         Height = 23
-        Hint = 'The .imagetags file has important infomation how to create the presentation.'
+        Hint = 'The .imgtags file has important infomation how to create the presentation.'
         Top = 40
         Width = 232
         Anchors = [akTop, akLeft, akRight]

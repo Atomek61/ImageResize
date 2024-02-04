@@ -41,7 +41,7 @@ uses
 
 const
   TAGS_FILETITLE      = '.tags';
-  TAGID_FILENAME     =  'Filename';
+  FILENAME_KEY     =  'Filename';
 
 type
   TStringDictionary = TDictionary<string, string>;
@@ -68,13 +68,13 @@ type
     // One call for two purposes: .tags files or .imgtags file.
     // 1. If .tags, then load with LoadFromTagsFile with a given image file list
     // 2. If .imgtags, then load with LoadFromImgTagsFile with a given .imgtags file (Filenames will be created from this file)
-    procedure LoadFromFile(const Filename :string; ImplicitFilenames :boolean);
+    procedure LoadFromFile(const Filename :string; const ExpectedFilenameKey :string; ImplicitFilenames :boolean);
   public
     procedure Clear; override;
     procedure Prepare(const Filenames :TStringArray);
     procedure LoadFromTags;
     procedure SaveToFile(const LstFilename :string; const TagKeys :TStringArray; Options :TSaveOptions = []);
-    procedure SaveToImgTagsFile(const ImgTagsFilename :string; const TagKeys :TStringArray; Size :integer);
+    procedure SaveToImgTagsFile(const ImgTagsFilename :string; const Keys :TStringArray; Size :integer);
     procedure SaveAllToImgTagsFile(const ImgTagsFilename :string; Size :integer);
     procedure LoadFromImgTagsFile(const ImgTagsFilename :string);
     property TagKeys :TStringArray read FTagKeys;
@@ -82,14 +82,14 @@ type
   end;
 
 resourcestring
-  SErrInvalidTagsFileFmt  = 'Invalid .tags file ''%s'' - %s.';
-  SErrInvalidLineFmt      = 'Invalid .tags file ''%s'' line %d - %s.';
-  SErrEmpty               = 'file is empty';
-  SErrFilenameNotFound    = 'tag ''Filename'' not in first column';
-  SErrFilenameNotAllowed  = 'multiple ''Filename'' tags';
-  SErrMoreValuesThanTags  = 'more values than tags';
-  SErrMissingFilename     = 'missing filename';
-  SErrAsterisk            = 'first row cannot contain a *';
+  SErrInvalidTagsFileFmt      = 'Invalid .tags file ''%s'' - %s.';
+  SErrInvalidLineFmt          = 'Invalid .tags file ''%s'' line %d - %s.';
+  SErrEmpty                   = 'file is empty';
+  SErrFilenameKeyNotFoundFmt  = 'first Column ''%s'' not found';
+  SErrFilenameNotAllowedFmt   = 'multiple ''%s'' tags not allowed';
+  SErrMoreValuesThanTags      = 'more values than tags';
+  SErrMissingFilename         = 'missing filename';
+  SErrAsterisk                = 'first row cannot contain a *';
 
 implementation
 
@@ -124,6 +124,36 @@ begin
     if Value[i]=',' then Exit(Quoted(Value));
   end;
   result := Value;
+end;
+
+function IsAnySizePrefix(const Key :string) :boolean;
+var
+  i :integer;
+  c :char;
+begin
+  for i:=1 to Length(Key) do begin
+    c := Key[i];
+    if (c<'0') or (c>'9') then
+      Exit((i>1) and (c='.'));
+  end;
+  result := false;
+end;
+
+function RemoveAnySizePrefix(const Key :string) :string;
+var
+  i :integer;
+  c :char;
+begin
+  for i:=1 to Length(Key) do begin
+    c := Key[i];
+    if (c<'0') or (c>'9') then begin
+      if (i>1) and (c='.') then
+        Exit(Copy(Key, i+1, Length(Key)-i))
+      else
+        Exit(Key);
+    end;
+  end;
+  result := Key;
 end;
 
 { TTags }
@@ -177,7 +207,7 @@ end;
 //    Add(Filename);
 //end;
 //
-procedure TFilesTags.LoadFromFile(const Filename :string; ImplicitFilenames :boolean);
+procedure TFilesTags.LoadFromFile(const Filename :string; const ExpectedFilenameKey :string; ImplicitFilenames :boolean);
 var
   Path, Filetitle :string;
   Lines :TStringList;
@@ -185,7 +215,7 @@ var
   Row :TStringArray;
   Tags :TTags;
   LastTags :TTags;
-  FilenameTag :string;
+  FilenameKey :string;
   i, j :integer;
   Value :string;
   UnusedRow :boolean;
@@ -213,16 +243,18 @@ begin
       ColKeys := Lines[0].Split(',');
       if (Length(ColKeys)=0) then RaiseInvalid(SErrEmpty);
       RemoveQuotes(ColKeys);
-      FilenameTag := Trim(ColKeys[0]);
-      if not SameText(FilenameTag, TAGID_FILENAME) then RaiseInvalid(SErrFilenameNotFound, 0);
+      FilenameKey := Trim(ColKeys[0]);
+      if not SameText(FilenameKey, ExpectedFilenameKey) then
+        RaiseInvalid(Format(SErrFilenameKeyNotFoundFmt, [ExpectedFilenameKey]), 0);
       // Update global list of all keys...
       for j:=1 to High(ColKeys) do begin
         // 'Filename' is only allowed for the first column
-        if SameText(ColKeys[j], TAGID_FILENAME) then
-          RaiseInvalid(SErrFilenameNotAllowed, -1);
+        if SameText(ColKeys[j], ExpectedFilenameKey) then
+          RaiseInvalid(Format(SErrFilenameNotAllowedFmt, [ExpectedFilenameKey]), -1);
         if not FTagKeys.Contains(ColKeys[j]) then
           FTagKeys.Add(ColKeys[j]);
       end;
+
       // Parse lines...
       for i:=1 to Lines.Count-1 do begin
         Row := Lines[i].Split(',', '"', '"');
@@ -290,7 +322,7 @@ begin
       TagsFilename := Path + TAGS_FILETITLE;
       if not UniqueTagsFiles.Contains(TagsFilename) and FileExists(TagsFilename) then begin
         UniqueTagsFiles.Add(TagsFilename);
-        LoadFromFile(TagsFilename, false);
+        LoadFromFile(TagsFilename, 'Filename', false);
       end;
     end;
   finally
@@ -333,7 +365,7 @@ begin
       end;
     end else begin
       begin
-        Line := TAGID_FILENAME;
+        Line := FILENAME_KEY;
         for Key in TagKeys do
           Line := Line + ', ' + Key;
         s.Add(Line);
@@ -355,16 +387,17 @@ begin
   end;
 end;
 
-procedure TFilesTags.SaveToImgTagsFile(const ImgTagsFilename: string; const TagKeys :TStringArray; Size: integer);
+procedure TFilesTags.SaveToImgTagsFile(const ImgTagsFilename: string; const Keys :TStringArray; Size: integer);
 var
-  i :integer;
+  i, j :integer;
   Tags :TTags;
   s :TStringList;
   Line :string;
   BasePath :string;
   TargetFilename :string;
   Key :string;
-  SizeStr :string;
+  SizePrefix :string;
+  SizeFilenameKey :string;
 
   function GetField(const TagKey :string) :string;
   begin
@@ -375,20 +408,23 @@ var
   end;
 
 begin
+  if Length(Keys)=0 then Exit;
   BasePath := ExpandFilename(ExtractFilePath(ImgTagsFilename));
   s := TStringList.Create;
   try
     s.WriteBOM := true;
-    Line := TAGID_FILENAME;
-    for Key in TagKeys do
-      Line := Line + ', ' + Key;
+    Line := RemoveAnySizePrefix(Keys[0]);
+    for i:=1 to High(Keys) do
+      Line := Line + ', '+RemoveAnySizePrefix(Keys[i]);
     s.Add(Line);
-    SizeStr := IntToStr(Size);
-    // Create a line for each Filename, which has Tags for the required size
-    for i:=0 to FFilenames.Count-1 do if TryGetValue(FFilenames[i], Tags) and Tags.TryGetValue(SizeStr, TargetFilename) then begin
-      Line := ExtractRelativePath(BasePath, TargetFilename);
-      for Key in TagKeys do
-        Line := Line + GetField(Key);
+
+    SizePrefix := IntToStr(Size)+'.';
+    // Create a line for each Filename
+    SizeFilenameKey := SizePrefix+FILENAME_KEY;
+    for i:=0 to FFilenames.Count-1 do if TryGetValue(FFilenames[i], Tags) then begin
+      Line := Tags[Keys[0]];
+      for j:=1 to High(Keys) do
+        Line := Line + GetField(Keys[j]);
       s.Add(Line);
     end;
     s.SaveToFile(ImgTagsFilename, TEncoding.UTF8);
@@ -400,26 +436,37 @@ end;
 procedure TFilesTags.SaveAllToImgTagsFile(const ImgTagsFilename: string; Size: integer);
 var
   UniqueKeys :TUniqueStrings;
-  AllKeys :TStringArray;
+  Keys :TStringArray;
   Key :string;
-  i, n :integer;
+  i :integer;
   Tags :TTags;
+  SizePrefix :string;
+
 begin
   UniqueKeys := TUniqueStrings.Create;
-  // Merge all Keys, which are not sizes (integers to mark a written size)
+  // Merge all Keys, which has not SIZE. prefix or the prefix belongs to Size
+  SizePrefix := IntToStr(Size)+'.';
   for i:=0 to FFilenames.Count-1 do
     if TryGetValue(FFilenames[i], Tags) then
       for Key in Tags.Keys do
-        if not TryStrToInt(Key, n) then
+        if Key.StartsWith(SizePrefix) or not IsAnySizePrefix(Key) then
           UniqueKeys.Add(Key);
-  AllKeys := UniqueKeys.ToArray;
-  SaveToImgTagsFile(ImgTagsFilename, AllKeys, Size);
+  Keys := UniqueKeys.ToArray;
+  // Put Filename as first Key
+  for i:=1 to High(Keys) do
+    if Keys[i].EndsWith('.ImgFilename') then begin
+      Key := Keys[0];
+      Keys[0] := Keys[i];
+      Keys[i] := Key;
+      break;
+    end;
+  SaveToImgTagsFile(ImgTagsFilename, Keys, Size);
 end;
 
 procedure TFilesTags.LoadFromImgTagsFile(const ImgTagsFilename: string);
 begin
   Clear;
-  LoadFromFile(ImgTagsFilename, true);
+  LoadFromFile(ImgTagsFilename, 'ImgFilename', true);
 end;
 
 //procedure test;
@@ -440,6 +487,26 @@ end;
 //      WriteLn(E.Message);
 //    end;
 //  end;
+//end;
+
+//procedure test;
+//begin
+//  if IsAnySizePrefix('abc') then Beep;
+//  if IsAnySizePrefix('480.abc') then Beep;
+//  if IsAnySizePrefix('12xa.abc') then Beep;
+//  if IsAnySizePrefix('.345') then Beep;
+//  if IsAnySizePrefix('48.') then Beep;
+//end;
+//
+//procedure test;
+//var
+//  a :string;
+//begin
+//  a := RemoveAnySizePrefix('abc');
+//  a := RemoveAnySizePrefix('480.abc');
+//  a := RemoveAnySizePrefix('12xa.abc');
+//  a := RemoveAnySizePrefix('.345');
+//  a := RemoveAnySizePrefix('48.');
 //end;
 //
 //initialization

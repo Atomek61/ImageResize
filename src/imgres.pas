@@ -24,7 +24,7 @@ interface
 
 uses
   Classes, SysUtils, StrUtils, Types, BGRABitmap, BGRABitmapTypes,
-  threading.dispatcher, Tags, Logging, StringArrays, FileUtil;
+  threading.dispatcher, Tags, Logging, StringArrays, FileUtil, IntTypes;
 
 resourcestring
   SCptInterpolationDefault   = 'Default';
@@ -450,7 +450,6 @@ var
   TagKey :string;
   MsgScalingFmt :string;
   MsgScalingLevel :TLevel;
-  FileSize :Int64;
 begin
 
   result := false;
@@ -492,10 +491,8 @@ begin
     if ProcRes.TagsRequired then begin
       FileTags.AddOrSetValue('OrgWidth', IntToStr(SourceSize.cx));
       FileTags.AddOrSetValue('OrgHeight', IntToStr(SourceSize.cy));
-      FileTags.AddOrSetValue('OrgSize', IntToStr(IfThen(SourceSize.cx>SourceSize.cy, SourceSize.cx, SourceSize.cy)));
       FileTags.AddOrSetValue('OrgFilename', ExtractFilename(SourceFilename));
-      FileSize := FileUtil.FileSize(SourceFilename);
-      FileTags.AddOrSetValue('OrgFilesize', IntToStr(FileSize));
+      FileTags.AddOrSetValue('OrgFilesize', IntToStr(FileUtil.FileSize(SourceFilename)));
     end;
 
     ////////////////////////////////////////////////////
@@ -613,12 +610,16 @@ begin
         if not Processor.FNoCreate then
           TargetImg.SaveToFile(TargetFilename, Writer);
 
-        // In the tags list of this file, make a column with the size as key and the relative filename as value
-        // After the size-loop the FileTags row has a marker for each size the origin was resampled to.
-        // At the end of the process, for each size, the Processor writes a row in the .imgtags file, where such a flag exists
-        if ProcRes.TagsRequired then
-          FileTags.Add(IntToStr(Size), ExtractFilename(TargetFilename));
-
+        // Add some size dependent un-normalized information.
+        // Later the Process.Execute method will extract this information and
+        // writes an .imgtags file for each size
+        if ProcRes.TagsRequired then begin
+          SizeStr := IntToStr(Size)+'.';
+          FileTags.Add(SizeStr+'ImgFilename', ExtractFilename(TargetFilename));
+          FileTags.Add(SizeStr+'ImgWidth', IntToStr(TargetSize.cx));
+          FileTags.Add(SizeStr+'ImgHeight', IntToStr(TargetSize.cy));
+          FileTags.Add(SizeStr+'ImgFilesize', IntToStr(FileUtil.FileSize(TargetFilename)));
+        end;
       finally
         Writer.Free;
         TargetImg.Free;
@@ -649,11 +650,11 @@ end;
 
 constructor TProcessor.Create;
 begin
-  FSourceFilenames     := TStringList.Create;
+  FSourceFilenames  := TStringList.Create;
   FSizes            := nil;
-  FJPEGQuality       := DEFAULTJPEGQUALITY;
+  FJPEGQuality      := DEFAULTJPEGQUALITY;
   FPNGCompression   := DEFAULTPNGCOMPRESSION;
-  Interpolation        := DEFAULT_INTERPOLATION;
+  Interpolation     := DEFAULT_INTERPOLATION;
   FMrkFilename      := '';
   FMrkSize          := DEFAULTMRKSIZE;
   FMrkX             := DEFAULTMRKX;
@@ -668,7 +669,7 @@ begin
   FShuffle          := DEFAULT_SHUFFLE;
   FShuffleSeed      := DEFAULT_SHUFFLESEED;
   FTagsSources      := DEFAULT_TAGSSOURCES;
-  FTagKeys           := nil;
+  FTagKeys          := nil;
   FCopyright        := DEFAULT_COPYRIGHT;
   FTagsReports      := DEFAULT_TAGSREPORTS;
   FNoCreate         := DEFAULT_NOCREATE;
@@ -789,15 +790,14 @@ begin
       end;
     end;
 
-    // Check if TagsSources are implicite
-    if (FTagsSources=[]) and ((Length(FTagKeys)>0) or (FTagsReports<>[])) then begin
-      include(FTagsSources, tsEXIF);
-      include(FTagsSources, tsTagsFiles);
-    end;
-
     // A Copyright overwrite implicitely requires tagging
     if (FCopyright<>'') and not FTagKeys.contains(TAGID_COPYRIGHT) then
       FTagKeys.Add(TAGID_COPYRIGHT);
+
+    // Check if TagsSources are implicite
+    if (FTagsSources=[]) and ((Length(FTagKeys)>0) or (trImgTags in FTagsReports)) then begin
+      include(FTagsSources, tsTagsFiles);
+    end;
 
     // Check if the tags database is required
     ProcRes.TagsRequired := (FTagsSources<>[]) or (Length(FTagKeys)>0);
@@ -908,7 +908,6 @@ begin
           ImgTagsFilename := ProcRes.TargetFolders[i]+IMAGEINFOSFILETITLE+IntToStr(FSizes[i]);
         Print(Format(SMsgWritingTagsReportFmt, [ImgTagsFilename]));
         ForceDirectories(ExtractFilePath(ImgTagsFilename));
-//        ProcRes.FilesTags.SaveToImgTagsFile(ImgTagsFilename, ProcRes.FilesTags.TagKeys, FSizes[i]);
         ProcRes.FilesTags.SaveAllToImgTagsFile(ImgTagsFilename, FSizes[i]);
       end;
     end;

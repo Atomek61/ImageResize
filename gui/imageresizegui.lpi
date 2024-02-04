@@ -297,6 +297,24 @@
         <Filename Value="..\src\language.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
+      <Unit>
+        <Filename Value="..\src\inttypes.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="IntTypes"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\stringutils.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="StringUtils"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\imgutils.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\colorsetting.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

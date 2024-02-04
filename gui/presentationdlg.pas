@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Buttons, StdCtrls,
   ExtCtrls, ComCtrls, Presentations, LCLIntf, LCLType, RichMemo,
-  Logging, Types, GetText, FileUtil,
+  Logging, Types, GetText, FileUtil, ImgRes,
   LoggingRichMemo, Settings, AppSettings;
 
 type
@@ -105,7 +105,7 @@ end;
 
 procedure TPresentationDialog.ButtonTargetFromDocClick(Sender: TObject);
 begin
-  EditImgTagsFilename.Text := MainDialog.EditTargetFolder.Text;
+  EditImgTagsFilename.Text := IncludeTrailingPathDelimiter(MainDialog.EditTargetFolder.Text) + IMAGEINFOSFILETITLE;
 end;
 
 procedure TPresentationDialog.ButtonWebShowClick(Sender: TObject);

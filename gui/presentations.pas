@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Controls, Forms, IniFiles, Generics.Collections,
-  Graphics, GetText, DateUtils, Generics.Defaults, FileUtil,
+  Graphics, GetText, DateUtils, Generics.Defaults, FileUtil, StringUtils,
   GalleryProcessor, Logging, StrUtils, StringArrays, Settings,
   PresentationManagerFrm, SettingsEditor, TemplateEngine, WebUtils, Language;
 
@@ -236,7 +236,7 @@ var
   WprFilenames :TStringList;
   Filename :string;
 begin
-  WprFilenames := FindAllFiles(Folder, '*.'+PRESENTATIONFILE_EXTENSION, true);
+    WprFilenames := FindAllFiles(Folder, '*.'+PRESENTATIONFILE_EXTENSION, true);
   try
     for Filename in WprFilenames do begin
       try
@@ -307,6 +307,7 @@ var
   SectionKeys :TStringList;
   Key :string;
   VarName, VarValue :string;
+  PrdDir :string;
 
   function MakeAbsoluteList(const Line :string) :TStringArray;
   var
@@ -320,6 +321,7 @@ var
 
 begin
   inherited Create(IniFile);
+  PrdDir := ExtractFilePath(IniFile.Filename);
   FProcessor := GalleryProcessor.TProcessor.Create(Delimiters);
   FProcessor.CopyFiles := MakeAbsoluteList(IniFile.ReadString(PRESENTATION_SECTION, 'Copy', ''));
   FProcessor.TemplateFiles := MakeAbsoluteList(IniFile.ReadString(PRESENTATION_SECTION, 'Templates', ''));
@@ -336,6 +338,8 @@ begin
       if StartsText('Fragment.', Key) then begin
         VarName := Copy(Key, 10, Length(Key)-9);
         VarValue := IniFile.ReadString(PRESENTATION_SECTION, Key, '');
+        if VarValue.StartsWith('@') then
+          VarValue := LoadStringFromFile(PrdDir+Copy(VarValue, 2, Length(VarValue)-1));
         FProcessor.ListFragments.Add(VarName, VarValue);
       end;
   finally
@@ -370,10 +374,10 @@ begin
 
   // Make Settings available to the Processor
   for Setting in Settings.Items do begin
-    if SettingPresentationFns.TryGetValue(Setting.Presentation, SettingPresentationFn) then
-      ValuePresentation := SettingPresentationFn(Setting)
-    else
-      ValuePresentation := Setting.AsDisplay;
+    //if SettingPresentationFns.TryGetValue(Setting.Presentation, SettingPresentationFn) then
+    //  ValuePresentation := SettingPresentationFn(Setting)
+    //else
+    ValuePresentation := Setting.AsDisplay;
     FProcessor.DocVars.Load(UpperCase(Setting.Key), ValuePresentation);
   end;
 
@@ -382,7 +386,7 @@ end;
 
 function AsWebColor(Setting :TSetting) :string;
 begin
-  result := ColorToHTMLColor((Setting as TInt32Setting).Value);
+  result := ColorToHTMLColor((Setting as TUInt32Setting).Value);
 end;
 
 initialization

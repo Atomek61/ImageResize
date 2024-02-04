@@ -38,6 +38,7 @@ function TryHTMLColorToColor(const Value :string; out Color :TColor) :boolean;
 var
   c :TFPColor;
   n :integer;
+  i64 :Int64;
 
   function Hex1(i :integer) :word;
   begin
@@ -101,6 +102,10 @@ begin
       Exit(False);
     end;
     Color := FPColorToTColor(c);
+  end else begin
+    result := TryStrToInt64(Value, i64) and (i64>=0) and (i64<=High(UInt32));
+    if result then
+      Color := i64;
   end;
 end;
 

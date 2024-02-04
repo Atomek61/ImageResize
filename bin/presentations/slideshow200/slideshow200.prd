@@ -5,17 +5,19 @@ Version=100
 [Presentation]
 Id=Slideshow200
 Class=Presentation
-Delimiters={{,}}
+;Delimiters={{,}}
 Title=Slideshow 2.0
 Description=Cinematic with navigation
-LongDescription=Simple slideshow for full-screen with HTML, CSS and JavaScript
+Description.de=Kino mit Navigation
+LongDescription=Simple slideshow for full-screen (1920px) with navigation
+LongDescription.de=Slideshow für Vollbild (1920px) mit Navigation
 Date=2024-01-03 20:00:00
 Icon=..\icon-slideshow.png
 Preview=slideshow-preview.jpg
 Copy=slideshow.js
 Templates=index.html,slideshow.css
-Fragment.IMAGES=<img class="image-hidden" src="{{URL}}" alt="{{TITLE}}"/>{{CRLF}}
-WebFile=index.html
+Fragment.IMAGES=<img class="image-hidden" src="%IMGFILENAME%" alt="%TITLE%"/>%CRLF%
+Fragment.BULLETS=<svg class="button-image" viewbox="0 0 128 128"><use href="#svg-circle"/></svg>%CRLF%
 
 [Settings.Title]
 Class=String
@@ -23,15 +25,15 @@ Caption=Title
 Caption.de=Titel
 
 [Settings.Color]
-Class=Int32
+Class=HTMLColor
 Presentation=WebColor
 Caption=Font Color
 Caption.de=Schriftfarbe
-Default=$E4EBDA
+Default=#E4EBDA
 
 [Settings.BackgroundColor]
-Class=Int32
+Class=HTMLColor
 Presentation=WebColor
 Caption=Background Color
 Caption.de=Hintergrundfarbe
-Default=$36361B
+Default=#36361B

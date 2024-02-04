@@ -79,6 +79,11 @@ type
   public
   end;
 
+  TUInt32Editor = class(TStringEditor)
+  public
+  end;
+
+
   TPickEdit = class(TEditor)
 
   end;
@@ -250,7 +255,7 @@ end;
 initialization
 begin
   EditorClasses := TEditorClasses.Create;
-  TEditor.Register([TStringEditor, TInt32Editor]);
+  TEditor.Register([TStringEditor, TInt32Editor, TUInt32Editor]);
 end;
 
 finalization

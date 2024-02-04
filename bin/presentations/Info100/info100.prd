@@ -1,0 +1,63 @@
+﻿[Common]
+Type=PRD
+Version=100
+
+[Presentation]
+Id=Info100
+Processor=Presentation
+Title=Info 1.0
+Description=Tabular Image Infos
+Description.de=Tabellarische Bildinformationen
+LongDescription=CSS Grid container. Demonstration of available information.
+LongDescription.de=CSS Grid-Container. Demonstration verfügbarer Informationen
+Date=2024-02-01 00:00:00
+Icon=..\icon-list.png
+Preview=preview.jpg
+Copy=shutter.png
+Templates=index.html,info.css
+Fragment.IMAGES=@fragment.images.html
+
+[Settings.Title]
+Class=String
+Caption=Title
+Caption.de=Titel
+
+[Settings.Copyright]
+Class=String
+Caption=Copyright
+Caption.de=Urheberhinweis
+
+[Settings.HeaderColor]
+Class=HTMLColor
+Presentation=WebColor
+Caption=Header Color
+Caption.de=Titelleiste
+Default=#386283
+
+[Settings.BackgroundColor]
+Class=HTMLColor
+Presentation=WebColor
+Caption=Background Color
+Caption.de=Hintergrund
+Default=#DAEBE4
+
+[Settings.CardColor]
+Class=HTMLColor
+Presentation=WebColor
+Caption=Card Background
+Caption.de=Kartenhintergrund
+Default=#210C21
+
+[Settings.TableFontColor]
+Class=HTMLColor
+Presentation=WebColor
+Caption=Font Color
+Caption.de=Tabellenschrift
+Default=#EDF0BF
+
+[Settings.TableColor]
+Class=HTMLColor
+Presentation=WebColor
+Caption=Font Color
+Caption.de=Tabellenhintergrund
+Default=#782C78

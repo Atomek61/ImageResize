@@ -1,0 +1,63 @@
+﻿<!DOCTYPE HTML>
+<head>
+  <meta charset="UTF-8"/>
+  <title>%TITLE%</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>       
+  <link rel="stylesheet" href="info.css"/>
+  <style>
+
+    .images {
+    }
+
+    figure {
+      display: flex;
+      width: 80%;
+      max-width: 600px;
+      background-color:black;
+      color: white;
+      padding: 1em;
+    }
+
+    figcaption {
+      display: grid;
+      grid-template-columns: auto auto;      
+      grid-template-rows: repeat(6, 2em);      
+      align-items: center;
+      background-color: rebeccapurple;
+      margin-left: 1em;
+      width: 100%;
+      padding: 1em;
+    }
+
+    figcaption p {
+      justify-items: start;
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    %TITLE%
+  </header>
+  <div class="images">
+    <figure>
+      <img src="img2.jpg"/>
+      <figcaption>
+        <p>Filename:</p><p>DSC02345.jpg</p>
+        <p>File Size:</p><p>23 kB</p>
+        <p>File Size:</p><p>23 kB</p>
+      </figcaption>
+    </figure>
+    <figure>
+      <img src="img3.jpg"/>
+      <figcaption>
+        <p>Filename:</p><p>DSC02345.jpg</p>
+        <p>File Size:</p><p>23 kB</p>
+      </figcaption>
+    </figure>
+  </div>
+  <footer>
+    %COPYRIGHT%
+  </footer>
+</body>
+</html>

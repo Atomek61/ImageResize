@@ -77,9 +77,9 @@ type
     constructor Create(const ASection :string = ''); virtual; overload;
     destructor Destroy; override;
     procedure SetDefaults; virtual;
+    procedure LoadDef(Ini :TCustomIniFile; const ASection :string = '');
     function IsEqual(const Other :TSettings) :boolean;
     procedure Copy(const Source :TSettings; Mode :TCopyMode);
-    procedure LoadDef(Ini :TCustomIniFile; const ASection :string = '');
     procedure Save(Ini :TCustomIniFile; const Section :string = ''); virtual;
     procedure Load(Ini :TCustomIniFile; const Section :string = ''; Mode :TLoadMode = lmStrict); virtual;
     property Items :TSettingList read FItems;
@@ -149,8 +149,6 @@ type
   private
     FValue :Int32;
     FDefault :Int32;
-    FMin :Int32;
-    FMax :Int32;
     procedure SetValue(AValue: Int32);
   protected
     procedure SetAsText(const AValue: string); override;
@@ -164,8 +162,57 @@ type
     procedure Assign(Source :TSetting); override;
     property Value :Int32 read FValue write SetValue;
     property Default :Int32 read FDefault write FDefault;
+  end;
+
+  { TExInt32Setting }
+
+  TExInt32Setting = class(TInt32Setting)
+  private
+    FMin :Int32;
+    FMax :Int32;
+    procedure SetValue(AValue: Int32);
+  protected
+    procedure LoadDef(Ini :TCustomIniFile; const Section :string); override;
+  public
+    constructor Create(Settings :TSettings; const Key :string); override;
     property Min :Int32 read FMin write FMin;
     property Max :Int32 read FMax write FMax;
+  end;
+
+  { TUInt32Setting }
+
+  TUInt32Setting = class(TSetting)
+  private
+    FValue :UInt32;
+    FDefault :UInt32;
+    procedure SetValue(AValue: UInt32);
+  protected
+    procedure SetAsText(const AValue: string); override;
+    function GetAsText :string; override;
+    procedure SetDefault; override;
+  public
+    procedure LoadDef(Ini :TCustomIniFile; const Section :string); override;
+    constructor Create(Settings :TSettings; const Key :string); override;
+    class function ClassDefault :string; override;
+    function IsEqual(Other :TSetting) :boolean; override;
+    procedure Assign(Source :TSetting); override;
+    property Value :UInt32 read FValue write SetValue;
+    property Default :UInt32 read FDefault write FDefault;
+  end;
+
+  { TExUInt32Setting }
+
+  TExUInt32Setting = class(TUInt32Setting)
+  private
+    FMin :UInt32;
+    FMax :UInt32;
+    procedure SetValue(AValue: UInt32);
+  protected
+    procedure LoadDef(Ini :TCustomIniFile; const Section :string); override;
+  public
+    constructor Create(Settings :TSettings; const Key :string); override;
+    property Min :UInt32 read FMin write FMin;
+    property Max :UInt32 read FMax write FMax;
   end;
 
   { TBooleanSetting }
@@ -233,6 +280,7 @@ uses
 resourcestring
   SErrSettingClassNotFoundFmt = 'Setting class ''%s'' from [''%s''] not registered.';
   SErrConvertToInt32Fmt       = 'Cant convert ''%s'' to an Int32.';
+  SErrConvertToUInt32Fmt      = 'Cant convert ''%s'' to an UInt32.';
   SErrConvertToBooleanFmt     = 'Cant convert ''%s'' to boolean.';
   SErrAssigningSectionFmt     = 'Cant assign values of [%s] to those of [%s].';
   SErrAssignClassFmt          = 'Cant assign %s value to %s value.';
@@ -728,8 +776,6 @@ end;
 
 procedure TInt32Setting.SetValue(AValue: Int32);
 begin
-  if AValue<FMin then AValue := FMin;
-  if AValue>FMax then AValue := FMax;
   if FValue=AValue then Exit;
   FValue:=AValue;
   Change;
@@ -759,15 +805,13 @@ begin
   inherited LoadDef(Ini, Section);
   FDefault := Ini.ReadInteger(Section, 'Default', 0);
   FValue := FDefault;
-  FMin := Ini.ReadInteger(Section, 'Min', Low(Int32));
-  FMax := Ini.ReadInteger(Section, 'Max', High(Int32));
 end;
 
 constructor TInt32Setting.Create(Settings: TSettings; const Key: string);
 begin
   inherited;
-  FMin := Low(Int32);
-  FMax := High(Int32);
+  FValue := 0;
+  FDefault := 0;
 end;
 
 class function TInt32Setting.ClassDefault: string;
@@ -787,6 +831,113 @@ begin
     FValue := TInt32Setting(Source).FValue;
     Change;
   end;
+end;
+
+{ TExInt32Setting }
+
+constructor TExInt32Setting.Create(Settings: TSettings; const Key: string);
+begin
+  inherited;
+  FMin := Low(Int32);
+  FMax := High(Int32);
+end;
+
+procedure TExInt32Setting.SetValue(AValue: Int32);
+begin
+  if AValue<FMin then AValue := FMin;
+  if AValue>FMax then AValue := FMax;
+  inherited
+end;
+
+procedure TExInt32Setting.LoadDef(Ini: TCustomIniFile; const Section: string);
+begin
+  inherited LoadDef(Ini, Section);
+  FMin := Ini.ReadInteger(Section, 'Min', Low(Int32));
+  FMax := Ini.ReadInteger(Section, 'Max', High(Int32));
+end;
+
+{ TUInt32Setting }
+
+procedure TUInt32Setting.SetValue(AValue: UInt32);
+begin
+  if FValue=AValue then Exit;
+  FValue:=AValue;
+  Change;
+end;
+
+procedure TUInt32Setting.SetAsText(const AValue: string);
+var
+  Value :Int64;
+begin
+  if not (TryStrToInt64(AValue, Value) or (Value<Low(UInt32)) or (Value>High(UInt32))) then
+    raise EConvertError.CreateFmt(SErrConvertToUInt32Fmt, [AValue]);
+  self.Value := Value;
+end;
+
+function TUInt32Setting.GetAsText: string;
+begin
+  result := IntToStr(FValue);
+end;
+
+procedure TUInt32Setting.SetDefault;
+begin
+  Value := FDefault;
+end;
+
+procedure TUInt32Setting.LoadDef(Ini: TCustomIniFile; const Section: string);
+begin
+  inherited LoadDef(Ini, Section);
+  FDefault := Ini.ReadInt64(Section, 'Default', 0);
+  FValue := FDefault;
+end;
+
+constructor TUInt32Setting.Create(Settings: TSettings; const Key: string);
+begin
+  inherited;
+  FValue := 0;
+  FDefault := 0;
+end;
+
+class function TUInt32Setting.ClassDefault: string;
+begin
+  result := '0';
+end;
+
+function TUInt32Setting.IsEqual(Other: TSetting): boolean;
+begin
+  result := inherited IsEqual(Other) and (FValue = TUInt32Setting(Other).FValue);
+end;
+
+procedure TUInt32Setting.Assign(Source: TSetting);
+begin
+  inherited;
+  if not IsEqual(Source) then begin
+    FValue := TUInt32Setting(Source).FValue;
+    Change;
+  end;
+end;
+
+{ TExUInt32Setting }
+
+constructor TExUInt32Setting.Create(Settings: TSettings; const Key: string);
+begin
+  inherited;
+  FMin := Low(UInt32);
+  FMax := High(UInt32);
+end;
+
+procedure TExUInt32Setting.SetValue(AValue: UInt32);
+begin
+  if AValue<FMin then AValue := FMin;
+  if AValue>FMax then AValue := FMax;
+  inherited
+end;
+
+procedure TExUInt32Setting.LoadDef(Ini: TCustomIniFile; const Section: string);
+begin
+  inherited LoadDef(Ini, Section);
+  FMin := Ini.ReadInt64(Section, 'Min', Low(UInt32));
+  FMax := Ini.ReadInt64(Section, 'Max', High(UInt32));
 end;
 
 { TBooleanSetting }
@@ -935,7 +1086,7 @@ begin
 //  Test;
   SettingsClasses := TDictionary<string, TSettingsClass>.Create;
   SettingClasses := TDictionary<string, TSettingClass>.Create;
-  TSetting.Register([TStringSetting, TInt32Setting, TBooleanSetting, TPicklistSetting, TPicktextSetting]);
+  TSetting.Register([TStringSetting, TInt32Setting, TExInt32Setting, TUInt32Setting, TExUInt32Setting, TBooleanSetting, TPicklistSetting, TPicktextSetting]);
 end;
 
 finalization

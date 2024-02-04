@@ -256,14 +256,14 @@ object MainDialog: TMainDialog
         Top = 4
         Width = 393
         TabStop = False
-        ActivePage = TabSheetQuality
+        ActivePage = TabSheetTagging
         Align = alClient
         BorderSpacing.Around = 4
         ImagesWidth = 32
         MultiLine = True
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 3
+        TabIndex = 4
         TabOrder = 1
         Options = [nboMultiLine]
         object TabSheetSizes: TTabSheet
@@ -1216,7 +1216,6 @@ object MainDialog: TMainDialog
           object GroupBoxTagsLoading: TGroupBox
             Left = 4
             Height = 74
-            Hint = 'Tags can be read from the original files EXIF of from .tags files in each origins folder.'#13#10'The latter ones do override the origins EXIF source.'
             Top = 82
             Width = 377
             HelpType = htKeyword
@@ -1232,24 +1231,26 @@ object MainDialog: TMainDialog
             object CheckBoxTagsSourceEXIF: TCheckBox
               Left = 9
               Height = 19
+              Hint = 'You can edit EXIF tags of your fotos with many programs'
               Top = 4
               Width = 364
               Align = alTop
               BorderSpacing.Left = 9
               BorderSpacing.Top = 4
-              Caption = 'Use origins EXIF meta information'
+              Caption = 'From images EXIF tags'
               TabOrder = 0
               OnChange = ProjectChanged
             end
             object CheckBoxTagsSourceTagsFiles: TCheckBox
               Left = 9
               Height = 19
+              Hint = 'You can put a .tags file to each of folder with your fotos'
               Top = 27
               Width = 364
               Align = alTop
               BorderSpacing.Left = 9
               BorderSpacing.Top = 4
-              Caption = 'Search for .tags files in each origins folder'
+              Caption = 'From .tags files in each origins folder'
               TabOrder = 1
               OnChange = ProjectChanged
             end

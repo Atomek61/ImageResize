@@ -3,16 +3,9 @@
   <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>   
-    <title></title>
+    <title>%TITLE%</title>
     <script src="slideshow.js"></script>
-    <link rel="stylesheet" href="slideshow.css">
-    <style>
-        body {
-            margin: 0;
-            background-color: darkslategray;
-        }        
-    </style>
-	<style>
+    <link rel="stylesheet" href="slideshow.css"/>
     <script>
         window.onload = function() {
            sl = new Slideshow(document.getElementById('slideshow'));
@@ -39,7 +32,7 @@
         </svg>        
     </div>
     <div style="position: absolute; top: 0px; width: 100%;" id="slideshow" class="slideshow">
-{{IMAGES}}
+%IMAGES%
         <div class="title-bar"></div>
         <div class="navigation-bar button-prev">
             <svg viewbox="0 0 128 128" ><use href="#svg-prev"/></svg>
@@ -48,10 +41,7 @@
             <svg viewbox="0 0 128 128" ><use href="#svg-next"/></svg>
         </div>    
         <div class="control-bar">
-            <svg class="button-image" viewbox="0 0 128 128"><use href="#svg-circle"/></svg>
-            <svg class="button-image" viewbox="0 0 128 128"><use href="#svg-circle"/></svg>
-            <svg class="button-image" viewbox="0 0 128 128"><use href="#svg-circle"/></svg>
-            <svg class="button-image" viewbox="0 0 128 128"><use href="#svg-circle"/></svg> 
+%BULLETS%
             <svg class="button-cinema" viewbox="0 0 128 128"><use href="#svg-frame-start"/></svg>
             <svg class="button-fullscreen" viewbox="0 0 128 128"><use href="#svg-expand"/></svg>
         </div>

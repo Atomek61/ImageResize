@@ -39,6 +39,11 @@ msgstr "Ihre Anwendung ist aktuell"
 msgid "Update available: Version %s from %s"
 msgstr "Update verfügbar: Version %s von %s"
 
+#: colorsetting.serrconverttohtmlcolorfmt
+#, object-pascal-format
+msgid "Cant convert '%s' to a HTMLColor."
+msgstr "Kann '%s' nicht in HTML-Farbwert umwandeln."
+
 #: datetimeutils.serrdatefmt
 #, object-pascal-format
 msgid "Cant '%s' convert to a date."
@@ -54,15 +59,11 @@ msgstr "Ungültige Zeitangabe '%s'."
 msgid "Invalid format for datetime '%s'."
 msgstr "Ungültiges Fomat für Datum/Zeit '%s'."
 
-#: galleryprocessor.serrdotimagesnotfoundfmt
-#, object-pascal-format
-msgid "Tags file '%s' not found."
-msgstr "Tags-Datei '%s' nicht gefunden..."
-
 #: galleryprocessor.serrimgtagsnotfoundfmt
 #, object-pascal-format
-msgid ".imgtags file '%s' not found."
-msgstr ""
+msgctxt "galleryprocessor.serrimgtagsnotfoundfmt"
+msgid "Tags file '%s' not found."
+msgstr "Tags-Datei '%s' nicht gefunden."
 
 #: galleryprocessor.smsgbuildinglists
 msgid "Building lists..."
@@ -79,8 +80,7 @@ msgid "Ok"
 msgstr "Ok"
 
 #: galleryprocessor.smsgloadingdotimagesfmt
-#, object-pascal-format, fuzzy
-#| msgid "Loading image infos '%s'..."
+#, object-pascal-format
 msgid "Loading image tags '%s'..."
 msgstr "Lade Bildinformationen '%s'..."
 
@@ -351,6 +351,16 @@ msgstr "Schreibe EXIF nach '%s'..."
 msgid "Writing Tags Report to '%s'..."
 msgstr "Schreibe Tags Report nach '%s'..."
 
+#: imgutils.serrinvalidimageorientationfmt
+#, object-pascal-format
+msgid "Invalid image orientation '%s'."
+msgstr "Ungültige Bildorientierung '%s'."
+
+#: imgutils.serrinvalidimageratiofmt
+#, object-pascal-format
+msgid "Invalid image format '%s'."
+msgstr "Ungültiges Bildformat '%s'."
+
 #: maindlg.scptcancel
 msgctxt "maindlg.scptcancel"
 msgid "Cancel"
@@ -558,7 +568,7 @@ msgstr "Ungültige Parameter"
 
 #: presentationdlg.serrmissingimgtags
 msgid ".imgtags file not found."
-msgstr ""
+msgstr ".imgtags-Datei nicht gefunden."
 
 #: presentationdlg.serrshowwebresourcefmt
 #, object-pascal-format
@@ -604,6 +614,11 @@ msgstr "Kann '%s' nicht in einen Wahrheitswert verwandeln."
 #, object-pascal-format
 msgid "Cant convert '%s' to an Int32."
 msgstr "Kann '%s nicht in einen Int32 wandeln."
+
+#: settings.serrconverttouint32fmt
+#, object-pascal-format
+msgid "Cant convert '%s' to an UInt32."
+msgstr "Kann '%s' nicht in einen UInt32 umwandeln."
 
 #: settings.serrinvalidpicklist
 msgid "Invalid picklist."
@@ -758,13 +773,15 @@ msgstr "erste Zeile darf nicht den * enthalten"
 msgid "file is empty"
 msgstr "leere Datei"
 
-#: tags.serrfilenamenotallowed
-msgid "multiple 'Filename' tags"
-msgstr "mehrfaches 'Filename'-Tag"
+#: tags.serrfilenamekeynotfoundfmt
+#, object-pascal-format
+msgid "first Column '%s' not found"
+msgstr "erste Spalte muss '%s' heißen"
 
-#: tags.serrfilenamenotfound
-msgid "tag 'Filename' not in first column"
-msgstr "in der ersten Zeile muss das Tag 'Filename' stehen"
+#: tags.serrfilenamenotallowedfmt
+#, object-pascal-format
+msgid "multiple '%s' tags not allowed"
+msgstr "mehrere '%s'-Spalten unzulässig"
 
 #: tags.serrinvalidlinefmt
 #, object-pascal-format
@@ -972,21 +989,15 @@ msgid "ImageResize"
 msgstr "ImageResize"
 
 #: tmaindialog.checkboximageinfosenabled.caption
-#, fuzzy
-#| msgid "Create Presentation Infos (.imgtags)"
 msgid "Presentation Infos (.imgtags)"
 msgstr "Erzeuge Infos für Präsentationen (.imgtags)"
 
 #: tmaindialog.checkboximageinfosenabled.hint
-#, fuzzy
-#| msgid ""
-#| "The Slideshow Afterburner requires such files with the\n"
-#| "names and titles of the images to be displayed."
 msgid ""
 "The Presentation afterburner requires such files with \n"
 "names, titles and other information about the images."
 msgstr ""
-"Der Slideshow Afterburner benötigt eine solche Datei mit\n"
+"Der Präsentations-Nachbrenner benötigt eine solche Datei mit\n"
 "Dateinamen und Titeln der Bilder für die Anzeige."
 
 #: tmaindialog.checkboxmrkenabled.caption
@@ -1033,11 +1044,9 @@ msgid "Copyright"
 msgstr "Urheberrecht (Copyright)"
 
 #: tmaindialog.checkboxtagsreportenabled.caption
-#, fuzzy
-#| msgid "Create Tags Report (.tagsreport)"
 msgctxt "tmaindialog.checkboxtagsreportenabled.caption"
 msgid "Tags Report (.tagsreport)"
-msgstr "Erzeuge Tags Report (.tagsreport)"
+msgstr "Tags Report (.tagsreport)"
 
 #: tmaindialog.checkboxtagsreportenabled.hint
 msgid ""
@@ -1050,12 +1059,20 @@ msgstr ""
 "Quelle können EXIF-Tags oder aus .tags-Dateien sein."
 
 #: tmaindialog.checkboxtagssourceexif.caption
-msgid "Use origins EXIF meta information"
-msgstr "Verwende die originalen EXIF Metainformationen"
+msgid "From images EXIF tags"
+msgstr "Von EXIF-Tags der Bilder"
+
+#: tmaindialog.checkboxtagssourceexif.hint
+msgid "You can edit EXIF tags of your fotos with many programs"
+msgstr "Es gibt viele Programme mit denen sie die EXIF-Tags ihrer Fotos bearbeiten können."
 
 #: tmaindialog.checkboxtagssourcetagsfiles.caption
-msgid "Search for .tags files in each origins folder"
-msgstr "Suche nach .tags-Dateien in den Ursprungsverzeichnissen"
+msgid "From .tags files in each origins folder"
+msgstr "Von .tags-Dateien aus den Ordnern der Originalbilder"
+
+#: tmaindialog.checkboxtagssourcetagsfiles.hint
+msgid "You can put a .tags file to each of folder with your fotos"
+msgstr "Sie können in jedes Verzeichnis mit ihren Bildern eine .tags-Datei schreiben."
 
 #: tmaindialog.checkboxtagtimestamp.caption
 msgid "Timestamp"
@@ -1176,7 +1193,7 @@ msgid "1"
 msgstr "1"
 
 #: tmaindialog.editrentemplate.hint
-#, fuzzy, badformat
+#, fuzzy
 msgid ""
 "Enter a filename template containing placeholders for special values.\n"
 "This template will be expanded for each resampled image. Insert the\n"
@@ -1272,33 +1289,21 @@ msgstr "Mischen"
 #: tmaindialog.groupboxtagsloading.caption
 msgctxt "tmaindialog.groupboxtagsloading.caption"
 msgid "Tags Loading"
-msgstr ""
-
-#: tmaindialog.groupboxtagsloading.hint
-#, fuzzy
-msgctxt "tmaindialog.groupboxtagsloading.hint"
-msgid ""
-"Tags can be read from the original files EXIF of from .tags files in each origins folder.\n"
-"The latter ones do override the origins EXIF source."
-msgstr ""
-"Tags können aus den EXIF Metainformationen der originalen Bilddateien übertragen werden\n"
-"oder sie werden aus .tags-Dateien aus den Ursprungsverzeichnissen geladen.\n"
-"Letztere überschreiben ggf. die ursprünglichen EXIF-Tags."
+msgstr "Tags laden"
 
 #: tmaindialog.groupboxtagssaving.caption
 msgctxt "tmaindialog.groupboxtagssaving.caption"
 msgid "Tags Saving"
-msgstr ""
+msgstr "Tags speichern"
 
 #: tmaindialog.groupboxtagssaving.hint
-#, fuzzy
 msgctxt "tmaindialog.groupboxtagssaving.hint"
 msgid ""
 "A Tags Report is a list of filenames and tags, which may be usefull for creating\n"
 "a slideshow."
 msgstr ""
 "Ein Tags Report ist eine Liste von Dateinamen und Tags, welche\n"
-"nützlich für die Erzeugung einer Slideshow sein können."
+"nützlich sein könnte für die Erzeugung einer Slideshow."
 
 #: tmaindialog.label1.caption
 msgid "Source Files:"
@@ -1347,7 +1352,7 @@ msgstr "Dateiauswahl:"
 #: tmaindialog.label2.caption
 msgctxt "tmaindialog.label2.caption"
 msgid "Overwrite with this:"
-msgstr ""
+msgstr "Überschreiben mit diesem:"
 
 #: tmaindialog.label20.caption
 msgid "Click or drag the watermark"
@@ -1626,8 +1631,8 @@ msgid "Save Watermark Image"
 msgstr "Wasserzeichen speichern"
 
 #: tpresentationdialog.buttonbrowsetargetfolder.hint
-msgid "Browse for the source/target folder of the resulting presentation"
-msgstr "Wählen Sie das Verzeichnis mit den Bildern aus, das auch das Ergebnis der Präsentation enthalten wird"
+msgid "Select the .imgtags file in the folder of the images to be dispayed."
+msgstr "Wählen Sie die .imgtags.Datei im Verzeichnis mit den anzuzeigenden Bildern."
 
 #: tpresentationdialog.buttoncancel.caption
 msgctxt "tpresentationdialog.buttoncancel.caption"
@@ -1677,8 +1682,10 @@ msgid "Presentation"
 msgstr "Präsentation"
 
 #: tpresentationdialog.editimgtagsfilename.hint
-msgid "The .imagetags file has important infomation how to create the presentation."
+msgid "The .imgtags file has important infomation how to create the presentation."
 msgstr ""
+"Die .imgtags-Datei enthält wichtige\n"
+"Informationen für die Erstellung der Präsentation."
 
 #: tpresentationdialog.labellongdescription.caption
 msgctxt "tpresentationdialog.labellongdescription.caption"
@@ -1691,15 +1698,13 @@ msgid "&Available:"
 msgstr "&Verfügbar:"
 
 #: tpresentationdialog.labeltargetfolder.caption
-#, fuzzy
-#| msgid "&Folder with Images:"
 msgctxt "tpresentationdialog.labeltargetfolder.caption"
 msgid ".&imgtags File:"
-msgstr "&Bildordner:"
+msgstr ".&imgtags-Datei:"
 
 #: tpresentationdialog.openimgtagsdialog.title
 msgid "Open .imgtags File"
-msgstr ""
+msgstr "Öffne .imgtags-Datei"
 
 #: tpresentationdialog.panelmanagerframe.caption
 msgid "This presentation has no settings"
@@ -1815,4 +1820,3 @@ msgstr "Speichern"
 msgctxt "webutils.serrinvalidhtmlcolorfmt"
 msgid "Invalid web color '%s'."
 msgstr "Ungültige Web-Farbe '%s'."
-

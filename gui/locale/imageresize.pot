@@ -28,6 +28,11 @@ msgstr ""
 msgid "Update available: Version %s from %s"
 msgstr ""
 
+#: colorsetting.serrconverttohtmlcolorfmt
+#, object-pascal-format
+msgid "Cant convert '%s' to a HTMLColor."
+msgstr ""
+
 #: datetimeutils.serrdatefmt
 #, object-pascal-format
 msgid "Cant '%s' convert to a date."
@@ -43,14 +48,10 @@ msgstr ""
 msgid "Invalid format for datetime '%s'."
 msgstr ""
 
-#: galleryprocessor.serrdotimagesnotfoundfmt
-#, object-pascal-format
-msgid "Tags file '%s' not found."
-msgstr ""
-
 #: galleryprocessor.serrimgtagsnotfoundfmt
 #, object-pascal-format
-msgid ".imgtags file '%s' not found."
+msgctxt "galleryprocessor.serrimgtagsnotfoundfmt"
+msgid "Tags file '%s' not found."
 msgstr ""
 
 #: galleryprocessor.smsgbuildinglists
@@ -339,6 +340,16 @@ msgstr ""
 msgid "Writing Tags Report to '%s'..."
 msgstr ""
 
+#: imgutils.serrinvalidimageorientationfmt
+#, object-pascal-format
+msgid "Invalid image orientation '%s'."
+msgstr ""
+
+#: imgutils.serrinvalidimageratiofmt
+#, object-pascal-format
+msgid "Invalid image format '%s'."
+msgstr ""
+
 #: maindlg.scptcancel
 msgctxt "maindlg.scptcancel"
 msgid "Cancel"
@@ -590,6 +601,11 @@ msgstr ""
 msgid "Cant convert '%s' to an Int32."
 msgstr ""
 
+#: settings.serrconverttouint32fmt
+#, object-pascal-format
+msgid "Cant convert '%s' to an UInt32."
+msgstr ""
+
 #: settings.serrinvalidpicklist
 msgid "Invalid picklist."
 msgstr ""
@@ -739,12 +755,14 @@ msgstr ""
 msgid "file is empty"
 msgstr ""
 
-#: tags.serrfilenamenotallowed
-msgid "multiple 'Filename' tags"
+#: tags.serrfilenamekeynotfoundfmt
+#, object-pascal-format
+msgid "first Column '%s' not found"
 msgstr ""
 
-#: tags.serrfilenamenotfound
-msgid "tag 'Filename' not in first column"
+#: tags.serrfilenamenotallowedfmt
+#, object-pascal-format
+msgid "multiple '%s' tags not allowed"
 msgstr ""
 
 #: tags.serrinvalidlinefmt
@@ -1008,11 +1026,19 @@ msgid ""
 msgstr ""
 
 #: tmaindialog.checkboxtagssourceexif.caption
-msgid "Use origins EXIF meta information"
+msgid "From images EXIF tags"
+msgstr ""
+
+#: tmaindialog.checkboxtagssourceexif.hint
+msgid "You can edit EXIF tags of your fotos with many programs"
 msgstr ""
 
 #: tmaindialog.checkboxtagssourcetagsfiles.caption
-msgid "Search for .tags files in each origins folder"
+msgid "From .tags files in each origins folder"
+msgstr ""
+
+#: tmaindialog.checkboxtagssourcetagsfiles.hint
+msgid "You can put a .tags file to each of folder with your fotos"
 msgstr ""
 
 #: tmaindialog.checkboxtagtimestamp.caption
@@ -1188,13 +1214,6 @@ msgstr ""
 #: tmaindialog.groupboxtagsloading.caption
 msgctxt "tmaindialog.groupboxtagsloading.caption"
 msgid "Tags Loading"
-msgstr ""
-
-#: tmaindialog.groupboxtagsloading.hint
-msgctxt "tmaindialog.groupboxtagsloading.hint"
-msgid ""
-"Tags can be read from the original files EXIF of from .tags files in each origins folder.\n"
-"The latter ones do override the origins EXIF source."
 msgstr ""
 
 #: tmaindialog.groupboxtagssaving.caption
@@ -1522,7 +1541,7 @@ msgid "Save Watermark Image"
 msgstr ""
 
 #: tpresentationdialog.buttonbrowsetargetfolder.hint
-msgid "Browse for the source/target folder of the resulting presentation"
+msgid "Select the .imgtags file in the folder of the images to be dispayed."
 msgstr ""
 
 #: tpresentationdialog.buttoncancel.caption
@@ -1573,7 +1592,7 @@ msgid "Presentation"
 msgstr ""
 
 #: tpresentationdialog.editimgtagsfilename.hint
-msgid "The .imagetags file has important infomation how to create the presentation."
+msgid "The .imgtags file has important infomation how to create the presentation."
 msgstr ""
 
 #: tpresentationdialog.labellongdescription.caption

@@ -6,8 +6,8 @@ unit galleryprocessor;
 interface
 
 uses
-  Classes, SysUtils, TemplateEngine, Tags, StringArrays, Generics.Collections,
-  FileUtil, Logging;
+  Classes, SysUtils, StrUtils, TemplateEngine, Tags, StringArrays, Generics.Collections,
+  FileUtil, Logging, IntTypes, ImgUtils;
 
 type
 
@@ -51,20 +51,20 @@ type
 
   end;
 
-const
-  DOTIMAGESFILETITLE = '.imgtags';
+//const
+//  DOTIMAGESFILETITLE = '.imgtags';
 
 implementation
 
 resourcestring
-  SErrImgTagsNotFoundFmt = '.imgtags file ''%s'' not found.';
-  SErrDotImagesNotFoundFmt = 'Tags file ''%s'' not found.';
-  SMsgLoadingDotImagesFmt = 'Loading image tags ''%s''...';
-  SMsgBuildingLists = 'Building lists...';
+  SErrImgTagsNotFoundFmt    = 'Tags file ''%s'' not found.';
+//  SErrDotImagesNotFoundFmt  = 'Tags file ''%s'' not found.';
+  SMsgLoadingDotImagesFmt   = 'Loading image tags ''%s''...';
+  SMsgBuildingLists         = 'Building lists...';
   SMsgProcessingTemplateFmt = 'Processing ''%s''...';
-  SMsgCopyingFmt = 'Copying ''%s''...';
-  SMsgStatisticsFmt = 'Copied: %d/%d (%.0f%%), processed: %d/%d (%.0f%%), solved: %d/%d (%.0f%%), lists: %d, rows: %d, replaced: %d, elapsed %.1fs.';
-  SMsgFinalOk = 'Ok';
+  SMsgCopyingFmt            = 'Copying ''%s''...';
+  SMsgStatisticsFmt         = 'Copied: %d/%d (%.0f%%), processed: %d/%d (%.0f%%), solved: %d/%d (%.0f%%), lists: %d, rows: %d, replaced: %d, elapsed %.1fs.';
+  SMsgFinalOk               = 'Ok';
 
 { TProcessor }
 
@@ -127,6 +127,38 @@ var
       result := f2/f1*100.0;
   end;
 
+  function LargerSize(const Width, Height :string) :string;
+  begin
+    result := IfThen(StrToInt(ImgVars[Width])>StrToInt(ImgVars[Height]), Width, Height);
+  end;
+
+  function PrettySize(const Size :string) :string;
+  begin
+    result := Int64ToPrettySize(StrToInt64(ImgVars[Size]));
+  end;
+
+  function PrettyRatio(const Width, Height :string) :string;
+  var
+    Ratio :TImageRatio;
+    Orientation :TImageOrientation;
+  begin
+    if WidthHeightToRatioAndOrientation(StrToInt(ImgVars[Width]), StrToInt(ImgVars[Height]), Ratio, Orientation) then
+      result := RatioToStr(Ratio)
+    else
+      result := '';
+  end;
+
+  function PrettyOrientation(const Width, Height :string) :string;
+  var
+    Ratio :TImageRatio;
+    Orientation :TImageOrientation;
+  begin
+    if WidthHeightToRatioAndOrientation(StrToInt(ImgVars[Width]), StrToInt(ImgVars[Height]), Ratio, Orientation) then
+      result := OrientationToStr(Orientation)
+    else
+      result := '';
+  end;
+
 begin
   Lists := TStringDictionary.Create;
   ImgVars := TSolver.Create(FDelimiters);
@@ -147,16 +179,18 @@ begin
         raise Exception.CreateFmt(SErrImgTagsNotFoundFmt, [FImgTagsFilename]);
       TargetFolder := ExtractFilePath(FImgTagsFilename);
 
-      // 2. Load the tags of the .images file
+      // 2. Load the tags of the .imgtags file
       Log(SMsgLoadingDotImagesFmt, [FImgTagsFilename], llInfo);
       FFilesTags.LoadFromImgTagsFile(FImgTagsFilename);
       Stats.ItemsPerList := FFilesTags.Filenames.Count;
 
       // 3. Iterate over the images and build the lists
       Log(SMsgBuildingLists, llInfo);
+
       // Prepare the array of lists
       for Fragment in FListFragments do
         Lists.Add(Fragment.Key, '');
+
       // Iterate over the images
       for i:=0 to FFilesTags.Filenames.Count-1 do begin
         // Build the ImgVars for each image
@@ -168,8 +202,17 @@ begin
         Tags := FFilesTags[FFilesTags.Filenames[i]];
         for Key in FFilesTags.TagKeys do begin
           if not Tags.TryGetValue(Key, Value) then Value := '';
-          ImgVars.Load('IMG'+UpperCase(Key), Value);
+          ImgVars.Load(UpperCase(Key), Value);
         end;
+
+        // Add some calculated vars
+        ImgVars.Add('IMGSIZE', LargerSize('IMGWIDTH', 'IMGHEIGHT'));
+        ImgVars.Add('IMGPRETTYFILESIZE', PrettySize('IMGFILESIZE'));
+        ImgVars.Add('ORGRATIO', PrettyRatio('ORGWIDTH', 'ORGHEIGHT'));
+        ImgVars.Add('ORGORIENTATION', PrettyOrientation('ORGWIDTH', 'ORGHEIGHT'));
+        ImgVars.Add('ORGPRETTYFILESIZE', PrettySize('ORGFILESIZE'));
+        ImgVars.Add('ORGSIZE', LargerSize('ORGWIDTH', 'ORGHEIGHT'));
+
         // Add the global vars
         for j:=0 to FSysVars.Count-1 do
           ImgVars.Load(FSysVars.Keys[j], FSysVars.Values[j]);

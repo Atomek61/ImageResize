@@ -11,7 +11,7 @@ type
 
   { TWebColorEditor }
 
-  TWebColorEditor = class(TInt32Editor)
+  TWebColorEditor = class(TStringEditor)
   private
     FLock :boolean;
   protected
@@ -38,7 +38,7 @@ end;
 procedure TWebColorEditor.DrawCell(Canvas: TCanvas; Rect: TRect; State: TGridDrawState);
 begin
   with Canvas do begin
-    Brush.Color := StrToInt(Value);
+    Brush.Color := HTMLColorToColor(Value);
     Rect.Left := Rect.Right - Rect.Height*2;
     dec(Rect.Right, 3);
     inc(Rect.Top, 2); dec(Rect.Bottom, 3);
@@ -48,7 +48,7 @@ end;
 
 function TWebColorEditor.GetPresentation: string;
 begin
-  result := ColorToHTMLColor(StrToInt(Value));
+  result := Value;
 end;
 
 procedure TWebColorEditor.SetPresentation(AValue: string);
@@ -56,18 +56,18 @@ var
   Color :TColor;
 begin
   if not FLock and TryHTMLColorToColor(AValue, Color) then
-    Value := IntToStr(Color);
+    Value := ColorToHTMLColor(Color);
 end;
 
 procedure TWebColorEditor.ButtonClick;
 begin
   if not Assigned(ColorDialog) then
     ColorDialog := TColorDialog.Create(nil);
-  ColorDialog.Color := StrToInt(Value);
+  ColorDialog.Color := HTMLColorToColor(Value);
   if ColorDialog.Execute then begin
     FLock := true;
     try
-      Value := IntToStr(ColorDialog.Color);
+      Value := ColorToHTMLColor(ColorDialog.Color);
       SetCell(GetPresentation);
     finally
       FLock := false;

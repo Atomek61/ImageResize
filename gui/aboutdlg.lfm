@@ -1,7 +1,7 @@
 object AboutDialog: TAboutDialog
-  Left = 615
+  Left = 307
   Height = 381
-  Top = 463
+  Top = 391
   Width = 712
   BorderIcons = [biSystemMenu]
   Caption = 'About ImageResize'
@@ -13,7 +13,7 @@ object AboutDialog: TAboutDialog
   Position = poScreenCenter
   LCLVersion = '3.0.0.3'
   object ButtonClose: TButton
-    Left = 615
+    Left = 611
     Height = 29
     Top = 14
     Width = 80
