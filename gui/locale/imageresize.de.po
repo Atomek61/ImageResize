@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: aboutdlg.scptavailable
 msgid "Available"
@@ -404,7 +404,7 @@ msgstr "Prozessor"
 #: maindlg.scptquerysave
 msgctxt "maindlg.scptquerysave"
 msgid "Project unsaved"
-msgstr "Projekt ungesichert"
+msgstr "Projekt ungespeichert"
 
 #: maindlg.scptsizeclasslarge
 msgid "Large - Desktop size"
@@ -935,7 +935,7 @@ msgstr "&Speichern"
 
 #: tmaindialog.actionsave.hint
 msgid "Save current settings to a file"
-msgstr "Sichert die aktuellen Einstellungen in einer Datei"
+msgstr "Speichert die aktuellen Einstellungen in einer Datei"
 
 #: tmaindialog.actionsaveas.caption
 msgctxt "tmaindialog.actionsaveas.caption"
@@ -1735,9 +1735,11 @@ msgstr "&Automatisch speichern"
 
 #: tsettingsdialog.checkboxautosave.hint
 msgid ""
-"Always save the current settings in a hidden file,\n"
-"so it is available on the next start."
-msgstr "Sichert die aktuellen Einstellungen in einer versteckten Datei, sodass sie beim nächsten Start wieder zur Verfügung stehen."
+"On closing save current settings to a hidden file,\n"
+"so they are available on next start."
+msgstr ""
+"Beim Beenden werden die aktuellen Einstellungen in einer versteckten Datei gespeichert,\n"
+"sodass sie beim nächsten Start wieder zur Verfügung stehen."
 
 #: tsettingsdialog.checkboxrelpathes.caption
 msgctxt "tsettingsdialog.checkboxrelpathes.caption"

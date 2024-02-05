@@ -49,6 +49,7 @@ type
     procedure KeyNotify(constref AKey: string; ACollectionNotification: TCollectionNotification); override;
   public
     constructor Create; overload;
+    procedure Clear; override;
     procedure SetDefaults;
     procedure Load(Ini :TCustomIniFile; const Group :string = ''; Mode :TLoadMode = lmEasygoing);
     procedure Save(Ini :TCustomIniFile; const Group :string = '');
@@ -591,6 +592,12 @@ begin
   inherited Create([doOwnsValues]);
 end;
 
+procedure TSettingsList.Clear;
+begin
+  inherited Clear;
+  FDirty := false;
+end;
+
 procedure TSettingsList.DoChanged;
 begin
   FDirty := true;
@@ -618,6 +625,7 @@ var
 begin
   for Settings in self.Values do
     Settings.SetDefaults;
+  FDirty := false;
 end;
 
 procedure TSettingsList.Load(Ini: TCustomIniFile; const Group: string; Mode: TLoadMode);
@@ -642,6 +650,7 @@ begin
         Settings.Load(Ini, Prefix+SettingsSection, Mode);
       end;
     end;
+    FDirty := false;
   finally
     Sections.Free;
   end;
@@ -653,6 +662,7 @@ var
 begin
   for Settings in Values do
     Settings.Save(Ini, IfThen(Group='', Settings.Section, Group+'.'+Settings.Section));
+  FDirty := false;
 end;
 
 { TSetting }

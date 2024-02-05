@@ -1,7 +1,7 @@
 object MainDialog: TMainDialog
-  Left = 758
+  Left = 329
   Height = 680
-  Top = 276
+  Top = 190
   Width = 900
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'ImageResize'
@@ -1444,8 +1444,8 @@ object MainDialog: TMainDialog
     end
     object ProgressBar: TPaintBox
       Left = 0
-      Height = 6
-      Top = 471
+      Height = 4
+      Top = 473
       Width = 900
       Align = alBottom
       BorderSpacing.Bottom = 3

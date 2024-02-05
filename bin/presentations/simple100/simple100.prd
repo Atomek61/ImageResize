@@ -15,4 +15,4 @@ Date=2024-01-01 00:00:00
 Icon=..\icon-list.png
 Preview=preview.jpg
 Templates=index.html
-Fragment.IMAGES=<img src="%URL%" alt="%TITLE%"/>%CR%%LF%
+Fragment.IMAGES=<img src="%IMGFILENAME%" alt="%TITLE%"/>%CRLF%

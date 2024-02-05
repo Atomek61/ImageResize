@@ -105,7 +105,8 @@ end;
 
 procedure TPresentationDialog.ButtonTargetFromDocClick(Sender: TObject);
 begin
-  EditImgTagsFilename.Text := IncludeTrailingPathDelimiter(MainDialog.EditTargetFolder.Text) + IMAGEINFOSFILETITLE;
+  if MainDialog.EditTargetFolder.Text<>'' then
+    EditImgTagsFilename.Text := IncludeTrailingPathDelimiter(MainDialog.EditTargetFolder.Text) + IMAGEINFOSFILETITLE;
 end;
 
 procedure TPresentationDialog.ButtonWebShowClick(Sender: TObject);
@@ -208,6 +209,7 @@ begin
   try
     if FManagers.Count=0 then
       Scan;
+
     for Settings in ParamsList.Values do begin
       if FManagers.TryFind(Settings.Section, Index) then begin
         FManagers[Index].Settings.Copy(Settings, cmWeak);
@@ -218,13 +220,15 @@ begin
     EditImgTagsFilename.Text := PresentationSettings.ImgTagsFilename.AsDisplay;
     if FManagers.TryFind(PresentationSettings.Id.Value, Index) then
       ManagerIndex := Index
-    else ManagerIndex := 0;
+    else
+      ManagerIndex := -1;
 
     result := ShowModal = mrOk;
     if result then begin
-      PresentationSettings.ImgTagsFilename.AsText := EditImgTagsFilename.Text;
+      PresentationSettings.ImgTagsFilename.AsDisplay := EditImgTagsFilename.Text;
       if FManagerIndex<>-1 then
         PresentationSettings.Id.AsText := FManagers[FManagerIndex].Id;
+
       for Manager in FManagers do begin
         if Manager.Settings.Dirty then begin
           if not ParamsList.TryGetValue(Manager.Settings.Section, Settings) then begin
@@ -235,6 +239,7 @@ begin
         end;
       end;
     end;
+
   finally
     TLogger.SwapDefaultLogger(FOuterLogger).Free;
   end;

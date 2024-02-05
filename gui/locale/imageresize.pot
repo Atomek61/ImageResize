@@ -1643,8 +1643,8 @@ msgstr ""
 
 #: tsettingsdialog.checkboxautosave.hint
 msgid ""
-"Always save the current settings in a hidden file,\n"
-"so it is available on the next start."
+"On closing save current settings to a hidden file,\n"
+"so they are available on next start."
 msgstr ""
 
 #: tsettingsdialog.checkboxrelpathes.caption

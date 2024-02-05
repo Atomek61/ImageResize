@@ -24,16 +24,39 @@ Class=String
 Caption=Title
 Caption.de=Titel
 
-[Settings.Color]
+[Settings.SymbolSize]
+Class=UInt32
+Presentation=UInt32
+Caption=Symbol Size %
+Caption.de=Symbolgröße %
+Min=5
+Max=20
+Default=8
+
+[Settings.FontColor]
 Class=HTMLColor
 Presentation=WebColor
-Caption=Font Color
-Caption.de=Schriftfarbe
+Caption=Font
+Caption.de=Schrift
 Default=#E4EBDA
+
+[Settings.ControlsColor]
+Class=HTMLColor
+Presentation=WebColor
+Caption=Button
+Caption.de=Schaltflächen
+Default=#E4EBDA
+
+[Settings.ImgBkgColor]
+Class=HTMLColor
+Presentation=WebColor
+Caption=Image Background
+Caption.de=Bildhintergrund
+Default=#36361B
 
 [Settings.BackgroundColor]
 Class=HTMLColor
 Presentation=WebColor
-Caption=Background Color
-Caption.de=Hintergrundfarbe
+Caption=Background
+Caption.de=Hintergrund
 Default=#36361B

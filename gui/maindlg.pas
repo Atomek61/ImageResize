@@ -317,8 +317,13 @@ type
     procedure EditSizesExit(Sender: TObject);
     procedure ProjectChanged(Sender :TObject);
   private
+    // Project settings. Most of the settings are stored in the MainDialog controls.
     FProjectFilename :string;
     FProjectDescription :string; // From project file
+    FPresentationSettings :TPresentationSettings;
+    FPresentationParamsList :TSettingsList;
+  private
+    // Application
     FAutoExit :boolean;
     FIsSave :boolean; // If Current project is from a file: if false then save -> saveas
     FIsDirty :boolean; // If Changes since last modification
@@ -331,8 +336,6 @@ type
     FProcessingSettings :TProcessingSettings;
     FDialogSettings :TDialogSettings;
     FWorkingDirectory :string;
-    FPresentationSettings :TPresentationSettings;
-    FPresentationParamsList :TSettingsList;
     procedure ChangeCurrentDir(const Path :string);
     function GetAppDataFilename(const Filetitle :string; CanCreate :boolean) :string;
     procedure SetDirty(AValue: boolean);
@@ -341,6 +344,7 @@ type
     procedure OnProgress(Sender :TObject; Progress :single);
     function LoadSettings :boolean;
     procedure SaveSettings;
+    procedure InitProject;
     function LoadProjectFromIni(Ini :TCustomIniFile) :boolean;
     procedure SaveProjectToIni(Ini :TCustomIniFile; SavePathesAsIs :boolean);
     function LoadLastProject :boolean;
@@ -688,6 +692,68 @@ begin
   end;
 end;
 
+procedure TMainDialog.InitProject;
+var
+  ImgResizer :TProcessor;
+begin
+  ImgResizer := TProcessor.Create;
+  try
+    MemoSrcFilenames.Lines.Clear;
+    FProjectDescription                 := '';
+    ActionSrcFilenames.Checked          := true;
+    EditSrcFolder.Text                  := '';
+    EditSrcMasks.Text                   := DEFAULT_SRCMASK;
+    EditTargetFolder.Text               := '';
+    EditSizes.Text                      := '';
+    ComboBoxJPEGQuality.ItemIndex       := 0;
+    ComboBoxPNGCompression.ItemIndex    := 0;
+    ComboBoxInterpolation.ItemIndex     := 0;
+    EditMrkFilename.Text                := '';
+    UpDownMrkSize.Position              := round(ImgResizer.MrkSize);
+    UpDownMrkX.Position                 := round(ImgResizer.MrkX);
+    UpDownMrkY.Position                 := round(ImgResizer.MrkY);
+    UpDownMrkAlpha.Position             := round(ImgResizer.MrkAlpha);
+    FIsSave                             := false;
+    CheckBoxRenEnabled.Checked          := ImgResizer.RenEnabled;
+    RadioButtonRenSimple.Checked        := true;
+    EditRenTemplate.Text                := DEFAULT_RENFILETEMPLATE;
+    CheckBoxShuffle.Checked             := DEFAULT_SHUFFLE;
+    ComboBoxShuffleSeed.Text            := SCptRandomSeed;
+    CheckBoxMrkEnabled.Checked          := false;
+    CheckBoxTagsSourceEXIF.Checked      := false;
+    CheckBoxTagsSourceTagsFiles.Checked := false;
+    CheckBoxTagTitle.Checked            := false;
+    CheckBoxTagTimestamp.Checked        := false;
+    CheckBoxTagCopyright.Checked        := false;
+    EditCopyright.Text                  := '';
+    CheckBoxImageInfosEnabled.Checked   := true;
+    CheckBoxTagsReportEnabled.Checked   := false;
+    CheckBoxNoCreate.Checked            := false;
+
+    ActionSrcFilenames.Execute;
+    ActionParamSizes.Execute;
+
+    FPresentationSettings.SetDefaults;
+    FPresentationParamsList.Clear;
+
+    RequiredStepsUpdate;
+    SetTitle(SCptUnnamed);
+    FProjectFilename := '';
+    FIsSave := false;
+    Dirty := false;
+
+    FPresentationSettings.SetDefaults;
+    FPresentationParamsList.Clear;
+
+    // Show initial message in Message log
+    MemoMessages.Clear;
+    Log(Format(SCptInfoFmt, [GUIVER_APP, GUIVER_VERSION, GUIVER_DATE, IMGRESVER, TThread.ProcessorCount]), llNews);
+
+  finally
+    ImgResizer.Free;
+  end;
+end;
+
 function TMainDialog.LoadSettings :boolean;
 var
   Filename :string;
@@ -761,6 +827,8 @@ begin
       Log(Format(SLogWarningProjectVersionFmt, [IniVer, PRJVERSION]), llWarning);
       Exit;
     end;
+
+    InitProject;
 
     FProjectDescription                   := ReadString(PROJECT_SECTION,  'Description', '');
     if SameText(ReadString(PROJECT_SECTION, 'Source', 'Filenames'), 'Filenames') then
@@ -991,63 +1059,9 @@ begin
 end;
 
 procedure TMainDialog.ActionNewExecute(Sender: TObject);
-var
-  ImgResizer :TProcessor;
 begin
   if not CheckSave then Exit;
-  ImgResizer := TProcessor.Create;
-  try
-    MemoSrcFilenames.Lines.Clear;
-    FProjectDescription                 := '';
-    ActionSrcFilenames.Checked          := true;
-    EditSrcFolder.Text                  := '';
-    EditSrcMasks.Text                   := DEFAULT_SRCMASK;
-    EditTargetFolder.Text               := '';
-    EditSizes.Text                      := '';
-    ComboBoxJPEGQuality.ItemIndex       := 0;
-    ComboBoxPNGCompression.ItemIndex    := 0;
-    ComboBoxInterpolation.ItemIndex     := 0;
-    EditMrkFilename.Text                := '';
-    UpDownMrkSize.Position              := round(ImgResizer.MrkSize);
-    UpDownMrkX.Position                 := round(ImgResizer.MrkX);
-    UpDownMrkY.Position                 := round(ImgResizer.MrkY);
-    UpDownMrkAlpha.Position             := round(ImgResizer.MrkAlpha);
-    FIsSave                             := false;
-    CheckBoxRenEnabled.Checked          := ImgResizer.RenEnabled;
-    RadioButtonRenSimple.Checked        := true;
-    EditRenTemplate.Text                := DEFAULT_RENFILETEMPLATE;
-    CheckBoxShuffle.Checked             := DEFAULT_SHUFFLE;
-    ComboBoxShuffleSeed.Text            := SCptRandomSeed;
-    CheckBoxMrkEnabled.Checked          := false;
-    CheckBoxTagsSourceEXIF.Checked      := false;
-    CheckBoxTagsSourceTagsFiles.Checked := false;
-    CheckBoxTagTitle.Checked            := false;
-    CheckBoxTagTimestamp.Checked        := false;
-    CheckBoxTagCopyright.Checked        := false;
-    EditCopyright.Text                  := '';
-    CheckBoxTagsReportEnabled.Checked   := false;
-    CheckBoxImageInfosEnabled.Checked   := false;
-    CheckBoxNoCreate.Checked            := false;
-
-    ActionSrcFilenames.Execute;
-    ActionParamSizes.Execute;
-
-    FPresentationSettings.SetDefaults;
-    FPresentationParamsList.Clear;
-
-    RequiredStepsUpdate;
-    SetTitle(SCptUnnamed);
-    FProjectFilename := '';
-    FIsSave := false;
-    Dirty := false;
-
-    // Show initial message in Message log
-    MemoMessages.Clear;
-    Log(Format(SCptInfoFmt, [GUIVER_APP, GUIVER_VERSION, GUIVER_DATE, IMGRESVER, TThread.ProcessorCount]), llNews);
-
-  finally
-    ImgResizer.Free;
-  end;
+  InitProject;
 end;
 
 procedure TMainDialog.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -1587,7 +1601,7 @@ begin
   r := ProgressBar.ClientRect;
   r.Right := round(r.Left + FProgress*(r.Width));
   with ProgressBar.Canvas do begin
-    Brush.Color := STYLECOLOR_LIGHT2;
+    Brush.Color := STYLECOLOR_DARK;
     FillRect(r);
   end;
 end;

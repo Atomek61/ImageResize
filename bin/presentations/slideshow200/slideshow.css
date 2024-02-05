@@ -1,13 +1,13 @@
 body {
     margin: 0;
-    background-color: darkslategray;
+    background-color: %BACKGROUNDCOLOR%;
 }
 
 .slideshow {
     position: absolute;
     width: 100%;
     aspect-ratio: 16/9;
-    background-color: rgb(23, 39, 39);
+    background-color: %IMGBKGCOLOR%;
 }
 
 .slideshow img {
@@ -20,12 +20,12 @@ body {
 }
 
 .title-bar {
-    font: 14pt Arial;
+    font: 24pt Arial;
     position: absolute;
     height: 1em;
     top: 5%;
     left: 50%; transform: translatex(-50%);
-    color: white;
+    color: %FONTCOLOR%;
     transition: 0.3s;
 }
 
@@ -34,13 +34,13 @@ body {
 }
 
 .navigation-bar, .control-bar {
-    fill: rgb(91, 239, 192);
+    fill: %CONTROLSCOLOR%;
     fill-opacity: 0;
 }
 
 .navigation-bar {
     position: absolute;
-    height: 100%; width: 5%;
+    height: 100%; width: %SYMBOLSIZE%%;
     transition: 0.3s;
 }
 
@@ -64,7 +64,7 @@ body {
 
 .control-bar {
     position: absolute;
-    width: 100%; height: 5%; bottom: 1%;
+    width: 100%; height: %SYMBOLSIZE%%; bottom: 1%;
     display: flex;
     justify-content: center;
     transition: 0.3s;

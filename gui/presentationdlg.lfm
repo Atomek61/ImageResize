@@ -212,7 +212,7 @@ object PresentationDialog: TPresentationDialog
         Left = 8
         Height = 68
         Hint = 'Shows the presentation in your systems web browser.'
-        Top = 76
+        Top = 84
         Width = 110
         Align = alTop
         Anchors = []
@@ -259,7 +259,7 @@ object PresentationDialog: TPresentationDialog
       end
       object ButtonExecute: TBitBtn
         Left = 8
-        Height = 60
+        Height = 68
         Hint = 'Starts the selected processor to create the presentation.'
         Top = 8
         Width = 110
