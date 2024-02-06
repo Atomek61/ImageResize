@@ -3,15 +3,16 @@
   <ProjectSession>
     <PathDelim Value="\"/>
     <Version Value="12"/>
-    <BuildModes Active="Debug"/>
+    <BuildModes Active="Release"/>
     <Units>
       <Unit>
         <Filename Value="imageresizegui.lpr"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="2"/>
-        <CursorPos X="74" Y="20"/>
+        <CursorPos X="11" Y="20"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="maindlg.pas"/>
@@ -32,6 +33,7 @@
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="aboutdlg.pas"/>
@@ -41,10 +43,11 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="13"/>
         <TopLine Value="120"/>
-        <CursorPos X="25" Y="142"/>
+        <CursorPos X="6" Y="142"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="mrkeditdlg.pas"/>
@@ -54,6 +57,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <UsageCount Value="201"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\imgres.pas"/>
@@ -67,6 +71,7 @@
           <Item1 X="3" Y="454" ID="1"/>
         </Bookmarks>
         <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\updateutils.pas"/>
@@ -74,6 +79,7 @@
         <EditorIndex Value="-1"/>
         <CursorPos X="19" Y="4"/>
         <UsageCount Value="210"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\datetimeutils.pas"/>
@@ -81,6 +87,7 @@
         <EditorIndex Value="-1"/>
         <CursorPos X="11" Y="10"/>
         <UsageCount Value="206"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\threading.dispatcher.pas"/>
@@ -89,6 +96,7 @@
         <TopLine Value="125"/>
         <CursorPos X="3" Y="135"/>
         <UsageCount Value="200"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\tags.pas"/>
@@ -99,6 +107,7 @@
         <CursorPos Y="85"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\exifutils.pas"/>
@@ -107,6 +116,7 @@
         <EditorIndex Value="-1"/>
         <CursorPos X="24" Y="11"/>
         <UsageCount Value="200"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="settingsdlg.pas"/>
@@ -116,10 +126,11 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="11"/>
         <TopLine Value="13"/>
-        <CursorPos X="57" Y="22"/>
+        <CursorPos X="23" Y="22"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="settings.pas"/>
@@ -129,6 +140,7 @@
         <CursorPos Y="323"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\animator.pas"/>
@@ -136,6 +148,7 @@
         <EditorIndex Value="-1"/>
         <CursorPos X="3" Y="15"/>
         <UsageCount Value="200"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\logging.pas"/>
@@ -144,6 +157,7 @@
         <TopLine Value="26"/>
         <CursorPos Y="43"/>
         <UsageCount Value="200"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\loggingrichmemo.pas"/>
@@ -152,6 +166,7 @@
         <CursorPos Y="30"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="presentationdlg.pas"/>
@@ -162,9 +177,10 @@
         <UnitName Value="PresentationDlg"/>
         <EditorIndex Value="3"/>
         <TopLine Value="215"/>
-        <CursorPos X="23" Y="217"/>
+        <CursorPos X="11" Y="217"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="imagesmod.pas"/>
@@ -175,6 +191,7 @@
         <EditorIndex Value="-1"/>
         <CursorPos X="24" Y="8"/>
         <UsageCount Value="200"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="presentations.pas"/>
@@ -184,6 +201,7 @@
         <CursorPos Y="287"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="galleryprocessor.pas"/>
@@ -193,6 +211,7 @@
         <CursorPos X="97" Y="215"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="presentationmanagerfrm.pas"/>
@@ -203,6 +222,7 @@
         <EditorIndex Value="-1"/>
         <CursorPos Y="10"/>
         <UsageCount Value="201"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="appsettings.pas"/>
@@ -212,6 +232,7 @@
         <CursorPos X="6" Y="123"/>
         <UsageCount Value="202"/>
         <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="colorfrm.pas"/>
@@ -222,6 +243,7 @@
         <EditorIndex Value="-1"/>
         <CursorPos X="3" Y="9"/>
         <UsageCount Value="201"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\tagids.pas"/>
@@ -229,6 +251,7 @@
         <EditorIndex Value="-1"/>
         <CursorPos Y="14"/>
         <UsageCount Value="224"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="settingseditor.pas"/>
@@ -236,6 +259,7 @@
         <EditorIndex Value="14"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\webutils.pas"/>
@@ -245,6 +269,7 @@
         <CursorPos X="59" Y="34"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\webcolors.pas"/>
@@ -252,6 +277,7 @@
         <EditorIndex Value="-1"/>
         <CursorPos X="13" Y="39"/>
         <UsageCount Value="201"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="webcoloreditor.pas"/>
@@ -260,6 +286,7 @@
         <TopLine Value="26"/>
         <CursorPos Y="70"/>
         <UsageCount Value="202"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\language.pas"/>
@@ -267,6 +294,7 @@
         <EditorIndex Value="-1"/>
         <CursorPos X="22" Y="34"/>
         <UsageCount Value="105"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\inttypes.pas"/>
@@ -275,6 +303,7 @@
         <EditorIndex Value="-1"/>
         <CursorPos X="27" Y="32"/>
         <UsageCount Value="70"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\stringutils.pas"/>
@@ -283,6 +312,7 @@
         <EditorIndex Value="-1"/>
         <CursorPos X="13"/>
         <UsageCount Value="69"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\imgutils.pas"/>
@@ -291,6 +321,7 @@
         <TopLine Value="42"/>
         <CursorPos Y="47"/>
         <UsageCount Value="57"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\colorsetting.pas"/>
@@ -299,6 +330,7 @@
         <CursorPos Y="14"/>
         <UsageCount Value="54"/>
         <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="stringarrays.pas"/>
@@ -306,6 +338,7 @@
         <WindowIndex Value="1"/>
         <CursorPos X="30" Y="9"/>
         <UsageCount Value="195"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="license.rc"/>
@@ -321,12 +354,14 @@
         <EditorIndex Value="-1"/>
         <CursorPos X="3" Y="9"/>
         <UsageCount Value="100"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="settings2.pas"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="custompickdlg.pas"/>
@@ -336,12 +371,14 @@
         <EditorIndex Value="-1"/>
         <CursorPos X="8" Y="28"/>
         <UsageCount Value="17"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="projectsettings.pas"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="21" Y="5"/>
         <UsageCount Value="96"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\imgtags.pas"/>
@@ -349,6 +386,7 @@
         <TopLine Value="145"/>
         <CursorPos Y="171"/>
         <UsageCount Value="83"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\vardisplay.pas"/>
@@ -356,12 +394,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="292"/>
         <UsageCount Value="75"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="slideshow200presentationmanager.pas"/>
         <EditorIndex Value="-1"/>
         <CursorPos Y="13"/>
         <UsageCount Value="180"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="colorpresentationmanagerfrm.pas"/>
@@ -371,23 +411,27 @@
         <EditorIndex Value="-1"/>
         <CursorPos X="47" Y="9"/>
         <UsageCount Value="118"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="valueseditor.pas"/>
         <EditorIndex Value="-1"/>
         <UsageCount Value="20"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\params.pas"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="4" Y="11"/>
         <UsageCount Value="19"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="presentationsettings.pas"/>
         <EditorIndex Value="-1"/>
         <CursorPos Y="12"/>
         <UsageCount Value="9"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="basicwebprocessorparamsfrm.pas"/>
@@ -397,6 +441,7 @@
         <EditorIndex Value="-1"/>
         <CursorPos X="44" Y="3"/>
         <UsageCount Value="3"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="webprocessorinfofrm.pas"/>
@@ -406,6 +451,7 @@
         <EditorIndex Value="-1"/>
         <CursorPos X="14" Y="8"/>
         <UsageCount Value="78"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="taskparamsfrm.pas"/>
@@ -415,6 +461,7 @@
         <EditorIndex Value="-1"/>
         <CursorPos X="10" Y="15"/>
         <UsageCount Value="71"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="taskparamfrm.pas"/>
@@ -424,11 +471,13 @@
         <EditorIndex Value="-1"/>
         <CursorPos X="3" Y="13"/>
         <UsageCount Value="70"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\varsolver.pas"/>
         <EditorIndex Value="-1"/>
         <UsageCount Value="6"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\bin\slideshow.wpr"/>
@@ -443,6 +492,7 @@
         <TopLine Value="52"/>
         <CursorPos Y="85"/>
         <UsageCount Value="165"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="webcreatordlg.pas"/>
@@ -452,6 +502,7 @@
         <EditorIndex Value="-1"/>
         <CursorPos X="13" Y="11"/>
         <UsageCount Value="159"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\filetags.pas"/>
@@ -459,12 +510,14 @@
         <TopLine Value="22"/>
         <CursorPos X="26" Y="57"/>
         <UsageCount Value="6"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\exiftags.pas"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="38" Y="14"/>
         <UsageCount Value="6"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\sysutils\filutilh.inc"/>
@@ -478,7 +531,7 @@
         <UnitName Value="SysUtils"/>
         <EditorIndex Value="19"/>
         <TopLine Value="58"/>
-        <CursorPos X="29" Y="75"/>
+        <CursorPos Y="75"/>
         <UsageCount Value="80"/>
         <Loaded Value="True"/>
       </Unit>
@@ -546,6 +599,7 @@
         <CursorPos Y="1440"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\components\lazutils\fileutil.pas"/>
@@ -560,6 +614,7 @@
         <CursorPos Y="263"/>
         <UsageCount Value="89"/>
         <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\types.pp"/>
@@ -573,9 +628,10 @@
         <Filename Value="..\lib\inc\generics.dictionaries.inc"/>
         <EditorIndex Value="16"/>
         <TopLine Value="352"/>
-        <CursorPos X="10" Y="389"/>
+        <CursorPos X="5" Y="389"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\dexif\dglobal.pas"/>
@@ -595,6 +651,7 @@
         <EditorIndex Value="-1"/>
         <CursorPos X="19" Y="19"/>
         <UsageCount Value="30"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\lcl\include\control.inc"/>
@@ -610,6 +667,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="460"/>
         <UsageCount Value="8"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\lcl\include\customactionlist.inc"/>
@@ -690,6 +748,7 @@
         <ResourceBaseClass Value="Frame"/>
         <EditorIndex Value="-1"/>
         <UsageCount Value="6"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\bin\web\slideshow200\slideshow200.wpr"/>
@@ -710,7 +769,7 @@
         <Filename Value="C:\lazarus\lcl\lcltype.pp"/>
         <UnitName Value="LCLType"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="0"/>
+        <UsageCount Value="10"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\packages\fcl-base\src\gettext.pp"/>
@@ -725,6 +784,7 @@
         <EditorIndex Value="-1"/>
         <CursorPos X="41" Y="2"/>
         <UsageCount Value="4"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\packages\rtl-objpas\src\inc\dateutils.pp"/>
@@ -780,6 +840,7 @@
         <CursorPos Y="180"/>
         <UsageCount Value="83"/>
         <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\classes\stringl.inc"/>
@@ -812,6 +873,7 @@
         <Filename Value="webtasks.pas"/>
         <EditorIndex Value="-1"/>
         <UsageCount Value="3"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgrawinbitmap.pas"/>
@@ -915,6 +977,7 @@
         <EditorIndex Value="-1"/>
         <CursorPos X="36" Y="8"/>
         <UsageCount Value="7"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\lcl\lcltranslator.pas"/>
@@ -959,6 +1022,7 @@
         <Filename Value="..\src\web139.inc"/>
         <EditorIndex Value="-1"/>
         <UsageCount Value="7"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="C:\Users\Jan\AppData\Local\imageresize.3.6\lastproject.irs"/>
@@ -971,6 +1035,7 @@
         <UnitName Value="VarResolverFns"/>
         <EditorIndex Value="-1"/>
         <UsageCount Value="3"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="C:\TEMP\index.html"/>
@@ -1220,6 +1285,7 @@
         <Filename Value="..\src\stringarrays.pas"/>
         <EditorIndex Value="-1"/>
         <UsageCount Value="15"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\tstX\.imgtags360"/>
@@ -1245,6 +1311,7 @@
         <TopLine Value="4"/>
         <CursorPos Y="25"/>
         <UsageCount Value="18"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\components\lazutils\graphtype.pp"/>
