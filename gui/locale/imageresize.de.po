@@ -235,8 +235,28 @@ msgstr "Ungültiger Name der Interpolation - '%s'"
 
 #: imgres.serrinvalidjpegqualityfmt
 #, object-pascal-format
-msgid "Invalid JPEG quality %s (1..100 expected)"
-msgstr "Ungültige JPEG-Qualität %s (Voreinstellung oder 1..100) erwartet."
+msgid "Invalid JPEG quality '%s' (1..100 expected)"
+msgstr "Ungültige JPEG-Qualität %s (Voreinstellung oder 1..100) erwartet"
+
+#: imgres.serrinvalidmrkfloatcountfmt
+#, object-pascal-format
+msgid "Invalid watermark size/pos parameters '%s' (3 comma-separated floats expected)"
+msgstr "Ungültige Wasserzeichen Größe/Position '%s' (3 kommaseparierte Fließkommazahlen erwartet)"
+
+#: imgres.serrinvalidmrkfloatrangefmt
+#, object-pascal-format
+msgid "Invalid watermark size/position range '%s' (0..100.0 expected)"
+msgstr "Ungültige Wasserzeichen Größe/Position '%s' (0..100,0 erwartet)"
+
+#: imgres.serrinvalidmrkopacityfmt
+#, object-pascal-format
+msgid "Invalid watermark opacity value '%s' (0..100.0 expected)"
+msgstr "Ungültige Wasserzeichen-Deckkraft '%s' (0..100,0 erwartet)"
+
+#: imgres.serrinvalidmrkparamcountfmt
+#, object-pascal-format
+msgid "Invalid number of watermark parameters '%s' (1, 2 or 3 expected)"
+msgstr "Ungültige Anzahl von Wasserzeichen-Parametern '%s' (1, 2, oder 3 erwartet)"
 
 #: imgres.serrinvalidplaceholder
 msgid "Unknown or invalid placeholder"
@@ -249,7 +269,7 @@ msgstr "Ungültige PNG-Kompression %d (0..3 erwartet)"
 
 #: imgres.serrinvalidpngcompressionnamefmt
 #, object-pascal-format
-msgid "Invalid PNG compression %s (Default, None, Fastest or Maximum expected)"
+msgid "Invalid PNG compression '%s' (Default, None, Fastest or Maximum expected)"
 msgstr "Ungültige PNG-Kompression %s (Voreinstellung, Keine, Schnellste oder Maximal erwartet)."
 
 #: imgres.serrinvalidrenamingparamfmt
@@ -1064,7 +1084,7 @@ msgstr "Von EXIF-Tags der Bilder"
 
 #: tmaindialog.checkboxtagssourceexif.hint
 msgid "You can edit EXIF tags of your fotos with many programs"
-msgstr "Es gibt viele Programme mit denen sie die EXIF-Tags ihrer Fotos bearbeiten können."
+msgstr "Es gibt viele Programme mit denen sie die EXIF-Tags ihrer Fotos bearbeiten können"
 
 #: tmaindialog.checkboxtagssourcetagsfiles.caption
 msgid "From .tags files in each origins folder"
@@ -1072,7 +1092,7 @@ msgstr "Von .tags-Dateien aus den Ordnern der Originalbilder"
 
 #: tmaindialog.checkboxtagssourcetagsfiles.hint
 msgid "You can put a .tags file to each of folder with your fotos"
-msgstr "Sie können in jedes Verzeichnis mit ihren Bildern eine .tags-Datei schreiben."
+msgstr "Sie können in jedes Verzeichnis mit ihren Bildern eine .tags-Datei schreiben"
 
 #: tmaindialog.checkboxtagtimestamp.caption
 msgid "Timestamp"
@@ -1130,22 +1150,6 @@ msgctxt "tmaindialog.comboboxshuffleseed.text"
 msgid "<random>"
 msgstr "<random>"
 
-#: tmaindialog.editmrkalpha.hint
-msgid ""
-"Choose the watermarks opacity.\n"
-"\n"
-"A strong watermark has 100%,\n"
-"a weak one has 10% opacity."
-msgstr ""
-"Wählen Sie die Transparenz für das Wasserzeichen.\n"
-"\n"
-"Ein stark deckendes hat 100%,\n"
-"ein schwach durchscheinendes 10% Transparenz."
-
-#: tmaindialog.editmrkalpha.text
-msgid "50"
-msgstr "50"
-
 #: tmaindialog.editmrkfilename.hint
 msgid ""
 "Select a png file with the desired watermark.\n"
@@ -1165,6 +1169,24 @@ msgstr ""
 "\n"
 "Sie können den eingebauten Editor\n"
 "oder InkScape zur Erstellung nutzen."
+
+#: tmaindialog.editmrkopacity.hint
+msgctxt "tmaindialog.editmrkopacity.hint"
+msgid ""
+"Choose the watermarks opacity.\n"
+"\n"
+"A strong watermark has 100%,\n"
+"a weak one has 10% opacity."
+msgstr ""
+"Wählen Sie die Deckkraft für das Wasserzeichen.\n"
+"\n"
+"Ein stark deckendes hat 100%,\n"
+"ein schwach durchscheinendes 10%."
+
+#: tmaindialog.editmrkopacity.text
+msgctxt "tmaindialog.editmrkopacity.text"
+msgid "50"
+msgstr "50"
 
 #: tmaindialog.editmrksize.hint
 msgid "Size in percent of the watermark image in relation to the resampled image width."
@@ -1193,7 +1215,6 @@ msgid "1"
 msgstr "1"
 
 #: tmaindialog.editrentemplate.hint
-#, fuzzy
 msgid ""
 "Enter a filename template containing placeholders for special values.\n"
 "This template will be expanded for each resampled image. Insert the\n"

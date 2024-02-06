@@ -28,7 +28,7 @@ type
     MrkSize             :TUInt32Setting;
     MrkX                :TUInt32Setting;
     MrkY                :TUInt32Setting;
-    MrkAlpha            :TUInt32Setting;
+    MrkOpacity          :TUInt32Setting;
     RenEnabled          :TBooleanSetting;
     RenSimple           :TBooleanSetting;
     RenMode             :TPicklistSetting;
@@ -120,7 +120,7 @@ begin
   MrkSize             := TUInt32Setting.Create(self,    'MrkSize');
   MrkX                := TUInt32Setting.Create(self,    'MrkX');
   MrkY                := TUInt32Setting.Create(self,    'MrkY');
-  MrkAlpha            := TUInt32Setting.Create(self,    'MrkAlpha');
+  MrkOpacity            := TUInt32Setting.Create(self,    'MrkAlpha');
   RenEnabled          := TBooleanSetting.Create(self,   'RenEnabled');
   RenSimple           := TBooleanSetting.Create(self,   'RenSimple');
   RenMode             := TPicklistSetting.Create(self,  'RenMode');

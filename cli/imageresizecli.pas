@@ -72,11 +72,7 @@ var
   SourceFolder :string;
   SourceFilename :string;
   SourceFilenames :TStringList;
-  Items :TStringDynArray;
-  FloatParams :TSingleDynArray;
-  MrkFilename :string;
-  MrkSize, MrkX, MrkY :single;
-  MrkAlpha :single;
+  MrkParams :TProcessor.TWatermarkParams;
   ThreadCount :integer;
   StopOnError :boolean;
   Path, MaskStr :string;
@@ -146,31 +142,17 @@ begin
       Interpolation := Processor.Interpolation;
 
     // Watermark "C:\Folder\mark%SIZE%.png:-1.0,-1.0:50.0"
-    MrkFilename := '';
-    MrkSize := Processor.MrkSize;
-    MrkX := Processor.MrkX;
-    MrkY := Processor.MrkY;
-    MrkAlpha := Processor.MrkAlpha;
+    MrkParams.Filename := '';
+    with Processor.WatermarkParams do begin
+      MrkParams.Size := Size;
+      MrkParams.X := X;
+      MrkParams.Y := Y;
+      MrkParams.Opacity := Opacity;
+    end;
     Param := GetOptionValue('w', 'watermark');
     if Param<>'' then begin
       inc(OptionCount, 2);
-      Items := StrToStringArray(Param, '?');
-      if (Length(Items)<1) or (Length(Items)>3) then
-        raise Exception.CreateFmt('Invalid number of watermark parameters ''%s''.', [Param]);
-      MrkFilename := Items[0];
-      if Length(Items)>1 then begin
-        if not StrToSingleArray(Items[1], ',', FloatParams, FormatSettings) or (Length(FloatParams)<>3) then
-          raise Exception.CreateFmt('Invalid number of watermark position parameters ''%s''.', [Items[1]]);
-        if (FloatParams[0]<0.0) or (FloatParams[0]>100.0) or (FloatParams[1]<0.0) or (FloatParams[1]>100.0) or (FloatParams[2]<0.0) or (FloatParams[2]>100.0) then
-          raise Exception.CreateFmt('Invalid watermark size/position ''%s''.', [Items[1]]);
-        MrkSize := FloatParams[0];
-        MrkX := FloatParams[1];
-        MrkY := FloatParams[2];
-      end;
-      if Length(Items)>2 then begin
-        if not TryStrToFloat(Items[2], MrkAlpha, FormatSettings) or (MrkAlpha<0.0) or (MrkAlpha>100.0) then
-          raise Exception.CreateFmt('Invalid watermark alpha value ''%s''.', [Items[2]]);
-      end;
+      TProcessor.StrToWatermarkParams(Param, MrkParams);
     end;
 
     // Tagging
@@ -299,11 +281,7 @@ begin
     Processor.JPEGQuality := JPEGQuality;
     Processor.PNGCompression := PNGCompression;
     Processor.Interpolation := Interpolation;
-    Processor.MrkFilename := MrkFilename;
-    Processor.MrkSize := MrkSize;
-    Processor.MrkX := MrkX;
-    Processor.MrkY := MrkY;
-    Processor.MrkAlpha := MrkAlpha;
+    Processor.WatermarkParams := MrkParams;
     Processor.ThreadCount := ThreadCount;
     Processor.StopOnError := StopOnError;
     Processor.TargetFiletemplate := TargetFileTemplate;

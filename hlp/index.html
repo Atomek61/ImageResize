@@ -70,12 +70,13 @@
 
       <p style="font-size: 16pt; font-style: bold;">
         <img src="img/new.svg" style="float:left; margin-right: 1em;"></img>
-        Version 3.5 available - Windows 64 Bit
+        Version 4.0 available - Windows 64 Bit
         <ul>
           <li>New Design</li>
           <li>EXIF Tagging</li>
           <li>Tags Report Export</li>
-          <li>Resampling Fine Tuning</li>
+          <li>Interpolation Control</li>
+          <li>Image Presentation</li>
         </ul>  
       </p>
 
@@ -84,13 +85,13 @@
           <p>
             Graphical User Interface
           </p>
-          <img src="img/gui.png"/>
+          <img src="gui.png"/>
         </div>
         <div>
           <p>
             Commandline Interface
           </p>
-          <img src="img/cli.png"/>
+          <img src="cli.png"/>
         </div>
       </div>
 
@@ -100,24 +101,16 @@
       Sources available on GitHub: <a href="https://github.com/Atomek61/ImageResize.git">https://github.com/Atomek61/ImageResize.git</a><br/>
       <a href="#license">License</a><br/>
       <a href="#overview">Overview</a><br/>
-      <a href="hlp35/gui/en/index.html">Windows GUI</a> Application<br/>
-      <a href="hlp35/cli/index.html">Commandline</a> Interface for Windows (CLI)<br/>
+      <a href="hlp40/gui/en/index.html">Windows GUI</a> Application<br/>
+      <a href="hlp40/cli/index.html">Commandline</a> Interface for Windows (CLI)<br/>
       <a href="#history">Version History</a><br/>
       
       <h2 id="license">Copyright and License</h2>
       <div class="icode">
-        <p>
-          ImageResize Copyright (c) 2023 Jan Schirrmacher, www.atomek.de
-        </p>
-        <p>
-          Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy and merge copies of the Software, subject to the following conditions:
-        <p>
-        <p>
-          The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-        </p>
-        <p>
-          THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHOR OR COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-        </p>
+        <p>ImageResize Copyright (c) 2024 Jan Schirrmacher, www.atomek.de</p>
+        <p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy and merge copies of the Software, subject to the following conditions:</p>
+        <p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+        <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHOR OR COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
       </div>
 
       <h2 id="overview">Overview</h2>
@@ -153,13 +146,13 @@
             <th>Part</th><th>Name</th><th>Meaning</th><th>Version</th>
           </tr>
           <tr>
-            <td>Library</td><td>TProcessor</td><td>Functional core</td><td>3.2</td>
+            <td>Library</td><td>TProcessor</td><td>Functional core</td><td>4.0</td>
           </tr>
           <tr>
-            <td>GUI</td><td>ImageResize.exe</td><td>Graphical User Interface</td><td>3.5</td>
+            <td>GUI</td><td>ImageResize.exe</td><td>Graphical User Interface</td><td>4.0</td>
           </tr>
           <tr>
-            <td>CLI</td><td>imgres.exe</td><td>Commandline Interface</td><td>3.2</td>
+            <td>CLI</td><td>imgres.exe</td><td>Commandline Interface</td><td>4.0</td>
           </tr>
         </table>
       </p>
@@ -180,10 +173,10 @@
         &lt;F1&gt; - depending on the context, the HTML topic will be displayed.
       </p>
       <p>
-        <a href="hlp35/gui/en/index.html">Complete reference (English)</a><br/>
-        <a href="hlp35/gui/de/index.html">Komplette Referenz (Deutsch)</a>
+        <a href="hlp40/gui/en/index.html">Complete reference (English)</a><br/>
+        <a href="hlp40/gui/de/index.html">Komplette Referenz (Deutsch)</a>
       </p>
-      <a href="hlp35/gui/en/index.html">
+      <a href="hlp40/gui/en/index.html">
         <div class="ct">
           <img src="img/gui.png" style="min-width: 50%; max-width: 100%"/>
         </div>
@@ -199,20 +192,23 @@
         <span class="cmd">C:\Pictures> imgres myphoto.jpg .\web1200 1200</span>
       </p>
       <p>
-        <a href="hlp35/cli/index.html">Complete reference</a>
+        <a href="hlp40/cli/index.html">Complete reference</a>
       </p>
-      <a href="hlp35/cli/index.html">
+      <a href="hlp40/cli/index.html">
         <div class="ct">
-          <img src="hlp35/cli/img/cli.png" style="min-width: 50%; max-width: 100%"/>
+          <img src="hlp40/cli/img/cli.png" style="min-width: 50%; max-width: 100%"/>
         </div>
       </a>  
       <p>
-        imgres is written with Lazarus. The tool is available for Windows but
-        it could be ported to Linux and OSX with low effort.
+        imgres is written with Lazarus. The tool is available for Windows.
       </p>
 
       <h2 id="history">Version History</h2>      
       <ul>
+        <li>V4.0 Presentation</li>
+        <ul>
+          <li>Web Presentation</li>
+        </ul>
         <li>V3.5 New Design</li>
         <ul>
           <li>GUI face lifting</li>
@@ -335,12 +331,11 @@
       <h2>Roadmap</h2>
       <ul>
         <li>High DPI symbols in GUI</li>
-        <li>Slideshow Afterburner - Web Gallery Creation</li>
       </ul>
     </div>
     
     <footer>
-      © 2023 Jan Schirrmacher
+      © 2024 Jan Schirrmacher
     </footer>
   </body>
 </html>

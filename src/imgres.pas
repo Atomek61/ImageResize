@@ -93,10 +93,10 @@ const
   DEFAULTPNGCOMPRESSION     = 2;
   DEFAULTJPEGQUALITY        = 75;
   DEFAULT_INTERPOLATION     = ipLanczos2;
-  DEFAULTMRKSIZE            = 20.0;
-  DEFAULTMRKX               = 98.0;
-  DEFAULTMRKY               = 98.0;
-  DEFAULTMRKALPHA           = 50.0;
+  DEFAULT_MRKSIZE           = 20.0;
+  DEFAULT_MRKX              = 98.0;
+  DEFAULT_MRKY              = 98.0;
+  DEFAULT_MRKOPACITY        = 50.0;
   DEFAULT_THREADCOUNT       = 0;
   DEFAULT_STOPONERROR       = true;
   DEFAULT_RENENABLED        = false;
@@ -134,6 +134,14 @@ type
       FmtStr :string;
       IndexDigits :integer;
       IndexStart :integer;
+    end;
+
+    TWatermarkParams = record
+      Filename :string;
+      Size    :single;
+      X       :single;
+      Y       :single;
+      Opacity :single;
     end;
 
   private type
@@ -177,12 +185,7 @@ type
     FPNGCompression   :integer;
     FResampleMode     :TResampleMode;
     FResampleFilter   :TResampleFilter;
-    FMrkFilename      :string;
-    FMrkFilenameDependsOnSize :boolean; // if MrkFilename contains %SIZE%
-    FMrkSize          :single;
-    FMrkX             :single;
-    FMrkY             :single;
-    FMrkAlpha         :single;
+    FWaterMarkParams  :TWatermarkParams;
     FThreadCount      :integer;
     FStopOnError      :boolean;
     FRen              :TRenameParams;
@@ -203,14 +206,10 @@ type
     function GetSourceFilenames: TStrings;
     procedure SetTargetFiletemplate(AValue: string);
     procedure SetInterpolation(AValue: TInterpolation);
-    procedure SetMrkFilename(AValue: string);
     procedure SetSizes(AValue: string);
     procedure SetJPEGQuality(AValue: integer);
     procedure SetPNGCompression(AValue: integer);
-    procedure SetMrkSize(AValue: single);
-    procedure SetMrkX(AValue: single);
-    procedure SetMrkY(AValue: single);
-    procedure SetMrkAlpha(AValue: single);
+    procedure SetWatermarkParams(const AValue: TWatermarkParams);
     procedure SetSourceFilenames(AValue: TStrings);
     procedure SetTargetFolder(AValue: string);
     procedure SetThreadCount(AValue: integer);
@@ -220,6 +219,8 @@ type
     procedure OnTaskPrint(Sender :TObject; WorkerId: integer; const Line :string; Level :TLevel);
     procedure OnTaskProgress(Sender :TObject; Progress :single);
     procedure Print(const Line :string; Level :TLevel = mlInfo);
+  public
+    class var FormatSettings :TFormatSettings;
   public
     constructor Create;
     destructor Destroy; override;
@@ -240,6 +241,7 @@ type
     class function RenameParamsToStr(const Params :TRenameParams) :string;
     class function TryStrToTagsSources(const Str :string; out Value :TTagsSources) :boolean;
     class function TryStrToTagsReports(const Str :string; out Value :TTagsReports) :boolean;
+    class procedure StrToWatermarkParams(const Str :string; out Value :TWatermarkParams);
 
     property SourceFilenames :TStrings read GetSourceFilenames write SetSourceFilenames;
     property TargetFolder :string read FTargetFolder write SetTargetFolder;
@@ -248,11 +250,7 @@ type
     property JPEGQuality :integer read FJPEGQuality write SetJPEGQuality;
     property PNGCompression :integer read FPNGCompression write SetPNGCompression;
     property Interpolation :TInterpolation read GetInterpolation write SetInterpolation;
-    property MrkFilename :string read FMrkFilename write SetMrkFilename; // if msFile
-    property MrkSize :single read FMrkSize write SetMrkSize;
-    property MrkX :single read FMrkX write SetMrkX;
-    property MrkY :single read FMrkY write SetMrkY;
-    property MrkAlpha :single read FMrkAlpha write SetMrkAlpha;
+    property WatermarkParams :TWatermarkParams read FWatermarkParams write SetWatermarkParams;
     property ThreadCount :integer read FThreadCount write SetThreadCount;
     property StopOnError :boolean read FStopOnError write FStopOnError;
     property RenEnabled :boolean read FRen.Enabled;
@@ -307,6 +305,10 @@ resourcestring
   SErrInvalidPlaceholder          = 'Unknown or invalid placeholder';
   SInfResultFmt                   = 'Images: %d, Filter: %s, Sizes: %d, Tasks: %d, Successful: %d, Failed: %d, Elapsed: %.2fs';
   SErrInvalidInterpolationFmt     = 'Invalid interpolation name ''%s''';
+  SErrInvalidMrkParamCountFmt     = 'Invalid number of watermark parameters ''%s'' (1, 2 or 3 expected)';
+  SErrInvalidMrkFloatCountFmt     = 'Invalid watermark size/pos parameters ''%s'' (3 comma-separated floats expected)';
+  SErrInvalidMrkFloatRangeFmt     = 'Invalid watermark size/position range ''%s'' (0..100.0 expected)';
+  SErrInvalidMrkOpacityFmt        = 'Invalid watermark opacity value ''%s'' (0..100.0 expected)';
 
 implementation
 
@@ -556,23 +558,23 @@ begin
 
         ////////////////////////////////////////////////////////////////////////////
         // Watermark
-        if Processor.MrkFilename<>'' then begin
+        if Processor.FWatermarkParams.Filename<>'' then begin
           MrkImg := ProcRes.MrkImages[i mod Length(ProcRes.MrkImages)];
 
           // Watermark size in percent of the width or original size if MrkSize=0.0
-          if Processor.MrkSize<>0.0 then begin
-            MrkRectSize.cx := round(TargetSize.cx*Processor.MrkSize/100.0);
-            MrkRectSize.cy := round(TargetSize.cx*Processor.MrkSize/100.0 * MrkImg.Height/MrkImg.Width);
+          if Processor.FWatermarkParams.Size<>0.0 then begin
+            MrkRectSize.cx := round(TargetSize.cx*Processor.FWatermarkParams.Size/100.0);
+            MrkRectSize.cy := round(TargetSize.cx*Processor.FWatermarkParams.Size/100.0 * MrkImg.Height/MrkImg.Width);
           end else begin
             MrkRectSize.cx := MrkImg.Width;
             MrkRectSize.cy := MrkImg.Height;
           end;
-          MrkRect.Left := round((TargetSize.cx - MrkRectSize.cx) * Processor.MrkX/100.0);
-          MrkRect.Top := round((TargetSize.cy - MrkRectSize.cy) * Processor.MrkY/100.0);
+          MrkRect.Left := round((TargetSize.cx - MrkRectSize.cx) * Processor.FWatermarkParams.X/100.0);
+          MrkRect.Top := round((TargetSize.cy - MrkRectSize.cy) * Processor.FWatermarkParams.Y/100.0);
           MrkRect.Width := MrkRectSize.cx;
           MrkRect.Height := MrkRectSize.cy;
           Print(Format(SMsgWatermarkingFmt, [ExtractFilename(SourceFilename), SourceSize.cx, SourceSize.cy, TargetSize.cx, TargetSize.cy]));
-          TargetImg.StretchPutImage(MrkRect, MrkImg, dmLinearBlend, round(255*Processor.MrkAlpha/100.0));
+          TargetImg.StretchPutImage(MrkRect, MrkImg, dmLinearBlend, round(255*(Processor.FWatermarkParams.Opacity/100.0)));
         end;
 
         ////////////////////////////////////////////////////////////////////////////
@@ -656,11 +658,13 @@ begin
   FJPEGQuality      := DEFAULTJPEGQUALITY;
   FPNGCompression   := DEFAULTPNGCOMPRESSION;
   Interpolation     := DEFAULT_INTERPOLATION;
-  FMrkFilename      := '';
-  FMrkSize          := DEFAULTMRKSIZE;
-  FMrkX             := DEFAULTMRKX;
-  FMrkY             := DEFAULTMRKY;
-  FMrkAlpha         := DEFAULTMRKALPHA;
+  with FWatermarkParams do begin
+    Filename  := '';
+    Size      := DEFAULT_MRKSIZE;
+    X         := DEFAULT_MRKX;
+    Y         := DEFAULT_MRKY;
+    Opacity   := DEFAULT_MRKOPACITY;
+  end;
   FThreadCount      := DEFAULT_THREADCOUNT;
   FStopOnError      := DEFAULT_STOPONERROR;
   FRen.Enabled      := DEFAULT_RENENABLED;
@@ -853,20 +857,20 @@ begin
     end;
 
     // Load MrkImages...
-    if FMrkFilename='' then begin
+    if FWatermarkParams.Filename='' then begin
       SetLength(ProcRes.MrkImages, 0);
     end else begin
-      if FMrkFilenameDependsOnSize then begin
+      if Pos('%SIZE%', FWatermarkParams.Filename)>0 then begin
         SetLength(ProcRes.MrkImages, m);
         for i:=0 to m-1 do begin
-          Item := ReplaceStr(FMrkFilename, '%SIZE%', IntToStr(FSizes[i]));
+          Item := ReplaceStr(FWatermarkParams.Filename, '%SIZE%', IntToStr(FSizes[i]));
           Print(Format(SMsgLoadMrkFileFmt, [ExtractFilename(Item)]));
           ProcRes.MrkImages[i] := TBGRABitmap.Create(Item);
         end;
       end else begin
         SetLength(ProcRes.MrkImages, 1);
-        Print(Format(SMsgLoadMrkFileFmt, [ExtractFilename(FMrkFilename)]));
-        ProcRes.MrkImages[0] := TBGRABitmap.Create(FMrkFilename);
+        Print(Format(SMsgLoadMrkFileFmt, [ExtractFilename(FWatermarkParams.Filename)]));
+        ProcRes.MrkImages[0] := TBGRABitmap.Create(FWatermarkParams.Filename);
       end;
     end;
 
@@ -1093,9 +1097,38 @@ begin
   Items := StrToStringArray(Str, ',');
   for Item in Items do
     if SameText(Item, 'TAGSREPORT') then include(Value, trTagsReport)
-    else if SameText(Item, 'IMAGES') then include(Value, trImgTags)
+    else if SameText(Item, 'IMGTAGS') then include(Value, trImgTags)
     else Exit(false);
   result := true;
+end;
+
+// "path\mark[%SIZE%].png[:size,x,y[:opacity]]"   count: 1, 2, 3 allowed
+class procedure TProcessor.StrToWatermarkParams(const Str: string; out Value: TWatermarkParams);
+var
+  Items :TStringArray;
+  Floats :TSingleDynArray;
+  n :integer;
+begin
+  Items := Str.Split(':');
+  n := Length(Items);
+  if (n<1) or (n>3) then
+    raise Exception.CreateFmt(SErrInvalidMrkParamCountFmt, [Str]);
+  Value.Filename  := Items[0];
+  Value.Size      := 20.0;
+  Value.X         := 98.0;
+  Value.Y         := 98.0;
+  Value.Opacity   := 50.0;
+  if n>1 then begin
+    if not StrToSingleArray(Items[1], ',', Floats, FormatSettings) or (Length(Floats)<>3) then
+      raise Exception.CreateFmt(SErrInvalidMrkFloatCountFmt, [Items[1]]);
+    if (Floats[0]<0.0) or (Floats[0]>100.0) or (Floats[1]<0.0) or (Floats[1]>100.0) or (Floats[2]<0.0) or (Floats[2]>100.0) then
+      raise Exception.CreateFmt(SErrInvalidMrkFloatRangeFmt, [Items[1]]);
+    Value.Size := Floats[0];
+    Value.X := Floats[1];
+    Value.Y := Floats[2];
+  end;
+  if (n>2) and not (TryStrToFloat(Items[2], Value.Opacity, FormatSettings) and (Value.Opacity>=0.0) and (Value.Opacity<=100.0)) then
+    raise Exception.CreateFmt(SErrInvalidMrkOpacityFmt, [Items[2]]);
 end;
 
 class function TProcessor.TryStrToInterpolation(const Str: string; out Value: TInterpolation): boolean;
@@ -1194,13 +1227,6 @@ begin
   end;
 end;
 
-procedure TProcessor.SetMrkFilename(AValue: string);
-begin
-  if AValue=FMrkFilename then Exit;
-  FMrkFilename := AValue;
-  FMrkFilenameDependsOnSize := Pos('%SIZE%', AValue)>0;
-end;
-
 procedure TProcessor.SetJPEGQuality(AValue: integer);
 begin
   if AValue<1 then AValue := 1;
@@ -1217,32 +1243,15 @@ begin
   FPNGCompression:=AValue;
 end;
 
-procedure TProcessor.SetMrkSize(AValue: single);
+procedure TProcessor.SetWatermarkParams(const AValue: TWatermarkParams);
 begin
-  if FMrkSize=AValue then Exit;
-  if AValue<0.0 then AValue := 0.0;
-  if AValue>100.0 then AValue := 100.0;
-  FMrkSize:=AValue;
-end;
-
-procedure TProcessor.SetMrkX(AValue: single);
-begin
-  if FMrkX=AValue then Exit;
-  FMrkX:=AValue;
-end;
-
-procedure TProcessor.SetMrkY(AValue: single);
-begin
-  if FMrkY=AValue then Exit;
-  FMrkY:=AValue;
-end;
-
-procedure TProcessor.SetMrkAlpha(AValue: single);
-begin
-  if FMrkAlpha=AValue then Exit;
-  if AValue<0.0 then AValue := 0.0;
-  if AValue>100.0 then AValue := 100.0;
-  FMrkAlpha:=AValue;
+  FWatermarkParams := AValue;
+  with FWatermarkParams do begin
+    if Size<0.0 then Size := 1.0 else if Size>100.0 then Size := 100.0;
+    if X<0.0 then X:=0.0 else if X>100.0 then X:=100.0;
+    if Y<0.0 then Y:=0.0 else if Y>100.0 then Y:=100.0;
+    if Opacity<0.0 then Opacity:=0.0 else if Opacity>100.0 then Opacity:=100.0;
+  end;
 end;
 
 procedure TProcessor.SetSourceFilenames(AValue: TStrings);
@@ -1264,6 +1273,7 @@ end;
 
 initialization
 begin
+  GetLocaleFormatSettings($409, TProcessor.FormatSettings);
   Randomize;
 end;
 

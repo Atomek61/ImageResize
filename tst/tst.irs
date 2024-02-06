@@ -16,14 +16,20 @@ CardColor=16777215
 HeaderColor=8610360
 BackgroundColor=15002586
 
+[Presentation.Slideshow200]
+Title=Kirchen
+FontColor=#E4EBDA
+ControlsColor=#A0DD84
+BackgroundColor=#36361B
+
 [Project]
 Description=
 Source=Filenames
-SourceFolder=
+SourceFolder=srcI
 SourceMasks=*.jpg;*.png
-SourceFilenames=D:\Mf\Lazarus\ImageResize\tst\srcH\img1.png|D:\Mf\Lazarus\ImageResize\tst\srcH\img2.jpg|D:\Mf\Lazarus\ImageResize\tst\srcH\img3.jpg|D:\Mf\Lazarus\ImageResize\tst\srcH\img4.png|
-Sizes=480
-TargetFolder=D:\Mf\Lazarus\ImageResize\tst\tst10\
+SourceFilenames=srcI\DSC02329.jpg|srcI\DSC02361.jpg|srcI\DSC02380.jpg|
+Sizes=480, 1280
+TargetFolder=churches%SIZE%
 Interpolation=Default
 JPEGQuality=Default
 PNGCompression=Default
@@ -32,7 +38,7 @@ MrkFilename=
 MrkSize=20
 MrkX=98
 MrkY=98
-MrkAlpha=50
+MrkOpacity=50
 RenEnabled=0
 RenSimple=1
 RenAdvanced=0

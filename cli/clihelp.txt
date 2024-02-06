@@ -22,7 +22,7 @@ short long            parameter   comment
                                  Default is BestQuality: Mitchell on up- and Spline on down-scaling.
    -r -rename         template   Rename files by a template with placeholders.
                                  SIZE% and %INDEX[:n[,d]]% with n=startindex, d=number of digits/auto
-   -w -watermark      file.png   A PNG watermark file and optional a position and opacity, see example.
+   -w -watermark      file.png   A PNG watermark file and optional size, position and opacity, see example.
    -s -shuffle        0..n       Mixes the image list, makes sense together with -r.
                                  A random seed of 0 (assumed if ommited) means an unpredictable sequence.
                                  A fix value will mix a list always in the same manner, 
@@ -49,11 +49,11 @@ Examples:
   imgres ..\theimage.jpg C:\TEMP\res%SIZE% 480,640,800 -j 50
     resamples a single jpg with 3 resolutions and stores them to different folders at 50% quality
 
-  imgres @mylist.txt img%SIZE% 640,1920 -j 1 -p max -q
+  imgres @mylist.txt img%SIZE% 640,1920 -j 1 -p maximum -q
     resamples a list of files which path/name is stored in a file, with smallest file sizes in quiet mode.
 
-  imgres myimages\*.jpg;*.png \MyImages 640 -w "mywatermark.png?10,1,98?50"
-    adds a watermark of 10% width, 1% from the left, 2% from the bottom, with 50% opacity.
+  imgres myimages\*.jpg;*.png \MyImages 640 -w mywatermark.png:10,1,98:20
+    adds a watermark of 10% width, 1% from the left, 2% from the bottom, with 20% opacity.
 
   imgres DSC4205.jpg C:\TEMP 640 -c "(c) 1941 ACME"
     inserts an EXIF copyright note

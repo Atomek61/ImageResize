@@ -224,7 +224,27 @@ msgstr ""
 
 #: imgres.serrinvalidjpegqualityfmt
 #, object-pascal-format
-msgid "Invalid JPEG quality %s (1..100 expected)"
+msgid "Invalid JPEG quality '%s' (1..100 expected)"
+msgstr ""
+
+#: imgres.serrinvalidmrkfloatcountfmt
+#, object-pascal-format
+msgid "Invalid watermark size/pos parameters '%s' (3 comma-separated floats expected)"
+msgstr ""
+
+#: imgres.serrinvalidmrkfloatrangefmt
+#, object-pascal-format
+msgid "Invalid watermark size/position range '%s' (0..100.0 expected)"
+msgstr ""
+
+#: imgres.serrinvalidmrkopacityfmt
+#, object-pascal-format
+msgid "Invalid watermark opacity value '%s' (0..100.0 expected)"
+msgstr ""
+
+#: imgres.serrinvalidmrkparamcountfmt
+#, object-pascal-format
+msgid "Invalid number of watermark parameters '%s' (1, 2 or 3 expected)"
 msgstr ""
 
 #: imgres.serrinvalidplaceholder
@@ -238,7 +258,7 @@ msgstr ""
 
 #: imgres.serrinvalidpngcompressionnamefmt
 #, object-pascal-format
-msgid "Invalid PNG compression %s (Default, None, Fastest or Maximum expected)"
+msgid "Invalid PNG compression '%s' (Default, None, Fastest or Maximum expected)"
 msgstr ""
 
 #: imgres.serrinvalidrenamingparamfmt
@@ -1084,18 +1104,6 @@ msgctxt "tmaindialog.comboboxshuffleseed.text"
 msgid "<random>"
 msgstr ""
 
-#: tmaindialog.editmrkalpha.hint
-msgid ""
-"Choose the watermarks opacity.\n"
-"\n"
-"A strong watermark has 100%,\n"
-"a weak one has 10% opacity."
-msgstr ""
-
-#: tmaindialog.editmrkalpha.text
-msgid "50"
-msgstr ""
-
 #: tmaindialog.editmrkfilename.hint
 msgid ""
 "Select a png file with the desired watermark.\n"
@@ -1106,6 +1114,20 @@ msgid ""
 "Inkscape is a good tool for creating\n"
 "watermark files. Or use the inbuilt\n"
 "editor."
+msgstr ""
+
+#: tmaindialog.editmrkopacity.hint
+msgctxt "tmaindialog.editmrkopacity.hint"
+msgid ""
+"Choose the watermarks opacity.\n"
+"\n"
+"A strong watermark has 100%,\n"
+"a weak one has 10% opacity."
+msgstr ""
+
+#: tmaindialog.editmrkopacity.text
+msgctxt "tmaindialog.editmrkopacity.text"
+msgid "50"
 msgstr ""
 
 #: tmaindialog.editmrksize.hint

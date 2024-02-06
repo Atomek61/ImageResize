@@ -159,6 +159,19 @@ var
       result := '';
   end;
 
+  function FileFormat(const Filename :string) :string;
+  var
+    Ext :string;
+  begin
+    Ext := ExtractFileExt(Filename);
+    if SameText(Ext, 'jpg') or SameText(Ext, 'jpeg') then
+      result := 'JPEG'
+    else if SameText(Ext, 'png') then
+      result := 'PNG'
+    else
+      result := UpperCase(Copy(Ext, 2, Length(Ext)-1));
+  end;
+
 begin
   Lists := TStringDictionary.Create;
   ImgVars := TSolver.Create(FDelimiters);
@@ -199,6 +212,9 @@ begin
         ImgVars.Add('IMGNUMBER', IntToStr(i+1));
         ImgVars.Add('IMGCOUNT', IntToStr(FFilesTags.Filenames.Count));
         ImgVars.Add('IMGFILENAME', ExtractFilename(FFilesTags.Filenames[i]));
+        ImgVars.Add('IMGFILETITLE', ChangeFileExt(ExtractFilename(FFilesTags.Filenames[i]), ''));
+        ImgVars.Add('IMGFILEEXT', ExtractFileExt(FFilesTags.Filenames[i]));
+        ImgVars.Add('IMGFILEFORMAT', FileFormat(FFilesTags.Filenames[i]));
         Tags := FFilesTags[FFilesTags.Filenames[i]];
         for Key in FFilesTags.TagKeys do begin
           if not Tags.TryGetValue(Key, Value) then Value := '';

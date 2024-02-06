@@ -171,7 +171,7 @@ type
     EditRenTemplate: TComboBox;
     ComboBoxJPEGQuality: TComboBox;
     ComboBoxPNGCompression: TComboBox;
-    EditMrkAlpha: TEdit;
+    EditMrkOpacity: TEdit;
     EditMrkFilename: TEdit;
     EditMrkSize: TEdit;
     EditMrkX: TEdit;
@@ -262,7 +262,7 @@ type
     ToolButtonHelp: TToolButton;
     ToolButton8: TToolButton;
     ToolButtonEditor: TToolButton;
-    UpDownMrkAlpha: TUpDown;
+    UpDownMrkOpacity: TUpDown;
     UpDownMrkSize: TUpDown;
     UpDownMrkX: TUpDown;
     UpDownMrkY: TUpDown;
@@ -709,10 +709,12 @@ begin
     ComboBoxPNGCompression.ItemIndex    := 0;
     ComboBoxInterpolation.ItemIndex     := 0;
     EditMrkFilename.Text                := '';
-    UpDownMrkSize.Position              := round(ImgResizer.MrkSize);
-    UpDownMrkX.Position                 := round(ImgResizer.MrkX);
-    UpDownMrkY.Position                 := round(ImgResizer.MrkY);
-    UpDownMrkAlpha.Position             := round(ImgResizer.MrkAlpha);
+    with ImgResizer.WatermarkParams do begin
+      UpDownMrkSize.Position            := round(Size);
+      UpDownMrkX.Position               := round(X);
+      UpDownMrkY.Position               := round(Y);
+      UpDownMrkOpacity.Position           := round(Opacity);
+    end;
     FIsSave                             := false;
     CheckBoxRenEnabled.Checked          := ImgResizer.RenEnabled;
     RadioButtonRenSimple.Checked        := true;
@@ -851,7 +853,7 @@ begin
     UpDownMrkSize.Position                := ReadInteger(PROJECT_SECTION, 'MrkSize', UpDownMrkSize.Position);
     UpDownMrkX.Position                   := ReadInteger(PROJECT_SECTION, 'MrkX', UpDownMrkX.Position);
     UpDownMrkY.Position                   := ReadInteger(PROJECT_SECTION, 'MrkY', UpDownMrkY.Position);
-    UpDownMrkAlpha.Position               := ReadInteger(PROJECT_SECTION, 'MrkAlpha', UpDownMrkAlpha.Position);
+    UpDownMrkOpacity.Position             := ReadInteger(PROJECT_SECTION, 'MrkOpacity', UpDownMrkOpacity.Position);
     CheckBoxRenEnabled.Checked            := ReadBool(PROJECT_SECTION,    'RenEnabled', CheckBoxRenEnabled.Checked);
     RadioButtonRenSimple.Checked          := ReadBool(PROJECT_SECTION,    'RenSimple', RadioButtonRenSimple.Checked);
     RadioButtonRenAdvanced.Checked        := ReadBool(PROJECT_SECTION,    'RenAdvanced', RadioButtonRenAdvanced.Checked);
@@ -938,7 +940,7 @@ begin
     WriteString(PROJECT_SECTION,  'MrkSize',        EditMrkSize.Text);
     WriteString(PROJECT_SECTION,  'MrkX',           EditMrkX.Text);
     WriteString(PROJECT_SECTION,  'MrkY',           EditMrkY.Text);
-    WriteString(PROJECT_SECTION,  'MrkAlpha',       EditMrkAlpha.Text);
+    WriteString(PROJECT_SECTION,  'MrkOpacity',     EditMrkOpacity.Text);
     WriteBool(PROJECT_SECTION,    'RenEnabled',     CheckBoxRenEnabled.Checked);
     WriteBool(PROJECT_SECTION,    'RenSimple',      RadioButtonRenSimple.Checked);
     WriteBool(PROJECT_SECTION,    'RenAdvanced',    RadioButtonRenAdvanced.Checked);
@@ -1543,7 +1545,7 @@ var
 begin
   if CalcMarkRect(MarkRect) then begin
     ImgRect := TRect.Create(0, 0, MarkRect.Width, MarkRect.Height);
-    Transparency := 255-round(255*StrToFloat(EditMrkAlpha.Text)/100.0);
+    Transparency := round(255*StrToFloat(EditMrkOpacity.Text)/100.0);
     BorderColor.FromColor(clBlack);
     FillColor.FromColor(clBlue, Transparency);
     Bmp := TBGRABitmap.Create(MarkRect.Width, MarkRect.Height);
@@ -1556,44 +1558,6 @@ begin
   end;
 end;
 
-//procedure TMainDialog.PaintBoxMrkPreviewPaint(Sender: TObject);
-//var
-//  ImgRect :TRect;
-//  MarkRect :TRect;
-//
-//  Bmp :TBGRABitmap;
-//  Txt :TBGRABitmap;
-//  BorderColor :TBGRAPixel;
-//  FillColor :TBGRAPixel;
-////  TextColor :TBGRAPixel;
-//  Transparency :Byte;
-//begin
-//  if CalcMarkRect(MarkRect) then begin
-//    ImgRect := TRect.Create(0, 0, MarkRect.Width, MarkRect.Height);
-//    Transparency := 255-round(255*StrToFloat(EditMrkAlpha.Text)/100.0);
-//    BorderColor.FromColor(clBlue);
-//    FillColor.FromColor(clWhite);
-////    TextColor.FromColor(clBlack, Transparency);
-//    Bmp := TBGRABitmap.Create(MarkRect.Width, MarkRect.Height);
-//    Txt := TBGRABitmap.Create(MarkRect.Width, MarkRect.Height);
-//    try
-////      Txt.AlphaFill(120);
-//      ImageListWatermarkText.StretchDraw(Txt.Canvas, 0, ImgRect);
-//      Txt.Fill(FillColor, dmSetExceptTransparent, round(Transparency*256));
-//      Txt.Draw(Bmp.Canvas, 0, 0, False);
-////      Bmp.FontHeight := ImgRect.Height;
-//      Bmp.Rectangle(ImgRect, BorderColor, BGRAPixelTransparent, dmLinearBlend);
-////      Bmp.TextOut(0, 0, SCptWatermark, TextColor);
-////      ImageListWatermarkText.StretchDraw(PaintBoxMrkPreview.Canvas, 0, MarkRect);
-//      Bmp.Draw(PaintBoxMrkPreview.Canvas, MarkRect, False);
-//
-//    except
-//    end;
-//    Bmp.Free;
-//    Txt.Free;
-//  end;
-//end;
-//
 procedure TMainDialog.ProgressBarPaint(Sender: TObject);
 var
   r :TRect;
@@ -1703,6 +1667,7 @@ var
   TagsReports :TTagsReports;
   TagKeys :TStringArray;
   Processor :TProcessor;
+  WatermarkParams :TProcessor.TWatermarkParams;
 begin
   if FExecuting then begin
     FCancelled := true;
@@ -1775,23 +1740,25 @@ begin
         Processor.ShuffleSeed := StrToShuffleSeed(ComboBoxShuffleSeed.Text);
 
         // Watermark
-        Processor.MrkFilename := EditMrkFilename.Text;
+        WatermarkParams.Filename := EditMrkFilename.Text;
 
         if not TryStrToFloat(EditMrkSize.Text, x) or (x<0.0) or (x>100.0) then
           raise Exception.Create(SErrInvalidMrkSize);
-        Processor.MrkSize := x;
+        WatermarkParams.Size := x;
 
         if not TryStrToFloat(EditMrkX.Text, p.x) or (p.x<0.0) or (p.x>100.0) then
           raise Exception.Create(SErrInvalidMrkXBrd);
         if not TryStrToFloat(EditMrkY.Text, p.y) or (p.y<0.0) or (p.y>100.0) then
           raise Exception.Create(SErrInvalidMrkYBrd);
 
-        Processor.MrkX := StrToFloat(EditMrkX.Text);
-        Processor.MrkY := StrToFloat(EditMrkY.Text);
+        WatermarkParams.X := StrToFloat(EditMrkX.Text);
+        WatermarkParams.Y := StrToFloat(EditMrkY.Text);
 
-        if not TryStrToFloat(EditMrkAlpha.Text, x) or (x<0.0) or (x>100.0) then
+        if not TryStrToFloat(EditMrkOpacity.Text, x) or (x<0.0) or (x>100.0) then
           raise Exception.Create(SErrInvalidMrkOpacity);
-        Processor.MrkAlpha := x;
+        WatermarkParams.Opacity := x;
+
+        Processor.WatermarkParams := WatermarkParams;
 
         // Tagging
         TagKeys := nil;
