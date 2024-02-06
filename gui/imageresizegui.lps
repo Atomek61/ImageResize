@@ -37,10 +37,13 @@
         <ComponentName Value="AboutDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="11"/>
         <TopLine Value="120"/>
-        <CursorPos Y="155"/>
+        <CursorPos X="25" Y="142"/>
         <UsageCount Value="201"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="mrkeditdlg.pas"/>
@@ -54,7 +57,7 @@
       <Unit>
         <Filename Value="..\src\imgres.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="15"/>
+        <EditorIndex Value="16"/>
         <TopLine Value="306"/>
         <CursorPos X="81" Y="798"/>
         <UsageCount Value="200"/>
@@ -90,7 +93,7 @@
         <Filename Value="..\src\tags.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Tags"/>
-        <EditorIndex Value="14"/>
+        <EditorIndex Value="15"/>
         <TopLine Value="73"/>
         <CursorPos Y="85"/>
         <UsageCount Value="201"/>
@@ -121,8 +124,8 @@
         <Filename Value="settings.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="10"/>
-        <TopLine Value="1071"/>
-        <CursorPos Y="1109"/>
+        <TopLine Value="289"/>
+        <CursorPos Y="323"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit>
@@ -176,7 +179,6 @@
         <Filename Value="presentations.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Presentations"/>
-        <IsVisibleTab Value="True"/>
         <TopLine Value="271"/>
         <CursorPos Y="287"/>
         <UsageCount Value="200"/>
@@ -230,9 +232,7 @@
       <Unit>
         <Filename Value="settingseditor.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="11"/>
-        <TopLine Value="114"/>
-        <CursorPos X="3" Y="121"/>
+        <EditorIndex Value="12"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit>
@@ -293,7 +293,7 @@
       <Unit>
         <Filename Value="..\src\colorsetting.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="12"/>
+        <EditorIndex Value="13"/>
         <CursorPos Y="14"/>
         <UsageCount Value="42"/>
         <Loaded Value="True"/>
@@ -567,7 +567,7 @@
       </Unit>
       <Unit>
         <Filename Value="..\lib\inc\generics.dictionaries.inc"/>
-        <EditorIndex Value="13"/>
+        <EditorIndex Value="14"/>
         <TopLine Value="352"/>
         <CursorPos X="10" Y="389"/>
         <UsageCount Value="100"/>
@@ -626,7 +626,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="2782"/>
         <CursorPos Y="2807"/>
-        <UsageCount Value="0"/>
+        <UsageCount Value="10"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\lcl\forms.pp"/>
@@ -771,7 +771,7 @@
       </Unit>
       <Unit>
         <Filename Value="..\src\templateengine.pas"/>
-        <EditorIndex Value="16"/>
+        <EditorIndex Value="17"/>
         <TopLine Value="159"/>
         <CursorPos Y="180"/>
         <UsageCount Value="77"/>
@@ -1093,7 +1093,7 @@
         <Filename Value="..\tst\guitest4.irs"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="49" Y="7"/>
-        <UsageCount Value="0"/>
+        <UsageCount Value="10"/>
         <DefaultSyntaxHighlighter Value="None"/>
       </Unit>
       <Unit>
@@ -1112,7 +1112,7 @@
         <Filename Value="..\tst\srcB\.tags"/>
         <EditorIndex Value="-1"/>
         <CursorPos Y="7"/>
-        <UsageCount Value="0"/>
+        <UsageCount Value="10"/>
         <DefaultSyntaxHighlighter Value="None"/>
       </Unit>
       <Unit>
@@ -1253,38 +1253,6 @@
     <JumpHistory HistoryIndex="29">
       <Position>
         <Filename Value="presentationdlg.pas"/>
-        <Caret Line="233" TopLine="209"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="232" TopLine="209"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="233" TopLine="209"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="232" TopLine="209"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="209" TopLine="189"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="244" TopLine="226"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="245" TopLine="226"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="206" TopLine="186"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
         <Caret Line="246" TopLine="228"/>
       </Position>
       <Position>
@@ -1370,6 +1338,38 @@
         <Filename Value="settingseditor.pas"/>
         <Caret Line="121" Column="3" TopLine="114"/>
       </Position>
+      <Position>
+        <Filename Value="settingseditor.pas"/>
+        <Caret Line="125" Column="41" TopLine="114"/>
+      </Position>
+      <Position>
+        <Filename Value="settingseditor.pas"/>
+        <Caret Line="34"/>
+      </Position>
+      <Position>
+        <Filename Value="settingseditor.pas"/>
+        <Caret Line="83" TopLine="59"/>
+      </Position>
+      <Position>
+        <Filename Value="settingseditor.pas"/>
+        <Caret Line="73" Column="3" TopLine="59"/>
+      </Position>
+      <Position>
+        <Filename Value="settingseditor.pas"/>
+        <Caret Line="56" TopLine="22"/>
+      </Position>
+      <Position>
+        <Filename Value="settingseditor.pas"/>
+        <Caret Line="225" TopLine="225"/>
+      </Position>
+      <Position>
+        <Filename Value="settingseditor.pas"/>
+        <Caret Line="56" TopLine="35"/>
+      </Position>
+      <Position>
+        <Filename Value="settingseditor.pas"/>
+        <Caret Line="202" Column="40" TopLine="183"/>
+      </Position>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>
@@ -1438,13 +1438,6 @@
         <WatchKind Value="wpkWrite"/>
         <Source Value="presentationprocessor.pas"/>
         <Line Value="204"/>
-      </Item>
-      <Item>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="settings.pas"/>
-        <Line Value="323"/>
       </Item>
       <Item>
         <Kind Value="bpkSource"/>

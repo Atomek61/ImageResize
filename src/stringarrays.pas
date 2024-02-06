@@ -18,7 +18,7 @@ type
   public
     procedure Add(const Value :string);
     procedure Clear;
-    function TryFind(const Value :string; var Index :integer; IgnoreCase :boolean = false) :boolean;
+    function TryFind(const Value :string; out Index :integer; IgnoreCase :boolean = false) :boolean;
     function Contains(const Value: string; IgnoreCase :boolean = false): boolean;
 //    procedure Split(const Str :string; Separator :char = ',');
     function Join(const Delimiter :string) :string;
@@ -50,7 +50,7 @@ begin
   self := nil;
 end;
 
-function TStringArrayHelper.TryFind(const Value: string; var Index: integer; IgnoreCase: boolean): boolean;
+function TStringArrayHelper.TryFind(const Value: string; out Index: integer; IgnoreCase: boolean): boolean;
 var
   i :integer;
 begin

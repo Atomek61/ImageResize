@@ -387,6 +387,7 @@ begin
   FStats.Successful := 0;
   FStats.Failed := 0;
   FStats.Elapsed := 0;
+  Working := nil;
 
   // Is there anything to do?
   Pool := nil;

@@ -1,4 +1,3 @@
-imgres CLI 3.3 for engine 3.3 (c) 2023 Jan Schirrmacher, www.atomek.de
 Free tool for JPEG and PNG quality resampling.
 
   Usage: imgres filename folder size {-option [param]}
@@ -16,11 +15,11 @@ Options:
 
 short long            parameter   comment
 -----------------------------------------
-   -j -jpgquality     1..100     A quality from 1 to 100 percent (default is 75)
-   -p -pngcompression degree     None|Fastest|Default|max
-   -f -filter         filter     Stretch, Box, Linear, HalfCosine, Cosine, Bicubic, Mitchell, Spline,
+   -j -jpegquality    1..100     A quality from 1 to 100 percent (default is 75)
+   -p -pngcompression degree     Default|None|Fastest|Maximum
+   -i -interpolation  name       Stretch, Box, Linear, HalfCosine, Cosine, Bicubic, Mitchell, Spline,
                                  Lanczos2, Lanczos3, Lanczos4, BestQuality
-                                 Default is Lanczos2.
+                                 Default is BestQuality: Mitchell on up- and Spline on down-scaling.
    -r -rename         template   Rename files by a template with placeholders.
                                  SIZE% and %INDEX[:n[,d]]% with n=startindex, d=number of digits/auto
    -w -watermark      file.png   A PNG watermark file and optional a position and opacity, see example.
@@ -34,8 +33,8 @@ short long            parameter   comment
                                  taglist is a list of special tagnames: "Title,Timestamp,Copyright"
                                  if no meta sources is defined, EXIF is assumed.
    -c -copyright      "text"     Writes (overrides) the EXIF or .tags copyright tag.
-   -l -listing        listings   Exports infos. listings is a comma-separated combination of "tagsreport"
-                                 and "images", e.g. "Images" or "TagsReports,Images".
+   -l -listing        listings   Exports infos - listings is a comma-separated combination of "tagsreport"
+                                 and "imgtags", e.g. "imgtags" or "TagsReports,ImgTags".
    -t -threadcount    0..n       Number of threads to use, 0 means maximum.
    -x -stoponerror               Stop on error. flag: 0-false, 1-true
    -h -help                      Outputs this text.

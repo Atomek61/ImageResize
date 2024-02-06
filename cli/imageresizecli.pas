@@ -1,6 +1,6 @@
 program imageresizecli;
 
-{$mode objfpc}{$H+}
+{$mode delphi}{$H+}
 {$MODESWITCH TYPEHELPERS}
 
 uses
@@ -8,71 +8,12 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Classes, Types, SysUtils, CustApp, interfaces, exifutils, tags, logging,
-  { you can add units after this } fileutil, utils, imgres, generics.collections;
+  { you can add units after this } fileutil, utils, imgres, generics.collections,
+  Windows;
 
 const
   IMGRESCLIVER = '4.0';
   IMGRESCLICPR = 'imgres CLI '+IMGRESCLIVER+' for engine '+IMGRESVER+' (c) 2024 Jan Schirrmacher, www.atomek.de';
-
-  INTROSTR = 'Free tool for JPEG and PNG quality resampling.';
-  USAGESTR = '  Usage: imgres filename folder size {-option [param]}';
-
-  HINTSSTR =
-    '  filename            Is a single JPEG or PNG file, a text filename preceeded by @ with a list of filenames'#10+
-    '                      or a wildcard with path/mask. Multiple masks are to be separated by semicolon.'#10+
-    '  folder              Where to store the resulting resampled and resized files. The folder must contain'#10+
-    '                      the placeholder ''%SIZE%'' when there are multiple sizes. Non-existing folders'#10+
-    '                      will be created.'#10+
-    '  size                Is a size in pixels or a comma-separated list of sizes, where the size refers to'#10+
-    '                      the longer side of the image.'#10+
-    '  {-option [param]}   Is a list of pairs of option/parameter. Some options dont have a parameter.'#10#10+
-    'Options:'#10#10+
-    'short long            parameter   comment'#10+
-    '-----------------------------------------'#10+
-    '   -j -jpegquality    1..100     A quality from 1 to 100 percent (default is 75)'#10+
-    '   -p -pngcompression degree     None|Fastest|Default|max'#10+
-    '   -i -interpolation  name       Stretch, Box, Linear, HalfCosine, Cosine, Bicubic, Mitchell, Spline,'#10+
-    '                                 Lanczos2, Lanczos3, Lanczos4, BestQuality'#10+
-    '                                 Default is Lanczos2.'#10+
-    '   -r -rename         template   Rename files by a template with placeholders.'#10+
-    '                                 SIZE% and %INDEX[:n[,d]]% with n=startindex, d=number of digits/auto'#10+
-    '   -w -watermark      file.png   A PNG watermark file and optional a position and opacity, see example.'#10+
-    '   -s -shuffle        0..n       Mixes the image list, makes sense together with -r.'#10+
-    '                                 A random seed of 0 (assumed if ommited) means an unpredictable sequence.'#10+
-    '                                 A fix value will mix a list always in the same manner, '#10+
-    '                                 unless the number of files doesnt change.'#10+
-    '   -m -meta           sources    EXIF | TAGS | EXIF,TAGS'#10+
-    '                                 EXIF loads tags from origin files, TAGS from .tags files'#10+
-    '   -e -exif           taglist    writes certain metadata into the resized files.'#10+
-    '                                 taglist is a list of special tagnames: "Title,Timestamp,Copyright"'#10+
-    '                                 if no meta sources is defined, EXIF is assumed.'#10+
-    '   -c -copyright      "text"     Writes (overrides) the EXIF or .tags copyright tag.'+#10+
-    '   -l -listing        listings   Exports infos. listings is a comma-separated combination of "tagsreport"'#10+
-    '                                 and "images", e.g. "Images" or "TagsReports,Images".'+#10+
-    '   -t -threadcount    0..n       Number of threads to use, 0 means maximum.'#10+
-    '   -x -stoponerror               Stop on error. flag: 0-false, 1-true'#10+
-    '   -h -help                      Outputs this text.'#10+
-    '   -n -nocreate                  Dryrun, does not create images, but if applicable listing.'#10+
-    '   -q -quit                      Suppresses any message output.'#10;
-
-  EXAMPLESTR =
-    'Examples:'#10#10+
-    '  imgres myimage.png \Images\res640 640'#10+
-    '    resamples a single png image with the default quality.'#10#10+
-
-    '  imgres ..\theimage.jpg C:\TEMP\res%SIZE% 480,640,800 -j 50'#10+
-    '    resamples a single jpg with 3 resolutions and stores them to different folders at 50% quality'#10#10+
-
-    '  imgres @mylist.txt img%SIZE% 640,1920 -j 1 -p max -q'#10+
-    '    resamples a list of files which path/name is stored in a file, with smallest file sizes in quiet mode.'#10#10+
-
-    '  imgres myimages\*.jpg;*.png \MyImages 640 -w "mywatermark.png?10,1,98?50"'#10+
-    '    adds a watermark of 10% width, 1% from the left, 2% from the bottom, with 50% opacity.'#10#10+
-
-    '  imgres DSC4205.jpg C:\TEMP 640 -c "(c) 1941 ACME"'#10+
-    '    inserts an EXIF copyright note'#10#10+
-
-    '  More info at www.atomek.de/imageresize/cli/index.html';
 
   ERRINVALIDNUMBEROFPARAMS = 'Invalid number of parameters.';
   ERRINVALIDSRCFILENAME = 'Invalid parameter srcfilename.';
@@ -93,8 +34,21 @@ type
     procedure OnProgress(Sender :TObject; Progress :single);
   public
     constructor Create(AComponent :TComponent); override;
-    procedure WriteHelp; virtual;
   end;
+
+function LoadStringFromResource(const ResName :string) :string;
+var
+  s :TResourceStream;
+begin
+  result := '';
+  s := TResourceStream.Create(HInstance, ResName, Windows.RT_RCDATA);
+  try
+    SetLength(result, s.Size);
+    s.Read(PChar(result)^, s.Size);
+  finally
+    s.Free;
+  end;
+end;
 
 { TImageResizeCli }
 
@@ -150,7 +104,8 @@ begin
 
   // parse parameters
   if (ParamCount=0) or HasOption('h', 'help') then begin
-    WriteHelp;
+    WriteLn(IMGRESCLICPR);
+    WriteLn(LoadStringFromResource('CLIHELP'));
     Terminate;
     Exit;
   end;
@@ -168,7 +123,7 @@ begin
     Param := GetOptionValue('j', 'jpegquality');
     if Param<>'' then begin
       if not TryStrToInt(Param, JPEGQuality) or (JPEGQuality<1) or (JPEGQuality>100) then
-        raise Exception.CreateFmt('Invalid jpegquality ''%s'', 1..100 expected.', [Param]);
+        raise Exception.CreateFmt(SErrInvalidJPEGQualityFmt, [Param]);
       inc(OptionCount, 2);
     end else
       JPEGQuality := Processor.JPEGQuality;
@@ -177,7 +132,7 @@ begin
     Param := GetOptionValue('p', 'pngcompression');
     if Param<>'' then begin
       if not TProcessor.TryNameToPNGCompression(Param, PNGCompression) then
-        raise Exception.CreateFmt('Invalid pngcompression ''%s'', none, fastes, default or max expected.', [Param]);
+        raise Exception.CreateFmt(SErrInvalidPNGCompressionNameFmt, [Param]);
       inc(OptionCount, 2);
     end else
       PNGCompression := Processor.PNGCompression;
@@ -361,7 +316,7 @@ begin
     Processor.NoCreate := NoCreate;
 
     if not Quiet then
-      Processor.OnPrint := @OnPrint;
+      Processor.OnPrint := OnPrint;
 
     ///////////////////////////////////////////////////
     // Finally call the processor...
@@ -389,17 +344,8 @@ end;
 constructor TImageResizeCli.Create(AComponent: TComponent);
 begin
   inherited Create(AComponent);
-  OnException := @DoException;
+  OnException := DoException;
   StopOnException := true;
-end;
-
-procedure TImageResizeCli.WriteHelp;
-begin
-  WriteLn(IMGRESCLICPR);
-  WriteLn(INTROSTR);
-  WriteLn(#10+USAGESTR+#10);
-  WriteLn(HINTSSTR);
-  WriteLn(EXAMPLESTR);
 end;
 
 var

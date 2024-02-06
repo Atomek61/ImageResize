@@ -22,8 +22,8 @@ const
   TAGID_TITLE         = 'Title';
   TAGID_TIMESTAMP     = 'Timestamp';
   TAGID_COPYRIGHT     = 'Copyright';
-  TAGID_CAMMAKER      = 'CamMaker';
-  TAGID_CAMMODEL      = 'CamModel';
+  //TAGID_CAMMAKER      = 'CamMaker';
+  //TAGID_CAMMODEL      = 'CamModel';
   //TAGID_GPSLONGITUDE  = 'Longitude';
   //TAGID_GPSLATITUDE   = 'Latitude';
   //TAGID_SIZE          = 'Size';
@@ -50,7 +50,6 @@ var
   ImgData :TImgData;
   Timestamp :TDateTime;
   StrValue :string;
-  IntValue :Integer;
 begin
   result := false;
   ImgData := TImgData.Create;

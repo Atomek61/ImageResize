@@ -24,7 +24,7 @@ interface
 
 uses
   Classes, SysUtils, StrUtils, Types, BGRABitmap, BGRABitmapTypes,
-  threading.dispatcher, Tags, Logging, StringArrays, FileUtil, IntTypes;
+  threading.dispatcher, Tags, Logging, StringArrays, FileUtil;
 
 resourcestring
   SCptInterpolationDefault   = 'Default';
@@ -271,15 +271,6 @@ function TrySizesStrToSizes(const Str :string; out Values :TSizes) :boolean;
 function SizesToSizesStr(const Sizes :TSizes) :string;
 //function TryJPEGQualityNameToIndex(const Name :string; out Index :integer) :boolean;
 
-implementation
-
-uses
-  Math, ZStream, FPWriteJpeg, FPWritePng, FPImage, utils,
-  generics.collections, EXIFUtils;
-
-const
-  TAGID_COPYRIGHT = 'Copyright';
-
 resourcestring
   SCptHint                        = 'Hint';
   SCptWarning                     = 'Warning';
@@ -306,8 +297,8 @@ resourcestring
   SErrInvalidSizesFmt             = 'Invalid sizes ''%s''';
   SErrMultipleSizes               = 'Multiple sizes but placeholder %SIZE% not found in either folder or filename template';
   SErrInvalidPNGCompressionFmt    = 'Invalid PNG compression %d (0..3 expected)';
-  SErrInvalidPNGCompressionNameFmt= 'Invalid PNG compression %s (Default, None, Fastest or Maximum expected)';
-  SErrInvalidJPEGQualityFmt       = 'Invalid JPEG quality %s (1..100 expected)';
+  SErrInvalidPNGCompressionNameFmt= 'Invalid PNG compression ''%s'' (Default, None, Fastest or Maximum expected)';
+  SErrInvalidJPEGQualityFmt       = 'Invalid JPEG quality ''%s'' (1..100 expected)';
   SErrInvalidRenamingParamFmt     = 'Invalid renaming parameter ''%s''';
   SErrInvalidINDEXPlaceholderFmt  = 'Invalid INDEX placeholder parameters ''%s''';
   SErrInvalidINDEXStartFmt        = 'Invalid INDEX start ''%s''';
@@ -316,6 +307,16 @@ resourcestring
   SErrInvalidPlaceholder          = 'Unknown or invalid placeholder';
   SInfResultFmt                   = 'Images: %d, Filter: %s, Sizes: %d, Tasks: %d, Successful: %d, Failed: %d, Elapsed: %.2fs';
   SErrInvalidInterpolationFmt     = 'Invalid interpolation name ''%s''';
+
+implementation
+
+uses
+  Math, ZStream, FPWriteJpeg, FPWritePng, FPImage, utils,
+  generics.collections, EXIFUtils;
+
+const
+  TAGID_COPYRIGHT = 'Copyright';
+
 const
   LEVELSTRS :array[TLevel] of string = (SCptHint, '', SCptWarning, SCptAbort, SCptFatal);
 
