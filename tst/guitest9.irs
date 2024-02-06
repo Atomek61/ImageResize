@@ -3,17 +3,17 @@ Type=IRS
 Version=400
 
 [Presentation]
-Id=Info100
-ImgTagsFilename=tstInfo\.imgtags
+Id=Slideshow200
+ImgTagsFilename=tst8\.imgtags
 
 [Project]
 Description=
 Source=Filenames
 SourceFolder=
 SourceMasks=*.jpg;*.png
-SourceFilenames=D:\DesktopGalleries\Elbe 2024\DSC04752.jpg|D:\DesktopGalleries\Elbe 2024\DSC04753.jpg|D:\DesktopGalleries\Elbe 2024\DSC04755.jpg|D:\DesktopGalleries\Elbe 2024\DSC04756.jpg|D:\DesktopGalleries\Elbe 2024\DSC04757.jpg|D:\DesktopGalleries\Elbe 2024\DSC04758.jpg|D:\DesktopGalleries\Elbe 2024\DSC04763.jpg|D:\DesktopGalleries\Elbe 2024\DSC04766.jpg|D:\DesktopGalleries\Elbe 2024\DSC04768.jpg|D:\DesktopGalleries\Elbe 2024\DSC04775.jpg|
-Sizes=360, 480
-TargetFolder=tst9
+SourceFilenames=srcB\src1\DSC04236.jpg|srcB\src1\DSC04242.jpg|srcB\src1\DSC04258.jpg|srcB\src2\DSC04262.jpg|srcB\src2\DSC04264.jpg|srcB\src2\DSC04288.jpg|srcB\src2\src3\DSC04293.jpg|srcB\src2\src3\DSC04314.jpg|srcB\src2\src3\DSC04318.jpg|srcB\src2\src3\DSC04321.jpg|
+Sizes=1600
+TargetFolder=tst8
 Interpolation=Default
 JPEGQuality=Default
 PNGCompression=Default
@@ -22,20 +22,28 @@ MrkFilename=
 MrkSize=20
 MrkX=98
 MrkY=98
-MrkAlpha=50
-RenEnabled=1
-RenSimple=0
-RenAdvanced=1
+MrkOpacity=50
+RenEnabled=0
+RenSimple=1
+RenAdvanced=0
 RenCustom=0
 RenTemplate=img%INDEX:1,3%.%FILEEXT%
 ShuffleEnabled=0
 ShuffleSeed=0
-TagsSourceEXIF=0
-TagsSourceTagsFiles=0
-TagTitle=0
+TagsSourceEXIF=1
+TagsSourceTagsFiles=1
+TagTitle=1
 TagTimestamp=0
-TagCopyright=0
-Copyright=
+TagCopyright=1
+Copyright=© 2024 Jan-Erich Schirrmacher
 TagsReportEnabled=0
 ImageInfosEnabled=1
 NoCreate=0
+
+[Presentation.Slideshow200]
+Title=Die schöne Nordsee
+SymbolSize=8
+FontColor=#126998
+ControlsColor=#C023C5
+ImgBkgColor=#36361B
+BackgroundColor=#36361B

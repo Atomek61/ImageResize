@@ -24,9 +24,8 @@
 
       <h1 id="overview">Übersicht</h1>
       <p>
-        <i>ImageResize</i> 3.5 ist eine App zur Größenänderung von JPEG- und PNG-Bildern.
-        Sie ist für die Erzeugung von Web-Gallerien gedacht und kann viele Bilder 
-        auf einmal verarbeiten.
+        <i>ImageResize</i> 4.0 ist eine App zur Größenänderung von JPEG- und PNG-Bildern.
+        Sie kann viele Bilder verarbeiten und daraus Web-Gallerien (Präsentationen) erzeugen.
       </p>
       
       <h2 id="contents">Inhalt</h2>
@@ -34,10 +33,11 @@
       <a href="#srcfilelist">Quelldateien</a><br/>
       <a href="#sizes">Zielgrößen</a><br/>
       <a href="#dstfolder">Zielordner</a><br/>
-      <a href="#renaming">Umbenennen und mischen</a><br/>
+      <a href="#renaming">Umbenennen und Mischen</a><br/>
       <a href="#watermark">Wasserzeichen</a><br/>
       <a href="#quality">Qualität</a><br/>
       <a href="#tagging">Taggen</a><br/>
+      <a herf="#presentation">Präsentation</a><br/>
       <a href="#saving">Öffnen und Speichern</a><br/>
       <a href="#settings">Einstellungen</a><br/>
       <a href="#commandline">Kommandozeilen-Parameter</a><br/>
@@ -50,11 +50,12 @@
         <li>Kontextsensitives Hilfesystem</li>
         <li>Resampling (Verkleinerung) von Listen mit Bilddateien</li>
         <li>Resampling jedes Bildes in mehrere Größen</li>
-        <li>Nutzt <i>Lanczos</i>-Interpolation für gute Ergebnisse</li>
+        <li>Auswahl der Interpolation für gute Ergebnisse</li>
         <li>Optionales Wasserzeichen</li>
         <li>EXIF Tags (Titel, Timestamp, Copyright)</li>
         <li>Unterstützt JPEG- und PNG</li>
         <li>Kontrolle der Kompression</li>
+        <li>Kann Web-Gallerien erzeugen (Präsentation)</li>
         <li>GUI-, CLI- und API-Schnittstelle</li>
         <li>Kontrollierte Dateiumbenennung</li>
         <li>Zufälliges Mischen der Bilder</li>
@@ -65,7 +66,6 @@
       <ul>
         <li>Bildverzerrung</li>
         <li>Formatkonvertierung (JPEG bleibt JPEG und PNG bleibt PNG)</li>
-        <li>Vorschau</li>
         <li>Alle EXIF tags übertragen</li>
       </ul>
       
@@ -89,7 +89,7 @@
       </p>
       <ol>
         <li>manuell eingegeben werden</li>
-        <li>im Auswahldialog ausgewählt werden<img class="btn" src="../img/open.png"/> mit &lt;STRG&gt; und &lt;UMSCHALT&gt;</li>
+        <li>im Auswahldialog ausgewählt werden<img class="btn" src="../img/doc-open.png"/> mit &lt;STRG&gt; und &lt;UMSCHALT&gt;</li>
         <li>durch Ziehen von Bilddateien aus dem Windows-Explorer ergänzt werden</li>
         <li>durch Angabe eines Quellordners mit Dateifilter angegeben werden</li>
         <li>relative Pfadangaben beinhalten</li>
@@ -97,26 +97,23 @@
       <p>
         Die Liste kann JPEG- und PNG-Dateien enthalten. Die Dateinamen können beibehalten
         oder <a href="#renaming">umbenannt</a> werden. Relative Pfade beziehen sich auf
-        das Arbeitsverzeichnis des Programmes, welches nach dem Laden oder Speichern einer
-        Projektdatei (.irs) der Pfad zu dieser ist.
+        den Speicherort der Projektdatei (.irs) oder auf das letzte aktuelle Verzeichnis.
       </p>
       <a class="chfot" href="#contents">Inhalt</a>
       
-      <h1 id="sizes">Größen</h1>
+      <h1 id="sizes"><img src="../img/sizes.png"/> Größen</h1>
       <p>
-        Eine <i>Größe</i> in Pixeln bezieht sich auf die längere Seite eines Bildes.
-        Gewöhnlich ist die Größe der Originaldatei größer als die des Zieles.
+        Eine <i>Größe</i> in Pixeln bezieht sich auf die längere Seite eines Bildes. 
       </p>
       <p>
         ImageResize kann mehrere Größen für jedes Bild erzeugen. Geben Sie eine Liste von Größen ein,
         die mit dem Komma getrennt sind, oder wählen Sie Größen aus den Vorschlägen aus.<br/>
-        <img src="img/multiplesizes.png"/>
+      </p>  
+      <p>
+        Sie können alle Größen angeben, die größer als 0 sind.
       </p>
       <p>
-        Sie können alle Größen angeben, die größer als 0 sind. Die Vorschläge unter der Liste sind unverbindlich.
-      </p>
-      <p>
-        Sie können die Liste ändern, indem Sie die Löschen-Schaltfläche <img class="btn" src="../img/delete.png"/>
+          Sie können die Liste ändern, indem Sie die Löschen-Schaltfläche <img class="btn" src="../img/delete.png"/>
         klicken. Um eine einzelne Größe zu löschen, markieren Sie zuvor die Größe, oder sie klicken einen
         bereits gewählten Vorschlag erneut.
       </p>
@@ -125,7 +122,7 @@
       <h1 id="dstfolder">Zielordner</h1>
       <p>
         Ein Zielordner muss angegeben werden. Sie können ihn direkt eintippen
-        oder mit der Schaltfläche <img class="btn" src="../img/button-folder.png"/> auswählen.
+        oder mit der Schaltfläche <img class="btn" src="../img/folder-open.png"/> auswählen.
       </p>
       <p>
         Um Konflikte der Zielnamen zu vermeiden, wenn mehrere Zielgrößen angegeben werden,
@@ -135,7 +132,7 @@
       </p>
       <a class="chfot" href="#contents">Inhalt</a>
       
-      <h1 id="renaming">Umbenennen und Mischen</h1>
+      <h1 id="renaming"><img src="../img/rename.png"/> Umbenennen und Mischen</h1>
       <p>
         Umbenennen der Zieldateien wird interessant, wenn Sie nicht
         für jede Größe einen eigenen Ordner erzeugen möchten, sondern
@@ -143,6 +140,7 @@
         Zieldateien umbenannt werden, am besten, indem sie die Zielgröße
         zur Unterscheidung enthalten.
       </p>
+
       <p>
         Klicken Sie <i>Anwenden</i> und wählen Sie eine der möglichen Strategien:
       </p>
@@ -169,7 +167,7 @@
         <span class="plh">%SIZE%</span>-Platzhalters.
       </p>
       
-      <h2 id="rencustom">Strategie <b>"Benutzer"</b></h2>
+      <h2 id="rencustom">Strategie <b>"Angepasst"</b></h2>
       <p>
         Um das Programm einen geeigneten Dateinamen erzeugen zu lassen, können Sie hier
         eine eigene Vorlage angeben. Die Vorlage enthält <i>Platzhalter</i> für
@@ -215,13 +213,14 @@
         </tr>
         <tr>
           <td><span class="plh">%FILTER%</span></td>
-          <td>Der Name des aktuell gewählten Filters der Interpolation.</td>
+          <td>Der Name der aktuell gewählten Interpolation.</td>
         </tr>
       </table>
 
       <h2 id="shuffle">Mischen</h2>
       <p>
         <i>Mischen</i> bedeutet, dass die lexikalische Reihenfolge der Zieldateinamen zufällig ist.
+        Dazu ist die automatische Umbenennung der Zieldateien nötig.
       </p>
       <p>
         ImageResize mischt zunächst die Reihenfolge der Bilder bevor es die resampelten Bilder erzeugt.
@@ -230,17 +229,17 @@
         Eine geeignete Vorlage für den Zielnamen ist z.B. <span class="plh">img%INDEX:1,3%.%FILEEXT%</span>.
       </p>
       <p>
-        Der Parameter <i>Saat</i> kontrolliert die zufällige Abfolge. Eine Saat von 0 wird
+        Der Parameter <i>Saat</i> kontrolliert die zufällige Abfolge. Eine Saat von 0 ("Zufällig") wird
         jedesmal eine andere Abfolge erzeugen, wenn die Verarbeitung gestartet wird.
         Jeder andere konstante Wert wird die Abfolge in der selben Art mischen,
         solange die Länge der Bildliste sich nicht ändert.
       </p>
       
-      <h1 id="watermark">Wasserzeichen</h1>
+      <h1 id="watermark"><img src="../img/watermark.png"/> Wasserzeichen</h1>
       <p>
         Ein Wasserzeichen ist ein halbdurchlässiges kleines Bild, dass z.B. ein Copyright dem Zielbild zufügt.
         Das Bild muss im PNG-Format vorliegen und kann einen Alpha-Channel (Transparenz) haben. Wenn das
-        Bild gedruckt wird, kann eine zusätzliche Transparenz angegeben werden. 20 bis 30 Prozent ist gut
+        Bild gedruckt wird, kann eine zusätzliche Deckkraft angegeben werden. 20 bis 30 Prozent ist gut
         für eine schwach sichtbare Erscheinung, ab 50 Prozent wird das Wasserbild deutlich sichtbar.
       </p>
       
@@ -276,12 +275,11 @@
       </ul>      
       <p>
         Sie können dabei <i>Transparenz</i> verwenden, aber beachten Sie, dass ImageResize zusätzlich eine
-        Transparenz darüberlegen kann.
+        Deckungskraft darüberlegen kann.
       </p>
-      <h3 id="mrkopaque">Transparenz</h3>
+      <h3 id="mrkopaque">Deckungskraft</h3>
       <p>
-        Eine Transparenz von 0 Prozent lässt das Wasserbild verschwinden, 100 Prozent macht es voll deckend.
-        40 Prozent sind eine gute Wahl.
+        Eine Deckungskraft von 0 Prozent lässt das Wasserbild verschwinden, 100 Prozent macht es voll deckend.
       </p>
       <table>
         <tr><td>10%</td><td><img src="../img/opaque10.jpg"/></td>
@@ -308,14 +306,14 @@
       </p>
       <a class="chfot" href="#contents">Inhalt</a>
 
-      <h1 id="quality">Qualität</h1>
+      <h1 id="quality"><img src="../img/quality.png"/> Qualität</h1>
       <p>
         Die Qualität des Ergebnisses hängt von diesen Einstellungen ab.
         Sie können den Kompressionsgrad für JPEG- und für PNG-Formate und
-        den Resampling-Algorithmus steuern.
+        den Resampling-Algorithmus (<i>Interpolation</i>) steuern.
       </p>
 
-      <h2 id="quality-resampling">Resampling</h2>
+      <h2 id="quality-resampling">Interpolation</h2>
       <p>
         Resampling bedeutet das Aufbauen eines neuen Bildes mit kleineren oder größeren
         Abmessungen bei gleichem Seitenverhältnis. Dazu müssen die Farben der Pixel des Zielbildes
@@ -329,7 +327,11 @@
         Ausser dem einfachen <i>Stretch</i> sind die Algorithmen Interpolationen.
         Je nach Skalierung wirken Sie sich unterschiedlich aus.
       </p>
-      <img src="img/quality-resampling.png"/>
+      <img src="img/quality-interpolation.png"/>
+      <p>
+        Die Voreinstellung ist "Beste Qualität". Dabei wird "Mitchell" für Herauf- und 
+        "Spline" für Herunterskalieren gewählt.
+      </p>
       <p>
         Schauen Sie sich die <a href="interpol.html">Wirkung verschiedener Interpolationen</a> an.
       </p>
@@ -337,13 +339,16 @@
       <h2 id="quality-jpeg">JPEG Qualität</h2>
       <p>
         JPEG hat ein verlustbehaftetes Verfahren. Eine höhere Qualität resultiert
-        in größeren Dateien. Bei JPEG ist 75 bis 95 Prozent eine gute Wahl.
+        in größeren Dateien. Bei JPEG ist 75 bis 95 Prozent eine gute Wahl. Noch 50%
+        hat eine erstaunlich gute Qualität bei kleinen Dateien. Wenn Sie Web-Gallerien
+        erzeugen, und die Größe auf die Bildschirmgröße beschränken (1920px) bei 50%
+        Qualität/Kompression erhalten Sie optimale Ladezeiten.
       </p>
       <img src="img/quality-JPEG.png"/>
 
       <h2 id="quality-png">PNG Qualität</h2>
       <p>
-        Das PNG-Format komprimiert verlustfrei, ergibt aber bei Naturbildern
+        Das PNG-Format komprimiert immer verlustfrei, ergibt aber bei Naturbildern
         eine geringe Kompression, daher ist es hauptsächlich bei künstlichen Bildern sinnvoll.
         Es sind 4 Kompressionsgrade möglich:
         <ul>
@@ -357,7 +362,7 @@
 
       <a class="chfot" href="#contents">Inhalt</a>
       
-      <h1 id="tagging">Taggen</h1>
+      <h1 id="tagging"><img src="../img/tagging.png"/></span> Taggen</h1>
       <p>
         Sie können gewisse Meta-Informationen ihrer Bilder in die erzeugten Bilder schreiben. Normalerweise werden
         solche Metainformationen bei Fotos (z.B. JPEG) im EXIF-Format innerhalb der Datei gespeichert.
@@ -369,10 +374,25 @@
       </p>
       <ul>
         <li>Zum Erhalt Ihres Copyrights bei der Weitergabe von Bildern</li>
-        <li>Als Grundlage für eine <i>Slideshow</i> (automatisierter Bildbetrachter)</li>
+        <li>Als Grundlage für die <a href="#presentation"><i>Präsentation</i></a></li>
       </ul>
       <p>
-        Dazu werden die folgenden Metainformationen (<i>Tags</i>) unterstützt:
+        Es gibt in ImageResize zwei Strategien solche Tags weiterzugeben:
+      </p>
+      <ul>
+        <li>Als EXIF-Tags innerhalb von JPEG-Bildern</li>
+        <li>Als .imgtags-Datei, die jedem Zielverzeichnis, bzw. jeder Bildgröße automatisch beigefügt wird</li>
+      </ul>
+      <p>
+        Es gibt zwei Quellen für Tags:        
+      </p>
+      <ul>
+        <li>Die EXIF-Tags der originalen Dateien</li>
+        <li>.tags-Dateien, die den Originalbildern beigefügt werden können</li>
+      </ul>
+      <h3>EXIF-Tags</h3>
+      <p>
+        Es werden derzeit von ImageResize leider nur bestimmte EXIF-Tags unterstützt:
       </p>
       <ul>
         <li>
@@ -397,7 +417,7 @@
         </li>
       </ul>
       <p>
-        Im Parameter-Dialog <i>Taggen</i> können Sie auswählen, welche der genannten Tags in die Zielbilder übernommen werden sollen.
+        Im Einstellungen-Dialog <i>Taggen</i> können Sie auswählen, welche der genannten Tags in die Zielbilder übernommen werden sollen.
         Dabei können die Copyright-Einträge für alle Bilder mit einer neuen Zeichenkette überschrieben werden.
       </p>
       

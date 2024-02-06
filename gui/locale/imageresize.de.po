@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.3.1\n"
 
 #: aboutdlg.scptavailable
 msgid "Available"
@@ -471,7 +471,7 @@ msgstr "Ungültige JPEG-Qualität"
 
 #: maindlg.serrinvalidmrkopacity
 msgid "Invalid watermark opacity"
-msgstr "Ungültige Wasserbild-Transparenz"
+msgstr "Ungültige Wasserbild-Deckkraft"
 
 #: maindlg.serrinvalidmrksize
 msgid "Invalid watermark size"
@@ -1346,7 +1346,7 @@ msgstr "%"
 
 #: tmaindialog.label13.caption
 msgid "Opacity:"
-msgstr "Transparenz:"
+msgstr "Deckkraft:"
 
 #: tmaindialog.label14.caption
 msgctxt "tmaindialog.label14.caption"

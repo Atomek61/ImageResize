@@ -256,14 +256,14 @@ object MainDialog: TMainDialog
         Top = 4
         Width = 393
         TabStop = False
-        ActivePage = TabSheetWatermark
+        ActivePage = TabSheetRenaming
         Align = alClient
         BorderSpacing.Around = 4
         ImagesWidth = 32
         MultiLine = True
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 2
+        TabIndex = 1
         TabOrder = 1
         Options = [nboMultiLine]
         object TabSheetSizes: TTabSheet
@@ -353,14 +353,14 @@ object MainDialog: TMainDialog
           object GroupBoxRename: TGroupBox
             Left = 4
             Height = 226
-            Top = 122
+            Top = 27
             Width = 377
-            Align = alClient
+            Align = alTop
             BorderSpacing.Around = 4
             Caption = 'Strategy'
             ClientHeight = 206
             ClientWidth = 373
-            TabOrder = 2
+            TabOrder = 1
             object RadioButtonRenSimple: TRadioButton
               Left = 8
               Height = 19
@@ -445,7 +445,7 @@ object MainDialog: TMainDialog
           object GroupBoxShuffle: TGroupBox
             Left = 4
             Height = 91
-            Top = 27
+            Top = 257
             Width = 377
             HelpType = htKeyword
             HelpKeyword = 'HTML/index.html#shuffle'
@@ -454,7 +454,7 @@ object MainDialog: TMainDialog
             Caption = 'Shuffle'
             ClientHeight = 71
             ClientWidth = 373
-            TabOrder = 1
+            TabOrder = 2
             object CheckBoxShuffle: TCheckBox
               Left = 16
               Height = 19

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="128"
+   height="128"
+   viewBox="0 0 128 128.00001"
+   version="1.1"
+   id="svg138"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   sodipodi:docname="new.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview140"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     showgrid="true"
+     showguides="true"
+     inkscape:lockguides="true"
+     inkscape:zoom="5.17549"
+     inkscape:cx="-21.543854"
+     inkscape:cy="50.623226"
+     inkscape:window-width="2560"
+     inkscape:window-height="1417"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid259"
+       empspacing="4"
+       originx="0"
+       originy="0" />
+    <inkscape:grid
+       type="xygrid"
+       id="grid261"
+       spacingy="16.000001"
+       spacingx="16.000001"
+       color="#e5001f"
+       opacity="0.14901961"
+       originx="0"
+       originy="0" />
+    <sodipodi:guide
+       position="-68,64.000005"
+       orientation="0,-1"
+       id="guide263"
+       inkscape:locked="true" />
+    <sodipodi:guide
+       position="64.000007,63.999998"
+       orientation="1,0"
+       id="guide315"
+       inkscape:locked="true" />
+  </sodipodi:namedview>
+  <defs
+     id="defs135">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient11600">
+      <stop
+         style="stop-color:#f3ae73;stop-opacity:1;"
+         offset="0"
+         id="stop11596" />
+      <stop
+         style="stop-color:#a40000;stop-opacity:1"
+         offset="1"
+         id="stop11598" />
+    </linearGradient>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient11600"
+       id="radialGradient11602"
+       cx="40"
+       cy="40"
+       fx="40"
+       fy="40"
+       r="39.597984"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       sodipodi:type="star"
+       style="fill:url(#radialGradient11602);fill-opacity:1;stroke:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round"
+       id="path10865"
+       inkscape:flatsided="false"
+       sodipodi:sides="8"
+       sodipodi:cx="40"
+       sodipodi:cy="40"
+       sodipodi:r1="40.000004"
+       sodipodi:r2="21.236465"
+       sodipodi:arg1="0.64350119"
+       sodipodi:arg2="1.0362003"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="M 72.000001,64.000005 50.819841,58.273437 45.656852,79.597984 34.729511,60.572054 15.999995,72.000001 21.726563,50.819841 0.40201602,45.656852 19.427946,34.729511 7.9999989,15.999995 29.180159,21.726563 34.343148,0.40201602 45.270489,19.427946 64.000005,7.9999989 58.273437,29.180159 79.597984,34.343148 60.572054,45.270489 Z"
+       transform="matrix(1.1248896,1.1248896,-1.1248896,1.1248896,63.273274,-26.375642)" />
+    <g
+       aria-label="Update 2023-12"
+       id="text269"
+       style="font-weight:bold;font-size:32px;line-height:0.8;font-family:Verdana;-inkscape-font-specification:'Verdana Bold';fill:#fce94f;stroke:#204a87;stroke-linecap:round;stroke-linejoin:round"
+       transform="matrix(0.75025181,0,0,0.75025181,-23.418826,-13.285258)" />
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:21.3333px;font-family:Rubik;-inkscape-font-specification:'Rubik Bold';text-align:center;text-anchor:middle;fill:none;stroke:#e30000;stroke-width:1;stroke-linecap:square;stroke-dasharray:none"
+       x="76.933922"
+       y="38.117458"
+       id="text402"
+       transform="rotate(15)"><tspan
+         sodipodi:role="line"
+         id="tspan400"
+         x="76.933922"
+         y="38.117458"
+         style="fill:#fce94f;fill-opacity:1;stroke:#204a87;stroke-width:1;stroke-dasharray:none">Update</tspan><tspan
+         sodipodi:role="line"
+         x="76.933922"
+         y="64.784081"
+         id="tspan404"
+         style="fill:#fce94f;fill-opacity:1;stroke:#204a87;stroke-width:1;stroke-dasharray:none">2024-02</tspan></text>
+  </g>
+</svg>
