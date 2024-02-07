@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: aboutdlg.scptavailable
 msgid "Available"
@@ -1112,8 +1112,8 @@ msgid ""
 msgstr ""
 "Beim Skalieren eines Bildes bestimmt der Interpolations-Algorithmus\n"
 "die Verarbeitungsgeschwindigkeit und die Qualität des Ergebnisses.\n"
-"Die Voreinstellung bedeutet Mitchell beim herauf- und Spline beim\n"
-"herunterskalieren.\n"
+"Die Voreinstellung bedeutet Mitchell beim herunter- und Spline beim\n"
+"heraufskalieren.\n"
 "RTFM."
 
 #: tmaindialog.comboboxjpegquality.hint
@@ -1461,7 +1461,7 @@ msgstr "Wählen Sie eine oder mehrere Dateien"
 
 #: tmaindialog.radiobuttonrenadvanced.caption
 msgid "2 Advanced - all files in one folder"
-msgstr "2 Fortgeschritten - alle Dateien in ein Verzeichnis"
+msgstr "2 Erweitert - alle Dateien in ein Verzeichnis"
 
 #: tmaindialog.radiobuttonrencustom.caption
 msgid "3 Custom"

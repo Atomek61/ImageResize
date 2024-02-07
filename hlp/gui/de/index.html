@@ -159,12 +159,13 @@
         Ziffern mit führenden Nullen enthalten wird.
       </p>
       
-      <h2 id="renadvanced">Strategie <b>"Fortgeschritten"</b></h2>
+      <h2 id="renadvanced">Strategie <b>"Erweitert"</b></h2>
       <p>
-        Die Dateinamen-Vorlage in diesem Falle ist z.B. <span class="plh">img%INDEX:1,3%_%SIZE%.%FILEEXT%</span>,
-        um alle Dateien im selben Verzeichnis zu erzeugen. Sie erzeugt einen Dateinamen wie 
-        <i>img085_1920.jpg</i>. Der Dateinamenskonflikt ist vermieden durch Verwendung des
-        <span class="plh">%SIZE%</span>-Platzhalters.
+        Die Dateinamen-Vorlage in diesem Falle ist z.B.
+        <span class="plh">img%INDEX:1,3%_%SIZE%.%FILEEXT%</span>,
+        um alle Dateien ohne Namenskonflikt im selben Verzeichnis zu erzeugen.
+        Sie erzeugt einen Dateinamen wie <i>img085_1920.jpg</i>. Der Dateinamenskonflikt wird
+        vermieden durch Verwendung des <span class="plh">%SIZE%</span>-Platzhalters.
       </p>
       
       <h2 id="rencustom">Strategie <b>"Angepasst"</b></h2>
@@ -237,7 +238,7 @@
       
       <h1 id="watermark"><img src="../img/watermark.png"/> Wasserzeichen</h1>
       <p>
-        Ein Wasserzeichen ist ein halbdurchlässiges kleines Bild, dass z.B. ein Copyright dem Zielbild zufügt.
+        Ein Wasserzeichen ist ein halbdurchlässiges kleines Bild, dass dem Zielbild z.B. ein Copyright zufügt.
         Das Bild muss im PNG-Format vorliegen und kann einen Alpha-Channel (Transparenz) haben. Wenn das
         Bild gedruckt wird, kann eine zusätzliche Deckkraft angegeben werden. 20 bis 30 Prozent ist gut
         für eine schwach sichtbare Erscheinung, ab 50 Prozent wird das Wasserbild deutlich sichtbar.
@@ -254,18 +255,17 @@
       </p>
       <p>
         Normalerweise genügt es für alle Zielgrößen eine gemeinsame Datei anzugeben, weil die Größe
-        für jedes Bild angepasst wird. Daher ist es ok ein Wasserzeichenbild mit hoher Auflösung einmalig
-        für alle zu erzeugen.
+        für jedes Bild angepasst wird. Dafür wird ein Wasserzeichenbild mit guter Auflösung einmalig
+        für alle zu erzeugt.
       </p>
       <p>
-        Um für jede Zielgröße ein anderes Wasserbild festzulegen, müssen Sie
+        Um für jede Zielgröße ein anderes Wasserbild festlegen zu können, müssen Sie
         im Namen der Wasserbilddatei den Platzhalter <span class="plh">%SIZE%</span> angeben.
         ImageResize erwartet in diesem Falle ein Wasserbild für jede Größe, deren Name 
         der Vorlage entspricht, also die Größe enthält.
       </p>
       <p>
-        Sie können eine Wasserbilddatei mit jedem Programm erzeugen welches das PNG-Format unterstützt.
-        Ein paar Vorschläge:
+        Sie können Wasserbilddateien mit jedem Programm erzeugen welches das PNG-Format unterstützt, z.B:
       </p>
       <ul>
         <li><a href="http://inkscape.org">Inkscape</a> - ein freier Vektorgraphik-Editor</li>
@@ -275,11 +275,11 @@
       </ul>      
       <p>
         Sie können dabei <i>Transparenz</i> verwenden, aber beachten Sie, dass ImageResize zusätzlich eine
-        Deckungskraft darüberlegen kann.
+        Deckkraft darüberlegen kann.
       </p>
-      <h3 id="mrkopaque">Deckungskraft</h3>
+      <h3 id="mrkopaque">Deckkraft</h3>
       <p>
-        Eine Deckungskraft von 0 Prozent lässt das Wasserbild verschwinden, 100 Prozent macht es voll deckend.
+        Eine Deckkraft von 0 Prozent lässt das Wasserbild verschwinden, 100 Prozent macht es voll deckend.
       </p>
       <table>
         <tr><td>10%</td><td><img src="../img/opaque10.jpg"/></td>
@@ -315,7 +315,7 @@
 
       <h2 id="quality-resampling">Interpolation</h2>
       <p>
-        Resampling bedeutet das Aufbauen eines neuen Bildes mit kleineren oder größeren
+        Resampling oder Skalierung bedeutet das Aufbauen eines neuen Bildes mit kleineren oder größeren
         Abmessungen bei gleichem Seitenverhältnis. Dazu müssen die Farben der Pixel des Zielbildes
         durch Interpolation ermittelt werden. Im einfachsten Falle - Stretch (ohne Interpolation) -
         bekommt das Pixel den Farbwert des ihm nächsten Pixels des Originales. Dies führt zu
@@ -329,8 +329,8 @@
       </p>
       <img src="img/quality-interpolation.png"/>
       <p>
-        Die Voreinstellung ist "Beste Qualität". Dabei wird "Mitchell" für Herauf- und 
-        "Spline" für Herunterskalieren gewählt.
+        Die Voreinstellung ist "Beste Qualität". Dabei wird "Mitchell" für Herunter- und 
+        "Spline" für Heraufskalieren gewählt.
       </p>
       <p>
         Schauen Sie sich die <a href="interpol.html">Wirkung verschiedener Interpolationen</a> an.
@@ -338,24 +338,24 @@
       
       <h2 id="quality-jpeg">JPEG Qualität</h2>
       <p>
-        JPEG hat ein verlustbehaftetes Verfahren. Eine höhere Qualität resultiert
+        JPEG ist ein verlustbehaftetes Verfahren. Eine höhere Qualität resultiert
         in größeren Dateien. Bei JPEG ist 75 bis 95 Prozent eine gute Wahl. Noch 50%
         hat eine erstaunlich gute Qualität bei kleinen Dateien. Wenn Sie Web-Gallerien
-        erzeugen, und die Größe auf die Bildschirmgröße beschränken (1920px) bei 50%
-        Qualität/Kompression erhalten Sie optimale Ladezeiten.
+        erzeugen, und die Größe auf die Bildschirmgröße beschränken (1920px) erhalten Sie
+        bei 50% Qualität/Kompression optimale Ladezeiten bei akzeptabler Qualität.
       </p>
       <img src="img/quality-JPEG.png"/>
 
       <h2 id="quality-png">PNG Qualität</h2>
       <p>
         Das PNG-Format komprimiert immer verlustfrei, ergibt aber bei Naturbildern
-        eine geringe Kompression, daher ist es hauptsächlich bei künstlichen Bildern sinnvoll.
-        Es sind 4 Kompressionsgrade möglich:
+        eine geringe Kompression, daher ist es hauptsächlich bei künstlichen Bildern sinnvoll, wo
+        es große einfarbige Flächen gibt. Es sind 4 Kompressionsgrade möglich:
         <ul>
-          <li><i>none</i> - keine Kompression</li>
-          <li><i>fastest</i> - geringe und schnellste Kompression</li>
-          <li><i>default</i> - normale Kompression</li>
-          <li><i>maximum</i> - größte und langsamste Kompression</li>
+          <li><i>Voreinstellung</i> - normale Kompression</li>
+          <li><i>Keine</i></li>
+          <li><i>Schnellste</i> - geringe und schnellste Kompression</li>
+          <li><i>Maximal</i> - größte und langsamste Kompression</li>
         </ul>
       </p>
       <img src="img/quality-PNG.png"/><br/>
@@ -363,18 +363,20 @@
       <a class="chfot" href="#contents">Inhalt</a>
       
       <h1 id="tagging"><img src="../img/tagging.png"/></span> Taggen</h1>
+      <h2>Allgemeines</h2>
       <p>
-        Sie können gewisse Meta-Informationen ihrer Bilder in die erzeugten Bilder schreiben. Normalerweise werden
+        Sie können gewisse Meta-Informationen ihrer Bilder den erzeugten Bildern zufügen. Normalerweise werden
         solche Metainformationen bei Fotos (z.B. JPEG) im EXIF-Format innerhalb der Datei gespeichert.
-        Die meisten Fotoapparate legen damit viele technische Informationen in den erzeugten JPEG-Dateien ab.
+        Die modernen Fotoapparate legen damit viele technische Informationen ab. Die wichtigsten Meta-Informationen
+        für ImageResize sind <i>Titel</i>, <i>Timestamp</i> und <i>Copyright</i>.
       </p>
       <p>
-        Taggen (engl. "anhängen") bedeutet, dass Sie den mit ImageResize erzeugten Bildern bestimmte dieser
-        Informationen mitgeben. Es wird aus zwei Gründen von ImageResize unterstützt:
+        Taggen (engl. "anhängen") bedeutet bei ImageResize, dass Sie den mit ImageResize erzeugten Bildern
+        bestimmte dieser Informationen mitgeben. Es wird aus zwei Gründen von ImageResize unterstützt:
       </p>
       <ul>
         <li>Zum Erhalt Ihres Copyrights bei der Weitergabe von Bildern</li>
-        <li>Als Grundlage für die <a href="#presentation"><i>Präsentation</i></a></li>
+        <li>Als Grundlage für die <a href="#presentation"><i>Präsentation</i> als private oder öffentliche Webseite.</a></li>
       </ul>
       <p>
         Es gibt in ImageResize zwei Strategien solche Tags weiterzugeben:
@@ -388,7 +390,7 @@
       </p>
       <ul>
         <li>Die EXIF-Tags der originalen Dateien</li>
-        <li>.tags-Dateien, die den Originalbildern beigefügt werden können</li>
+        <li>.tags-Dateien, die Sie den Originalbildern beifügen können</li>
       </ul>
       <h3>EXIF-Tags</h3>
       <p>
@@ -441,7 +443,7 @@
         mit Bildern haben, legen Sie in jedes Verzeichnis eine .tags-Datei.
       </p>
       <p>
-        Eine .tags-Datei ist eine CSV-Datei (kommaseparierte Liste) mit UTF-8-Kodierung. Die Titelzeile enthält die Namen der Spalten
+        Eine .tags-Datei ist eine UTF-8 codierte CSV-Datei (kommaseparierte Liste). Die Titelzeile enthält die Namen der Spalten
         (Filename, Title, Timestamp, Copyright). Darunter existiert für jedes Bild eine Zeile mit den Feldern entsprechend der Header-Zeile.
       </p>
       <pre class="code">
@@ -450,34 +452,42 @@ DSC04262.jpg, Labore Sanitas, (c) 2023 ATOMEK
 DSC04264.jpg, Leuchtturm am Hafen, (c) 2023 ATOMEK
 DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
       <p>
-        Sie können beliebige Spaltenüberschriften verwenden, aber es werden nur die folgenden von ImageResize verwendet:
-        Filename, Title, Timestamp und Copyright.
-      </p>
-      <p>
         Die erste Spalte muss "Filename" heißen und enthält den Namen der Datei ohne den Pfad.
-        Die Reihenfolge der anderen Spalten und die Reihenfolge der Zeilen sind unbedeutend.
-        Wenn ein Feld Kommata oder führende Leerzeichen enthalten soll, setzen Sie das Feld in doppelte Anführungszeichen.
+        Die Reihenfolge der anderen Spalten und die Reihenfolge der Zeilen sind unbedeutend. Sie können auch eigene Felder einführen,
+        die in der Präsentation verwendet werden. Wenn ein Feld Kommata oder führende Leerzeichen enthalten soll,
+        setzen Sie den Wert in doppelte Anführungszeichen. Die letzten Felder eine Zeile können fehlen - es müssen keine Kommata mit
+        leeren Werten folgen. Der Asterisk * steht für einen Wert, der von der vorherigen Zeile übernommen werden soll.
       </p>
       <p>
         Wenn Sie mehrere .tags-Dateien in verschiedenen Verzeichnissen anlegen, müssen diese nicht gleich strukturiert sein.
-        Sie können unterschiedliche Spaltennamen haben.
+        Sie können unterschiedliche Spaltennamen haben. Wiederholen sich Werte entsprechend dem Wert der vorhergehenden Zeile, geben Sie
+        * als Wert an.
       </p>
  
-      <h2>Erzeugen einer Liste aller Tags (TagsReport)</h2>
+      <h2>Einstellungen zum Taggen</h2>
+      <h3>Tags speichern</h3>
       <p>
-        Im Parameter-Dialog <i>Taggen</i> können Sie ImageResize anweisen eine UTF-8 kodierte Textdatei mit einer Liste der bekannten
-        Tags zu erzeugen. Voraussetzung ist das Taggen. Dann werden die .tags-Dateien gelesen, ggf. durch EXIF-Metadaten vervollständigt
-        und abschließend als eine große Tabelle gespeichert.
+        Hier bestimmen Sie, ob die gefundenen Tags in .imgtags-Dateien der Zielordner gespeichert werden sollen. Dies ist Voraussetzung
+        für die Erzeugung einer Präsentation und ist daher vorausgewählt. Die .imgtags-Dateien sind klein im Vergleich zu den Bilddateien.
       </p>
       <p>
-        Eine solche Datei mit der kann für einen Slideshow-Generator die Grundage bilden.
-        Das nächste Release von ImageResize wird einen HTML-Slideshow-Generator als Werkzeug beinhalten.
+        .tagsreport-Dateien sind allgemeinere CSV-Dateien für zukünftige Zwecke und eigene Programme. Sie werden von ImageResize nicht benötigt.
+      </p>
+      <h3>Tags laden</h3>
+      <p>
+        Wenn Sie Tags verarbeiten möchten, müssen Sie angeben woher diese kommen sollen. Sie können entweder aus den EXIF-Informationen der
+        JPEGs stammen oder aus ihren .tags-Dateien oder aus beidem. Wenn sie aus beidem stammen haben die .tags-Dateien Vorrang.
+        Ist z.B. das Copyright-Tag in den EXIF-Informationen des Fotos enthalten und außerdem existiert auch eine Copyright-Spalte in
+        der .tags-Datei, dann wird der Wert aus der .tags-Datei genommen.
       </p>
       <p>
-        Wenn ein Feld den Asterisk enthält (als einziges Zeichen), wird der Feldwert von der vorherigen Zeile übernommen.
+        Wenn sie Tags speichern wollen aber keine Tags-Quelle angeben, wird ImageResize selbsttätig nach .tags-Dateien suchen.
       </p>
-
-      <h2>Tagging Dialog</h2>
+      <h3>EXIF Tagging</h3>
+      <p>
+        Sie können hier bestimmen, ob die erzeugten Bilder EXIF-Tags erhalten sollen. Normalerweise enthalten die erzeugten Bilder keinerlei
+        Meta-Informationen aus den Originaldateien.
+      </p>
 
       <h3 id="tagging-source">Tags Quellen</h3>
       <img src="img/tagging-sources.png"/>
