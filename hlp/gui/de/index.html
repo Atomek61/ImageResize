@@ -24,8 +24,9 @@
 
       <h1 id="overview">Übersicht</h1>
       <p>
-        <i>ImageResize</i> 4.0 ist eine App zur Größenänderung von JPEG- und PNG-Bildern.
-        Sie kann viele Bilder verarbeiten und daraus Web-Gallerien (Präsentationen) erzeugen.
+        <i>ImageResize</i> 4.0 ist eine App zur Größenänderung von JPEG- und PNG-Bildern
+        (auch Skalierung oder Resampling genannt).
+        Sie kann viele Bilder verarbeiten und daraus Präsentationen (Web-Gallerien) erzeugen.
       </p>
       
       <h2 id="contents">Inhalt</h2>
@@ -37,7 +38,7 @@
       <a href="#watermark">Wasserzeichen</a><br/>
       <a href="#quality">Qualität</a><br/>
       <a href="#tagging">Taggen</a><br/>
-      <a herf="#presentation">Präsentation</a><br/>
+      <a href="#presentation">Präsentation</a><br/>
       <a href="#saving">Öffnen und Speichern</a><br/>
       <a href="#settings">Einstellungen</a><br/>
       <a href="#commandline">Kommandozeilen-Parameter</a><br/>
@@ -47,24 +48,24 @@
         Fähigkeiten  
       </p>
       <ul>
-        <li>Kontextsensitives Hilfesystem</li>
-        <li>Resampling (Verkleinerung) von Listen mit Bilddateien</li>
-        <li>Resampling jedes Bildes in mehrere Größen</li>
+        <li>Skalieren von JPEG- und PNG-Bildern</li>
+        <li>Parallelverarbeitung vieler Bildern</li>
+        <li>Skalieren jedes Bildes in mehrere Größen</li>
+        <li>Vergrößern und verkleinern</li>
+        <li>Erzeugen verschiedener Präsentationen (für den Web-Browser)</li>
         <li>Auswahl der Interpolation für gute Ergebnisse</li>
         <li>Optionales Wasserzeichen</li>
         <li>EXIF Tags (Titel, Timestamp, Copyright)</li>
-        <li>Unterstützt JPEG- und PNG</li>
-        <li>Kontrolle der Kompression</li>
-        <li>Kann Web-Gallerien erzeugen (Präsentation)</li>
         <li>GUI-, CLI- und API-Schnittstelle</li>
         <li>Kontrollierte Dateiumbenennung</li>
         <li>Zufälliges Mischen der Bilder</li>
+        <li>Speichern der Einstellungen in Projektdateien</li>
       </ul>
       <p>
-        Unfähigkeiten
+        Was es nicht kann
       </p>
       <ul>
-        <li>Bildverzerrung</li>
+        <li>Ausschnitte, Bildverzerrung und andere Transformationen</li>
         <li>Formatkonvertierung (JPEG bleibt JPEG und PNG bleibt PNG)</li>
         <li>Alle EXIF tags übertragen</li>
       </ul>
@@ -74,9 +75,9 @@
         Das Programm benötigt mindestens die folgenden 3 Angaben:
       </p>
       <ol>
-        <li>Eine Liste von Bilddateien oder einen Quellordner mit Dateifilter<br/><img src="img/minsrc.png"/></li>
+        <li>Die Liste von Bilddateien oder einen Quellordner mit Dateifilter<br/><img src="img/minsrc.png"/></li>
         <li>Eine oder mehrere Zielgrößen<br/><img src="img/minsize.png"/></li>
-        <li>Ein Zielordner<br/><img src="img/mindst.png"/></li>
+        <li>Den Zielordner<br/><img src="img/mindst.png"/></li>
       </ol>
       <p>
         Drücken Sie am Ende <img class="btn" src="img/minexec.png"/> um das Resampling zu starten.
@@ -88,14 +89,14 @@
         Pfad/Dateiname und kann
       </p>
       <ol>
-        <li>manuell eingegeben werden</li>
+        <li>manuell bearbeitet werden</li>
         <li>im Auswahldialog ausgewählt werden<img class="btn" src="../img/doc-open.png"/> mit &lt;STRG&gt; und &lt;UMSCHALT&gt;</li>
         <li>durch Ziehen von Bilddateien aus dem Windows-Explorer ergänzt werden</li>
         <li>durch Angabe eines Quellordners mit Dateifilter angegeben werden</li>
         <li>relative Pfadangaben beinhalten</li>
       </ol>
       <p>
-        Die Liste kann JPEG- und PNG-Dateien enthalten. Die Dateinamen können beibehalten
+        Die Liste darf JPEG- und PNG-Dateien enthalten. Die Dateinamen können beibehalten
         oder <a href="#renaming">umbenannt</a> werden. Relative Pfade beziehen sich auf
         den Speicherort der Projektdatei (.irs) oder auf das letzte aktuelle Verzeichnis.
       </p>
@@ -103,7 +104,7 @@
       
       <h1 id="sizes"><img src="../img/sizes.png"/> Größen</h1>
       <p>
-        Eine <i>Größe</i> in Pixeln bezieht sich auf die längere Seite eines Bildes. 
+        Eine <i>Größe</i> in Pixeln bezieht sich auf die längere Seite des Bildes. 
       </p>
       <p>
         ImageResize kann mehrere Größen für jedes Bild erzeugen. Geben Sie eine Liste von Größen ein,
@@ -113,7 +114,7 @@
         Sie können alle Größen angeben, die größer als 0 sind.
       </p>
       <p>
-          Sie können die Liste ändern, indem Sie die Löschen-Schaltfläche <img class="btn" src="../img/delete.png"/>
+        Sie können die Liste ändern, indem Sie die Löschen-Schaltfläche <img class="btn" src="../img/delete.png"/>
         klicken. Um eine einzelne Größe zu löschen, markieren Sie zuvor die Größe, oder sie klicken einen
         bereits gewählten Vorschlag erneut.
       </p>
@@ -134,10 +135,9 @@
       
       <h1 id="renaming"><img src="../img/rename.png"/> Umbenennen und Mischen</h1>
       <p>
-        Umbenennen der Zieldateien wird interessant, wenn Sie nicht
-        für jede Größe einen eigenen Ordner erzeugen möchten, sondern
-        alle Dateien in einen Ordner packen möchten. Dann müssen die
-        Zieldateien umbenannt werden, am besten, indem sie die Zielgröße
+        Umbenennen der Zieldateien wird interessant, wenn Sie nicht für jede Größe
+        einen eigenen Ordner, sondern alle Dateien in einem gemeinsamen Ordner erzeugen möchten.
+        Dann müssen die Zieldateien umbenannt werden, am besten, indem sie die Zielgröße
         zur Unterscheidung enthalten.
       </p>
 
@@ -213,7 +213,7 @@
           <td>Die Zielgröße in Pixeln der aktuellen Datei.</td>
         </tr>
         <tr>
-          <td><span class="plh">%FILTER%</span></td>
+          <td><span class="plh">%INTERPOLATION%</span></td>
           <td>Der Name der aktuell gewählten Interpolation.</td>
         </tr>
       </table>
@@ -235,10 +235,11 @@
         Jeder andere konstante Wert wird die Abfolge in der selben Art mischen,
         solange die Länge der Bildliste sich nicht ändert.
       </p>
+      <a class="chfot" href="#contents">Inhalt</a>
       
       <h1 id="watermark"><img src="../img/watermark.png"/> Wasserzeichen</h1>
       <p>
-        Ein Wasserzeichen ist ein halbdurchlässiges kleines Bild, dass dem Zielbild z.B. ein Copyright zufügt.
+        Ein Wasserzeichen ist ein halbdurchlässiges kleines Bild, das dem Zielbild z.B. ein Copyright zufügt.
         Das Bild muss im PNG-Format vorliegen und kann einen Alpha-Channel (Transparenz) haben. Wenn das
         Bild gedruckt wird, kann eine zusätzliche Deckkraft angegeben werden. 20 bis 30 Prozent ist gut
         für eine schwach sichtbare Erscheinung, ab 50 Prozent wird das Wasserbild deutlich sichtbar.
@@ -255,8 +256,8 @@
       </p>
       <p>
         Normalerweise genügt es für alle Zielgrößen eine gemeinsame Datei anzugeben, weil die Größe
-        für jedes Bild angepasst wird. Dafür wird ein Wasserzeichenbild mit guter Auflösung einmalig
-        für alle zu erzeugt.
+        für jedes Bild angepasst wird. Dafür wird ein Wasserzeichenbild in guter Auflösung einmalig
+        für alle erzeugt.
       </p>
       <p>
         Um für jede Zielgröße ein anderes Wasserbild festlegen zu können, müssen Sie
@@ -313,7 +314,7 @@
         den Resampling-Algorithmus (<i>Interpolation</i>) steuern.
       </p>
 
-      <h2 id="quality-resampling">Interpolation</h2>
+      <h2 id="quality">Qualität</h2>
       <p>
         Resampling oder Skalierung bedeutet das Aufbauen eines neuen Bildes mit kleineren oder größeren
         Abmessungen bei gleichem Seitenverhältnis. Dazu müssen die Farben der Pixel des Zielbildes
@@ -359,13 +360,12 @@
         </ul>
       </p>
       <img src="img/quality-PNG.png"/><br/>
-
       <a class="chfot" href="#contents">Inhalt</a>
       
       <h1 id="tagging"><img src="../img/tagging.png"/></span> Taggen</h1>
       <h2>Allgemeines</h2>
       <p>
-        Sie können gewisse Meta-Informationen ihrer Bilder den erzeugten Bildern zufügen. Normalerweise werden
+        Sie können gewisse Meta-Informationen den erzeugten Bildern zufügen. Normalerweise werden
         solche Metainformationen bei Fotos (z.B. JPEG) im EXIF-Format innerhalb der Datei gespeichert.
         Die modernen Fotoapparate legen damit viele technische Informationen ab. Die wichtigsten Meta-Informationen
         für ImageResize sind <i>Titel</i>, <i>Timestamp</i> und <i>Copyright</i>.
@@ -376,22 +376,22 @@
       </p>
       <ul>
         <li>Zum Erhalt Ihres Copyrights bei der Weitergabe von Bildern</li>
-        <li>Als Grundlage für die <a href="#presentation"><i>Präsentation</i> als private oder öffentliche Webseite.</a></li>
+        <li>Als Grundlage für die <a href="#presentation"><i>Präsentation</i> als private oder öffentliche Webseite</a></li>
       </ul>
       <p>
-        Es gibt in ImageResize zwei Strategien solche Tags weiterzugeben:
+        Es gibt in ImageResize folgende Strategien solche Tags weiterzugeben:
       </p>
-      <ul>
+      <ol>
         <li>Als EXIF-Tags innerhalb von JPEG-Bildern</li>
         <li>Als .imgtags-Datei, die jedem Zielverzeichnis, bzw. jeder Bildgröße automatisch beigefügt wird</li>
-      </ul>
+      </ol>
       <p>
-        Es gibt zwei Quellen für Tags:        
+        Es gibt folgende Quellen für Tags:        
       </p>
-      <ul>
+      <ol>
         <li>Die EXIF-Tags der originalen Dateien</li>
         <li>.tags-Dateien, die Sie den Originalbildern beifügen können</li>
-      </ul>
+      </ol>
       <h3>EXIF-Tags</h3>
       <p>
         Es werden derzeit von ImageResize leider nur bestimmte EXIF-Tags unterstützt:
@@ -399,23 +399,17 @@
       <ul>
         <li>
           <h4>Titel</h4>
-          <p>
-            Eine kurze Beschreibung des Bildinhaltes, so wie er von einem Anzeigeprogramm wiedergegeben würde.
-            Der Titel ist als EXIF Tag <i>ImageDescription</i> abgelegt.
-          </p>
+          Eine kurze Beschreibung des Bildinhaltes, so wie er von einem Anzeigeprogramm wiedergegeben würde.
+          Der Titel ist als EXIF Tag <i>ImageDescription</i> abgelegt.
         </li>
         <li>
           <h4>Zeitstempel</h4>
-          <p>
-            Das Aufnahmedatum eines Fotos.
-          </p>
+          Das Aufnahmedatum eines Fotos.
         </li>
         <li>
           <h4>Copyright</h4>
-          <p>
-            Das Copyright-Tag besteht mindestens aus den Teilen <i>Copyright-Zeichen</i> © od. (c), dem <i>Jahr</i> und dem <i>Urheber</i>.
-            Z.B. "© 2024 Mogli Maisenkeyser, www.atomek.de". Hängen Sie eine Webdomäne dran, um keinen Zweifel zu lassen.
-          </p>
+          Das Copyright-Tag besteht mindestens aus den Teilen <i>Copyright-Zeichen</i> © od. (c), dem <i>Jahr</i> und dem <i>Urheber</i>.
+          Z.B. "© 2024 Mogli Maisenkeyser, www.atomek.de". Hängen Sie eine Webdomäne dran, um keinen Zweifel zu lassen.
         </li>
       </ul>
       <p>
@@ -429,12 +423,12 @@
       </p>
       <h3>1. Die Originaldateien mit EXIF-Metainformationen erweitern</h3>
       <p>
-        Das geht nur bei JPEG-, nicht aber bei PNG-Bildern. Sie können dazu externe Programme verwenden:
+        Das geht nur bei JPEG-, nicht aber bei PNG-Bildern. Sie können dazu
       </p>
       <ul>
-        <li>Mit dem Eigenschaften-Dialog im Windows-Explorer. Im Reiter "Details" können sie die Tags <i>Titel</i>,
-          <i>Erfassungsdatum</i> und <i>Copyright</i> in den Originalen ändern.</li>
-        <li>Verwendung eines Programmes eines Drittanbieters - z.B. ExifTool oder RawTherapee</li>
+        <li>im Eigenschaften-Dialog des Windows-Explorers im Reiter "Details" die Tags <i>Titel</i>,
+          <i>Erfassungsdatum</i> und <i>Copyright</i> in ändern.</li>
+        <li>ein Programm wie ExifTool oder RawTherapee verwenden.</li>
       </ul>
       <h3>2. Vorbereiten der Tags in .tags-Dateien</h3>
       <p>
@@ -465,15 +459,18 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
       </p>
  
       <h2>Einstellungen zum Taggen</h2>
-      <h3>Tags speichern</h3>
+      <h3 id="tagssave">Tags speichern</h3>
       <p>
-        Hier bestimmen Sie, ob die gefundenen Tags in .imgtags-Dateien der Zielordner gespeichert werden sollen. Dies ist Voraussetzung
-        für die Erzeugung einer Präsentation und ist daher vorausgewählt. Die .imgtags-Dateien sind klein im Vergleich zu den Bilddateien.
+        Hier bestimmen Sie, ob die gefundenen Tags in .imgtags-Dateien der Zielordner gespeichert werden sollen. Die .imgtags-Dateien
+        sind klein im Vergleich zu den Bilddateien.
+      </p>
+      <p class="hint-box">.imgtags-Dateien sind eine Voraussetzung für die Erzeugung einer Präsentation und werden voreingestellt
+        erzeugt.
       </p>
       <p>
         .tagsreport-Dateien sind allgemeinere CSV-Dateien für zukünftige Zwecke und eigene Programme. Sie werden von ImageResize nicht benötigt.
       </p>
-      <h3>Tags laden</h3>
+      <h3 id="tagsload">Tags laden</h3>
       <p>
         Wenn Sie Tags verarbeiten möchten, müssen Sie angeben woher diese kommen sollen. Sie können entweder aus den EXIF-Informationen der
         JPEGs stammen oder aus ihren .tags-Dateien oder aus beidem. Wenn sie aus beidem stammen haben die .tags-Dateien Vorrang.
@@ -481,7 +478,8 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
         der .tags-Datei, dann wird der Wert aus der .tags-Datei genommen.
       </p>
       <p>
-        Wenn sie Tags speichern wollen aber keine Tags-Quelle angeben, wird ImageResize selbsttätig nach .tags-Dateien suchen.
+        Wenn sie Tags speichern wollen aber keine Tags-Quelle angeben, wird ImageResize selbsttätig nach .tags-Dateien suchen, auch wenn
+        Sie dies nicht ausdrücklich angegeben haben.
       </p>
       <h3>EXIF Tagging</h3>
       <p>
@@ -489,43 +487,45 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
         Meta-Informationen aus den Originaldateien.
       </p>
 
-      <h3 id="tagging-source">Tags Quellen</h3>
-      <img src="img/tagging-sources.png"/>
-      <p>
-        Sie können die Quellen der Tags explizit angeben. Damit haben sie mehr Kontroller darüber, wo die Tags herkommen.
-        Normalerweise erkennt das Programm selbst, welche Quelle erforderlich ist. Wenn sie keine Quelle angeben, wird EXIF angenommen,
-        sofern Sie Tags ausgewählt habe.
-      </p>
-      <p>
-        Wenn Sie .tags-Dateien zu den Original-Dateien gespeichert haben und diese, z.B. für den Tags Report verwenden möchten,
-        müssen Sie die die Checkbox "Suche nach .tags-Dateien" klicken.
-      </p>
-
       <h3 id="tagging-exif">EXIF Tagging</h3>
       <img src="img/tagging-exif.png"/>
       <p>
-        Hier wählen Sie aus, welche Tags in die erzeugten Bilder als EXIF-Tags übernommen werden sollen. Der Bildtitel wird im
+        Hier wählen Sie aus, welche Tags in die erzeugten Bilder als EXIF-Tags übernommen werden sollen. Der Titel wird im
         EXIF-Feld "ImageDescription" abgelegt. Sie können das Copyright-Tag für alle erzeugten Bilder überschreiben.
       </p>
       <p>
-        Wenn Sie als Quelle sowohl EXIF als auch .tags-Dateien angegeben haben, haben die .tags-Dateien Vorrang. Die EXIF-Metainformationen
-        der Originaldateien werden dann nur verwendet, wenn die .tags-Dateien für die betreffende Datei keine Felder definiert haben.
+        Wenn Sie als Quelle sowohl EXIF als auch .tags-Dateien angegeben haben (Tags laden), haben die .tags-Dateien Vorrang.
+        Die EXIF-Metainformationen der Originaldateien werden dann nur verwendet, wenn die .tags-Dateien für die betreffende
+        Datei keine Felder definiert haben.
+      </p>
+      <a class="chfot" href="#contents">Inhalt</a>
+
+      <h1 id="presentation"><img src="../img/cinema.png"/> Präsentation</h1>
+      <p>
+        Die wichtigste Neuerung der Version 4.0 ist die Einführung der Präsentation ihrer Bilder. Die Präsentation
+        ist eine Web-Gallerie, die Sie mit ihrem Webbrowser betrachten können.
       </p>
 
-      <h3 id="tagging-tagsreport">Tags Report</h3>
-      <img src="img/tagging-tagsreport.png"/>
+      <h2>Erzeugen einer Präsentation</h2>
       <p>
-        Zum Abschluss der Erzeugung der Bilddateien kann eine Liste aller ermittelten Tags gespeichert werden. Die Datei wird
-        UTF-8-kodiert als CSV-Datei gespeichert. Beispiel:
+        Angenommen Sie haben zuvor ihre Bilder auf eine geeignete Größe skaliert, wählen Sie den Dialog 
+        Präsentationen... <img class="btn" src="../img/cinema.png"/> .
       </p>
-      <pre class="code">
-Filename, Title, Copyright
-DSC04262.jpg, Labore Sanitas, (c) 2023 ATOMEK
-C:\Bilder\DSC04264.jpg, Leuchtturm am Hafen, (c) 2023 ATOMEK
-C:\Bilder\DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
+      <ol>
+        <li>wählen Sie eine der verfügbaren Präsentationen, z.B. "Info 1.0"</li>
+        <li>öffnen Sie die betreffende .imgtags-Datei mit den Meta-Informationen</li>
+        <li>geben Sie bei den Einstellungen den Titel der Gallerie und die anderen Angaben ein</li>
+        <li>Klicken Sie Erzeugen <img class="btn" src="../img/magicwand2.png"/></li>
+        <li>Schauen Sie sich die erzeugte Präsentation mit <img class="btn" src="../img/webshow.png"/>an</li>
+      </ol>
+
+      <img src="img/presentation-dialog.png"/>
+
       <p>
-        Die erzeugte Datei soll eines Tages als Grundlage für den Slideshow-Nachbrenner dienen.
+        Wenn Sie mehrfach "Anzeigen" klicken, wird ihr Browser möglicherweise jedesmal ein neues Tab öffnen. Sie können
+        statt dessen die aktuell im Browser angezeigte Präsentation im ihrem Browser aktualisieren.
       </p>
+      <a class="chfot" href="#contents">Inhalt</a>
 
       <h1 id="saving">Öffnen und Speichern von Projektdateien</h1>
       <img src="img/buttons-project.png"/>
@@ -543,46 +543,10 @@ C:\Bilder\DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
         Im bequemsten Falle speichert ImageResize stets automatisch die aktuellen Einstellungen.
       </p>
       <p>
-        Sie können dieses Verhalten im Dialog <i>Einstellungen</i> ändern.
+        Sie können dieses Verhalten im Dialog <a href="#settings">Einstellungen</a> ändern.
       </p>
       <a class="chfot" href="#contents">Inhalt</a>
       
-      <h1 id="settings">Einstellungen</h1>
-      <p>
-        Mit <img src="img/button-settings.png"/> kommen sie zum Dialog mit globalen Einstellungen.
-      </p>
-
-      <h2 id="threads">Threads</h2>
-      <p>
-        ImageResize kann durch Multi-Threading die Rechenpower des Systems besser nutzen.<br/>
-        <i>Single</i> bedeutet, dass nur ein Kern genutzt wird - die Verarbeitung wird entsprechend langsam.
-        Sie können bis zur Gesamtzahl der verfügbaren Kerne gehen (=<i>Maximum</i>).
-        Dies kann die Verarbeitungsgeschwindigkeit vervielfachen, z.B. 5-fach bei 12 Hyperthreads statt nur einem.
-      </p>
-      <p>
-        In Systemen mit <i>Hyperthreading</i> ist die Zahl der virtuellen Kerne höher als die der physischen.
-        Wenn Sie 12 Kerne haben, von denen nur 6 physisch sind, bewirkt die Nutzung von 12 Threads
-        gegenüber 6 Threads nur eine Erhöhung der Verarbeitungsgeschwindigkeit um etwa 8 Prozent.
-      </p>
-
-      <h2 id="stoponerr">Anhalten bei Fehler</h2>
-      <p>
-        Diese Options signalisiert den Threads ein Beenden sobald es möglich ist. Das kann bei der 
-        Nutzung mehrerer Kerne etwas verzögert auftreten.
-      </p>
-
-      <h2>Benehmen</h2>
-      <p>
-        Diese Einstellung steuert das Verhalten der Anwendung zur Vermeidung von Datenverlust.
-      </p>
-      <ul>
-        <li><u>Standard</u> - Rückfragen zum Speichern ohne automatische Sicherung der Einstellungen</li>
-        <li><u>Komfortabel</u> - Kein Rückfragen zum Speichern, aber Sicherheit durch automatisches Speichern</li>
-        <li><u>Neurotisch</u> - Rückfragen zum Speichern und automatische Sicherung</li>
-        <li><u>Chuck Norris</u> - Kein Rückfragen, kein automatisches Speichern</li>
-      </ul>
-
-      <a class="chfot" href="#contents">Inhalt</a>
       
       <h1 id="commandline">Kommandozeilen-Parameter</h1>
       <p>
@@ -720,7 +684,7 @@ C:\Bilder\DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
     </div>
 
     <footer>
-      © 2023 Jan Schirrmacher, www.atomek.de
+      © 2024 Jan Schirrmacher, www.atomek.de
     </footer>
   </body>
 </html>

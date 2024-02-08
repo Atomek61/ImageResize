@@ -1022,7 +1022,7 @@ begin
   Params.IndexStart := 1;
   ParamCount := 0;
   if Length(Str)>0 then begin
-    // %FILENAME%, %FILEEXT%, %INDEX:N,W%, %SIZE%, %FILTER%
+    // %FILENAME%, %FILEEXT%, %INDEX:N,W%, %SIZE%, %INTERPOLATION%
     // %0:s        %1:s       %2:s         %3:s    %4:s
     // Default: img%2:s.%1:s
     Params.FmtStr := Str;
@@ -1050,8 +1050,8 @@ begin
     end;
     if IsPlaceholder('SIZE', i) then
       Params.FmtStr := ReplaceStr(Params.FmtStr, '%SIZE%', '%3:s');
-    if IsPlaceholder('FILTER', i) then
-      Params.FmtStr := ReplaceStr(Params.FmtStr, '%FILTER%', '%4:s');
+    if IsPlaceholder('INTERPOLATION', i) then
+      Params.FmtStr := ReplaceStr(Params.FmtStr, '%INTERPOLATION%', '%4:s');
     if ParamCount<Length(Placeholders) then
       Exit(Err(SErrInvalidPlaceholder));
     Params.Enabled := true;
@@ -1067,7 +1067,7 @@ begin
       '%FILEEXT%',  // 1
       '%'+Format('INDEX:%d,%d', [Params.IndexStart, Params.IndexDigits])+'%', // 2
       '%SIZE%',     // 3
-      '%FILTER%'    // 4
+      '%INTERPOLATION%'    // 4
     ]);
   end else
     result := '';

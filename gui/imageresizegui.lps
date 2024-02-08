@@ -18,8 +18,6 @@
         <ComponentName Value="MainDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="70"/>
         <ExtraEditorCount Value="1"/>
         <ExtraEditor1>
           <EditorIndex Value="-1"/>
@@ -54,14 +52,17 @@
       <Unit>
         <Filename Value="..\src\imgres.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="480"/>
-        <CursorPos X="51" Y="495"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="1048"/>
+        <CursorPos X="52" Y="1054"/>
         <UsageCount Value="200"/>
         <Bookmarks Count="2">
           <Item0 X="7" Y="743"/>
           <Item1 X="3" Y="454" ID="1"/>
         </Bookmarks>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\updateutils.pas"/>
@@ -1289,7 +1290,7 @@
         <DefaultSyntaxHighlighter Value="None"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="14">
+    <JumpHistory HistoryIndex="18">
       <Position>
         <Filename Value="maindlg.pas"/>
         <Caret Line="1792" Column="19" TopLine="1762"/>
@@ -1347,6 +1348,22 @@
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="1054" Column="65" TopLine="1021"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="1053" Column="23" TopLine="1022"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="1054" Column="52" TopLine="1023"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="1062" Column="25" TopLine="1050"/>
       </Position>
     </JumpHistory>
     <RunParams>
