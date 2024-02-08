@@ -49,6 +49,14 @@ h4 {font-size: 14pt; font-weight: bold; font-style: italic;}
 
 img:not(.btn) {margin-top: 0.5em;}
 
+.icon-left {
+  float: left; margin-right: 1em;  
+}
+
+.icon-right {
+  float: right; margin-left: 1em;  
+}
+
 .title-box {
   font-family: "Arial";
   position: absolute;
@@ -152,3 +160,4 @@ td {
   padding: 0.5em;
   font: 12pt "Courier New";
 }
+

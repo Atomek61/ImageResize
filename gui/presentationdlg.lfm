@@ -118,8 +118,8 @@ object PresentationDialog: TPresentationDialog
       end
       object PanelManagerFrame: TPanel
         Left = 357
-        Height = 247
-        Top = 64
+        Height = 239
+        Top = 72
         Width = 291
         Anchors = [akTop, akLeft, akRight, akBottom]
         BevelOuter = bvNone
