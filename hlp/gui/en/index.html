@@ -102,7 +102,7 @@
     </p>
     <a class="chfot" href="#contents">Content</a>
 
-    <h1 id="sizes"><img class="icon-left" src="../img/sizes.png"/> Sizes</h1>
+    <h1 id="sizes"><img class="icon-right" src="../img/sizes.png"/>Sizes</h1>
     <p>
       A <i>size</i> in pixels refers to the longer side of the image.
     </p>
@@ -133,7 +133,7 @@
     </p>
     <a class="chfot" href="#contents">Content</a>
 
-    <h1 id="renaming"><img class="icon-left" src="../img/rename.png"/> Rename and shuffle</h1>
+    <h1 id="renaming"><img class="icon-right" src="../img/rename.png"/>Rename and shuffle</h1>
     <p>
       Renaming the target files becomes interesting if you don't have any size
       a separate folder, but rather all files in a common folder.
@@ -166,7 +166,7 @@
       avoided by using the <span class="plh">%SIZE%</span> wildcard.
     </p>
   
-    <h2 id="rencustom">Strategy <b>"Customized"</b></h2>
+    <h2 id="rencustom">Strategy <b>"Custom"</b></h2>
     <p>
       To have the program generate a suitable file name, you can here
       provide your own template. The template contains <i>placeholders</i> for
@@ -234,7 +234,7 @@
     </p>
     <a class="chfot" href="#contents">Content</a>
 
-    <h1 id="watermark"><img class="icon-left" src="../img/watermark.png"/> Watermark</h1>
+    <h1 id="watermark"><img class="icon-right" src="../img/watermark.png"/>Watermark</h1>
     <p>
       A watermark is a semi-transparent small image that, for example, adds a copyright to the target image.
       The image must be in PNG format and can have an alpha channel (transparency). When that
@@ -292,19 +292,25 @@
       <td>100%</td><td><img src="../img/opaque100.jpg"/></td></tr>
     </table>
   
-    <h3 id="mrkx">Horizontal position</h3>
+    <h3 id="mrksize">Size</h3>
+    <p>
+      Size is in percent of the available width.<br/>
+      1 percent is the smallest and 100 percent is the full width.
+    </p>
+
+    <h3 id="mrkx">Horizontal Position</h3>
     <p>
       The position is given as a percentage of the available space and is counted from the top left.<br/>
       0 percent is left-aligned, 50 percent is centered, and 100 percent is right-aligned.
     </p>
 
-    <h3 id="mrky">Vertical position</h3>
+    <h3 id="mrky">Vertical Position</h3>
     <p>
       0 percent is at the top, 50 percent is vertically centered, 100 percent is at the bottom.
     </p>
     <a class="chfot" href="#contents">Content</a>
 
-    <h1 id="quality"><img class="icon-left" src="../img/quality.png"/> Quality</h1>
+    <h1 id="quality"><img class="icon-right" src="../img/quality.png"/>Quality</h1>
     <p>
       The quality of the result depends on these settings.
       You can set the compression level for JPEG and PNG formats and
@@ -319,6 +325,7 @@
       the pixel gets the color value of the pixel closest to it in the original. This leads to
       loss of information and quality when down-scaling and poor quality when up-scaling.
     </p>
+    <img class="icon-left" src="img/quality-interpolation.png"/>
     <p>
       There are 11 resampling algorithms available.
       Apart from the simple <i>Stretch</i>, the algorithms are interpolations.
@@ -333,6 +340,7 @@
     </p>
     
     <h2 id="quality-jpeg">JPEG quality</h2>
+    <img class="icon-right" src="img/quality-JPEG.png"/>
     <p>
       JPEG is a lossy process. A higher quality results
       in larger files. For JPEG, 75 to 95 percent is a good choice. 50% left
@@ -340,9 +348,9 @@
       create, and limit the size to the screen size (1920px) you get
       at 50% quality/compression optimal loading times with acceptable quality.
     </p>
-    <img src="img/quality-JPEG.png"/>
 
     <h2 id="quality-png">PNG quality</h2>
+    <img class="icon-left" src="img/quality-PNG.png"/><br/>
     <p>
       The PNG format always compresses losslessly, but for natural images it results
       in low compression, so it is mainly useful for artificial images where there
@@ -354,14 +362,13 @@
         <li><i>Maximum</i> - highest and slowest compression</li>
       </ul>
     </p>
-    <img src="img/quality-PNG.png"/><br/>
     <a class="chfot" href="#contents">Content</a>
 
-    <h1 id="tagging"><img src="../img/tagging.png"/></span> Tagging</h1>
+    <h1 id="tagging"><img class="icon-right" src="../img/tagging.png"/></span>Tagging</h1>
     <h2>General</h2>
     <p>
-      You can add certain meta information to the generated images. Normally will
-      Such meta information for photos (e.g. JPEG) is saved in EXIF format within the file.
+      You can add certain meta information to the generated images. Normally 
+      such meta information for photos (e.g. JPEG) is saved in EXIF format within the file.
       Modern cameras store a lot of technical information. The most important meta information
       for ImageResize are <i>Title</i>, <i>Timestamp</i> and <i>Copyright</i>.
     </p>
@@ -369,16 +376,16 @@
       Tagging with ImageResize means that images created with ImageResize are provided with
       certain of this information. It is supported by ImageResize for two reasons:
     </p>
-    <ul>
+    <ol>
       <li>To maintain your copyright when sharing images</li>
-      <li>As a basis for the <a href="#presentation"><i>presentation</i> as a private or public website</a></li>
-    </ul>
+      <li>As a basis for the <a href="#presentation"><i>presentation</i></a> as a private or public website</li>
+    </ol>
     <p>
       There are the following strategies for passing such tags in ImageResize:
     </p>
     <ol>
       <li>As EXIF tags within JPEG images</li>
-      <li>As an .imgtags file that is automatically attached to every target directory or every image size</li>
+      <li>As an .imgtags file that is automatically attached to every target directory and every image size</li>
     </ol>
     <p>
       There are the following sources for tags:
@@ -398,7 +405,7 @@
         The title is stored as an EXIF tag <i>ImageDescription</i>.
       </li>
       <li>
-        <h4>Time stamp</h4>
+        <h4>Timestamp</h4>
         The date a photo was taken.
       </li>
       <li>
@@ -412,7 +419,7 @@
       The copyright entries for all images can be overwritten with a new character string.
     </p>
 
-    <h2>Preparing to tag your images</h2>
+    <h2>Preparing to tag your Images</h2>
     <p>
       There are two ways to tag the copies created:
     </p>
@@ -436,24 +443,24 @@
       (Filename, Title, Timestamp, Copyright). Below this there is a line for each image with the fields corresponding to the header line.
     </p>
     <pre class="code">
-      Filename, Title, Copyright
-      DSC04262.jpg, Labore Sanitas, (c) 2023 ATOMEK
-      DSC04264.jpg, Leuchtturm am Hafen, (c) 2023 ATOMEK
-      DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
+Filename, Title, Copyright
+DSC04262.jpg, Labore Sanitas, (c) 2023 ATOMEK
+DSC04264.jpg, Leuchtturm am Hafen, (c) 2023 ATOMEK
+DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
       <p>
-        The first column must be called "Filename" and contains the name of the file without the path.
+        The first column must be named "Filename" and contains the name of the file without the path.
         The order of the other columns and the order of the rows are insignificant. You can also introduce your own fields,
         used in the presentation. If you want a field to contain commas or leading spaces,
         enclose the value in double quotes. The last fields of a line can be missing - no commas need to be included
         follow empty values. The asterisk * stands for a value that should be taken over from the previous line.
       </p>
       <p>
-        If you create multiple .tags files in different directories, they do not have to be structured in the same way.
-        They can have different column names. If values repeat according to the value of the previous line, enter
+        If you create multiple .tags files in different directories, they can differ in their structure and
+        they can have different column names. If values repeat according to the value of the previous line, enter
         * as value.
       </p>
 
-      <h2>Settings for tagging</h2>
+      <h2>Settings for Tagging</h2>
       <h3 id="tagssave">Save tags</h3>
       <p>
         Here you determine whether the found tags should be saved in .imgtags files in the target folders. The .imgtags files

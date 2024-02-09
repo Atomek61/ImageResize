@@ -102,7 +102,7 @@
     </p>
     <a class="chfot" href="#contents">Inhalt</a>
     
-    <h1 id="sizes"><img class="icon-left" src="../img/sizes.png"/> Größen</h1>
+    <h1 id="sizes"><img class="icon-right" src="../img/sizes.png"/>Größen</h1>
     <p>
       Eine <i>Größe</i> in Pixeln bezieht sich auf die längere Seite des Bildes. 
     </p>
@@ -133,7 +133,7 @@
     </p>
     <a class="chfot" href="#contents">Inhalt</a>
     
-    <h1 id="renaming"><img class="icon-left" src="../img/rename.png"/> Umbenennen und Mischen</h1>
+    <h1 id="renaming"><img class="icon-right" src="../img/rename.png"/> Umbenennen und Mischen</h1>
     <p>
       Umbenennen der Zieldateien wird interessant, wenn Sie nicht für jede Größe
       einen eigenen Ordner, sondern alle Dateien in einem gemeinsamen Ordner erzeugen möchten.
@@ -237,7 +237,7 @@
     </p>
     <a class="chfot" href="#contents">Inhalt</a>
     
-    <h1 id="watermark"><img class="icon-left" src="../img/watermark.png"/> Wasserzeichen</h1>
+    <h1 id="watermark"><img class="icon-right" src="../img/watermark.png"/> Wasserzeichen</h1>
     <p>
       Ein Wasserzeichen ist ein halbdurchlässiges kleines Bild, das dem Zielbild z.B. ein Copyright zufügt.
       Das Bild muss im PNG-Format vorliegen und kann einen Alpha-Channel (Transparenz) haben. Wenn das
@@ -295,6 +295,12 @@
       <td>100%</td><td><img src="../img/opaque100.jpg"/></td></tr>
     </table>
     
+    <h3 id="mrksize">Größe</h3>
+    <p>
+      Die Größe wird in Prozent der verfügbaren Breite angegeben.<br/>
+      1 Prozent ist die kleinste und 100 Prozent entspricht der vollen Breite.
+    </p>
+
     <h3 id="mrkx">Horizontale Position</h3>
     <p>
       Die Position wird in Prozent des verfügbaren Raumes angegeben und von links oben gezählt.<br/>
@@ -307,7 +313,7 @@
     </p>
     <a class="chfot" href="#contents">Inhalt</a>
 
-    <h1 id="quality"><img class="icon-left" src="../img/quality.png"/> Qualität</h1>
+    <h1 id="quality"><img class="icon-right" src="../img/quality.png"/> Qualität</h1>
     <p>
       Die Qualität des Ergebnisses hängt von diesen Einstellungen ab.
       Sie können den Kompressionsgrad für JPEG- und für PNG-Formate und
@@ -323,11 +329,11 @@
       Informations- und Qualitätsverlust beim Verkleinern und zu schlechter Qualität beim
       Vergrößern.
     </p>
-    Es stehen 11 Resampling-Algorithmen zur Verfügung.
+    <img class="icon-left" src="img/quality-interpolation.png"/>
     <p>
-      <img class="icon-left" src="img/quality-interpolation.png"/>
+      Es stehen 11 Resampling-Algorithmen zur Verfügung.
       Ausser dem einfachen <i>Stretch</i> sind die Algorithmen Interpolationen.
-      Je nach Skalierung wirken Sie sich unterschiedlich aus.
+      Je nach Skalierung wirken sie sich unterschiedlich aus.
     </p>
     <p>
       Die Voreinstellung ist "Beste Qualität". Dabei wird "Mitchell" für Herunter- und 
@@ -348,7 +354,7 @@
     </p>
   
     <h2 id="quality-png">PNG Qualität</h2>
-    <img class="icon-right" src="img/quality-PNG.png"/><br/>
+    <img class="icon-left" src="img/quality-PNG.png"/>
     <p>
       Das PNG-Format komprimiert immer verlustfrei, ergibt aber bei Naturbildern
       eine geringe Kompression, daher ist es hauptsächlich bei künstlichen Bildern sinnvoll, wo
@@ -374,10 +380,10 @@
       Taggen (engl. "anhängen") bedeutet bei ImageResize, dass Sie den mit ImageResize erzeugten Bildern
       bestimmte dieser Informationen mitgeben. Es wird aus zwei Gründen von ImageResize unterstützt:
     </p>
-    <ul>
+    <ol>
       <li>Zum Erhalt Ihres Copyrights bei der Weitergabe von Bildern</li>
-      <li>Als Grundlage für die <a href="#presentation"><i>Präsentation</i> als private oder öffentliche Webseite</a></li>
-    </ul>
+      <li>Als Grundlage für die <a href="#presentation"><i>Präsentation</i></a> als private oder öffentliche Webseite</li>
+    </ol>
     <p>
       Es gibt in ImageResize folgende Strategien solche Tags weiterzugeben:
     </p>
@@ -500,7 +506,7 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
     </p>
     <a class="chfot" href="#contents">Inhalt</a>
 
-    <h1 id="presentation"><img class="icon-left" src="../img/cinema.png"/> Präsentation</h1>
+    <h1 id="presentation"><img class="icon-right" src="../img/cinema.png"/> Präsentation</h1>
     <p>
       Die wichtigste Neuerung der Version 4.0 ist die Einführung der Präsentation ihrer Bilder. Die Präsentation
       ist eine Web-Gallerie, die Sie mit ihrem Webbrowser betrachten können.
@@ -550,7 +556,7 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
     </p>
     <a class="chfot" href="#contents">Inhalt</a>
     
-    <h1 id="settings"><img src="../img/sprocket.png"/> Einstellungen</h1>
+    <h1 id="settings"><img class="icon-right" src="../img/sprocket.png"/> Einstellungen</h1>
     <h2 id="threads"><img src="../img/boost.png"/> Verarbeitung</h2>
     <ul>
       <li><b>Threads</b> – ImageResize kann die Rechenleistung des Systems durch Multithreading besser nutzen.<br/>
@@ -625,7 +631,7 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
     <a class="chfot" href="#contents">Inhalt</a>
     
     
-    <h1 id="mrkeditor"><img class="icon-left" src="../img/editor.png"/>Wasserzeichen-Editor</h1>
+    <h1 id="mrkeditor"><img class="icon-right" src="../img/editor.png"/>Wasserzeichen-Editor</h1>
     <p>
       Mit dem eingebauten Wasserzeichen-Editor
       können Sie einen Schriftzug mit ein paar nützlichen Dekorationen erzeugen.  
