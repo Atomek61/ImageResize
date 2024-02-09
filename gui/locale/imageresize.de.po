@@ -1215,6 +1215,7 @@ msgid "1"
 msgstr "1"
 
 #: tmaindialog.editrentemplate.hint
+#, fuzzy, badformat
 msgid ""
 "Enter a filename template containing placeholders for special values.\n"
 "This template will be expanded for each resampled image. Insert the\n"
@@ -1732,6 +1733,7 @@ msgid "This presentation has no settings"
 msgstr "Diese Präsentation hat keine Einstellungen"
 
 #: tpresentationmanagerframe.label1.caption
+msgctxt "tpresentationmanagerframe.label1.caption"
 msgid "Settin&gs:"
 msgstr "Einstellun&gen:"
 
@@ -1843,3 +1845,4 @@ msgstr "Speichern"
 msgctxt "webutils.serrinvalidhtmlcolorfmt"
 msgid "Invalid web color '%s'."
 msgstr "Ungültige Web-Farbe '%s'."
+

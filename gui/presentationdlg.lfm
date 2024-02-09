@@ -65,9 +65,9 @@ object PresentationDialog: TPresentationDialog
       object LabelManagers: TLabel
         AnchorSideLeft.Control = ListBoxManagers
         AnchorSideBottom.Control = ListBoxManagers
-        Left = 21
+        Left = 19
         Height = 15
-        Top = 22
+        Top = 8
         Width = 51
         Anchors = [akLeft, akBottom]
         BorderSpacing.Left = 3
@@ -81,10 +81,10 @@ object PresentationDialog: TPresentationDialog
         AnchorSideTop.Control = EditImgTagsFilename
         AnchorSideTop.Side = asrCenter
         AnchorSideBottom.Side = asrBottom
-        Left = 590
+        Left = 587
         Height = 25
         Hint = 'Select the .imgtags file in the folder of the images to be dispayed.'
-        Top = 39
+        Top = 25
         Width = 30
         BorderSpacing.Left = 1
         Images = ImagesModule.ImageList20x20
@@ -94,10 +94,10 @@ object PresentationDialog: TPresentationDialog
         TabOrder = 3
       end
       object EditImgTagsFilename: TEdit
-        Left = 357
+        Left = 354
         Height = 23
         Hint = 'The .imgtags file has important infomation how to create the presentation.'
-        Top = 40
+        Top = 26
         Width = 232
         Anchors = [akTop, akLeft, akRight]
         TabOrder = 2
@@ -106,9 +106,9 @@ object PresentationDialog: TPresentationDialog
       object LabelTargetFolder: TLabel
         AnchorSideLeft.Control = EditImgTagsFilename
         AnchorSideBottom.Control = EditImgTagsFilename
-        Left = 360
+        Left = 357
         Height = 15
-        Top = 22
+        Top = 8
         Width = 70
         Anchors = [akLeft, akBottom]
         BorderSpacing.Left = 3
@@ -117,10 +117,10 @@ object PresentationDialog: TPresentationDialog
         FocusControl = EditImgTagsFilename
       end
       object PanelManagerFrame: TPanel
-        Left = 357
-        Height = 239
-        Top = 72
-        Width = 291
+        Left = 354
+        Height = 240
+        Top = 64
+        Width = 292
         Anchors = [akTop, akLeft, akRight, akBottom]
         BevelOuter = bvNone
         Caption = 'This presentation has no settings'
@@ -134,10 +134,10 @@ object PresentationDialog: TPresentationDialog
         AnchorSideTop.Control = EditImgTagsFilename
         AnchorSideTop.Side = asrCenter
         AnchorSideBottom.Side = asrBottom
-        Left = 620
+        Left = 617
         Height = 25
         Hint = 'Copies the current target folder from the main dialog.'
-        Top = 39
+        Top = 25
         Width = 30
         BorderSpacing.Left = 31
         Images = ImagesModule.ImageList20x20
@@ -147,9 +147,9 @@ object PresentationDialog: TPresentationDialog
         TabOrder = 4
       end
       object ListBoxManagers: TListBox
-        Left = 18
-        Height = 184
-        Top = 40
+        Left = 16
+        Height = 188
+        Top = 26
         Width = 326
         Anchors = [akTop, akLeft, akBottom]
         Font.Height = -16
@@ -162,9 +162,9 @@ object PresentationDialog: TPresentationDialog
         OnDrawItem = ListBoxManagersDrawItem
       end
       object PanelInfo: TPanel
-        Left = 19
+        Left = 16
         Height = 80
-        Top = 231
+        Top = 226
         Width = 326
         Anchors = [akLeft, akBottom]
         BevelOuter = bvNone
@@ -198,14 +198,15 @@ object PresentationDialog: TPresentationDialog
     end
     object PanelControls: TPanel
       Left = 652
-      Height = 282
-      Top = 32
+      Height = 290
+      Top = 16
       Width = 126
       Align = alRight
       Anchors = []
-      BorderSpacing.Top = 32
+      BorderSpacing.Top = 16
+      BorderSpacing.Bottom = 8
       BevelOuter = bvNone
-      ClientHeight = 282
+      ClientHeight = 290
       ClientWidth = 126
       TabOrder = 1
       object ButtonWebShow: TBitBtn
@@ -228,7 +229,7 @@ object PresentationDialog: TPresentationDialog
         Left = 8
         Height = 30
         Hint = 'Closes the dialog and saves the settings'
-        Top = 214
+        Top = 222
         Width = 110
         Align = alBottom
         Anchors = []
@@ -244,7 +245,7 @@ object PresentationDialog: TPresentationDialog
         Left = 8
         Height = 30
         Hint = 'Closes the dialog and discards the settings'
-        Top = 252
+        Top = 260
         Width = 110
         Align = alBottom
         Anchors = []

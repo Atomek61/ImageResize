@@ -1641,6 +1641,7 @@ msgid "This presentation has no settings"
 msgstr ""
 
 #: tpresentationmanagerframe.label1.caption
+msgctxt "tpresentationmanagerframe.label1.caption"
 msgid "Settin&gs:"
 msgstr ""
 
