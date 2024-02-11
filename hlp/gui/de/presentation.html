@@ -50,7 +50,67 @@
       <li>Betätigen Sie Erzeugen... <img class="btn" src="../img/magicwand2.png"/></li>
     </ol>
 
-  </div>
+    <h1 id="howwoks">Arbeitsweise</h1>
+    <p>
+      ImageResize benötigt für die Erzeugung die folgenden Dateien:
+      <ol>
+        <li>JPEG oder PNG Dateien, die in einem gemeinsamen Order liegen</li>
+        <li>Eine .imgtags-Datei, die von ImageResize beim Resampling erzeugt wird</li>
+        <li>Eine .prd-Präsentationsdatei, die im Verzeichnis <i>Presentation</i> der Installation liegt</li>
+        <li>Eine oder mehrere HTML/CSS/JS-Dateien als Vorlagen, sowie ev. weitere Dateien</li>
+      </ol>
+    </p>
+    <p>
+      ImageResize ist gut geeignet, um große Fotos (z.b. 12 MPixel) in handlichere (2 MPixel) für Bildschirmauflösung
+      zu konvertieren. Dabei kann es EXIF- und .tags-Informationen verwenden um z.B. Bildtitel, Copyright-Infos, Datum
+      und andere Informationen in .imgtags-Dateien zu speichern.
+    </p>
+    <p>
+      Die .imgtags-Dateien sind Tabellen mit kommaseparierten Texten, die die Informations-Basis für die Erzeugung
+      der Web-Gallerien enthalten.
+    </p>
+    <p>
+      ImageResize enthält einen <i>Präsentations-Manager</i>, der eine Liste von <i>Präsentationen</i> laden und
+      anbieten kann. Normalerweise beschreibt eine .prd-Datei genau eine Präsentation. In der .prd-Datei befinden
+      sich alle Informationen, die einen Präsentations-Prozessor steuern. Derzeit gibt es nur einen
+      Präsentations-Prozessor - den Gallerie-Prozessor, der wie folgt arbeitet, nachdem er die oben genannten
+      Informationen (.imgtags-Datei, Bilder, Präsentations-Parameter und ein Zielverzeichnis) bekommen hat:
+    </p>
+    <ol>
+      <li>Laden eines HTML- oder JS-Fragmentes</li>
+      <li>Aufbauen der zu jedem Fragment gehörenden Liste</li>
+      <li>Laden der HTML- oder anderer Vorlagen</li>
+      <li>Ersetzen der Listen-Platzhalter in den Vorlagen durch die erzeugten Listen</li>
+      <li>Ersetzen von Platzhaltern auf Dokumenten-Ebene</li>
+      <li>Speichern der so prozessiertern Vorlagen</li>
+      <li>Kopieren weiterer erforderlicher Dateien</li>
+    </ol>
+    <h2>Domänen</h2>
+    <p>
+      Es gibt zwei Domänen, die jede eine eigene Liste von Variablen kennen:
+    </p>
+    <ol>
+      <li>Bild-Domäne mit den Bild-Variablen</li>
+      <li>Dokumenten-Domäne mit den Dokumenten-Variablen</li>
+    </ol>
+    <p>
+      Der Gallerie-Prozessor baut zunächst in der Bild-Domäne Listen auf, indem er für jedes Bild ein Fragment nimmt und darin
+      alle Platzhalter der Bild-Variablen durch ihre Werte ersetzt. Ist die Liste vollständig, wird sie zunächst als Dokumenten-Variable
+      gespeichert.
+    </p>
+    <p>
+      In der <i>Dokumenten-Domäne</i> lädt der Prozessor die Vorlagen und ersetzt die Platzhalter der Variablen der Dokumenten-Domäne
+      durch ihre Wert. Dabei setzt er auch die zuvor in der Bild-Domäne erzeugten Listen ein.
+    </p>
+    <h3>Beispiel</h3>
+    <p>
+      Die einfache Präsentation <i>Simple</i> ist zur Demonstration gedacht:
+    </p>
+
+
+
+
+</div>
 
   <footer>
     © 2024 Jan Schirrmacher, www.atomek.de
