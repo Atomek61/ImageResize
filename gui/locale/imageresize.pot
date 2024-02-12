@@ -1390,10 +1390,6 @@ msgstr ""
 msgid "Save Tags Report as"
 msgstr ""
 
-#: tmaindialog.toolbutton2.caption
-msgid "ToolButton2"
-msgstr ""
-
 #: tmaindialog.toolbuttonabout.hint
 msgid "License and Vendor Infos"
 msgstr ""

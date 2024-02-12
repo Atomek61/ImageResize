@@ -1,0 +1,15 @@
+[Common]
+Type=WAMS
+Version=200
+
+[Settings]
+Text=© Atomek 2024
+Font=96Pt, "Arial", bold
+FontColor=$00FF00
+Shadow=1
+ShadowBlur=13
+ShadowColor=$000000
+ShadowQuality=1
+Outline=1
+OutlineColor=$80FFEC
+OutlineWidth=8

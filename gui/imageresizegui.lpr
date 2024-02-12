@@ -15,7 +15,7 @@ uses
   tags, settings, animator, logging, imagesmod, presentations, galleryprocessor,
   appsettings, presentationmanagerfrm, colorfrm, tagids, webutils,
   settingseditor, webcolors, webcoloreditor, language, inttypes, stringutils,
-  imgutils, colorsetting;
+  imgutils, colorsetting, controlshot;
 
 {$R *.res}
 

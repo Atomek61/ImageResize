@@ -34,6 +34,7 @@ object MainDialog: TMainDialog
     ParentBackground = False
     ParentColor = False
     TabOrder = 1
+    OnClick = PanelControlsClick
     object PanelSource: TPanel
       Left = 7
       Height = 368
@@ -83,12 +84,12 @@ object MainDialog: TMainDialog
         Top = 70
         Width = 384
         TabStop = False
-        ActivePage = TabSheetSrcFolder
+        ActivePage = TabSheetSrcFilenames
         Align = alClient
         BorderSpacing.Around = 4
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 1
+        TabIndex = 0
         TabOrder = 1
         object TabSheetSrcFilenames: TTabSheet
           ClientHeight = 286
@@ -256,14 +257,14 @@ object MainDialog: TMainDialog
         Top = 4
         Width = 393
         TabStop = False
-        ActivePage = TabSheetTagging
+        ActivePage = TabSheetQuality
         Align = alClient
         BorderSpacing.Around = 4
         ImagesWidth = 32
         MultiLine = True
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 4
+        TabIndex = 3
         TabOrder = 1
         Options = [nboMultiLine]
         object TabSheetSizes: TTabSheet
@@ -1520,48 +1521,47 @@ object MainDialog: TMainDialog
       Action = ActionExecute
     end
     object ToolButtonHelp: TToolButton
-      Left = 662
+      Left = 668
       Top = 0
       Action = ActionHelp
     end
-    object ToolButton8: TToolButton
-      Left = 657
+    object ToolButtonSep0: TToolButton
+      Left = 660
       Height = 64
       Top = 0
       Style = tbsDivider
     end
     object ToolButtonEditor: TToolButton
-      Left = 494
+      Left = 497
       Top = 0
       Action = ActionEditWatermark
     end
     object ToolButtonAbout: TToolButton
-      Left = 742
+      Left = 748
       Hint = 'License and Vendor Infos'
       Top = 0
       Action = ActionAbout
     end
     object ToolButtonSlideshowAfterburner: TToolButton
-      Left = 574
+      Left = 577
       Top = 0
       Action = ActionPresentation
     end
     object ToolButtonSettings: TToolButton
-      Left = 414
+      Left = 417
       Top = 0
       Action = ActionSettings
     end
-    object ToolButton1: TToolButton
+    object ToolButtonSep2: TToolButton
       Left = 409
       Height = 64
       Top = 0
       Style = tbsDivider
     end
-    object ToolButton2: TToolButton
+    object ToolButtonSep1: TToolButton
       Left = 321
       Height = 64
       Top = 0
-      Caption = 'ToolButton2'
       Style = tbsSeparator
     end
   end

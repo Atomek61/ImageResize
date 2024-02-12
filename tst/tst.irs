@@ -8,40 +8,42 @@ TargetFolder=txtX
 ImgTagsFilename=tst10\.imgtags
 
 [Presentation.Pinboard100]
-Title=Header
+Title=Nordsee
 Width=400
-Copyright=Footer
-FontColor=0
-CardColor=16777215
-HeaderColor=8610360
-BackgroundColor=15002586
+Copyright=(c) 2023 Atomek.de
+FontColor=#000000
+CardColor=#FFFFFF
+HeaderColor=#386283
+BackgroundColor=#DAEBE4
 
 [Presentation.Slideshow200]
-Title=Kirchen
-FontColor=#E4EBDA
-ControlsColor=#A0DD84
+Title=Die schöne Nordsee
+FontColor=#126998
+ControlsColor=#C023C5
 BackgroundColor=#36361B
+SymbolSize=8
+ImgBkgColor=#36361B
 
 [Project]
 Description=
 Source=Filenames
-SourceFolder=srcI
+SourceFolder=
 SourceMasks=*.jpg;*.png
-SourceFilenames=srcI\DSC02329.jpg|srcI\DSC02361.jpg|srcI\DSC02380.jpg|
-Sizes=480, 1280
-TargetFolder=churches%SIZE%
+SourceFilenames=srcA\IMG2742.jpg|srcA\IMG2743.jpg|srcA\IMG2744.png|srcA\IMG2745.jpg|srcA\IMG2746.jpg|
+Sizes=480, 1200
+TargetFolder=tst6\img%SIZE%
 Interpolation=Default
 JPEGQuality=Default
 PNGCompression=Default
-MrkEnabled=0
-MrkFilename=
-MrkSize=20
-MrkX=98
-MrkY=98
+MrkEnabled=1
+MrkFilename=watermarks\atomek2024.png
+MrkSize=50
+MrkX=47
+MrkY=34
 MrkOpacity=50
 RenEnabled=0
-RenSimple=1
-RenAdvanced=0
+RenSimple=0
+RenAdvanced=1
 RenCustom=0
 RenTemplate=img%INDEX:1,3%.%FILEEXT%
 ShuffleEnabled=0
@@ -53,5 +55,14 @@ TagTimestamp=0
 TagCopyright=0
 Copyright=
 TagsReportEnabled=0
-ImageInfosEnabled=1
+ImageInfosEnabled=0
 NoCreate=0
+
+[Presentation.Info100]
+Title=Hildesheimer Kirchen
+Copyright=(c) Atomek.de
+HeaderColor=#386283
+BackgroundColor=#DAEBE4
+CardColor=#210C21
+TableFontColor=#EDF0BF
+TableColor=#782C78

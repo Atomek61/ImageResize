@@ -74,6 +74,10 @@
             <CompilerMessages>
               <IgnoredMessages idx5024="True"/>
             </CompilerMessages>
+            <CustomOptions Value="-d_DEBUG"/>
+            <OtherDefines Count="1">
+              <Define0 Value="_DEBUG"/>
+            </OtherDefines>
           </Other>
         </CompilerOptions>
       </Item>
@@ -313,6 +317,10 @@
       </Unit>
       <Unit>
         <Filename Value="..\src\colorsetting.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\controlshot.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
     </Units>

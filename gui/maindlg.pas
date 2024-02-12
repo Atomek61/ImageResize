@@ -22,7 +22,7 @@ uses
   BGRABitmapTypes, BGRASpeedButton, BGRAGraphicControl, RichMemo,
   Generics.Collections, MrkEditDlg, WinDirs, UpdateUtils, AppSettings, Logging,
   LoggingRichMemo, StringArrays, Presentations, PresentationDlg, Settings,
-  TagIds, LazFileUtils, Translations, Language;
+  TagIds, LazFileUtils, Translations, Language, ControlShot;
 
 const
   LM_RUN                = LM_USER + 1;
@@ -243,8 +243,8 @@ type
     ToolBarSrc: TToolBar;
     ToolBarParameters: TToolBar;
     ToolBarSizeButtons: TToolBar;
-    ToolButton1: TToolButton;
-    ToolButton2: TToolButton;
+    ToolButtonSep2: TToolButton;
+    ToolButtonSep1: TToolButton;
     ToolButtonNew: TToolButton;
     ToolButtonSlideshowAfterburner: TToolButton;
     ToolButtonSrcFilenames: TToolButton;
@@ -261,7 +261,7 @@ type
     ToolButtonSave: TToolButton;
     ToolButtonExecute: TToolButton;
     ToolButtonHelp: TToolButton;
-    ToolButton8: TToolButton;
+    ToolButtonSep0: TToolButton;
     ToolButtonEditor: TToolButton;
     UpDownMrkOpacity: TUpDown;
     UpDownMrkSize: TUpDown;
@@ -313,6 +313,7 @@ type
     procedure PaintBoxMrkPreviewMouseWheel(Sender: TObject; Shift: TShiftState;
       WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
     procedure PaintBoxMrkPreviewPaint(Sender: TObject);
+    procedure PanelControlsClick(Sender: TObject);
     procedure ProgressBarPaint(Sender: TObject);
     procedure TimerProgressBarOffTimer(Sender: TObject);
     procedure EditSizesExit(Sender: TObject);
@@ -1557,6 +1558,42 @@ begin
     end;
     Bmp.Free;
   end;
+end;
+
+procedure TMainDialog.PanelControlsClick(Sender: TObject);
+
+begin
+{$IFDEF _DEBUG}
+//  ControlShot.SnapshotFolder := ExtractFilepath(Application.Exename) + '..\hlp\gui\'+TLanguage.Code+'\img';
+  ActionNew.Execute;
+  ControlShot.SnapshotFolder := 'C:\TEMP\hlp';
+  ToolButtonSrcFilenames.Click;
+  with MemoSrcFilenames.Lines do begin
+    Clear;
+    Add('myphotos\DSC06237.jpg');
+    Add('myphotos\DSC06238.jpg');
+    Add('myphotos\DSC06227.jpg');
+    Add('myphotos\DSC06403.jpg');
+  end;
+  Snapshot('minsrc', PanelSource, -2, -40, 320, 165);
+  ToolButtonSizes.Click;
+  EditSizes.Text := '360';
+  Snapshot('minsize', PanelParams, -2, -40, 340, 95);
+  EditTargetFolder.Text := 'mygallery\img%SIZE%';
+  Snapshot('mindst', PanelDestination, -200, -8, 340, 60);
+  Snapshot('minexec', ButtonExecute, 0, 0, 0, 0);
+  Snapshot('buttons-project', ToolButtonNew, 0, 0, 340, ToolButtonNew.Height);
+  EditSizes.Text := '120, 800, 1920';
+  Snapshot('multiplesizes', EditSizes, -6, -24, 200, 32);
+  ToolButtonQuality.Click;
+  ComboBoxInterpolation.ItemIndex := 7;
+  ComboBoxInterpolation.DroppedDown := true;
+  DelayForSnapshot(4000);
+  Snapshot('quality-interpolation', GroupBoxInterpolation, 0, 0, 0, 300);
+  //if not Assigned(MrkEditDialog) then
+  //Snapshot('buttons-watermark', MrkEditDialog.ToolBar, 0, 0, MrkEditDialog.ToolBar.Width, MrkEditDialog.ToolBar.Height);
+
+{$ENDIF}
 end;
 
 procedure TMainDialog.ProgressBarPaint(Sender: TObject);

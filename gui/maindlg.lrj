@@ -87,7 +87,6 @@
 {"hash":29454611,"name":"tmaindialog.toolbuttonnew.hint","sourcebytes":[82,101,115,101,116,32,97,108,108,32,115,101,116,116,105,110,103,115,32,116,111,32,100,101,102,97,117,108,116,32,118,97,108,117,101,115],"value":"Reset all settings to default values"},
 {"hash":208450213,"name":"tmaindialog.toolbuttonsaveas.hint","sourcebytes":[83,97,118,101,32,99,117,114,114,101,110,116,32,115,101,116,116,105,110,103,115,32,116,111,32,97,110,111,116,104,101,114,32,102,105,108,101],"value":"Save current settings to another file"},
 {"hash":232652851,"name":"tmaindialog.toolbuttonabout.hint","sourcebytes":[76,105,99,101,110,115,101,32,97,110,100,32,86,101,110,100,111,114,32,73,110,102,111,115],"value":"License and Vendor Infos"},
-{"hash":160486418,"name":"tmaindialog.toolbutton2.caption","sourcebytes":[84,111,111,108,66,117,116,116,111,110,50],"value":"ToolButton2"},
 {"hash":177351,"name":"tmaindialog.actionnew.caption","sourcebytes":[38,78,101,119],"value":"&New"},
 {"hash":202838350,"name":"tmaindialog.actionnew.hint","sourcebytes":[82,101,115,101,116,32,97,108,108,32,115,101,116,116,105,110,103,115,32,116,111,32,100,101,102,97,117,108,116,32,118,97,108,117,101,115,46],"value":"Reset all settings to default values."},
 {"hash":2844350,"name":"tmaindialog.actionopen.caption","sourcebytes":[38,79,112,101,110],"value":"&Open"},
