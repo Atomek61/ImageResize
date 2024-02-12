@@ -256,14 +256,14 @@ object MainDialog: TMainDialog
         Top = 4
         Width = 393
         TabStop = False
-        ActivePage = TabSheetRenaming
+        ActivePage = TabSheetTagging
         Align = alClient
         BorderSpacing.Around = 4
         ImagesWidth = 32
         MultiLine = True
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 1
+        TabIndex = 4
         TabOrder = 1
         Options = [nboMultiLine]
         object TabSheetSizes: TTabSheet
@@ -1177,7 +1177,7 @@ object MainDialog: TMainDialog
             Top = 4
             Width = 377
             HelpType = htKeyword
-            HelpKeyword = 'HTML/index.html#tagging-tagsreport'
+            HelpKeyword = 'HTML/index.html#tagging-tagssave'
             Align = alTop
             AutoSize = True
             BorderSpacing.Around = 4
@@ -1205,6 +1205,7 @@ object MainDialog: TMainDialog
               Hint = 'A .tagsreport file contains all the gathered tags of all origin images.'#13#10#13#10'The source may be the EXIF tags or from .tags files.'
               Top = 27
               Width = 364
+              HelpType = htKeyword
               Align = alTop
               BorderSpacing.Left = 9
               BorderSpacing.Top = 4
@@ -1219,7 +1220,7 @@ object MainDialog: TMainDialog
             Top = 82
             Width = 377
             HelpType = htKeyword
-            HelpKeyword = 'HTML/index.html#tagging-source'
+            HelpKeyword = 'HTML/index.html#tagsload'
             Align = alTop
             AutoSize = True
             BorderSpacing.Around = 4
@@ -1680,9 +1681,8 @@ object MainDialog: TMainDialog
     Top = 568
   end
   object HTMLHelpDatabase: THTMLHelpDatabase
-    BaseURL = 'file://hlp'
     AutoRegister = True
-    KeywordPrefix = 'HTML/'
+    KeywordPrefix = 'HTML'
     Left = 760
     Top = 16
   end

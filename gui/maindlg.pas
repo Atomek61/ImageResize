@@ -92,7 +92,7 @@ const
 
 resourcestring
   SCptDependenciesFmt = 'Build with Lazarus %s, BGRABitmap %s, dExif %s, RichMemo';
-  SUrlWebHelp = 'http://www.atomek.de/imageresize/hlp35/gui/en';
+  SUrlWebHelp = 'http://www.atomek.de/imageresize/hlp40/gui/en';
   SLocDirHelp = 'hlp\gui\en';
 
 type
