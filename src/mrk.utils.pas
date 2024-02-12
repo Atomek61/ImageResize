@@ -30,6 +30,7 @@ type
     ShadowQuality :integer;
     Outline :boolean;
     OutlineColor :TColor;
+    OutlineWidth :integer;
     procedure Defaults;
     procedure SaveToIni(Ini :TIniFile);
     procedure LoadFromIni(Ini :TIniFile);
@@ -58,6 +59,7 @@ begin
   Renderer.ShadowQuality := TRadialBlurType(Params.ShadowQuality);
   Renderer.OutlineVisible := Params.Outline;
   Renderer.OutlineColor := Params.OutlineColor;
+  Renderer.OutlineWidth := Params.OutlineWidth;
   Renderer.OuterOutlineOnly := True;
   Img.FontRenderer := renderer;
   Img.FontName := Params.FontName;
@@ -118,6 +120,7 @@ begin
   ShadowQuality := 0;
   Outline := true;
   OutlineColor := clBlack;
+  OutlineWidth := 4;
 end;
 
 procedure TWatermarkParams.SaveToIni(Ini: TIniFile);
@@ -131,6 +134,7 @@ begin
   Ini.WriteInteger('Settings', 'ShadowQuality', ShadowQuality);
   Ini.WriteBool('Settings', 'Outline', Outline);
   Ini.WriteString('Settings', 'OutlineColor', '$'+Format('%6.6x', [UInt32(OutlineColor)]));
+  Ini.WriteString('Settings', 'OutlineWidth', IntToStr(OutlineWidth));
 end;
 
 procedure TWatermarkParams.LoadFromIni(Ini: TIniFile);
@@ -148,6 +152,7 @@ begin
   ShadowQuality := Ini.ReadInteger('Settings', 'ShadowQuality', ShadowQuality);
   Outline := Ini.ReadBool('Settings', 'Outline', Outline);
   OutlineColor := Ini.ReadInteger('Settings', 'OutlineColor', UInt32(OutlineColor));
+  OutlineWidth := Ini.ReadInteger('Settings', 'OutlineWidth', UInt32(OutlineWidth));
 end;
 
 end.

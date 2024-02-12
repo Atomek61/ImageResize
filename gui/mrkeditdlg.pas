@@ -51,6 +51,7 @@ type
     ColorBoxShadowColor: TColorBox;
     ComboBoxShadowQuality: TComboBox;
     EditShadowBlur: TEdit;
+    EditOutlineWidth: TEdit;
     EditText: TEdit;
     EditFont: TEdit;
     FontDialog: TFontDialog;
@@ -63,6 +64,7 @@ type
     Label5: TLabel;
     Label6: TLabel;
     Label7: TLabel;
+    Label8: TLabel;
     OpenDialog: TOpenDialog;
     PaintBoxPreview: TPaintBox;
     PanelSettings: TPanel;
@@ -82,6 +84,7 @@ type
     ToolButton8: TToolButton;
     ToolButton9: TToolButton;
     UpDownShadowBlur: TUpDown;
+    UpDownOutlineWidth: TUpDown;
     procedure ActionHelpExecute(Sender: TObject);
     procedure ButtonSaveClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -234,6 +237,7 @@ begin
     ShadowQuality := ComboBoxShadowQuality.ItemIndex;
     Outline := CheckBoxOutline.Checked;
     OutlineColor := ColorBoxOutlineColor.Selected;
+    OutlineWidth := UpDownOutlineWidth.Position;
   end;
   result := true;
 end;
@@ -259,6 +263,7 @@ begin
     ComboBoxShadowQuality.ItemIndex := ShadowQuality;
     CheckBoxOutline.Checked := Outline;
     ColorBoxOutlineColor.Selected := OutlineColor;
+    UpDownOutlineWidth.Position := OutlineWidth;
   end;
   FDirty := OldDirty;
 end;

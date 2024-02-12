@@ -1,13 +1,13 @@
 object MrkEditDialog: TMrkEditDialog
   Left = 1002
-  Height = 429
+  Height = 487
   Top = 366
   Width = 658
   HelpType = htKeyword
   HelpKeyword = 'HTML/index.html#mrkeditor'
   BorderIcons = [biSystemMenu]
   Caption = 'Watermark Image Editor'
-  ClientHeight = 429
+  ClientHeight = 487
   ClientWidth = 658
   Constraints.MinHeight = 429
   Constraints.MinWidth = 658
@@ -19,13 +19,13 @@ object MrkEditDialog: TMrkEditDialog
   LCLVersion = '3.0.0.3'
   object PanelPreview: TPanel
     Left = 8
-    Height = 133
+    Height = 148
     Top = 68
     Width = 642
     Align = alClient
     BorderSpacing.Around = 8
     BevelOuter = bvLowered
-    ClientHeight = 133
+    ClientHeight = 148
     ClientWidth = 642
     Color = clWhite
     ParentBackground = False
@@ -33,7 +33,7 @@ object MrkEditDialog: TMrkEditDialog
     TabOrder = 1
     object ImageLandscape: TImage
       Left = 1
-      Height = 131
+      Height = 146
       Top = 1
       Width = 640
       Align = alClient
@@ -2820,7 +2820,7 @@ object MrkEditDialog: TMrkEditDialog
     end
     object PaintBoxPreview: TPaintBox
       Left = 1
-      Height = 131
+      Height = 146
       Top = 1
       Width = 640
       Align = alClient
@@ -2906,12 +2906,12 @@ object MrkEditDialog: TMrkEditDialog
   end
   object PanelSettings: TPanel
     Left = 0
-    Height = 173
-    Top = 209
+    Height = 216
+    Top = 224
     Width = 658
     Align = alBottom
     BevelOuter = bvNone
-    ClientHeight = 173
+    ClientHeight = 216
     ClientWidth = 658
     TabOrder = 2
     object Bevel3: TBevel
@@ -2927,7 +2927,7 @@ object MrkEditDialog: TMrkEditDialog
     end
     object Bevel2: TBevel
       Left = 376
-      Height = 118
+      Height = 156
       Top = 48
       Width = 9
       Anchors = [akTop, akLeft, akRight]
@@ -2942,8 +2942,6 @@ object MrkEditDialog: TMrkEditDialog
       Hint = 'Thin border around the text letters'
       Top = 120
       Width = 57
-      HelpType = htKeyword
-      HelpKeyword = 'HTML/index.html#mrkoutline'
       Caption = 'Outline'
       Checked = True
       State = cbChecked
@@ -2955,17 +2953,15 @@ object MrkEditDialog: TMrkEditDialog
       Height = 19
       Top = 52
       Width = 60
-      HelpType = htKeyword
-      HelpKeyword = 'HTML/index.html#mrkshadow'
       Anchors = [akTop, akRight]
       Caption = 'Shadow'
       Checked = True
       State = cbChecked
-      TabOrder = 7
+      TabOrder = 8
       OnChange = EditChanged
     end
     object Label5: TLabel
-      Left = 32
+      Left = 18
       Height = 15
       Top = 147
       Width = 32
@@ -2978,8 +2974,6 @@ object MrkEditDialog: TMrkEditDialog
       Height = 22
       Top = 144
       Width = 112
-      HelpType = htKeyword
-      HelpKeyword = 'HTML/index.html#mrkoutlinecolor'
       DefaultColorColor = clNone
       NoneColorColor = clWhite
       Selected = clNone
@@ -3035,7 +3029,7 @@ object MrkEditDialog: TMrkEditDialog
       Min = 0
       OnChanging = UpDownShadowBlurChanging
       Position = 6
-      TabOrder = 10
+      TabOrder = 11
     end
     object EditShadowBlur: TEdit
       Left = 516
@@ -3043,10 +3037,8 @@ object MrkEditDialog: TMrkEditDialog
       Hint = 'Width in pixels of the blur'
       Top = 109
       Width = 104
-      HelpType = htKeyword
-      HelpKeyword = 'HTML/index.html#mrkblur'
       Anchors = [akTop, akRight]
-      TabOrder = 9
+      TabOrder = 10
       OnChange = EditChanged
     end
     object Label6: TLabel
@@ -3076,8 +3068,6 @@ object MrkEditDialog: TMrkEditDialog
       Height = 22
       Top = 76
       Width = 123
-      HelpType = htKeyword
-      HelpKeyword = 'HTML/index.html#mrkshadowcolor'
       DefaultColorColor = clNone
       NoneColorColor = clWhite
       Selected = clNone
@@ -3085,7 +3075,7 @@ object MrkEditDialog: TMrkEditDialog
       Anchors = [akTop, akRight]
       ItemHeight = 16
       OnChange = EditChanged
-      TabOrder = 8
+      TabOrder = 9
     end
     object Label3: TLabel
       Left = 17
@@ -3101,8 +3091,6 @@ object MrkEditDialog: TMrkEditDialog
       Height = 22
       Top = 80
       Width = 112
-      HelpType = htKeyword
-      HelpKeyword = 'HTML/index.html#mrkcolor'
       DefaultColorColor = clNone
       NoneColorColor = clWhite
       Selected = clNone
@@ -3116,8 +3104,6 @@ object MrkEditDialog: TMrkEditDialog
       Height = 23
       Top = 49
       Width = 230
-      HelpType = htKeyword
-      HelpKeyword = 'HTML/index.html#mrkfont'
       Anchors = [akTop, akLeft, akRight]
       TabOrder = 2
       OnChange = EditChanged
@@ -3145,8 +3131,6 @@ object MrkEditDialog: TMrkEditDialog
       Height = 23
       Top = 3
       Width = 505
-      HelpType = htKeyword
-      HelpKeyword = 'HTML/index.html#mrktext'
       Anchors = [akTop, akLeft, akRight]
       TabOrder = 0
       OnChange = EditChanged
@@ -3167,8 +3151,6 @@ object MrkEditDialog: TMrkEditDialog
       Height = 23
       Top = 144
       Width = 120
-      HelpType = htKeyword
-      HelpKeyword = 'HTML/index.html#mrkquality'
       Anchors = [akTop, akRight]
       ItemHeight = 15
       ItemIndex = 0
@@ -3181,15 +3163,45 @@ object MrkEditDialog: TMrkEditDialog
         'Box'
       )
       Style = csDropDownList
-      TabOrder = 11
+      TabOrder = 12
       Text = 'Normal'
       OnChange = EditChanged
+    end
+    object Label8: TLabel
+      Left = 18
+      Height = 15
+      Top = 180
+      Width = 35
+      Caption = 'Width:'
+      FocusControl = EditOutlineWidth
+      ParentColor = False
+    end
+    object EditOutlineWidth: TEdit
+      Left = 112
+      Height = 23
+      Hint = 'Width in pixels of the blur'
+      Top = 177
+      Width = 96
+      Anchors = [akTop, akRight]
+      TabOrder = 7
+      OnChange = EditChanged
+    end
+    object UpDownOutlineWidth: TUpDown
+      Left = 208
+      Height = 23
+      Top = 177
+      Width = 17
+      Associate = EditOutlineWidth
+      Min = 1
+      OnChanging = UpDownShadowBlurChanging
+      Position = 6
+      TabOrder = 13
     end
   end
   object PanelControls: TPanel
     Left = 0
     Height = 44
-    Top = 385
+    Top = 443
     Width = 658
     Align = alBottom
     BevelOuter = bvNone
@@ -3245,7 +3257,7 @@ object MrkEditDialog: TMrkEditDialog
   object Bevel4: TBevel
     Left = 4
     Height = 3
-    Top = 382
+    Top = 440
     Width = 650
     Align = alBottom
     BorderSpacing.Left = 4

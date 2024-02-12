@@ -1478,6 +1478,10 @@ msgstr "1 Einfach - ein Verzeichnis für jede Größe"
 msgid "Save Tags Report as"
 msgstr "Tags Report speichern als"
 
+#: tmaindialog.toolbutton2.caption
+msgid "ToolButton2"
+msgstr ""
+
 #: tmaindialog.toolbuttonabout.hint
 msgid "License and Vendor Infos"
 msgstr "Lizenz und Hersteller-Infos"
@@ -1615,7 +1619,14 @@ msgstr "Schatten"
 msgid "Normal"
 msgstr "Normal"
 
+#: tmrkeditdialog.editoutlinewidth.hint
+#, fuzzy
+msgctxt "tmrkeditdialog.editoutlinewidth.hint"
+msgid "Width in pixels of the blur"
+msgstr "Breite des Schattens"
+
 #: tmrkeditdialog.editshadowblur.hint
+msgctxt "tmrkeditdialog.editshadowblur.hint"
 msgid "Width in pixels of the blur"
 msgstr "Breite des Schattens"
 
@@ -1649,6 +1660,10 @@ msgstr "Verwischen:"
 #: tmrkeditdialog.label7.caption
 msgid "Quality:"
 msgstr "Qualität:"
+
+#: tmrkeditdialog.label8.caption
+msgid "Width:"
+msgstr ""
 
 #: tmrkeditdialog.savedialog.title
 msgid "Save Watermark Image"

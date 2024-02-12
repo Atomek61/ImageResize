@@ -1390,6 +1390,10 @@ msgstr ""
 msgid "Save Tags Report as"
 msgstr ""
 
+#: tmaindialog.toolbutton2.caption
+msgid "ToolButton2"
+msgstr ""
+
 #: tmaindialog.toolbuttonabout.hint
 msgid "License and Vendor Infos"
 msgstr ""
@@ -1523,7 +1527,13 @@ msgstr ""
 msgid "Normal"
 msgstr ""
 
+#: tmrkeditdialog.editoutlinewidth.hint
+msgctxt "tmrkeditdialog.editoutlinewidth.hint"
+msgid "Width in pixels of the blur"
+msgstr ""
+
 #: tmrkeditdialog.editshadowblur.hint
+msgctxt "tmrkeditdialog.editshadowblur.hint"
 msgid "Width in pixels of the blur"
 msgstr ""
 
@@ -1556,6 +1566,10 @@ msgstr ""
 
 #: tmrkeditdialog.label7.caption
 msgid "Quality:"
+msgstr ""
+
+#: tmrkeditdialog.label8.caption
+msgid "Width:"
 msgstr ""
 
 #: tmrkeditdialog.savedialog.title

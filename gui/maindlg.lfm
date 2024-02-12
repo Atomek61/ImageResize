@@ -1515,47 +1515,54 @@ object MainDialog: TMainDialog
       Action = ActionSave
     end
     object ToolButtonExecute: TToolButton
-      Left = 401
+      Left = 329
       Top = 0
       Action = ActionExecute
     end
     object ToolButtonHelp: TToolButton
-      Left = 654
+      Left = 662
       Top = 0
       Action = ActionHelp
     end
     object ToolButton8: TToolButton
-      Left = 649
+      Left = 657
       Height = 64
       Top = 0
       Style = tbsDivider
     end
     object ToolButtonEditor: TToolButton
-      Left = 486
+      Left = 494
       Top = 0
       Action = ActionEditWatermark
     end
     object ToolButtonAbout: TToolButton
-      Left = 734
+      Left = 742
       Hint = 'License and Vendor Infos'
       Top = 0
       Action = ActionAbout
     end
     object ToolButtonSlideshowAfterburner: TToolButton
-      Left = 566
+      Left = 574
       Top = 0
       Action = ActionPresentation
     end
     object ToolButtonSettings: TToolButton
-      Left = 321
+      Left = 414
       Top = 0
       Action = ActionSettings
     end
     object ToolButton1: TToolButton
-      Left = 481
+      Left = 409
       Height = 64
       Top = 0
       Style = tbsDivider
+    end
+    object ToolButton2: TToolButton
+      Left = 321
+      Height = 64
+      Top = 0
+      Caption = 'ToolButton2'
+      Style = tbsSeparator
     end
   end
   object MemoMessages: TRichMemo
@@ -1682,7 +1689,7 @@ object MainDialog: TMainDialog
   end
   object HTMLHelpDatabase: THTMLHelpDatabase
     AutoRegister = True
-    KeywordPrefix = 'HTML'
+    KeywordPrefix = 'HTML/'
     Left = 760
     Top = 16
   end

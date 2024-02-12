@@ -244,6 +244,7 @@ type
     ToolBarParameters: TToolBar;
     ToolBarSizeButtons: TToolBar;
     ToolButton1: TToolButton;
+    ToolButton2: TToolButton;
     ToolButtonNew: TToolButton;
     ToolButtonSlideshowAfterburner: TToolButton;
     ToolButtonSrcFilenames: TToolButton;
