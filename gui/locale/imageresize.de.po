@@ -564,10 +564,8 @@ msgstr ""
 "Wollen Sie die Änderungen speichern?"
 
 #: maindlg.surlwebhelp
-#, fuzzy
-#| msgid "http://www.atomek.de/imageresize/hlp35/gui/en"
 msgid "http://www.atomek.de/imageresize/hlp40/gui/en"
-msgstr "http://www.atomek.de/imageresize/hlp35/gui/de"
+msgstr "http://www.atomek.de/imageresize/hlp40/gui/de"
 
 #: mrkeditdlg.scptdialogtitle
 msgid "Watermark Editor"
@@ -871,7 +869,7 @@ msgstr "Öffnet die lokale oder die Internet-basierte HTML-Hilfe (F1)"
 
 #: tmaindialog.actionhelpscreenshots.caption
 msgid "HlpShots"
-msgstr ""
+msgstr "HlpShots"
 
 #: tmaindialog.actionnew.caption
 msgctxt "tmaindialog.actionnew.caption"
@@ -1221,16 +1219,15 @@ msgid "1"
 msgstr "1"
 
 #: tmaindialog.editrentemplate.hint
-#, fuzzy, badformat
+#, fuzzy
 msgid ""
 "Enter a filename template containing placeholders for special values.\n"
 "This template will be expanded for each resampled image. Insert the\n"
 "%SIZE% placeholder to enable multiple sizes in a common folder."
 msgstr ""
-"Geben Sie eine Dateinamen-Vorlage ein, die Platzhalter für bestimmte\n"
-"Werte enthält. Die Vorlage wird für jede skalierte Datei ausgewertet.\n"
-"Fügen Sie den %SIZE%-Platzhalter ein, um mehrere Größen eines Bildes\n"
-"in einem gemeinsamen Verzeichnis erzeugen zu können."
+"Geben Sie eine Dateinamen-Vorlage ein, die Platzhalter für bestimmte Werte enthält.\n"
+"Die Vorlage wird für jede skalierte Datei ausgewertet. Fügen Sie den %SIZE%-Platzhalter ein,\n"
+"um mehrere Größen eines Bildes in einem gemeinsamen Verzeichnis erzeugen zu können."
 
 #: tmaindialog.editsizes.hint
 msgid ""
@@ -1268,13 +1265,11 @@ msgstr ""
 " an der Stelle eingefügt werden, wo die aktuelle Größe erscheinen soll."
 
 #: tmaindialog.groupboxinterpolationquality.caption
-#, fuzzy
 msgctxt "tmaindialog.groupboxinterpolationquality.caption"
 msgid "Interpolation"
 msgstr "Interpolation"
 
 #: tmaindialog.groupboxjpegquality.caption
-#, fuzzy
 msgctxt "tmaindialog.groupboxjpegquality.caption"
 msgid "JPEG"
 msgstr "JPEG"
@@ -1288,7 +1283,6 @@ msgid "Layout"
 msgstr "Layout"
 
 #: tmaindialog.groupboxpngcompression.caption
-#, fuzzy
 msgctxt "tmaindialog.groupboxpngcompression.caption"
 msgid "PNG"
 msgstr "PNG"
@@ -1302,13 +1296,11 @@ msgid "Shuffle"
 msgstr "Mischen"
 
 #: tmaindialog.groupboxtaggingexif.caption
-#, fuzzy
 msgctxt "tmaindialog.groupboxtaggingexif.caption"
 msgid "EXIF Tagging"
 msgstr "EXIF Tagging"
 
 #: tmaindialog.groupboxtaggingexif.hint
-#, fuzzy
 msgctxt "tmaindialog.groupboxtaggingexif.hint"
 msgid ""
 "Define which EXIF tags are to be copied from the origin to the resampled images.\n"
@@ -1324,19 +1316,16 @@ msgstr ""
 "Lightroom oder Photoshop."
 
 #: tmaindialog.groupboxtaggingload.caption
-#, fuzzy
 msgctxt "tmaindialog.groupboxtaggingload.caption"
 msgid "Tags Loading"
 msgstr "Tags laden"
 
 #: tmaindialog.groupboxtaggingsave.caption
-#, fuzzy
 msgctxt "tmaindialog.groupboxtaggingsave.caption"
 msgid "Tags Saving"
 msgstr "Tags speichern"
 
 #: tmaindialog.groupboxtaggingsave.hint
-#, fuzzy
 msgctxt "tmaindialog.groupboxtaggingsave.hint"
 msgid ""
 "A Tags Report is a list of filenames and tags, which may be usefull for creating\n"
@@ -1632,10 +1621,9 @@ msgid "Normal"
 msgstr "Normal"
 
 #: tmrkeditdialog.editoutlinewidth.hint
-#, fuzzy
 msgctxt "tmrkeditdialog.editoutlinewidth.hint"
-msgid "Width in pixels of the blur"
-msgstr "Breite des Schattens"
+msgid "Width in pixels of the outline"
+msgstr "Breite des Umrisses in Pixeln"
 
 #: tmrkeditdialog.editshadowblur.hint
 msgctxt "tmrkeditdialog.editshadowblur.hint"
@@ -1675,7 +1663,7 @@ msgstr "Qualität:"
 
 #: tmrkeditdialog.label8.caption
 msgid "Width:"
-msgstr ""
+msgstr "Breite:"
 
 #: tmrkeditdialog.savedialog.title
 msgid "Save Watermark Image"
@@ -1874,4 +1862,3 @@ msgstr "Speichern"
 msgctxt "webutils.serrinvalidhtmlcolorfmt"
 msgid "Invalid web color '%s'."
 msgstr "Ungültige Web-Farbe '%s'."
-

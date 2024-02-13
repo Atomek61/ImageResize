@@ -1533,7 +1533,7 @@ msgstr ""
 
 #: tmrkeditdialog.editoutlinewidth.hint
 msgctxt "tmrkeditdialog.editoutlinewidth.hint"
-msgid "Width in pixels of the blur"
+msgid "Width in pixels of the outline"
 msgstr ""
 
 #: tmrkeditdialog.editshadowblur.hint

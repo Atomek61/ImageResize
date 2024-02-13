@@ -4,20 +4,20 @@
 <svg
    width="128"
    height="128"
-   viewBox="0 0 128 128.00001"
+   viewBox="0 0 128 128"
    version="1.1"
-   id="svg138"
-   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   id="svg1"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
    sodipodi:docname="watermark.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
   <sodipodi:namedview
-     id="namedview140"
+     id="namedview1"
      pagecolor="#ffffff"
-     bordercolor="#000000"
-     borderopacity="0.25"
+     bordercolor="#666666"
+     borderopacity="1.0"
      inkscape:showpageshadow="2"
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
@@ -26,67 +26,85 @@
      showgrid="true"
      showguides="true"
      inkscape:lockguides="true"
-     inkscape:zoom="5.17549"
-     inkscape:cx="58.545181"
-     inkscape:cy="87.624554"
-     inkscape:window-width="1548"
-     inkscape:window-height="1230"
-     inkscape:window-x="52"
-     inkscape:window-y="52"
+     guidecolor="#29e500"
+     guideopacity="0.6"
+     inkscape:zoom="3.4222863"
+     inkscape:cx="75.242097"
+     inkscape:cy="110.89078"
+     inkscape:window-width="1845"
+     inkscape:window-height="1237"
+     inkscape:window-x="96"
+     inkscape:window-y="24"
      inkscape:window-maximized="0"
-     inkscape:current-layer="layer3">
+     inkscape:current-layer="layer1">
     <inkscape:grid
-       type="xygrid"
-       id="grid259"
+       id="grid1"
+       units="px"
+       originx="0"
+       originy="0"
+       spacingx="1"
+       spacingy="1"
+       empcolor="#3f3fff"
+       empopacity="0.25098039"
+       color="#3f3fff"
+       opacity="0.1254902"
        empspacing="4"
-       originx="0"
-       originy="0" />
+       dotted="false"
+       gridanglex="30"
+       gridanglez="30"
+       visible="true" />
     <inkscape:grid
-       type="xygrid"
-       id="grid261"
-       spacingy="16.000001"
-       spacingx="16.000001"
-       color="#e5001f"
-       opacity="0.14901961"
+       id="grid2"
+       units="px"
        originx="0"
-       originy="0" />
+       originy="0"
+       spacingx="16"
+       spacingy="16"
+       empcolor="#3f3fff"
+       empopacity="0.25098039"
+       color="#bd0000"
+       opacity="0.36078431"
+       empspacing="4"
+       dotted="false"
+       gridanglex="30"
+       gridanglez="30"
+       visible="true" />
     <sodipodi:guide
-       position="-68,64.000005"
-       orientation="0,-1"
-       id="guide263"
+       position="64,-60"
+       orientation="1,0"
+       id="guide2"
        inkscape:locked="true" />
     <sodipodi:guide
-       position="64.000007,63.999998"
-       orientation="1,0"
-       id="guide315"
+       position="-72,64"
+       orientation="0,-1"
+       id="guide3"
        inkscape:locked="true" />
   </sodipodi:namedview>
   <defs
-     id="defs135" />
-  <g
-     inkscape:groupmode="layer"
-     id="layer3"
-     inkscape:label="Dots"
-     style="display:inline">
-    <g
-       id="g12512"
-       transform="rotate(15,89.19147,97.191508)">
-      <path
-         style="fill:#c17d11;fill-opacity:1;stroke-linecap:round;stroke-linejoin:round"
-         d="m 24,112.00001 h 80 L 100,84 l -28,-5e-6 c -4,-12 0,-35.999992 0,-35.999992 C 72,48.000003 84,40 84,32 84,24 80.000005,16.000001 64,16 c -16.000005,-10e-7 -20.000002,8.000004 -20,16.000002 2e-6,7.999998 12,16.000001 12,16.000001 0,0 4,23.999992 0,35.999997 H 28 l -4,28.00001"
-         id="path12350"
-         sodipodi:nodetypes="ccccczzzcccc" />
-      <ellipse
-         style="fill:#ffffff;fill-opacity:1;stroke-linecap:round;stroke-linejoin:round"
-         id="path12404"
-         cx="56"
-         cy="28.000002"
-         rx="4"
-         ry="4.000001" />
-    </g>
-  </g>
+     id="defs1" />
   <g
      inkscape:label="Ebene 1"
      inkscape:groupmode="layer"
-     id="layer1" />
+     id="layer1">
+    <g
+       id="g2"
+       transform="rotate(15,76.153905,84.040928)">
+      <path
+         id="path1"
+         style="fill:#d99c3c;fill-opacity:1;stroke-width:16;stroke-linejoin:bevel;paint-order:markers fill stroke"
+         d="M 63.818359,8 V 8.00586 C 59.215714,8.0082478 38.535419,8.2608743 40.181641,28 c 1.680161,20.146081 12,28.000005 12,32 0,3.999996 -2.999999,6.01858 -3,9 10e-7,2.981422 3,7 3,7 H 16 l -4,28 H 63.818359 64.181641 116 L 112,76 H 75.818359 c 0,0 3,-4.018583 3,-7 0,-2.981417 -3,-5.000004 -3,-9 0,-3.999996 10.319839,-11.85392 12,-32 C 89.464581,8.2608745 68.784285,8.0082474 64.181641,8.0058594 V 8 C 64.141243,8 64.043962,8.0019619 64,8.0019531 63.956038,8.0019619 63.858757,8 63.818359,8 Z" />
+      <path
+         id="rect1"
+         style="fill:#888a85;stroke-width:16;stroke-linejoin:bevel;paint-order:markers fill stroke"
+         d="m 16,104 v 8 H 63.818359 64.181641 112 v -8 H 64.181641 63.818359 Z" />
+      <ellipse
+         style="fill:#ffffff;stroke-width:16;stroke-linejoin:bevel;paint-order:markers fill stroke"
+         id="path2"
+         cx="35.80127"
+         cy="41.990379"
+         rx="6"
+         ry="4"
+         transform="rotate(-30)" />
+    </g>
+  </g>
 </svg>

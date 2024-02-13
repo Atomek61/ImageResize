@@ -24,26 +24,35 @@ BackgroundColor=#36361B
 SymbolSize=8
 ImgBkgColor=#36361B
 
+[Presentation.Info100]
+Title=Hildesheimer Kirchen
+Copyright=(c) Atomek.de
+HeaderColor=#386283
+BackgroundColor=#DAEBE4
+CardColor=#210C21
+TableFontColor=#EDF0BF
+TableColor=#782C78
+
 [Project]
 Description=
 Source=Filenames
 SourceFolder=
 SourceMasks=*.jpg;*.png
-SourceFilenames=srcA\IMG2742.jpg|srcA\IMG2743.jpg|srcA\IMG2744.png|srcA\IMG2745.jpg|srcA\IMG2746.jpg|
-Sizes=480, 1200
-TargetFolder=tst6\img%SIZE%
-Interpolation=Default
+SourceFilenames=myphotos\DSC06237.jpg|myphotos\DSC06238.jpg|myphotos\DSC06227.jpg|myphotos\DSC06403.jpg|
+Sizes=120, 800, 1920
+TargetFolder=mygallery\img%SIZE%
+Interpolation=Mitchell
 JPEGQuality=Default
-PNGCompression=Default
-MrkEnabled=1
-MrkFilename=watermarks\atomek2024.png
-MrkSize=50
-MrkX=47
-MrkY=34
+PNGCompression=Fastest
+MrkEnabled=0
+MrkFilename=
+MrkSize=20
+MrkX=98
+MrkY=98
 MrkOpacity=50
 RenEnabled=0
-RenSimple=0
-RenAdvanced=1
+RenSimple=1
+RenAdvanced=0
 RenCustom=0
 RenTemplate=img%INDEX:1,3%.%FILEEXT%
 ShuffleEnabled=0
@@ -55,14 +64,5 @@ TagTimestamp=0
 TagCopyright=0
 Copyright=
 TagsReportEnabled=0
-ImageInfosEnabled=0
+ImageInfosEnabled=1
 NoCreate=0
-
-[Presentation.Info100]
-Title=Hildesheimer Kirchen
-Copyright=(c) Atomek.de
-HeaderColor=#386283
-BackgroundColor=#DAEBE4
-CardColor=#210C21
-TableFontColor=#EDF0BF
-TableColor=#782C78

@@ -3179,7 +3179,7 @@ object MrkEditDialog: TMrkEditDialog
     object EditOutlineWidth: TEdit
       Left = 112
       Height = 23
-      Hint = 'Width in pixels of the blur'
+      Hint = 'Width in pixels of the outline'
       Top = 177
       Width = 96
       Anchors = [akTop, akRight]
