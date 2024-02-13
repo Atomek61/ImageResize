@@ -1312,9 +1312,9 @@ object MainDialog: TMainDialog
       Left = 50
       Height = 25
       Top = 8
-      Width = 130
+      Width = 63
       BorderSpacing.Left = 6
-      Caption = 'Source Images'
+      Caption = 'Images'
       Font.Color = 9785877
       Font.Height = -19
       Font.Style = [fsBold]

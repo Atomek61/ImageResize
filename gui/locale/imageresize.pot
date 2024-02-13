@@ -1360,7 +1360,7 @@ msgid "Seed:"
 msgstr ""
 
 #: tmaindialog.labelstep1.caption
-msgid "Source Images"
+msgid "Images"
 msgstr ""
 
 #: tmaindialog.labelstep2.caption

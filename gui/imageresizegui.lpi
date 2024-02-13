@@ -27,7 +27,7 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <MajorVersionNr Value="4"/>
-      <StringTable Comments="Scales images down for web galleries" CompanyName="www.atomek.de" FileDescription="ImageResize" LegalCopyright="© 2024 Jan Schirrmacher, www.atomek.de"/>
+      <StringTable Comments="Scales images for web galleries" CompanyName="www.atomek.de" FileDescription="ImageResize" LegalCopyright="© 2024 Jan Schirrmacher, www.atomek.de"/>
     </VersionInfo>
     <BuildModes>
       <Item Name="Default" Default="True"/>

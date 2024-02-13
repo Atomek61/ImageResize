@@ -50,11 +50,29 @@ h4 {font-size: 14pt; font-weight: bold; font-style: italic;}
 img {margin-top: 0.5em; max-width: 100%;}
 
 .icon-left {
-  float: left; margin-top: 4px; margin-right: 1em;  
+  width: 48px;
+  float: left;
+  margin-top: 4px;
+  margin-right: 1em;  
 }
 
 .icon-right {
-  float: right; margin-top: 8px; margin-left: 1em;  
+  width: 64px;
+  float: right;
+  margin-top: 8px;
+  margin-left: 1em;  
+}
+
+.img-left {
+  float: left;
+  margin-top: 4px;
+  margin-right: 1em;  
+}
+
+.img-right {
+  float: right;
+  margin-top: 8px;
+  margin-left: 1em;  
 }
 
 .title-box {
@@ -104,9 +122,10 @@ td {
 .flag {width: 40px;}
 
 .btn {
+  width: 20px;
   position:relative;
   padding: 2px 4px 2px 4px;
-  top: 4px;
+  top: 6px;
   margin-top: 0;
   background-color: #d4d8e4;
   border-top: solid 1.75px white;

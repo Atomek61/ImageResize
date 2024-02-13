@@ -19,8 +19,8 @@
   </header>
 
   <div class="contents">
-    <a href="../de/index.html"><img class="flag" src="../img/de.png"/></a>
     <img class="flag" src="../img/en.png"/>
+    <a href="../de/index.html"><img class="flag" src="../img/de.png"/></a>
 
     <h1 id="overview">Overview</h1>
     <p>
@@ -71,7 +71,7 @@
       <li>Transfer all EXIF tags</li>
     </ul>
 
-    <h1 id="overview">Overview</h1>
+    <h1 id="overview"><img class="icon-right" src="../img/stepbystep.svg"/>Overview</h1>
     <p>
       The program requires at least the following 3 pieces of information:
     </p>
@@ -91,7 +91,7 @@
     </p>
     <ol>
       <li>can be edited manually</li>
-      <li>can be selected in the selection dialog<img class="btn" src="../img/doc-open.png"/> with &lt;CTRL&gt; and &lt;SHIFT&gt;</li>
+      <li>can be selected in the selection dialog <img class="btn" src="../img/doc-open.svg"/> with &lt;CTRL&gt; and &lt;SHIFT&gt;</li>
       <li>can be supplemented by dragging image files from Windows Explorer</li>
       <li>can be specified by specifying a source folder with a file filter</li>
       <li>can include relative path information</li>
@@ -103,10 +103,11 @@
     </p>
     <a class="chfot" href="#contents">Content</a>
 
-    <h1 id="sizes"><img class="icon-right" src="img/sizes-multiple.png"/>Sizes</h1>
+    <h1 id="sizes">Sizes</h1>
     <p>
       A <i>size</i> in pixels refers to the longer side of the image.
     </p>
+    <img src="img/sizes-multiple.png"/>
     <p>
       ImageResize can produce multiple sizes for each image. Enter a list of sizes,
       separated by a comma, or select sizes from the suggestions.<br/>
@@ -115,7 +116,7 @@
       You can specify any size greater than 0.
     </p>
     <p>
-      You can change the list by using the delete button <img class="btn" src="../img/delete.png"/>.
+      You can change the list by using the delete button <img class="btn" src="../img/delete.svg"/>.
       To delete a single size, first select the size or click one
       already selected suggestion again.
     </p>
@@ -124,7 +125,7 @@
     <h1 id="dstfolder">Target folder</h1>
     <p>
       A destination folder must be specified. You can type it directly
-      or select with the <img class="btn" src="../img/folder-open.png"/> button.
+      or select with the <img class="btn" src="../img/folder-open.svg"/> button.
     </p>
     <p>
       To avoid target name conflicts when multiple target sizes are specified,
@@ -134,7 +135,7 @@
     </p>
     <a class="chfot" href="#contents">Content</a>
 
-    <h1 id="renaming"><img class="icon-right" src="../img/rename.png"/>Rename and shuffle</h1>
+    <h1 id="renaming"><img class="icon-right" src="../img/rename.svg"/>Rename and shuffle</h1>
     <p>
       Renaming the target files becomes interesting if you don't have any size
       a separate folder, but rather all files in a common folder.
@@ -235,7 +236,7 @@
     </p>
     <a class="chfot" href="#contents">Content</a>
 
-    <h1 id="watermark"><img class="icon-right" src="../img/watermark.png"/>Watermark</h1>
+    <h1 id="watermark"><img class="icon-right" src="../img/watermark.svg"/>Watermark</h1>
     <p>
       A watermark is a semi-transparent small image that, for example, adds a copyright to the target image.
       The image must be in PNG format and can have an alpha channel (transparency). When that
@@ -311,7 +312,7 @@
     </p>
     <a class="chfot" href="#contents">Content</a>
 
-    <h1 id="quality"><img class="icon-right" src="../img/quality.png"/>Quality</h1>
+    <h1 id="quality"><img class="icon-right" src="../img/quality.svg"/>Quality</h1>
     <p>
       The quality of the result depends on these settings.
       You can set the compression level for JPEG and PNG formats and
@@ -326,7 +327,7 @@
       the pixel gets the color value of the pixel closest to it in the original. This leads to
       loss of information and quality when down-scaling and poor quality when up-scaling.
     </p>
-    <img class="icon-left" src="img/quality-interpolation.png"/>
+    <img class="img-left" src="img/quality-interpolation.png"/>
     <p>
       There are 11 resampling algorithms available.
       Apart from the simple <i>Stretch</i>, the algorithms are interpolations.
@@ -341,7 +342,7 @@
     </p>
     
     <h2 id="quality-jpeg">JPEG quality</h2>
-    <img class="icon-right" src="img/quality-JPEG.png"/>
+    <img class="img-right" src="img/quality-JPEG.png"/>
     <p>
       JPEG is a lossy process. A higher quality results
       in larger files. For JPEG, 75 to 95 percent is a good choice. 50% left
@@ -350,8 +351,8 @@
       at 50% quality/compression optimal loading times with acceptable quality.
     </p>
 
-    <h2 id="quality-png">PNG quality</h2>
-    <img class="icon-left" src="img/quality-PNG.png"/><br/>
+    <h2 id="quality-png">PNG compression</h2>
+    <img class="img-left" src="img/quality-PNG.png"/>
     <p>
       The PNG format always compresses losslessly, but for natural images it results
       in low compression, so it is mainly useful for artificial images where there
@@ -365,7 +366,7 @@
     </p>
     <a class="chfot" href="#contents">Content</a>
 
-    <h1 id="tagging"><img class="icon-right" src="../img/tagging.png"/></span>Tagging</h1>
+    <h1 id="tagging"><img class="icon-right" src="../img/tagging.svg"/></span>Tagging</h1>
     <h2>General</h2>
     <p>
       You can add certain meta information to the generated images. Normally 
@@ -517,15 +518,18 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
         <li>select one of the available presentations, e.g. "Info 1.0"</li>
         <li>open the relevant .imgtags file with the meta information</li>
         <li>In the settings, enter the title of the gallery and other information</li>
-        <li>Click Create <img class="btn" src="../img/magicwand2.png"/></li>
-        <li>View the created presentation with <img class="btn" src="../img/webshow.png"/></li>
+        <li>Click Create <img class="btn" src="../img/magicwand2.svg"/></li>
+        <li>View the created presentation with <img class="btn" src="../img/webshow.svg"/></li>
       </ol>
 
       <img src="img/presentation-dialog.png"/>
 
       <p>
         If you click "Show" multiple times, your browser may open a new tab each time. You can
-        Instead, update the presentation currently displayed in the browser in your browser.
+        instead, reload the presentation currently displayed in your browser.
+      </p>
+      <p>
+        If you close the dialog with Ok, the settings will be adopted into the current project.
       </p>
       <a class="chfot" href="#contents">Content</a>
 
@@ -548,13 +552,13 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
         You can change this behavior in the <a href="#settings">Settings</a> dialog.
       </p>
       <p>
-        <img class="icon-left" src="../img/save-dirty.png"/>
+        <img class="icon-left" src="../img/save-dirty.svg"/>
         When settings are changed, this is indicated by a red dot in the save icon.
       </p>
       <a class="chfot" href="#contents">Content</a>
 
-      <h1 id="settings"><img class="icon-right" src="../img/sprocket.png"/>Settings</h1>
-      <h2 id="threads"><img src="../img/boost.png"/> Processing</h2>
+      <h1 id="settings"><img class="icon-right" src="../img/sprocket.svg"/>Settings</h1>
+      <h2 id="threads"><img class="icon-left" src="../img/boost.svg"/> Processing</h2>
       <ul>
         <li><b>Threads</b> - ImageResize can make better use of the system's computing power through multi-threading.<br/>
         <i>Single</i> means that only one core is used - processing becomes correspondingly slow.
@@ -569,7 +573,7 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
         Compared to 6 threads, the processing speed only increases by around 8 percent.
       </p>
 
-      <h2><img src="../img/save-dirty.png"/> Save</h2>
+      <h2><img class="icon-left" src="../img/save-dirty.svg"/> Save</h2>
       <ul>
         <li><b>Behavior</b>
           <p>
@@ -626,7 +630,7 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
       </p>
       <a class="chfot" href="#contents">Content</a>
 
-      <h1 id="mrkeditor"><img src="../img/editor.png"/> Watermark Editor</h1>
+      <h1 id="mrkeditor"><img class="icon-right" src="../img/editor.svg"/>Watermark Editor</h1>
       <p>
         With the built-in watermark editor
         you can create a lettering with a some useful decorations.
@@ -636,7 +640,7 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
         but without the additional transparency that you can specify in the watermark settings.
       </p>
       <p>
-        <img class="icon-left" src='../img/whiteblackbkg.png'/>
+        <img src='../img/whiteblackbkg.png'/>
         To get an impression of what your watermark looks like on a dark or light background,
         press one of these buttons .
       </p>
@@ -644,9 +648,9 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
         <img style="max-width: 80%" src="img/watermarkeditor.png"/>
       </p>
 
-      <img src="img/buttons-watermark.png"/>
+      <img class="icon-left" src="../img/save.svg"/>
       <p>
-        With these buttons you can save the dialog settings as a .was file
+        With this button you can save the dialog settings as a .was file
         and load it again later. The generated PNG image of the watermark is saved next to the .was file.
       </p>
       <p>
@@ -658,31 +662,36 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
           <td>
             Enter the line of text that should be displayed in the watermark here. The © symbol with
             &lt;OLD&gt; &lt;0&gt; &lt;1&gt; &lt;6&gt; &lt;9&gt; or with that
-            <img class="btn" src="../img/copyright.png"/> button.
+            <img class="btn" src="../img/copyright.svg"/> button.
           </td>
         </tr>
         <tr id="mrkfont"><td>Font</td>
           <td>
             Choose a font with the size in <i>points</i>, a font name in quotation marks and optionally the styles
-            <i>Italic</i> and <i>Bold</i> or select a font in the <img class="btn" src="../img/font.png"/> dialog.
+            <i>Italic</i> and <i>Bold</i> or select a font in the <img class="btn" src="../img/font.svg"/> dialog.
             The quality of the watermark depends on the font size. 12pt creates a coarse pixel watermark,
             48pt creates one more accurate display. The font size has no impact on the later display in the
             image, as its size is determined by the watermark settings of the main window.
           </td>
         </tr>
-        <tr id="mrkcolor"><td>Font color</td>
+        <tr id="mrkcolor"><td>Color (Font)</td>
           <td>
             Select the character color (foreground).
           </td>
         </tr>
         <tr id="mrkoutline"><td>Outline</td>
           <td>
-            The font receives a fine outline with the selected color.
+            The font receives an outline with the selected color.
           </td>
         </tr>
-        <tr id="mrkoutlinecolor"><td>Outline color</td>
+        <tr id="mrkoutlinecolor"><td>Color (Outline)</td>
           <td>
-            Color of the fine outline.
+            Color of the outline.
+          </td>
+        </tr>
+        <tr id="mrkoutlinewidth"><td>Width (Outline)</td>
+          <td>
+            The outlines width in pixels.
           </td>
         </tr>
         <tr id="mrkshadow"><td>Shadow</td>
@@ -690,7 +699,7 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
             Allows the font to have a blurred background that glows or appears like a shadow, depending on the color.
           </td>
         </tr>
-        <tr id="mrkshadowcolor"><td>Shadow Color</td>
+        <tr id="mrkshadowcolor"><td>Color (Shadow)</td>
           <td>
             Select the color of the blurred background.
           </td>
@@ -709,13 +718,14 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
             is a very thin shadow, like an outline.
           </td>
         </tr>
-        <tr><td>Ok</td>
+        <tr><td>Ok <img class="btn" src="../img/ok.svg"/></td>
           <td>
-            After a watermark has been defined, it must first be saved as a PNG file, or
-            must be previously loaded from a file. Only then does <b>Ok</b> become available.
+            After a watermark has been defined, it must first be saved as a PNG file
+            <img class="btn" src="../img/save.svg"/> , or  must be previously loaded from a file.
+            Only then does <b>Ok</b> become available.
           </td>
         </tr>
-        <tr><td>Cancel</td>
+        <tr><td>Cancel <img class="btn" src="../img/cancel.svg"/></td>
           <td>
             Closes the dialog without using the file.
           </td>
@@ -724,7 +734,7 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
       <a class="chfot" href="#contents">Content</a>
     </div>
   <footer>
-    © 202 Jan Schirrmacher, www.atomek.de
+    © 2024 Jan Schirrmacher, www.atomek.de
   </footer>
 </body>
 </html>

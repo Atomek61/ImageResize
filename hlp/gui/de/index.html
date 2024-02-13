@@ -71,7 +71,7 @@
       <li>Alle EXIF tags übertragen</li>
     </ul>
     
-    <h1 id="overview"><img class="icon-right" src="../img/stepbystep.png"/>Übersicht</h1>
+    <h1 id="overview"><img class="icon-right" src="../img/stepbystep.svg"/>Übersicht</h1>
     <p>
       Das Programm benötigt mindestens die folgenden 3 Angaben:
     </p>
@@ -81,17 +81,17 @@
       <li>Den Zielordner<br/><img src="img/step-targetfolder.png"/></li>
     </ol>
     <p>
-      Drücken Sie am Ende <img style="position: relative; top:10px;" src="img/step-execute.png"/> um das Resampling zu starten.
+      Drücken Sie am Ende <img style="position: relative; top:10px;" src="img/step-execute.png"/> um die Verarbeitung zu starten.
     </p>
     
-    <h1 id="srcfilelist">Quelldateien</h1>
+    <h1 id="srcfilelist">Bilder</h1>
     <p>
-      ImageResize kann viele Bilddateien resampeln. Die Liste der Bilder besteht aus
+      ImageResize kann viele Bilddateien verarbeiten. Die Liste der Bilder besteht aus
       Pfad/Dateiname und kann
     </p>
     <ol>
       <li>manuell bearbeitet werden</li>
-      <li>im Auswahldialog ausgewählt werden <img class="btn" src="../img/doc-open.png"/> mit &lt;STRG&gt; und &lt;UMSCHALT&gt;</li>
+      <li>im Auswahldialog ausgewählt werden <img class="btn" src="../img/doc-open.svg"/> mit &lt;STRG&gt; und &lt;UMSCHALT&gt;</li>
       <li>durch Ziehen von Bilddateien aus dem Windows-Explorer ergänzt werden</li>
       <li>durch Angabe eines Quellordners mit Dateifilter angegeben werden</li>
       <li>relative Pfadangaben beinhalten</li>
@@ -103,10 +103,11 @@
     </p>
     <a class="chfot" href="#contents">Inhalt</a>
     
-    <h1 id="sizes"><img class="icon-right" src="img/sizes-multiple.png"/>Größen</h1>
+    <h1 id="sizes">Größen</h1>
     <p>
       Eine <i>Größe</i> in Pixeln bezieht sich auf die längere Seite des Bildes. 
     </p>
+    <img src="img/sizes-multiple.png"/>
     <p>
       ImageResize kann mehrere Größen für jedes Bild erzeugen. Geben Sie eine Liste von Größen ein,
       die mit dem Komma getrennt sind, oder wählen Sie Größen aus den Vorschlägen aus.<br/>
@@ -115,7 +116,7 @@
       Sie können alle Größen angeben, die größer als 0 sind.
     </p>
     <p>
-      Sie können die Liste ändern, indem Sie die Löschen-Schaltfläche <img class="btn" src="../img/delete.png"/>
+      Sie können die Liste ändern, indem Sie die Löschen-Schaltfläche <img class="btn" src="../img/delete.svg"/>
       klicken. Um eine einzelne Größe zu löschen, markieren Sie zuvor die Größe, oder sie klicken einen
       bereits gewählten Vorschlag erneut.
     </p>
@@ -124,7 +125,7 @@
     <h1 id="dstfolder">Zielordner</h1>
     <p>
       Ein Zielordner muss angegeben werden. Sie können ihn direkt eintippen
-      oder mit der Schaltfläche <img class="btn" src="../img/folder-open.png"/> auswählen.
+      oder mit der Schaltfläche <img class="btn" src="../img/folder-open.svg"/> auswählen.
     </p>
     <p>
       Um Konflikte der Zielnamen zu vermeiden, wenn mehrere Zielgrößen angegeben werden,
@@ -134,7 +135,7 @@
     </p>
     <a class="chfot" href="#contents">Inhalt</a>
     
-    <h1 id="renaming"><img class="icon-right" src="../img/rename.png"/> Umbenennen und Mischen</h1>
+    <h1 id="renaming"><img class="icon-right" src="../img/rename.svg"/> Umbenennen und Mischen</h1>
     <p>
       Umbenennen der Zieldateien wird interessant, wenn Sie nicht für jede Größe
       einen eigenen Ordner, sondern alle Dateien in einem gemeinsamen Ordner erzeugen möchten.
@@ -238,7 +239,7 @@
     </p>
     <a class="chfot" href="#contents">Inhalt</a>
     
-    <h1 id="watermark"><img class="icon-right" src="../img/watermark.png"/> Wasserzeichen</h1>
+    <h1 id="watermark"><img class="icon-right" src="../img/watermark.svg"/> Wasserzeichen</h1>
     <p>
       Ein Wasserzeichen ist ein halbdurchlässiges kleines Bild, das dem Zielbild z.B. ein Copyright zufügt.
       Das Bild muss im PNG-Format vorliegen und kann einen Alpha-Channel (Transparenz) haben. Wenn das
@@ -314,7 +315,7 @@
     </p>
     <a class="chfot" href="#contents">Inhalt</a>
 
-    <h1 id="quality"><img class="icon-right" src="../img/quality.png"/> Qualität</h1>
+    <h1 id="quality"><img class="icon-right" src="../img/quality.svg"/>Qualität</h1>
     <p>
       Die Qualität des Ergebnisses hängt von diesen Einstellungen ab.
       Sie können den Kompressionsgrad für JPEG- und für PNG-Formate und
@@ -330,7 +331,7 @@
       Informations- und Qualitätsverlust beim Verkleinern und zu schlechter Qualität beim
       Vergrößern.
     </p>
-    <img class="icon-left" src="img/quality-interpolation.png"/>
+    <img class="img-left" src="img/quality-interpolation.png"/>
     <p>
       Es stehen 11 Resampling-Algorithmen zur Verfügung.
       Ausser dem einfachen <i>Stretch</i> sind die Algorithmen Interpolationen.
@@ -345,7 +346,7 @@
     </p>
     
     <h2 id="quality-jpeg">JPEG Qualität</h2>
-    <img class="icon-right" src="img/quality-JPEG.png"/>
+    <img class="img-right" src="img/quality-JPEG.png"/>
     <p>
       JPEG ist ein verlustbehaftetes Verfahren. Eine höhere Qualität resultiert
       in größeren Dateien. Bei JPEG ist 75 bis 95 Prozent eine gute Wahl. Noch 50%
@@ -354,8 +355,8 @@
       bei 50% Qualität/Kompression optimale Ladezeiten bei akzeptabler Qualität.
     </p>
   
-    <h2 id="quality-png">PNG Qualität</h2>
-    <img class="icon-left" src="img/quality-PNG.png"/>
+    <h2 id="quality-png">PNG Kompression</h2>
+    <img class="img-left" src="img/quality-PNG.png"/>
     <p>
       Das PNG-Format komprimiert immer verlustfrei, ergibt aber bei Naturbildern
       eine geringe Kompression, daher ist es hauptsächlich bei künstlichen Bildern sinnvoll, wo
@@ -369,7 +370,7 @@
     </p>
     <a class="chfot" href="#contents">Inhalt</a>
     
-    <h1 id="tagging"><img class="icon-right" src="../img/tagging.png"/>Taggen</h1>
+    <h1 id="tagging"><img class="icon-right" src="../img/tagging.svg"/>Taggen</h1>
     <h2>Allgemeines</h2>
     <p>
       Sie könne den erzeugten Bildern gewisse Metainformationen zufügen. Normalerweise werden
@@ -506,7 +507,7 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
     </p>
     <a class="chfot" href="#contents">Inhalt</a>
 
-    <h1 id="presentation"><img class="icon-right" src="../img/cinema.png"/> Präsentation</h1>
+    <h1 id="presentation"><img class="icon-right" src="../img/cinema.svg"/> Präsentation</h1>
     <p>
       Die wichtigste Neuerung der Version 4.0 ist die Einführung der Präsentation ihrer Bilder. Die Präsentation
       ist eine Web-Gallerie, die Sie mit ihrem Webbrowser betrachten können.
@@ -521,15 +522,18 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
       <li>wählen Sie eine der verfügbaren Präsentationen, z.B. "Info 1.0"</li>
       <li>öffnen Sie die betreffende .imgtags-Datei mit den Meta-Informationen</li>
       <li>geben Sie bei den Einstellungen den Titel der Gallerie und die anderen Angaben ein</li>
-      <li>Klicken Sie Erzeugen <img class="btn" src="../img/magicwand2.png"/></li>
-      <li>Schauen Sie sich die erzeugte Präsentation mit <img class="btn" src="../img/webshow.png"/>an</li>
+      <li>Klicken Sie Erzeugen <img class="btn" src="../img/magicwand2.svg"/></li>
+      <li>Schauen Sie sich die erzeugte Präsentation mit <img class="btn" src="../img/webshow.svg"/> an</li>
     </ol>
 
     <img src="img/presentation-dialog.png"/>
 
     <p>
       Wenn Sie mehrfach "Anzeigen" klicken, wird ihr Browser möglicherweise jedesmal ein neues Tab öffnen. Sie können
-      statt dessen die aktuell im Browser angezeigte Präsentation im ihrem Browser aktualisieren.
+      statt dessen die aktuell im Browser angezeigte Präsentation in ihrem Browser neu laden.
+    </p>
+    <p>
+      Wenn Sie den Dialog mit Ok schließen, werden die Einstellungen ins aktuelle Projekt übernommen.
     </p>
     <a class="chfot" href="#contents">Inhalt</a>
 
@@ -550,14 +554,14 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
       Sie können dieses Verhalten im Dialog <a href="#settings">Einstellungen</a> steuern.
     </p>
     <p>
-      <img class="icon-left" src="../img/save-dirty.png"/>
+      <img class="icon-left" src="../img/save-dirty.svg"/>
       Wenn Einstellungen geändert werden, wird dies durch einen roten Punkt im Speichern-Symbol
       ausgedrückt.
     </p>
     <a class="chfot" href="#contents">Inhalt</a>
     
-    <h1 id="settings"><img class="icon-right" src="../img/sprocket.png"/>Einstellungen</h1>
-    <h2 id="threads"><img src="../img/boost.png"/> Verarbeitung</h2>
+    <h1 id="settings"><img class="icon-right" src="../img/sprocket.svg"/>Einstellungen</h1>
+    <h2 id="threads"><img class="icon-left" src="../img/boost.svg"/> Verarbeitung</h2>
     <ul>
       <li><b>Threads</b> – ImageResize kann die Rechenleistung des Systems durch Multithreading besser nutzen.<br/>
       <i>Single</i> bedeutet, dass nur ein Kern verwendet wird – die Verarbeitung wird entsprechend langsam.
@@ -572,7 +576,7 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
       Im Vergleich zu 6 Threads erhöht sich die Verarbeitungsgeschwindigkeit nur um rund 8 Prozent.
     </p>
 
-    <h2><img src="../img/save-dirty.png"/> Speichern</h2>
+    <h2><img class="icon-left" src="../img/save-dirty.svg"/> Speichern</h2>
     <ul>
       <li><b>Verhalten</b>
         <p>
@@ -631,7 +635,7 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
     <a class="chfot" href="#contents">Inhalt</a>
     
     
-    <h1 id="mrkeditor"><img class="icon-right" src="../img/editor.png"/>Wasserzeichen-Editor</h1>
+    <h1 id="mrkeditor"><img class="icon-right" src="../img/editor.svg"/>Wasserzeichen-Editor</h1>
     <p>
       Mit dem eingebauten Wasserzeichen-Editor
       können Sie einen Schriftzug mit ein paar nützlichen Dekorationen erzeugen.  
@@ -641,7 +645,7 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
       allerdings ohne die zusätzliche Transparenz, die sie bei den Wasserzeichen-Einstellungen angeben können.
     </p>
     <p>
-      <img class="icon-left" src='../img/whiteblackbkg.png'/>
+      <img src='../img/whiteblackbkg.png'/>
       Um einen Eindruck davon zu bekommen, wie das Wasserzeichen auf hellem oder dunklem Hintergrund wirkt,
       klicken sie eine dieser Schaltflächen.
     </p>
@@ -649,9 +653,9 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
       <img style="max-width: 80%" src="img/watermarkeditor.png"/>
     </p>
 
-    <img src="img/buttons-watermark.png"/>
+    <img class="icon-left" src="../img/save.svg"/>
     <p>
-      Mit diesen Schaltflächen können Sie die Einstellungen des Dialoges als .was-Datei speichern
+      Mit dieser Schaltfläche können Sie die Einstellungen des Dialoges als .was-Datei speichern
       und später wieder laden. Es wird neben der .was-Datei das erzeugte PNG-Bild des Wasserzeichens gespeichert.
     </p>
     <p>
@@ -663,31 +667,36 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
         <td>
           Geben Sie hier die Textzeile ein, die im Wasserzeichen dargestellt werden soll. Das ©-Zeichen mit
           &lt;ALT&gt; &lt;0&gt; &lt;1&gt; &lt;6&gt; &lt;9&gt; oder mit der 
-          <img class="btn" src="../img/copyright.png"/>-Schaltfläche.
+          <img class="btn" src="../img/copyright.svg"/>-Schaltfläche.
         </td>
       </tr>
       <tr id="mrkfont"><td>Font</td>
         <td>
           Wählen Sie einen Font mit der Größe in <i>Punkten</i>, einen Fontnamen in Anführungszeichen und optional die Stile <i>Italic</i> und
-          <i>Bold</i> oder wählen Sie einen Font im Dialog <img class="btn" src="../img/font.png"/> aus.
+          <i>Bold</i> oder wählen Sie einen Font im Dialog <img class="btn" src="../img/font.svg"/> aus.
           Die Qualität des Wasserzeichens hängt mit der Font-Größe zusammen. 12pt erzeugt ein grobpixeliges Wasserzeichen, 48pt eine
           genauere Abbildung. Die Fontgröße hat keinen Einfluss auf die spätere Darstellung im Bild, da deren Größe bei den Wasserzeicheneinstellungen 
           des Hauptfensters angegeben wird.
         </td>
       </tr>
-      <tr id="mrkcolor"><td>Font Farbe</td>
+      <tr id="mrkcolor"><td>Farbe (Font)</td>
         <td>
           Wählen Sie die Zeichenfarbe (Vordergrund) aus.
         </td>
       </tr>
       <tr id="mrkoutline"><td>Umriss</td>
         <td>
-          Die Schrift erhält einen feinen Umriss mit der gewählten Farbe. 
+          Die Schrift erhält einen Umriss mit der gewählten Farbe. 
         </td>
       </tr>
-      <tr id="mrkoutlinecolor"><td>Umrissfarbe</td>
+      <tr id="mrkoutlinecolor"><td>Farbe (Umriss)</td>
         <td>
-          Farbe des feinen Umrisses.
+          Farbe des Umrisses.
+        </td>
+      </tr>
+      <tr id="mrkoutlinewidth"><td>Breite (Umriss)</td>
+        <td>
+          Breite des Umrisses in Pixeln.
         </td>
       </tr>
       <tr id="mrkshadow"><td>Schatten</td>
@@ -695,7 +704,7 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
           Ermöglicht einen verwischten Hintergrund der Schrift, der je nach Farbe leuchtet oder wie ein Schatten wirkt.
         </td>
       </tr>
-      <tr id="mrkshadowcolor"><td>Schatten Farbe</td>
+      <tr id="mrkshadowcolor"><td>Farbe (Schatten)</td>
         <td>
           Wählen Sie die Farbe des verwischten Hintergrundes aus.
         </td>
@@ -714,13 +723,13 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
           ist ein sehr dünner Schatten, wie ein Umriss.
         </td>
       </tr>
-      <tr><td>Ok</td>
+      <tr><td>Ok <img class="btn" src="../img/ok.svg"/></td>
         <td>
-          Nachdem ein Wasserzeichen definiert wurde, muss es zunächst als PNG-Datei gespeichert werden, oder 
+          Nachdem ein Wasserzeichen definiert wurde, muss es zunächst gespeichert werden <img class="btn" src="../img/save.svg"/> , oder 
           zuvor aus einer Datei geladen werden. Erst dann wird <b>Ok</b> verfügbar.
         </td>
       </tr>
-      <tr><td>Abbrechen</td>
+      <tr><td>Abbrechen <img class="btn" src="../img/cancel.svg"/></td>
         <td>
           Schließt den Dialog, ohne die Datei zu verwenden.
         </td>

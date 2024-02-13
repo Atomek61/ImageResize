@@ -29,7 +29,7 @@ const
 
   GUIVER_APP            = 'ImageResize';
   GUIVER_VERSION        = '4.0';
-  GUIVER_DATE           = '2024-01-25';
+  GUIVER_DATE           = '2024-02-13';
 
   GUIVER                :TVersionManifest = (App: GUIVER_APP; Version: GUIVER_VERSION; Date: GUIVER_DATE; Hint: '');
 
