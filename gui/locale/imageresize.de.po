@@ -869,6 +869,10 @@ msgstr "&Hilfe"
 msgid "Opens the local or internet-based HTML help (F1)"
 msgstr "Öffnet die lokale oder die Internet-basierte HTML-Hilfe (F1)"
 
+#: tmaindialog.actionhelpscreenshots.caption
+msgid "HlpShots"
+msgstr ""
+
 #: tmaindialog.actionnew.caption
 msgctxt "tmaindialog.actionnew.caption"
 msgid "&New"
@@ -1263,12 +1267,49 @@ msgstr ""
 "Wenn mehrere Größen angegeben werden, muss der Platzhalter %SIZE% im Pfad\n"
 " an der Stelle eingefügt werden, wo die aktuelle Größe erscheinen soll."
 
-#: tmaindialog.groupboxexiftagging.caption
+#: tmaindialog.groupboxinterpolationquality.caption
+#, fuzzy
+msgctxt "tmaindialog.groupboxinterpolationquality.caption"
+msgid "Interpolation"
+msgstr "Interpolation"
+
+#: tmaindialog.groupboxjpegquality.caption
+#, fuzzy
+msgctxt "tmaindialog.groupboxjpegquality.caption"
+msgid "JPEG"
+msgstr "JPEG"
+
+#: tmaindialog.groupboxmrkfilename.caption
+msgid "Filename"
+msgstr "Dateiname"
+
+#: tmaindialog.groupboxmrklayout.caption
+msgid "Layout"
+msgstr "Layout"
+
+#: tmaindialog.groupboxpngcompression.caption
+#, fuzzy
+msgctxt "tmaindialog.groupboxpngcompression.caption"
+msgid "PNG"
+msgstr "PNG"
+
+#: tmaindialog.groupboxrename.caption
+msgid "Strategy"
+msgstr "Strategie"
+
+#: tmaindialog.groupboxshuffle.caption
+msgid "Shuffle"
+msgstr "Mischen"
+
+#: tmaindialog.groupboxtaggingexif.caption
+#, fuzzy
+msgctxt "tmaindialog.groupboxtaggingexif.caption"
 msgid "EXIF Tagging"
 msgstr "EXIF Tagging"
 
-#: tmaindialog.groupboxexiftagging.hint
-msgctxt "tmaindialog.groupboxexiftagging.hint"
+#: tmaindialog.groupboxtaggingexif.hint
+#, fuzzy
+msgctxt "tmaindialog.groupboxtaggingexif.hint"
 msgid ""
 "Define which EXIF tags are to be copied from the origin to the resampled images.\n"
 "This option is valid only for JPEG files.\n"
@@ -1282,46 +1323,21 @@ msgstr ""
 "Sie verwenden ein gängiges Bildbearbeitungsprogramm, wie RawTherapee,\n"
 "Lightroom oder Photoshop."
 
-#: tmaindialog.groupboxinterpolation.caption
-msgid "Interpolation"
-msgstr "Interpolation"
-
-#: tmaindialog.groupboxjpgoptions.caption
-msgid "JPEG"
-msgstr "JPEG"
-
-#: tmaindialog.groupboxmrkfilename.caption
-msgid "Filename"
-msgstr "Dateiname"
-
-#: tmaindialog.groupboxmrklayout.caption
-msgid "Layout"
-msgstr "Layout"
-
-#: tmaindialog.groupboxpngoptions.caption
-msgid "PNG"
-msgstr "PNG"
-
-#: tmaindialog.groupboxrename.caption
-msgid "Strategy"
-msgstr "Strategie"
-
-#: tmaindialog.groupboxshuffle.caption
-msgid "Shuffle"
-msgstr "Mischen"
-
-#: tmaindialog.groupboxtagsloading.caption
-msgctxt "tmaindialog.groupboxtagsloading.caption"
+#: tmaindialog.groupboxtaggingload.caption
+#, fuzzy
+msgctxt "tmaindialog.groupboxtaggingload.caption"
 msgid "Tags Loading"
 msgstr "Tags laden"
 
-#: tmaindialog.groupboxtagssaving.caption
-msgctxt "tmaindialog.groupboxtagssaving.caption"
+#: tmaindialog.groupboxtaggingsave.caption
+#, fuzzy
+msgctxt "tmaindialog.groupboxtaggingsave.caption"
 msgid "Tags Saving"
 msgstr "Tags speichern"
 
-#: tmaindialog.groupboxtagssaving.hint
-msgctxt "tmaindialog.groupboxtagssaving.hint"
+#: tmaindialog.groupboxtaggingsave.hint
+#, fuzzy
+msgctxt "tmaindialog.groupboxtaggingsave.hint"
 msgid ""
 "A Tags Report is a list of filenames and tags, which may be usefull for creating\n"
 "a slideshow."

@@ -19,8 +19,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="1552"/>
-        <CursorPos X="43" Y="1592"/>
+        <TopLine Value="1112"/>
+        <CursorPos X="63" Y="1134"/>
         <ExtraEditorCount Value="1"/>
         <ExtraEditor1>
           <EditorIndex Value="-1"/>
@@ -48,7 +48,7 @@
         <ComponentName Value="MrkEditDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="5"/>
         <TopLine Value="396"/>
         <CursorPos X="72" Y="403"/>
         <UsageCount Value="201"/>
@@ -163,9 +163,11 @@
         <ComponentName Value="ImagesModule"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
-        <EditorIndex Value="-1"/>
+        <EditorIndex Value="1"/>
         <CursorPos X="30" Y="20"/>
         <UsageCount Value="200"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="presentations.pas"/>
@@ -253,7 +255,7 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="3" Y="14"/>
-        <UsageCount Value="126"/>
+        <UsageCount Value="129"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\inttypes.pas"/>
@@ -261,7 +263,7 @@
         <UnitName Value="IntTypes"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="27" Y="32"/>
-        <UsageCount Value="91"/>
+        <UsageCount Value="94"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\stringutils.pas"/>
@@ -269,7 +271,7 @@
         <UnitName Value="StringUtils"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="13"/>
-        <UsageCount Value="90"/>
+        <UsageCount Value="93"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\imgutils.pas"/>
@@ -277,14 +279,23 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="42"/>
         <CursorPos Y="47"/>
-        <UsageCount Value="78"/>
+        <UsageCount Value="81"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\colorsetting.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos Y="14"/>
-        <UsageCount Value="75"/>
+        <UsageCount Value="78"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\controlshot.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="45"/>
+        <CursorPos Y="75"/>
+        <UsageCount Value="32"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="stringarrays.pas"/>
@@ -618,10 +629,11 @@
       <Unit>
         <Filename Value="C:\lazarus\lcl\forms.pp"/>
         <UnitName Value="Forms"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="818"/>
-        <CursorPos X="3" Y="839"/>
-        <UsageCount Value="19"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="577"/>
+        <CursorPos Y="610"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\lcl\include\customcheckbox.inc"/>
@@ -1262,15 +1274,6 @@
         <UsageCount Value="14"/>
       </Unit>
       <Unit>
-        <Filename Value="..\src\controlshot.pas"/>
-        <IsPartOfProject Value="True"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="33"/>
-        <CursorPos X="23" Y="73"/>
-        <UsageCount Value="29"/>
-        <Loaded Value="True"/>
-      </Unit>
-      <Unit>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\win64\windows.pp"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="59" Y="21"/>
@@ -1313,6 +1316,12 @@
         <CursorPos X="3" Y="2085"/>
         <UsageCount Value="10"/>
       </Unit>
+      <Unit>
+        <Filename Value="C:\lazarus\lcl\include\windowmagnet.inc"/>
+        <EditorIndex Value="4"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit>
     </Units>
     <OtherDefines Count="1">
       <Define0 Value="_DEBUG"/>
@@ -1320,123 +1329,123 @@
     <JumpHistory HistoryIndex="29">
       <Position>
         <Filename Value="..\src\controlshot.pas"/>
-        <Caret Line="56" TopLine="22"/>
+        <Caret Line="72" TopLine="38"/>
       </Position>
       <Position>
         <Filename Value="..\src\controlshot.pas"/>
-        <Caret Line="51" TopLine="22"/>
+        <Caret Line="73" TopLine="39"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="1512" Column="27" TopLine="1500"/>
+        <Caret Line="1592" TopLine="1562"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret TopLine="508"/>
+        <Caret Line="1598" Column="24" TopLine="1562"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1588" Column="66" TopLine="1576"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1572" TopLine="1531"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1132" Column="31" TopLine="1123"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="253" TopLine="253"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="559" Column="22" TopLine="530"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1119" TopLine="1107"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1121" TopLine="1107"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1122" TopLine="1107"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1123" TopLine="1107"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1124" TopLine="1107"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1125" TopLine="1107"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1126" TopLine="1107"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1127" TopLine="1107"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1129" TopLine="1107"/>
       </Position>
       <Position>
         <Filename Value="..\src\controlshot.pas"/>
-        <Caret Line="18" Column="36" TopLine="12"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="39" Column="32" TopLine="28"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1567" Column="41" TopLine="1531"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1568" Column="20" TopLine="1547"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1577" Column="19" TopLine="1554"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="248" Column="5" TopLine="228"/>
+        <Caret Line="44" TopLine="36"/>
       </Position>
       <Position>
         <Filename Value="..\src\controlshot.pas"/>
-        <Caret Line="21" Column="55"/>
+        <Caret Line="45" TopLine="36"/>
       </Position>
       <Position>
         <Filename Value="..\src\controlshot.pas"/>
-        <Caret Line="29" Column="36" TopLine="21"/>
-      </Position>
-      <Position>
-        <Filename Value="mrkeditdlg.pas"/>
-        <Caret Line="326" Column="12" TopLine="298"/>
-      </Position>
-      <Position>
-        <Filename Value="mrkeditdlg.pas"/>
-        <Caret Line="131" Column="16" TopLine="126"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1576" TopLine="1555"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1560" Column="17" TopLine="1556"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="274" TopLine="274"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1646" Column="35" TopLine="1641"/>
-      </Position>
-      <Position>
-        <Filename Value="mrkeditdlg.pas"/>
-        <Caret Line="127" TopLine="107"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1647" Column="21" TopLine="1641"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="22" TopLine="22"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1573" TopLine="1540"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1582" TopLine="1552"/>
+        <Caret Line="46" TopLine="36"/>
       </Position>
       <Position>
         <Filename Value="..\src\controlshot.pas"/>
-        <Caret Line="41" TopLine="6"/>
+        <Caret Line="47" TopLine="36"/>
       </Position>
       <Position>
         <Filename Value="..\src\controlshot.pas"/>
-        <Caret Line="42" TopLine="7"/>
+        <Caret Line="48" TopLine="36"/>
       </Position>
       <Position>
         <Filename Value="..\src\controlshot.pas"/>
-        <Caret Line="43" TopLine="8"/>
+        <Caret Line="49" TopLine="36"/>
       </Position>
       <Position>
         <Filename Value="..\src\controlshot.pas"/>
-        <Caret Line="44" TopLine="9"/>
+        <Caret Line="50" TopLine="36"/>
       </Position>
       <Position>
         <Filename Value="..\src\controlshot.pas"/>
-        <Caret Line="45" Column="46" TopLine="20"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1589" Column="32" TopLine="1568"/>
+        <Caret Line="51" TopLine="36"/>
       </Position>
       <Position>
         <Filename Value="..\src\controlshot.pas"/>
-        <Caret Line="19"/>
+        <Caret Line="52" TopLine="36"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\controlshot.pas"/>
+        <Caret Line="75" TopLine="53"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\controlshot.pas"/>
+        <Caret Line="74" TopLine="34"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\controlshot.pas"/>
+        <Caret Line="75" TopLine="45"/>
       </Position>
     </JumpHistory>
     <RunParams>

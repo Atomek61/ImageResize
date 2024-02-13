@@ -75,12 +75,12 @@
       Das Programm benötigt mindestens die folgenden 3 Angaben:
     </p>
     <ol>
-      <li>Die Liste von Bilddateien oder einen Quellordner mit Dateifilter<br/><img src="img/minsrc.png"/></li>
-      <li>Eine oder mehrere Zielgrößen<br/><img src="img/minsize.png"/></li>
-      <li>Den Zielordner<br/><img src="img/mindst.png"/></li>
+      <li>Die Liste von Bilddateien oder einen Quellordner mit Dateifilter<br/><img src="img/step-srcimages.png"/></li>
+      <li>Eine oder mehrere Zielgrößen<br/><img src="img/step-sizes.png"/></li>
+      <li>Den Zielordner<br/><img src="img/step-targetfolder.png"/></li>
     </ol>
     <p>
-      Drücken Sie am Ende <img style="position: relative; top:10px;" src="../img/start.png"/> um das Resampling zu starten.
+      Drücken Sie am Ende <img style="position: relative; top:10px;" src="img/step-execute.png"/> um das Resampling zu starten.
     </p>
     
     <h1 id="srcfilelist">Quelldateien</h1>
@@ -102,7 +102,7 @@
     </p>
     <a class="chfot" href="#contents">Inhalt</a>
     
-    <h1 id="sizes"><img class="icon-right" src="../img/sizes.png"/>Größen</h1>
+    <h1 id="sizes"><img class="icon-right" src="../img/sizes-multiple.png"/>Größen</h1>
     <p>
       Eine <i>Größe</i> in Pixeln bezieht sich auf die längere Seite des Bildes. 
     </p>
@@ -466,17 +466,20 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
 
     <h2>Einstellungen zum Taggen</h2>
     <h3 id="tagssave">Tags speichern</h3>
+    <img src="img/tagging-save.png"/>
     <p>
       Hier bestimmen Sie, ob die gefundenen Tags in .imgtags-Dateien der Zielordner gespeichert werden sollen. Die .imgtags-Dateien
       sind klein im Vergleich zu den Bilddateien.
     </p>
-    <p class="hint-box">.imgtags-Dateien sind eine Voraussetzung für die Erzeugung einer Präsentation und werden voreingestellt
-      erzeugt.
-    </p>
     <p id="tags-report">
       .tagsreport-Dateien sind allgemeinere CSV-Dateien für zukünftige Zwecke und eigene Programme. Sie werden von ImageResize nicht benötigt.
     </p>
+    <p class="hint-box">.imgtags-Dateien sind eine Voraussetzung für die Erzeugung einer Präsentation und werden voreingestellt
+      erzeugt.
+    </p>
+
     <h3 id="tagsload">Tags laden</h3>
+    <img src="img/tagging-load.png"/>
     <p>
       Wenn Sie Tags verarbeiten möchten, müssen Sie angeben woher diese kommen sollen. Sie können entweder aus den EXIF-Informationen der
       JPEGs stammen oder aus ihren .tags-Dateien oder aus beidem. Wenn sie aus beidem stammen haben die .tags-Dateien Vorrang.
@@ -487,15 +490,11 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
       Wenn sie Tags speichern wollen aber keine Tags-Quelle angeben, wird ImageResize selbsttätig nach .tags-Dateien suchen, auch wenn
       Sie dies nicht ausdrücklich angegeben haben.
     </p>
-    <h3>EXIF Tagging</h3>
-    <p>
-      Sie können hier bestimmen, ob die erzeugten Bilder EXIF-Tags erhalten sollen. Normalerweise enthalten die erzeugten Bilder keinerlei
-      Meta-Informationen aus den Originaldateien.
-    </p>
 
     <h3 id="tagging-exif">EXIF Tagging</h3>
     <img src="img/tagging-exif.png"/>
     <p>
+      Normalerweise enthalten die erzeugten Bilder keinerlei Meta-Informationen aus den Originaldateien.
       Hier wählen Sie aus, welche Tags in die erzeugten Bilder als EXIF-Tags übernommen werden sollen. Der Titel wird im
       EXIF-Feld "ImageDescription" abgelegt. Sie können das Copyright-Tag für alle erzeugten Bilder überschreiben.
     </p>

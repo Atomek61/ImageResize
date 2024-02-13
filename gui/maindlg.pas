@@ -109,6 +109,7 @@ type
   end;
 
   TMainDialog = class(TForm)
+    ActionHelpScreenshots: TAction;
     ActionPresentation: TAction;
     ActionListParams: TActionList;
     ActionListSource: TActionList;
@@ -178,16 +179,16 @@ type
     EditMrkY: TEdit;
     EditSizes: TEdit;
     EditTargetFolder: TEdit;
-    GroupBoxInterpolation: TGroupBox;
-    GroupBoxTagsSaving: TGroupBox;
-    GroupBoxTagsLoading: TGroupBox;
-    GroupBoxEXIFTagging: TGroupBox;
+    GroupBoxInterpolationQuality: TGroupBox;
+    GroupBoxTaggingSave: TGroupBox;
+    GroupBoxTaggingLoad: TGroupBox;
+    GroupBoxTaggingEXIF: TGroupBox;
     GroupBoxMrkFilename: TGroupBox;
     GroupBoxShuffle: TGroupBox;
     GroupBoxRename: TGroupBox;
     GroupBoxMrkLayout: TGroupBox;
-    GroupBoxJpgOptions: TGroupBox;
-    GroupBoxPngOptions: TGroupBox;
+    GroupBoxJPEGQuality: TGroupBox;
+    GroupBoxPNGCompression: TGroupBox;
     HTMLBrowserHelpViewer: THTMLBrowserHelpViewer;
     HTMLHelpDatabase: THTMLHelpDatabase;
     Label1: TLabel;
@@ -243,6 +244,7 @@ type
     ToolBarSrc: TToolBar;
     ToolBarParameters: TToolBar;
     ToolBarSizeButtons: TToolBar;
+    ToolButtonHlpScreenshots: TToolButton;
     ToolButtonSep2: TToolButton;
     ToolButtonSep1: TToolButton;
     ToolButtonNew: TToolButton;
@@ -267,6 +269,7 @@ type
     UpDownMrkSize: TUpDown;
     UpDownMrkX: TUpDown;
     UpDownMrkY: TUpDown;
+    procedure ActionHelpScreenshotsExecute(Sender: TObject);
     procedure ActionSettingsExecute(Sender: TObject);
     procedure ActionPresentationExecute(Sender: TObject);
     procedure ActionSourceExecute(Sender: TObject);
@@ -313,7 +316,6 @@ type
     procedure PaintBoxMrkPreviewMouseWheel(Sender: TObject; Shift: TShiftState;
       WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
     procedure PaintBoxMrkPreviewPaint(Sender: TObject);
-    procedure PanelControlsClick(Sender: TObject);
     procedure ProgressBarPaint(Sender: TObject);
     procedure TimerProgressBarOffTimer(Sender: TObject);
     procedure EditSizesExit(Sender: TObject);
@@ -554,6 +556,10 @@ begin
 
   FPresentationSettings := TPresentationSettings.Create;
   FPresentationParamsList := TSettingsList.Create;
+
+{$IFDEF _DEBUG}
+  ActionHelpScreenshots.Visible := True;
+{$ENDIF}
 
   // Create Size Buttons
   for i:=0 to High(DEFSIZES) do begin
@@ -1106,6 +1112,53 @@ begin
   end;
 end;
 
+procedure TMainDialog.ActionHelpScreenshotsExecute(Sender: TObject);
+begin
+  ActionHelpScreenshots.Visible := false;
+  ActionNew.Execute;
+  ControlShot.SnapshotFolder := ExtractFilepath(Application.Exename) + '..\hlp\gui\'+TLanguage.Code+'\img';
+//  ControlShot.SnapshotFolder := 'C:\TEMP\hlp';
+  ToolButtonSrcFilenames.Click;
+  with MemoSrcFilenames.Lines do begin
+    Clear;
+    Add('myphotos\DSC06237.jpg');
+    Add('myphotos\DSC06238.jpg');
+    Add('myphotos\DSC06227.jpg');
+    Add('myphotos\DSC06403.jpg');
+  end;
+  Snapshot('step-srcimages', PanelSource, -2, -40, 360, 165);
+  ToolButtonSizes.Click;
+  EditSizes.Text := '360';
+  Snapshot('step-sizes', PanelParams, -2, -40, 360, 95);
+  EditTargetFolder.Text := 'mygallery\img%SIZE%';
+  Snapshot('step-targetfolder', PanelDestination, -200, -8, 360, 60);
+  Snapshot('step-execute', ButtonExecute, 0, 0, 0, 0);
+  Snapshot('buttons-project', ToolButtonNew, 0, 0, 4*ToolButtonNew.Width, ToolButtonNew.Height);
+  EditSizes.Text := '120, 800, 1920';
+  Snapshot('sizes-multiple', EditSizes, -6, -24, 200, 32);
+
+  ToolButtonQuality.Click;
+  ComboBoxInterpolation.ItemIndex := 7;
+  ComboBoxInterpolation.DroppedDown := true;
+  Snapshot('quality-interpolation', GroupBoxInterpolationQuality, -8, 0, 300, 270);
+  ComboBoxJPEGQuality.ItemIndex := 5;
+  ComboBoxJPEGQuality.DroppedDown := true;
+  Snapshot('quality-JPEG', GroupBoxJPEGQuality, -8, 0, 270, 210);
+  ComboBoxPNGCompression.ItemIndex := 2;
+  ComboBoxPNGCompression.DroppedDown := true;
+  Snapshot('quality-PNG', GroupBoxPNGCompression, -8, 0, 270, 130);
+  ComboBoxPNGCompression.DroppedDown := false;
+
+  ToolButtonTagging.Click;
+  Snapshot('tagging-save', GroupBoxTaggingSave, -8, 0, 0, 0);
+  Snapshot('tagging-load', GroupBoxTaggingLoad, -8, 0, 0, 0);
+  Snapshot('tagging-EXIF', GroupBoxTaggingEXIF, -8, 0, 0, 0);
+
+  ActionHelpScreenshots.Visible := true;
+  //if not Assigned(MrkEditDialog) then
+  //Snapshot('buttons-watermark', MrkEditDialog.ToolBar, 0, 0, MrkEditDialog.ToolBar.Width, MrkEditDialog.ToolBar.Height);
+end;
+
 procedure TMainDialog.ActionPresentationExecute(Sender: TObject);
 begin
   if PresentationDialog.Execute(FPresentationSettings, FPresentationParamsList) then begin
@@ -1558,42 +1611,6 @@ begin
     end;
     Bmp.Free;
   end;
-end;
-
-procedure TMainDialog.PanelControlsClick(Sender: TObject);
-
-begin
-{$IFDEF _DEBUG}
-//  ControlShot.SnapshotFolder := ExtractFilepath(Application.Exename) + '..\hlp\gui\'+TLanguage.Code+'\img';
-  ActionNew.Execute;
-  ControlShot.SnapshotFolder := 'C:\TEMP\hlp';
-  ToolButtonSrcFilenames.Click;
-  with MemoSrcFilenames.Lines do begin
-    Clear;
-    Add('myphotos\DSC06237.jpg');
-    Add('myphotos\DSC06238.jpg');
-    Add('myphotos\DSC06227.jpg');
-    Add('myphotos\DSC06403.jpg');
-  end;
-  Snapshot('minsrc', PanelSource, -2, -40, 320, 165);
-  ToolButtonSizes.Click;
-  EditSizes.Text := '360';
-  Snapshot('minsize', PanelParams, -2, -40, 340, 95);
-  EditTargetFolder.Text := 'mygallery\img%SIZE%';
-  Snapshot('mindst', PanelDestination, -200, -8, 340, 60);
-  Snapshot('minexec', ButtonExecute, 0, 0, 0, 0);
-  Snapshot('buttons-project', ToolButtonNew, 0, 0, 340, ToolButtonNew.Height);
-  EditSizes.Text := '120, 800, 1920';
-  Snapshot('multiplesizes', EditSizes, -6, -24, 200, 32);
-  ToolButtonQuality.Click;
-  ComboBoxInterpolation.ItemIndex := 7;
-  ComboBoxInterpolation.DroppedDown := true;
-  DelayForSnapshot(4000);
-  Snapshot('quality-interpolation', GroupBoxInterpolation, 0, 0, 0, 300);
-  //if not Assigned(MrkEditDialog) then
-  //Snapshot('buttons-watermark', MrkEditDialog.ToolBar, 0, 0, MrkEditDialog.ToolBar.Width, MrkEditDialog.ToolBar.Height);
-
-{$ENDIF}
 end;
 
 procedure TMainDialog.ProgressBarPaint(Sender: TObject);

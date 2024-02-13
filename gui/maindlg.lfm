@@ -34,7 +34,6 @@ object MainDialog: TMainDialog
     ParentBackground = False
     ParentColor = False
     TabOrder = 1
-    OnClick = PanelControlsClick
     object PanelSource: TPanel
       Left = 7
       Height = 368
@@ -257,14 +256,14 @@ object MainDialog: TMainDialog
         Top = 4
         Width = 393
         TabStop = False
-        ActivePage = TabSheetQuality
+        ActivePage = TabSheetTagging
         Align = alClient
         BorderSpacing.Around = 4
         ImagesWidth = 32
         MultiLine = True
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 3
+        TabIndex = 4
         TabOrder = 1
         Options = [nboMultiLine]
         object TabSheetSizes: TTabSheet
@@ -939,7 +938,7 @@ object MainDialog: TMainDialog
           ClientHeight = 352
           ClientWidth = 385
           ImageIndex = 8
-          object GroupBoxJpgOptions: TGroupBox
+          object GroupBoxJPEGQuality: TGroupBox
             Left = 4
             Height = 65
             Top = 73
@@ -972,7 +971,7 @@ object MainDialog: TMainDialog
               OnChange = ProjectChanged
             end
           end
-          object GroupBoxPngOptions: TGroupBox
+          object GroupBoxPNGCompression: TGroupBox
             Left = 4
             Height = 65
             Top = 142
@@ -1006,7 +1005,7 @@ object MainDialog: TMainDialog
               OnChange = ProjectChanged
             end
           end
-          object GroupBoxInterpolation: TGroupBox
+          object GroupBoxInterpolationQuality: TGroupBox
             Left = 4
             Height = 65
             Top = 4
@@ -1047,7 +1046,7 @@ object MainDialog: TMainDialog
           HelpKeyword = 'HTML/index.html#tagging'
           ClientHeight = 352
           ClientWidth = 385
-          object GroupBoxEXIFTagging: TGroupBox
+          object GroupBoxTaggingEXIF: TGroupBox
             Left = 4
             Height = 157
             Hint = 'Define which EXIF tags are to be copied from the origin to the resampled images.'#13#10'This option is valid only for JPEG files.'#13#10'To change the EXIF tags of your source images, you can change them in the'#13#10'Windows Explorer or with a photo editor like RawTherapee.'
@@ -1101,7 +1100,7 @@ object MainDialog: TMainDialog
               OnChange = ProjectChanged
             end
             object EditCopyright: TEdit
-              AnchorSideLeft.Control = GroupBoxEXIFTagging
+              AnchorSideLeft.Control = GroupBoxTaggingEXIF
               AnchorSideTop.Control = CheckBoxTagCopyright
               Left = 29
               Height = 23
@@ -1171,7 +1170,7 @@ object MainDialog: TMainDialog
               ParentColor = False
             end
           end
-          object GroupBoxTagsSaving: TGroupBox
+          object GroupBoxTaggingSave: TGroupBox
             Left = 4
             Height = 74
             Hint = 'A Tags Report is a list of filenames and tags, which may be usefull for creating'#13#10'a slideshow.'
@@ -1215,7 +1214,7 @@ object MainDialog: TMainDialog
               OnChange = ProjectChanged
             end
           end
-          object GroupBoxTagsLoading: TGroupBox
+          object GroupBoxTaggingLoad: TGroupBox
             Left = 4
             Height = 74
             Top = 82
@@ -1521,34 +1520,34 @@ object MainDialog: TMainDialog
       Action = ActionExecute
     end
     object ToolButtonHelp: TToolButton
-      Left = 668
+      Left = 662
       Top = 0
       Action = ActionHelp
     end
     object ToolButtonSep0: TToolButton
-      Left = 660
+      Left = 657
       Height = 64
       Top = 0
       Style = tbsDivider
     end
     object ToolButtonEditor: TToolButton
-      Left = 497
+      Left = 494
       Top = 0
       Action = ActionEditWatermark
     end
     object ToolButtonAbout: TToolButton
-      Left = 748
+      Left = 742
       Hint = 'License and Vendor Infos'
       Top = 0
       Action = ActionAbout
     end
     object ToolButtonSlideshowAfterburner: TToolButton
-      Left = 577
+      Left = 574
       Top = 0
       Action = ActionPresentation
     end
     object ToolButtonSettings: TToolButton
-      Left = 417
+      Left = 414
       Top = 0
       Action = ActionSettings
     end
@@ -1563,6 +1562,12 @@ object MainDialog: TMainDialog
       Height = 64
       Top = 0
       Style = tbsSeparator
+    end
+    object ToolButtonHlpScreenshots: TToolButton
+      Left = 822
+      Top = 0
+      Action = ActionHelpScreenshots
+      ImageIndex = 30
     end
   end
   object MemoMessages: TRichMemo
@@ -1644,6 +1649,11 @@ object MainDialog: TMainDialog
       Hint = 'Settings dialog for some global and project-independent settings'
       ImageIndex = 21
       OnExecute = ActionSettingsExecute
+    end
+    object ActionHelpScreenshots: TAction
+      Caption = 'HlpShots'
+      OnExecute = ActionHelpScreenshotsExecute
+      Visible = False
     end
   end
   object OpenDialogSrcFilenames: TOpenDialog

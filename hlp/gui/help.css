@@ -151,7 +151,8 @@ td {
 .hint-box {
   background-color: hsl(240, 50%, 90%);
   color:hsl(240, 40%, 20%);
-  padding: 0.2em;
+  padding: 1em;
+  margin: 1em;
   border-left: 2mm solid hsl(240, 40%, 50%);
 }
 

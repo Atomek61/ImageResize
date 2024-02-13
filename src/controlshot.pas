@@ -5,7 +5,7 @@ unit controlshot;
 interface
 
 uses
-  Forms, Windows, Classes, SysUtils, Controls, Graphics, BGRABitmap, FPWritePNG;
+  LCLIntf, LCLType, Forms, Windows, Classes, SysUtils, Controls, Graphics, BGRABitmap, FPWritePNG;
 
 var
   SnapshotFolder :string;
@@ -21,11 +21,13 @@ implementation
 
 procedure Snapshot(const Filetitle :string; Control :TControl; dx, dy, Width, Height :integer);
 var
+  ScreenBmp :TBitmap;
   Bmp :TBitmap;
   SrcRect, DstRect :TRect;
   Form :TCustomForm;
   Bmpa :TBGRABitmap;
   PNGWriter :TFPWriterPNG;
+  ScreenDC :HDC;
 
   function GetParentForm(Control :TControl) :TCustomForm;
   var
@@ -41,24 +43,29 @@ var
 
 begin
   Application.ProcessMessages;
-  Form := GetParentForm(Control);
   if Width = 0 then Width := Control.Width - dx;
   if Height = 0 then Height := Control.Height;
   DstRect := Classes.Rect(0, 0, Width, Height-dy);
-  SrcRect.TopLeft := Form.ScreenToClient(Control.Parent.ClientToScreen(Control.BoundsRect.TopLeft));
+  SrcRect.TopLeft := Control.Parent.ClientToScreen(Control.BoundsRect.TopLeft);
   inc(SrcRect.Left, dx);
   inc(SrcRect.Top, dy);
   SrcRect.Right := SrcRect.Left + DstRect.Width;
   SrcRect.Bottom := SrcRect.Top + DstRect.Height;
+  Bmpa := nil;
+  PNGWriter := nil;
+  ScreenBmp := TBitmap.Create;
   Bmp := TBitmap.Create;
   try
+    ScreenDC := GetDC(0);
+    ScreenBmp.LoadFromDevice(ScreenDC);
+    ReleaseDC(0, ScreenDC);
     Bmp.SetSize(DstRect.Width, DstRect.Height);
-    Bmp.Canvas.CopyRect(DstRect, Form.Canvas, SrcRect);
+    Bmp.Canvas.CopyRect(DstRect, ScreenBmp.Canvas, SrcRect);
     PNGWriter := TFPWriterPNG.Create;
     Bmpa := TBGRABitmap.Create(Bmp);
     Bmpa.SaveToFile(IncludeTrailingPathDelimiter(SnapshotFolder)+Filetitle+'.png', PngWriter);
-//    Bmp.SaveToFile(IncludeTrailingPathDelimiter(SnapshotFolder)+Filename);
   finally
+    ScreenBmp.Free;
     Bmp.Free;
     Bmpa.Free;
     PNGWriter.Free;

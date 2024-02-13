@@ -849,6 +849,10 @@ msgstr ""
 msgid "Opens the local or internet-based HTML help (F1)"
 msgstr ""
 
+#: tmaindialog.actionhelpscreenshots.caption
+msgid "HlpShots"
+msgstr ""
+
 #: tmaindialog.actionnew.caption
 msgctxt "tmaindialog.actionnew.caption"
 msgid "&New"
@@ -1192,24 +1196,13 @@ msgid ""
 "into the path where the program shall insert the current size ."
 msgstr ""
 
-#: tmaindialog.groupboxexiftagging.caption
-msgid "EXIF Tagging"
-msgstr ""
-
-#: tmaindialog.groupboxexiftagging.hint
-msgctxt "tmaindialog.groupboxexiftagging.hint"
-msgid ""
-"Define which EXIF tags are to be copied from the origin to the resampled images.\n"
-"This option is valid only for JPEG files.\n"
-"To change the EXIF tags of your source images, you can change them in the\n"
-"Windows Explorer or with a photo editor like RawTherapee."
-msgstr ""
-
-#: tmaindialog.groupboxinterpolation.caption
+#: tmaindialog.groupboxinterpolationquality.caption
+msgctxt "tmaindialog.groupboxinterpolationquality.caption"
 msgid "Interpolation"
 msgstr ""
 
-#: tmaindialog.groupboxjpgoptions.caption
+#: tmaindialog.groupboxjpegquality.caption
+msgctxt "tmaindialog.groupboxjpegquality.caption"
 msgid "JPEG"
 msgstr ""
 
@@ -1221,7 +1214,8 @@ msgstr ""
 msgid "Layout"
 msgstr ""
 
-#: tmaindialog.groupboxpngoptions.caption
+#: tmaindialog.groupboxpngcompression.caption
+msgctxt "tmaindialog.groupboxpngcompression.caption"
 msgid "PNG"
 msgstr ""
 
@@ -1233,18 +1227,32 @@ msgstr ""
 msgid "Shuffle"
 msgstr ""
 
-#: tmaindialog.groupboxtagsloading.caption
-msgctxt "tmaindialog.groupboxtagsloading.caption"
+#: tmaindialog.groupboxtaggingexif.caption
+msgctxt "tmaindialog.groupboxtaggingexif.caption"
+msgid "EXIF Tagging"
+msgstr ""
+
+#: tmaindialog.groupboxtaggingexif.hint
+msgctxt "tmaindialog.groupboxtaggingexif.hint"
+msgid ""
+"Define which EXIF tags are to be copied from the origin to the resampled images.\n"
+"This option is valid only for JPEG files.\n"
+"To change the EXIF tags of your source images, you can change them in the\n"
+"Windows Explorer or with a photo editor like RawTherapee."
+msgstr ""
+
+#: tmaindialog.groupboxtaggingload.caption
+msgctxt "tmaindialog.groupboxtaggingload.caption"
 msgid "Tags Loading"
 msgstr ""
 
-#: tmaindialog.groupboxtagssaving.caption
-msgctxt "tmaindialog.groupboxtagssaving.caption"
+#: tmaindialog.groupboxtaggingsave.caption
+msgctxt "tmaindialog.groupboxtaggingsave.caption"
 msgid "Tags Saving"
 msgstr ""
 
-#: tmaindialog.groupboxtagssaving.hint
-msgctxt "tmaindialog.groupboxtagssaving.hint"
+#: tmaindialog.groupboxtaggingsave.hint
+msgctxt "tmaindialog.groupboxtaggingsave.hint"
 msgid ""
 "A Tags Report is a list of filenames and tags, which may be usefull for creating\n"
 "a slideshow."
