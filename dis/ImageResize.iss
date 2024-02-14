@@ -29,7 +29,7 @@ WelcomeLabel2=This will install [name/ver] on your computer.%n%n[name] is a JPEG
 Name: desktopicon; Description: "Create a desktop icon for the Windows application";
 Name: localhelp; Description: "Install the HTML based helpfiles";
 Name: installconsoleapp; Description: "Install the commandline tool imgres.exe";
-Name: demoproject; Description: "Install a demo project";
+Name: demoproject; Description: "Install a demo project in the Windows folder for public documents";
 
 [Run]
 Filename: {app}\ImageResize.exe; Description: "Start {#PROGNAME} now"; Flags: postinstall; 
@@ -41,7 +41,7 @@ Source: bin\locale\*.po; DestDir: "{app}\locale";
 Source: bin\presentations\*.*; DestDir: "{app}\presentations"; Flags: recursesubdirs;
 Source: bin\imgres.exe; DestDir: "{win}"; Tasks: installconsoleapp; 
 Source: hlp\*.*; DestDir: "{app}\hlp"; Tasks: localhelp; 
-Source: bin\demo\*.*; DestDir: "{commondesktop}\ImageResize Demo Project"; Flags: recursesubdirs; Tasks: demoproject; 
+Source: bin\demo\*.*; Excludes: \img*; DestDir: "{commondocs}\ImageResize Demo Project"; Flags: recursesubdirs; Tasks: demoproject; 
 
 [Icons]
 Name: "{group}\{#PROGNAME}"; Filename: "{app}\{#PROGEXE}";

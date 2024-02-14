@@ -4,7 +4,7 @@ Version=400
 
 [Presentation]
 Id=Pinboard100
-ImgTagsFilename=img360\.imgtags
+ImgTagsFilename=img\.imgtags
 
 [Presentation.Pinboard100]
 Title=Winter 2024
@@ -16,13 +16,14 @@ HeaderColor=#386283
 BackgroundColor=#DAEBE4
 
 [Project]
-Description=
+Description=Click Execute, open the Presentation dialog, create the presentation and show it
+Description.de=Klicke Ausführen, öffne den Dialog Präsentation, erzeuge eine und zeige sie an
 Source=Filenames
 SourceFolder=
 SourceMasks=*.jpg;*.png
 SourceFilenames=org\DSC08223.jpg|org\DSC08229.jpg|org\DSC08245.jpg|org\DSC08301.jpg|
-Sizes=360
-TargetFolder=img%SIZE%
+Sizes=480
+TargetFolder=img
 Interpolation=Default
 JPEGQuality=Default
 PNGCompression=Default

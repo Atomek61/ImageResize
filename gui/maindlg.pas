@@ -22,7 +22,7 @@ uses
   BGRABitmapTypes, BGRASpeedButton, BGRAGraphicControl, RichMemo,
   Generics.Collections, MrkEditDlg, WinDirs, UpdateUtils, AppSettings, Logging,
   LoggingRichMemo, StringArrays, Presentations, PresentationDlg, Settings,
-  TagIds, LazFileUtils, Translations, Language, ControlShot;
+  TagIds, LazFileUtils, Translations, Language, ControlShot, IniFilesHelper;
 
 const
   LM_RUN                = LM_USER + 1;
@@ -840,7 +840,7 @@ begin
 
     InitProject;
 
-    FProjectDescription                   := ReadString(PROJECT_SECTION,  'Description', '');
+    FProjectDescription                   := ReadLang(PROJECT_SECTION,  'Description', '', TLanguage.Code);
     if SameText(ReadString(PROJECT_SECTION, 'Source', 'Filenames'), 'Filenames') then
       ActionSrcFilenames.Execute
     else
