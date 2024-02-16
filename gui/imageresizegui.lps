@@ -31,7 +31,6 @@
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="aboutdlg.pas"/>
@@ -57,7 +56,6 @@
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\imgres.pas"/>
@@ -136,7 +134,6 @@
         <CursorPos Y="323"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\animator.pas"/>
@@ -175,7 +172,6 @@
         <CursorPos X="5" Y="13"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="imagesmod.pas"/>
@@ -188,7 +184,6 @@
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="presentations.pas"/>
@@ -199,7 +194,6 @@
         <CursorPos Y="287"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="galleryprocessor.pas"/>
@@ -257,7 +251,6 @@
         <CursorPos X="49" Y="194"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\webutils.pas"/>
@@ -336,7 +329,6 @@
         <CursorPos Y="75"/>
         <UsageCount Value="38"/>
         <Loaded Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="stringarrays.pas"/>
@@ -844,7 +836,6 @@
         <CursorPos X="10" Y="253"/>
         <UsageCount Value="82"/>
         <Loaded Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\classes\stringl.inc"/>
@@ -981,7 +972,6 @@
         <CursorPos X="3" Y="39"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\lcl\lcltranslator.pas"/>
@@ -1402,7 +1392,7 @@
         <Loaded Value="True"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="29">
+    <JumpHistory HistoryIndex="27">
       <Position>
         <Filename Value="..\src\controlshot.pas"/>
         <Caret Line="46" TopLine="36"/>
@@ -1480,16 +1470,8 @@
         <Caret Line="352" TopLine="333"/>
       </Position>
       <Position>
-        <Filename Value="settings.pas"/>
-        <Caret Line="323" TopLine="741"/>
-      </Position>
-      <Position>
         <Filename Value="..\src\inifileshelper.pas"/>
         <Caret Line="15"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="849" TopLine="1004"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>

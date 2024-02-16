@@ -12,7 +12,6 @@ body {
   padding: 0;
   color: hsl(var(--fgdhue), 20%, 80%);
   background-color: hsl(var(--bkghue), 40%, 10%);
-  font: 14pt "Verdana"; /* fallback */
   font: 14pt "Open Sans";
 }
 
