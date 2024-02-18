@@ -24,7 +24,6 @@ var
   ScreenBmp :TBitmap;
   Bmp :TBitmap;
   SrcRect, DstRect :TRect;
-  Form :TCustomForm;
   Bmpa :TBGRABitmap;
   PNGWriter :TFPWriterPNG;
   ScreenDC :HDC;
@@ -39,6 +38,7 @@ var
         Exit(Parent as TCustomForm);
       Parent := Parent.Parent;
     until not Assigned(Parent);
+    result := nil;
   end;
 
 begin

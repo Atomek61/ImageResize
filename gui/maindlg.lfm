@@ -70,7 +70,7 @@ object MainDialog: TMainDialog
           Style = tbsCheck
         end
         object ToolButtonSrcFolder: TToolButton
-          Left = 81
+          Left = 82
           Top = 0
           Action = ActionSrcFolder
           Grouped = True
@@ -1728,7 +1728,7 @@ object MainDialog: TMainDialog
     Left = 128
     Top = 552
     object ActionSrcFilenames: TAction
-      Caption = '&List of Files'
+      Caption = '&List of Images'
       Checked = True
       GroupIndex = 2
       ImageIndex = 19

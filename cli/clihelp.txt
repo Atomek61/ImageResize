@@ -38,7 +38,7 @@ short long            parameter comment
    -t -threadcount    0..n      Number of threads to use, 0 means maximum.
    -x -stoponerror    0 | 1     Stop on error. flag: 0-false, 1-true
    -h -help                     Outputs this text.
-   -n -nocreate                 Dryrun, does not create images, but if applicable listing.
+   -n -nocreate                 Dryrun, does not create images, but if applicable the listings.
    -q -quiet                    Suppresses any message output.
 
 Examples:

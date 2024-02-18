@@ -6,7 +6,7 @@ unit stringarrays;
 interface
 
 uses
-  Classes, SysUtils, StrUtils;
+  Classes, SysUtils;
 
 type
   { TStringArrayHelper }

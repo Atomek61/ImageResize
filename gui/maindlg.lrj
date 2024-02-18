@@ -109,7 +109,7 @@
 {"hash":56226371,"name":"tmaindialog.actionhelpscreenshots.caption","sourcebytes":[72,108,112,83,104,111,116,115],"value":"HlpShots"},
 {"hash":3528851,"name":"tmaindialog.opendialogsrcfilenames.title","sourcebytes":[83,101,108,101,99,116,32,111,110,101,32,111,114,32,109,111,114,101,32,73,109,97,103,101,115],"value":"Select one or more Images"},
 {"hash":151014323,"name":"tmaindialog.saveasdialogtagsreport.title","sourcebytes":[83,97,118,101,32,84,97,103,115,32,82,101,112,111,114,116,32,97,115],"value":"Save Tags Report as"},
-{"hash":189179683,"name":"tmaindialog.actionsrcfilenames.caption","sourcebytes":[38,76,105,115,116,32,111,102,32,70,105,108,101,115],"value":"&List of Files"},
+{"hash":73737075,"name":"tmaindialog.actionsrcfilenames.caption","sourcebytes":[38,76,105,115,116,32,111,102,32,73,109,97,103,101,115],"value":"&List of Images"},
 {"hash":181807842,"name":"tmaindialog.actionsrcfolder.caption","sourcebytes":[38,70,111,108,100,101,114],"value":"&Folder"},
 {"hash":94101699,"name":"tmaindialog.actionparamsizes.caption","sourcebytes":[83,105,38,122,101,115],"value":"Si&zes"},
 {"hash":185453731,"name":"tmaindialog.actionparamsizes.hint","sourcebytes":[79,110,101,32,111,114,32,109,111,114,101,32,83,105,122,101,115,32,111,102,32,116,104,101,32,114,101,115,97,109,112,108,101,100,32,73,109,97,103,101,115],"value":"One or more Sizes of the resampled Images"},

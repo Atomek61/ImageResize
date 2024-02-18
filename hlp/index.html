@@ -5,14 +5,20 @@
     <meta charset="UTF-8"/>
     <title>Atomeks ImageResize</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>   
-    <link rel="stylesheet" href="intro.css"/>
-    
-    <script>
-    </script>
-    
     <style>
-    </style>
+      :root {
+        --themeH: 216;
+        --titleH: 39;
+        --titleColor: hsl(var(--titleH), 80%, 70%);
 
+        --backcolor: hsl(var(--themeH), 50%, 90%);
+        --fontcolor: hsl(var(--themeH), 50%, 30%);
+        --backcolor2: hsl(var(--themeH), 50%, 85%);
+        --fontcolor2: hsl(var(--themeH), 50%, 40%);
+    }
+    </style>
+    <link rel="stylesheet" href="help.css"/>   
+    <link rel="stylesheet" href="intro.css"/>
     <script>
       clitext = `Free tool for JPEG and PNG quality scaling.
 
@@ -54,24 +60,24 @@ short long            parameter comment
  -t -threadcount    0..n      Number of threads to use, 0 means maximum.
  -x -stoponerror    0 | 1     Stop on error. flag: 0-false, 1-true
  -h -help                     Outputs this text.
- -n -nocreate                 Dryrun, does not create images, but if applicable listing.
+ -n -nocreate                 Dryrun, does not create images, but if applicable the listings.
  -q -quiet                    Suppresses any message output.
 
 Examples:
 
-imgres myimage.png \Images\res640 640
+imgres myimage.png \\Images\\res640 640
   resamples a single png image with the default quality.
 
-imgres ..\theimage.jpg C:\TEMP\res%SIZE% 480,640,800 -j 50
+imgres ..\\theimage.jpg C:\\TEMP\\res%SIZE% 480,640,800 -j 50
   resamples a single jpg with 3 resolutions and stores them to different folders at 50% quality
 
 imgres @mylist.txt img%SIZE% 640,1920 -j 1 -p maximum -q
   resamples a list of files which path/name is stored in a file, with smallest file sizes in quiet mode.
 
-imgres myimages\*.jpg;*.png \MyImages 640 -w mywatermark.png:10,1,98:20
+imgres myimages\\*.jpg;*.png \\MyImages 640 -w mywatermark.png:10,1,98:20
   adds a watermark of 10% width, 1% from the left, 2% from the bottom, with 20% opacity.
 
-imgres DSC4205.jpg C:\TEMP 640 -c "(c) 1941 ACME"
+imgres DSC4205.jpg C:\\TEMP 640 -c "(c) 1941 ACME"
   inserts an EXIF copyright note
 
 More info at www.atomek.de/imageresize/cli/index.html
@@ -88,12 +94,14 @@ More info at www.atomek.de/imageresize/cli/index.html
 
   <body>
   
-    <header style="background-image: url('img/title.jpg');">
+    <header style="background-image: url('img/technik1.jpg')">
       <div>
         <div>Atomek</div>
         <div>ImageResize</div>  
       </div>
     </header>
+
+    <img class="new-tag" src="img/new.svg"></img>
 
     <main>
 
@@ -106,16 +114,16 @@ More info at www.atomek.de/imageresize/cli/index.html
 
       <article>
 
-        <h1>ImageResize - free tool for scaling JPEG and PNG images</h1>
+        <h1>ImageResize - free Tool for scaling JPEG and PNG Images</h1>
 
-        <table class="download">
+        <table class="styled-table">
           <tr><td>GUI+CLI</td><td>Complete</td><td>Version 4.0</td><td>Windows 64Bit</td><td>2024-02-15</td><td><a href="download/InstallImageResize.zip">Download</li></a></td></tr>
           <tr><td>CLI</td><td>Commandline Interface</td><td>Version 4.0</td><td>Windows 64Bit</td><td>2024-02-15</td><td><a href="download/imgres.zip">Download</li></a></td></tr>
+          <tr><td>Source code</td><td>on GitHub</td><td colspan="3">https://github.com/Atomek61/ImageResize.git<td><a href="https://github.com/Atomek61/ImageResize.git">Repository</a></td></tr>
         </table>
 
-        <h2>Version 4.0 available - Windows 64 Bit</h2>
-        <p style="font-size: 16pt; font-style: bold;">
-          <img src="img/new.svg" style="float:left; margin-right: 1em;"></img>
+        <h2>Version 4.0 available from February 2024 - Windows 64 Bit</h2>
+        <p style="font-size: 16pt; font-style: bold;">          
           <ul>
             <li>New Design</li>
             <li>EXIF Tagging</li>
@@ -127,32 +135,32 @@ More info at www.atomek.de/imageresize/cli/index.html
 
         <h2>This is what it looks like</h2>
         <div style="display: flex;">
-          <div class="scmodule">
+          <div>
             <p>
-              Graphical User Interface
+              GUI - Graphical User Interface
             </p>
-            <img src="img/gui.png"/>
+            <img src="img/gui.png" style="width: 80%"/>
           </div>
-          <div class="scmodule">
+          <div>
             <p>
-              Commandline Interface
+              CLI - Commandline Interface
             </p>
             <pre class="terminal-box clitext" style="font-size: 4pt;"></pre>
           </div>
         </div>
 
-        <h2>Contents</h2>
-        <a href="download/InstallImageResize.zip">Download</a> complete - Windows 64Bit, GUI and commandline interface<br/>
-        <a href="download/imgres.zip">Download</a> commandline only - Windows 64Bit<br/>
-        Sources available on GitHub: <a href="https://github.com/Atomek61/ImageResize.git">https://github.com/Atomek61/ImageResize.git</a><br/>
-        <a href="#license">License</a><br/>
-        <a href="#overview">Overview</a><br/>
-        <a href="hlp40/gui/en/index.html">Windows GUI</a> Application<br/>
-        <a href="hlp40/cli/index.html">Commandline</a> Interface for Windows (CLI)<br/>
-        <a href="#history">Version History</a><br/>
+        <h2>Contents of this Website</h2>
+        <ul style="list-style-type: none">
+          <li><a href="#license">Copyright and license</a></li>
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#interfaces">Software interfaces</a></li>
+          <li><a href="hlp40/gui/en/index.html">Application Manual</a></li>
+          <li><a href="hlp40/cli/index.html">Commandline Manual</a></li>
+          <li><a href="#history">History</a></li>
+        </ul>
         
-        <h2 id="license">Copyright and License</h2>
-        <div class="icode">
+        <h2 id="license">Copyright and license</h2>
+        <div class="license-box">
           <p>ImageResize Copyright (c) 2024 Jan Schirrmacher, www.atomek.de</p>
           <p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy and merge copies of the Software, subject to the following conditions:</p>
           <p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
@@ -170,46 +178,27 @@ More info at www.atomek.de/imageresize/cli/index.html
         </p>
         <ul>
           <li>Resampling JPEG and PNG files with a good quality</li>
+          <li>Web Gallery Generator (Presentation)</li>
           <li>Bulk resizing of several files for several resolutions</li>
-          <li>Adding a watermark</li>
-          <li>Easy to use</li>
-          <li>Easy maintenace of existing image galleries</li>
+          <li>Watermark</li>
           <li>Commandline version and GUI version</li>
-          <li>Quality/Size control - JPEG quality and PNG compression</li>
+          <li>Quality/Compression control - JPEG quality and PNG compression</li>
           <li>Multithreading for better bulk performance</li>
-          <li>Many Resampling algorithm available - 3x Lanczos, Spline, Bicubic, ... </li>
+          <li>Many interpolation algorithms available - Lanczos, Spline, Bicubic, ... </li>
           <li>EXIF Tagging of created images with Copyright, Title and Timestamp</li>
-          <li>Tags Reporting for the comming Slideshow Afterburner</li>
+          <li>Tags reporting for presentation afterburner</li>
           <li>Use with Microsoft Windows 10 or 11</li>
-          <li>And the best: Web Gallery Generator (Presentation)</li>
         </ul>
         
-        <h2>And the best (beside its free) - the NEW feature: A Web Gallery Generator</h2>
+        <h2 id="interfaces">Software Interfaces</h2>
         <p>
-          <img src="img/presentationdlg.png"/>
-        </p>
-        <p>
-          <ul>
-            <li>The presentation is a complete website for your browser</li>
-            <li>Its designed to be copied to your web-server</li>
-            <li>You can choose different designs</li>
-            <li>The Presentation Manager is designed to be customizeable, 
-              create new web presentations with HTML, CSS and JavaScript</li>
-          </ul>
-        </p>
-        <p>
-          <img src="img/presentationexample.jpg"/>
-        </p>
-
-        <h3>Versions</h3>
-        <p>
-          ImageResize has three parts, each has its own version
-          <table class="vistable">
+          ImageResize has three interfaces, each has its own version
+          <table class="styled-table">
             <tr>
-              <th>Part</th><th>Name</th><th>Meaning</th><th>Version</th>
+              <th>Interface</th><th>Name</th><th>Meaning</th><th>Version</th>
             </tr>
             <tr>
-              <td>Library</td><td>TProcessor</td><td>Functional core</td><td>4.0</td>
+              <td>Code</td><td>TProcessor</td><td>Functional core<br/>in Object Pascal</td><td>4.0</td>
             </tr>
             <tr>
               <td>GUI</td><td>ImageResize.exe</td><td>Graphical User Interface</td><td>4.0</td>
@@ -260,8 +249,28 @@ More info at www.atomek.de/imageresize/cli/index.html
         <pre class="terminal-box clitext">
 
         </pre>
+
+        <h2>And the best (beside its free) - the NEW feature: A Web Gallery Generator</h2>
         <p>
-          imgres is written with Lazarus. The tool is available for Windows.
+          ImageResize at the beginning was a simple image resizing and renaming tool but kept in
+          mind, that its the base for creation of Web Galleries. Now this old dream became true.
+          With adding the new Web Gallery Generator (called <i>Presentation</i>) all my dreams
+          became reality (Ok, I have other dreams too - universal peace for instance - but they have to wait...)
+        </p>
+        <p>
+          <img src="img/presentationdlg.png"/>
+        </p>
+        <p>
+          <ul>
+            <li>The presentation is a complete website for your browser</li>
+            <li>Its designed to be copied to your web-server</li>
+            <li>You can choose different designs</li>
+            <li>The Presentation Manager is designed to be customizeable, 
+              create new web presentations with HTML, CSS and JavaScript</li>
+          </ul>
+        </p>
+        <p>
+          <img src="img/presentationexample.jpg"/>
         </p>
 
         <h2 id="history">Version History</h2>      
@@ -270,7 +279,7 @@ More info at www.atomek.de/imageresize/cli/index.html
           <ul>
             <li>Web Presentation</li>
           </ul>
-          <li>V3.5 New Design</li>
+          <li>V3.5 New Design (unpublished)</li>
           <ul>
             <li>GUI face lifting</li>
             <li>More interpolation algorithms</li>

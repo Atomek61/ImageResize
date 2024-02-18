@@ -980,7 +980,9 @@ msgid "Settings dialog for some global and project-independent settings"
 msgstr "Dialog für einige globale, nicht projektabhängige Einstellungen"
 
 #: tmaindialog.actionsrcfilenames.caption
-msgid "&List of Files"
+#, fuzzy
+#| msgid "&List of Files"
+msgid "&List of Images"
 msgstr "Datei&liste"
 
 #: tmaindialog.actionsrcfolder.caption
@@ -1219,7 +1221,7 @@ msgid "1"
 msgstr "1"
 
 #: tmaindialog.editrentemplate.hint
-#, fuzzy
+#, fuzzy, badformat
 msgid ""
 "Enter a filename template containing placeholders for special values.\n"
 "This template will be expanded for each resampled image. Insert the\n"
@@ -1862,3 +1864,4 @@ msgstr "Speichern"
 msgctxt "webutils.serrinvalidhtmlcolorfmt"
 msgid "Invalid web color '%s'."
 msgstr "Ungültige Web-Farbe '%s'."
+

@@ -360,7 +360,7 @@ var
   Stats :TProcessor.TStats;
   Setting :TSetting;
   ValuePresentation :string;
-  SettingPresentationFn :TSettingPresentationFn;
+//  SettingPresentationFn :TSettingPresentationFn;
 begin
   FParamsEditor.Flush;
   FProcessor.ImgTagsFilename := ImgTagsFilename;

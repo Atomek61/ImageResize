@@ -1,0 +1,120 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+main {
+  background-image: url("../img/bkgshutter-bright.png");
+}
+
+a:link {color: hsl(240, 100%, 80%);}
+a:visited {color: hsl(240, 40%, 50%);}
+
+h1, h2, h3, h4, h5, h6 {
+  padding: 0;
+  line-height: 1.3em;
+}
+
+h1 {font-size: 24pt; margin-top: 1em; border-top: 2px solid var(--fontcolor);}
+h2 {clear: both; font-size: 20pt; font-style: italic;}
+h3 {clear: both; font-size: 16pt;}
+h4 {font-size: 14pt; font-weight: bold; font-style: italic;}
+
+img {margin-top: 0.5em; max-width: 100%;}
+
+.icon-left {
+  width: 48px;
+  float: left;
+  margin-top: 4px;
+  margin-right: 1em;  
+}
+
+.icon-right {
+  width: 64px;
+  float: right;
+  margin-top: 8px;
+  margin-left: 1em;  
+}
+
+.img-left {
+  float: left;
+  margin: 0 1em 1em 0;
+}
+
+.img-right {
+  float: right;
+  margin: 0 0 1em 1em;
+}
+
+p {
+  margin: 1em 0 1em 0;
+}
+
+table {
+  margin: 1em 0 1em 0;
+}
+
+td {
+  padding: 0.2em 0.4em 0.2em 0;
+}
+
+.flag {width: 40px;}
+
+.btn {
+  width: 20px;
+  position:relative;
+  padding: 2px 4px 2px 4px;
+  top: 6px;
+  margin-top: 0;
+  background-color: #d4d8e4;
+  border-top: solid 1.75px white;
+  border-left: solid 1.75px white;
+  border-right: solid 1.75px #444;
+  border-bottom: solid 1.75px #444;
+  border-radius: 3px;
+}
+
+.chfot {margin-bottom: 2em; margin-top: 1.5em;}
+
+.ct {display: flex; justify-content: space-around;}
+
+.partab {border-collapse: collapse;}
+.partab td {
+  vertical-align: top;
+  border-top: 1px solid hsl(var(--fgdhue), 20%, 60%);
+  margin: 0 0 1em 0;
+}
+
+.simple-table {border-collapse: collapse;}
+.simple-table td{
+  padding: 0.5em;
+}
+.simple-table td, .simple-table th {
+  border: 2px solid  hsl(var(--fgdhue), 50%, 40%);
+}
+
+.cmd {
+  margin: 1em;
+  padding: 2px 4px 2px 4px;
+  color: silver;
+  background-color: black;
+  font: 11pt Courier;
+ }
+
+.plh {
+  font: italic 14pt "Courier New";
+  color: rgb(162, 188, 238);
+}
+
+.hint-box {
+  background-color: hsl(240, 50%, 90%);
+  color:hsl(240, 40%, 20%);
+  padding: 1em;
+  margin: 1em;
+  border-left: 2mm solid hsl(240, 40%, 50%);
+}
+
+.code {
+  background-color: rgb(45, 82, 142);
+  color:rgb(245, 244, 178);
+  padding: 0.5em;
+  font: 12pt "Courier New";
+}
+

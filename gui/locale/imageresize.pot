@@ -956,7 +956,7 @@ msgid "Settings dialog for some global and project-independent settings"
 msgstr ""
 
 #: tmaindialog.actionsrcfilenames.caption
-msgid "&List of Files"
+msgid "&List of Images"
 msgstr ""
 
 #: tmaindialog.actionsrcfolder.caption
