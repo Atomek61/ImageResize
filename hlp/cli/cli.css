@@ -44,12 +44,43 @@ p {
   margin: 1em 0 1em 0;
 }
 
-table {
-  margin: 1em 0 1em 0;
+.param {
+  display: flex;
 }
 
-td {
-  padding: 0.2em 0.4em 0.2em 0;
+.param div:first-child {
+  min-width: 100px;
+  word-break: keep-all;
+}
+
+.option>div:first-child {
+  padding: 0; font-size: 12pt; font-weight: 600;
+  margin: 0.5em 0 0.25em 0;
+  padding: 0.2em 0 0.2em 0.5em;
+  background-color: hsl(var(--themeH), 30%, 20%);
+  color: var(--fontcolor);
+}
+
+.option>div:nth-child(2) {
+  display: flex;
+  margin-left: 1em;
+}
+
+.option>div:nth-child(2)>div:first-child {
+  min-width: 240px;
+  font-style: italic;
+}
+
+.option p {
+  padding: 0;
+  margin: 0 0 0.5em 0;
+}
+
+.option>div:nth-child(2)>div:nth-child(2) u {
+  color: rgb(150, 229, 229);
+  font-style: italic;
+  font-weight: bold;
+  text-decoration: none;
 }
 
 .btn {position:relative; top: 4px;}
@@ -57,13 +88,6 @@ td {
 .chfot {margin-bottom: 2em; margin-top: 1.5em;}
 
 .ct {display: flex; justify-content: space-around;}
-
-.partab {border-collapse: collapse;}
-.partab td {
-  vertical-align: top;
-  border-top: 1px solid hsl(var(--fgdhue), 20%, 60%);
-  margin: 0 0 1em 0;
-}
 
 .cmd {
   margin: 1em;

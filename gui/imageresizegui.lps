@@ -18,8 +18,8 @@
         <ComponentName Value="MainDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <TopLine Value="821"/>
-        <CursorPos Y="843"/>
+        <TopLine Value="1819"/>
+        <CursorPos X="25" Y="1838"/>
         <ExtraEditorCount Value="1"/>
         <ExtraEditor1>
           <EditorIndex Value="-1"/>
@@ -47,7 +47,7 @@
         <ComponentName Value="MrkEditDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="14"/>
+        <EditorIndex Value="15"/>
         <TopLine Value="396"/>
         <CursorPos X="37" Y="403"/>
         <UsageCount Value="201"/>
@@ -57,14 +57,16 @@
       <Unit>
         <Filename Value="..\src\imgres.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="419"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="175"/>
         <CursorPos X="3" Y="440"/>
         <UsageCount Value="200"/>
         <Bookmarks Count="2">
           <Item0 X="7" Y="743"/>
           <Item1 X="3" Y="454" ID="1"/>
         </Bookmarks>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\updateutils.pas"/>
@@ -92,8 +94,7 @@
         <Filename Value="..\src\tags.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Tags"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="5"/>
         <TopLine Value="394"/>
         <CursorPos X="5" Y="408"/>
         <UsageCount Value="201"/>
@@ -121,7 +122,7 @@
       <Unit>
         <Filename Value="settings.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="7"/>
         <TopLine Value="741"/>
         <CursorPos Y="323"/>
         <UsageCount Value="200"/>
@@ -156,7 +157,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="PresentationDlg"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="2"/>
         <TopLine Value="97"/>
         <CursorPos X="5" Y="13"/>
         <UsageCount Value="200"/>
@@ -168,7 +169,7 @@
         <ComponentName Value="ImagesModule"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
-        <EditorIndex Value="10"/>
+        <EditorIndex Value="11"/>
         <CursorPos X="9" Y="25"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -178,7 +179,7 @@
         <Filename Value="presentations.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Presentations"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="3"/>
         <TopLine Value="342"/>
         <CursorPos X="3" Y="363"/>
         <UsageCount Value="200"/>
@@ -230,7 +231,7 @@
       <Unit>
         <Filename Value="settingseditor.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="9"/>
         <TopLine Value="173"/>
         <CursorPos X="49" Y="194"/>
         <UsageCount Value="200"/>
@@ -300,7 +301,7 @@
       <Unit>
         <Filename Value="..\src\controlshot.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="11"/>
+        <EditorIndex Value="12"/>
         <TopLine Value="19"/>
         <CursorPos X="19" Y="41"/>
         <UsageCount Value="39"/>
@@ -638,7 +639,7 @@
       <Unit>
         <Filename Value="C:\lazarus\lcl\forms.pp"/>
         <UnitName Value="Forms"/>
-        <EditorIndex Value="12"/>
+        <EditorIndex Value="13"/>
         <TopLine Value="577"/>
         <CursorPos Y="610"/>
         <UsageCount Value="23"/>
@@ -779,7 +780,7 @@
       </Unit>
       <Unit>
         <Filename Value="..\src\templateengine.pas"/>
-        <EditorIndex Value="9"/>
+        <EditorIndex Value="10"/>
         <TopLine Value="234"/>
         <CursorPos X="10" Y="253"/>
         <UsageCount Value="82"/>
@@ -915,7 +916,7 @@
       </Unit>
       <Unit>
         <Filename Value="..\src\inifileshelper.pas"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="8"/>
         <CursorPos X="3" Y="39"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
@@ -1222,7 +1223,7 @@
       </Unit>
       <Unit>
         <Filename Value="..\src\stringarrays.pas"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="6"/>
         <CursorPos X="20" Y="9"/>
         <UsageCount Value="14"/>
         <Loaded Value="True"/>
@@ -1331,14 +1332,14 @@
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\lcl\include\windowmagnet.inc"/>
-        <EditorIndex Value="13"/>
+        <EditorIndex Value="14"/>
         <UsageCount Value="14"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\packages\rtl-generics\src\generics.defaults.pas"/>
         <UnitName Value="Generics.Defaults"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="4"/>
         <TopLine Value="2612"/>
         <CursorPos X="85" Y="2615"/>
         <UsageCount Value="10"/>
@@ -1349,18 +1350,6 @@
       <Define0 Value="_DEBUG"/>
     </OtherDefines>
     <JumpHistory HistoryIndex="29">
-      <Position>
-        <Filename Value="..\src\controlshot.pas"/>
-        <Caret Line="75" TopLine="53"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\controlshot.pas"/>
-        <Caret Line="74" TopLine="34"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\controlshot.pas"/>
-        <Caret Line="75" TopLine="45"/>
-      </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
         <Caret Line="1117" Column="12" TopLine="1112"/>
@@ -1468,6 +1457,18 @@
       <Position>
         <Filename Value="..\src\stringarrays.pas"/>
         <Caret Line="9" Column="20"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="843" TopLine="821"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="880" Column="101" TopLine="861"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="138" Column="19" TopLine="119"/>
       </Position>
     </JumpHistory>
     <RunParams>

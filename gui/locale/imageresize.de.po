@@ -352,9 +352,9 @@ msgstr "Mische die Dateiliste..."
 msgid "Up-scaling '%s' from %dx%d to %dx%d..."
 msgstr "Heraufskaliere '%s' von %dx%d nach %dx%d..."
 
-#: imgres.smsgwarningnocreate
-msgid "Not really creating any image (-nocreate flag)"
-msgstr "Erzeuge nicht wirklich irgendein Bild oder einen Folder (-nocreate Flag)"
+#: imgres.smsgwarningdryrun
+msgid "Not really creating any image (-dryrun flag)"
+msgstr ""
 
 #: imgres.smsgwatermarkingfmt
 #, object-pascal-format
@@ -1014,6 +1014,24 @@ msgstr "Öffnet den eingebauten Wasserzeichen-Editor"
 msgid "ImageResize"
 msgstr "ImageResize"
 
+#: tmaindialog.checkboxdryrun.caption
+msgid "Dry Run"
+msgstr ""
+
+#: tmaindialog.checkboxdryrun.hint
+#, fuzzy
+msgctxt "tmaindialog.checkboxdryrun.hint"
+msgid ""
+"If checked, no image or folder will be created.\n"
+"Its to check the settings and gather statistics.\n"
+"\n"
+"One exception: the Tags Report will be created!"
+msgstr ""
+"Wenn ausgewählt wird kein Bild oder Ordner erzeugt.\n"
+"Das ist, um die Einstellungen zu prüfen und um Statistiken zu sammeln.\n"
+"\n"
+"Ausnahme: Der Tags Report wird trotzdem erzeugt!"
+
 #: tmaindialog.checkboximageinfosenabled.caption
 msgid "Presentation Infos (.imgtags)"
 msgstr "Erzeuge Infos für Präsentationen (.imgtags)"
@@ -1030,22 +1048,6 @@ msgstr ""
 msgctxt "tmaindialog.checkboxmrkenabled.caption"
 msgid "Enabled"
 msgstr "Anwenden"
-
-#: tmaindialog.checkboxnocreate.caption
-msgid "Don't really create Images"
-msgstr "Erzeuge keine Bilder"
-
-#: tmaindialog.checkboxnocreate.hint
-msgid ""
-"If checked, no image or folder will be created.\n"
-"Its to check the settings and gather statistics.\n"
-"\n"
-"One exception: the Tags Report will be created!"
-msgstr ""
-"Wenn ausgewählt wird kein Bild oder Ordner erzeugt.\n"
-"Das ist, um die Einstellungen zu prüfen und um Statistiken zu sammeln.\n"
-"\n"
-"Ausnahme: Der Tags Report wird trotzdem erzeugt!"
 
 #: tmaindialog.checkboxrenenabled.caption
 msgctxt "tmaindialog.checkboxrenenabled.caption"

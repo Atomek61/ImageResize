@@ -110,7 +110,7 @@ const
   DEFAULT_COPYRIGHT         = '';
   DEFAULT_TAGSSOURCES       = [];
   DEFAULT_TAGSREPORTS       = [];
-  DEFAULT_NOCREATE          = false;
+  DEFAULT_DRYRUN            = false;
 
   DEFSIZES :array[0..15] of integer = (32, 48, 64, 120, 240, 360, 480, 640, 800, 960, 1280, 1600, 1920, 2560, 3840, 4096);
 
@@ -195,7 +195,7 @@ type
     FTagKeys          :TStringArray; // 'Copyright',
     FCopyright        :string;
     FTagsReports      :TTagsReports;
-    FNoCreate         :boolean;
+    FDryRun         :boolean;
   private
     FCancel :boolean;
     FOnPrint :TPrintEvent;
@@ -260,7 +260,7 @@ type
     property TagKeys :TStringArray read FTagKeys write FTagKeys;
     property Copyright :string read FCopyright write FCopyright;
     property TagsReports :TTagsReports read FTagsReports write FTagsReports;
-    property NoCreate :boolean read FNoCreate write FNoCreate;
+    property DryRun :boolean read FDryRun write FDryRun;
     property OnPrint :TPrintEvent read FOnPrint write FOnPrint;
     property OnProgress :TProgressEvent read FOnProgress write FOnProgress;
   end;
@@ -274,7 +274,7 @@ resourcestring
   SCptWarning                     = 'Warning';
   SCptAbort                       = 'Abort';
   SCptFatal                       = 'Fatal';
-  SMsgWarningNoCreate             = 'Not really creating any image (-nocreate flag)';
+  SMsgWarningDryRun               = 'Not really creating any image (-dryrun flag)';
   SErrFormatNotSupportedFmt       = 'Format %s not supported';
   SMsgDownScalingFmt              = 'Down-scaling ''%s'' from %dx%d to %dx%d...';
   SMsgUpScalingFmt                = 'Up-scaling ''%s'' from %dx%d to %dx%d...';
@@ -511,7 +511,7 @@ begin
         TargetFileExt := ExtractExt(SourceFilename);
         if IsJPEG(SourceFilename) then begin
 
-          if not Processor.FNoCreate then begin
+          if not Processor.FDryRun then begin
             // Jpg-options
             Writer := TFPWriterJPEG.Create;
             with TFPWriterJPEG(Writer) do
@@ -520,7 +520,7 @@ begin
 
         end else if IsPNG(SourceFilename) then begin
 
-          if not Processor.FNoCreate then begin
+          if not Processor.FDryRun then begin
             // Png-options
             Writer := TFPWriterPNG.Create;
             with TFPWriterPNG(Writer) do
@@ -610,7 +610,7 @@ begin
         TargetFolder := ProcRes.TargetFolders[i mod Length(ProcRes.TargetFolders)];
         TargetFilename := IncludeTrailingPathDelimiter(TargetFolder) + TargetFiletitleExt;
         Print(Format(SMsgSavingFmt, [TargetFilename]));
-        if not Processor.FNoCreate then
+        if not Processor.FDryRun then
           TargetImg.SaveToFile(TargetFilename, Writer);
 
         // Add some size dependent un-normalized information.
@@ -631,7 +631,7 @@ begin
       // EXIF
       if (Length(Processor.FTagKeys)>0) and IsJPEG(TargetFilename) then begin
         Print(Format(SMsgWritingExifFmt, [TargetFilename]));
-        if not Processor.FNoCreate then
+        if not Processor.FDryRun then
           WriteExifTags(TargetFilename, FileTags, Processor.FTagKeys);
       end;
 
@@ -677,7 +677,7 @@ begin
   FTagKeys          := nil;
   FCopyright        := DEFAULT_COPYRIGHT;
   FTagsReports      := DEFAULT_TAGSREPORTS;
-  FNoCreate         := DEFAULT_NOCREATE;
+  FDryRun           := DEFAULT_DRYRUN;
 end;
 
 destructor TProcessor.Destroy;
@@ -774,8 +774,8 @@ begin
   Dispatcher  := TDispatcher.Create;
   try
 
-    if FNoCreate then
-      Print(SMsgWarningNoCreate, mlWarning);
+    if FDryRun then
+      Print(SMsgWarningDryRun, mlWarning);
 
     // Build list of SourceFilenames with absolute paths
     n := FSourceFilenames.Count;
@@ -838,7 +838,7 @@ begin
         ProcRes.TargetFolders[i] := IncludeTrailingPathDelimiter(ExpandFilename(FTargetFolder));
     for i:=0 to m-1 do begin
       Print(Format(SMsgCreatingFolderFmt, [ProcRes.TargetFolders[i]]));
-      if not FNoCreate then
+      if not FDryRun then
         ForceDirectories(ProcRes.TargetFolders[i]);
     end;
 
@@ -1109,6 +1109,7 @@ var
   Floats :TSingleDynArray;
   n :integer;
 begin
+  Floats := nil;
   Items := Str.Split(':');
   n := Length(Items);
   if (n<1) or (n>3) then

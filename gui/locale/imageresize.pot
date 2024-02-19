@@ -341,8 +341,8 @@ msgstr ""
 msgid "Up-scaling '%s' from %dx%d to %dx%d..."
 msgstr ""
 
-#: imgres.smsgwarningnocreate
-msgid "Not really creating any image (-nocreate flag)"
+#: imgres.smsgwarningdryrun
+msgid "Not really creating any image (-dryrun flag)"
 msgstr ""
 
 #: imgres.smsgwatermarkingfmt
@@ -988,6 +988,19 @@ msgstr ""
 msgid "ImageResize"
 msgstr ""
 
+#: tmaindialog.checkboxdryrun.caption
+msgid "Dry Run"
+msgstr ""
+
+#: tmaindialog.checkboxdryrun.hint
+msgctxt "tmaindialog.checkboxdryrun.hint"
+msgid ""
+"If checked, no image or folder will be created.\n"
+"Its to check the settings and gather statistics.\n"
+"\n"
+"One exception: the Tags Report will be created!"
+msgstr ""
+
 #: tmaindialog.checkboximageinfosenabled.caption
 msgid "Presentation Infos (.imgtags)"
 msgstr ""
@@ -1001,18 +1014,6 @@ msgstr ""
 #: tmaindialog.checkboxmrkenabled.caption
 msgctxt "tmaindialog.checkboxmrkenabled.caption"
 msgid "Enabled"
-msgstr ""
-
-#: tmaindialog.checkboxnocreate.caption
-msgid "Don't really create Images"
-msgstr ""
-
-#: tmaindialog.checkboxnocreate.hint
-msgid ""
-"If checked, no image or folder will be created.\n"
-"Its to check the settings and gather statistics.\n"
-"\n"
-"One exception: the Tags Report will be created!"
 msgstr ""
 
 #: tmaindialog.checkboxrenenabled.caption

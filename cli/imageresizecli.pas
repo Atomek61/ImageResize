@@ -84,7 +84,7 @@ var
   TagKeys :TStringArray;
   Copyright :string;
   TagsReports :TTagsReports;
-  NoCreate :boolean;
+  DryRun :boolean;
   Processor :TProcessor;
 
   function IncludeTrailingPathDelimiterEx(const Path :string) :string;
@@ -116,7 +116,7 @@ begin
   try
 
     // JPEGQuality
-    Param := GetOptionValue('j', 'jpegquality');
+    Param := GetOptionValue('j', 'jpeg');
     if Param<>'' then begin
       if not TryStrToInt(Param, JPEGQuality) or (JPEGQuality<1) or (JPEGQuality>100) then
         raise Exception.CreateFmt(SErrInvalidJPEGQualityFmt, [Param]);
@@ -125,7 +125,7 @@ begin
       JPEGQuality := Processor.JPEGQuality;
 
     // PNGCompression
-    Param := GetOptionValue('p', 'pngcompression');
+    Param := GetOptionValue('p', 'png');
     if Param<>'' then begin
       if not TProcessor.TryNameToPNGCompression(Param, PNGCompression) then
         raise Exception.CreateFmt(SErrInvalidPNGCompressionNameFmt, [Param]);
@@ -192,10 +192,10 @@ begin
       TagsReports := [];
 
     // Threading control
-    Param := GetOptionValue('t', 'threadcount');
+    Param := GetOptionValue('t', 'threads');
     if Param<>'' then begin
       if not TryStrToInt(Param, ThreadCount) or (ThreadCount<-1) then
-        raise Exception.CreateFmt('Invalid threadcount ''%s'', -1..n expected.', [Param]);
+        raise Exception.CreateFmt('Invalid threads number ''%s'', -1..n expected.', [Param]);
       inc(OptionCount, 2);
     end else
       ThreadCount := 0;
@@ -228,9 +228,9 @@ begin
       ShuffleSeed := 0;
     end;
 
-    // NoCreate flag
-    NoCreate := HasOption('n', 'nocreate');
-    if NoCreate then
+    // DryRun flag
+    DryRun := HasOption('d', 'dryrun');
+    if DryRun then
       inc(OptionCount, 1);
 
     // Check number of parameters
@@ -291,7 +291,7 @@ begin
     Processor.TagKeys := TagKeys;
     Processor.Copyright := Copyright;
     Processor.TagsReports := TagsReports;
-    Processor.NoCreate := NoCreate;
+    Processor.DryRun := DryRun;
 
     if not Quiet then
       Processor.OnPrint := OnPrint;

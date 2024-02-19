@@ -11,77 +11,79 @@
       :root {
         --themeH: 220;
         --titleH: 220;
-        --titleColor: hsl(var(--titleH), 80%, 30%) ;
+        --titleColor: hsl(var(--titleH), 80%, 70%) ;
 
         --backcolor: hsl(var(--themeH), 50%, 10%);
         --fontcolor: hsl(var(--themeH), 50%, 90%);
         --backcolor2: hsl(var(--themeH), 50%, 40%);
-        --fontcolor2: hsl(var(--themeH), 50%, 85%);
+        --fontcolor2: hsl(var(--themeH), 50%, 65%);
       }
     </style>
     <script>
       clitext = `Free tool for JPEG and PNG quality scaling.
 
-Usage: imgres filename folder size {-option [param]}
+  Usage: imgres source target size {-option [value]}
 
-filename            Is a single JPEG or PNG file, a text filename preceeded by @ with a list of filenames
-                    or a wildcard with path/mask. Multiple masks are to be separated by semicolon.
-folder              Where to store the resulting resampled and resized files. The folder must contain the
-                    placeholder %SIZE% if the resulting filename conflict is not resolved by renaming.
-                    Non-existend folders are created.
-size                Is a size in pixels or a comma-separated list of sizes, where the size refers to
-                    the longer side of the image.
-{-option [param]}   Is a list of pairs of option/parameter. Some options have no parameter.
+  source              Is one of the following:
+                      - a single JPEG or PNG file
+                      - the name of a text file preceeded by @ with a list of filenames
+                      - a path to a folder with semicolon-separated wildcards
+  target              The folder where to store the resulting resampled and resized files.
+                      If the resulting filenames can conflict and this is not solved by renaming
+                      then the folder must contain the placeholder %SIZE%.
+                      Non-existend folders are created.
+  size                Is a size in pixels or a comma-separated list of sizes, where the size refers to
+                      the longer side of the image.
+  {-option [value]}   Is a list of pairs of option/value. Some options have no value.
 
 Options:
 
 short long            parameter comment
 -----------------------------------------
-  -j -jpegquality    1..100    A quality from 1 to 100 percent (default is 75)
-  -p -pngcompression degree    Default|None|Fastest|Maximum
-  -i -interpolation  name      Stretch, Box, Linear, HalfCosine, Cosine, Bicubic, Mitchell, Spline,
-                              Lanczos2, Lanczos3, Lanczos4, BestQuality
-                              Default is BestQuality: Mitchell on up- and Spline on down-scaling.
-  -r -rename         template  Rename files by a template with placeholders.
-                              SIZE% and %INDEX[:n[,d]]% with n=startindex, d=number of digits/auto
-  -w -watermark      file.png  A PNG watermark file and optional size, position and opacity, see example.
-  -s -shuffle        0..n      Mixes the image list, makes sense together with -r.
-                              A random seed of 0 (assumed if ommited) means an unpredictable sequence.
-                              A fixed value will always shuffle a list in the same way if the number
-                              of files has not changed.
-  -m -meta           sources   EXIF | TAGS | EXIF,TAGS
-                              EXIF loads tags from origin files, TAGS from .tags files
-  -e -exif           taglist   writes certain metadata into the resized files.
-                              taglist is a list of special tagnames: "Title,Timestamp,Copyright"
-                              if no meta sources is defined, EXIF is assumed.
-  -c -copyright      "text"    Writes (overrides) the EXIF or .tags copyright tag.
-  -l -listing        listings  Exports infos - listings is a comma-separated combination of "tagsreport"
-                              and "imgtags", e.g. "imgtags" or "TagsReports,ImgTags".
-  -t -threadcount    0..n      Number of threads to use, 0 means maximum.
-  -x -stoponerror    0 | 1     Stop on error. flag: 0-false, 1-true
-  -h -help                     Outputs this text.
-  -n -nocreate                 Dryrun, does not create images, but if applicable the listings.
-  -q -quiet                    Suppresses any message output.
+   -j -jpeg           1..100    A quality from 1 to 100 percent (default is 75)
+   -p -png            compr     Compression: Default|None|Fastest|Maximum
+   -i -interpolation  name      Stretch, Box, Linear, HalfCosine, Cosine, Bicubic, Mitchell, Spline,
+                                Lanczos2, Lanczos3, Lanczos4, BestQuality
+                                Default is BestQuality: Mitchell on up- and Spline on down-scaling.
+   -r -rename         template  Rename files by a template with placeholders.
+                                SIZE% and %INDEX[:n[,d]]% with n=startindex, d=number of digits/auto
+   -w -watermark      file.png  A PNG watermark file and optional size, position and opacity, see example.
+   -s -shuffle        0..n      Mixes the image list, makes sense together with -r.
+                                A random seed of 0 (assumed if ommited) means an unpredictable sequence.
+                                A fixed value will always shuffle a list in the same way if the number
+                                of files has not changed.
+   -m -meta           sources   EXIF | TAGS | EXIF,TAGS
+                                EXIF loads tags from origin files, TAGS from .tags files
+   -e -exif           taglist   writes certain metadata into the resized files.
+                                taglist is a list of special tagnames: "Title,Timestamp,Copyright"
+                                if no meta sources is defined, EXIF is assumed.
+   -c -copyright      "text"    Writes (overrides) the EXIF or .tags copyright tag.
+   -l -listing        listings  Exports infos - listings is a comma-separated combination of "tagsreport"
+                                and "imgtags", e.g. "imgtags" or "TagsReports,ImgTags".
+   -t -threadcount    0..n      Number of threads to use, 0 means maximum.
+   -x -stoponerror    0 | 1     Stop on error. flag: 0-false, 1-true
+   -h -help                     Outputs this text.
+   -n -nocreate                 Dryrun, does not create images, but if applicable the listings.
+   -q -quiet                    Suppresses any message output.
 
 Examples:
 
-imgres myimage.png \\Images\\res640 640
-  resamples a single png image with the default quality.
+  imgres myimage.png \\Images\\res640 640
+    resamples a single png image with the default quality.
 
-imgres ..\\theimage.jpg C:\\TEMP\\res%SIZE% 480,640,800 -j 50
-  resamples a single jpg with 3 resolutions and stores them to different folders at 50% quality
+  imgres ..\\theimage.jpg C:\\TEMP\\res%SIZE% 480,640,800 -j 50
+    resamples a single jpg with 3 resolutions and stores them to different folders at 50% quality
 
-imgres @mylist.txt img%SIZE% 640,1920 -j 1 -p maximum -q
-  resamples a list of files which path/name is stored in a file, with smallest file sizes in quiet mode.
+  imgres @mylist.txt img%SIZE% 640,1920 -j 1 -p maximum -q
+    resamples a list of files which path/name is stored in a file, with smallest file sizes in quiet mode.
 
-imgres myimages\\*.jpg;*.png \\MyImages 640 -w mywatermark.png:10,1,98:20
-  adds a watermark of 10% width, 1% from the left, 2% from the bottom, with 20% opacity.
+  imgres myimages\\*.jpg;*.png \\MyImages 640 -w mywatermark.png:10,1,98:20
+    adds a watermark of 10% width, 1% from the left, 2% from the bottom, with 20% opacity.
 
-imgres DSC4205.jpg C:\\TEMP 640 -c "(c) 1941 ACME"
-  inserts an EXIF copyright note
+  imgres DSC4205.jpg C:\\TEMP 640 -c "(c) 1941 ACME"
+    inserts an EXIF copyright note
 
-More info at www.atomek.de/imageresize/cli/index.html
-`;
+  More info at www.atomek.de/imageresize/cli/index.html`;
           
           window.onload = (event) => {      
             var list = document.getElementsByClassName("clitext");
@@ -96,10 +98,10 @@ More info at www.atomek.de/imageresize/cli/index.html
   </head>
 
   <body>
-    <header style="background-image: url('../img/title.jpg');">
+    <header style="background-image: url('../img/foerde1.jpg');">
       <div>
         <div>Atomek</div>
-        <div>imgres - command line tool</div>
+        <div>imgres CLI</div>
       </div>
     </header>
   
@@ -114,248 +116,262 @@ More info at www.atomek.de/imageresize/cli/index.html
 <pre class="terminal-box clitext" style="font-size: 10pt;"></pre>
       <h2 id="syntax">Syntax</h2>
       <p>
-        imgres <i>filename folder size {options}</i><br/>
+        imgres <i>source target size {option [value]}</i><br/>
       </p>
 
       <h2 id="params">Parameters</h2>
-      <table class="partab">
-        <tr>
-          <td>
-            <i>filename</i><br/>
-          </td>
-          <td>
-            <ol>
-              <li>
-                Path/filename of the source image file. This can be a JPEG file
-                or a PNG file.<br/>
-              </li>
-              <li>
-                Text file with a filename list. The filename must be preceeded
-                by @.
-              </li>
-              <li>
-                Path/wildcards - i.e. C:\MyImages\img???.jpg;*.png
-              </li>
-            </ol>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <i>folder</i>
-          </td>
-          <td>
-            The folder where to store the resulting file. This can be a relative
-            path. If its the dot '.' the result will be saved "inplaced", replacing
-            the source file.<br/>
-            If you create multiple files with different sizes, enter a placeholder
-            <span class="plh">%SIZE%</span> where the program will insert the size.
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <i>size</i>
-          </td>
-          <td>
-            Size in pixels of the resampled image. The size refers to the longer
-            side of the image. This means, imgres always bewares the width/heigth ratio.<br/>
-            You can specify multiple sizes, separated by a comma to let the
-            process create multiple resampled files. Because the files will have the
-            same names, it is required to enter a placeholder <span class="plh">%SIZE%</span> in
-            the dstfolder.
-          </td>
-        </tr>
-      </table>
-      <h2 id="params">Options</h2>
-      <table class="partab">
-        <tr>
-          <td>
-            <i>-h</i><br/>
-            <i>-help</i>
-          </td>
-          <td>
-            Shows a help text.
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <i>-q</i><br/>
-            <i>-quiet</i>
-          </td>
-          <td>
-            Quiet mode, supresses any console output.
-          </td>
-        </tr>
-        <tr id="filter">
-          <td>
-            <i>-f&nbsp;name</i><br/>
-            <i>-filter&nbsp;name</i>
-          </td>
-          <td><i>Stretch</i>, <i>Box</i>, <i>Linear</i>, <i>HalfCosine</i>, <i>Cosine</i>, <i>Bicubic</i>, <i>Mitchell</i>, <i>Spline</i>,
-            <i>Lanczos2</i>, <i>Lanczos3</i>, <i>Lanczos4</i>, <i>BestQuality</i><br/>
-            The interpolation algorithm wich is applied while resampling. Default is <i>Lanczos2</i>. <i>Best Quality</i> means, that
-            depending on upsampling or downsampling either <i>Spline</i> or <i>Mitchell</i> is selected automatically.
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <i>-j&nbsp;value</i><br/>
-            <i>-jpgquality&nbsp;value</i>
-          </td>
-          <td>
+      <p>
+        All these parameters are required.
+      </p>
+      <div class="param">
+        <div>source</div>
+        <div>
+          One of either
+          <ul>
+            <li>
+              Path/filename of an image file to be scaled. This can be a JPEG file
+              or a PNG file.<br/>
+            </li>
+            <li>
+              Text file with a filename list. The filename must be preceeded by @.
+            </li>
+            <li>
+              Path/wildcards - i.e. C:\MyImages\img???.jpg;*.png
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="param">
+        <div>target</div>
+        <div>
+          The folder where to store the resulting file. This can be a relative
+          path. If its the dot '.' the result will be saved "inplaced", replacing
+          the source file.<br/>
+          If you create multiple files with different sizes, enter a placeholder
+          <span class="plh">%SIZE%</span> where the program will insert the size or
+          enter a <a href="#renaming">renaming</a> parameter.
+        </div>
+      </div>
+      <div class="param">
+        <div>size</div>
+        <div>
+          Size in pixels of the resampled image. The size refers to the longer
+          side of the image. This means, imgres always bewares the width/heigth ratio.<br/>
+          You can specify multiple sizes, separated by a comma to let the
+          process create multiple resampled files. Because the files will have the
+          same names, it is required to enter a placeholder <span class="plh">%SIZE%</span> in
+          the dstfolder.
+        </div>
+      </div>
+
+      <h2>Options</h2>
+      <p>
+        All these options are optional.
+      </p>
+      <div class="option">
+        <div>Help</div>
+        <div>
+          <div>-h<br/>-help</div><div>
+            Shows the CLI help.
+          </div>
+        </div>
+      </div>
+
+      <div class="option">
+        <div>Quiet</div>
+        <div>
+          <div>-q<br/>-quiet</div><div>Quiet mode, supresses any console output.</div>
+        </div>
+      </div>
+
+      <div class="option" id="interpolation">
+        <div>Interpolation</div>
+        <div>
+          <div>-i name<br/>-interpolation name</div>
+          <div>
+            <p>
+              One of: <u>Stretch</u>, <u>Box</u>, <u>Linear</u>, <u>HalfCosine</u>, <u>Cosine</u>, <u>Bicubic</u>, <u>Mitchell</u>, <u>Spline</u>,
+              <u>Lanczos2</u>, <u>Lanczos3</u>, <u>Lanczos4</u>, <u>BestQuality</u>
+            </p>
+            <p>
+              The interpolation algorithm wich is applied while resampling. Default is <u>Lanczos2</u>. <u>Best Quality</u> means, that
+              depending on upsampling or downsampling either <u>Spline</u> or <u>Mitchell</u> is selected automatically.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="option">
+        <div>JPEG Quality</div>
+        <div>
+          <div>-j quality<br/>-jpeg quality</div>
+          <div>
             A value between 1 and 100, where 1 is the lowest and 100 is
-            the highest quality. This partameter refers only to JPEG files.
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <i>-p&nbsp;value</i><br/>
-            <i>-pngcompression&nbsp;value</i>
-          </td>
-          <td>
-            One of the strings <i>none</i>,<i>fastest</i>,<i>default</i> and <i>max</i>.
+            the highest quality. This parameter refers only to JPEG files.
+          </div>
+        </div>
+      </div>
+
+      <div class="option">
+        <div>PNG Compression</div>
+        <div>
+          <div>-p compression<br/>-png compression</div>
+          <div>
+            One of: <u>none</u>, <u>fastest</u>, <u>default</u> and <u>max</u>.
             The PNG format has a loss-less compression, so this parameter has
             an impact to the compression/decompression effort, not to the
             image quality.
-          </td>
-        </tr>
-        <tr id="placing">
-          <td>
-            <i>-w&nbsp;value</i><br/>
-            <i>-watermark value</i>
-          </td>
-          <td>
+          </div>
+        </div>
+      </div>
+
+      <div class="option">
+        <div>Watermark</div>
+        <div>
+          <div>-w descriptor<br/>-watermark descriptor</div>
+          <div>
             <p>
               A watermark is a PNG image containing a copyright or what ever. The
               watermark can be printed an any position. The position is in percent
               and refers to the images width resp. height. The <i>Size</i> is in
               percent of the images width.
-            </p><p>
+            </p>
+            <p>
               The positions in percent refers to the difference of the images
               size and the watermarks size. Thus, 50%/50% centeres the image.
               0% is left/upper alignment, 100% results in a right/bottom
               aligment.
             </p><p>
-              The value format is:
+              The descriptor format is:
             </p><p>
-              <b><code>filename[?size,x,y[?opacity]]</code></b>
+              <b><code>filename.png[?size,x,y[?opacity]]</code></b>
             </p><p>
               If you want to use spaces, set the parameter in quotes.
               Defaults are size=20%, x=98%, y=98%, opacity=50%
             </p>
-          </td>
-        </tr>
-        <tr id="exif">
-          <td>
-            <i>-e&nbsp;taglist</i><br/>
-            <i>-exif&nbsp;taglist</i>
-          </td>
-          <td>
-            Inserts EXIF tags listed in the taglist into the target files. The taglist is a comma-separated
-            list of the keywords <b>Title</b>, <b>Timestamp</b>, <b>Copyright</b>. Other tags are not supported.
+          </div>
+        </div>
+      </div>
+
+      <div class="option">
+        <div>EXIF</div>
+        <div>
+          <div>-e keywords<br/>-exif keywords</div>
+          <div>
+            Inserts EXIF tags listed in the taglist into the target files. The keywords are comma-separated
+            <u>Title</u>, <u>Timestamp</u> and <u>Copyright</u>. Other tags are not supported.
             The source of tags are either existing EXIF tags or .tags files.
             <a href="../gui/en/index.html#tagging">More details here</a>.
-          </td>
-        </tr>
-        <tr id="copyright">
-          <td>
-            <i>-c&nbsp;text</i><br/>
-            <i>-copyright&nbsp;text</i>
-          </td>
-          <td>
+          </div>
+        </div>
+      </div>
+
+      <div class="option">
+        <div>Copyright</div>
+        <div>
+          <div>-c text<br/>-copyright text</div>
+          <div>
             Inserts an EXIF Copyright tag with the given text. This overrides any existing Copyright tags in
             the original files.
             <a href="../gui/en/index.html#tagging">More details here</a>.
-          </td>
-        </tr>
-        <tr id="meta">
-          <td>
-            <i>-m&nbsp;sources</i><br/>
-            <i>-meta&nbsp;sources</i>
-          </td>
-          <td>
-            Controls the source of the EXIF tagging by the -e switch. <i>sources</i> is a comma-separated list
-            of the keywords <b>EXIF</b> and <b>TAGS</b>. EXIF means the internal tags dictionary is filled
-            with EXIF tags from the original files. TAGS means, that files names .tags are interpreted, if 
-            exist.
-            <a href="../gui/en/index.html#tagging">More details here</a>.
-          </td>
-        </tr>
-        <tr id="listing">
-          <td>
-            <i>-l&nbsp;listings</i><br/>
-            <i>-listing&nbsp;listings</i>
-          </td>
-          <td>
+          </div>
+        </div>
+      </div>
+
+      <div class="option">
+        <div>Meta Information</div>
+        <div>
+          <div>-m keywords<br/>-meta keywords</div>
+          <div>
+            Controls the source of the EXIF tagging by the -e switch. <i>keywords</i> are <u>EXIF</u> and <u>TAGS</u>.
+            EXIF means the internal tags dictionary is filled with EXIF tags from the original files.
+            TAGS means, that files named .tags are interpreted, if they exist. If both keywords are selected, separate
+            them with a comma. See more details <a href="../gui/en/index.html#tagging">here</a>.
+          </div>
+        </div>
+      </div>
+
+      <div class="option">
+        <div>Tags Listings</div>
+        <div>
+          <div>-l keywords<br/>-listings keywords</div>
+          <div>
             imgres maintains an internal dictionary with tags. It is filled either by EXIF tags or by additional
             .tags files in each source folder. The -l switch lets imgres dump its contents to a .csv formatted
-            UTF-8 encoded file. <i>listings</i> stands for "TagsReport"|"Images"|"TagsReports,Images".
-            The options
-            <a href="../gui/en/index.html#tagging">More details here</a>.
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <i>-t&nbsp;value</i><br/>
-            <i>-threadcount value</i>
-          </td>
-          <td>
+            UTF-8 encoded file. <i>keywords</i> stands for a combination of <u>TagsReport</u> and <u>Images</u>.
+            See more details <a href="../gui/en/index.html#tagging"></a>here</a>.
+          </div>
+        </div>
+      </div>
+
+      <div class="option">
+        <div>Threads Count</div>
+        <div>
+          <div>-t number<br/>-threads number</div>
+          <div>
             <p>
               0 - (default) uses as many threads as processors are availabe
             </p><p>
               1 - single thread, all resamplings are in sequential order
             </p><p>
               n - number of threads to use. n is automatically limited to either
-              the number of available processors or the number of tasks.
+              the number of available processors or the number of <i>tasks</i>.
             </p><p>
               A "task" is a resampling request. For each source file a task is launched.
             </p>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <i>-x</i><br/>
-            <i>-stoponerror</i>
-          </td>
-          <td>
-            <p>
+          </div>
+        </div>
+      </div>
+
+      <div class="option">
+        <div>Stop on Error</div>
+        <div>
+          <div>-s 0|1<br/>-stoponerror 0|1</div>
+          <div>
               If an error occures, this flag lets the program stop as soon as possible.
               Note: some tasks may run into the same error and report it.
-            </p>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <i>-r&nbsp;template</i><br/>
-            <i>-rename template</i>
-          </td>
-          <td>
+          </div>
+        </div>
+      </div>
+
+      <div class="option">
+        <div>Renaming</div>
+        <div>
+          <div>-r template<br/>-r template</div>
+          <div>
             <p>
               Enables target file renaming. Enter a filename template as
-              parameter. The template can contain up to 4 placeholders:<br/>
+              parameter. The template can contain up to 4 placeholders:
+            </p><p>
               <span class="plh">%FILENAME%</span> stands for the original file
-              title. That is the filename without path and without extension.<br/>
+              title. That is the filename without path and without extension.
+            </p><p>
               <span class="plh">%FILEEXT%</span> is the file extension without the
               leading dot.
+            </p><p>
               <span class="plh">%INDEX[:n[,d]]%</span> is the current number of
               the source image in the list of files. <i>n</i> is the start index,
               default is 1. <i>d</i> is the number of digits to print. The resulting
-              number will be filled with leading zeroes. if d is <i>auto</i>, the
+              number will be filled with leading zeroes. if d is <u>auto</u>, the
               program will calculate the number of digits automatically. This is
               the default. <span class="plh">%INDEX%</span> is equivalent to
-              <span class="plh">%INDEX:1,auto%</span>.<br/>
-              target file renaming with the <span class="plh">%SIZE%</span>
+              <span class="plh">%INDEX:1,auto%</span>.
+            </p><p>
+              Target file renaming with the <span class="plh">%SIZE%</span>
               -placeholder enables you to create all resized images into the
-              same folder without any naming conflict.<br/>
+              same folder without any naming conflict.
+            </p><p>
               See <a href="../gui/en/index.html#placeholders">available placeholders</a>.              
             </p>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <i>-s&nbsp;seed</i><br/>
-            <i>-shuffle seed</i>
-          </td>
-          <td>
+          </div>
+        </div>
+      </div>
+
+      <div class="option">
+        <div>Shuffle</div>
+        <div>
+          <div>-s seed<br/>-shuffle seed</div>
+          <div>
             <p>
               Mixes (shuffles) the renamed target files randomly. To get the same
               (random) sequence of files, enter a <i>seed</i> not equal to zero. Multiple
@@ -371,46 +387,52 @@ More info at www.atomek.de/imageresize/cli/index.html
               template for renaming. The system uses a file attribute for sorting
               (usually the name of the the file), when listing them.
             </p>
-          </td>
-        </tr>
-      </table>
-      
+          </div>
+        </div>
+      </div>
+
+      <div class="option">
+        <div>Dry Run</div>
+        <div>
+          <div>-d<br/>-dryrun</div>
+          <div>
+            No images are beeing created but if required .imgtags files are beeing created. 
+          </div>
+        </div>
+      </div>
+
       <h2 id="howworks">Examples</h2>
       <p>
-        The tool needs a source file, a target folder and a target size.
-        It loads the image (jpg or png), resamples it to the desired size and
-        saves the result to the target folder, always using the original name.
+        For resampling multiple files you can create a list of files like this
       </p><p>
-        To resample multiple files you can create a list of files like this
-      </p><p>
-        <span class="cmd">dir /B *.jpg &gt; imglist.txt</span>
+        <span class="terminal">dir /B *.jpg &gt; imglist.txt</span>
       </p><p>
         To use the filelist, put an @ in front of the lists path and name
       </p><p>
-        <span class="cmd">imgres @imglist.txt .\img640 640</span>
+        <span class="terminal">imgres @imglist.txt .\img640 640</span>
       </p><p>
         To resample multiple files in multiple resolutions, just enter multiple
         comma separated sizes without spaces.
       </p><p>
         Note: the placeholder %SIZE% in the target path is required.
       </p><p>
-        <span class="cmd">imgres @imglist.txt .\img%SIZE% 240,640,1280</span>
+        <span class="terminal">imgres @imglist.txt .\img%SIZE% 240,640,1280</span>
       </p><p>
         This creates a 640px jpg with a 640*60%=384px size watermark at the
         left bottom corner. 2% for the left margin, 98% percent means 2% from
         the bottom border.
       </p><p>
-        <span class="cmd">imgres image.jpg img640 640 -w "watermark.png?60,2,98?20"</span>
+        <span class="terminal">imgres image.jpg img640 640 -w "watermark.png?60,2,98?20"</span>
       </p><p>
         This example demonstrates how to create all resized image files to a single
         folder. The trick is to build in the target size into the filename
         that all filenames become unique.
       </p><p>
-        <span class="cmd">imgres MyImages\*.jpg;*.png .\images 200,1920 -r "img%INDEX:1,3%_%SIZE%.%FILEEXT%"</span>
+        <span class="terminal">imgres MyImages\*.jpg;*.png .\images 200,1920 -r "img%INDEX:1,3%_%SIZE%.%FILEEXT%"</span>
       </p><p>
         This example mixes the files randomly with a random seed of 1000.
       </p><p>
-        <span class="cmd">imgres MyImages\*.jpg .\images 1920 -s 1000 -r "img%INDEX:1,3%.%FILEEXT%"</span>
+        <span class="terminal">imgres MyImages\*.jpg .\images 1920 -s 1000 -r "img%INDEX:1,3%.%FILEEXT%"</span>
       </p>
 
     </div>

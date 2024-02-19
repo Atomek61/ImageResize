@@ -1394,19 +1394,19 @@ object MainDialog: TMainDialog
         Spacing = 0
         TabOrder = 2
       end
-      object CheckBoxNoCreate: TCheckBox
+      object CheckBoxDryRun: TCheckBox
         AnchorSideTop.Control = EditTargetFolder
         AnchorSideTop.Side = asrBottom
         AnchorSideRight.Control = EditTargetFolder
         AnchorSideRight.Side = asrBottom
-        Left = 264
+        Left = 358
         Height = 19
         Hint = 'If checked, no image or folder will be created.'#13#10'Its to check the settings and gather statistics.'#13#10#13#10'One exception: the Tags Report will be created!'
         Top = 30
-        Width = 154
+        Width = 60
         Alignment = taLeftJustify
         Anchors = [akTop, akRight]
-        Caption = 'Don''t really create Images'
+        Caption = 'Dry Run'
         TabOrder = 3
         OnClick = ProjectChanged
       end

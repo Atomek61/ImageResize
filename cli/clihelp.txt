@@ -1,22 +1,25 @@
 Free tool for JPEG and PNG quality scaling.
 
-  Usage: imgres filename folder size {-option [param]}
+  Usage: imgres source target size {-option [value]}
 
-  filename            Is a single JPEG or PNG file, a text filename preceeded by @ with a list of filenames
-                      or a wildcard with path/mask. Multiple masks are to be separated by semicolon.
-  folder              Where to store the resulting resampled and resized files. The folder must contain the
-                      placeholder %SIZE% if the resulting filename conflict is not resolved by renaming.
+  source              Is one of the following:
+                      - a single JPEG or PNG file
+                      - the name of a text file preceeded by @ with a list of filenames
+                      - a path to a folder with semicolon-separated wildcards
+  target              The folder where to store the resulting resampled and resized files.
+                      If the resulting filenames can conflict and this is not solved by renaming
+                      then the folder must contain the placeholder %SIZE%.
                       Non-existend folders are created.
   size                Is a size in pixels or a comma-separated list of sizes, where the size refers to
                       the longer side of the image.
-  {-option [param]}   Is a list of pairs of option/parameter. Some options have no parameter.
+  {-option [value]}   Is a list of pairs of option/value. Some options have no value.
 
 Options:
 
 short long            parameter comment
 -----------------------------------------
-   -j -jpegquality    1..100    A quality from 1 to 100 percent (default is 75)
-   -p -pngcompression degree    Default|None|Fastest|Maximum
+   -j -jpeg           1..100    A quality from 1 to 100 percent (default is 75)
+   -p -png            compr     Compression: Default|None|Fastest|Maximum
    -i -interpolation  name      Stretch, Box, Linear, HalfCosine, Cosine, Bicubic, Mitchell, Spline,
                                 Lanczos2, Lanczos3, Lanczos4, BestQuality
                                 Default is BestQuality: Mitchell on up- and Spline on down-scaling.
@@ -35,10 +38,10 @@ short long            parameter comment
    -c -copyright      "text"    Writes (overrides) the EXIF or .tags copyright tag.
    -l -listing        listings  Exports infos - listings is a comma-separated combination of "tagsreport"
                                 and "imgtags", e.g. "imgtags" or "TagsReports,ImgTags".
-   -t -threadcount    0..n      Number of threads to use, 0 means maximum.
-   -x -stoponerror    0 | 1     Stop on error. flag: 0-false, 1-true
+   -t -threads        0..n      Number of threads to use, 0 means maximum.
+   -x -stoponerror              Stop all tasks if an error occures
    -h -help                     Outputs this text.
-   -n -nocreate                 Dryrun, does not create images, but if applicable the listings.
+   -d -dryrun                   Dryrun, does not create images, but if applicable the listings.
    -q -quiet                    Suppresses any message output.
 
 Examples:

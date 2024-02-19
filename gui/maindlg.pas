@@ -135,7 +135,7 @@ type
     Label2: TLabel;
     PaintBoxMrkPreview: TBGRAGraphicControl;
     ButtonExecute: TBGRASpeedButton;
-    CheckBoxNoCreate: TCheckBox;
+    CheckBoxDryRun: TCheckBox;
     CheckBoxImageInfosEnabled: TCheckBox;
     Image: TImage;
     LabelStep1: TLabel;
@@ -738,7 +738,7 @@ begin
     EditCopyright.Text                  := '';
     CheckBoxImageInfosEnabled.Checked   := true;
     CheckBoxTagsReportEnabled.Checked   := false;
-    CheckBoxNoCreate.Checked            := false;
+    CheckBoxDryRun.Checked            := false;
 
     ActionSrcFilenames.Execute;
     ActionParamSizes.Execute;
@@ -877,7 +877,7 @@ begin
     EditCopyright.Text                    := ReadString(PROJECT_SECTION,  'Copyright', EditCopyright.Text);
     CheckBoxTagsReportEnabled.Checked     := ReadBool(PROJECT_SECTION,    'TagsReportEnabled', CheckBoxTagsReportEnabled.Checked);
     CheckBoxImageInfosEnabled.Checked     := ReadBool(PROJECT_SECTION,    'ImageInfosEnabled', CheckBoxImageInfosEnabled.Checked);
-    CheckBoxNoCreate.Checked              := ReadBool(PROJECT_SECTION,    'NoCreate', DEFAULT_NOCREATE);
+    CheckBoxDryRun.Checked              := ReadBool(PROJECT_SECTION,    'NoCreate', DEFAULT_DRYRUN);
 
     ActionParamSizes.Execute;
   end;
@@ -964,7 +964,7 @@ begin
     WriteString(PROJECT_SECTION,  'Copyright',      EditCopyright.Text);
     WriteBool(PROJECT_SECTION,    'TagsReportEnabled', CheckBoxTagsReportEnabled.Checked);
     WriteBool(PROJECT_SECTION,    'ImageInfosEnabled', CheckBoxImageInfosEnabled.Checked);
-    WriteBool(PROJECT_SECTION,    'NoCreate',       CheckBoxNoCreate.Checked);
+    WriteBool(PROJECT_SECTION,    'NoCreate',       CheckBoxDryRun.Checked);
   end;
   if FPresentationSettings.Dirty then
     FPresentationSettings.Save(Ini);
@@ -1835,7 +1835,7 @@ begin
         Processor.TagsReports := TagsReports;
 
         // NoCreate flag
-        Processor.NoCreate := CheckBoxNoCreate.Checked;
+        Processor.DryRun := CheckBoxDryRun.Checked;
 
         // stop, if %SIZE% placeholder is not contained either in
         // TargetFolder nor in FileTemplate
