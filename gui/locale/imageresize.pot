@@ -849,10 +849,6 @@ msgstr ""
 msgid "Opens the local or internet-based HTML help (F1)"
 msgstr ""
 
-#: tmaindialog.actionhelpscreenshots.caption
-msgid "HlpShots"
-msgstr ""
-
 #: tmaindialog.actionnew.caption
 msgctxt "tmaindialog.actionnew.caption"
 msgid "&New"
@@ -995,10 +991,8 @@ msgstr ""
 #: tmaindialog.checkboxdryrun.hint
 msgctxt "tmaindialog.checkboxdryrun.hint"
 msgid ""
-"If checked, no image or folder will be created.\n"
-"Its to check the settings and gather statistics.\n"
-"\n"
-"One exception: the Tags Report will be created!"
+"No image or folder will be created, but\n"
+".imgtags and .tagsreport on demand."
 msgstr ""
 
 #: tmaindialog.checkboximageinfosenabled.caption

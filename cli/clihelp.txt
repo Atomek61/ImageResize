@@ -22,27 +22,27 @@ short long            parameter comment
    -p -png            compr     Compression: Default|None|Fastest|Maximum
    -i -interpolation  name      Stretch, Box, Linear, HalfCosine, Cosine, Bicubic, Mitchell, Spline,
                                 Lanczos2, Lanczos3, Lanczos4, BestQuality
-                                Default is BestQuality: Mitchell on up- and Spline on down-scaling.
+                                Default is BestQuality: Mitchell on up- and Spline on down-scaling
    -r -rename         template  Rename files by a template with placeholders.
                                 SIZE% and %INDEX[:n[,d]]% with n=startindex, d=number of digits/auto
-   -w -watermark      file.png  A PNG watermark file and optional size, position and opacity, see example.
-   -s -shuffle        0..n      Mixes the image list, makes sense together with -r.
+   -w -watermark      file.png  A PNG watermark file and optional size, position and opacity, see example
+   -s -shuffle        0..n      Mixes the image list, makes sense together with -r
                                 A random seed of 0 (assumed if ommited) means an unpredictable sequence.
                                 A fixed value will always shuffle a list in the same way if the number
                                 of files has not changed.
    -m -meta           sources   EXIF | TAGS | EXIF,TAGS
                                 EXIF loads tags from origin files, TAGS from .tags files
-   -e -exif           taglist   writes certain metadata into the resized files.
-                                taglist is a list of special tagnames: "Title,Timestamp,Copyright"
+   -e -exif           taglist   Writes certain metadata into the resized files.
+                                Taglist is a list of special tagnames: "Title,Timestamp,Copyright"
                                 if no meta sources is defined, EXIF is assumed.
    -c -copyright      "text"    Writes (overrides) the EXIF or .tags copyright tag.
    -l -listing        listings  Exports infos - listings is a comma-separated combination of "tagsreport"
                                 and "imgtags", e.g. "imgtags" or "TagsReports,ImgTags".
-   -t -threads        0..n      Number of threads to use, 0 means maximum.
+   -t -threads        0..n      Number of threads to use, 0 means maximum
    -x -stoponerror              Stop all tasks if an error occures
-   -h -help                     Outputs this text.
-   -d -dryrun                   Dryrun, does not create images, but if applicable the listings.
-   -q -quiet                    Suppresses any message output.
+   -h -help                     Outputs this text
+   -d -dryrun                   Dry run, does not create images, but if applicable the listings
+   -q -quiet                    Suppresses any message output
 
 Examples:
 

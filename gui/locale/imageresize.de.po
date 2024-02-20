@@ -354,7 +354,7 @@ msgstr "Heraufskaliere '%s' von %dx%d nach %dx%d..."
 
 #: imgres.smsgwarningdryrun
 msgid "Not really creating any image (-dryrun flag)"
-msgstr ""
+msgstr "Erzeuge nicht wirklich irgendwelche Bilddateien (-dryrun Flag)."
 
 #: imgres.smsgwatermarkingfmt
 #, object-pascal-format
@@ -867,10 +867,6 @@ msgstr "&Hilfe"
 msgid "Opens the local or internet-based HTML help (F1)"
 msgstr "Öffnet die lokale oder die Internet-basierte HTML-Hilfe (F1)"
 
-#: tmaindialog.actionhelpscreenshots.caption
-msgid "HlpShots"
-msgstr "HlpShots"
-
 #: tmaindialog.actionnew.caption
 msgctxt "tmaindialog.actionnew.caption"
 msgid "&New"
@@ -980,8 +976,6 @@ msgid "Settings dialog for some global and project-independent settings"
 msgstr "Dialog für einige globale, nicht projektabhängige Einstellungen"
 
 #: tmaindialog.actionsrcfilenames.caption
-#, fuzzy
-#| msgid "&List of Files"
 msgid "&List of Images"
 msgstr "Datei&liste"
 
@@ -1016,21 +1010,16 @@ msgstr "ImageResize"
 
 #: tmaindialog.checkboxdryrun.caption
 msgid "Dry Run"
-msgstr ""
+msgstr "Trockenlauf"
 
 #: tmaindialog.checkboxdryrun.hint
-#, fuzzy
 msgctxt "tmaindialog.checkboxdryrun.hint"
 msgid ""
-"If checked, no image or folder will be created.\n"
-"Its to check the settings and gather statistics.\n"
-"\n"
-"One exception: the Tags Report will be created!"
+"No image or folder will be created, but\n"
+".imgtags and .tagsreport on demand."
 msgstr ""
-"Wenn ausgewählt wird kein Bild oder Ordner erzeugt.\n"
-"Das ist, um die Einstellungen zu prüfen und um Statistiken zu sammeln.\n"
-"\n"
-"Ausnahme: Der Tags Report wird trotzdem erzeugt!"
+"Es werden keine Bilder oder Verzeichnisse erstellt, jedoch\n"
+".imgtags- und .tagsreport-Dateien falls angefordert."
 
 #: tmaindialog.checkboximageinfosenabled.caption
 msgid "Presentation Infos (.imgtags)"

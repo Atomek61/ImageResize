@@ -1401,7 +1401,7 @@ object MainDialog: TMainDialog
         AnchorSideRight.Side = asrBottom
         Left = 358
         Height = 19
-        Hint = 'If checked, no image or folder will be created.'#13#10'Its to check the settings and gather statistics.'#13#10#13#10'One exception: the Tags Report will be created!'
+        Hint = 'No image or folder will be created, but'#13#10'.imgtags and .tagsreport on demand.'
         Top = 30
         Width = 60
         Alignment = taLeftJustify
@@ -1477,6 +1477,17 @@ object MainDialog: TMainDialog
       Width = 32
       ImageIndex = 22
       Images = ImagesModule.ImageList32x32
+    end
+    object BitBtn1: TBitBtn
+      Left = 864
+      Height = 30
+      Top = 3
+      Width = 27
+      Action = ActionHelpScreenshots
+      Anchors = [akTop, akRight]
+      Images = ImagesModule.ImageList20x20
+      ImageIndex = 18
+      TabOrder = 3
     end
   end
   object ToolBar: TToolBar
@@ -1563,12 +1574,6 @@ object MainDialog: TMainDialog
       Top = 0
       Style = tbsSeparator
     end
-    object ToolButtonHlpScreenshots: TToolButton
-      Left = 822
-      Top = 0
-      Action = ActionHelpScreenshots
-      ImageIndex = 30
-    end
   end
   object MemoMessages: TRichMemo
     Left = 4
@@ -1651,7 +1656,6 @@ object MainDialog: TMainDialog
       OnExecute = ActionSettingsExecute
     end
     object ActionHelpScreenshots: TAction
-      Caption = 'HlpShots'
       OnExecute = ActionHelpScreenshotsExecute
       Visible = False
     end

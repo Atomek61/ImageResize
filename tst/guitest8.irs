@@ -34,4 +34,4 @@ TagCopyright=1
 Copyright=© 2024 Jan-Erich Schirrmacher
 TagsReportEnabled=0
 ImageInfosEnabled=1
-NoCreate=0
+DryRun=0

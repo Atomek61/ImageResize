@@ -8,9 +8,8 @@
       <Unit0>
         <Filename Value="imageresizecli.pas"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="233"/>
+        <TopLine Value="231"/>
         <CursorPos X="3" Y="88"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -749,9 +748,9 @@
       </Unit99>
       <Unit100>
         <Filename Value="clihelp.txt"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="17"/>
-        <CursorPos Y="42"/>
+        <CursorPos X="34" Y="19"/>
         <UsageCount Value="12"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Text"/>

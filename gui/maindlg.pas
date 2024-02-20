@@ -129,6 +129,7 @@ type
     ActionNew: TAction;
     ActionAbout: TAction;
     ActionExecute: TAction;
+    BitBtn1: TBitBtn;
     ImageStep1: TImage;
     ImageStep2: TImage;
     ImageStep3: TImage;
@@ -244,7 +245,6 @@ type
     ToolBarSrc: TToolBar;
     ToolBarParameters: TToolBar;
     ToolBarSizeButtons: TToolBar;
-    ToolButtonHlpScreenshots: TToolButton;
     ToolButtonSep2: TToolButton;
     ToolButtonSep1: TToolButton;
     ToolButtonNew: TToolButton;
@@ -877,7 +877,7 @@ begin
     EditCopyright.Text                    := ReadString(PROJECT_SECTION,  'Copyright', EditCopyright.Text);
     CheckBoxTagsReportEnabled.Checked     := ReadBool(PROJECT_SECTION,    'TagsReportEnabled', CheckBoxTagsReportEnabled.Checked);
     CheckBoxImageInfosEnabled.Checked     := ReadBool(PROJECT_SECTION,    'ImageInfosEnabled', CheckBoxImageInfosEnabled.Checked);
-    CheckBoxDryRun.Checked              := ReadBool(PROJECT_SECTION,    'NoCreate', DEFAULT_DRYRUN);
+    CheckBoxDryRun.Checked                := ReadBool(PROJECT_SECTION,    'DryRun', DEFAULT_DRYRUN);
 
     ActionParamSizes.Execute;
   end;
@@ -904,7 +904,7 @@ var
       ProjectDir := ExtractFilePath(Ini.Filename);
       for i:=0 to Filenames.Count-1 do begin
         Filename := CreateAbsolutePath(Filenames[i], CurrentDir);
-        Filenames[i] := CreateRelativePath(Filename, ProjectDir);
+        Filenames[i] := CreateRelativePath(Filename, ProjectDir, true);
       end;
     end;
     result := ReplaceStr(Filenames.Text, #13#10, LINESEP)
@@ -914,11 +914,14 @@ var
   var
     CurrentDir :string;
     ProjectDir :string;
+    RelativePath :string;
   begin
     if FDialogSettings.RelPathes.Value and not SavePathesAsIs then begin
       CurrentDir := GetCurrentDir;
       ProjectDir := ExtractFilePath(Ini.Filename);
-      Edit.Text := CreateRelativePath(CreateAbsolutePath(Edit.Text, CurrentDir), ProjectDir);
+      RelativePath := CreateRelativePath(CreateAbsolutePath(Edit.Text, CurrentDir), ProjectDir, true);
+      //if RelativePath='' then RelativePath := '.\';
+      Edit.Text := RelativePath;
     end;
     result := Edit.Text;
   end;
@@ -964,7 +967,7 @@ begin
     WriteString(PROJECT_SECTION,  'Copyright',      EditCopyright.Text);
     WriteBool(PROJECT_SECTION,    'TagsReportEnabled', CheckBoxTagsReportEnabled.Checked);
     WriteBool(PROJECT_SECTION,    'ImageInfosEnabled', CheckBoxImageInfosEnabled.Checked);
-    WriteBool(PROJECT_SECTION,    'NoCreate',       CheckBoxDryRun.Checked);
+    WriteBool(PROJECT_SECTION,    'DryRun',       CheckBoxDryRun.Checked);
   end;
   if FPresentationSettings.Dirty then
     FPresentationSettings.Save(Ini);
@@ -1834,7 +1837,7 @@ begin
         if CheckBoxImageInfosEnabled.Checked then include(TagsReports, trImgTags);
         Processor.TagsReports := TagsReports;
 
-        // NoCreate flag
+        // DryRun flag
         Processor.DryRun := CheckBoxDryRun.Checked;
 
         // stop, if %SIZE% placeholder is not contained either in
@@ -1882,5 +1885,21 @@ begin
 //  OpenUrl('http://www.atomek.de/imageresize/index.html#gui');
 end;
 
+//procedure test;
+//var
+//  dir1, dir2 :string;
+//begin
+//  dir1 := '.\';
+//  SetCurrentDir('D:\mf\Dev\Lazarus\ImageResize\tst');
+//  dir2 := CleanAndExpandDirectory(dir1);
+//
+//
+//end;
+//
+//initialization
+//begin
+//  test;
+//end;
+//
 end.
 
