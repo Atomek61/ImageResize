@@ -12,7 +12,7 @@ WizardStyle=modern
 DefaultDirName={autopf}\{#PROGNAME}
 DefaultGroupName=Atomek\{#PROGNAME}
 UninstallDisplayIcon={app}\{#PROGEXE}
-Compression=lzma2
+Compression=bzip
 SolidCompression=yes
 SourceDir=..\
 OutputDir=dis\out
@@ -40,8 +40,8 @@ Source: bin\*.dll; DestDir: "{app}";
 Source: bin\locale\*.po; DestDir: "{app}\locale"; 
 Source: bin\presentations\*.*; DestDir: "{app}\presentations"; Flags: recursesubdirs;
 Source: bin\imgres.exe; DestDir: "{win}"; Tasks: installconsoleapp; 
-Source: hlp\*.*; DestDir: "{app}\hlp"; Tasks: localhelp; 
-Source: bin\demo\*.*; Excludes: \img*; DestDir: "{commondocs}\ImageResize Demo Project"; Flags: recursesubdirs; Tasks: demoproject; 
+Source: hlp\gui\*.*; Excludes: res; DestDir: "{app}\hlp"; Tasks: localhelp; Flags: recursesubdirs;
+Source: bin\demo\*.*; Excludes: \img*,.gitignore; DestDir: "{commondocs}\ImageResize Demo Project"; Flags: recursesubdirs; Tasks: demoproject; 
 
 [Icons]
 Name: "{group}\{#PROGNAME}"; Filename: "{app}\{#PROGEXE}";

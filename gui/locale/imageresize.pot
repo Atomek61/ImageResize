@@ -495,7 +495,7 @@ msgid "Source folder not found"
 msgstr ""
 
 #: maindlg.slocdirhelp
-msgid "hlp\\gui\\en"
+msgid "hlp\\en"
 msgstr ""
 
 #: maindlg.slogcantloadproject
