@@ -1,0 +1,413 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8"/>
+    <title>ImageResize Intro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>   
+    <style>
+      :root {
+        --themeH: 216;
+        --titleH: 39;
+        --titleColor: hsl(var(--titleH), 80%, 70%);
+
+        --backcolor: hsl(var(--themeH), 50%, 90%);
+        --fontcolor: hsl(var(--themeH), 50%, 30%);
+        --backcolor2: hsl(var(--themeH), 50%, 85%);
+        --fontcolor2: hsl(var(--themeH), 50%, 40%);
+    }
+    </style>
+    <link rel="stylesheet" href="../help.css"/>   
+    <link rel="stylesheet" href="intro.css"/>
+    <script>
+      clitext = `Free tool for JPEG and PNG quality scaling.
+
+Usage: imgres source target size {-option [value]}
+
+source              Is one of the following:
+                    - a single JPEG or PNG file
+                    - the name of a text file preceeded by @ with a list of filenames
+                    - a path to a folder with semicolon-separated wildcards
+target              The folder where to store the resulting resampled and resized files.
+                    If the resulting filenames can conflict and this is not solved by renaming
+                    then the folder must contain the placeholder %SIZE%.
+                    Non-existend folders are created.
+size                Is a size in pixels or a comma-separated list of sizes, where the size refers to
+                    the longer side of the image.
+{-option [value]}   Is a list of pairs of option/value. Some options have no value.
+
+Options:
+
+short long          parameter comment
+-----------------------------------------
+ -j -jpeg           1..100    A quality from 1 to 100 percent (default is 75)
+ -p -png            compr     Compression: Default|None|Fastest|Maximum
+ -i -interpolation  name      Stretch, Box, Linear, HalfCosine, Cosine, Bicubic, Mitchell, Spline,
+                              Lanczos2, Lanczos3, Lanczos4, BestQuality
+                              Default is BestQuality: Mitchell on up- and Spline on down-scaling
+ -r -rename         template  Rename files by a template with placeholders.
+                              SIZE% and %INDEX[:n[,d]]% with n=startindex, d=number of digits/auto
+ -w -watermark      file.png  A PNG watermark file and optional size, position and opacity, see example
+ -s -shuffle        0..n      Mixes the image list, makes sense together with -r
+                              A random seed of 0 (assumed if ommited) means an unpredictable sequence.
+                              A fixed value will always shuffle a list in the same way if the number
+                              of files has not changed.
+ -m -meta           sources   EXIF | TAGS | EXIF,TAGS
+                              EXIF loads tags from origin files, TAGS from .tags files
+ -e -exif           taglist   Writes certain metadata into the resized files.
+                              Taglist is a list of special tagnames: "Title,Timestamp,Copyright"
+                              if no meta sources is defined, EXIF is assumed.
+ -c -copyright      "text"    Writes (overrides) the EXIF or .tags copyright tag.
+ -l -listing        listings  Exports infos - listings is a comma-separated combination of "tagsreport"
+                              and "imgtags", e.g. "imgtags" or "TagsReports,ImgTags".
+ -t -threads        0..n      Number of threads to use, 0 means maximum
+ -x -stoponerror              Stop all tasks if an error occures
+ -h -help                     Outputs this text
+ -d -dryrun                   Dry run, does not create images, but if applicable the listings
+ -q -quiet                    Suppresses any message output
+
+Examples:
+
+imgres myimage.png \Images\res640 640
+  resamples a single png image with the default quality.
+
+imgres ..\theimage.jpg C:\TEMP\res%SIZE% 480,640,800 -j 50
+  resamples a single jpg with 3 resolutions and stores them to different folders at 50% quality
+
+imgres @mylist.txt img%SIZE% 640,1920 -j 1 -p maximum -q
+  resamples a list of files which path/name is stored in a file, with smallest file sizes in quiet mode.
+
+imgres myimages\*.jpg;*.png \MyImages 640 -w mywatermark.png:10,1,98:20
+  adds a watermark of 10% width, 1% from the left, 2% from the bottom, with 20% opacity.
+
+imgres DSC4205.jpg C:\TEMP 640 -c "(c) 1941 ACME"
+  inserts an EXIF copyright note
+
+More info at www.atomek.de/imageresize/cli/index.html`;
+      
+      window.onload = (event) => {      
+        var list = document.getElementsByClassName("clitext");
+        for (var i=0; i<list.length; i++)
+          list[i].innerHTML = clitext;
+      }
+    </script>
+
+  </head>
+
+  <body>
+  
+    <header style="background-image: url('../img/title5.jpg')">
+      <div>
+        <div>Atomek</div>
+        <div>ImageResize</div>  
+      </div>
+    </header>
+
+    <img class="new-tag" src="img/new.svg"></img>
+
+    <main>
+
+      <nav>
+        <ul id="menu">
+          <li><a href="../../index.html">Home</a></li>
+          <li><a href="../download/InstallImageResize.zip">Download</a></li>
+        </ul>
+      </nav>
+
+      <article>
+
+        <h1>ImageResize - free Tool for scaling JPEG and PNG Images</h1>
+
+        <table class="styled-table">
+          <tr><td>GUI+CLI</td><td>Complete</td><td>Version 4.0</td><td>Windows 64Bit</td><td>2024-02-15</td><td><a href="../download/InstallImageResize.zip">Download</li></a></td></tr>
+          <tr><td>CLI</td><td>Commandline Interface</td><td>Version 4.0</td><td>Windows 64Bit</td><td>2024-02-15</td><td><a href="../download/imgres.zip">Download</li></a></td></tr>
+          <tr><td>Source code</td><td>on GitHub</td><td colspan="3">https://github.com/Atomek61/ImageResize.git<td><a href="https://github.com/Atomek61/ImageResize.git">Repository</a></td></tr>
+        </table>
+
+        <h2>Version 4.0 February 2024 - Windows 64 Bit</h2>
+        <p style="font-size: 16pt; font-style: bold;">          
+          <ul>
+            <li>New Design</li>
+            <li>EXIF Tagging</li>
+            <li>Tags Report Export</li>
+            <li>Interpolation Control</li>
+            <li>Web Gallery Generator (Presentation)</li>
+          </ul>  
+        </p>
+
+        <div style="display: flex;">
+          <div>
+            <a href="../gui/en/index.html"><h2>GUI - Graphical User Interface</h2></a>
+            <img src="img/gui.png" style="width: 80%"/>
+          </div>
+          <div>
+            <a href="../cli/index.html"><h2>CLI - Commandline Interface</h2></a>
+            <pre class="terminal-box clitext" style="font-size: 4pt;"></pre>
+          </div>
+        </div>
+
+        <h2>Contents</h2>
+        <ul style="list-style-type: none">
+          <li><a href="#license">Copyright and license</a></li>
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#interfaces">Software interfaces</a></li>
+          <li><a href="../gui/en/index.html">Application Manual</a></li>
+          <li><a href="../cli/index.html">Commandline Manual</a></li>
+          <li><a href="#history">History</a></li>
+        </ul>
+        
+        <h2 id="license">Copyright and license</h2>
+        <div class="license-box">
+          <p>ImageResize Copyright (c) 2024 Jan Schirrmacher, www.atomek.de</p>
+          <p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy and merge copies of the Software, subject to the following conditions:</p>
+          <p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+          <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHOR OR COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+        </div>
+
+        <h2 id="overview">Overview</h2>
+        <p>
+          I wrote this little tool for my website, where I sometimes have to resample
+          high resolution images to web images at a lower resolution.
+        </p>
+        <p>
+          Formerly I used JpgIlluminator or IrfanView, which are excellent tools for their purposes. I decided to write a tool of
+          my own, which fullfills my special needs:
+        </p>
+        <ul>
+          <li>Resampling JPEG and PNG files with a good quality</li>
+          <li>Web Gallery Generator (Presentation)</li>
+          <li>Bulk resizing of several files for several resolutions</li>
+          <li>Watermark</li>
+          <li>Commandline version and GUI version</li>
+          <li>Quality/Compression control - JPEG quality and PNG compression</li>
+          <li>Multithreading for better bulk performance</li>
+          <li>Many interpolation algorithms available - Lanczos, Spline, Bicubic, ... </li>
+          <li>EXIF Tagging of created images with Copyright, Title and Timestamp</li>
+          <li>Tags reporting for presentation afterburner</li>
+          <li>Use with Microsoft Windows 10 or 11</li>
+        </ul>
+        
+        <h2 id="interfaces">Software Interfaces</h2>
+        <p>
+          ImageResize has three interfaces, each has its own version
+          <table class="styled-table">
+            <tr>
+              <th>Interface</th><th>Name</th><th>Meaning</th><th>Version</th>
+            </tr>
+            <tr>
+              <td>Code</td><td>TProcessor</td><td>Functional core<br/>in Object Pascal</td><td>4.0</td>
+            </tr>
+            <tr>
+              <td>GUI</td><td>ImageResize.exe</td><td>Graphical User Interface</td><td>4.0</td>
+            </tr>
+            <tr>
+              <td>CLI</td><td>imgres.exe</td><td>Commandline Interface</td><td>4.0</td>
+            </tr>
+          </table>
+        </p>
+
+        <h2 id="gui">Windows GUI Application - ImageResize.exe</h2>
+        <p>
+          This application is compiled for Microsoft Windows 64 Bit, but
+          the source could be ported for Linux or OSX.
+        </p>
+        <h3>Getting Help</h3>
+        <p>
+          After installing the GUI application you have either a local copy of the 
+          HTML-Help files (an installation option) or you can access the web documentation 
+          on my homepage.
+        </p>
+        <p>
+          To get help from inside the application, many controls have <i>hints</i> or simply press 
+          &lt;F1&gt;.
+        </p>
+        <p>
+          <a href="../gui/en/index.html">Complete reference (English)</a><br/>
+          <a href="../gui/de/index.html">Komplette Referenz (Deutsch)</a>
+        </p>
+        <a href="../gui/en/index.html">
+          <div class="ct">
+            <img src="img/gui.png" style="min-width: 50%; max-width: 100%"/>
+          </div>
+        </a>
+
+        <h2 id="commandline">Commandline Interface imgres.exe</h2>
+        <p>
+          Download the <a href="../download/imgres.zip">imgres.exe</a> file, copy it to your Windows folder, open the
+          commandline with cmd.exe and type <span class="terminal">imgres</span>. This will display a help text.
+        </p>
+        <p>
+          Example to scale an image with source image, target folder and new size in pixel of the larger side:<br/>
+          <span class="terminal">C:\Pictures> imgres myphoto.jpg .\web1200 1200</span>
+        </p>
+        <p>
+          <a href="../cli/index.html">Complete reference</a>
+        </p>
+        <pre class="terminal-box clitext">
+
+        </pre>
+
+        <h2>And the best (beside its free) - the NEW feature: A Web Gallery Generator</h2>
+        <p>
+          ImageResize at the beginning was a simple image resizing and renaming tool but kept in
+          mind, that its the base for creation of Web Galleries. Now this old dream became true.
+          With adding the new Web Gallery Generator (called <i>Presentation</i>) all my dreams
+          became reality (Ok, I have other dreams too - universal peace for instance - but they have to wait...)
+        </p>
+        <p>
+          <img src="img/presentationdlg.png"/>
+        </p>
+        <p>
+          <ul>
+            <li>The presentation is a complete website for your browser</li>
+            <li>Its designed to be copied to your web-server</li>
+            <li>You can choose different designs</li>
+            <li>The Presentation Manager is designed to be customizeable, 
+              create new web presentations with HTML, CSS and JavaScript</li>
+          </ul>
+        </p>
+        <p>
+          <img src="img/presentationexample.jpg"/>
+        </p>
+
+        <h2 id="history">Version History</h2>      
+        <ul>
+          <li>V4.0 Presentation</li>
+          <ul>
+            <li>Web Presentation</li>
+          </ul>
+          <li>V3.5 New Design (unpublished)</li>
+          <ul>
+            <li>GUI face lifting</li>
+            <li>More interpolation algorithms</li>
+            <li>EXIF Tagging</li>
+            <li>Tags Reporting</li>
+            <li>Chuck Norris</li>
+          </ul>
+          <li>V3.4 Update Checking</li>
+          <ul>
+            <li>About dialog checks for updates</li>
+            <li>GUI face lifting</li>
+          </ul>
+          <li>V3.3.3 - Minor GUI Improvements</li>
+          <ul>
+            <li>New Icons, better hints and captions</li>
+          </ul>
+          <li>V3.3 - Acceleration, Bugfixing</li>
+          <ul>
+            <li>Improved resampling parallelization when using multiple cores</li>
+          </ul>
+          <li>V3.2 - Bugfixing, Face-Lifting, Translation, Acceleration
+            <ul>
+              <li>GUI - many small improvements</li>
+              <li>Reduced Memory-Consumption</li>
+              <li>Better execution speed when multithreading (see Boost)</li>
+              <li>German localization</li>
+            </ul>
+          </li>  
+          <li>V3.0 - Features and Improvements
+            <ul>
+              <li>Feature Shaking - random image sequence</li>
+              <li>Improvement Watermark - better size calculation</li>
+            </ul>
+          </li>
+          <li>V2.4 - Features
+            <ul>
+              <li>Template-handling in Browsing for destination folder</li>
+              <li>Icons for size-buttons</li>
+            </ul>
+          </li>
+          <li>V2.3 - Bugfixing, Features</li>
+            <ul>
+              <li>Bugfix errorhandling</li>
+              <li>wildcards for CLI</li>
+              <li>html help for CLI</li>
+            </ul>
+          </li>
+          <li>V2.2 - Help system
+            <ul>
+              <li>Online help added</li>
+              <li>Offline help added</li>
+            </ul>
+          </li>
+          <li>V2.1 - Small features and bugfixes
+            <ul>
+              <li>Size Suggestion Buttons enhanced</li>
+              <li>Some bugfixes</li>
+            </ul>
+          </li>
+          <li>V2.0 - Features
+            <ul>
+              <li>
+                Interactive watermark positioning
+              </li>
+              <li>
+                .was files save watermark settings
+              </li>
+              <li>
+                Watermark favorites saving
+              </li>
+            </ul>
+          </li>
+          <li>V1.9.5 - Feature added
+            <ul>
+              <li>Added a simple Watermark Editor</li>
+            </ul>
+          </li>
+          <li>V1.9.2 - Bugfix
+            <ul>
+              <li>CLI Uninitialized vars</li>
+              <li>may hang on -x with error loading a file</li>
+            </ul>
+          </li>
+          <li>V1.9.1 - Feature added
+            <ul>
+              <li>StopOnError-Flag added</li>
+            </ul>
+          </li>
+          <li>V1.9 - Performance boost
+            <ul>
+              <li>Introduced thread pooling </li>
+            </ul>
+          </li>
+          <li>V1.4 - GUI pimping
+            <ul>
+              <li>Some symbols added</li>
+              <li>PageControl introduced</li>
+            </ul>
+          </li>
+          <li>V1.3 - New features
+            <ul>
+              <li>New commandline parameters for the GUI</li>
+            </ul>
+          </li>
+          <li>V1.2 - New features
+            <ul>
+              <li>Opening and Saving</li>
+              <li>Toolbar</li>
+            </ul>
+          </li>
+          <li>V1.1 - Bugfix
+            <ul>
+              <li>in feature automatically adding %SIZE%</li>
+            </ul>
+          </li>
+          <li>V1.0 - Initial Release</li>
+        </ul> 
+        
+        <h2>Roadmap</h2>
+        <ul>
+          <li>High DPI symbols in GUI</li>
+          <li>Presentation Zipper</li>
+          <li>Additional Web Presentations</li>
+          <li>Command Line Interface for creating presentations</li>
+          <li>.tags-Editor</li>
+        </ul>
+      </article>
+    </main>
+    
+    <footer>
+      © 2024 Jan Schirrmacher
+    </footer>
+  </body>
+</html>

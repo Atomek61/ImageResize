@@ -29,7 +29,7 @@ const
 
   GUIVER_APP            = 'ImageResize';
   GUIVER_VERSION        = '4.0';
-  GUIVER_DATE           = '2024-02-21';
+  GUIVER_DATE           = '2024-02-24';
 
   GUIVER                :TVersionManifest = (App: GUIVER_APP; Version: GUIVER_VERSION; Date: GUIVER_DATE; Hint: '');
 
@@ -93,7 +93,7 @@ const
 resourcestring
   SCptDependenciesFmt = 'Build with Lazarus %s, BGRABitmap %s, dExif %s, RichMemo';
   SUrlWebHelp = 'http://www.atomek.de/imageresize/hlp40/gui/en';
-  SLocDirHelp = 'hlp\en';
+  SLocDirHelp = 'hlp\gui\en';
 
 type
 

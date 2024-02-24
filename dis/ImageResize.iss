@@ -15,7 +15,7 @@ UninstallDisplayIcon={app}\{#PROGEXE}
 Compression=bzip
 SolidCompression=yes
 SourceDir=..\
-OutputDir=dis\out
+OutputDir=hlp\download
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
 DisableWelcomePage=No
@@ -40,7 +40,10 @@ Source: bin\*.dll; DestDir: "{app}";
 Source: bin\locale\*.po; DestDir: "{app}\locale"; 
 Source: bin\presentations\*.*; DestDir: "{app}\presentations"; Flags: recursesubdirs;
 Source: bin\imgres.exe; DestDir: "{win}"; Tasks: installconsoleapp; 
-Source: hlp\gui\*.*; Excludes: res; DestDir: "{app}\hlp"; Tasks: localhelp; Flags: recursesubdirs;
+Source: hlp\gui\*.*; DestDir: "{app}\hlp\gui"; Tasks: localhelp; Flags: recursesubdirs;
+Source: hlp\interpolations\*.*; DestDir: "{app}\hlp\interpolations"; Tasks: localhelp; Flags: recursesubdirs;
+Source: hlp\img\*.*; DestDir: "{app}\hlp\img"; Tasks: localhelp;
+Source: hlp\*.css; DestDir: "{app}\hlp"; Tasks: localhelp;
 Source: bin\demo\*.*; Excludes: \img*,.gitignore; DestDir: "{commondocs}\ImageResize Demo Project"; Flags: recursesubdirs; Tasks: demoproject; 
 
 [Icons]

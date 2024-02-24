@@ -1,0 +1,192 @@
+<!DOCTYPE HTML>
+<html lang="de">
+
+  <head>
+    <meta charset="UTF-8"/>
+    <title>ImageResize Interpolation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>   
+    <style>
+      :root {
+          --themeH: 220;
+          --titleH: 150;
+          --titleColor: hsl(var(--titleH), 80%, 70%) ;
+
+          --backcolor: hsl(var(--themeH), 50%, 10%);
+          --fontcolor: hsl(var(--themeH), 50%, 90%);
+          --backcolor2: hsl(var(--themeH), 50%, 40%);
+          --fontcolor2: hsl(var(--themeH), 50%, 65%);
+      }
+    </style>
+    <link rel="stylesheet" href="../../help.css"/>
+    <link rel="stylesheet" href="../interpolations.css"/>
+  </head>
+
+  <body>
+
+    <header style="background-image: url('../../img/title5.jpg');">
+      <div class="title-box">
+        <div>Atomek</div>
+        <div>ImageResize</div>
+      </div>
+    </header>
+  
+    <main>
+      <article>
+        <h1>Interpolation with ImageResize</h1>
+  
+        <ul>
+          <li><a href="#algo">Effect of the algorithms</a></li>
+          <li><a href="#upscaling">Scale up (enlarge)</a></li>
+          <li><a href="#downscaling">Scale down (reduce size)</a></li>
+        </ul>
+
+        <h2 id="algo">Effect of the algorithms</h2>
+        <div class="filter">
+          <div class="filter-box">
+            <i>Stretch</i><br/>
+            <img src="../img/img_Stretch_16.png"/>
+          </div>
+          <div class="filter-box">
+            <i>Box</i><br/>
+            <img src="../img/img_Box_16.png"/>
+          </div>
+          <div class="filter-box">
+            <i>Linear</i><br/>
+            <img src="../img/img_Linear_16.png"/>
+          </div>
+          <div class="filter-box">
+            <i>Half Cosine</i><br/>
+            <img src="../img/img_HalfCosine_16.png"/>
+          </div>
+          <div class="filter-box">
+            <i>Cosine</i><br/>
+            <img src="../img/img_Cosine_16.png"/>
+          </div>
+          <div class="filter-box">
+            <i>Bicubic</i><br/>
+            <img src="../img/img_Bicubic_16.png"/>
+          </div>
+          <div class="filter-box">
+            <i>Mitchell</i><br/>
+            <img src="../img/img_Mitchell_16.png"/>
+          </div>
+          <div class="filter-box">
+            <i>Spline</i><br/>
+            <img src="../img/img_Spline_16.png"/>
+          </div>
+          <div class="filter-box">
+            <i>Lanczos 2</i><br/>
+            <img src="../img/img_Lanczos2_16.png"/>
+          </div>
+          <div class="filter-box">
+            <i>Lanczos 3</i><br/>
+            <img src="../img/img_Lanczos3_16.png"/>
+          </div>
+          <div class="filter-box">
+            <i>Lanczos 4</i><br/>
+            <img src="../img/img_Lanczos4_16.png"/>
+          </div>
+        </div>
+        
+        <h2 id="upscaling">Effect of upscaling</h2>
+        <div class="filter-box">
+          (Without image) <i>Best Quality</i> uses <i>Spline</i> or <i>Mitchell</i><br/> depending on scaling up or down
+        </div>
+        <div class="resampling">
+          <div class="filter-box">
+            <i>Stretch</i> is not a filter, but a stretching of the pixels without interpolation<br/>
+            <img src="../img/img_Stretch_256.png"/>
+          </div>
+          <div class="filter-box">
+            <i>Box</i>Equivalent to <i>Stretch</i> with high quality and pixel-centered coordinates<br/>
+            <img src="../img/img_Box_256.png"/>
+          </div>
+          <div class="filter-box">
+            <i>Linear</i> Linear interpolation results in a transition between pixels<br/>
+            <img src="../img/img_Linear_256.png"/>
+          </div>
+          <div class="filter-box">
+            <i>Half Cosine</i> Mixture of <i>Linear</i> and <i>Cosine</i> results in a medium transition between the pixels<br/>
+            <img src="../img/img_HalfCosine_256.png"/>
+          </div>
+          <div class="filter-box">
+            <i>Cosine</i> Cosine-like interpolation results in a faster transition between pixels <br/>
+            <img src="../img/img_Cosine_256.png"/>
+          </div>
+          <div class="filter-box">
+            <i>Bicubic</i> Simple bi-cubic filter (blurred)<br/>
+            <img src="../img/img_Bicubic_256.png"/>
+          </div>
+          <div class="filter-box">
+            <i>Mitchell</i> The Mitchell filter is a good interpolation for downscaling.<br/>
+            <img src="../img/img_Mitchell_256.png"/>
+          </div>
+          <div class="filter-box">
+            <i>Spline</i> Good filter for scaling up<br/>
+            <img src="../img/img_Spline_256.png"/>
+          </div>
+          <div class="filter-box">
+            <i>Lanczos 2</i> Lanczos filter with radius 2 and blur correction<br/>
+            <img src="../img/img_Lanczos2_256.png"/>
+          </div>
+          <div class="filter-box">
+            <i>Lanczos 3</i> Lanczos filter with radius 3, high contrast<br/>
+            <img src="../img/img_Lanczos3_256.png"/>
+          </div>
+          <div class="filter-box">
+            <i>Lanczos 4</i> Lanczos filter with radius 4, high contrast<br/>
+            <img src="../img/img_Lanczos4_256.png"/>
+          </div>
+        </div>
+        
+        <h2 id="downscaling">Effect of downscaling</h2>
+        <div class="resampling">
+            <div class="filter-box">
+            <i>Stretch</i> is not a filter, but a stretching of the pixels without interpolation<br/>
+            <img src="../img/img_Stretch_64.png"/>
+          </div>
+          <div class="filter-box">
+            <i>Box</i>Equivalent to <i>Stretch</i> with high quality and pixel-centered coordinates<br/>
+            <img src="../img/img_Box_64.png"/>
+          </div>
+          <div class="filter-box">
+            <i>Linear</i> Linear interpolation results in a transition between pixels<br/>
+            <img src="../img/img_Linear_64.png"/>
+          </div>
+          <div class="filter-box">
+            <i>Half Cosine</i> Mixture of <i>Linear</i> and <i>Cosine</i> results in a medium transition between the pixels<br/>
+            <img src="../img/img_HalfCosine_64.png"/>
+          </div>
+          <div class="filter-box">
+            <i>Cosine</i> Cosine-like interpolation results in a faster transition between pixels <br/>
+            <img src="../img/img_Cosine_64.png"/>
+          </div>
+          <div class="filter-box">
+            <i>Bicubic</i> Simple bi-cubic filter (blurred)<br/>
+            <img src="../img/img_Bicubic_64.png"/>
+          </div>
+          <div class="filter-box">
+            <i>Mitchell</i> The Mitchell filter is a good interpolation for downscaling.<br/>
+            <img src="../img/img_Mitchell_64.png"/>
+          </div>
+          <div class="filter-box">
+            <i>Spline</i> Good filter for scaling up<br/>
+            <img src="../img/img_Spline_64.png"/>
+          </div>
+          <div class="filter-box">
+            <i>Lanczos 2</i> Lanczos filter with radius 2 and blur correction<br/>
+            <img src="../img/img_Lanczos2_64.png"/>
+          </div>
+          <div class="filter-box">
+            <i>Lanczos 3</i> Lanczos filter with radius 3, high contrast<br/>
+            <img src="../img/img_Lanczos3_64.png"/>
+          </div>
+          <div class="filter-box">
+            <i>Lanczos 4</i> Lanczos filter with radius 4, high contrast<br/>
+            <img src="../img/img_Lanczos4_64.png"/>
+          </div>
+        </div>
+      </article>
+    </main>
+  </body>    
+</html>

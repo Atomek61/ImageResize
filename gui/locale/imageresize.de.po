@@ -506,8 +506,8 @@ msgid "Source folder not found"
 msgstr "Fehlendes Quellverzeichnis"
 
 #: maindlg.slocdirhelp
-msgid "hlp\\en"
-msgstr "hlp\\de"
+msgid "hlp\\gui\\en"
+msgstr "hlp\\gui\\de"
 
 #: maindlg.slogcantloadproject
 msgctxt "maindlg.slogcantloadproject"
@@ -1212,6 +1212,7 @@ msgid "1"
 msgstr "1"
 
 #: tmaindialog.editrentemplate.hint
+#, fuzzy
 msgid ""
 "Enter a filename template containing placeholders for special values.\n"
 "This template will be expanded for each resampled image. Insert the\n"

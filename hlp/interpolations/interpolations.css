@@ -1,0 +1,40 @@
+br+img {
+    margin-top: 0.3em
+}
+
+.atop td {
+    vertical-align: top;
+}
+
+.atop tr td:nth-child(1)  {
+    width: 7em; font-weight: bold; font-style: italic;
+}
+
+.framed {
+    border: 1px solid silver;
+}
+
+.filter {
+    display: flex; flex-wrap: wrap;
+}
+
+.filter div {
+    width: 160px;
+}
+
+.filter .filter-box {
+    margin-bottom: 1em; padding-top: 0.5em;
+}
+
+.filter-box i:nth-child(1) {
+  background: linear-gradient(15deg, rgb(128, 63, 63) 0%, rgb(52, 52, 113) 100%);
+  padding: 0 0.5em 0 0.5em;
+  color: rgb(226, 226, 76);
+  font-weight: bold;
+  font-size: 16pt;
+  border-radius: 4px;
+}
+
+.resampling .filter-box {
+    margin-bottom: 1em; border-top: 2px solid silver; padding-top: 0.5em;
+}

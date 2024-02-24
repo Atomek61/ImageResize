@@ -41,6 +41,7 @@ type
     TabSheetVersion: TTabSheet;
     TabSheetUpdate: TTabSheet;
     TabSheetLicense: TTabSheet;
+    TimerBlinkAvailable: TTimer;
     ToolBar: TToolBar;
     ToolButtonLicense: TToolButton;
     ToolButtonVersions: TToolButton;
@@ -52,6 +53,7 @@ type
     procedure LabelLinkImageResizeDownloadClick(Sender: TObject);
     procedure LabelLinkImageResizeHomeClick(Sender: TObject);
     procedure TabButtonClick(Sender :TObject);
+    procedure TimerBlinkAvailableTimer(Sender: TObject);
   private
 
   public
@@ -62,7 +64,7 @@ implementation
 
 uses
   maindlg, imgres, LazVersion, BGRABitmapTypes, opensslsockets, Updateutils,
-  lclintf, dGlobal;
+  lclintf, dGlobal, FileInfo;
 
 resourcestring
   SCptAvailable           = 'Available';
@@ -91,6 +93,14 @@ begin
   PageControl.TabIndex := TAction(Sender).Tag;
 end;
 
+procedure TAboutDialog.TimerBlinkAvailableTimer(Sender: TObject);
+begin
+  if LabelAvailability.Font.Color = clWindowText then
+    LabelAvailability.Font.Color := clRed
+  else
+    LabelAvailability.Font.Color := clWindowText;
+end;
+
 procedure TAboutDialog.ActionCheckUpdateExecute(Sender: TObject);
 var
   UpdateManifest :TVersionManifest;
@@ -105,10 +115,11 @@ begin
     if UpdateManifest.App<>GUIVER.App then
       raise Exception.CreateFmt(SErrAppNotMatchingFmt, [UpdateManifest.App, GUIVER.App]);
     if GUIVER.AsDateTime < UpdateManifest.AsDateTime then begin
-      LabelAvailability.Font.Color := clMaroon;
+      TimerBlinkAvailable.Enabled := true;
+      LabelAvailability.Font.Color := clWindowText;
       LabelAvailability.Caption := Format(SMsgUpdateAvailableFmt, [UpdateManifest.version, UpdateManifest.Date]);
     end else begin
-      LabelAvailability.Font.Color := clGreen;
+      LabelAvailability.Font.Color := clWindowText;
       LabelAvailability.Caption := SMsgIsUpToDate;
     end;
   except
@@ -139,11 +150,13 @@ class function TAboutDialog.Execute(const Text1, Text2, LicenseResName :string):
 var
   AboutDialog: TAboutDialog;
   s :TStream;
+  ver :TProgramVersion;
 begin
   AboutDialog := TAboutDialog.Create(nil);
   with AboutDialog do try
     LabelImgresGuiCpr.Caption := Text1;
-    LabelAppVersion.Caption := GUIVER_APP + ' ' + GUIVER_VERSION;
+    GetProgramVersion(ver);
+    LabelAppVersion.Caption := GUIVER_APP + ' ' + ProgramversionToStr(ver);
     LabelProcessorVersion.Caption := Text2;
     LabelDependencies.Caption := Format(SCptDependenciesFmt, [laz_version, BGRABitmapVersionStr, dGlobal.dExifVersion]);
     s := TResourceStream.Create(HInstance, LicenseResName, RT_RCDATA);

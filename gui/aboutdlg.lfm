@@ -310,4 +310,10 @@ object AboutDialog: TAboutDialog
       OnExecute = ActionDownloadExecute
     end
   end
+  object TimerBlinkAvailable: TTimer
+    Enabled = False
+    OnTimer = TimerBlinkAvailableTimer
+    Left = 430
+    Top = 17
+  end
 end
