@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>ImageResize CLI</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>   
+        <link rel="stylesheet" href="gallery.css"/>
+        <style>
+        </style>
+        <script>
+            window.onload = (event) => {
+                for (const child of document.getElementById("picklist").children) {
+                    child.addEventListener("click", (event) => {
+                        let img = document.getElementById("display");
+                        img.setAttribute('src', event.target.getAttribute('src'))
+                    });
+                }
+                document.getElementById("display").setAttribute('src', document.getElementById("picklist").children[0].getAttribute('src'));
+            }
+        </script>
+    </head>
+    <body>
+        <img id="display"/>
+        <div id="picklist">%IMAGES%</div>
+    </body>
+</html>

@@ -20,7 +20,8 @@ body {
 }
 
 .title-bar {
-    font: 24pt Arial;
+    font-family: Arial;
+	font-size: %SYMBOLSIZE%em;
     position: absolute;
     height: 1em;
     top: 5%;
@@ -35,13 +36,13 @@ body {
 
 .navigation-bar, .control-bar {
     fill: %CONTROLSCOLOR%;
-    fill-opacity: 0;
+    fill-opacity: 1;
 }
 
 .navigation-bar {
     position: absolute;
-    height: 100%; width: %SYMBOLSIZE%%;
-    transition: 0.3s;
+    height: 100%; width: calc(2*%SYMBOLSIZE%em);
+    xtransition: 0.3s;
 }
 
 .navigation-bar svg {            
@@ -64,7 +65,7 @@ body {
 
 .control-bar {
     position: absolute;
-    width: 100%; height: %SYMBOLSIZE%%; bottom: 1%;
+    width: 100%; height: %SYMBOLSIZE%em; bottom: 1%;
     display: flex;
     justify-content: center;
     transition: 0.3s;

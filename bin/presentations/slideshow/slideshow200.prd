@@ -12,10 +12,10 @@ Description.de=Kino mit Navigation
 LongDescription=Simple slideshow for full-screen (1920px) with navigation
 LongDescription.de=Slideshow für Vollbild (1920px) mit Navigation
 Date=2024-01-03 20:00:00
-Icon=..\icon-slideshow.png
-Preview=slideshow-preview.jpg
-Copy=slideshow.js
-Templates=index.html,slideshow.css
+Icon=icon.png
+Preview=200\preview.jpg
+Copy=200\slideshow.js
+Templates=200\index.html,200\slideshow.css
 Fragment.IMAGES=<img class="image-hidden" src="%IMGFILENAME%" alt="%TITLE%"/>%CRLF%
 Fragment.BULLETS=<svg class="button-image" viewbox="0 0 128 128"><use href="#svg-circle"/></svg>%CRLF%
 

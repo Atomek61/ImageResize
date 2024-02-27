@@ -221,9 +221,9 @@ object SettingsDialog: TSettingsDialog
     ParentFont = False
   end
   object ImageChucky: TImage
-    Left = 328
+    Left = 56
     Height = 168
-    Top = 172
+    Top = 144
     Width = 176
     AutoSize = True
     Picture.Data = {
@@ -573,6 +573,17 @@ object SettingsDialog: TSettingsDialog
       A273459471ACA5EC101C3207D7BFF5FBFF1F9C57274643014D9A000000004945
       4E44AE426082
     }
+    Visible = False
+  end
+  object BGRAGraphicControl1: TBGRAGraphicControl
+    Left = 344
+    Height = 194
+    Top = 144
+    Width = 160
+    Color = clWhite
+    ColorOpacity = 128
+    Alignment = taCenter
+    Caption = 'BGRAGraphicControl1'
   end
   object TimerChucky: TTimer
     Enabled = False

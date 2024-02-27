@@ -11,10 +11,10 @@ Description.de=Einfaches Pinboard
 LongDescription=CSS Flex container. Recommended for medium size photos (400px).
 LongDescription.de=CSS Flex Container. Empfohlen für Fotos mittlerer Größe (400px).
 Date=2024-01-01 00:00:00
-Icon=..\icon-pinboard.png
-Preview=preview.jpg
+Icon=icon.png
+Preview=100\preview.jpg
 Copy=shutter.png
-Templates=index.html,pinboard.css
+Templates=100\index.html,100\pinboard.css
 Fragment.IMAGES=<figure><img src="%IMGFILENAME%"/><figcaption>%TITLE% (%ORGFILENAME%)</figcaption></figure>%CRLF%
 
 [Settings.Title]

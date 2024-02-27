@@ -11,11 +11,11 @@ Description.de=Tabellarische Bildinformationen
 LongDescription=CSS flex container. Display available information.
 LongDescription.de=CSS Flex-Container. Anzeige verfügbarer Informationen.
 Date=2024-02-01 00:00:00
-Icon=..\icon-details.png
-Preview=preview.jpg
+Icon=icon.png
+Preview=100\preview.jpg
 Copy=shutter.png
-Templates=index.html,info.css
-Fragment.IMAGES=@fragment.images.html
+Templates=100\index.html,100\info.css
+Fragment.IMAGES=@100\fragment.images.html
 
 [Settings.Title]
 Class=String

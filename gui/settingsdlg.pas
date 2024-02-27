@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Buttons,
-  ExtCtrls, AppSettings, animator;
+  ExtCtrls, BGRAGraphicControl, AppSettings, animator;
 
 type
 
@@ -18,6 +18,7 @@ type
     Bevel1: TBevel;
     Bevel2: TBevel;
     Bevel4: TBevel;
+    BGRAGraphicControl1: TBGRAGraphicControl;
     ButtonCancel: TBitBtn;
     ButtonOk: TBitBtn;
     CheckBoxRelPathes: TCheckBox;
@@ -41,11 +42,11 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure PaintBoxChuckyPaint(Sender: TObject);
     procedure TimerChuckyTimer(Sender: TObject);
   private
     FBehaviorLocked :boolean;
     FBehavior :TBehavior;
-    FChuckyT0 :TDateTime;
     FChuckyAnimator :TAnimator;
     procedure SetBehavior(AValue: TBehavior);
     procedure OnAnimateChucky(Sender :TObject; Value :double);
@@ -105,6 +106,8 @@ end;
 
 procedure TSettingsDialog.FormShow(Sender: TObject);
 begin
+  with PaintBoxChucky do
+    SetBounds(Left, self.ClientHeight-Height, ImageChucky.Width, ImageChucky.Height);
   with FChuckyAnimator do begin
     Min := 0;
     Max := ImageChucky.Height;
@@ -132,12 +135,18 @@ var
   ChuckyVisibleLines :integer;
 begin
   T1 := Now;
-  ChuckyVisibleLines := round(ImageChucky.Height*(T1-FChuckyT0)*SECSPERDAY/CHUCKYSPEED);
+  ChuckyVisibleLines := round(ImageChucky.Height*(T1-FChuckyAnimator.T0)*SECSPERDAY/CHUCKYSPEED);
+  PaintBoxChucky.Invalidate;
   if ChuckyVisibleLines >= ImageChucky.Height then begin
     TimerChucky.Enabled := false;
     ChuckyVisibleLines := ImageChucky.Height;
   end;
   ImageChucky.Top := ClientHeight - ChuckyVisibleLines;
+end;
+
+procedure TSettingsDialog.PaintBoxChuckyPaint(Sender: TObject);
+begin
+  PaintBoxChucky.Canvas.Draw(0, round(ImageChucky.Height-FChuckyAnimator.Value), ImageChucky.Picture.Graphic);
 end;
 
 procedure TSettingsDialog.SetBehavior(AValue: TBehavior);
@@ -150,10 +159,12 @@ begin
   CheckBoxWarnDirty.Checked := FBehavior in [bhNeurotic, bhStandard];
   if Behavior = bhChucky then begin
     FChuckyAnimator.Start;
-    ImageChucky.Visible := true;
+    PaintBoxChucky.Visible := true;
+//    ImageChucky.Visible := true;
   end else begin
     ImageChucky.Top := ClientHeight;
-    ImageChucky.Visible := false;
+    PaintBoxChucky.Visible := false;
+//    ImageChucky.Visible := false;
     FChuckyAnimator.Stop;
   end;
 
@@ -161,11 +172,8 @@ begin
 end;
 
 procedure TSettingsDialog.OnAnimateChucky(Sender: TObject; Value :double);
-var
-  ChuckyVisibleLines :integer;
 begin
-  ChuckyVisibleLines := round(Value);
-  ImageChucky.Top := ClientHeight - ChuckyVisibleLines;
+  PaintBoxChucky.Invalidate;
 end;
 
 procedure TSettingsDialog.GetProcessingSettings(Settings :TProcessingSettings);

@@ -17,5 +17,6 @@
 {"hash":217855253,"name":"tsettingsdialog.checkboxrelpathes.hint","sourcebytes":[80,97,116,104,101,115,32,119,105,108,108,32,98,101,32,115,97,118,101,100,32,114,101,108,97,116,105,118,101,32,116,111,32,116,104,101,32,112,114,111,106,101,99,116,32,102,105,108,101],"value":"Pathes will be saved relative to the project file"},
 {"hash":254205827,"name":"tsettingsdialog.checkboxrelpathes.caption","sourcebytes":[83,97,118,101,32,114,101,108,97,116,105,118,101,32,80,97,116,104,101,115],"value":"Save relative Pathes"},
 {"hash":164620055,"name":"tsettingsdialog.labelprocessing.caption","sourcebytes":[80,114,111,99,101,115,115,105,110,103],"value":"Processing"},
-{"hash":93900871,"name":"tsettingsdialog.labelsaving.caption","sourcebytes":[83,97,118,105,110,103],"value":"Saving"}
+{"hash":93900871,"name":"tsettingsdialog.labelsaving.caption","sourcebytes":[83,97,118,105,110,103],"value":"Saving"},
+{"hash":217267345,"name":"tsettingsdialog.bgragraphiccontrol1.caption","sourcebytes":[66,71,82,65,71,114,97,112,104,105,99,67,111,110,116,114,111,108,49],"value":"BGRAGraphicControl1"}
 ]}

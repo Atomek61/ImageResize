@@ -12,10 +12,10 @@ Description.de=Mit Navigation-Zeile
 LongDescription=Bildbetrachter mit Thumbnail-Zeile
 LongDescription.de=Image Viewer with thumbnail row
 Date=2024-02-26 22:00:00
-Icon=..\icon-gallery.png
-Preview=gallery100-preview.jpg
+Icon=icon.png
+Preview=100\preview.jpg
 ;Copy=gallery.css
-Templates=index.html,gallery.css
+Templates=100\index.html,100\gallery.css
 Fragment.IMAGES=<img src="%IMGFILENAME%"/>%CRLF%
 
 [Settings.Ratio]
