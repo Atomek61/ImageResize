@@ -1,0 +1,56 @@
+[Common]
+Type=PRP
+Version=100
+
+[Presentation]
+Id=Gallery100
+Class=Presentation
+;Delimiters={{,}}
+Title=Gallery 1.0
+Description=Bottom Navigation
+Description.de=Mit Navigation-Zeile
+LongDescription=Bildbetrachter mit Thumbnail-Zeile
+LongDescription.de=Image Viewer with thumbnail row
+Date=2024-02-26 22:00:00
+Icon=..\icon-gallery.png
+Preview=gallery100-preview.jpg
+;Copy=gallery.css
+Templates=index.html,gallery.css
+Fragment.IMAGES=<img src="%IMGFILENAME%"/>%CRLF%
+
+[Settings.Ratio]
+Class=String
+Caption=Image Ratio
+Caption.de=Bildverhältnis
+Text=16/9,3/2,4/3
+Default=3/2
+
+[Settings.BckColor1]
+Class=HTMLColor
+Presentation=WebColor
+Caption=Background 1
+Caption.de=Hintergrund 1
+Default=#000000
+
+[Settings.BckColor2]
+Class=HTMLColor
+Presentation=WebColor
+Caption=Background 2
+Caption.de=Hintergrund 2
+Default=#000000
+
+[Settings.ThmbnSize]
+Class=Int32
+Min=32
+Max=240
+Caption=Thumbnail Width
+Caption.de=Vorschaubreite
+Default=120
+
+[Settings.Gap]
+Class=Int32
+Min=0
+Max=64
+Caption=Gap
+Caption.de=Spalt
+Default=3
