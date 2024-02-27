@@ -507,12 +507,7 @@ begin
         if not SettingClasses.TryGetValue(SettingClassName, SettingClass) then
           raise Exception.CreateFmt(SErrSettingClassNotFoundFmt, [SettingClassName, SettingSection]);
         Setting := SettingClass.Create(self, SettingKey);
-        try
-          Setting.LoadDef(Ini, SettingSection);
-        except
-          Setting.Free;
-          raise;
-        end;
+        Setting.LoadDef(Ini, SettingSection);
       end;
   finally
     Sections.Free;

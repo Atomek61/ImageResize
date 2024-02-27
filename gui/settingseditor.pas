@@ -76,16 +76,17 @@ type
   { TInt32Editor }
 
   TInt32Editor = class(TStringEditor)
-  public
   end;
 
   TUInt32Editor = class(TStringEditor)
-  public
   end;
 
 
-  TPickEdit = class(TEditor)
+  { TPickEditor }
 
+  TPickEditor = class(TEditor)
+  public
+    procedure Bind(ItemProp :TItemProp); override;
   end;
 
 implementation
@@ -246,6 +247,21 @@ begin
 
 end;
 
+{ TPickEditor }
+
+procedure TPickEditor.Bind(ItemProp: TItemProp);
+var
+  i :integer;
+  Pick :TPickSetting;
+begin
+  inherited Bind(ItemProp);
+  ItemProp.EditStyle := esPickList;
+  Pick := Setting as TPickSetting;
+  ItemProp.ReadOnly := Pick is TPicklistSetting;
+  for i:=0 to High(Pick.Display) do
+    ItemProp.PickList.Add(Pick.Display[i]);
+end;
+
 { TInt32Editor }
 
 { TStringEditor }
@@ -255,7 +271,7 @@ end;
 initialization
 begin
   EditorClasses := TEditorClasses.Create;
-  TEditor.Register([TStringEditor, TInt32Editor, TUInt32Editor]);
+  TEditor.Register([TStringEditor, TInt32Editor, TUInt32Editor, TPickEditor]);
 end;
 
 finalization
