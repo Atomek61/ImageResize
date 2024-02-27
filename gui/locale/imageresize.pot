@@ -305,6 +305,7 @@ msgstr ""
 
 #: imgres.smsgloadingfmt
 #, object-pascal-format
+msgctxt "imgres.smsgloadingfmt"
 msgid "Loading '%s'..."
 msgstr ""
 
@@ -590,6 +591,12 @@ msgstr ""
 #: presentations.serrunregisterpresentationmanagerfmt
 #, object-pascal-format
 msgid "Unregistered PresentationManager class '%s'."
+msgstr ""
+
+#: presentations.smsgloadingfmt
+#, object-pascal-format
+msgctxt "presentations.smsgloadingfmt"
+msgid "Loading '%s'..."
 msgstr ""
 
 #: settings.serrassignclassfmt

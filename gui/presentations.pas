@@ -116,7 +116,7 @@ const
   PRESENTATIONFILE_EXTENSION = 'prd';
 
 resourcestring
-//  SErrMissingPresentationManagerClassFmt = 'Missing PresentationManager class entry in ''%s''.';
+  SMsgLoadingFmt = 'Loading ''%s''...';
   SErrUnregisterPresentationManagerFmt = 'Unregistered PresentationManager class ''%s''.';
   SErrIniValueNotFoundFmt = 'Key ''[%s]%s'' not found in ''%s''.';
 
@@ -236,9 +236,10 @@ var
   WprFilenames :TStringList;
   Filename :string;
 begin
-    WprFilenames := FindAllFiles(Folder, '*.'+PRESENTATIONFILE_EXTENSION, true);
+  WprFilenames := FindAllFiles(Folder, '*.'+PRESENTATIONFILE_EXTENSION, true);
   try
     for Filename in WprFilenames do begin
+      Log(SMsgLoadingFmt, [ExtractFilename(Filename)], llInfo);
       try
         Managers.Add(TCustomManager.Create(Filename));
       except on E :Exception do

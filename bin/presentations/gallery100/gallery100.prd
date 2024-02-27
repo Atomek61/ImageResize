@@ -19,10 +19,12 @@ Templates=index.html,gallery.css
 Fragment.IMAGES=<img src="%IMGFILENAME%"/>%CRLF%
 
 [Settings.Ratio]
-Class=String
+Class=Picktext
+Presentation=Pick
 Caption=Image Ratio
 Caption.de=Bildverhältnis
 Text=16/9,3/2,4/3
+Display=16/9,3/2,4/3
 Default=3/2
 
 [Settings.BckColor1]

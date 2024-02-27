@@ -316,6 +316,7 @@ msgstr "Herunterskaliere '%s' von %dx%d nach %dx%d..."
 
 #: imgres.smsgloadingfmt
 #, object-pascal-format
+msgctxt "imgres.smsgloadingfmt"
 msgid "Loading '%s'..."
 msgstr "Lade '%s'..."
 
@@ -605,6 +606,12 @@ msgstr "Bezeichner '[%s]%s' nicht gefunden in '%s'."
 #, object-pascal-format
 msgid "Unregistered PresentationManager class '%s'."
 msgstr "Unregistrierte Preäsentations-manager-Klasse '%s'."
+
+#: presentations.smsgloadingfmt
+#, object-pascal-format, fuzzy
+msgctxt "presentations.smsgloadingfmt"
+msgid "Loading '%s'..."
+msgstr "Lade '%s'..."
 
 #: settings.serrassignclassfmt
 #, object-pascal-format
@@ -1212,7 +1219,7 @@ msgid "1"
 msgstr "1"
 
 #: tmaindialog.editrentemplate.hint
-#, fuzzy
+#, fuzzy, badformat
 msgid ""
 "Enter a filename template containing placeholders for special values.\n"
 "This template will be expanded for each resampled image. Insert the\n"
@@ -1855,3 +1862,4 @@ msgstr "Speichern"
 msgctxt "webutils.serrinvalidhtmlcolorfmt"
 msgid "Invalid web color '%s'."
 msgstr "Ungültige Web-Farbe '%s'."
+

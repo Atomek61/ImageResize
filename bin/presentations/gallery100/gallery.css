@@ -1,6 +1,7 @@
 body {
     background-color: %BCKCOLOR1%;
     margin: %GAP%px;
+    line-height: 0;
 }
 
 #display {
