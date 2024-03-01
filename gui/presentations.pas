@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, Controls, Forms, IniFiles, Generics.Collections,
   Graphics, GetText, DateUtils, Generics.Defaults, FileUtil, StringUtils,
   GalleryProcessor, Logging, StrUtils, StringArrays, Settings,
-  PresentationManagerFrm, SettingsEditor, TemplateEngine, WebUtils, Language;
+  PresentationManagerFrm, SettingsEditors, TemplateEngine, WebUtils, Language;
 
 const
   SYSPRESENTATIONAPP      = 'ImageResize Presentation';
@@ -375,7 +375,7 @@ begin
 
   // Make Settings available to the Processor
   for Setting in Settings.Items do begin
-    //if SettingPresentationFns.TryGetValue(Setting.Presentation, SettingPresentationFn) then
+    //if SettingPresentationFns.TryGetValue(Setting.PresentationHint, SettingPresentationFn) then
     //  ValuePresentation := SettingPresentationFn(Setting)
     //else
     ValuePresentation := Setting.AsDisplay;

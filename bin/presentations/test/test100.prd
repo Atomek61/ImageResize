@@ -1,0 +1,37 @@
+﻿[Common]
+Type=PRD
+Version=100
+
+[Presentation]
+Id=Test100
+Processor=Presentation
+VarDelimiters=%,%
+Title=Test 1.0
+Description=Test of Settings
+LongDescription=Should not appear in the production
+Date=2024-03-01 00:00:00
+Icon=icon.png
+Preview=100\preview.jpg
+Templates=100\index.html
+Fragment.IMAGES=<img src="%IMGFILENAME%" alt="%TITLE%"/>%CRLF%
+
+[Settings.tst1]
+Class=String
+Caption=Test1
+
+[Settings.tst2]
+Class=Int32
+Caption=Test2
+
+[Settings.FontColor]
+Class=HTMLColor
+Presentation=WebColor
+Caption=Font
+Caption.de=Schrift
+Default=#E4EBDA
+
+[Settings.Babo]
+Class=String
+Presentation=Filename
+Caption=Babofile
+

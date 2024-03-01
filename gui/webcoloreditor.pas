@@ -5,20 +5,16 @@ unit webcoloreditor;
 interface
 
 uses
-  Classes, SysUtils, SettingsEditor, ValEdit, Graphics, Grids, Dialogs, WebUtils;
+  Classes, SysUtils, SettingsEditors, ValEdit, Graphics, Grids, Dialogs, WebUtils;
 
 type
 
   { TWebColorEditor }
 
-  TWebColorEditor = class(TStringEditor)
-  private
-    FLock :boolean;
+  TWebColorEditor = class(TEditor)
   protected
     procedure Bind(ItemProp :TItemProp); override;
     procedure DrawCell(Canvas :TCanvas; Rect :TRect; State :TGridDrawState); override;
-    function GetPresentation: string; override;
-    procedure SetPresentation(AValue: string); override;
     procedure ButtonClick; override;
   end;
 
@@ -38,7 +34,7 @@ end;
 procedure TWebColorEditor.DrawCell(Canvas: TCanvas; Rect: TRect; State: TGridDrawState);
 begin
   with Canvas do begin
-    Brush.Color := HTMLColorToColor(Value);
+    Brush.Color := HTMLColorToColor(Cell);
     Rect.Left := Rect.Right - Rect.Height*2;
     dec(Rect.Right, 3);
     inc(Rect.Top, 2); dec(Rect.Bottom, 3);
@@ -46,33 +42,13 @@ begin
   end;
 end;
 
-function TWebColorEditor.GetPresentation: string;
-begin
-  result := Value;
-end;
-
-procedure TWebColorEditor.SetPresentation(AValue: string);
-var
-  Color :TColor;
-begin
-  if not FLock and TryHTMLColorToColor(AValue, Color) then
-    Value := ColorToHTMLColor(Color);
-end;
-
 procedure TWebColorEditor.ButtonClick;
 begin
   if not Assigned(ColorDialog) then
     ColorDialog := TColorDialog.Create(nil);
-  ColorDialog.Color := HTMLColorToColor(Value);
-  if ColorDialog.Execute then begin
-    FLock := true;
-    try
-      Value := ColorToHTMLColor(ColorDialog.Color);
-      SetCell(GetPresentation);
-    finally
-      FLock := false;
-    end;
-  end;
+  ColorDialog.Color := HTMLColorToColor(Cell);
+  if ColorDialog.Execute then
+    Cell := ColorToHTMLColor(ColorDialog.Color);
 end;
 
 initialization

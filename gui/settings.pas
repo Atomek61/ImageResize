@@ -92,12 +92,17 @@ type
 
   { TSetting }
 
+  // Value - inner Value of type Int32, String or whatever
+  // AsText - persistent string representation
+  // AsDisplay - language-depentent out presentation
+  // Presentation - Hint how to Display
+
   TSetting = class
   private
     FSettings :TSettings;
     FKey :string;
     FCaption: string;
-    FPresentation :string; // How to display
+    FPresentationHint :string; // How to display
     FOnChanged :TNotifyEvent;
   protected
     procedure Change;
@@ -121,7 +126,7 @@ type
     property Caption :string read FCaption;
     property AsText :string read GetAsText write SetAsText;
     property AsDisplay :string read GetAsDisplay write SetAsDisplay;
-    property Presentation :string read FPresentation;
+    property PresentationHint :string read FPresentationHint;
     property OnChanged :TNotifyEvent read FOnChanged write FOnChanged;
   end;
 
@@ -238,6 +243,7 @@ type
 
   { TPickSetting }
 
+  // Never instantiate
   TPickSetting = class(TStringSetting)
   protected
     FText :TStringArray;
@@ -680,7 +686,7 @@ end;
 procedure TSetting.LoadDef(Ini: TCustomIniFile; const Section: string);
 begin
   FCaption := Ini.ReadLang(Section, 'Caption', FSettings.FLangCode);
-  FPresentation := Ini.ReadString(Section, 'Presentation', ClassId);
+  FPresentationHint := Ini.ReadString(Section, 'Presentation', ClassId);
 end;
 
 function TSetting.GetAsDisplay: string;
@@ -696,7 +702,7 @@ end;
 procedure TSetting.DoClone(var Clone: TSetting);
 begin
   Clone.FCaption := FCaption;
-  Clone.FPresentation := FPresentation;
+  Clone.FPresentationHint := FPresentationHint;
   Clone.Assign(self);
 end;
 

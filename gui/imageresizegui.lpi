@@ -283,10 +283,6 @@
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="settingseditor.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
         <Filename Value="..\src\webutils.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
@@ -323,6 +319,11 @@
       <Unit>
         <Filename Value="..\src\controlshot.pas"/>
         <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="settingseditors.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="SettingsEditors"/>
       </Unit>
     </Units>
   </ProjectOptions>

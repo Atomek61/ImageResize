@@ -18,7 +18,6 @@ type
     Bevel1: TBevel;
     Bevel2: TBevel;
     Bevel4: TBevel;
-    BGRAGraphicControl1: TBGRAGraphicControl;
     ButtonCancel: TBitBtn;
     ButtonOk: TBitBtn;
     CheckBoxRelPathes: TCheckBox;
@@ -36,14 +35,11 @@ type
     LabelCores: TLabel;
     LabelSaving: TLabel;
     PanelControls: TPanel;
-    TimerChucky: TTimer;
     procedure CheckBoxAutoSaveClick(Sender: TObject);
     procedure ComboBoxBehaviorChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure PaintBoxChuckyPaint(Sender: TObject);
-    procedure TimerChuckyTimer(Sender: TObject);
   private
     FBehaviorLocked :boolean;
     FBehavior :TBehavior;
@@ -96,7 +92,6 @@ begin
   CheckBoxWarnDirty.Checked := true;
   CheckBoxRelPathes.Checked := true;
   FBehaviorLocked := false;
-  ImageChucky.Top := ClientHeight;
 end;
 
 procedure TSettingsDialog.FormDestroy(Sender: TObject);
@@ -106,8 +101,6 @@ end;
 
 procedure TSettingsDialog.FormShow(Sender: TObject);
 begin
-  with PaintBoxChucky do
-    SetBounds(Left, self.ClientHeight-Height, ImageChucky.Width, ImageChucky.Height);
   with FChuckyAnimator do begin
     Min := 0;
     Max := ImageChucky.Height;
@@ -129,26 +122,6 @@ begin
     Behavior := TBehavior(ComboBoxBehavior.ItemIndex);
 end;
 
-procedure TSettingsDialog.TimerChuckyTimer(Sender: TObject);
-var
-  T1 :TDateTime;
-  ChuckyVisibleLines :integer;
-begin
-  T1 := Now;
-  ChuckyVisibleLines := round(ImageChucky.Height*(T1-FChuckyAnimator.T0)*SECSPERDAY/CHUCKYSPEED);
-  PaintBoxChucky.Invalidate;
-  if ChuckyVisibleLines >= ImageChucky.Height then begin
-    TimerChucky.Enabled := false;
-    ChuckyVisibleLines := ImageChucky.Height;
-  end;
-  ImageChucky.Top := ClientHeight - ChuckyVisibleLines;
-end;
-
-procedure TSettingsDialog.PaintBoxChuckyPaint(Sender: TObject);
-begin
-  PaintBoxChucky.Canvas.Draw(0, round(ImageChucky.Height-FChuckyAnimator.Value), ImageChucky.Picture.Graphic);
-end;
-
 procedure TSettingsDialog.SetBehavior(AValue: TBehavior);
 begin
   if FBehavior=AValue then Exit;
@@ -158,13 +131,12 @@ begin
   CheckBoxAutoSave.Checked := FBehavior in [bhNeurotic, bhComfortable];
   CheckBoxWarnDirty.Checked := FBehavior in [bhNeurotic, bhStandard];
   if Behavior = bhChucky then begin
+    ImageChucky.Top := ClientHeight;
     FChuckyAnimator.Start;
-    PaintBoxChucky.Visible := true;
-//    ImageChucky.Visible := true;
+    ImageChucky.Visible := true;
   end else begin
     ImageChucky.Top := ClientHeight;
-    PaintBoxChucky.Visible := false;
-//    ImageChucky.Visible := false;
+    ImageChucky.Visible := false;
     FChuckyAnimator.Stop;
   end;
 
@@ -173,7 +145,7 @@ end;
 
 procedure TSettingsDialog.OnAnimateChucky(Sender: TObject; Value :double);
 begin
-  PaintBoxChucky.Invalidate;
+  ImageChucky.Top := ClientHeight - round(Value);
 end;
 
 procedure TSettingsDialog.GetProcessingSettings(Settings :TProcessingSettings);

@@ -235,7 +235,6 @@ object PresentationDialog: TPresentationDialog
         Anchors = []
         BorderSpacing.Around = 8
         Caption = '&Ok'
-        ModalResult = 1
         Images = ImagesModule.ImageList20x20
         ImageIndex = 2
         OnClick = ButtonOkClick

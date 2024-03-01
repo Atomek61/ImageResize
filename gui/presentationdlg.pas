@@ -101,6 +101,7 @@ var
 begin
   for Manager in FManagers do
     Manager.StoreParams;
+  ModalResult := mrOk;
 end;
 
 procedure TPresentationDialog.ButtonTargetFromDocClick(Sender: TObject);
@@ -179,18 +180,15 @@ begin
     Manager := FManagers[Index];
     LabelLongDescription.Caption := Manager.LongDescription;
     ImagePreview.Picture.Assign(Manager.Preview);
-    with Manager.ShowFrame(PanelManagerFrame) do begin
-      Align := alClient;
-    end;
+    Manager.ShowFrame(PanelManagerFrame).Align := alClient;
     ButtonWebShow.Enabled := true;
   end else begin
     LabelLongDescription.Caption := '';
     ImagePreview.Picture := nil;
     ButtonWebShow.Enabled := false;
   end;
-  if FManagerIndex<>-1 then begin
+  if FManagerIndex<>-1 then
     FManager.HideFrame;
-  end;
   FManagerIndex := Index;
   if FManagerIndex=-1 then
     FManager := nil

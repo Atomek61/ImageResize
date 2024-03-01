@@ -1,4 +1,4 @@
-unit settingseditor;
+unit SettingsEditors;
 
 {$mode delphi}
 
@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, LCLType, Generics.Collections, Grids, IniFiles, Graphics,
-  Settings, ValEdit;
+  Settings, ValEdit, Dialogs;
 
 type
   TEditor = class;
@@ -17,14 +17,13 @@ type
 
   { TSettingsEditor }
 
+  // Binds a TValueListEditor to a list of TSetting and creates a TEditor to it.
   TSettingsEditor = class
   private
     FControl :TValueListEditor;
     FSettings :TSettings;
     FEditorList :TEditorList;
-    FEditorDict :TEditorDictionary;
-    procedure OnGetCellDisplay(Sender: TObject; ACol, ARow: Integer; var Value: string);
-    procedure OnSetCellDisplay(Sender: TObject; ACol, ARow: Integer; const Value: string);
+    FEditorDict :TEditorDictionary; // ? superfluous
     procedure OnButtonClick(Sender: TObject; ACol, ARow: Integer);
     procedure OnDrawCell(Sender: TObject; aCol, aRow: Integer; aRect: TRect; aState: TGridDrawState);
     procedure OnKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -45,18 +44,16 @@ type
     FSettingsEditor :TSettingsEditor;
     FSetting :TSetting;
     FIndex :integer;
-    FValue :string;
   protected
     procedure Bind(ItemProp :TItemProp); virtual;
-    function GetPresentation: string; virtual;
-    procedure SetPresentation(AValue: string); virtual;
+    function GetCell: string;
+    procedure SetCell(const Value: string);
     procedure DrawCell(Canvas :TCanvas; Rect :TRect; State :TGridDrawState); virtual;
     procedure ButtonClick; virtual;
-    procedure SetCell(const AValue :string);
-    procedure Flush; virtual;
+    procedure ValueToCell; virtual;
+    procedure CellToValue; virtual;
     property SettingsEditor :TSettingsEditor read FSettingsEditor;
     property Setting :TSetting read FSetting;
-    property Value :string read FValue write FValue;
     property Index :integer read FIndex;
   public
     ReadOnly :boolean;
@@ -64,9 +61,8 @@ type
     class function ClassId :string;
     class procedure Register(const Classes :array of TEditorClass);
     procedure Load(Ini :TCustomIniFile; const Section :string); virtual;
+    property Cell :string read GetCell write SetCell;
   end;
-
-  // For each TSetting derivate an equivalent exists
 
   { TStringEditor }
 
@@ -89,6 +85,18 @@ type
   TPickEditor = class(TEditor)
   protected
     procedure Bind(ItemProp :TItemProp); override;
+  end;
+
+  { TFilenameEditor }
+
+  TFilenameEditor = class(TStringEditor)
+  private
+    FOpenDialog :TOpenDialog;
+  protected
+    procedure Bind(ItemProp :TItemProp); override;
+    procedure ButtonClick; override;
+  public
+    destructor Destroy; override;
   end;
 
 implementation
@@ -122,8 +130,6 @@ var
   i :integer;
 begin
   FControl := AControl;
-  FControl.OnGetEditText := OnGetCellDisplay;
-  FControl.OnSetEditText := OnSetCellDisplay;
   FControl.OnButtonClick := OnButtonClick;
   FControl.OnDrawCell    := OnDrawCell;
   FControl.OnKeyDown     := OnKeyDown;
@@ -132,7 +138,7 @@ begin
   FEditorDict.Clear;
   for i:=0 to Settings.Items.Count-1 do begin
     Setting := Settings.Items[i];
-    EditorClassName := 'T'+Setting.Presentation+'Editor';
+    EditorClassName := 'T'+Setting.PresentationHint+'Editor';
     if EditorClasses.TryGetValue(EditorClassName, EditorClass) then
       EditorClass.Create(Setting, self);
   end;
@@ -143,19 +149,7 @@ var
   Editor :TEditor;
 begin
   for Editor in FEditorList do
-    Editor.Flush;
-end;
-
-procedure TSettingsEditor.OnGetCellDisplay(Sender: TObject; ACol, ARow: Integer;
-  var Value: string);
-begin
-  Value := FEditorList[ARow-FControl.FixedRows].GetPresentation;
-end;
-
-procedure TSettingsEditor.OnSetCellDisplay(Sender: TObject; ACol, ARow: Integer;
-  const Value: string);
-begin
-  FEditorList[ARow-FControl.FixedRows].SetPresentation(Value);
+    Editor.CellToValue;
 end;
 
 procedure TSettingsEditor.OnButtonClick(Sender: TObject; ACol, ARow: Integer);
@@ -191,10 +185,10 @@ begin
   FSettingsEditor := ASettingsEditor;
   FSetting := ASetting;
   FIndex := FSettingsEditor.FEditorList.Add(self);
-  FSettingsEditor.FEditorDict.Add(ASetting.Key, self);
-  FValue := FSetting.AsDisplay;
-  FSettingsEditor.FControl.Strings.Add(FSetting.Caption+'='+GetPresentation);
+  FSettingsEditor.FEditorDict.Add(FSetting.Key, self);
+  FSettingsEditor.FControl.InsertRow(FSetting.Caption, '', true);
   Bind(FSettingsEditor.FControl.ItemProps[FIndex]);
+  ValueToCell;
 end;
 
 class function TEditor.ClassId: string;
@@ -220,28 +214,29 @@ begin
 
 end;
 
-procedure TEditor.SetCell(const AValue: string);
+procedure TEditor.ValueToCell;
 begin
-  SettingsEditor.Control.Values[Setting.Caption] := AValue;
+  Cell := FSetting.AsDisplay;
 end;
 
-procedure TEditor.Flush;
+procedure TEditor.CellToValue;
 begin
-  FSetting.AsDisplay := Value;
+  FSetting.AsDisplay := Cell;
 end;
 
 procedure TEditor.Bind(ItemProp :TItemProp);
 begin
 end;
 
-function TEditor.GetPresentation: string;
+function TEditor.GetCell: string;
 begin
-  result := FValue;
+  result := FSettingsEditor.FControl.Cells[1, FIndex];
 end;
 
-procedure TEditor.SetPresentation(AValue: string);
+procedure TEditor.SetCell(const Value: string);
 begin
-  FValue := AValue;
+  if Value=GetCell then Exit;
+  FSettingsEditor.FControl.Cells[1, FIndex] := Value;
 end;
 
 procedure TEditor.DrawCell(Canvas: TCanvas; Rect: TRect; State: TGridDrawState);
@@ -264,6 +259,30 @@ begin
     ItemProp.PickList.Add(PickSetting.Display[i]);
 end;
 
+{ TFilenameEditor }
+
+procedure TFilenameEditor.Bind(ItemProp: TItemProp);
+begin
+  inherited Bind(ItemProp);
+  ItemProp.EditStyle := esEllipsis;
+end;
+
+procedure TFilenameEditor.ButtonClick;
+begin
+  inherited ButtonClick;
+  if not Assigned(FOpenDialog) then
+    FOpenDialog := TOpenDialog.Create(nil);
+  FOpenDialog.Filename := Cell;
+  if FOpenDialog.Execute then
+    Cell := FOpenDialog.FileName;
+end;
+
+destructor TFilenameEditor.Destroy;
+begin
+  inherited Destroy;
+  FOpenDialog.Free;
+end;
+
 { TInt32Editor }
 
 { TStringEditor }
@@ -273,7 +292,7 @@ end;
 initialization
 begin
   EditorClasses := TEditorClasses.Create;
-  TEditor.Register([TStringEditor, TInt32Editor, TUInt32Editor, TPickEditor]);
+  TEditor.Register([TStringEditor, TInt32Editor, TUInt32Editor, TPickEditor, TFilenameEditor]);
 end;
 
 finalization

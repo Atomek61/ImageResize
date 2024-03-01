@@ -10,220 +10,17 @@ object SettingsDialog: TSettingsDialog
   Caption = 'Settings'
   ClientHeight = 338
   ClientWidth = 514
-  DoubleBuffered = False
+  DoubleBuffered = True
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
   ParentDoubleBuffered = False
   ShowHint = True
   LCLVersion = '3.0.0.3'
-  object CheckBoxStopOnError: TCheckBox
-    Left = 128
-    Height = 19
-    Hint = 'When processing the images, if to stop on the first error.'
-    Top = 53
-    Width = 87
-    Caption = '&Stop on Error'
-    Checked = True
-    State = cbChecked
-    TabOrder = 1
-  end
-  object Label8: TLabel
-    Left = 128
-    Height = 15
-    Top = 27
-    Width = 44
-    Caption = '&Threads:'
-    FocusControl = ComboBoxThreadsUsed
-    ParentColor = False
-  end
-  object ComboBoxThreadsUsed: TComboBox
-    Left = 208
-    Height = 23
-    Hint = 'ImageResize uses thread pooling to benefit'#13#10'the full computers power.'#13#10#13#10'The number of threads should be limited'#13#10'to the available number of cores.'
-    Top = 24
-    Width = 104
-    ItemHeight = 15
-    ItemIndex = 0
-    Items.Strings = (
-      'Single'
-      'Maximum'
-    )
-    TabOrder = 0
-    Text = 'Single'
-  end
-  object LabelCores: TLabel
-    Left = 320
-    Height = 15
-    Top = 27
-    Width = 30
-    Caption = 'Cores'
-    ParentColor = False
-  end
-  object Image1: TImage
-    Left = 37
-    Height = 32
-    Top = 50
-    Width = 32
-    AutoSize = True
-    Center = True
-    ImageIndex = 17
-    Images = ImagesModule.ImageList32x32
-  end
-  object Bevel1: TBevel
-    Left = 4
-    Height = 8
-    Top = 112
-    Width = 517
-    Shape = bsTopLine
-  end
-  object Image2: TImage
-    Left = 37
-    Height = 32
-    Top = 163
-    Width = 32
-    AutoSize = True
-    Center = True
-    ImageIndex = 4
-    Images = ImagesModule.ImageList32x32
-  end
-  object CheckBoxAutoSave: TCheckBox
-    Left = 128
-    Height = 19
-    Hint = 'On closing save current settings to a hidden file,'#13#10'so they are available on next start.'
-    Top = 200
-    Width = 71
-    Caption = '&Auto Save'
-    TabOrder = 4
-    OnClick = CheckBoxAutoSaveClick
-  end
-  object CheckBoxWarnDirty: TCheckBox
-    Left = 128
-    Height = 19
-    Hint = 'Makes sure that unsaved changes will not be lost, when loading a new project.'
-    Top = 172
-    Width = 88
-    Caption = 'Saving &Query'
-    TabOrder = 3
-    OnClick = CheckBoxAutoSaveClick
-  end
-  object ComboBoxBehavior: TComboBox
-    Left = 208
-    Height = 23
-    Hint = 'Quick Settings for Auto Save and Saving Query'
-    Top = 136
-    Width = 108
-    ItemHeight = 15
-    Style = csDropDownList
-    TabOrder = 2
-    OnChange = ComboBoxBehaviorChange
-  end
-  object LabelBehavior: TLabel
-    Left = 128
-    Height = 15
-    Top = 140
-    Width = 56
-    Caption = '&Behaviour:'
-    FocusControl = ComboBoxBehavior
-    ParentColor = False
-  end
-  object Bevel4: TBevel
-    Left = 4
-    Height = 3
-    Top = 291
-    Width = 506
-    Align = alBottom
-    BorderSpacing.Left = 4
-    BorderSpacing.Right = 4
-    Shape = bsBottomLine
-  end
-  object PanelControls: TPanel
-    Left = 0
-    Height = 44
-    Top = 294
-    Width = 514
-    Align = alBottom
-    BevelOuter = bvNone
-    ClientHeight = 44
-    ClientWidth = 514
-    TabOrder = 6
-    object ButtonOk: TBitBtn
-      Left = 298
-      Height = 28
-      Top = 8
-      Width = 100
-      Align = alRight
-      Anchors = [akRight, akBottom]
-      BorderSpacing.Around = 8
-      Caption = 'Ok'
-      ModalResult = 1
-      Images = ImagesModule.ImageList20x20
-      ImageIndex = 2
-      TabOrder = 0
-    end
-    object ButtonCancel: TBitBtn
-      Left = 406
-      Height = 28
-      Top = 8
-      Width = 100
-      Align = alRight
-      Anchors = [akRight, akBottom]
-      BorderSpacing.Around = 8
-      Cancel = True
-      Caption = 'Cancel'
-      GlyphShowMode = gsmAlways
-      ModalResult = 2
-      Images = ImagesModule.ImageList20x20
-      ImageIndex = 3
-      TabOrder = 1
-    end
-  end
-  object Bevel2: TBevel
-    Left = 128
-    Height = 8
-    Top = 232
-    Width = 184
-    Shape = bsTopLine
-  end
-  object CheckBoxRelPathes: TCheckBox
-    Left = 128
-    Height = 19
-    Hint = 'Pathes will be saved relative to the project file'
-    Top = 248
-    Width = 121
-    Caption = 'Save relative Pathes'
-    TabOrder = 5
-  end
-  object LabelProcessing: TLabel
-    Left = 0
-    Height = 18
-    Top = 16
-    Width = 108
-    Alignment = taCenter
-    AutoSize = False
-    Caption = 'Processing'
-    Font.Color = clHighlight
-    Font.Height = -13
-    Font.Style = [fsBold]
-    ParentFont = False
-  end
-  object LabelSaving: TLabel
-    Left = 0
-    Height = 18
-    Top = 128
-    Width = 108
-    Alignment = taCenter
-    AutoSize = False
-    Caption = 'Saving'
-    Font.Color = clHighlight
-    Font.Height = -13
-    Font.Style = [fsBold]
-    ParentFont = False
-  end
   object ImageChucky: TImage
-    Left = 56
+    Left = 312
     Height = 168
-    Top = 144
+    Top = 172
     Width = 176
     AutoSize = True
     Picture.Data = {
@@ -573,23 +370,210 @@ object SettingsDialog: TSettingsDialog
       A273459471ACA5EC101C3207D7BFF5FBFF1F9C57274643014D9A000000004945
       4E44AE426082
     }
+    Transparent = True
     Visible = False
   end
-  object BGRAGraphicControl1: TBGRAGraphicControl
-    Left = 344
-    Height = 194
-    Top = 144
-    Width = 160
-    Color = clWhite
-    ColorOpacity = 128
-    Alignment = taCenter
-    Caption = 'BGRAGraphicControl1'
+  object CheckBoxStopOnError: TCheckBox
+    Left = 128
+    Height = 19
+    Hint = 'When processing the images, if to stop on the first error.'
+    Top = 53
+    Width = 87
+    Caption = '&Stop on Error'
+    Checked = True
+    State = cbChecked
+    TabOrder = 1
   end
-  object TimerChucky: TTimer
-    Enabled = False
-    Interval = 50
-    OnTimer = TimerChuckyTimer
-    Left = 48
-    Top = 240
+  object Label8: TLabel
+    Left = 128
+    Height = 15
+    Top = 27
+    Width = 44
+    Caption = '&Threads:'
+    FocusControl = ComboBoxThreadsUsed
+    ParentColor = False
+  end
+  object ComboBoxThreadsUsed: TComboBox
+    Left = 208
+    Height = 23
+    Hint = 'ImageResize uses thread pooling to benefit'#13#10'the full computers power.'#13#10#13#10'The number of threads should be limited'#13#10'to the available number of cores.'
+    Top = 24
+    Width = 104
+    ItemHeight = 15
+    ItemIndex = 0
+    Items.Strings = (
+      'Single'
+      'Maximum'
+    )
+    TabOrder = 0
+    Text = 'Single'
+  end
+  object LabelCores: TLabel
+    Left = 320
+    Height = 15
+    Top = 27
+    Width = 30
+    Caption = 'Cores'
+    ParentColor = False
+  end
+  object Image1: TImage
+    Left = 37
+    Height = 32
+    Top = 50
+    Width = 32
+    AutoSize = True
+    Center = True
+    ImageIndex = 17
+    Images = ImagesModule.ImageList32x32
+  end
+  object Bevel1: TBevel
+    Left = 4
+    Height = 8
+    Top = 112
+    Width = 517
+    Shape = bsTopLine
+  end
+  object Image2: TImage
+    Left = 37
+    Height = 32
+    Top = 163
+    Width = 32
+    AutoSize = True
+    Center = True
+    ImageIndex = 4
+    Images = ImagesModule.ImageList32x32
+  end
+  object CheckBoxAutoSave: TCheckBox
+    Left = 128
+    Height = 19
+    Hint = 'On closing save current settings to a hidden file,'#13#10'so they are available on next start.'
+    Top = 200
+    Width = 71
+    Caption = '&Auto Save'
+    TabOrder = 4
+    OnClick = CheckBoxAutoSaveClick
+  end
+  object CheckBoxWarnDirty: TCheckBox
+    Left = 128
+    Height = 19
+    Hint = 'Makes sure that unsaved changes will not be lost, when loading a new project.'
+    Top = 172
+    Width = 88
+    Caption = 'Saving &Query'
+    TabOrder = 3
+    OnClick = CheckBoxAutoSaveClick
+  end
+  object ComboBoxBehavior: TComboBox
+    Left = 208
+    Height = 23
+    Hint = 'Quick Settings for Auto Save and Saving Query'
+    Top = 136
+    Width = 108
+    ItemHeight = 15
+    Style = csDropDownList
+    TabOrder = 2
+    OnChange = ComboBoxBehaviorChange
+  end
+  object LabelBehavior: TLabel
+    Left = 128
+    Height = 15
+    Top = 140
+    Width = 56
+    Caption = '&Behaviour:'
+    FocusControl = ComboBoxBehavior
+    ParentColor = False
+  end
+  object Bevel4: TBevel
+    Left = 4
+    Height = 3
+    Top = 291
+    Width = 506
+    Align = alBottom
+    BorderSpacing.Left = 4
+    BorderSpacing.Right = 4
+    Shape = bsBottomLine
+  end
+  object PanelControls: TPanel
+    Left = 0
+    Height = 44
+    Top = 294
+    Width = 514
+    Align = alBottom
+    BevelOuter = bvNone
+    ClientHeight = 44
+    ClientWidth = 514
+    TabOrder = 6
+    object ButtonOk: TBitBtn
+      Left = 298
+      Height = 28
+      Top = 8
+      Width = 100
+      Align = alRight
+      Anchors = [akRight, akBottom]
+      BorderSpacing.Around = 8
+      Caption = 'Ok'
+      ModalResult = 1
+      Images = ImagesModule.ImageList20x20
+      ImageIndex = 2
+      TabOrder = 0
+    end
+    object ButtonCancel: TBitBtn
+      Left = 406
+      Height = 28
+      Top = 8
+      Width = 100
+      Align = alRight
+      Anchors = [akRight, akBottom]
+      BorderSpacing.Around = 8
+      Cancel = True
+      Caption = 'Cancel'
+      GlyphShowMode = gsmAlways
+      ModalResult = 2
+      Images = ImagesModule.ImageList20x20
+      ImageIndex = 3
+      TabOrder = 1
+    end
+  end
+  object Bevel2: TBevel
+    Left = 128
+    Height = 8
+    Top = 232
+    Width = 184
+    Shape = bsTopLine
+  end
+  object CheckBoxRelPathes: TCheckBox
+    Left = 128
+    Height = 19
+    Hint = 'Pathes will be saved relative to the project file'
+    Top = 248
+    Width = 121
+    Caption = 'Save relative Pathes'
+    TabOrder = 5
+  end
+  object LabelProcessing: TLabel
+    Left = 0
+    Height = 18
+    Top = 16
+    Width = 108
+    Alignment = taCenter
+    AutoSize = False
+    Caption = 'Processing'
+    Font.Color = clHighlight
+    Font.Height = -13
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object LabelSaving: TLabel
+    Left = 0
+    Height = 18
+    Top = 128
+    Width = 108
+    Alignment = taCenter
+    AutoSize = False
+    Caption = 'Saving'
+    Font.Color = clHighlight
+    Font.Height = -13
+    Font.Style = [fsBold]
+    ParentFont = False
   end
 end

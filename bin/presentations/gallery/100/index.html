@@ -8,6 +8,7 @@
         <style>
         </style>
         <script>
+            currentImg
             window.onload = (event) => {
                 for (const child of document.getElementById("picklist").children) {
                     child.addEventListener("click", (event) => {
@@ -16,6 +17,10 @@
                     });
                 }
                 document.getElementById("display").setAttribute('src', document.getElementById("picklist").children[0].getAttribute('src'));
+                // let display = document.getElementById("display");
+                // display.addEventListener('click', (event) =>{
+                //     let next = 
+                // });
             }
         </script>
     </head>

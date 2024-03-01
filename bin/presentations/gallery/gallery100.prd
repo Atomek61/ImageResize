@@ -18,6 +18,11 @@ Preview=100\preview.jpg
 Templates=100\index.html,100\gallery.css
 Fragment.IMAGES=<img src="%IMGFILENAME%"/>%CRLF%
 
+[Settings.Thumbnails]
+Class=String
+Presentation=Filename
+Caption=Thumbnail .imgtags
+
 [Settings.Ratio]
 Class=Picktext
 Presentation=Pick
