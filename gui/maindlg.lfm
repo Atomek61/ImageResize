@@ -1,7 +1,7 @@
 object MainDialog: TMainDialog
-  Left = 329
+  Left = 368
   Height = 680
-  Top = 190
+  Top = 118
   Width = 900
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'ImageResize'
@@ -76,6 +76,11 @@ object MainDialog: TMainDialog
           Grouped = True
           Style = tbsCheck
         end
+        object ToolButton1: TToolButton
+          Left = 162
+          Top = 0
+          Caption = 'ToolButton1'
+        end
       end
       object PageControlSource: TPageControl
         Left = 4
@@ -83,12 +88,12 @@ object MainDialog: TMainDialog
         Top = 70
         Width = 384
         TabStop = False
-        ActivePage = TabSheetSrcFilenames
+        ActivePage = TabSheetSrcFolder
         Align = alClient
         BorderSpacing.Around = 4
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 0
+        TabIndex = 1
         TabOrder = 1
         object TabSheetSrcFilenames: TTabSheet
           ClientHeight = 286
@@ -256,14 +261,14 @@ object MainDialog: TMainDialog
         Top = 4
         Width = 393
         TabStop = False
-        ActivePage = TabSheetTagging
+        ActivePage = TabSheetSizes
         Align = alClient
         BorderSpacing.Around = 4
         ImagesWidth = 32
         MultiLine = True
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 4
+        TabIndex = 0
         TabOrder = 1
         Options = [nboMultiLine]
         object TabSheetSizes: TTabSheet
@@ -273,15 +278,15 @@ object MainDialog: TMainDialog
           ClientWidth = 385
           ImageIndex = 7
           object Label3: TLabel
-            AnchorSideLeft.Control = EditSizes
-            AnchorSideBottom.Control = EditSizes
-            Left = 9
+            AnchorSideTop.Control = EditSizes
+            AnchorSideRight.Control = EditSizes
+            Left = 6
             Height = 15
-            Top = 9
-            Width = 28
-            Anchors = [akLeft, akBottom]
-            BorderSpacing.Left = 3
-            BorderSpacing.Bottom = 3
+            Top = 8
+            Width = 114
+            Anchors = [akTop, akRight]
+            AutoSize = False
+            BorderSpacing.Top = 3
             Caption = 'Sizes:'
             FocusControl = EditSizes
             ParentColor = False
@@ -291,11 +296,11 @@ object MainDialog: TMainDialog
             AnchorSideLeft.Side = asrBottom
             AnchorSideTop.Control = EditSizes
             AnchorSideTop.Side = asrCenter
-            Left = 354
+            Left = 349
             Height = 25
             Hint = 'Clear all sizes or the selected one'
-            Top = 26
-            Width = 29
+            Top = 4
+            Width = 34
             Anchors = [akTop, akLeft, akRight]
             BorderSpacing.Left = 1
             Images = ImagesModule.ImageList20x20
@@ -305,11 +310,11 @@ object MainDialog: TMainDialog
             TabOrder = 1
           end
           object EditSizes: TEdit
-            Left = 6
+            Left = 120
             Height = 23
             Hint = 'Enter a comma-separated list of image sizes.'#13#10'The size refers to the longer side of an image.'#13#10'You can build a list by clicking the suggested'#13#10'sizes from the button field.'
-            Top = 27
-            Width = 347
+            Top = 5
+            Width = 228
             Anchors = [akTop, akLeft, akRight]
             TabOrder = 0
             OnChange = EditSizesChange
@@ -318,8 +323,8 @@ object MainDialog: TMainDialog
           end
           object ToolBarSizeButtons: TToolBar
             Left = 6
-            Height = 280
-            Top = 64
+            Height = 273
+            Top = 71
             Width = 375
             Align = alNone
             ButtonHeight = 20
@@ -329,6 +334,49 @@ object MainDialog: TMainDialog
             Images = ImagesModule.ImageList32x32
             ParentColor = False
             ShowCaptions = True
+            TabOrder = 4
+          end
+          object ButtonClearSizeNames: TBitBtn
+            AnchorSideLeft.Control = ComboBoxSizeNames
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = ComboBoxSizeNames
+            AnchorSideTop.Side = asrCenter
+            Left = 349
+            Height = 25
+            Hint = 'Clear all size names or the selected one'
+            Top = 38
+            Width = 34
+            Anchors = [akTop, akLeft, akRight]
+            BorderSpacing.Left = 1
+            Images = ImagesModule.ImageList20x20
+            ImageIndex = 8
+            OnClick = ButtonClearSizeNamesClick
+            Spacing = 0
+            TabOrder = 3
+          end
+          object Label8: TLabel
+            AnchorSideTop.Control = ComboBoxSizeNames
+            AnchorSideRight.Control = ComboBoxSizeNames
+            Left = 6
+            Height = 15
+            Top = 42
+            Width = 114
+            Anchors = [akTop, akRight]
+            AutoSize = False
+            BorderSpacing.Top = 3
+            Caption = 'Size Names:'
+            FocusControl = ComboBoxSizeNames
+            ParentColor = False
+          end
+          object ComboBoxSizeNames: TComboBox
+            Left = 120
+            Height = 23
+            Top = 39
+            Width = 228
+            ItemHeight = 15
+            Items.Strings = (
+              '_THUMBNAIL,'
+            )
             TabOrder = 2
           end
         end
@@ -383,27 +431,6 @@ object MainDialog: TMainDialog
               TabOrder = 2
               OnChange = ProjectChanged
             end
-            object LabelHintPlaceholderTitle: TLabel
-              Left = 24
-              Height = 15
-              Top = 120
-              Width = 121
-              Caption = 'Available Placeholders:'
-              Font.Color = clGrayText
-              ParentColor = False
-              ParentFont = False
-            end
-            object LabelHintPlaceholder2: TLabel
-              Left = 160
-              Height = 50
-              Top = 144
-              Width = 88
-              AutoSize = False
-              Caption = '%SIZE%'#13#10'%FILENAME%'#13#10'%FILEEXT%'
-              Font.Color = clGrayText
-              ParentColor = False
-              ParentFont = False
-            end
             object RadioButtonRenAdvanced: TRadioButton
               Left = 8
               Height = 19
@@ -416,30 +443,32 @@ object MainDialog: TMainDialog
               OnChange = ProjectChanged
             end
             object EditRenTemplate: TComboBox
-              Left = 24
+              Left = 27
               Height = 23
               Hint = 'Enter a filename template containing placeholders for special values.'#13#10'This template will be expanded for each resampled image. Insert the'#13#10'%SIZE% placeholder to enable multiple sizes in a common folder.'
-              Top = 88
+              Top = 113
               Width = 272
               ItemHeight = 15
               Items.Strings = (
-                'img%INDEX:1,3%.%FILEEXT%'
-                'img%INDEX:1,3%_%SIZE%.%FILEEXT%'
+                'img%INDEX:1,auto%.%FILEEXT%'
+                'img%INDEX:1,auto%_%SIZE%.%FILEEXT%'
+                'img%INDEX:1,auto%%SIZENAME%.%FILEEXT%'
               )
               TabOrder = 3
               OnChange = ProjectChanged
               OnEnter = EditRenTemplateEnter
             end
-            object LabelHintPlaceholder1: TLabel
-              Left = 25
-              Height = 50
-              Top = 144
-              Width = 120
-              AutoSize = False
-              Caption = '%SIZE:n,d%'#13#10'  n - start number'#13#10'  d - number of digits'
-              Font.Color = clGrayText
-              ParentColor = False
-              ParentFont = False
+            object LabelRenTemplate: TLabel
+              AnchorSideLeft.Control = EditRenTemplate
+              AnchorSideBottom.Control = EditRenTemplate
+              Left = 30
+              Height = 15
+              Top = 96
+              Width = 51
+              Anchors = [akLeft, akBottom]
+              BorderSpacing.Left = 3
+              BorderSpacing.Bottom = 2
+              Caption = 'Template:'
             end
           end
           object GroupBoxShuffle: TGroupBox
@@ -1355,7 +1384,7 @@ object MainDialog: TMainDialog
       object EditTargetFolder: TEdit
         Left = 8
         Height = 23
-        Hint = 'Enter a destination for the resampled images.'#13#10'If multiple sizes are entered, insert a placeholder %SIZE%'#13#10'into the path where the program shall insert the current size .'
+        Hint = 'Enter a destination for the resampled images.'#13#10'If multiple sizes are entered, insert placeholder %SIZE%'#13#10'or %SIZENAME% into the path where the program'#13#10'shall insert the current size .'
         Top = 7
         Width = 410
         Anchors = [akTop, akLeft, akRight]

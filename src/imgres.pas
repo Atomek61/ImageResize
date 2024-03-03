@@ -84,7 +84,7 @@ const
     SCptPNGCompressionNone, SCptPNGCompressionFastest, SCptPNGCompressionMax);
 
 const
-  IMGRESVER = '4.0';
+  IMGRESVER = '4.1';
   IMGRESCPR = 'imgres '+IMGRESVER+' © 2024 Jan Schirrmacher, www.atomek.de';
 
   TAGSREPORTFILETITLE       = '.tagsreport';
@@ -102,6 +102,7 @@ const
   DEFAULT_RENENABLED        = false;
   DEFAULT_RENFMTSTR         = 'img%2:s.%1:s';
   DEFAULT_RENFILETEMPLATE   = 'img%INDEX:1,3%.%FILEEXT%';
+  DEFAULT_SIZENAMES         = '_THUMBNAIL,';
   DEFAULT_RENINDEXSTART     = 1;
   DEFAULT_RENINDEXDIGITS    = 3;
   DEFAULT_SHUFFLE           = false;
@@ -181,7 +182,8 @@ type
     FSourceFilenames  :TStrings;
     FTargetFolder     :string;
     FSizes            :TSizes;
-    FJPEGQuality       :integer;
+    FSizeNames        :TStringArray;
+    FJPEGQuality      :integer;
     FPNGCompression   :integer;
     FResampleMode     :TResampleMode;
     FResampleFilter   :TResampleFilter;
@@ -195,7 +197,7 @@ type
     FTagKeys          :TStringArray; // 'Copyright',
     FCopyright        :string;
     FTagsReports      :TTagsReports;
-    FDryRun         :boolean;
+    FDryRun           :boolean;
   private
     FCancel :boolean;
     FOnPrint :TPrintEvent;
@@ -247,6 +249,7 @@ type
     property TargetFolder :string read FTargetFolder write SetTargetFolder;
     property TargetFiletemplate :string read GetTargetFiletemplate write SetTargetFiletemplate;
     property Sizes :string read GetSizes write SetSizes;
+    property SizeNames :TStringArray read FSizeNames write FSizeNames;
     property JPEGQuality :integer read FJPEGQuality write SetJPEGQuality;
     property PNGCompression :integer read FPNGCompression write SetPNGCompression;
     property Interpolation :TInterpolation read GetInterpolation write SetInterpolation;
@@ -313,7 +316,7 @@ resourcestring
 implementation
 
 uses
-  Math, ZStream, FPWriteJpeg, FPWritePng, FPImage, utils,
+  Math, ZStream, FPWriteJpeg, FPWritePng, FPImage, Utils,
   generics.collections, EXIFUtils;
 
 const
@@ -390,26 +393,6 @@ begin
   result := false;
 end;
 
-function ExtractExt(const Filename :string) :string;
-begin
-  result := ExtractFileExt(Filename);
-  if (Length(result)>0) then
-    result := Copy(result, 2, Length(result)-1);
-end;
-
-function IsJPEG(const Filename :string) :boolean;
-var
-  Ext :string;
-begin
-  Ext := UpperCase(ExtractFileExt(Filename));
-  result := (Ext = '.JPG') or (Ext = '.JPEG');
-end;
-
-function IsPNG(const Filename :string) :boolean;
-begin
-  result := UpperCase(ExtractFileExt(Filename)) = '.PNG'
-end;
-
 { TProcessor.TProcessorResources }
 
 constructor TProcessor.TProcessorResources.Create;
@@ -447,6 +430,7 @@ var
   MrkRect :TRect;
   IndexStr :string; // Index to display
   SizeStr :string;
+  SizeName :string;
   i, n, m :integer;
   ExifTags :TTags;
   ExifTagKeys :TStringArray;
@@ -584,11 +568,14 @@ begin
         // Saving...
         if Processor.FRen.Enabled then begin
           // Specialize the prepared template
+
           // %FILENAME%
           TargetFiletitle := ExtractFilename(SourceFilename);
           if Length(TargetFileExt)>0 then
             TargetFiletitle := Copy(TargetFiletitle, 1, Length(TargetFiletitle)-Length(TargetFileExt)-1);
+
           // %FILEEXT% - has been extracted previously
+
           // %INDEX%
           if Processor.FRen.IndexDigits = 0 then
             IndexStr := IntToStr(SourceFileIndex)
@@ -599,10 +586,20 @@ begin
               n := Processor.FRen.IndexDigits;
             IndexStr := Format('%*.*d', [n, n, SourceFileIndex+Processor.FRen.IndexStart]);
           end;
+
           // %SIZE%
           SizeStr := IntToStr(Size);
+
+          // %SIZENAME%
+          if i<Processor.SizeNames.Count then
+            SizeName := Processor.SizeNames[i]
+          else
+            SizeName := SizeStr;
+
+          // Create new filename
           TargetFiletitleExt := Format(Processor.FRen.FmtStr,
-            [TargetFiletitle, TargetFileExt, IndexStr, SizeStr, INTERPOLATION_NAMES[Processor.Interpolation]]);
+            [TargetFiletitle, TargetFileExt, IndexStr, SizeStr, INTERPOLATION_NAMES[Processor.Interpolation], SizeName]);
+
         end else
           TargetFiletitleExt := ExtractFilename(SourceFilename);
 
@@ -760,6 +757,7 @@ var
   Item :string;
   TagsFilename :string;
   ImgTagsFilename :string;
+  SizeName :string;
 begin
   // Check main parameters
   if FSourceFilenames.Count=0 then
@@ -818,22 +816,25 @@ begin
     // Prepare the destination file renaming feature
     m := Length(FSizes);
 
-    // Check, if multiple sizes, then either %SIZE% must be in folder or in renamed filename
-    ProcRes.IsTargetFileRenamingStrategy := FRen.Enabled and (Pos('%3:s', FRen.FmtStr)>0);
-    if Length(FSizes)>1 then begin
-      ProcRes.IsMultipleTargetFolderStrategy := Pos('%SIZE%', FTargetFolder)>0;
-      if not ProcRes.IsMultipleTargetFolderStrategy and not ProcRes.IsTargetFileRenamingStrategy then
+    // Check, if multiple sizes, then either %SIZE% or %SIZENAME% must be in folder or in renamed filename
+    ProcRes.IsTargetFileRenamingStrategy := FRen.Enabled and (Pos('%3:s', FRen.FmtStr)+Pos('%5:s', FRen.FmtStr)>0);
+    ProcRes.IsMultipleTargetFolderStrategy := Pos('%SIZE%', FTargetFolder)+Pos('%SIZENAME%', FTargetFolder)>0;
+    if (Length(FSizes)>1) and not ProcRes.IsMultipleTargetFolderStrategy and not ProcRes.IsTargetFileRenamingStrategy then
         raise Exception.Create(SErrMultipleSizes);
-    end else begin
-      ProcRes.IsMultipleTargetFolderStrategy := Pos('%SIZE%', FTargetFolder)>0;
-    end;
 
     // Create Destination Folders
     SetLength(ProcRes.TargetFolders, m);
-    if ProcRes.IsMultipleTargetFolderStrategy then
-      for i:=0 to m-1 do
-        ProcRes.TargetFolders[i] := IncludeTrailingPathDelimiter(ExpandFilename(ReplaceStr(FTargetFolder, '%SIZE%', IntToStr(FSizes[i]))))
-    else
+    if ProcRes.IsMultipleTargetFolderStrategy then begin
+      if Pos('%SIZENAME%', FTargetFolder)>0 then begin
+        for i:=0 to m-1 do begin
+          if i<FSizeNames.Count then SizeName := FSizeNames[i] else SizeName := IntToStr(FSizes[i]);
+          ProcRes.TargetFolders[i] := IncludeTrailingPathDelimiter(ExpandFilename(ReplaceStr(FTargetFolder, '%SIZENAME%', SizeName)));
+        end;
+      end else begin
+        for i:=0 to m-1 do
+          ProcRes.TargetFolders[i] := IncludeTrailingPathDelimiter(ExpandFilename(ReplaceStr(FTargetFolder, '%SIZE%', IntToStr(FSizes[i]))))
+      end;
+    end else
       for i:=0 to m-1 do
         ProcRes.TargetFolders[i] := IncludeTrailingPathDelimiter(ExpandFilename(FTargetFolder));
     for i:=0 to m-1 do begin
@@ -1022,8 +1023,8 @@ begin
   Params.IndexStart := 1;
   ParamCount := 0;
   if Length(Str)>0 then begin
-    // %FILENAME%, %FILEEXT%, %INDEX:N,W%, %SIZE%, %INTERPOLATION%
-    // %0:s        %1:s       %2:s         %3:s    %4:s
+    // %FILENAME%, %FILEEXT%, %INDEX:N,W%, %SIZE%, %INTERPOLATION%, %SIZENAME%
+    // %0:s        %1:s       %2:s         %3:s    %4:s             %5:s
     // Default: img%2:s.%1:s
     Params.FmtStr := Str;
     if IsPlaceholder('FILEEXT', i) then
@@ -1052,6 +1053,8 @@ begin
       Params.FmtStr := ReplaceStr(Params.FmtStr, '%SIZE%', '%3:s');
     if IsPlaceholder('INTERPOLATION', i) then
       Params.FmtStr := ReplaceStr(Params.FmtStr, '%INTERPOLATION%', '%4:s');
+    if IsPlaceholder('SIZENAME', i) then
+      Params.FmtStr := ReplaceStr(Params.FmtStr, '%SIZENAME%', '%5:s');
     if ParamCount<Length(Placeholders) then
       Exit(Err(SErrInvalidPlaceholder));
     Params.Enabled := true;
@@ -1063,11 +1066,12 @@ class function TProcessor.RenameParamsToStr(const Params: TRenameParams): string
 begin
   if Params.Enabled then begin
     result := Format(Params.FmtStr, [
-      '%FILENAME%', // 0
-      '%FILEEXT%',  // 1
+      '%FILENAME%',       // 0
+      '%FILEEXT%',        // 1
       '%'+Format('INDEX:%d,%d', [Params.IndexStart, Params.IndexDigits])+'%', // 2
-      '%SIZE%',     // 3
-      '%INTERPOLATION%'    // 4
+      '%SIZE%',           // 3
+      '%INTERPOLATION%',  // 4
+      '%SIZENAME%'        // 5
     ]);
   end else
     result := '';

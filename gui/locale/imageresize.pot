@@ -452,7 +452,7 @@ msgid "Cancelled at %.0f%%"
 msgstr ""
 
 #: maindlg.serrenterplaceholder
-msgid "Enter placeholder %SIZE% to either the target folder or the file template"
+msgid "Enter placeholder %SIZE% or %SIZENAME% to either the target folder or the file template"
 msgstr ""
 
 #: maindlg.serrinvalidjpgquality
@@ -974,7 +974,13 @@ msgstr ""
 msgid "Select a folder with images"
 msgstr ""
 
+#: tmaindialog.buttonclearsizenames.hint
+msgctxt "tmaindialog.buttonclearsizenames.hint"
+msgid "Clear all size names or the selected one"
+msgstr ""
+
 #: tmaindialog.buttonclearsizes.hint
+msgctxt "tmaindialog.buttonclearsizes.hint"
 msgid "Clear all sizes or the selected one"
 msgstr ""
 
@@ -1194,8 +1200,9 @@ msgstr ""
 #: tmaindialog.edittargetfolder.hint
 msgid ""
 "Enter a destination for the resampled images.\n"
-"If multiple sizes are entered, insert a placeholder %SIZE%\n"
-"into the path where the program shall insert the current size ."
+"If multiple sizes are entered, insert placeholder %SIZE%\n"
+"or %SIZENAME% into the path where the program\n"
+"shall insert the current size ."
 msgstr ""
 
 #: tmaindialog.groupboxinterpolationquality.caption
@@ -1318,6 +1325,7 @@ msgid "Algorithm:"
 msgstr ""
 
 #: tmaindialog.label3.caption
+msgctxt "tmaindialog.label3.caption"
 msgid "Sizes:"
 msgstr ""
 
@@ -1333,27 +1341,17 @@ msgstr ""
 msgid "Compression:"
 msgstr ""
 
+#: tmaindialog.label8.caption
+msgctxt "tmaindialog.label8.caption"
+msgid "Size Names:"
+msgstr ""
+
 #: tmaindialog.label9.caption
 msgid "Horizontal:"
 msgstr ""
 
-#: tmaindialog.labelhintplaceholder1.caption
-msgid ""
-"%SIZE:n,d%\n"
-"  n - start number\n"
-"  d - number of digits"
-msgstr ""
-
-#: tmaindialog.labelhintplaceholder2.caption
-msgctxt "tmaindialog.labelhintplaceholder2.caption"
-msgid ""
-"%SIZE%\n"
-"%FILENAME%\n"
-"%FILEEXT%"
-msgstr ""
-
-#: tmaindialog.labelhintplaceholdertitle.caption
-msgid "Available Placeholders:"
+#: tmaindialog.labelrentemplate.caption
+msgid "Template:"
 msgstr ""
 
 #: tmaindialog.labelshuffleseed.caption
@@ -1398,6 +1396,10 @@ msgstr ""
 
 #: tmaindialog.saveasdialogtagsreport.title
 msgid "Save Tags Report as"
+msgstr ""
+
+#: tmaindialog.toolbutton1.caption
+msgid "ToolButton1"
 msgstr ""
 
 #: tmaindialog.toolbuttonabout.hint
@@ -1617,7 +1619,7 @@ msgid "Closes the dialog and saves the settings"
 msgstr ""
 
 #: tpresentationdialog.buttontargetfromdoc.hint
-msgid "Copies the current target folder from the main dialog."
+msgid "Tries to uses the current target folder from the main dialog."
 msgstr ""
 
 #: tpresentationdialog.buttonwebshow.caption
@@ -1637,14 +1639,9 @@ msgstr ""
 msgid "The .imgtags file has important infomation how to create the presentation."
 msgstr ""
 
-#: tpresentationdialog.labellongdescription.caption
-msgctxt "tpresentationdialog.labellongdescription.caption"
-msgid "<LongDescription>"
-msgstr ""
-
 #: tpresentationdialog.labelmanagers.caption
 msgctxt "tpresentationdialog.labelmanagers.caption"
-msgid "&Available:"
+msgid "L&ayout:"
 msgstr ""
 
 #: tpresentationdialog.labeltargetfolder.caption
@@ -1759,6 +1756,10 @@ msgstr ""
 
 #: tsettingsdialog.labelsaving.caption
 msgid "Saving"
+msgstr ""
+
+#: ttaggingdialog.caption
+msgid "TaggingDialog"
 msgstr ""
 
 #: webutils.serrinvalidhtmlcolorfmt

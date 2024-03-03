@@ -8,15 +8,18 @@
         <style>
         </style>
         <script>
-            currentImg
+            function thumbnailSrcToFullSrc(name) {
+
+            }
+
             window.onload = (event) => {
                 for (const child of document.getElementById("picklist").children) {
                     child.addEventListener("click", (event) => {
                         let img = document.getElementById("display");
-                        img.setAttribute('src', event.target.getAttribute('src'))
+                        img.setAttribute('src', event.target.getAttribute('data-src'))
                     });
                 }
-                document.getElementById("display").setAttribute('src', document.getElementById("picklist").children[0].getAttribute('src'));
+                document.getElementById("display").setAttribute('src', document.getElementById("picklist").children[0].getAttribute('data-src'));
                 // let display = document.getElementById("display");
                 // display.addEventListener('click', (event) =>{
                 //     let next = 
@@ -26,6 +29,7 @@
     </head>
     <body>
         <img id="display"/>
-        <div id="picklist">%IMAGES%</div>
+        <div id="picklist">
+%THUMBNAILS%</div>
     </body>
 </html>

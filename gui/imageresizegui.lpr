@@ -10,12 +10,13 @@ uses
   athreads,
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, lazcontrols, maindlg, settingsdlg, mrkeditdlg, presentationdlg,
-  aboutdlg, imgres, updateutils, datetimeutils, threading.dispatcher, EXIFUtils,
-  tags, settings, animator, logging, imagesmod, presentations, galleryprocessor,
-  appsettings, presentationmanagerfrm, colorfrm, tagids, webutils,
-  webcolors, webcoloreditor, settingseditors, language, inttypes, stringutils,
-  imgutils, colorsetting, controlshot;
+  Forms, FrameViewer09, lazcontrols, maindlg, settingsdlg, mrkeditdlg,
+  presentationdlg, aboutdlg, imgres, updateutils, datetimeutils,
+  threading.dispatcher, EXIFUtils, tags, settings, animator, logging, imagesmod,
+  presentations, galleryprocessor, appsettings, presentationmanagerfrm,
+  colorfrm, tagids, webutils, webcolors, webcoloreditor, settingseditors,
+  language, inttypes, stringutils, imgutils, colorsetting, controlshot,
+  taggingdlg;
 
 {$R *.res}
 
@@ -28,6 +29,7 @@ begin
   Application.CreateForm(TSettingsDialog, SettingsDialog);
   Application.CreateForm(TPresentationDialog, PresentationDialog);
   Application.CreateForm(TImagesModule, ImagesModule);
+  Application.CreateForm(TTaggingDialog, TaggingDialog);
   Application.Run;
-  end.
+end.
 

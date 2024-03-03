@@ -16,25 +16,25 @@ type
   TProcessor = class
   private
     FDelimiters :TDelimiters;
-    FImgTagsFilename :string;          // Folder with images and meta info in .images file
+    FImgTagsFilename :string;       // Folder with images and meta info in .images file
     FTemplateFiles :TStringArray;   // Template files - .html, .js, .css or whatever
     FCopyFiles :TStringArray;       // Template files - .html, .js, .css or whatever
     FFilesTags :TFilesTags;         // Table with tags for each image file, usually from .images file in folder
     FListFragments :TStringDictionary;  // List fragments - each List, built by the FListSolver uses one
-    FSysVars :TSolver;           // Global Vars like CR, LF
+    FSysVars :TSolver;              // Global Vars like CR, LF
     FDocVars :TSolver;              // Global Vars like TITLE, DATE, OWNER, IMG-LIST, NAV-LIST
   public type
     TStats = record
-      FilesToCopy :integer;           // Number of files to be copied
-      FilesCopied :integer;           // Number of files copied
-      TemplatesToProcess :integer;    // Num,ber of templates to be processed
-      TemplatesProcessed :integer;    // Number of template files processed
-      Lists :integer;                 // Number of lists to build
-      ItemsPerList :integer;          // Number of items per list (same for all lists)
-      Dependencies :integer;          // Total number of dependencies
-      Solved :integer;                // Number of solved dependencies
-      Replacements :integer;          // Number of total replacements in the templates (without var solving)
-      Elapsed :integer;               // ms
+      FilesToCopy :integer;         // Number of files to be copied
+      FilesCopied :integer;         // Number of files copied
+      TemplatesToProcess :integer;  // Num,ber of templates to be processed
+      TemplatesProcessed :integer;  // Number of template files processed
+      Lists :integer;               // Number of lists to build
+      ItemsPerList :integer;        // Number of items per list (same for all lists)
+      Dependencies :integer;        // Total number of dependencies
+      Solved :integer;              // Number of solved dependencies
+      Replacements :integer;        // Number of total replacements in the templates (without var solving)
+      Elapsed :integer;             // ms
     end;
   public
     constructor Create(const Delimiters :TDelimiters); virtual;
@@ -55,6 +55,9 @@ type
 //  DOTIMAGESFILETITLE = '.imgtags';
 
 implementation
+
+uses
+  Utils;
 
 resourcestring
   SErrImgTagsNotFoundFmt    = 'Tags file ''%s'' not found.';
@@ -159,19 +162,6 @@ var
       result := '';
   end;
 
-  function FileFormat(const Filename :string) :string;
-  var
-    Ext :string;
-  begin
-    Ext := ExtractFileExt(Filename);
-    if SameText(Ext, 'jpg') or SameText(Ext, 'jpeg') then
-      result := 'JPEG'
-    else if SameText(Ext, 'png') then
-      result := 'PNG'
-    else
-      result := UpperCase(Copy(Ext, 2, Length(Ext)-1));
-  end;
-
 begin
   Lists := TStringDictionary.Create;
   ImgVars := TSolver.Create(FDelimiters);
@@ -213,7 +203,7 @@ begin
         ImgVars.Add('IMGCOUNT', IntToStr(FFilesTags.Filenames.Count));
         ImgVars.Add('IMGFILENAME', ExtractFilename(FFilesTags.Filenames[i]));
         ImgVars.Add('IMGFILETITLE', ChangeFileExt(ExtractFilename(FFilesTags.Filenames[i]), ''));
-        ImgVars.Add('IMGFILEEXT', ExtractFileExt(FFilesTags.Filenames[i]));
+        ImgVars.Add('IMGFILEEXT', ExtractExt(FFilesTags.Filenames[i]));
         ImgVars.Add('IMGFILEFORMAT', FileFormat(FFilesTags.Filenames[i]));
         Tags := FFilesTags[FFilesTags.Filenames[i]];
         for Key in FFilesTags.TagKeys do begin

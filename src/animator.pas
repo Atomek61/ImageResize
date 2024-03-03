@@ -34,9 +34,9 @@ type
     FGradientFunction :TGradientFunction;
     FMin :double;
     FMax :double;
-    FValue :double;
     FT0 :TDateTime;
     function GetEnabled: boolean;
+    function GetValue: double;
     procedure OnTimer(Sender :TObject);
     procedure SetDuration(AValue: TTime);
     procedure SetEnabled(AValue: boolean);
@@ -53,7 +53,7 @@ type
     property T0 :TDateTime read FT0;
     property Min :double read FMin write SetMin;
     property Max :double read FMax write SetMax;
-    property Value :double read FValue;
+    property Value :double read GetValue;
     property Resolution :integer read FResolution write SetResolution;
     property Gradient :TGradient read FGradient write SetGradient;
     property Duration :TTime read FDuration write SetDuration;
@@ -115,20 +115,28 @@ begin
   result := Assigned(FTimer);
 end;
 
-procedure TAnimator.OnTimer(Sender: TObject);
+function TAnimator.GetValue: double;
 var
   T1 :TDateTime;
   x :double;
 begin
   T1 := Now;
   x := (T1 - FT0)*SECSPERDAY/FDuration;
-  if x>=1.0 then begin
-    x := 1.0;
+  if x>=1.0 then
+    result := FMax
+  else
+    result := FMin+(FMax-FMin)*FGradientFunction(x)
+end;
+
+procedure TAnimator.OnTimer(Sender: TObject);
+var
+  v :double;
+begin
+  v := Value;
+  if v=FMax then
     FreeAndNil(FTimer);
-  end;
-  FValue := FMin+(FMax-FMin)*FGradientFunction(x);
   if Assigned(FOnAnimate) then
-    FOnAnimate(self, FValue);
+    FOnAnimate(self, v);
 end;
 
 procedure TAnimator.SetDuration(AValue: TTime);

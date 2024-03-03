@@ -8,7 +8,7 @@ Free tool for JPEG and PNG quality scaling.
                       - a path to a folder with semicolon-separated wildcards
   target              The folder where to store the resulting resampled and resized files.
                       If the resulting filenames can conflict and this is not solved by renaming
-                      then the folder must contain the placeholder %SIZE%.
+                      then the folder must contain the placeholder %SIZE% or %SIZENAME%.
                       Non-existend folders are created.
   size                Is a size in pixels or a comma-separated list of sizes, where the size refers to
                       the longer side of the image.
@@ -25,8 +25,11 @@ short long            parameter comment
                                 Default is BestQuality: Mitchell on up- and Spline on down-scaling
    -r -rename         template  Rename files by a template with placeholders.
                                 SIZE% and %INDEX[:n[,d]]% with n=startindex, d=number of digits/auto
+   -n -sizenames      names     If using the %SIZENAME% placeholder in file renaming template, or in
+                                in the target folders name, then each size must have a corresponding
+                                list of comma-separated names
    -w -watermark      file.png  A PNG watermark file and optional size, position and opacity, see example
-   -s -shuffle        0..n      Mixes the image list, makes sense together with -r
+   -s -shuffle        0..n      Mixes the image list, makes sense together with -r.
                                 A random seed of 0 (assumed if ommited) means an unpredictable sequence.
                                 A fixed value will always shuffle a list in the same way if the number
                                 of files has not changed.

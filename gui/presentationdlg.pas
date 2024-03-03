@@ -6,9 +6,9 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Buttons, StdCtrls,
-  ExtCtrls, ComCtrls, Presentations, LCLIntf, LCLType, RichMemo,
+  ExtCtrls, ComCtrls, Presentations, LCLIntf, LCLType, RichMemo, HtmlView,
   Logging, Types, GetText, FileUtil, ImgRes,
-  LoggingRichMemo, Settings, AppSettings;
+  LoggingRichMemo, Settings, AppSettings, HtmlLabel;
 
 type
 
@@ -21,18 +21,18 @@ type
     ButtonOk: TBitBtn;
     ButtonWebShow: TBitBtn;
     ButtonCancel: TBitBtn;
+    ComboBoxManagers: TComboBox;
     EditImgTagsFilename: TEdit;
+    LabelLongDescription: THtmlLabel;
     ImagePreview: TImage;
     LabelTargetFolder: TLabel;
     LabelManagers: TLabel;
-    LabelLongDescription: TLabel;
-    ListBoxManagers: TListBox;
     MemoMessages: TRichMemo;
     OpenImgTagsDialog: TOpenDialog;
+    PanelDescription: TPanel;
     PanelMain: TPanel;
     PanelManagerFrame: TPanel;
     PanelPresentation: TPanel;
-    PanelInfo: TPanel;
     PanelControls: TPanel;
     Splitter1: TSplitter;
     procedure ButtonBrowseTargetFolderClick(Sender: TObject);
@@ -40,12 +40,12 @@ type
     procedure ButtonOkClick(Sender: TObject);
     procedure ButtonTargetFromDocClick(Sender: TObject);
     procedure ButtonWebShowClick(Sender: TObject);
+    procedure ComboBoxManagersChange(Sender: TObject);
+    procedure ComboBoxManagersDrawItem(Control: TWinControl; Index: Integer;
+      ARect: TRect; State: TOwnerDrawState);
     procedure EditImgTagsFilenameChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure ListBoxManagersClick(Sender: TObject);
-    procedure ListBoxManagersDrawItem(Control: TWinControl; Index: Integer;
-      ARect: TRect; State: TOwnerDrawState);
   private
     FManagers :TManagers;
     FManagerIndex :integer;
@@ -106,7 +106,7 @@ end;
 
 procedure TPresentationDialog.ButtonTargetFromDocClick(Sender: TObject);
 begin
-  if MainDialog.EditTargetFolder.Text<>'' then
+  if (MainDialog.EditTargetFolder.Text<>'') and (Pos('%', MainDialog.EditTargetFolder.Text)=0) then
     EditImgTagsFilename.Text := IncludeTrailingPathDelimiter(MainDialog.EditTargetFolder.Text) + IMAGEINFOSFILETITLE;
 end;
 
@@ -126,31 +126,19 @@ begin
     Log(SErrShowWebResourceFmt, [DocURL], llWarning);
 end;
 
-procedure TPresentationDialog.EditImgTagsFilenameChange(Sender: TObject);
+procedure TPresentationDialog.ComboBoxManagersChange(Sender: TObject);
 begin
-  MainDialog.Dirty := true;
+  ManagerIndex := ComboBoxManagers.ItemIndex;
 end;
 
-procedure TPresentationDialog.ButtonBrowseTargetFolderClick(Sender: TObject);
-begin
-  if Trim(EditImgTagsFilename.Text)<>'' then
-    OpenImgTagsDialog.InitialDir := ExtractFilePath(EditImgTagsFilename.Text);
-  if OpenImgTagsDialog.Execute then
-    EditImgTagsFilename.Text := OpenImgTagsDialog.Filename;
-end;
-
-procedure TPresentationDialog.ListBoxManagersClick(Sender: TObject);
-begin
-  ManagerIndex := ListBoxManagers.ItemIndex;
-end;
-
-procedure TPresentationDialog.ListBoxManagersDrawItem(Control: TWinControl; Index: Integer; ARect: TRect; State: TOwnerDrawState);
+procedure TPresentationDialog.ComboBoxManagersDrawItem(Control: TWinControl;
+  Index: Integer; ARect: TRect; State: TOwnerDrawState);
 var
   Cnvs :TCanvas;
   ManagerIcon :TGraphic;
   hr, hi:integer;
 begin
-  Cnvs := ListBoxManagers.Canvas;
+  Cnvs := ComboBoxManagers.Canvas;
   Cnvs.Brush.Color := IfThen(odSelected in State, clHighlight, clBtnFace);
   Cnvs.FillRect(ARect);
   ManagerIcon := FManagers[Index].Icon;
@@ -168,6 +156,19 @@ begin
   Cnvs.TextOut(78, ARect.Top+36, FManagers[Index].Description);
 end;
 
+procedure TPresentationDialog.EditImgTagsFilenameChange(Sender: TObject);
+begin
+  MainDialog.Dirty := true;
+end;
+
+procedure TPresentationDialog.ButtonBrowseTargetFolderClick(Sender: TObject);
+begin
+  if Trim(EditImgTagsFilename.Text)<>'' then
+    OpenImgTagsDialog.InitialDir := ExtractFilePath(EditImgTagsFilename.Text);
+  if OpenImgTagsDialog.Execute then
+    EditImgTagsFilename.Text := OpenImgTagsDialog.Filename;
+end;
+
 procedure TPresentationDialog.SetManagerIndex(Index :integer);
 var
   Manager :TCustomManager;
@@ -175,15 +176,15 @@ begin
   if FManagerIndex=Index then Exit;
   if Index<0 then
     Index := -1;
-  ListBoxManagers.ItemIndex := Index;
+ ComboBoxManagers.ItemIndex := Index;
   if Index<>-1 then begin
     Manager := FManagers[Index];
-    LabelLongDescription.Caption := Manager.LongDescription;
+    LabelLongDescription.Body.Text := Manager.LongDescription;
     ImagePreview.Picture.Assign(Manager.Preview);
     Manager.ShowFrame(PanelManagerFrame).Align := alClient;
     ButtonWebShow.Enabled := true;
   end else begin
-    LabelLongDescription.Caption := '';
+    LabelLongDescription.Body.Clear;
     ImagePreview.Picture := nil;
     ButtonWebShow.Enabled := false;
   end;
@@ -256,9 +257,9 @@ begin
   Folder := IncludeTrailingPathDelimiter(ExtractFilePath(Application.Exename)+PRESENTATIONS_FOLDER);
   FManagers.Clear;
   TPresentationManager.Scan(Folder, FManagers);
-  ListBoxManagers.Items.Clear;
+  ComboBoxManagers.Items.Clear;
   for wp in FManagers do
-    ListBoxManagers.Items.Add(wp.Title);
+    ComboBoxManagers.Items.Add(wp.Title);
 end;
 
 end.

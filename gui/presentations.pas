@@ -41,6 +41,7 @@ type
     FImgTagsFilename :string;
     FSettings :TSettings;
     FDelimiters :TDelimiters;
+    FPrdDir :string;
     function GetIcon: TGraphic;
     function GetPreview: TGraphic;
   protected
@@ -141,11 +142,13 @@ const
       result := IniFile.ReadString(PRESENTATION_SECTION, Key, DEFAULTS[MustExist]);
     if MustExist and (result = UNDEFINED) then
       raise Exception.CreateFmt(SErrIniValueNotFoundFmt, [PRESENTATION_SECTION, Key, IniFile.Filename]);
+    if result.StartsWith('@') then
+      result := LoadStringFromFile(FPrdDir+Copy(result, 2, Length(result)-1));
   end;
 
 begin
   inherited Create;
-
+  FPrdDir           := ExtractFilePath(IniFile.Filename);
   FTitle            := IniRead('Title');
   FId               := IniRead('Id', true);
   FDescription      := IniRead('Description');
@@ -308,7 +311,6 @@ var
   SectionKeys :TStringList;
   Key :string;
   VarName, VarValue :string;
-  PrdDir :string;
 
   function MakeAbsoluteList(const Line :string) :TStringArray;
   var
@@ -322,7 +324,6 @@ var
 
 begin
   inherited Create(IniFile);
-  PrdDir := ExtractFilePath(IniFile.Filename);
   FProcessor := GalleryProcessor.TProcessor.Create(Delimiters);
   FProcessor.CopyFiles := MakeAbsoluteList(IniFile.ReadString(PRESENTATION_SECTION, 'Copy', ''));
   FProcessor.TemplateFiles := MakeAbsoluteList(IniFile.ReadString(PRESENTATION_SECTION, 'Templates', ''));
@@ -340,7 +341,7 @@ begin
         VarName := Copy(Key, 10, Length(Key)-9);
         VarValue := IniFile.ReadString(PRESENTATION_SECTION, Key, '');
         if VarValue.StartsWith('@') then
-          VarValue := LoadStringFromFile(PrdDir+Copy(VarValue, 2, Length(VarValue)-1));
+          VarValue := LoadStringFromFile(FPrdDir+Copy(VarValue, 2, Length(VarValue)-1));
         FProcessor.ListFragments.Add(VarName, VarValue);
       end;
   finally

@@ -1,0 +1,17 @@
+object TaggingDialog: TTaggingDialog
+  Left = 791
+  Height = 705
+  Top = 487
+  Width = 683
+  Caption = 'TaggingDialog'
+  ClientHeight = 705
+  ClientWidth = 683
+  LCLVersion = '3.0.0.3'
+  object StringGrid1: TStringGrid
+    Left = 16
+    Height = 680
+    Top = 8
+    Width = 528
+    TabOrder = 0
+  end
+end

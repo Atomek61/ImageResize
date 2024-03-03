@@ -14,8 +14,12 @@ function RemoveQuotes(const Str :string) :string;
 function TryStrToPlaceholders(const Str :string; Del :char; out Placeholders :TStringArray) :boolean;
 function TryParsePlaceholderParams(const Str :string; Del: char; out Params :TStringArray) :boolean;
 
+function FileFormat(const Filename :string) :string;
+function IsJPEG(const Filename :string) :boolean;
+function IsPNG(const Filename :string) :boolean;
 function IsPathAbsolute(const Path :string) :boolean;
 function IsWildcard(const Str :string) :boolean;
+function ExtractExt(const Filename :string) :string;
 
 implementation
 
@@ -134,6 +138,39 @@ end;
 function IsWildcard(const Str :string) :boolean;
 begin
   result := (Pos('*', Str)>0) or (Pos('?', Str)>0);
+end;
+
+function ExtractExt(const Filename :string) :string;
+begin
+  result := ExtractFileExt(Filename);
+  if (Length(result)>0) then
+    result := Copy(result, 2, Length(result)-1);
+end;
+
+function IsJPEG(const Filename :string) :boolean;
+var
+  Ext :string;
+begin
+  Ext := UpperCase(ExtractFileExt(Filename));
+  result := (Ext = '.JPG') or (Ext = '.JPEG');
+end;
+
+function IsPNG(const Filename :string) :boolean;
+begin
+  result := UpperCase(ExtractFileExt(Filename)) = '.PNG'
+end;
+
+function FileFormat(const Filename :string) :string;
+var
+  Ext :string;
+begin
+  Ext := ExtractFileExt(Filename);
+  if SameText(Ext, 'jpg') or SameText(Ext, 'jpeg') then
+    result := 'JPEG'
+  else if SameText(Ext, 'png') then
+    result := 'PNG'
+  else
+    result := UpperCase(Copy(Ext, 2, Length(Ext)-1));
 end;
 
 end.

@@ -7,16 +7,16 @@ Id=Gallery100
 Class=Presentation
 ;Delimiters={{,}}
 Title=Gallery 1.0
-Description=Bottom Navigation
-Description.de=Mit Navigation-Zeile
-LongDescription=Bildbetrachter mit Thumbnail-Zeile
-LongDescription.de=Image Viewer with thumbnail row
+Description=With thumbnail-preview
+Description.de=Mit Vorschau-Bildern
+LongDescription=@100\longdescription.html
+LongDescription.de=Create images with 64,1920 and the renaming template "img%INDEX:AUTO,1%%SIZENAME%.%FILEEXT%" and the size names "_THUMBNAIL,"
 Date=2024-02-26 22:00:00
 Icon=icon.png
 Preview=100\preview.jpg
 ;Copy=gallery.css
 Templates=100\index.html,100\gallery.css
-Fragment.IMAGES=<img src="%IMGFILENAME%"/>%CRLF%
+Fragment.THUMBNAILS=<img src="%IMGFILETITLE%_THUMBNAIL%IMGFILEEXT%" data-src="%IMGFILENAME%"/>%CRLF%
 
 [Settings.Thumbnails]
 Class=String

@@ -28,7 +28,7 @@ const
   LM_RUN                = LM_USER + 1;
 
   GUIVER_APP            = 'ImageResize';
-  GUIVER_VERSION        = '4.0';
+  GUIVER_VERSION        = '4.1';
   GUIVER_DATE           = '2024-02-24';
 
   GUIVER                :TVersionManifest = (App: GUIVER_APP; Version: GUIVER_VERSION; Date: GUIVER_DATE; Hint: '');
@@ -130,10 +130,14 @@ type
     ActionAbout: TAction;
     ActionExecute: TAction;
     BitBtn1: TBitBtn;
+    ButtonClearSizeNames: TBitBtn;
+    ComboBoxSizeNames: TComboBox;
     ImageStep1: TImage;
     ImageStep2: TImage;
     ImageStep3: TImage;
     Label2: TLabel;
+    Label8: TLabel;
+    LabelRenTemplate: TLabel;
     PaintBoxMrkPreview: TBGRAGraphicControl;
     ButtonExecute: TBGRASpeedButton;
     CheckBoxDryRun: TCheckBox;
@@ -202,12 +206,9 @@ type
     Label16: TLabel;
     Label17: TLabel;
     Label21: TLabel;
-    LabelHintPlaceholder1: TLabel;
     LabelShuffleSeed: TLabel;
     Label18: TLabel;
     Label20: TLabel;
-    LabelHintPlaceholderTitle: TLabel;
-    LabelHintPlaceholder2: TLabel;
     Label4: TLabel;
     LabelSourceFileListMessage: TLabel;
     Label9: TLabel;
@@ -245,6 +246,7 @@ type
     ToolBarSrc: TToolBar;
     ToolBarParameters: TToolBar;
     ToolBarSizeButtons: TToolBar;
+    ToolButton1: TToolButton;
     ToolButtonSep2: TToolButton;
     ToolButtonSep1: TToolButton;
     ToolButtonNew: TToolButton;
@@ -278,11 +280,13 @@ type
     procedure ButtonBrowseSrcFilesClick(Sender: TObject);
     procedure ButtonBrowseSrcFolderClick(Sender: TObject);
     procedure ButtonClearCopyrightClick(Sender: TObject);
+    procedure ButtonClearSizeNamesClick(Sender: TObject);
     procedure ButtonClearSizesClick(Sender: TObject);
     procedure ButtonClearSrcFilesClick(Sender: TObject);
     procedure ButtonInsertCopyrightClick(Sender: TObject);
     procedure ButtonInsertSIZEClick(Sender: TObject);
     procedure ActionParamExecute(Sender :TObject);
+    procedure EditSizeNamesChange(Sender: TObject);
     procedure EditSizesKeyPress(Sender: TObject; var Key: char);
     procedure EditSrcFolderChange(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -381,7 +385,7 @@ var
 implementation
 
 uses
-  math, helpintfs, Windows, FileUtil, SettingsDlg;
+  math, Utils, helpintfs, Windows, FileUtil, SettingsDlg;
 
 const
   SCptSizesDefault  = 'default';
@@ -420,7 +424,7 @@ resourcestring
   SErrInvalidMrkXBrd            = 'Invalid watermark x border';
   SErrInvalidMrkYBrd            = 'Invalid watermark y border';
   SErrInvalidMrkOpacity         = 'Invalid watermark opacity';
-  SErrEnterPlaceholder          = 'Enter placeholder %SIZE% to either the target folder or the file template';
+  SErrEnterPlaceholder          = 'Enter placeholder %SIZE% or %SIZENAME% to either the target folder or the file template';
   SErrAtFmt                     = 'Error at %.0f%% - %s';
   SErrCancelledAtFmt            = 'Cancelled at %.0f%%';
   SMsgCurrentDirFmt             = 'Current directory: %s';
@@ -713,6 +717,7 @@ begin
     EditSrcMasks.Text                   := DEFAULT_SRCMASK;
     EditTargetFolder.Text               := '';
     EditSizes.Text                      := '';
+    ComboBoxSizeNames.Text              := '';
     ComboBoxJPEGQuality.ItemIndex       := 0;
     ComboBoxPNGCompression.ItemIndex    := 0;
     ComboBoxInterpolation.ItemIndex     := 0;
@@ -850,6 +855,7 @@ begin
     EditSrcMasks.Text                     := ReadString(PROJECT_SECTION,  'SourceMasks', EditSrcMasks.Text);
     MemoSrcFilenames.Text                 := ReplaceStr(ReadString(PROJECT_SECTION, 'SourceFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, LINESEP)), LINESEP, #13#10);
     EditSizes.Text                        := ReadString(PROJECT_SECTION,  'Sizes', EditSizes.Text);
+    ComboBoxSizeNames.Text                := ReadString(PROJECT_SECTION,  'SizeNames', ComboBoxSizeNames.Text);
     EditTargetFolder.Text                 := ReadString(PROJECT_SECTION,  'TargetFolder', EditTargetFolder.Text);
     RequiredStepsUpdate;
     ComboBoxInterpolation.ItemIndex       := integer(TProcessor.NameToInterpolation(ReadString(PROJECT_SECTION,  'Interpolation', INTERPOLATION_NAMES[DEFAULT_INTERPOLATION])));
@@ -938,6 +944,7 @@ begin
     WriteString(PROJECT_SECTION,  'SourceMasks',    EditSrcMasks.Text);
     WriteString(PROJECT_SECTION,  'SourceFilenames', HandleFilenameRefs(MemoSrcFilenames.Lines));
     WriteString(PROJECT_SECTION,  'Sizes',          EditSizes.Text);
+    WriteString(PROJECT_SECTION,  'SizeNames',      ComboBoxSizeNames.Text);
     WriteString(PROJECT_SECTION,  'TargetFolder',   HandleFilenameRefs(EditTargetFolder));
     WriteString(PROJECT_SECTION,  'Interpolation',  INTERPOLATION_NAMES[TInterpolation(ComboBoxInterpolation.ItemIndex)]);
     Value := TProcessor.StrToJPEGQuality(ComboBoxJPEGQuality.Text);
@@ -1105,6 +1112,11 @@ begin
   end;
 end;
 
+procedure TMainDialog.EditSizeNamesChange(Sender: TObject);
+begin
+  Dirty := true;
+end;
+
 procedure TMainDialog.ActionSettingsExecute(Sender: TObject);
 begin
   SettingsDialog.SetProcessingSettings(FProcessingSettings);
@@ -1220,6 +1232,14 @@ end;
 procedure TMainDialog.ButtonClearCopyrightClick(Sender: TObject);
 begin
   EditCopyRight.Text := '';
+end;
+
+procedure TMainDialog.ButtonClearSizeNamesClick(Sender: TObject);
+begin
+  with ComboBoxSizeNames do if (SelLength>0) and (SelLength<Length(Text)) then
+    SelText := ''
+  else
+    ComboBoxSizeNames.Text := '';
 end;
 
 procedure TMainDialog.ButtonClearSizesClick(Sender: TObject);
@@ -1716,6 +1736,7 @@ end;
 procedure TMainDialog.ActionExecuteExecute(Sender: TObject);
 var
   Sizes :TIntegerDynArray;
+  SizeNames :TStringArray;
   x :single;
   p :TPos;
   TargetFolder :string;
@@ -1774,6 +1795,9 @@ begin
           Sizes[0] := DEFAULTSIZE;
         end else if not TrySizesStrToSizes(EditSizes.Text, Sizes) then
           raise Exception.Create(SErrInvalidSizes);
+
+        // SizeNames
+        SizeNames := StrToStringArray(ComboBoxSizeNames.Text);
 
         // Quality
         Processor := TProcessor.Create;
@@ -1843,14 +1867,15 @@ begin
         // stop, if %SIZE% placeholder is not contained either in
         // TargetFolder nor in FileTemplate
         TargetFolder := EditTargetFolder.Text;
-        if (Length(Sizes)>1) and (Pos('%SIZE%', TargetFolder)=0)
-         and not (Processor.RenEnabled and (Pos('%SIZE%', Processor.TargetFiletemplate)>0)) then
+        if (Length(Sizes)>1) and (Pos('%SIZE%', TargetFolder)+Pos('%SIZENAME%', TargetFolder)=0)
+         and not (Processor.RenEnabled and (Pos('%SIZE%', Processor.TargetFiletemplate)+Pos('%SIZENAME%', Processor.TargetFiletemplate)>0)) then
           raise Exception.Create(SErrEnterPlaceholder);
         // Hook the processor
         Processor.OnPrint := @OnPrint;
         Processor.OnProgress := @OnProgress;
 
         Processor.Sizes := SizesToSizesStr(Sizes);
+        Processor.SizeNames := SizeNames;
         Processor.SourceFilenames := SourceFilenames;
         Processor.TargetFolder := TargetFolder;
         Processor.ThreadCount := FProcessingSettings.ThreadsUsed.Value;

@@ -19,6 +19,7 @@ type
     SourceMasks         :TStringSetting;
     SourceFilenames     :TStringSetting;
     Sizes               :TStringSetting;
+    SizeNames           :TStringSetting;
     TargetFolder        :TStringSetting;
     JPEGQuality         :TPicklistSetting;
     PNGCompression      :TPicklistSetting;
@@ -111,6 +112,7 @@ begin
   SourceMasks         := TStringSetting.Create(self,    'SourceMasks');
   SourceFilenames     := TStringSetting.Create(self,    'SourceFilenames');
   Sizes               := TStringSetting.Create(self,    'Sizes');
+  SizeNames           := TStringSetting.Create(self,    'SizeNames');
   TargetFolder        := TStringSetting.Create(self,    'TargetFolder');
   JPEGQuality         := TPicklistSetting.Create(self,  'JPEGQuality');
   PNGCompression      := TPicklistSetting.Create(self,  'PNGCompression');

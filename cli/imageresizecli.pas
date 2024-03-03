@@ -69,6 +69,7 @@ var
   Interpolation :TInterpolation;
   TargetFolder :string;
   TargetFileTemplate :string;
+  SizeNames :TStringArray;
   SourceFolder :string;
   SourceFilename :string;
   SourceFilenames :TStringList;
@@ -212,6 +213,14 @@ begin
     end else
       TargetFileTemplate := '';
 
+    // SizeNames
+    Param := GetOptionValue('n', 'sizenames');
+    if Param<>'' then begin
+      SizeNames := StrToStringArray(Param);
+      inc(OptionCount, 2);
+    end else
+      SizeNames := nil;
+
     // File Shaking
     Shuffle := HasOption('s', 'shuffle');
     if Shuffle then begin
@@ -285,6 +294,7 @@ begin
     Processor.ThreadCount := ThreadCount;
     Processor.StopOnError := StopOnError;
     Processor.TargetFiletemplate := TargetFileTemplate;
+    Processor.Sizenames := SizeNames;
     Processor.Shuffle := Shuffle;
     Processor.ShuffleSeed := ShuffleSeed;
     Processor.TagsSources := TagsSources;
