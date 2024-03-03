@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>   
-    <title>%TITLE%</title>
+    <title>{TITLE}</title>
     <script src="slideshow.js"></script>
     <link rel="stylesheet" href="slideshow.css"/>
     <script>
@@ -32,7 +32,7 @@
         </svg>        
     </div>
     <div style="position: absolute; top: 0px; width: 100%;" id="slideshow" class="slideshow">
-%IMAGES%        <div class="title-bar">
+{IMAGES}<div class="title-bar">
         </div>
         <div class="navigation-bar button-prev">
             <svg viewbox="0 0 128 128" ><use href="#svg-prev"/></svg>
@@ -41,7 +41,7 @@
             <svg viewbox="0 0 128 128" ><use href="#svg-next"/></svg>
         </div>    
         <div class="control-bar">
-%BULLETS%        <svg class="button-cinema" viewbox="0 0 128 128"><use href="#svg-frame-start"/></svg>
+{BULLETS}        <svg class="button-cinema" viewbox="0 0 128 128"><use href="#svg-frame-start"/></svg>
             <svg class="button-fullscreen" viewbox="0 0 128 128"><use href="#svg-expand"/></svg>
         </div>
     </div>

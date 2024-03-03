@@ -8,7 +8,7 @@ Free tool for JPEG and PNG quality scaling.
                       - a path to a folder with semicolon-separated wildcards
   target              The folder where to store the resulting resampled and resized files.
                       If the resulting filenames can conflict and this is not solved by renaming
-                      then the folder must contain the placeholder %SIZE% or %SIZENAME%.
+                      then the folder must contain the placeholder {SIZE% or {SIZENAME%.
                       Non-existend folders are created.
   size                Is a size in pixels or a comma-separated list of sizes, where the size refers to
                       the longer side of the image.
@@ -18,14 +18,14 @@ Options:
 
 short long            parameter comment
 -----------------------------------------
-   -j -jpeg           1..100    A quality from 1 to 100 percent (default is 75)
-   -p -png            compr     Compression: Default|None|Fastest|Maximum
+   -j -JPEG           1..100    A quality from 1 to 100 percent (default is 75)
+   -p -PNG            compr     Compression: Default|None|Fastest|Maximum
    -i -interpolation  name      Stretch, Box, Linear, HalfCosine, Cosine, Bicubic, Mitchell, Spline,
                                 Lanczos2, Lanczos3, Lanczos4, BestQuality
                                 Default is BestQuality: Mitchell on up- and Spline on down-scaling
    -r -rename         template  Rename files by a template with placeholders.
-                                SIZE% and %INDEX[:n[,d]]% with n=startindex, d=number of digits/auto
-   -n -sizenames      names     If using the %SIZENAME% placeholder in file renaming template, or in
+                                {SIZE} and {INDEX[:n[,d]]} with n=startindex, d=number of digits/auto
+   -n -sizenames      names     If using the {SIZENAME} placeholder in file renaming template, or in
                                 in the target folders name, then each size must have a corresponding
                                 list of comma-separated names
    -w -watermark      file.png  A PNG watermark file and optional size, position and opacity, see example
@@ -52,10 +52,10 @@ Examples:
   imgres myimage.png \Images\res640 640
     resamples a single png image with the default quality.
 
-  imgres ..\theimage.jpg C:\TEMP\res%SIZE% 480,640,800 -j 50
+  imgres ..\theimage.jpg C:\TEMP\res{SIZE} 480,640,800 -j 50
     resamples a single jpg with 3 resolutions and stores them to different folders at 50% quality
 
-  imgres @mylist.txt img%SIZE% 640,1920 -j 1 -p maximum -q
+  imgres @mylist.txt img{SIZE} 640,1920 -j 1 -p maximum -q
     resamples a list of files which path/name is stored in a file, with smallest file sizes in quiet mode.
 
   imgres myimages\*.jpg;*.png \MyImages 640 -w mywatermark.png:10,1,98:20

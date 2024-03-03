@@ -117,7 +117,7 @@ begin
   try
 
     // JPEGQuality
-    Param := GetOptionValue('j', 'jpeg');
+    Param := GetOptionValue('j', 'JPEG');
     if Param<>'' then begin
       if not TryStrToInt(Param, JPEGQuality) or (JPEGQuality<1) or (JPEGQuality>100) then
         raise Exception.CreateFmt(SErrInvalidJPEGQualityFmt, [Param]);
@@ -126,7 +126,7 @@ begin
       JPEGQuality := Processor.JPEGQuality;
 
     // PNGCompression
-    Param := GetOptionValue('p', 'png');
+    Param := GetOptionValue('p', 'PNG');
     if Param<>'' then begin
       if not TProcessor.TryNameToPNGCompression(Param, PNGCompression) then
         raise Exception.CreateFmt(SErrInvalidPNGCompressionNameFmt, [Param]);
@@ -142,7 +142,7 @@ begin
     end else
       Interpolation := Processor.Interpolation;
 
-    // Watermark "C:\Folder\mark%SIZE%.png:-1.0,-1.0:50.0"
+    // Watermark "C:\Folder\mark{SIZE}.png:-1.0,-1.0:50.0"
     MrkParams.Filename := '';
     with Processor.WatermarkParams do begin
       MrkParams.Size := Size;

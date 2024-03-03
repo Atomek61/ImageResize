@@ -101,7 +101,7 @@ const
   DEFAULT_STOPONERROR       = true;
   DEFAULT_RENENABLED        = false;
   DEFAULT_RENFMTSTR         = 'img%2:s.%1:s';
-  DEFAULT_RENFILETEMPLATE   = 'img%INDEX:1,3%.%FILEEXT%';
+  DEFAULT_RENFILETEMPLATE   = 'img{INDEX:1,3}.{FILEEXT}';
   DEFAULT_SIZENAMES         = '_THUMBNAIL,';
   DEFAULT_RENINDEXSTART     = 1;
   DEFAULT_RENINDEXDIGITS    = 3;
@@ -296,7 +296,7 @@ resourcestring
   SErrInvalidThreadCount          = 'Invalid threadcount';
   SErrMissingSizes                = 'Missing sizes.';
   SErrInvalidSizesFmt             = 'Invalid sizes ''%s''';
-  SErrMultipleSizes               = 'Multiple sizes but placeholder %SIZE% not found in either folder or filename template';
+  SErrMultipleSizes               = 'Multiple sizes but placeholder {SIZE} not found in either folder or filename template';
   SErrInvalidPNGCompressionFmt    = 'Invalid PNG compression %d (0..3 expected)';
   SErrInvalidPNGCompressionNameFmt= 'Invalid PNG compression ''%s'' (Default, None, Fastest or Maximum expected)';
   SErrInvalidJPEGQualityFmt       = 'Invalid JPEG quality ''%s'' (1..100 expected)';
@@ -569,14 +569,14 @@ begin
         if Processor.FRen.Enabled then begin
           // Specialize the prepared template
 
-          // %FILENAME%
+          // {FILENAME}
           TargetFiletitle := ExtractFilename(SourceFilename);
           if Length(TargetFileExt)>0 then
             TargetFiletitle := Copy(TargetFiletitle, 1, Length(TargetFiletitle)-Length(TargetFileExt)-1);
 
-          // %FILEEXT% - has been extracted previously
+          // {FILEEXT} - has been extracted previously
 
-          // %INDEX%
+          // {INDEX}
           if Processor.FRen.IndexDigits = 0 then
             IndexStr := IntToStr(SourceFileIndex)
           else begin
@@ -587,10 +587,10 @@ begin
             IndexStr := Format('%*.*d', [n, n, SourceFileIndex+Processor.FRen.IndexStart]);
           end;
 
-          // %SIZE%
+          // {SIZE}
           SizeStr := IntToStr(Size);
 
-          // %SIZENAME%
+          // {SIZENAME}
           if i<Processor.SizeNames.Count then
             SizeName := Processor.SizeNames[i]
           else
@@ -816,23 +816,23 @@ begin
     // Prepare the destination file renaming feature
     m := Length(FSizes);
 
-    // Check, if multiple sizes, then either %SIZE% or %SIZENAME% must be in folder or in renamed filename
+    // Check, if multiple sizes, then either {SIZE} or {SIZENAME} must be in folder or in renamed filename
     ProcRes.IsTargetFileRenamingStrategy := FRen.Enabled and (Pos('%3:s', FRen.FmtStr)+Pos('%5:s', FRen.FmtStr)>0);
-    ProcRes.IsMultipleTargetFolderStrategy := Pos('%SIZE%', FTargetFolder)+Pos('%SIZENAME%', FTargetFolder)>0;
+    ProcRes.IsMultipleTargetFolderStrategy := Pos('{SIZE}', FTargetFolder)+Pos('{SIZENAME}', FTargetFolder)>0;
     if (Length(FSizes)>1) and not ProcRes.IsMultipleTargetFolderStrategy and not ProcRes.IsTargetFileRenamingStrategy then
         raise Exception.Create(SErrMultipleSizes);
 
     // Create Destination Folders
     SetLength(ProcRes.TargetFolders, m);
     if ProcRes.IsMultipleTargetFolderStrategy then begin
-      if Pos('%SIZENAME%', FTargetFolder)>0 then begin
+      if Pos('{SIZENAME}', FTargetFolder)>0 then begin
         for i:=0 to m-1 do begin
           if i<FSizeNames.Count then SizeName := FSizeNames[i] else SizeName := IntToStr(FSizes[i]);
-          ProcRes.TargetFolders[i] := IncludeTrailingPathDelimiter(ExpandFilename(ReplaceStr(FTargetFolder, '%SIZENAME%', SizeName)));
+          ProcRes.TargetFolders[i] := IncludeTrailingPathDelimiter(ExpandFilename(ReplaceStr(FTargetFolder, '{SIZENAME}', SizeName)));
         end;
       end else begin
         for i:=0 to m-1 do
-          ProcRes.TargetFolders[i] := IncludeTrailingPathDelimiter(ExpandFilename(ReplaceStr(FTargetFolder, '%SIZE%', IntToStr(FSizes[i]))))
+          ProcRes.TargetFolders[i] := IncludeTrailingPathDelimiter(ExpandFilename(ReplaceStr(FTargetFolder, '{SIZE}', IntToStr(FSizes[i]))))
       end;
     end else
       for i:=0 to m-1 do
@@ -861,10 +861,10 @@ begin
     if FWatermarkParams.Filename='' then begin
       SetLength(ProcRes.MrkImages, 0);
     end else begin
-      if Pos('%SIZE%', FWatermarkParams.Filename)>0 then begin
+      if Pos('{SIZE}', FWatermarkParams.Filename)>0 then begin
         SetLength(ProcRes.MrkImages, m);
         for i:=0 to m-1 do begin
-          Item := ReplaceStr(FWatermarkParams.Filename, '%SIZE%', IntToStr(FSizes[i]));
+          Item := ReplaceStr(FWatermarkParams.Filename, '{SIZE}', IntToStr(FSizes[i]));
           Print(Format(SMsgLoadMrkFileFmt, [ExtractFilename(Item)]));
           ProcRes.MrkImages[i] := TBGRABitmap.Create(Item);
         end;
@@ -1014,7 +1014,7 @@ var
   end;
 
 begin
-  if not TryStrToPlaceholders(Str, '%', Placeholders) then
+  if not TryStrToPlaceholders(Str, '{', '}', Placeholders) then
     Exit(Err(Format(SErrInvalidRenamingParamFmt, [Str])));
 
   Params.FmtStr := '';
@@ -1028,9 +1028,9 @@ begin
     // Default: img%2:s.%1:s
     Params.FmtStr := Str;
     if IsPlaceholder('FILEEXT', i) then
-      Params.FmtStr := ReplaceStr(Params.FmtStr, '%FILEEXT%', '%1:s');
+      Params.FmtStr := ReplaceStr(Params.FmtStr, '{FILEEXT}', '%1:s');
     if IsPlaceholder('FILENAME', i) then
-      Params.FmtStr := ReplaceStr(Params.FmtStr, '%FILENAME%', '%0:s');
+      Params.FmtStr := ReplaceStr(Params.FmtStr, '{FILENAME}', '%0:s');
     if IsPlaceholder('INDEX', i) then begin
       // Parse Parameters
       if not TryParsePlaceholderParams(Placeholders[i], ':', Items) then
@@ -1047,14 +1047,14 @@ begin
         end else if (Length(Items)>2) then
           Exit(Err(Format(SErrInvalidINDEXParamCountFmt, [Placeholders[i]])));
       end;
-      Params.FmtStr := ReplaceStr(Params.FmtStr, '%'+Placeholders[i]+'%', '%2:s');
+      Params.FmtStr := ReplaceStr(Params.FmtStr, '{'+Placeholders[i]+'}', '%2:s');
     end;
     if IsPlaceholder('SIZE', i) then
-      Params.FmtStr := ReplaceStr(Params.FmtStr, '%SIZE%', '%3:s');
+      Params.FmtStr := ReplaceStr(Params.FmtStr, '{SIZE}', '%3:s');
     if IsPlaceholder('INTERPOLATION', i) then
-      Params.FmtStr := ReplaceStr(Params.FmtStr, '%INTERPOLATION%', '%4:s');
+      Params.FmtStr := ReplaceStr(Params.FmtStr, '{INTERPOLATION}', '%4:s');
     if IsPlaceholder('SIZENAME', i) then
-      Params.FmtStr := ReplaceStr(Params.FmtStr, '%SIZENAME%', '%5:s');
+      Params.FmtStr := ReplaceStr(Params.FmtStr, '{SIZENAME}', '%5:s');
     if ParamCount<Length(Placeholders) then
       Exit(Err(SErrInvalidPlaceholder));
     Params.Enabled := true;
@@ -1066,12 +1066,12 @@ class function TProcessor.RenameParamsToStr(const Params: TRenameParams): string
 begin
   if Params.Enabled then begin
     result := Format(Params.FmtStr, [
-      '%FILENAME%',       // 0
-      '%FILEEXT%',        // 1
-      '%'+Format('INDEX:%d,%d', [Params.IndexStart, Params.IndexDigits])+'%', // 2
-      '%SIZE%',           // 3
-      '%INTERPOLATION%',  // 4
-      '%SIZENAME%'        // 5
+      '{FILENAME}',       // 0
+      '{FILEEXT}',        // 1
+      '{'+Format('INDEX:%d,%d', [Params.IndexStart, Params.IndexDigits])+'}', // 2
+      '{SIZE}',           // 3
+      '{INTERPOLATION}',  // 4
+      '{SIZENAME}'        // 5
     ]);
   end else
     result := '';
@@ -1106,7 +1106,7 @@ begin
   result := true;
 end;
 
-// "path\mark[%SIZE%].png[:size,x,y[:opacity]]"   count: 1, 2, 3 allowed
+// "path\mark[{SIZE}].png[:size,x,y[:opacity]]"   count: 1, 2, 3 allowed
 class procedure TProcessor.StrToWatermarkParams(const Str: string; out Value: TWatermarkParams);
 var
   Items :TStringArray;

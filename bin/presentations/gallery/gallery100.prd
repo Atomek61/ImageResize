@@ -10,13 +10,13 @@ Title=Gallery 1.0
 Description=With thumbnail-preview
 Description.de=Mit Vorschau-Bildern
 LongDescription=@100\longdescription.html
-LongDescription.de=Create images with 64,1920 and the renaming template "img%INDEX:AUTO,1%%SIZENAME%.%FILEEXT%" and the size names "_THUMBNAIL,"
+LongDescription.de=@100\longdescription.de.html
 Date=2024-02-26 22:00:00
 Icon=icon.png
 Preview=100\preview.jpg
 ;Copy=gallery.css
 Templates=100\index.html,100\gallery.css
-Fragment.THUMBNAILS=<img src="%IMGFILETITLE%_THUMBNAIL%IMGFILEEXT%" data-src="%IMGFILENAME%"/>%CRLF%
+Fragment.THUMBNAILS=<img src="{IMGFILETITLE}_THUMBNAIL.{IMGFILEEXT}" data-src="{IMGFILENAME}"/>{CRLF}
 
 [Settings.Thumbnails]
 Class=String

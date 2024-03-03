@@ -23,6 +23,7 @@ type
     PERCENTDELIMITERS :TDelimiters = (Del1: '%'; Del2: '%');
     BROSTDELIMITERS :TDelimiters = (Del1: '«'; Del2: '»');
     MUSTACHEDELIMITERS :TDelimiters = (Del1: '{{'; Del2: '}}');
+    CURLYBRACKETSDELIMITERS :TDelimiters = (Del1: '{'; Del2: '}');
 
 type
   { TSolver }

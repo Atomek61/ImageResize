@@ -11,7 +11,7 @@ function StrToIntegerArray(const Str :string; Separator :char; out Values :TInte
 function StrToStringArray(const Str :string; Separator :char = ',') :TStringArray;
 function StrToSingleArray(const Str :string; Separator :char; out Values :TSingleDynArray; const FormatSettings :TFormatSettings) :boolean;
 function RemoveQuotes(const Str :string) :string;
-function TryStrToPlaceholders(const Str :string; Del :char; out Placeholders :TStringArray) :boolean;
+function TryStrToPlaceholders(const Str :string; Del1, Del2 :char; out Placeholders :TStringArray) :boolean;
 function TryParsePlaceholderParams(const Str :string; Del: char; out Params :TStringArray) :boolean;
 
 function FileFormat(const Filename :string) :string;
@@ -94,7 +94,7 @@ begin
   result := true;
 end;
 
-function TryStrToPlaceholders(const Str :string; Del :char; out Placeholders :TStringArray) :boolean;
+function TryStrToPlaceholders(const Str :string; Del1, Del2 :char; out Placeholders :TStringArray) :boolean;
 var
   p0, p1, n :integer;
 begin
@@ -102,9 +102,9 @@ begin
   p1 := 0;
   Placeholders := nil;
   while true do begin
-    p0 := PosEx(Del, Str, p1+1);
+    p0 := PosEx(Del1, Str, p1+1);
     if p0=0 then break;
-    p1 := PosEx(Del, Str, p0+1);
+    p1 := PosEx(Del2, Str, p0+1);
     if p1=0 then Exit(false);
     SetLength(Placeholders, n+1);
     Placeholders[n] := Copy(Str, p0+1, p1-p0-1);

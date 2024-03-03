@@ -58,8 +58,8 @@ const
   MAINDIALOG_SECTION    = 'MainDialog';
   PRESDIALOG_SECTION    = 'PresentationDialog';
 
-  RENSIMPLETEMPLATE     = 'img%INDEX:1,3%.%FILEEXT%';
-  RENADVANCEDTEMPLATE   = 'img%INDEX:1,3%_%SIZE%.%FILEEXT%';
+  RENSIMPLETEMPLATE     = 'img{INDEX:1,3}.{FILEEXT}';
+  RENADVANCEDTEMPLATE   = 'img{INDEX:1,3}_{SIZE}.{FILEEXT}';
   DEFAULT_SRCMASK       = '*.jpg;*.png';
 
   THUMBNAILIMGMAX       = 240;
@@ -424,7 +424,7 @@ resourcestring
   SErrInvalidMrkXBrd            = 'Invalid watermark x border';
   SErrInvalidMrkYBrd            = 'Invalid watermark y border';
   SErrInvalidMrkOpacity         = 'Invalid watermark opacity';
-  SErrEnterPlaceholder          = 'Enter placeholder %SIZE% or %SIZENAME% to either the target folder or the file template';
+  SErrEnterPlaceholder          = 'Enter placeholder {SIZE} or {SIZENAME} to either the target folder or the file template';
   SErrAtFmt                     = 'Error at %.0f%% - %s';
   SErrCancelledAtFmt            = 'Cancelled at %.0f%%';
   SMsgCurrentDirFmt             = 'Current directory: %s';
@@ -1145,7 +1145,7 @@ begin
   ToolButtonSizes.Click;
   EditSizes.Text := '360';
   Snapshot('step-sizes', PanelParams, -2, -40, 360, 95);
-  EditTargetFolder.Text := 'mygallery\img%SIZE%';
+  EditTargetFolder.Text := 'mygallery\img{SIZE}';
   Snapshot('step-targetfolder', PanelDestination, -200, -8, 360, 60);
   Snapshot('step-execute', ButtonExecute, 0, 0, 0, 0);
   Snapshot('buttons-project', ToolButtonNew, 0, 0, 4*ToolButtonNew.Width, ToolButtonNew.Height);
@@ -1200,7 +1200,7 @@ var
 begin
   s := EditTargetFolder.Text;
   f := '';
-  if Pos('%SIZE%', s)>0 then
+  if Pos('{SIZE}', s)>0 then
     f := ExtractFilename(s);
   BrowseTargetFolder.Filename := LeftStr(s, Length(s)-Length(f));
   if BrowseTargetFolder.Execute then
@@ -1263,7 +1263,7 @@ end;
 
 procedure TMainDialog.ButtonInsertSIZEClick(Sender: TObject);
 begin
-  EditTargetFolder.SelText := '%SIZE%';
+  EditTargetFolder.SelText := '{SIZE}';
 end;
 
 procedure TMainDialog.ApplicationProperties1Exception(Sender: TObject;
@@ -1867,8 +1867,8 @@ begin
         // stop, if %SIZE% placeholder is not contained either in
         // TargetFolder nor in FileTemplate
         TargetFolder := EditTargetFolder.Text;
-        if (Length(Sizes)>1) and (Pos('%SIZE%', TargetFolder)+Pos('%SIZENAME%', TargetFolder)=0)
-         and not (Processor.RenEnabled and (Pos('%SIZE%', Processor.TargetFiletemplate)+Pos('%SIZENAME%', Processor.TargetFiletemplate)>0)) then
+        if (Length(Sizes)>1) and (Pos('{SIZE}', TargetFolder)+Pos('{SIZENAME}', TargetFolder)=0)
+         and not (Processor.RenEnabled and (Pos('{SIZE}', Processor.TargetFiletemplate)+Pos('{SIZENAME}', Processor.TargetFiletemplate)>0)) then
           raise Exception.Create(SErrEnterPlaceholder);
         // Hook the processor
         Processor.OnPrint := @OnPrint;

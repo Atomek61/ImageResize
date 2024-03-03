@@ -157,7 +157,7 @@ begin
   FDate             := IniFile.ReadDateTime(PRESENTATION_SECTION, 'Date', 0.0);
   FIconFile         := CreateAbsolutePath(IniFile.ReadString(PRESENTATION_SECTION, 'Icon', ''), FTemplateFolder);
   FPreviewFile      := CreateAbsolutePath(IniFile.ReadString(PRESENTATION_SECTION, 'Preview', ''), FTemplateFolder);
-  FDelimiters       := TDelimiters.StrToDelimiters(IniFile.ReadString(PRESENTATION_SECTION, 'Delimiters', PERCENTDELIMITERS.toString));
+  FDelimiters       := TDelimiters.StrToDelimiters(IniFile.ReadString(PRESENTATION_SECTION, 'Delimiters', CURLYBRACKETSDELIMITERS.toString));
 
   FSettings := TSettings.Create(FId);
   FSettings.LoadDef(IniFile, 'Settings');

@@ -5,7 +5,6 @@ Version=100
 [Presentation]
 Id=Simple100
 Processor=Presentation
-VarDelimiters=%,%
 Title=Simple 1.0
 Description=Simple HTML IMG-Tags
 Description.de=Einfach mit HTML und IMG-Tags
@@ -15,4 +14,4 @@ Date=2024-01-01 00:00:00
 Icon=icon.png
 Preview=100\preview.jpg
 Templates=100\index.html
-Fragment.IMAGES=<img src="%IMGFILENAME%" alt="%TITLE%"/>%CRLF%
+Fragment.IMAGES=<img src="{IMGFILENAME}" alt="{IMGTITLE}"/>{CRLF}

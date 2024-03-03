@@ -1,26 +1,26 @@
 body {
-    background-color: %BCKCOLOR1%;
-    margin: %GAP%px;
+    background-color: {BCKCOLOR1};
+    margin: {GAP}px;
     line-height: 0;
 }
 
 #display {
     width: 100%;
-    aspect-ratio: %RATIO%;
+    aspect-ratio: {RATIO};
     object-fit: contain;
-    background-color: %BCKCOLOR2%;
+    background-color: {BCKCOLOR2};
 }
 
 #picklist {
     overflow: auto;
     display: flex;
-    gap: %GAP%px;
+    gap: {GAP}px;
 }
 
 #picklist img  {
-    padding: %GAP%px;
-    background-color: %BCKCOLOR2%;
-    aspect-ratio: %RATIO%;
-    height: %THMBNSIZE%px;
+    padding: {GAP}px;
+    background-color: {BCKCOLOR2};
+    aspect-ratio: {RATIO};
+    width: {THMBNSIZE}px;
     object-fit: contain;
 }

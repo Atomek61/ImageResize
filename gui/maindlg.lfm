@@ -88,12 +88,12 @@ object MainDialog: TMainDialog
         Top = 70
         Width = 384
         TabStop = False
-        ActivePage = TabSheetSrcFolder
+        ActivePage = TabSheetSrcFilenames
         Align = alClient
         BorderSpacing.Around = 4
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 1
+        TabIndex = 0
         TabOrder = 1
         object TabSheetSrcFilenames: TTabSheet
           ClientHeight = 286
@@ -261,14 +261,14 @@ object MainDialog: TMainDialog
         Top = 4
         Width = 393
         TabStop = False
-        ActivePage = TabSheetSizes
+        ActivePage = TabSheetRenaming
         Align = alClient
         BorderSpacing.Around = 4
         ImagesWidth = 32
         MultiLine = True
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 0
+        TabIndex = 1
         TabOrder = 1
         Options = [nboMultiLine]
         object TabSheetSizes: TTabSheet
@@ -445,14 +445,14 @@ object MainDialog: TMainDialog
             object EditRenTemplate: TComboBox
               Left = 27
               Height = 23
-              Hint = 'Enter a filename template containing placeholders for special values.'#13#10'This template will be expanded for each resampled image. Insert the'#13#10'%SIZE% placeholder to enable multiple sizes in a common folder.'
+              Hint = 'Enter a filename template containing placeholders for special values.'#13#10'This template will be expanded for each resampled image. Insert the'#13#10'{SIZE} placeholder to enable multiple sizes in a common folder.'
               Top = 113
               Width = 272
               ItemHeight = 15
               Items.Strings = (
-                'img%INDEX:1,auto%.%FILEEXT%'
-                'img%INDEX:1,auto%_%SIZE%.%FILEEXT%'
-                'img%INDEX:1,auto%%SIZENAME%.%FILEEXT%'
+                'img{INDEX:1,auto}.{FILEEXT}'
+                'img{INDEX:1,auto}_{SIZE}.{FILEEXT}'
+                'img{INDEX:1,auto}{SIZENAME}.{FILEEXT}'
               )
               TabOrder = 3
               OnChange = ProjectChanged
@@ -1384,7 +1384,7 @@ object MainDialog: TMainDialog
       object EditTargetFolder: TEdit
         Left = 8
         Height = 23
-        Hint = 'Enter a destination for the resampled images.'#13#10'If multiple sizes are entered, insert placeholder %SIZE%'#13#10'or %SIZENAME% into the path where the program'#13#10'shall insert the current size .'
+        Hint = 'Enter a destination for the resampled images.'#13#10'If multiple sizes are entered, insert placeholder {SIZE}'#13#10'or {SIZENAME} into the path where the program'#13#10'shall insert the current size .'
         Top = 7
         Width = 410
         Anchors = [akTop, akLeft, akRight]
