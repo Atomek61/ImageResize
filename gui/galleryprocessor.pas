@@ -197,6 +197,7 @@ begin
         Lists.Add(Fragment.Key, '');
 
       // Iterate over the images
+      ImgVars.Delimiters := CURLYBRACKETDELIMITERS;
       for i:=0 to FFilesTags.Filenames.Count-1 do begin
         Ext := ExtractExt(FFilesTags.Filenames[i]);
 
@@ -230,8 +231,6 @@ begin
           ImgVars.Load(Fragment.Key, Fragment.Value);
 
         // Replace the vars
-        if not FDelimiters.TryGetValue(LowerCase(Ext), ImgVars.Delimiters) then
-          ImgVars.Delimiters := CURLYBRACKETDELIMITERS;
         ImgVars.Solve(SolverStats);
 
         inc(Stats.Dependencies, SolverStats.LeftDependencies + SolverStats.Solved);
@@ -249,6 +248,8 @@ begin
         TargetFilename := TargetFolder+ExtractFilename(TemplateFilename);
         Log(SMsgProcessingTemplateFmt, [ExtractFilename(TemplateFilename)], llInfo);
         FileSource.LoadFromFile(TemplateFilename, TEncoding.UTF8);
+        if not FDelimiters.TryGetValue(LowerCase(ExtractExt(TemplateFilename)), FDocVars.Delimiters) then
+          FDocVars.Delimiters := CURLYBRACKETDELIMITERS;
         FileText := FDocVars.Replace(FileSource.Text, Replacements);
         inc(Stats.Replacements, Replacements);
         FileSource.Text := FileText;

@@ -161,8 +161,8 @@ begin
   FDate             := IniFile.ReadDateTime(PRESENTATION_SECTION, 'Date', 0.0);
   FIconFile         := CreateAbsolutePath(IniFile.ReadString(PRESENTATION_SECTION, 'Icon', ''), FTemplateFolder);
   FPreviewFile      := CreateAbsolutePath(IniFile.ReadString(PRESENTATION_SECTION, 'Preview', ''), FTemplateFolder);
-  Keys := TStringlist.Create;
 
+  Keys := TStringlist.Create;
   try
     IniFile.ReadSection(PRESENTATION_SECTION, Keys);
     for Key in Keys do if Key.StartsWith('Delimiter.') then

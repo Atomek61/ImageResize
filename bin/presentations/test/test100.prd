@@ -5,10 +5,9 @@ Version=100
 [Presentation]
 Id=Test100
 Processor=Presentation
-VarDelimiters=%,%
 Title=Test 1.0
 Description=Test of Settings
-LongDescription=Should not appear in the production
+LongDescription=Not for production
 Date=2024-03-01 00:00:00
 Icon=icon.png
 Preview=100\preview.jpg
