@@ -15,7 +15,7 @@ type
 
   TProcessor = class
   private
-    FDelimiters :TDelimiters;
+    FDelimiters :TTypeDelimiters;
     FImgTagsFilename :string;       // Folder with images and meta info in .images file
     FTemplateFiles :TStringArray;   // Template files - .html, .js, .css or whatever
     FCopyFiles :TStringArray;       // Template files - .html, .js, .css or whatever
@@ -37,7 +37,7 @@ type
       Elapsed :integer;             // ms
     end;
   public
-    constructor Create(const Delimiters :TDelimiters); virtual;
+    constructor Create(const Delimiters :TTypeDelimiters); virtual;
     destructor Destroy; override;
     procedure Clear;
     function Execute(out Stats :TStats) :boolean;
@@ -47,7 +47,7 @@ type
     property ListFragments :TStringDictionary read FListFragments;
     property CopyFiles :TStringArray read FCopyFiles write FCopyFiles;
     property TemplateFiles :TStringArray read FTemplateFiles write FTemplateFiles;
-    property Delimiters :TDelimiters read FDelimiters;
+    property Delimiters :TTypeDelimiters read FDelimiters;
 
   end;
 
@@ -71,13 +71,13 @@ resourcestring
 
 { TProcessor }
 
-constructor TProcessor.Create(const Delimiters :TDelimiters);
+constructor TProcessor.Create(const Delimiters :TTypeDelimiters);
 begin
   FDelimiters := Delimiters;
   FFilesTags := TFilesTags.Create;
   FListFragments := TStringDictionary.Create;
-  FDocVars := TSolver.Create(FDelimiters);
-  FSysVars := TSolver.Create(FDelimiters);
+  FDocVars := TSolver.Create;
+  FSysVars := TSolver.Create;
   with FSysVars do begin
     Load('CR', #13);
     Load('LF', #10);
@@ -121,6 +121,8 @@ var
   Filename, FileText :string;
   Replacements :integer;
   t0 :Int64;
+  Delimiters :TDelimiters;
+  Ext :string;
 
   function Percent(f1, f2 :integer) :single;
   begin
@@ -164,7 +166,7 @@ var
 
 begin
   Lists := TStringDictionary.Create;
-  ImgVars := TSolver.Create(FDelimiters);
+  ImgVars := TSolver.Create;
   FileSource := TStringList.Create;
   Stats := Default(TStats);
   t0 := TThread.GetTickCount64;
@@ -196,6 +198,8 @@ begin
 
       // Iterate over the images
       for i:=0 to FFilesTags.Filenames.Count-1 do begin
+        Ext := ExtractExt(FFilesTags.Filenames[i]);
+
         // Build the ImgVars for each image
         ImgVars.Clear;
         ImgVars.Add('IMGINDEX', IntToStr(i));
@@ -203,7 +207,7 @@ begin
         ImgVars.Add('IMGCOUNT', IntToStr(FFilesTags.Filenames.Count));
         ImgVars.Add('IMGFILENAME', ExtractFilename(FFilesTags.Filenames[i]));
         ImgVars.Add('IMGFILETITLE', ChangeFileExt(ExtractFilename(FFilesTags.Filenames[i]), ''));
-        ImgVars.Add('IMGFILEEXT', ExtractExt(FFilesTags.Filenames[i]));
+        ImgVars.Add('IMGFILEEXT', Ext);
         ImgVars.Add('IMGFILEFORMAT', FileFormat(FFilesTags.Filenames[i]));
         Tags := FFilesTags[FFilesTags.Filenames[i]];
         for Key in FFilesTags.TagKeys do begin
@@ -224,7 +228,12 @@ begin
           ImgVars.Load(FSysVars.Keys[j], FSysVars.Values[j]);
         for Fragment in FListFragments do
           ImgVars.Load(Fragment.Key, Fragment.Value);
+
+        // Replace the vars
+        if not FDelimiters.TryGetValue(LowerCase(Ext), ImgVars.Delimiters) then
+          ImgVars.Delimiters := CURLYBRACKETDELIMITERS;
         ImgVars.Solve(SolverStats);
+
         inc(Stats.Dependencies, SolverStats.LeftDependencies + SolverStats.Solved);
         inc(Stats.Solved, SolverStats.Solved);
         for Fragment in FListFragments do

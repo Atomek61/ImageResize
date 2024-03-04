@@ -1,7 +1,6 @@
 unit templateengine;
 
 {$mode delphi}
-{$advancedrecords ON}
 
 interface
 
@@ -19,11 +18,13 @@ type
     class function StrToDelimiters(const Value :string) :TDelimiters; static;
   end;
 
+  TTypeDelimiters = TDictionary<string, TDelimiters>; // Pairs of fileytype/delimiters ('css', <,>), (html, {,}), ('js', %,%)
+
   const
-    PERCENTDELIMITERS :TDelimiters = (Del1: '%'; Del2: '%');
-    BROSTDELIMITERS :TDelimiters = (Del1: '«'; Del2: '»');
-    MUSTACHEDELIMITERS :TDelimiters = (Del1: '{{'; Del2: '}}');
-    CURLYBRACKETSDELIMITERS :TDelimiters = (Del1: '{'; Del2: '}');
+    PERCENTDELIMITERS       :TDelimiters = (Del1: '%'; Del2: '%');
+    BROSTDELIMITERS         :TDelimiters = (Del1: '«'; Del2: '»');
+    MUSTACHEDELIMITERS      :TDelimiters = (Del1: '{{'; Del2: '}}');
+    CURLYBRACKETDELIMITERS  :TDelimiters = (Del1: '{'; Del2: '}');
 
 type
   { TSolver }
@@ -56,8 +57,6 @@ type
   private
     FDict :TDictionary<string, TRec>;
     FArray :TObjectList<TRec>;
-    FD1 :string;
-    FD2 :string;
     function GetCount: integer;
     function GetItem(const Key :string): string;
     function GetKey(Index :integer): string;
@@ -65,7 +64,8 @@ type
     function Next(const Txt :string; var Iterator :TIterator; out Key :string) :boolean;
     procedure SetItem(const Key :string; const Value: string);
   public
-    constructor Create(const Delimiters :TDelimiters);
+    Delimiters :TDelimiters;
+    constructor Create;
     destructor Destroy; override;
     procedure Clear;
     procedure Add(const Key :string; const Value :string = '');
@@ -138,12 +138,11 @@ begin
     Add(Key, Value);
 end;
 
-constructor TSolver.Create(const Delimiters :TDelimiters);
+constructor TSolver.Create;
 begin
   FDict := TDictionary<string, TRec>.Create;
   FArray := TObjectList<TRec>.Create;
-  FD1 := Delimiters.Del1;
-  FD2 := Delimiters.Del2;
+  Delimiters := PERCENTDELIMITERS;
 end;
 
 destructor TSolver.Destroy;
@@ -230,7 +229,7 @@ begin
     Dependencies := Stats.LeftDependencies;
     for l in FArray do if l.DepsCount=0 then begin
       for r in l.Refs do begin
-        r.Value := StringReplace(r.Value, FD1+l.Key+FD2, l.Value, [rfReplaceAll]);
+        r.Value := StringReplace(r.Value, Delimiters.Del1+l.Key+Delimiters.Del2, l.Value, [rfReplaceAll]);
         dec(r.DepsCount);
         dec(Stats.LeftDependencies);
         inc(Stats.Solved);
@@ -256,7 +255,7 @@ begin
     if FDict.TryGetValue(Key, Rec) then begin
       inc(Replacements);
       result := result + Copy(Subject, p, Iterator.i0-p) + Rec.Value;
-      p := Iterator.i1+Length(FD2);
+      p := Iterator.i1+Length(Delimiters.Del2);
     end else
       Iterator.NoMatch;
   end;
@@ -289,13 +288,13 @@ end;
 function TSolver.Next(const Txt :string; var Iterator :TIterator; out Key :string) :boolean;
 begin
   with Iterator do begin
-    i0 := PosEx(FD1, Txt, i1+1);
+    i0 := PosEx(Delimiters.Del1, Txt, i1+1);
     result := i0 > 0;
     if result then begin
-      i1 := PosEx(FD2, Txt, i0+Length(FD1));
+      i1 := PosEx(Delimiters.Del2, Txt, i0+Length(Delimiters.Del1));
       result := i1 > 0;
       if result then
-        Key := Copy(Txt, i0+Length(FD1), i1-i0-Length(FD1));
+        Key := Copy(Txt, i0+Length(Delimiters.Del1), i1-i0-Length(Delimiters.Del1));
     end;
   end;
 end;
@@ -304,19 +303,19 @@ end;
 
 function TSolver.TIterator.Next(out Key: string): boolean;
 begin
-  i0 := PosEx(Solver.FD1, Subject, i1+1);
+  i0 := PosEx(Solver.Delimiters.Del1, Subject, i1+1);
   result := i0 > 0;
   if result then begin
-    i1 := PosEx(Solver.FD2, Subject, i0+Length(Solver.FD1));
+    i1 := PosEx(Solver.Delimiters.Del2, Subject, i0+Length(Solver.Delimiters.Del1));
     result := i1 > 0;
     if result then
-      Key := Copy(Subject, i0+Length(Solver.FD1), i1-i0-Length(Solver.FD1));
+      Key := Copy(Subject, i0+Length(Solver.Delimiters.Del1), i1-i0-Length(Solver.Delimiters.Del1));
   end;
 end;
 
 procedure TSolver.TIterator.NoMatch;
 begin
-  i1 := i0 + Length(Solver.FD1);
+  i1 := i0 + Length(Solver.Delimiters.Del1);
 end;
 
 constructor TSolver.TIterator.Create(Solver: TSolver; const Subject :string);

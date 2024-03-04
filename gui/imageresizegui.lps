@@ -92,7 +92,7 @@
         <Filename Value="..\src\tags.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Tags"/>
-        <EditorIndex Value="17"/>
+        <EditorIndex Value="19"/>
         <TopLine Value="26"/>
         <CursorPos X="3" Y="51"/>
         <UsageCount Value="201"/>
@@ -102,7 +102,7 @@
         <Filename Value="..\src\exifutils.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="EXIFUtils"/>
-        <EditorIndex Value="18"/>
+        <EditorIndex Value="20"/>
         <CursorPos Y="11"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -113,7 +113,7 @@
         <ComponentName Value="SettingsDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="16"/>
+        <EditorIndex Value="18"/>
         <TopLine Value="86"/>
         <CursorPos X="48" Y="87"/>
         <UsageCount Value="201"/>
@@ -131,7 +131,7 @@
       <Unit>
         <Filename Value="..\src\animator.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="19"/>
+        <EditorIndex Value="21"/>
         <TopLine Value="134"/>
         <CursorPos Y="159"/>
         <UsageCount Value="200"/>
@@ -160,6 +160,7 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="PresentationDlg"/>
         <EditorIndex Value="1"/>
+        <TopLine Value="28"/>
         <CursorPos X="28" Y="28"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -179,18 +180,19 @@
         <Filename Value="presentations.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Presentations"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="10"/>
-        <TopLine Value="140"/>
-        <CursorPos X="130" Y="160"/>
+        <TopLine Value="131"/>
+        <CursorPos Y="169"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="galleryprocessor.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="11"/>
-        <TopLine Value="212"/>
-        <CursorPos Y="239"/>
+        <EditorIndex Value="12"/>
+        <TopLine Value="211"/>
+        <CursorPos X="33" Y="234"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit>
@@ -256,7 +258,7 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="3" Y="14"/>
-        <UsageCount Value="183"/>
+        <UsageCount Value="185"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\inttypes.pas"/>
@@ -264,7 +266,7 @@
         <UnitName Value="IntTypes"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="27" Y="32"/>
-        <UsageCount Value="148"/>
+        <UsageCount Value="150"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\stringutils.pas"/>
@@ -272,13 +274,13 @@
         <UnitName Value="StringUtils"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="13"/>
-        <UsageCount Value="147"/>
+        <UsageCount Value="149"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\imgutils.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="13"/>
-        <UsageCount Value="135"/>
+        <EditorIndex Value="14"/>
+        <UsageCount Value="137"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -286,7 +288,7 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="82" Y="30"/>
-        <UsageCount Value="132"/>
+        <UsageCount Value="134"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controlshot.pas"/>
@@ -294,7 +296,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="19"/>
         <CursorPos X="19" Y="41"/>
-        <UsageCount Value="86"/>
+        <UsageCount Value="88"/>
       </Unit>
       <Unit>
         <Filename Value="settingseditors.pas"/>
@@ -303,7 +305,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="254"/>
         <CursorPos Y="276"/>
-        <UsageCount Value="42"/>
+        <UsageCount Value="44"/>
       </Unit>
       <Unit>
         <Filename Value="taggingdlg.pas"/>
@@ -314,7 +316,7 @@
         <UnitName Value="TaggingDlg"/>
         <EditorIndex Value="9"/>
         <CursorPos X="19" Y="23"/>
-        <UsageCount Value="34"/>
+        <UsageCount Value="36"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -501,8 +503,10 @@
       <Unit>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\win\sysutils.pp"/>
         <UnitName Value="SysUtils"/>
-        <EditorIndex Value="14"/>
-        <UsageCount Value="84"/>
+        <EditorIndex Value="15"/>
+        <TopLine Value="441"/>
+        <CursorPos X="73" Y="459"/>
+        <UsageCount Value="85"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -574,8 +578,8 @@
       <Unit>
         <Filename Value="C:\lazarus\components\lazutils\fileutil.pas"/>
         <UnitName Value="FileUtil"/>
-        <EditorIndex Value="15"/>
-        <UsageCount Value="21"/>
+        <EditorIndex Value="17"/>
+        <UsageCount Value="22"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -616,9 +620,9 @@
       <Unit>
         <Filename Value="..\src\utils.pas"/>
         <EditorIndex Value="5"/>
-        <TopLine Value="13"/>
-        <CursorPos Y="15"/>
-        <UsageCount Value="32"/>
+        <TopLine Value="130"/>
+        <CursorPos X="3" Y="145"/>
+        <UsageCount Value="33"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -687,10 +691,11 @@
       <Unit>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\packages\fcl-base\src\inifiles.pp"/>
         <UnitName Value="IniFiles"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="160"/>
-        <CursorPos X="14" Y="177"/>
-        <UsageCount Value="6"/>
+        <EditorIndex Value="11"/>
+        <TopLine Value="164"/>
+        <CursorPos X="24" Y="193"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\sysutils\sysinth.inc"/>
@@ -786,7 +791,7 @@
         <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\sysutils\syshelph.inc"/>
         <EditorIndex Value="8"/>
         <CursorPos X="3" Y="5"/>
-        <UsageCount Value="15"/>
+        <UsageCount Value="16"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -798,11 +803,10 @@
       </Unit>
       <Unit>
         <Filename Value="..\src\templateengine.pas"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="12"/>
-        <TopLine Value="229"/>
-        <CursorPos Y="263"/>
-        <UsageCount Value="82"/>
+        <EditorIndex Value="13"/>
+        <TopLine Value="85"/>
+        <CursorPos Y="112"/>
+        <UsageCount Value="83"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -1231,7 +1235,7 @@
         <EditorIndex Value="7"/>
         <TopLine Value="4"/>
         <CursorPos X="20" Y="21"/>
-        <UsageCount Value="19"/>
+        <UsageCount Value="20"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -1410,6 +1414,14 @@
         <EditorIndex Value="4"/>
         <TopLine Value="364"/>
         <CursorPos Y="385"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\sysutils\fina.inc"/>
+        <EditorIndex Value="16"/>
+        <TopLine Value="267"/>
+        <CursorPos X="17" Y="307"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
       </Unit>
@@ -1419,124 +1431,124 @@
     </OtherDefines>
     <JumpHistory HistoryIndex="29">
       <Position>
-        <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="26"/>
+        <Filename Value="presentations.pas"/>
+        <Caret Line="160" TopLine="131"/>
       </Position>
       <Position>
-        <Filename Value="galleryprocessor.pas"/>
-        <Caret Line="240" TopLine="227"/>
+        <Filename Value="presentations.pas"/>
+        <Caret Line="161" TopLine="131"/>
       </Position>
       <Position>
-        <Filename Value="galleryprocessor.pas"/>
-        <Caret Line="239" TopLine="227"/>
+        <Filename Value="presentations.pas"/>
+        <Caret Line="162" TopLine="131"/>
       </Position>
       <Position>
-        <Filename Value="galleryprocessor.pas"/>
-        <Caret Line="240" TopLine="227"/>
+        <Filename Value="presentations.pas"/>
+        <Caret Line="163" TopLine="131"/>
       </Position>
       <Position>
-        <Filename Value="galleryprocessor.pas"/>
-        <Caret Line="241" TopLine="227"/>
+        <Filename Value="presentations.pas"/>
+        <Caret Line="164" TopLine="131"/>
       </Position>
       <Position>
-        <Filename Value="galleryprocessor.pas"/>
-        <Caret Line="242" TopLine="227"/>
+        <Filename Value="presentations.pas"/>
+        <Caret Line="166" TopLine="131"/>
       </Position>
       <Position>
-        <Filename Value="galleryprocessor.pas"/>
-        <Caret Line="243" TopLine="227"/>
+        <Filename Value="presentations.pas"/>
+        <Caret Line="167" TopLine="131"/>
       </Position>
       <Position>
-        <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="250" TopLine="229"/>
+        <Filename Value="presentations.pas"/>
+        <Caret Line="168" TopLine="131"/>
       </Position>
       <Position>
-        <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="251" TopLine="229"/>
+        <Filename Value="presentations.pas"/>
+        <Caret Line="166" TopLine="131"/>
       </Position>
       <Position>
-        <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="252" TopLine="229"/>
+        <Filename Value="presentations.pas"/>
+        <Caret Line="169" TopLine="131"/>
       </Position>
       <Position>
-        <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="253" TopLine="229"/>
+        <Filename Value="presentations.pas"/>
+        <Caret Line="153" TopLine="131"/>
       </Position>
       <Position>
-        <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="254" TopLine="229"/>
+        <Filename Value="presentations.pas"/>
+        <Caret Line="169" TopLine="131"/>
       </Position>
       <Position>
-        <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="255" TopLine="229"/>
+        <Filename Value="presentations.pas"/>
+        <Caret Line="139" TopLine="131"/>
       </Position>
       <Position>
-        <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="256" TopLine="229"/>
+        <Filename Value="presentations.pas"/>
+        <Caret Line="140" TopLine="131"/>
       </Position>
       <Position>
-        <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="261" TopLine="229"/>
+        <Filename Value="presentations.pas"/>
+        <Caret Line="141" TopLine="131"/>
       </Position>
       <Position>
-        <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="255" TopLine="229"/>
+        <Filename Value="presentations.pas"/>
+        <Caret Line="142" TopLine="131"/>
       </Position>
       <Position>
-        <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="256" TopLine="229"/>
+        <Filename Value="presentations.pas"/>
+        <Caret Line="143" TopLine="131"/>
       </Position>
       <Position>
-        <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="261" TopLine="229"/>
+        <Filename Value="presentations.pas"/>
+        <Caret Line="145" TopLine="131"/>
       </Position>
       <Position>
-        <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="255" TopLine="229"/>
+        <Filename Value="presentations.pas"/>
+        <Caret Line="139" TopLine="131"/>
       </Position>
       <Position>
-        <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="256" TopLine="229"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="261" TopLine="229"/>
+        <Filename Value="presentations.pas"/>
+        <Caret Line="147" TopLine="131"/>
       </Position>
       <Position>
         <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="255" TopLine="229"/>
+        <Caret Line="109" TopLine="85"/>
       </Position>
       <Position>
         <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="256" TopLine="229"/>
+        <Caret Line="110" TopLine="85"/>
       </Position>
       <Position>
         <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="263" TopLine="229"/>
+        <Caret Line="112" TopLine="85"/>
       </Position>
       <Position>
-        <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="257" TopLine="229"/>
+        <Filename Value="presentations.pas"/>
+        <Caret Line="169" TopLine="131"/>
       </Position>
       <Position>
-        <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="264" TopLine="229"/>
+        <Filename Value="presentations.pas"/>
+        <Caret Line="168" TopLine="131"/>
       </Position>
       <Position>
-        <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="250" TopLine="229"/>
+        <Filename Value="presentations.pas"/>
+        <Caret Line="169" TopLine="131"/>
       </Position>
       <Position>
-        <Filename Value="galleryprocessor.pas"/>
-        <Caret Line="244" TopLine="227"/>
+        <Filename Value="presentations.pas"/>
+        <Caret Line="168" TopLine="131"/>
       </Position>
       <Position>
-        <Filename Value="galleryprocessor.pas"/>
-        <Caret Line="245" TopLine="212"/>
+        <Filename Value="presentations.pas"/>
+        <Caret Line="169" TopLine="131"/>
       </Position>
       <Position>
-        <Filename Value="galleryprocessor.pas"/>
-        <Caret Line="239" TopLine="212"/>
+        <Filename Value="presentations.pas"/>
+        <Caret Line="168" TopLine="131"/>
+      </Position>
+      <Position>
+        <Filename Value="presentations.pas"/>
+        <Caret Line="166" TopLine="131"/>
       </Position>
     </JumpHistory>
     <RunParams>
