@@ -5,7 +5,7 @@ Version=100
 [Presentation]
 Id=Gallery100
 Class=Presentation
-;Delimiters={{,}}
+Delimiters.html={,}
 Title=Gallery 1.0
 Description=With thumbnail-preview
 Description.de=Mit Vorschau-Bildern

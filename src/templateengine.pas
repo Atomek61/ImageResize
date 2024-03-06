@@ -26,6 +26,8 @@ type
     MUSTACHEDELIMITERS      :TDelimiters = (Del1: '{{'; Del2: '}}');
     CURLYBRACKETDELIMITERS  :TDelimiters = (Del1: '{'; Del2: '}');
 
+    MAXKEYLENGTH = 24;
+
 type
   { TSolver }
 
@@ -302,28 +304,29 @@ end;
 { TSolver.TIterator }
 
 function TSolver.TIterator.Next(out Key: string): boolean;
+var l :integer;
 begin
-  i0 := PosEx(Solver.Delimiters.Del1, Subject, i1+1);
-  result := i0 > 0;
-  if result then begin
-    i1 := PosEx(Solver.Delimiters.Del2, Subject, i0+Length(Solver.Delimiters.Del1));
-    result := i1 > 0;
-    if result then
-      Key := Copy(Subject, i0+Length(Solver.Delimiters.Del1), i1-i0-Length(Solver.Delimiters.Del1));
-  end;
+  i0 := PosEx(Solver.Delimiters.Del1, Subject, i1+Length(Solver.Delimiters.Del2));
+  if i0 = 0 then Exit(false);
+  i1 := PosEx(Solver.Delimiters.Del2, Subject, i0+Length(Solver.Delimiters.Del1));
+  if i1 = 0 then Exit(false);
+  l := i1-i0-Length(Solver.Delimiters.Del1);
+  if l>MAXKEYLENGTH then Exit(false);
+  Key := Copy(Subject, i0+Length(Solver.Delimiters.Del1), l);
+  result := true;
 end;
 
 procedure TSolver.TIterator.NoMatch;
 begin
-  i1 := i0 + Length(Solver.Delimiters.Del1);
+  i1 := i0 + Length(Solver.Delimiters.Del1) - Length(Solver.Delimiters.Del2);
 end;
 
 constructor TSolver.TIterator.Create(Solver: TSolver; const Subject :string);
 begin
   self.Solver := Solver;
   self.Subject := Subject;
-  i0 := 0;
-  i1 := 0;
+  i0 := 1;
+  i1 := 1-Length(Solver.Delimiters.Del2);
 end;
 
 //procedure Test;

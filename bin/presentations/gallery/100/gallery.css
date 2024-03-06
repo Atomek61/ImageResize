@@ -4,20 +4,24 @@ body {
     line-height: 0;
 }
 
-#display {
+#gallery {
+    aspect-ratio: 16/12;
+}
+
+#gallery .display {
     width: 100%;
     aspect-ratio: {RATIO};
     object-fit: contain;
     background-color: {BCKCOLOR2};
 }
 
-#picklist {
+#gallery .picklist {
     overflow: auto;
     display: flex;
     gap: {GAP}px;
 }
 
-#picklist img  {
+#gallery .picklist img  {
     padding: {GAP}px;
     background-color: {BCKCOLOR2};
     aspect-ratio: {RATIO};
