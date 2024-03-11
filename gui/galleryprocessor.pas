@@ -197,7 +197,7 @@ begin
         Lists.Add(Fragment.Key, '');
 
       // Iterate over the images
-      ImgVars.Delimiters := CURLYBRACKETDELIMITERS;
+      ImgVars.Delimiters := CURLYBRACEDELIMITERS;
       for i:=0 to FFilesTags.Filenames.Count-1 do begin
         Ext := ExtractExt(FFilesTags.Filenames[i]);
 
@@ -249,7 +249,7 @@ begin
         Log(SMsgProcessingTemplateFmt, [ExtractFilename(TemplateFilename)], llInfo);
         FileSource.LoadFromFile(TemplateFilename, TEncoding.UTF8);
         if not FDelimiters.TryGetValue(LowerCase(ExtractExt(TemplateFilename)), FDocVars.Delimiters) then
-          FDocVars.Delimiters := CURLYBRACKETDELIMITERS;
+          FDocVars.Delimiters := CURLYBRACEDELIMITERS;
         FileText := FDocVars.Replace(FileSource.Text, Replacements);
         inc(Stats.Replacements, Replacements);
         FileSource.Text := FileText;
@@ -293,27 +293,25 @@ begin
   end;
 end;
 
-//procedure Test;
-//var
-//  Processor :TProcessor;
-//begin
-//  Processor := TProcessor.Create;
-//  try
-//    Processor.Folder := 'D:\Mf\Dev\Lazarus\ImageResize\tst\tst9\img1920';
-//    Processor.ListFragments.Add('LIST-IMG', '<img src="«IMG-URL»" alt="«IMG-TITLE»"/>'+#13+#10);
-//    Processor.ListFragments.Add('LIST-JSON', '{url: "«IMG-URL»", title="«IMG-TITLE»"},'+#13+#10);
-//    Processor.TemplateFiles.Add('D:\Mf\Dev\Lazarus\ImageResize\tst\srcF\index.html.template');
-//    Processor.DocumentVars.Add('TITLE', 'Beispiel');
-//    Processor.Execute;
-//  finally
-//    Processor.Free;
-//  end;
-//end;
-//
-//initialization
-//begin
-//  Test;
-//end;
-//
+procedure Test;
+var
+  Vars :TSolver;
+  r :integer;
+  d :string;
+begin
+  Vars := TSolver.Create;
+  Vars.Delimiters := CURLYBRACEDELIMITERS;
+  Vars.Add('THUMBNAILS', 'mein kleiner Daumennagel');
+
+  d := Vars.Replace('XXXX {THUMBNAILS} YYYY', r);
+
+
+end;
+
+initialization
+begin
+  Test;
+end;
+
 end.
 

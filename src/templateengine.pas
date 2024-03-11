@@ -24,7 +24,7 @@ type
     PERCENTDELIMITERS       :TDelimiters = (Del1: '%'; Del2: '%');
     BROSTDELIMITERS         :TDelimiters = (Del1: '«'; Del2: '»');
     MUSTACHEDELIMITERS      :TDelimiters = (Del1: '{{'; Del2: '}}');
-    CURLYBRACKETDELIMITERS  :TDelimiters = (Del1: '{'; Del2: '}');
+    CURLYBRACEDELIMITERS    :TDelimiters = (Del1: '{'; Del2: '}');
 
     MAXKEYLENGTH = 24;
 
@@ -63,7 +63,7 @@ type
     function GetItem(const Key :string): string;
     function GetKey(Index :integer): string;
     function GetValue(Index :integer) :string; overload;
-    function Next(const Txt :string; var Iterator :TIterator; out Key :string) :boolean;
+    //function Next(const Txt :string; var Iterator :TIterator; out Key :string) :boolean;
     procedure SetItem(const Key :string; const Value: string);
   public
     Delimiters :TDelimiters;
@@ -144,7 +144,7 @@ constructor TSolver.Create;
 begin
   FDict := TDictionary<string, TRec>.Create;
   FArray := TObjectList<TRec>.Create;
-  Delimiters := PERCENTDELIMITERS;
+  Delimiters := CURLYBRACEDELIMITERS;
 end;
 
 destructor TSolver.Destroy;
@@ -287,20 +287,20 @@ begin
   result := FArray[Index].Value;
 end;
 
-function TSolver.Next(const Txt :string; var Iterator :TIterator; out Key :string) :boolean;
-begin
-  with Iterator do begin
-    i0 := PosEx(Delimiters.Del1, Txt, i1+1);
-    result := i0 > 0;
-    if result then begin
-      i1 := PosEx(Delimiters.Del2, Txt, i0+Length(Delimiters.Del1));
-      result := i1 > 0;
-      if result then
-        Key := Copy(Txt, i0+Length(Delimiters.Del1), i1-i0-Length(Delimiters.Del1));
-    end;
-  end;
-end;
-
+//function TSolver.Next(const Txt :string; var Iterator :TIterator; out Key :string) :boolean;
+//begin
+//  with Iterator do begin
+//    i0 := PosEx(Delimiters.Del1, Txt, i1+1);
+//    result := i0 > 0;
+//    if result then begin
+//      i1 := PosEx(Delimiters.Del2, Txt, i0+Length(Delimiters.Del1));
+//      result := i1 > 0;
+//      if result then
+//        Key := Copy(Txt, i0+Length(Delimiters.Del1), i1-i0-Length(Delimiters.Del1));
+//    end;
+//  end;
+//end;
+//
 { TSolver.TIterator }
 
 function TSolver.TIterator.Next(out Key: string): boolean;
@@ -311,7 +311,7 @@ begin
   i1 := PosEx(Solver.Delimiters.Del2, Subject, i0+Length(Solver.Delimiters.Del1));
   if i1 = 0 then Exit(false);
   l := i1-i0-Length(Solver.Delimiters.Del1);
-  if l>MAXKEYLENGTH then Exit(false);
+  if l>MAXKEYLENGTH then l := MAXKEYLENGTH;
   Key := Copy(Subject, i0+Length(Solver.Delimiters.Del1), l);
   result := true;
 end;
