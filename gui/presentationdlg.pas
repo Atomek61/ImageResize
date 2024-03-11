@@ -15,6 +15,7 @@ type
   { TPresentationDialog }
 
   TPresentationDialog = class(TForm)
+    ButtonRescan: TBitBtn;
     ButtonBrowseTargetFolder: TBitBtn;
     ButtonExecute: TBitBtn;
     ButtonTargetFromDoc: TBitBtn;
@@ -38,12 +39,12 @@ type
     procedure ButtonBrowseTargetFolderClick(Sender: TObject);
     procedure ButtonExecuteClick(Sender: TObject);
     procedure ButtonOkClick(Sender: TObject);
+    procedure ButtonRescanClick(Sender: TObject);
     procedure ButtonTargetFromDocClick(Sender: TObject);
     procedure ButtonWebShowClick(Sender: TObject);
     procedure ComboBoxManagersChange(Sender: TObject);
     procedure ComboBoxManagersDrawItem(Control: TWinControl; Index: Integer;
       ARect: TRect; State: TOwnerDrawState);
-    procedure EditImgTagsFilenameChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
   private
@@ -104,6 +105,11 @@ begin
   ModalResult := mrOk;
 end;
 
+procedure TPresentationDialog.ButtonRescanClick(Sender: TObject);
+begin
+  Scan;
+end;
+
 procedure TPresentationDialog.ButtonTargetFromDocClick(Sender: TObject);
 begin
   if (MainDialog.EditTargetFolder.Text<>'') and (Pos('%', MainDialog.EditTargetFolder.Text)=0) then
@@ -154,11 +160,6 @@ begin
   Cnvs.Font.Size := 9;
   Cnvs.Font.Style := [];
   Cnvs.TextOut(78, ARect.Top+36, FManagers[Index].Description);
-end;
-
-procedure TPresentationDialog.EditImgTagsFilenameChange(Sender: TObject);
-begin
-  MainDialog.Dirty := true;
 end;
 
 procedure TPresentationDialog.ButtonBrowseTargetFolderClick(Sender: TObject);
@@ -221,7 +222,7 @@ begin
       ManagerIndex := Index
     else
       ManagerIndex := -1;
-
+Application.ProcessMessages;
     result := ShowModal = mrOk;
     if result then begin
       PresentationSettings.ImgTagsFilename.AsDisplay := EditImgTagsFilename.Text;

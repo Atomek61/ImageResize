@@ -291,10 +291,8 @@ msgid "Missing sizes."
 msgstr "Fehlende Größe."
 
 #: imgres.serrmultiplesizes
-#, fuzzy
-#| msgid "Multiple sizes but placeholder %SIZE% not found in either folder or filename template"
 msgid "Multiple sizes but placeholder {SIZE} not found in either folder or filename template"
-msgstr "Mehrfache Größe, aber Platzhalter %SIZE% nicht gefunden im Verzeichnisnamen oder in der Dateinamen-Vorlage"
+msgstr "Mehrfache Größe, aber Platzhalter {SIZE} nicht gefunden im Verzeichnisnamen oder in der Dateinamen-Vorlage"
 
 #: imgres.sinfresultfmt
 #, object-pascal-format
@@ -465,10 +463,8 @@ msgid "Cancelled at %.0f%%"
 msgstr "Abgebrochen bei %.0f%%"
 
 #: maindlg.serrenterplaceholder
-#, fuzzy
-#| msgid "Enter placeholder %SIZE% or %SIZENAME% to either the target folder or the file template"
 msgid "Enter placeholder {SIZE} or {SIZENAME} to either the target folder or the file template"
-msgstr "Geben Sie den Platzhalter %SIZE% oder %SIZENAME% an im Verzeichnisnamen, bzw. im Dateinamen-Template"
+msgstr "Geben Sie den Platzhalter {SIZE} oder {SIZENAME} an im Verzeichnisnamen, bzw. im Dateinamen-Template"
 
 #: maindlg.serrinvalidjpgquality
 msgid "Invalid JPEG quality"
@@ -1164,6 +1160,28 @@ msgctxt "tmaindialog.comboboxshuffleseed.text"
 msgid "<random>"
 msgstr "<random>"
 
+#: tmaindialog.comboboxsizenames.hint
+msgid ""
+"Size names are required, if you want to create a presentation, which uses\n"
+"the {SIZENAME} template placeholder.\n"
+"For each size enter a name and separate names with commas.\n"
+"\n"
+"I.e. if you have the sizes \"120,1920\" and you enter the name list \"_THUMBNAIL,\",\n"
+"then for all 120px sized images the placeholder {SIZENAME} is \"_THUMBNAIL\"\n"
+"and for all 1920px sized images the placeholder will be an empty string.\n"
+"This is useful for presentations with a thumbnail view and where thumbnails and\n"
+"large views are rendered to a common folder."
+msgstr ""
+"Größennamen sind erforderlich, wenn Sie eine Präsentation erstellen wollen, die\n"
+"den Platzhalter {SIZENAME} verwendet.\n"
+"Geben Sie für jede Größe einen Namen ein und trennen Sie die Namen mit Kommas.\n"
+"\n"
+"Wenn Sie z.B. die Größen \"120,1920\" haben und Sie die Namensliste \"_THUMBNAIL,\" eingeben,\n"
+"dann ist der Platzhalter {SIZENAME} für alle Bilder in der Größe 120px \"_THUMBNAIL\"\n"
+"und für alle Bilder in der Größe 1920px ergibt der Platzhalter eine leere Zeichenkette.\n"
+"Dies ist nützlich für Präsentationen mit einer Thumbnail-Ansicht, bei denen Thumbnails und\n"
+"großen Ansichten in einen gemeinsamen Ordner gerendert werden."
+
 #: tmaindialog.editmrkfilename.hint
 msgid ""
 "Select a png file with the desired watermark.\n"
@@ -1229,18 +1247,13 @@ msgid "1"
 msgstr "1"
 
 #: tmaindialog.editrentemplate.hint
-#, fuzzy
-#| msgid ""
-#| "Enter a filename template containing placeholders for special values.\n"
-#| "This template will be expanded for each resampled image. Insert the\n"
-#| "%SIZE% placeholder to enable multiple sizes in a common folder."
 msgid ""
 "Enter a filename template containing placeholders for special values.\n"
 "This template will be expanded for each resampled image. Insert the\n"
 "{SIZE} placeholder to enable multiple sizes in a common folder."
 msgstr ""
 "Geben Sie eine Dateinamen-Vorlage ein, die Platzhalter für bestimmte Werte enthält.\n"
-"Die Vorlage wird für jede skalierte Datei ausgewertet. Fügen Sie den %SIZE%-Platzhalter ein,\n"
+"Die Vorlage wird für jede skalierte Datei ausgewertet. Fügen Sie den {SIZE}-Platzhalter ein,\n"
 "um mehrere Größen eines Bildes in einem gemeinsamen Verzeichnis erzeugen zu können."
 
 #: tmaindialog.editsizes.hint
@@ -1269,11 +1282,6 @@ msgid "*.jpg;*.png"
 msgstr "*.jpg;*.png"
 
 #: tmaindialog.edittargetfolder.hint
-#, fuzzy
-#| msgid ""
-#| "Enter a destination for the resampled images.\n"
-#| "If multiple sizes are entered, insert a placeholder %SIZE%\n"
-#| "into the path where the program shall insert the current size ."
 msgid ""
 "Enter a destination for the resampled images.\n"
 "If multiple sizes are entered, insert placeholder {SIZE}\n"
@@ -1281,7 +1289,7 @@ msgid ""
 "shall insert the current size ."
 msgstr ""
 "Geben Sie ein Ziel für die skalierten Bilder an.\n"
-"Wenn mehrere Größen angegeben werden, muss der Platzhalter %SIZE% im Pfad\n"
+"Wenn mehrere Größen angegeben werden, muss der Platzhalter {SIZE} im Pfad\n"
 " an der Stelle eingefügt werden, wo die aktuelle Größe erscheinen soll."
 
 #: tmaindialog.groupboxinterpolationquality.caption
@@ -1487,10 +1495,6 @@ msgstr "1 Einfach - ein Verzeichnis für jede Größe"
 #: tmaindialog.saveasdialogtagsreport.title
 msgid "Save Tags Report as"
 msgstr "Tags Report speichern als"
-
-#: tmaindialog.toolbutton1.caption
-msgid "ToolButton1"
-msgstr ""
 
 #: tmaindialog.toolbuttonabout.hint
 msgid "License and Vendor Infos"
@@ -1712,9 +1716,21 @@ msgctxt "tpresentationdialog.buttonok.hint"
 msgid "Closes the dialog and saves the settings"
 msgstr "Schließt den Dialog und übernimmt geänderte Einstellungen"
 
+#: tpresentationdialog.buttonrescan.caption
+msgid "Re&scan"
+msgstr "Re&scan"
+
+#: tpresentationdialog.buttonrescan.hint
+msgid ""
+"Load all available presentations again.\n"
+"\n"
+"This makes sense, when you are creating and testing your customized presentation."
+msgstr ""
+"Lade alle verfügbaren Präsentationen erneut.\n"
+"\n"
+"Das hat Sinn, wenn Sie eigene Präsentationen entwickeln und testen wollen."
+
 #: tpresentationdialog.buttontargetfromdoc.hint
-#, fuzzy
-#| msgid "Copies the current target folder from the main dialog."
 msgid "Tries to uses the current target folder from the main dialog."
 msgstr "Kopiert das Zielverzeichnis des Hauptdialoges hierher."
 
@@ -1738,11 +1754,9 @@ msgstr ""
 "Informationen für die Erstellung der Präsentation."
 
 #: tpresentationdialog.labelmanagers.caption
-#, fuzzy
-#| msgid "&Available:"
 msgctxt "tpresentationdialog.labelmanagers.caption"
 msgid "L&ayout:"
-msgstr "&Verfügbar:"
+msgstr "L&ayout:"
 
 #: tpresentationdialog.labeltargetfolder.caption
 msgctxt "tpresentationdialog.labeltargetfolder.caption"
@@ -1874,4 +1888,3 @@ msgstr ""
 msgctxt "webutils.serrinvalidhtmlcolorfmt"
 msgid "Invalid web color '%s'."
 msgstr "Ungültige Web-Farbe '%s'."
-

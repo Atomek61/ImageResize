@@ -100,7 +100,6 @@ object PresentationDialog: TPresentationDialog
         Width = 287
         Anchors = [akTop, akLeft, akRight]
         TabOrder = 0
-        OnChange = EditImgTagsFilenameChange
       end
       object LabelTargetFolder: TLabel
         AnchorSideLeft.Control = EditImgTagsFilename
@@ -272,6 +271,20 @@ object PresentationDialog: TPresentationDialog
         ImageIndex = 25
         OnClick = ButtonExecuteClick
         TabOrder = 0
+      end
+      object ButtonRescan: TBitBtn
+        Left = 8
+        Height = 30
+        Hint = 'Load all available presentations again.'#13#10#13#10'This makes sense, when you are creating and testing your customized presentation.'
+        Top = 160
+        Width = 110
+        Align = alTop
+        BorderSpacing.Around = 8
+        Caption = 'Re&scan'
+        Images = ImagesModule.ImageList20x20
+        ImageIndex = 19
+        OnClick = ButtonRescanClick
+        TabOrder = 4
       end
     end
   end

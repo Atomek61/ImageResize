@@ -1116,6 +1116,19 @@ msgctxt "tmaindialog.comboboxshuffleseed.text"
 msgid "<random>"
 msgstr ""
 
+#: tmaindialog.comboboxsizenames.hint
+msgid ""
+"Size names are required, if you want to create a presentation, which uses\n"
+"the {SIZENAME} template placeholder.\n"
+"For each size enter a name and separate names with commas.\n"
+"\n"
+"I.e. if you have the sizes \"120,1920\" and you enter the name list \"_THUMBNAIL,\",\n"
+"then for all 120px sized images the placeholder {SIZENAME} is \"_THUMBNAIL\"\n"
+"and for all 1920px sized images the placeholder will be an empty string.\n"
+"This is useful for presentations with a thumbnail view and where thumbnails and\n"
+"large views are rendered to a common folder."
+msgstr ""
+
 #: tmaindialog.editmrkfilename.hint
 msgid ""
 "Select a png file with the desired watermark.\n"
@@ -1398,10 +1411,6 @@ msgstr ""
 msgid "Save Tags Report as"
 msgstr ""
 
-#: tmaindialog.toolbutton1.caption
-msgid "ToolButton1"
-msgstr ""
-
 #: tmaindialog.toolbuttonabout.hint
 msgid "License and Vendor Infos"
 msgstr ""
@@ -1616,6 +1625,17 @@ msgstr ""
 #: tpresentationdialog.buttonok.hint
 msgctxt "tpresentationdialog.buttonok.hint"
 msgid "Closes the dialog and saves the settings"
+msgstr ""
+
+#: tpresentationdialog.buttonrescan.caption
+msgid "Re&scan"
+msgstr ""
+
+#: tpresentationdialog.buttonrescan.hint
+msgid ""
+"Load all available presentations again.\n"
+"\n"
+"This makes sense, when you are creating and testing your customized presentation."
 msgstr ""
 
 #: tpresentationdialog.buttontargetfromdoc.hint

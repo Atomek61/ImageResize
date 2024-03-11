@@ -76,11 +76,6 @@ object MainDialog: TMainDialog
           Grouped = True
           Style = tbsCheck
         end
-        object ToolButton1: TToolButton
-          Left = 162
-          Top = 0
-          Caption = 'ToolButton1'
-        end
       end
       object PageControlSource: TPageControl
         Left = 4
@@ -261,14 +256,14 @@ object MainDialog: TMainDialog
         Top = 4
         Width = 393
         TabStop = False
-        ActivePage = TabSheetRenaming
+        ActivePage = TabSheetSizes
         Align = alClient
         BorderSpacing.Around = 4
         ImagesWidth = 32
         MultiLine = True
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 1
+        TabIndex = 0
         TabOrder = 1
         Options = [nboMultiLine]
         object TabSheetSizes: TTabSheet
@@ -371,6 +366,7 @@ object MainDialog: TMainDialog
           object ComboBoxSizeNames: TComboBox
             Left = 120
             Height = 23
+            Hint = 'Size names are required, if you want to create a presentation, which uses'#13#10'the {SIZENAME} template placeholder.'#13#10'For each size enter a name and separate names with commas.'#13#10#13#10'I.e. if you have the sizes "120,1920" and you enter the name list "_THUMBNAIL,",'#13#10'then for all 120px sized images the placeholder {SIZENAME} is "_THUMBNAIL"'#13#10'and for all 1920px sized images the placeholder will be an empty string.'#13#10'This is useful for presentations with a thumbnail view and where thumbnails and'#13#10'large views are rendered to a common folder.'
             Top = 39
             Width = 228
             ItemHeight = 15

@@ -246,7 +246,6 @@ type
     ToolBarSrc: TToolBar;
     ToolBarParameters: TToolBar;
     ToolBarSizeButtons: TToolBar;
-    ToolButton1: TToolButton;
     ToolButtonSep2: TToolButton;
     ToolButtonSep1: TToolButton;
     ToolButtonNew: TToolButton;
