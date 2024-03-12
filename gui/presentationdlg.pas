@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Buttons, StdCtrls,
   ExtCtrls, ComCtrls, Presentations, LCLIntf, LCLType, RichMemo, HtmlView,
   Logging, Types, GetText, FileUtil, ImgRes,
-  LoggingRichMemo, Settings, AppSettings, HtmlLabel;
+  LoggingRichMemo, Settings, AppSettings, HtmlLabel, HTMLUn2, HtmlGlobals;
 
 type
 
@@ -25,7 +25,6 @@ type
     ComboBoxManagers: TComboBox;
     EditImgTagsFilename: TEdit;
     LabelLongDescription: THtmlLabel;
-    ImagePreview: TImage;
     LabelTargetFolder: TLabel;
     LabelManagers: TLabel;
     MemoMessages: TRichMemo;
@@ -47,6 +46,8 @@ type
       ARect: TRect; State: TOwnerDrawState);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure LabelLongDescriptionImageRequest(Sender: TObject;
+      const SRC: ThtString; var Stream: TStream);
   private
     FManagers :TManagers;
     FManagerIndex :integer;
@@ -86,6 +87,29 @@ begin
   FManagers.Free;
 end;
 
+procedure TPresentationDialog.LabelLongDescriptionImageRequest(Sender: TObject;
+  const SRC: ThtString; var Stream: TStream);
+var
+  FileStream :TFileStream;
+  MemStream :TMemoryStream;
+begin
+  if not Assigned(FManager) then Exit;
+  FileStream := TFileStream.Create(FManager.RootDir + SRC, fmOpenRead);
+  try
+    MemStream := TMemoryStream.Create;
+    try
+      MemStream.CopyFrom(FileStream, FileStream.Size);
+      MemStream.Position := 0;
+      Stream := MemStream;
+    except
+      MemStream.Free;
+      Stream := nil;
+    end;
+  finally
+    FileStream.Free;
+  end;
+end;
+
 procedure TPresentationDialog.ButtonExecuteClick(Sender: TObject);
 begin
   if (Trim(EditImgTagsFilename.Text)='') or not FileExists(EditImgTagsFilename.Text) then
@@ -121,11 +145,11 @@ var
   Manager :TPresentationManager;
   DocURL :string;
 begin
-  if (ManagerIndex=-1) or not (
-      FManagers[ManagerIndex] is TPresentationManager
+  if not Assigned(FManager) or not (
+      FManager is TPresentationManager
       and (Trim(EditImgTagsFilename.Text)<>''
   )) then Exit;
-  Manager := FManagers[ManagerIndex] as TPresentationManager;
+  Manager := FManager as TPresentationManager;
   if Manager.WebResource = '' then Exit;
   DocURL := ExtractFilePath(EditImgTagsFilename.Text)+Manager.WebResource;
   if not OpenDocument(DocURL) then
@@ -171,31 +195,27 @@ begin
 end;
 
 procedure TPresentationDialog.SetManagerIndex(Index :integer);
-var
-  Manager :TCustomManager;
 begin
-  if FManagerIndex=Index then Exit;
+  if Index=FManagerIndex then Exit;
   if Index<0 then
     Index := -1;
- ComboBoxManagers.ItemIndex := Index;
-  if Index<>-1 then begin
-    Manager := FManagers[Index];
-    LabelLongDescription.Body.Text := Manager.LongDescription;
-    ImagePreview.Picture.Assign(Manager.Preview);
-    Manager.ShowFrame(PanelManagerFrame).Align := alClient;
-    ButtonWebShow.Enabled := true;
-  end else begin
-    LabelLongDescription.Body.Clear;
-    ImagePreview.Picture := nil;
-    ButtonWebShow.Enabled := false;
-  end;
-  if FManagerIndex<>-1 then
-    FManager.HideFrame;
-  FManagerIndex := Index;
+  ComboBoxManagers.ItemIndex := Index;
   if FManagerIndex=-1 then
     FManager := nil
   else
+    FManager.HideFrame;
+  if Index<>-1 then begin
     FManager := FManagers[Index];
+    FManagerIndex := Index;
+    LabelLongDescription.Body.Text := FManager.LongDescription;
+    FManager.ShowFrame(PanelManagerFrame).Align := alClient;
+    ButtonWebShow.Enabled := true;
+  end else begin
+    FManager := nil;
+    FManagerIndex := -1;
+    LabelLongDescription.Body.Clear;
+    ButtonWebShow.Enabled := false;
+  end;
 end;
 
 function TPresentationDialog.Execute(PresentationSettings :TPresentationSettings; ParamsList :TSettingsList) :boolean;
@@ -222,7 +242,6 @@ begin
       ManagerIndex := Index
     else
       ManagerIndex := -1;
-Application.ProcessMessages;
     result := ShowModal = mrOk;
     if result then begin
       PresentationSettings.ImgTagsFilename.AsDisplay := EditImgTagsFilename.Text;

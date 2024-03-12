@@ -7,13 +7,13 @@ Id=Gallery100
 Class=Presentation
 Delimiters.html={,}
 Title=Gallery 1.0
+RootDir=100
 Description=With thumbnail-preview
 Description.de=Mit Vorschau-Bildern
 LongDescription=@100\longdescription.html
 LongDescription.de=@100\longdescription.de.html
 Date=2024-02-26 22:00:00
 Icon=icon.png
-Preview=100\preview.jpg
 ;Copy=gallery.css
 Templates=100\index.html,100\gallery.css
 Fragment.THUMBNAILS=<img src="{IMGFILETITLE}_THUMBNAIL.{IMGFILEEXT}" data-src="{IMGFILENAME}"/>{CRLF}

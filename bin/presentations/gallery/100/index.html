@@ -23,7 +23,8 @@
                         showImage(event.target)
                     });
                 }
-                document.getElementById("display").setAttribute('src', document.getElementById("picklist").children[0].getAttribute('data-src'));
+                showImage(document.getElementById("picklist").children[0]);
+
                 let display = document.getElementById("display");
                 display.addEventListener('click', (event) =>{
                     if (event.clientX<event.target.getBoundingClientRect().width / 2)

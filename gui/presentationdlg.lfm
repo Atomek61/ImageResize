@@ -52,14 +52,14 @@ object PresentationDialog: TPresentationDialog
     Constraints.MinHeight = 314
     TabOrder = 0
     object PanelPresentation: TPanel
-      Left = 450
+      Left = 360
       Height = 466
       Top = 0
-      Width = 424
+      Width = 514
       Align = alClient
       BevelOuter = bvNone
       ClientHeight = 466
-      ClientWidth = 424
+      ClientWidth = 514
       ParentBackground = False
       TabOrder = 0
       object ButtonBrowseTargetFolder: TBitBtn
@@ -68,7 +68,7 @@ object PresentationDialog: TPresentationDialog
         AnchorSideTop.Control = EditImgTagsFilename
         AnchorSideTop.Side = asrCenter
         AnchorSideBottom.Side = asrBottom
-        Left = 359
+        Left = 449
         Height = 25
         Hint = 'Select the .imgtags file in the folder of the images to be dispayed.'
         Top = 25
@@ -81,18 +81,18 @@ object PresentationDialog: TPresentationDialog
         TabOrder = 1
       end
       object EditImgTagsFilename: TEdit
-        Left = 5
+        Left = 15
         Height = 23
         Hint = 'The .imgtags file has important infomation how to create the presentation.'
         Top = 26
-        Width = 353
+        Width = 433
         Anchors = [akTop, akLeft, akRight]
         TabOrder = 0
       end
       object LabelTargetFolder: TLabel
         AnchorSideLeft.Control = EditImgTagsFilename
         AnchorSideBottom.Control = EditImgTagsFilename
-        Left = 8
+        Left = 18
         Height = 15
         Top = 8
         Width = 70
@@ -103,12 +103,14 @@ object PresentationDialog: TPresentationDialog
         FocusControl = EditImgTagsFilename
       end
       object PanelManagerFrame: TPanel
-        Left = 0
-        Height = 410
+        Left = 12
+        Height = 406
         Top = 56
-        Width = 424
+        Width = 498
         Align = alBottom
         Anchors = [akTop, akLeft, akRight, akBottom]
+        BorderSpacing.Left = 8
+        BorderSpacing.Around = 4
         BevelOuter = bvNone
         Caption = 'This presentation has no settings'
         Font.Color = clGrayText
@@ -121,7 +123,7 @@ object PresentationDialog: TPresentationDialog
         AnchorSideTop.Control = EditImgTagsFilename
         AnchorSideTop.Side = asrCenter
         AnchorSideBottom.Side = asrBottom
-        Left = 389
+        Left = 479
         Height = 25
         Hint = 'Tries to uses the current target folder from the main dialog.'
         Top = 25
@@ -231,11 +233,11 @@ object PresentationDialog: TPresentationDialog
       Left = 0
       Height = 466
       Top = 0
-      Width = 450
+      Width = 360
       Align = alLeft
       BevelOuter = bvNone
       ClientHeight = 466
-      ClientWidth = 450
+      ClientWidth = 360
       TabOrder = 2
       object LabelManagers: TLabel
         AnchorSideLeft.Control = ComboBoxManagers
@@ -253,43 +255,29 @@ object PresentationDialog: TPresentationDialog
         Left = 8
         Height = 70
         Top = 26
-        Width = 272
+        Width = 352
         ItemHeight = 64
         Style = csOwnerDrawFixed
         TabOrder = 0
         OnChange = ComboBoxManagersChange
         OnDrawItem = ComboBoxManagersDrawItem
       end
-      object ImagePreview: TImage
-        AnchorSideLeft.Control = ComboBoxManagers
-        AnchorSideLeft.Side = asrBottom
-        Left = 285
-        Height = 96
-        Top = 8
-        Width = 161
-        Anchors = [akTop, akLeft, akRight]
-        BorderSpacing.Left = 5
-        BorderSpacing.Right = 4
-        Center = True
-        Proportional = True
-      end
       object LabelLongDescription: THtmlLabel
-        Left = 0
-        Height = 358
-        Top = 108
-        Width = 450
+        Left = 8
+        Height = 362
+        Top = 104
+        Width = 352
         DefFontName = 'default'
         HistoryMaxCount = 0
-        MarginHeight = 12
-        MarginWidth = 24
+        MarginHeight = 0
+        MarginWidth = 0
         NoSelect = False
         PrintMarginBottom = 2
         PrintMarginLeft = 2
         PrintMarginRight = 2
         PrintMarginTop = 2
         PrintScale = 1
-        ScrollBars = ssAutoBoth
-        Align = alBottom
+        OnImageRequest = LabelLongDescriptionImageRequest
         Anchors = [akTop, akLeft, akRight, akBottom]
         TabOrder = 1
       end

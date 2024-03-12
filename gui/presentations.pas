@@ -35,15 +35,13 @@ type
     FDate :TDateTime;
     FIconFile :string;
     FIcon :TPicture;
-    FPreviewFile :string;
-    FPreview :TPicture;
     FTemplateFolder :string;
     FImgTagsFilename :string;
     FSettings :TSettings;
     FDelimiters :TTypeDelimiters;
     FPrdDir :string;
+    FRootDir :string;
     function GetIcon: TGraphic;
-    function GetPreview: TGraphic;
   protected
   public
     constructor Create(IniFile :TCustomIniFile); virtual; overload;
@@ -56,13 +54,13 @@ type
     procedure StoreParams; virtual; // Before Execution or before closing the dialog
     procedure HideFrame; virtual;
     procedure Execute; virtual;
+    property RootDir :string read FRootDir;
     property Id :string read FId;
     property Title :string read FTitle;
     property Description :string read FDescription;
     property LongDescription :string read FLongDescription;
     property Date :TDateTime read FDate;
     property Icon :TGraphic read GetIcon;
-    property Preview :TGraphic read GetPreview;
     property ImgTagsFilename :string read FImgTagsFilename write FImgTagsFilename;
     property Settings :TSettings read FSettings;
     property Delimiters :TTypeDelimiters read FDelimiters;
@@ -152,7 +150,8 @@ var
 begin
   inherited Create;
   FDelimiters       := TTypeDelimiters.Create;
-  FPrdDir           := ExtractFilePath(IniFile.Filename);
+  FPrdDir           := IncludeTrailingPathDelimiter(CreateAbsolutePath(ExtractFilePath(IniFile.Filename), ExtractFilePath(IniFile.Filename)));
+  FRootDir          := IncludeTrailingPathDelimiter(CreateAbsolutePath(IniFile.ReadString(PRESENTATION_SECTION, 'RootDir', FPrdDir), FPrdDir));
   FTitle            := IniRead('Title');
   FId               := IniRead('Id', true);
   FDescription      := IniRead('Description');
@@ -160,7 +159,6 @@ begin
   FTemplateFolder   := IncludeTrailingPathDelimiter(ExtractFilePath(IniFile.Filename));
   FDate             := IniFile.ReadDateTime(PRESENTATION_SECTION, 'Date', 0.0);
   FIconFile         := CreateAbsolutePath(IniFile.ReadString(PRESENTATION_SECTION, 'Icon', ''), FTemplateFolder);
-  FPreviewFile      := CreateAbsolutePath(IniFile.ReadString(PRESENTATION_SECTION, 'Preview', ''), FTemplateFolder);
 
   Keys := TStringlist.Create;
   try
@@ -179,7 +177,6 @@ destructor TCustomManager.Destroy;
 begin
   FDelimiters.Free;
   FIcon.Free;
-  FPreview.Free;
   FSettings.Free;
   inherited Destroy;
 end;
@@ -196,16 +193,6 @@ begin
     FIcon.LoadFromFile(FIconFile);
   end;
   result := FIcon.Graphic;
-end;
-
-function TCustomManager.GetPreview: TGraphic;
-begin
-  if not Assigned(FPreview) then begin
-    FPreview := TPicture.Create;
-    if FPreviewFile<>'' then
-      FPreview.LoadFromFile(FPreviewFile);
-  end;
-  result := FPreview.Graphic;
 end;
 
 function TCustomManager.ShowFrame(Parent :TWinControl): TFrame;
