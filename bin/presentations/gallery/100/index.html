@@ -8,22 +8,29 @@
         <style>
         </style>
         <script>
-            function thumbnailSrcToFullSrc(name) {
-
+            var currentThumbnail = null;
+            
+            function showImage(thumbnail) {
+                let img = document.getElementById("display");
+                img.setAttribute('src', thumbnail.getAttribute('data-src'))
+                currentThumbnail = thumbnail;
+                thumbnail.scrollIntoView()
             }
 
             window.onload = (event) => {
                 for (const child of document.getElementById("picklist").children) {
                     child.addEventListener("click", (event) => {
-                        let img = document.getElementById("display");
-                        img.setAttribute('src', event.target.getAttribute('data-src'))
+                        showImage(event.target)
                     });
                 }
                 document.getElementById("display").setAttribute('src', document.getElementById("picklist").children[0].getAttribute('data-src'));
-                // let display = document.getElementById("display");
-                // display.addEventListener('click', (event) =>{
-                //     let next = 
-                // });
+                let display = document.getElementById("display");
+                display.addEventListener('click', (event) =>{
+                    if (event.clientX<event.target.getBoundingClientRect().width / 2)
+                        showImage(currentThumbnail.previousElementSibling)
+                    else
+                        showImage(currentThumbnail.nextElementSibling);
+                });
             }
         </script>
     </head>

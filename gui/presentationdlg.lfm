@@ -148,50 +148,41 @@ object PresentationDialog: TPresentationDialog
         Left = 16
         Height = 70
         Top = 26
-        Width = 408
+        Width = 256
         ItemHeight = 64
         Style = csOwnerDrawFixed
         TabOrder = 4
         OnChange = ComboBoxManagersChange
         OnDrawItem = ComboBoxManagersDrawItem
       end
-      object PanelDescription: TPanel
+      object ImagePreview: TImage
+        AnchorSideLeft.Control = ComboBoxManagers
+        AnchorSideLeft.Side = asrBottom
+        Left = 277
+        Height = 96
+        Top = 8
+        Width = 147
+        Anchors = [akTop, akLeft, akRight]
+        BorderSpacing.Left = 5
+        BorderSpacing.Right = 4
+        Center = True
+        Proportional = True
+      end
+      object LabelLongDescription: THtmlLabel
         Left = 16
-        Height = 359
+        Height = 357
         Top = 104
         Width = 408
-        Anchors = [akTop, akLeft, akBottom]
-        ClientHeight = 359
-        ClientWidth = 408
+        DefFontName = 'default'
+        HistoryMaxCount = 0
+        NoSelect = False
+        PrintMarginBottom = 2
+        PrintMarginLeft = 2
+        PrintMarginRight = 2
+        PrintMarginTop = 2
+        PrintScale = 1
+        Anchors = [akTop, akLeft, akRight, akBottom]
         TabOrder = 5
-        object LabelLongDescription: THtmlLabel
-          Left = 1
-          Height = 261
-          Top = 1
-          Width = 406
-          DefFontName = 'default'
-          HistoryMaxCount = 0
-          NoSelect = False
-          PrintMarginBottom = 2
-          PrintMarginLeft = 2
-          PrintMarginRight = 2
-          PrintMarginTop = 2
-          PrintScale = 1
-          Align = alClient
-          TabOrder = 0
-        end
-        object ImagePreview: TImage
-          Left = 1
-          Height = 88
-          Top = 266
-          Width = 402
-          Align = alBottom
-          BorderSpacing.Top = 4
-          BorderSpacing.Right = 4
-          BorderSpacing.Bottom = 4
-          Center = True
-          Proportional = True
-        end
       end
     end
     object PanelControls: TPanel

@@ -255,7 +255,7 @@ begin
   WprFilenames := FindAllFiles(Folder, '*.'+PRESENTATIONFILE_EXTENSION, true);
   try
     for Filename in WprFilenames do begin
-      Log(SMsgLoadingFmt, [ExtractFilename(Filename)], llInfo);
+      Log(SMsgLoadingFmt, [ExtractFilename(Filename)], llHint);
       try
         Managers.Add(TCustomManager.Create(Filename));
       except on E :Exception do

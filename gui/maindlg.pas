@@ -1746,6 +1746,21 @@ var
   TagKeys :TStringArray;
   Processor :TProcessor;
   WatermarkParams :TProcessor.TWatermarkParams;
+
+  procedure EnableActions(Value :boolean);
+  begin
+    ActionNew.Enabled := Value;
+    ActionOpen.Enabled := Value;
+    ActionSave.Enabled := Value;
+    ActionSaveAs.Enabled := Value;
+    ActionSettings.Enabled := Value;
+    ActionEditWatermark.Enabled := Value;
+    ActionPresentation.Enabled := Value;
+    PanelSource.Enabled := Value;
+    PanelParams.Enabled := Value;
+    PanelDestination.Enabled := Value;
+  end;
+
 begin
   if FExecuting then begin
     FCancelled := true;
@@ -1759,6 +1774,7 @@ begin
     ActionExecute.ImageIndex := 6;
     ButtonExecute.ImageIndex := 6;
     ButtonExecute.Invalidate;
+    EnableActions(False);
     ProgressBar.Visible := true;
     TimerProgressBarOff.Enabled := false;
     MemoMessages.Lines.Clear;
@@ -1896,6 +1912,7 @@ begin
       ButtonExecute.Caption := SCptExecute;
       ActionExecute.ImageIndex := 5;
       ButtonExecute.ImageIndex := 5;
+      EnableActions(True);
       TimerProgressBarOff.Enabled := true;
       Screen.Cursor := crDefault;
     end;

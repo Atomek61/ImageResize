@@ -894,27 +894,28 @@ begin
     Dispatcher.StopOnError := StopOnError;
 
     result := Dispatcher.Execute(Tasks);
-
-    if trTagsReport in FTagsReports then begin
-      if ProcRes.IsMultipleTargetFolderStrategy then
-        TagsFilename := GetParentDirectory(FTargetFolder)+TAGSREPORTFILETITLE
-      else
-        TagsFilename := TargetFolder+TAGSREPORTFILETITLE;
-      Print(Format(SMsgWritingTagsReportFmt, [TagsFilename]));
-      ForceDirectories(ExtractFilePath(TagsFilename));
-      ProcRes.FilesTags.SaveToFile(TagsFilename, ProcRes.FilesTags.TagKeys, [soRelative]);
-    end;
-
-    // Save .imgtags
-    if trImgTags in FTagsReports then begin
-      for i:=0 to m-1 do begin
-        if ProcRes.IsMultipleTargetFolderStrategy or not ProcRes.IsTargetFileRenamingStrategy then
-          ImgTagsFilename := ProcRes.TargetFolders[i]+IMAGEINFOSFILETITLE
+    if result then begin
+      if trTagsReport in FTagsReports then begin
+        if ProcRes.IsMultipleTargetFolderStrategy then
+          TagsFilename := GetParentDirectory(FTargetFolder)+TAGSREPORTFILETITLE
         else
-          ImgTagsFilename := ProcRes.TargetFolders[i]+IMAGEINFOSFILETITLE+IntToStr(FSizes[i]);
-        Print(Format(SMsgWritingTagsReportFmt, [ImgTagsFilename]));
-        ForceDirectories(ExtractFilePath(ImgTagsFilename));
-        ProcRes.FilesTags.SaveAllToImgTagsFile(ImgTagsFilename, FSizes[i]);
+          TagsFilename := TargetFolder+TAGSREPORTFILETITLE;
+        Print(Format(SMsgWritingTagsReportFmt, [TagsFilename]));
+        ForceDirectories(ExtractFilePath(TagsFilename));
+        ProcRes.FilesTags.SaveToFile(TagsFilename, ProcRes.FilesTags.TagKeys, [soRelative]);
+      end;
+
+      // Save .imgtags
+      if trImgTags in FTagsReports then begin
+        for i:=0 to m-1 do begin
+          if ProcRes.IsMultipleTargetFolderStrategy or not ProcRes.IsTargetFileRenamingStrategy then
+            ImgTagsFilename := ProcRes.TargetFolders[i]+IMAGEINFOSFILETITLE
+          else
+            ImgTagsFilename := ProcRes.TargetFolders[i]+IMAGEINFOSFILETITLE+IntToStr(FSizes[i]);
+          Print(Format(SMsgWritingTagsReportFmt, [ImgTagsFilename]));
+          ForceDirectories(ExtractFilePath(ImgTagsFilename));
+          ProcRes.FilesTags.SaveAllToImgTagsFile(ImgTagsFilename, FSizes[i]);
+        end;
       end;
     end;
 
