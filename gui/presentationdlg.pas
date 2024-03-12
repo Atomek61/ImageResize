@@ -30,6 +30,7 @@ type
     LabelManagers: TLabel;
     MemoMessages: TRichMemo;
     OpenImgTagsDialog: TOpenDialog;
+    PanelLeft: TPanel;
     PanelMain: TPanel;
     PanelManagerFrame: TPanel;
     PanelPresentation: TPanel;

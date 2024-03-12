@@ -2,13 +2,13 @@ object PresentationDialog: TPresentationDialog
   Left = 765
   Height = 584
   Top = 174
-  Width = 914
+  Width = 1000
   BorderIcons = [biSystemMenu]
   Caption = 'Presentation'
   ClientHeight = 584
-  ClientWidth = 914
-  Constraints.MinHeight = 430
-  Constraints.MinWidth = 778
+  ClientWidth = 1000
+  Constraints.MinHeight = 400
+  Constraints.MinWidth = 900
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   ShowHint = True
@@ -17,7 +17,7 @@ object PresentationDialog: TPresentationDialog
     Left = 4
     Height = 106
     Top = 474
-    Width = 910
+    Width = 996
     Align = alBottom
     BorderSpacing.Left = 4
     BorderSpacing.Bottom = 4
@@ -35,7 +35,7 @@ object PresentationDialog: TPresentationDialog
     Left = 0
     Height = 8
     Top = 466
-    Width = 914
+    Width = 1000
     Align = alBottom
     Constraints.MinHeight = 8
     ResizeAnchor = akBottom
@@ -44,43 +44,31 @@ object PresentationDialog: TPresentationDialog
     Left = 0
     Height = 466
     Top = 0
-    Width = 914
+    Width = 1000
     Align = alClient
     BevelOuter = bvNone
     ClientHeight = 466
-    ClientWidth = 914
+    ClientWidth = 1000
     Constraints.MinHeight = 314
     TabOrder = 0
     object PanelPresentation: TPanel
-      Left = 0
+      Left = 450
       Height = 466
       Top = 0
-      Width = 788
+      Width = 424
       Align = alClient
       BevelOuter = bvNone
       ClientHeight = 466
-      ClientWidth = 788
+      ClientWidth = 424
       ParentBackground = False
       TabOrder = 0
-      object LabelManagers: TLabel
-        AnchorSideLeft.Control = ComboBoxManagers
-        AnchorSideBottom.Control = ComboBoxManagers
-        Left = 19
-        Height = 15
-        Top = 8
-        Width = 39
-        Anchors = [akLeft, akBottom]
-        BorderSpacing.Left = 3
-        BorderSpacing.Bottom = 3
-        Caption = 'L&ayout:'
-      end
       object ButtonBrowseTargetFolder: TBitBtn
         AnchorSideLeft.Control = EditImgTagsFilename
         AnchorSideLeft.Side = asrBottom
         AnchorSideTop.Control = EditImgTagsFilename
         AnchorSideTop.Side = asrCenter
         AnchorSideBottom.Side = asrBottom
-        Left = 723
+        Left = 359
         Height = 25
         Hint = 'Select the .imgtags file in the folder of the images to be dispayed.'
         Top = 25
@@ -93,18 +81,18 @@ object PresentationDialog: TPresentationDialog
         TabOrder = 1
       end
       object EditImgTagsFilename: TEdit
-        Left = 435
+        Left = 5
         Height = 23
         Hint = 'The .imgtags file has important infomation how to create the presentation.'
         Top = 26
-        Width = 287
+        Width = 353
         Anchors = [akTop, akLeft, akRight]
         TabOrder = 0
       end
       object LabelTargetFolder: TLabel
         AnchorSideLeft.Control = EditImgTagsFilename
         AnchorSideBottom.Control = EditImgTagsFilename
-        Left = 438
+        Left = 8
         Height = 15
         Top = 8
         Width = 70
@@ -115,10 +103,11 @@ object PresentationDialog: TPresentationDialog
         FocusControl = EditImgTagsFilename
       end
       object PanelManagerFrame: TPanel
-        Left = 432
-        Height = 392
-        Top = 64
-        Width = 350
+        Left = 0
+        Height = 410
+        Top = 56
+        Width = 424
+        Align = alBottom
         Anchors = [akTop, akLeft, akRight, akBottom]
         BevelOuter = bvNone
         Caption = 'This presentation has no settings'
@@ -132,7 +121,7 @@ object PresentationDialog: TPresentationDialog
         AnchorSideTop.Control = EditImgTagsFilename
         AnchorSideTop.Side = asrCenter
         AnchorSideBottom.Side = asrBottom
-        Left = 753
+        Left = 389
         Height = 25
         Hint = 'Tries to uses the current target folder from the main dialog.'
         Top = 25
@@ -144,49 +133,9 @@ object PresentationDialog: TPresentationDialog
         Spacing = 0
         TabOrder = 2
       end
-      object ComboBoxManagers: TComboBox
-        Left = 16
-        Height = 70
-        Top = 26
-        Width = 256
-        ItemHeight = 64
-        Style = csOwnerDrawFixed
-        TabOrder = 4
-        OnChange = ComboBoxManagersChange
-        OnDrawItem = ComboBoxManagersDrawItem
-      end
-      object ImagePreview: TImage
-        AnchorSideLeft.Control = ComboBoxManagers
-        AnchorSideLeft.Side = asrBottom
-        Left = 277
-        Height = 96
-        Top = 8
-        Width = 147
-        Anchors = [akTop, akLeft, akRight]
-        BorderSpacing.Left = 5
-        BorderSpacing.Right = 4
-        Center = True
-        Proportional = True
-      end
-      object LabelLongDescription: THtmlLabel
-        Left = 16
-        Height = 357
-        Top = 104
-        Width = 408
-        DefFontName = 'default'
-        HistoryMaxCount = 0
-        NoSelect = False
-        PrintMarginBottom = 2
-        PrintMarginLeft = 2
-        PrintMarginRight = 2
-        PrintMarginTop = 2
-        PrintScale = 1
-        Anchors = [akTop, akLeft, akRight, akBottom]
-        TabOrder = 5
-      end
     end
     object PanelControls: TPanel
-      Left = 788
+      Left = 874
       Height = 442
       Top = 16
       Width = 126
@@ -276,6 +225,73 @@ object PresentationDialog: TPresentationDialog
         ImageIndex = 19
         OnClick = ButtonRescanClick
         TabOrder = 4
+      end
+    end
+    object PanelLeft: TPanel
+      Left = 0
+      Height = 466
+      Top = 0
+      Width = 450
+      Align = alLeft
+      BevelOuter = bvNone
+      ClientHeight = 466
+      ClientWidth = 450
+      TabOrder = 2
+      object LabelManagers: TLabel
+        AnchorSideLeft.Control = ComboBoxManagers
+        AnchorSideBottom.Control = ComboBoxManagers
+        Left = 11
+        Height = 15
+        Top = 8
+        Width = 39
+        Anchors = [akLeft, akBottom]
+        BorderSpacing.Left = 3
+        BorderSpacing.Bottom = 3
+        Caption = 'L&ayout:'
+      end
+      object ComboBoxManagers: TComboBox
+        Left = 8
+        Height = 70
+        Top = 26
+        Width = 272
+        ItemHeight = 64
+        Style = csOwnerDrawFixed
+        TabOrder = 0
+        OnChange = ComboBoxManagersChange
+        OnDrawItem = ComboBoxManagersDrawItem
+      end
+      object ImagePreview: TImage
+        AnchorSideLeft.Control = ComboBoxManagers
+        AnchorSideLeft.Side = asrBottom
+        Left = 285
+        Height = 96
+        Top = 8
+        Width = 161
+        Anchors = [akTop, akLeft, akRight]
+        BorderSpacing.Left = 5
+        BorderSpacing.Right = 4
+        Center = True
+        Proportional = True
+      end
+      object LabelLongDescription: THtmlLabel
+        Left = 0
+        Height = 358
+        Top = 108
+        Width = 450
+        DefFontName = 'default'
+        HistoryMaxCount = 0
+        MarginHeight = 12
+        MarginWidth = 24
+        NoSelect = False
+        PrintMarginBottom = 2
+        PrintMarginLeft = 2
+        PrintMarginRight = 2
+        PrintMarginTop = 2
+        PrintScale = 1
+        ScrollBars = ssAutoBoth
+        Align = alBottom
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        TabOrder = 1
       end
     end
   end
