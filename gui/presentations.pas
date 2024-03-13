@@ -163,8 +163,8 @@ begin
   Keys := TStringlist.Create;
   try
     IniFile.ReadSection(PRESENTATION_SECTION, Keys);
-    for Key in Keys do if Key.StartsWith('Delimiter.') then
-      FDelimiters.Add(LowerCase(Copy(Key, 11, Length(Key)-10)), TDelimiters.StrToDelimiters(IniRead(Key)));
+    for Key in Keys do if Key.StartsWith('Delimiters.') then
+      FDelimiters.Add(LowerCase(Copy(Key, 12, Length(Key)-11)), TDelimiters.StrToDelimiters(IniRead(Key)));
   finally
     Keys.Free;
   end;

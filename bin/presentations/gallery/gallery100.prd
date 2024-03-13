@@ -6,6 +6,7 @@ Version=100
 Id=Gallery100
 Class=Presentation
 Delimiters.html={,}
+Delimiters.css=«,»
 Title=Gallery 1.0
 RootDir=100
 Description=With thumbnail-preview
@@ -16,12 +17,7 @@ Date=2024-02-26 22:00:00
 Icon=icon.png
 ;Copy=gallery.css
 Templates=100\index.html,100\gallery.css
-Fragment.THUMBNAILS=<img src="{IMGFILETITLE}_THUMBNAIL.{IMGFILEEXT}" data-src="{IMGFILENAME}"/>{CRLF}
-
-[Settings.Thumbnails]
-Class=String
-Presentation=Filename
-Caption=Thumbnail .imgtags
+Fragment.THUMBNAILS=<img src="{IMGFILETITLE}_THUMBNAIL.{IMGFILEEXT}" data-src="{IMGFILENAME}"/>
 
 [Settings.Ratio]
 Class=Picktext
@@ -32,24 +28,17 @@ Text=16/9,3/2,4/3
 Display=16/9,3/2,4/3
 Default=3/2
 
-[Settings.BckColor1]
+[Settings.BckColor]
 Class=HTMLColor
 Presentation=WebColor
-Caption=Background 1
-Caption.de=Hintergrund 1
-Default=#000000
-
-[Settings.BckColor2]
-Class=HTMLColor
-Presentation=WebColor
-Caption=Background 2
-Caption.de=Hintergrund 2
+Caption=Background
+Caption.de=Hintergrund
 Default=#000000
 
 [Settings.ThmbnSize]
 Class=Int32
 Min=32
-Max=240
+Max=400
 Caption=Thumbnail Width
 Caption.de=Vorschaubreite
 Default=120

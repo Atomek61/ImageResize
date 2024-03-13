@@ -15,7 +15,7 @@ type
 
   TProcessor = class
   private
-    FDelimiters :TTypeDelimiters;
+    FDelimiters :TTypeDelimiters;   // Delimiters depending on extension
     FImgTagsFilename :string;       // Folder with images and meta info in .images file
     FTemplateFiles :TStringArray;   // Template files - .html, .js, .css or whatever
     FCopyFiles :TStringArray;       // Template files - .html, .js, .css or whatever

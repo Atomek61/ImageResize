@@ -258,8 +258,7 @@ begin
       inc(Replacements);
       result := result + Copy(Subject, p, Iterator.i0-p) + Rec.Value;
       p := Iterator.i1+Length(Delimiters.Del2);
-    end else
-      Iterator.NoMatch;
+    end;
   end;
   if Replacements>0 then
     result := result + Copy(Subject, p, Length(Subject)-p+1)
@@ -306,14 +305,19 @@ end;
 function TSolver.TIterator.Next(out Key: string): boolean;
 var l :integer;
 begin
-  i0 := PosEx(Solver.Delimiters.Del1, Subject, i1+Length(Solver.Delimiters.Del2));
-  if i0 = 0 then Exit(false);
-  i1 := PosEx(Solver.Delimiters.Del2, Subject, i0+Length(Solver.Delimiters.Del1));
-  if i1 = 0 then Exit(false);
-  l := i1-i0-Length(Solver.Delimiters.Del1);
-  if l>MAXKEYLENGTH then l := MAXKEYLENGTH;
-  Key := Copy(Subject, i0+Length(Solver.Delimiters.Del1), l);
-  result := true;
+  while true do begin
+    i0 := PosEx(Solver.Delimiters.Del1, Subject, i1+Length(Solver.Delimiters.Del2));
+    if i0 = 0 then Exit(false);
+    i1 := PosEx(Solver.Delimiters.Del2, Subject, i0+Length(Solver.Delimiters.Del1));
+    if i1 = 0 then Exit(false);
+    l := i1-i0-Length(Solver.Delimiters.Del1);
+    if l>MAXKEYLENGTH then
+      i1 := i0 + Length(Solver.Delimiters.Del1) - Length(Solver.Delimiters.Del2)
+    else begin
+      Key := Copy(Subject, i0+Length(Solver.Delimiters.Del1), l);
+      Exit(True);
+    end;
+  end;
 end;
 
 procedure TSolver.TIterator.NoMatch;
