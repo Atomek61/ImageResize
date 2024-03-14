@@ -7,7 +7,7 @@
    viewBox="0 0 128 128.00001"
    version="1.1"
    id="svg138"
-   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
    sodipodi:docname="update.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -28,8 +28,8 @@
      showguides="true"
      inkscape:lockguides="true"
      inkscape:zoom="5.17549"
-     inkscape:cx="96.319382"
-     inkscape:cy="62.216331"
+     inkscape:cx="96.415992"
+     inkscape:cy="62.119722"
      inkscape:window-width="2560"
      inkscape:window-height="1417"
      inkscape:window-x="-8"
@@ -41,7 +41,11 @@
        id="grid259"
        empspacing="4"
        originx="0"
-       originy="0" />
+       originy="0"
+       spacingy="1"
+       spacingx="1"
+       units="px"
+       visible="true" />
     <inkscape:grid
        type="xygrid"
        id="grid261"
@@ -50,7 +54,9 @@
        color="#e5001f"
        opacity="0.14901961"
        originx="0"
-       originy="0" />
+       originy="0"
+       units="px"
+       visible="true" />
     <sodipodi:guide
        position="-68,64.000005"
        orientation="0,-1"
@@ -72,7 +78,7 @@
          offset="0"
          id="stop2126" />
       <stop
-         style="stop-color:#204a87;stop-opacity:0;"
+         style="stop-color:#872087;stop-opacity:0;"
          offset="1"
          id="stop2128" />
     </linearGradient>
@@ -84,7 +90,7 @@
          offset="0"
          id="stop1994" />
       <stop
-         style="stop-color:#204a87;stop-opacity:0;"
+         style="stop-color:#872087;stop-opacity:0;"
          offset="1"
          id="stop1996" />
     </linearGradient>
@@ -92,22 +98,22 @@
        inkscape:collect="always"
        xlink:href="#linearGradient1998"
        id="linearGradient2000"
-       x1="52"
-       y1="36"
-       x2="44"
-       y2="84"
+       x1="29.226669"
+       y1="54.68251"
+       x2="37.434547"
+       y2="85.869545"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="rotate(75,64,64)" />
+       gradientTransform="rotate(60,64,64)" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient2130"
        id="linearGradient2132"
-       x1="76"
-       y1="92"
-       x2="84"
-       y2="44"
+       x1="98.773323"
+       y1="73.317482"
+       x2="90.565445"
+       y2="42.130455"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="rotate(75,64,64)" />
+       gradientTransform="rotate(60,64,64)" />
   </defs>
   <g
      inkscape:label="Ebene 1"
@@ -116,10 +122,10 @@
     <path
        id="path1967"
        style="fill:url(#linearGradient2132);fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:square"
-       d="M 105.49302,87.956004 84.784781,76.000099 A 24,24 0 0 1 70.211657,87.18222 24,24 0 0 1 40.81778,70.211657 L 52.40889,67.105829 23.015013,50.135266 6.0444504,79.529143 17.63556,76.423314 A 48.000004,48.000004 45 0 0 76.423314,110.36444 48.000004,48.000004 45 0 0 105.49302,87.956004 Z" />
+       d="M 110.27945,76.400539 87.182411,70.211708 A 24,24 0 0 1 76,84.78461 24,24 0 0 1 43.21539,76 L 53.607695,70.000001 20.823085,61.215391 12.038476,94 22.43078,88 A 48.000004,48.000004 0 0 0 88,105.56922 48.000004,48.000004 0 0 0 110.27945,76.400539 Z" />
     <path
        id="path1673"
        style="fill:url(#linearGradient2000);fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:square"
-       d="m 121.95555,48.470857 -11.59111,3.105829 A 48.000004,48.000004 45 0 0 51.576686,17.63556 48.000004,48.000004 45 0 0 22.506984,40.043996 L 43.215219,51.999901 A 24,24 0 0 1 57.788343,40.81778 24,24 0 0 1 87.18222,57.788343 l -11.59111,3.105828 29.39388,16.970563 z" />
+       d="m 115.96152,34 -10.3923,6 A 48.000004,48.000004 0 0 0 40,22.43078 48.000004,48.000004 0 0 0 17.720554,51.59946 l 23.097035,6.188832 A 24,24 0 0 1 52,43.21539 24,24 0 0 1 84.78461,52 l -10.392305,6 32.784615,8.784609 z" />
   </g>
 </svg>

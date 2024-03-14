@@ -14,6 +14,7 @@
    inkscape:export-ydpi="24"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
   <sodipodi:namedview
@@ -37,7 +38,7 @@
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg138">
+     inkscape:current-layer="layer2">
     <inkscape:grid
        type="xygrid"
        id="grid259"
@@ -67,6 +68,34 @@
   </sodipodi:namedview>
   <defs
      id="defs135">
+    <linearGradient
+       id="linearGradient26"
+       inkscape:collect="always">
+      <stop
+         style="stop-color:#0058d7;stop-opacity:1;"
+         offset="0"
+         id="stop26" />
+      <stop
+         style="stop-color:#0058d7;stop-opacity:0;"
+         offset="1"
+         id="stop27" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient21"
+       inkscape:collect="always">
+      <stop
+         style="stop-color:#0058d7;stop-opacity:0;"
+         offset="0"
+         id="stop21" />
+      <stop
+         style="stop-color:#0058d7;stop-opacity:1;"
+         offset="0.47793144"
+         id="stop23" />
+      <stop
+         style="stop-color:#0058d7;stop-opacity:0;"
+         offset="1"
+         id="stop22" />
+    </linearGradient>
     <filter
        style="color-interpolation-filters:sRGB;"
        inkscape:label="Drop Shadow"
@@ -179,6 +208,56 @@
          result="composite2"
          id="feComposite848" />
     </filter>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient21"
+       id="linearGradient20"
+       x1="-48.000008"
+       y1="64"
+       x2="-64"
+       y2="64"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(80)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient21"
+       id="linearGradient23"
+       gradientUnits="userSpaceOnUse"
+       x1="-48.000008"
+       y1="64"
+       x2="-64"
+       y2="64"
+       gradientTransform="translate(96)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient21"
+       id="linearGradient24"
+       gradientUnits="userSpaceOnUse"
+       x1="-48.000008"
+       y1="64"
+       x2="-64"
+       y2="64"
+       gradientTransform="translate(112)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient21"
+       id="linearGradient25"
+       gradientUnits="userSpaceOnUse"
+       x1="-48.000008"
+       y1="64"
+       x2="-64"
+       y2="64"
+       gradientTransform="translate(64)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient26"
+       id="linearGradient27"
+       x1="-80.000008"
+       y1="63.999994"
+       x2="-16"
+       y2="63.999994"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(16.000008,-128)" />
   </defs>
   <g
      inkscape:groupmode="layer"
@@ -209,30 +288,45 @@
      style="display:inline">
     <path
        style="fill:#0058d7;fill-opacity:1;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
-       d="m 36,40 28.000001,-1.6e-5 V 15.999988 c -4e-6,-4 4.061371,-7.9386276 7.999996,-4.000002 L 123.81271,59.812712 C 128,64.000004 127.82553,64.447722 124,68 l -52,47.99999 c -3.999996,4.00001 -7.999992,0 -7.999996,-4 l -3e-6,-24.000028 L 36,88 Z"
+       d="m 64.000001,15.999988 c -4e-6,-4 4.061371,-7.9386276 7.999996,-4.000002 L 123.81271,59.812712 C 128,64.000004 127.82553,64.447722 124,68 l -52,47.99999 c -3.999996,4.00001 -7.999992,0 -7.999996,-4 z"
        id="path1084"
-       sodipodi:nodetypes="ccccccccccc" />
+       sodipodi:nodetypes="ccccccc" />
     <rect
-       style="display:inline;fill:#0058d7;fill-opacity:0.74747473;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
-       id="rect1187"
-       width="12"
-       height="48"
-       x="20"
-       y="40" />
+       style="fill:url(#linearGradient20);fill-opacity:1;stroke:none;stroke-width:99.867;stroke-linejoin:bevel;stroke-opacity:1;paint-order:markers fill stroke"
+       id="rect17"
+       width="16"
+       height="47.999996"
+       x="16"
+       y="39.999996" />
     <rect
-       style="fill:#0058d7;fill-opacity:0.25050506;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
-       id="rect1189"
-       width="4.000001"
-       height="48"
+       style="display:inline;fill:url(#linearGradient23);fill-opacity:1;stroke:none;stroke-width:99.867;stroke-linejoin:bevel;stroke-opacity:1;paint-order:markers fill stroke"
+       id="rect17-3"
+       width="16"
+       height="47.999996"
+       x="32"
+       y="39.999996" />
+    <rect
+       style="display:inline;fill:url(#linearGradient24);fill-opacity:1;stroke:none;stroke-width:99.867;stroke-linejoin:bevel;stroke-opacity:1;paint-order:markers fill stroke"
+       id="rect17-5"
+       width="16"
+       height="47.999996"
+       x="48"
+       y="39.999996" />
+    <rect
+       style="display:inline;fill:url(#linearGradient25);fill-opacity:1;stroke:none;stroke-width:99.867;stroke-linejoin:bevel;stroke-opacity:1;paint-order:markers fill stroke"
+       id="rect17-1"
+       width="16"
+       height="47.999996"
        x="0"
-       y="40" />
+       y="39.999996" />
     <rect
-       style="fill:#0058d7;fill-opacity:0.31919193;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
-       id="rect1197"
-       width="8"
-       height="48"
-       x="8"
-       y="40" />
+       style="fill:url(#linearGradient27);stroke:none;stroke-width:151.181;stroke-linejoin:bevel;stroke-opacity:1;paint-order:markers fill stroke"
+       id="rect25"
+       width="64.000008"
+       height="47.999996"
+       x="-64"
+       y="-88"
+       transform="scale(-1)" />
   </g>
   <g
      inkscape:label="Ebene 1"

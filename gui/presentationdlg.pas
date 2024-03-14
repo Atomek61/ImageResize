@@ -44,6 +44,7 @@ type
     procedure ComboBoxManagersChange(Sender: TObject);
     procedure ComboBoxManagersDrawItem(Control: TWinControl; Index: Integer;
       ARect: TRect; State: TOwnerDrawState);
+    procedure EditImgTagsFilenameChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure LabelLongDescriptionImageRequest(Sender: TObject;
@@ -53,6 +54,7 @@ type
     FManagerIndex :integer;
     FManager :TCustomManager;
     FOuterLogger :TLogger;
+    FPresentationSettings :TPresentationSettings; // Local copy for Ok/Cancel
     procedure SetManagerIndex(Index :Integer);
     procedure OnFrameSelected(Sender :TObject);
     procedure Scan;
@@ -80,10 +82,12 @@ procedure TPresentationDialog.FormCreate(Sender: TObject);
 begin
   FManagerIndex := -1;
   FManagers := TManagers.Create;
+  FPresentationSettings := TPresentationSettings.Create;
 end;
 
 procedure TPresentationDialog.FormDestroy(Sender: TObject);
 begin
+  FPresentationSettings.Free;
   FManagers.Free;
 end;
 
@@ -186,6 +190,11 @@ begin
   Cnvs.TextOut(78, ARect.Top+36, FManagers[Index].Description);
 end;
 
+procedure TPresentationDialog.EditImgTagsFilenameChange(Sender: TObject);
+begin
+  FPresentationSettings.ImgTagsFilename.AsDisplay := EditImgTagsFilename.Text;
+end;
+
 procedure TPresentationDialog.ButtonBrowseTargetFolderClick(Sender: TObject);
 begin
   if Trim(EditImgTagsFilename.Text)<>'' then
@@ -210,11 +219,13 @@ begin
     LabelLongDescription.Body.Text := FManager.LongDescription;
     FManager.ShowFrame(PanelManagerFrame).Align := alClient;
     ButtonWebShow.Enabled := true;
+    FPresentationSettings.Id.AsText := FManager.Id;
   end else begin
     FManager := nil;
     FManagerIndex := -1;
     LabelLongDescription.Body.Clear;
     ButtonWebShow.Enabled := false;
+    FPresentationSettings.Id.AsText := '';
   end;
 end;
 
@@ -230,9 +241,13 @@ begin
     if FManagers.Count=0 then
       Scan;
 
+    FPresentationSettings.Copy(PresentationSettings, cmAll);
+    FPresentationSettings.Dirty := false;
+    EditImgTagsFilename.Text := FPresentationSettings.ImgTagsFilename.AsDisplay;
+
     for Settings in ParamsList.Values do begin
       if FManagers.TryFind(Settings.Section, Index) then begin
-        FManagers[Index].Settings.Copy(Settings, cmWeak);
+        FManagers[Index].Settings.Copy(Settings, cmExisting);
         FManagers[Index].Settings.Dirty := false;
       end;
     end;
@@ -244,10 +259,10 @@ begin
       ManagerIndex := -1;
     result := ShowModal = mrOk;
     if result then begin
-      PresentationSettings.ImgTagsFilename.AsDisplay := EditImgTagsFilename.Text;
-      if FManagerIndex<>-1 then
-        PresentationSettings.Id.AsText := FManagers[FManagerIndex].Id;
-
+      if FPresentationSettings.Dirty then begin
+        PresentationSettings.Copy(FPresentationSettings, cmAll);
+        PresentationSettings.Dirty := true;
+      end;
       for Manager in FManagers do begin
         if Manager.Settings.Dirty then begin
           if not ParamsList.TryGetValue(Manager.Settings.Section, Settings) then begin

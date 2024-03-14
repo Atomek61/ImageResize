@@ -88,6 +88,7 @@ object PresentationDialog: TPresentationDialog
         Width = 433
         Anchors = [akTop, akLeft, akRight]
         TabOrder = 0
+        OnChange = EditImgTagsFilenameChange
       end
       object LabelTargetFolder: TLabel
         AnchorSideLeft.Control = EditImgTagsFilename

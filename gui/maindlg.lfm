@@ -1340,6 +1340,7 @@ object MainDialog: TMainDialog
       Width = 63
       BorderSpacing.Left = 6
       Caption = 'Images'
+      FocusControl = PanelSource
       Font.Color = 9785877
       Font.Height = -19
       Font.Style = [fsBold]
@@ -1356,14 +1357,14 @@ object MainDialog: TMainDialog
       Anchors = [akLeft, akBottom]
       BorderSpacing.Left = 6
       Caption = 'Target &Folder'
-      FocusControl = EditTargetFolder
+      FocusControl = PanelTarget
       Font.Color = 9785877
       Font.Height = -19
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
     end
-    object PanelDestination: TPanel
+    object PanelTarget: TPanel
       Left = 200
       Height = 51
       Top = 416
@@ -1462,6 +1463,7 @@ object MainDialog: TMainDialog
       Width = 212
       BorderSpacing.Left = 6
       Caption = 'Sizes and other Settings'
+      FocusControl = PanelParams
       Font.Color = 9785877
       Font.Height = -19
       Font.Style = [fsBold]

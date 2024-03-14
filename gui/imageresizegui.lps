@@ -8,7 +8,7 @@
       <Unit>
         <Filename Value="imageresizegui.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="8"/>
         <CursorPos Y="34"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
@@ -19,8 +19,8 @@
         <ComponentName Value="MainDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <TopLine Value="134"/>
-        <CursorPos Y="121"/>
+        <TopLine Value="1174"/>
+        <CursorPos X="28" Y="1178"/>
         <ExtraEditorCount Value="1"/>
         <ExtraEditor1>
           <EditorIndex Value="-1"/>
@@ -118,10 +118,11 @@
       <Unit>
         <Filename Value="settings.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="24"/>
-        <CursorPos X="3" Y="63"/>
+        <EditorIndex Value="7"/>
+        <TopLine Value="448"/>
+        <CursorPos Y="471"/>
         <UsageCount Value="200"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\animator.pas"/>
@@ -153,10 +154,13 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="PresentationDlg"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="77"/>
-        <CursorPos X="31" Y="102"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="255"/>
+        <CursorPos X="11" Y="265"/>
         <UsageCount Value="200"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="imagesmod.pas"/>
@@ -164,27 +168,28 @@
         <ComponentName Value="ImagesModule"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
-        <EditorIndex Value="-1"/>
+        <EditorIndex Value="2"/>
         <CursorPos X="20" Y="24"/>
         <UsageCount Value="200"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="presentations.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Presentations"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="133"/>
-        <CursorPos X="61" Y="167"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="42"/>
+        <CursorPos X="14" Y="65"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="galleryprocessor.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="195"/>
-        <CursorPos X="38" Y="250"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="228"/>
+        <CursorPos Y="251"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit>
@@ -201,10 +206,11 @@
       <Unit>
         <Filename Value="appsettings.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="53"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="51"/>
         <CursorPos X="3" Y="74"/>
         <UsageCount Value="202"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="colorfrm.pas"/>
@@ -258,7 +264,7 @@
         <UnitName Value="IntTypes"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="27" Y="32"/>
-        <UsageCount Value="173"/>
+        <UsageCount Value="179"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\stringutils.pas"/>
@@ -266,20 +272,20 @@
         <UnitName Value="StringUtils"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="13"/>
-        <UsageCount Value="172"/>
+        <UsageCount Value="178"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\imgutils.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="160"/>
+        <UsageCount Value="166"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\colorsetting.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="82" Y="30"/>
-        <UsageCount Value="157"/>
+        <UsageCount Value="163"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\controlshot.pas"/>
@@ -287,7 +293,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="19"/>
         <CursorPos X="19" Y="41"/>
-        <UsageCount Value="111"/>
+        <UsageCount Value="117"/>
       </Unit>
       <Unit>
         <Filename Value="settingseditors.pas"/>
@@ -296,7 +302,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="254"/>
         <CursorPos Y="276"/>
-        <UsageCount Value="67"/>
+        <UsageCount Value="73"/>
       </Unit>
       <Unit>
         <Filename Value="taggingdlg.pas"/>
@@ -307,7 +313,7 @@
         <UnitName Value="TaggingDlg"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="19" Y="23"/>
-        <UsageCount Value="59"/>
+        <UsageCount Value="65"/>
       </Unit>
       <Unit>
         <Filename Value="settingseditor.pas"/>
@@ -586,10 +592,11 @@
       </Unit>
       <Unit>
         <Filename Value="..\lib\inc\generics.dictionaries.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="308"/>
-        <CursorPos Y="329"/>
-        <UsageCount Value="100"/>
+        <EditorIndex Value="10"/>
+        <TopLine Value="370"/>
+        <CursorPos Y="395"/>
+        <UsageCount Value="101"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\dexif\dglobal.pas"/>
@@ -606,10 +613,10 @@
       </Unit>
       <Unit>
         <Filename Value="..\src\utils.pas"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="5"/>
         <TopLine Value="130"/>
         <CursorPos Y="145"/>
-        <UsageCount Value="32"/>
+        <UsageCount Value="35"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -789,10 +796,10 @@
       </Unit>
       <Unit>
         <Filename Value="..\src\templateengine.pas"/>
-        <EditorIndex Value="5"/>
-        <TopLine Value="288"/>
-        <CursorPos Y="71"/>
-        <UsageCount Value="95"/>
+        <EditorIndex Value="9"/>
+        <TopLine Value="87"/>
+        <CursorPos Y="114"/>
+        <UsageCount Value="98"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -1475,124 +1482,124 @@
     </OtherDefines>
     <JumpHistory HistoryIndex="29">
       <Position>
-        <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="257" TopLine="228"/>
+        <Filename Value="settings.pas"/>
+        <Caret Line="780" TopLine="756"/>
       </Position>
       <Position>
-        <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="258" TopLine="228"/>
+        <Filename Value="settings.pas"/>
+        <Caret Line="784" TopLine="756"/>
       </Position>
       <Position>
-        <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="259" TopLine="228"/>
+        <Filename Value="settings.pas"/>
+        <Caret Line="471" TopLine="448"/>
       </Position>
       <Position>
-        <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="260" TopLine="228"/>
+        <Filename Value="settings.pas"/>
+        <Caret Line="472" TopLine="448"/>
       </Position>
       <Position>
-        <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="256" TopLine="228"/>
+        <Filename Value="settings.pas"/>
+        <Caret Line="473" TopLine="448"/>
       </Position>
       <Position>
-        <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="257" TopLine="228"/>
+        <Filename Value="settings.pas"/>
+        <Caret Line="778" TopLine="754"/>
       </Position>
       <Position>
-        <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="258" TopLine="228"/>
+        <Filename Value="settings.pas"/>
+        <Caret Line="779" TopLine="754"/>
       </Position>
       <Position>
-        <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="259" TopLine="228"/>
+        <Filename Value="settings.pas"/>
+        <Caret Line="728" TopLine="704"/>
       </Position>
       <Position>
-        <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="260" TopLine="228"/>
+        <Filename Value="settings.pas"/>
+        <Caret Line="729" TopLine="704"/>
       </Position>
       <Position>
-        <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="256" TopLine="228"/>
+        <Filename Value="settings.pas"/>
+        <Caret Line="731" TopLine="704"/>
       </Position>
       <Position>
-        <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="237" TopLine="229"/>
+        <Filename Value="settings.pas"/>
+        <Caret Line="733" TopLine="704"/>
       </Position>
       <Position>
-        <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="256" TopLine="228"/>
+        <Filename Value="settings.pas"/>
+        <Caret Line="780" TopLine="756"/>
       </Position>
       <Position>
-        <Filename Value="galleryprocessor.pas"/>
-        <Caret Line="253" TopLine="230"/>
+        <Filename Value="settings.pas"/>
+        <Caret Line="773" TopLine="756"/>
       </Position>
       <Position>
-        <Filename Value="..\src\templateengine.pas"/>
-        <Caret Line="86" Column="42" TopLine="54"/>
+        <Filename Value="settings.pas"/>
+        <Caret Line="774" TopLine="756"/>
       </Position>
       <Position>
-        <Filename Value="galleryprocessor.pas"/>
-        <Caret Line="253" TopLine="230"/>
+        <Filename Value="settings.pas"/>
+        <Caret Line="723" TopLine="699"/>
       </Position>
       <Position>
-        <Filename Value="galleryprocessor.pas"/>
-        <Caret Line="251" TopLine="230"/>
+        <Filename Value="settings.pas"/>
+        <Caret Line="724" TopLine="699"/>
       </Position>
       <Position>
-        <Filename Value="galleryprocessor.pas"/>
-        <Caret Line="252" TopLine="230"/>
+        <Filename Value="settings.pas"/>
+        <Caret Line="725" TopLine="699"/>
       </Position>
       <Position>
-        <Filename Value="galleryprocessor.pas"/>
-        <Caret Line="251" TopLine="230"/>
+        <Filename Value="settings.pas"/>
+        <Caret Line="775" TopLine="751"/>
       </Position>
       <Position>
-        <Filename Value="galleryprocessor.pas"/>
-        <Caret Line="252" TopLine="230"/>
+        <Filename Value="settings.pas"/>
+        <Caret Line="781" TopLine="751"/>
       </Position>
       <Position>
-        <Filename Value="galleryprocessor.pas"/>
-        <Caret Line="40" TopLine="13"/>
+        <Filename Value="settings.pas"/>
+        <Caret Line="782" TopLine="751"/>
       </Position>
       <Position>
-        <Filename Value="galleryprocessor.pas"/>
-        <Caret Line="93" Column="50" TopLine="74"/>
+        <Filename Value="settings.pas"/>
+        <Caret Line="680" TopLine="656"/>
       </Position>
       <Position>
-        <Filename Value="presentations.pas"/>
-        <Caret Line="166" Column="53" TopLine="129"/>
+        <Filename Value="settings.pas"/>
+        <Caret Line="681" TopLine="656"/>
       </Position>
       <Position>
-        <Filename Value="imageresizegui.lpr"/>
-        <Caret Line="34"/>
+        <Filename Value="settings.pas"/>
+        <Caret Line="683" TopLine="656"/>
       </Position>
       <Position>
-        <Filename Value="galleryprocessor.pas"/>
-        <Caret Line="251" TopLine="228"/>
+        <Filename Value="settings.pas"/>
+        <Caret Line="381" TopLine="357"/>
       </Position>
       <Position>
-        <Filename Value="galleryprocessor.pas"/>
-        <Caret Line="252" TopLine="228"/>
+        <Filename Value="settings.pas"/>
+        <Caret Line="382" TopLine="357"/>
       </Position>
       <Position>
-        <Filename Value="galleryprocessor.pas"/>
-        <Caret Line="251" TopLine="228"/>
+        <Filename Value="settings.pas"/>
+        <Caret Line="383" TopLine="357"/>
       </Position>
       <Position>
-        <Filename Value="galleryprocessor.pas"/>
-        <Caret Line="248" Column="64" TopLine="228"/>
+        <Filename Value="settings.pas"/>
+        <Caret Line="393" TopLine="357"/>
       </Position>
       <Position>
-        <Filename Value="..\src\utils.pas"/>
-        <Caret Line="22"/>
+        <Filename Value="settings.pas"/>
+        <Caret Line="684" TopLine="660"/>
       </Position>
       <Position>
-        <Filename Value="presentations.pas"/>
-        <Caret Line="165" TopLine="133"/>
+        <Filename Value="settings.pas"/>
+        <Caret Line="784" TopLine="760"/>
       </Position>
       <Position>
-        <Filename Value="presentations.pas"/>
-        <Caret Line="166" TopLine="133"/>
+        <Filename Value="presentationdlg.pas"/>
+        <Caret Line="262" TopLine="238"/>
       </Position>
     </JumpHistory>
     <RunParams>
@@ -1676,20 +1683,6 @@
         <WatchKind Value="wpkWrite"/>
         <Source Value="settingseditor.pas"/>
         <Line Value="295"/>
-      </Item>
-      <Item>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="galleryprocessor.pas"/>
-        <Line Value="251"/>
-      </Item>
-      <Item>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="presentations.pas"/>
-        <Line Value="165"/>
       </Item>
     </BreakPoints>
   </Debugging>

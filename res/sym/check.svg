@@ -7,7 +7,7 @@
    viewBox="0 0 6.35 6.35"
    version="1.1"
    id="svg5526"
-   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
    sodipodi:docname="check.svg"
    inkscape:export-filename="..\png32\checkupdate.png"
    inkscape:export-xdpi="128"
@@ -32,10 +32,10 @@
      inkscape:zoom="29.276992"
      inkscape:cx="7.8901548"
      inkscape:cy="11.391198"
-     inkscape:window-width="1831"
-     inkscape:window-height="1230"
-     inkscape:window-x="104"
-     inkscape:window-y="104"
+     inkscape:window-width="2560"
+     inkscape:window-height="1417"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
      inkscape:lockguides="true">
@@ -48,7 +48,8 @@
        spacingx="0.26458333"
        spacingy="0.26458333"
        enabled="true"
-       visible="true" />
+       visible="true"
+       units="px" />
     <sodipodi:guide
        position="-3.4395833,5.8208333"
        orientation="0,-1"
@@ -85,22 +86,14 @@
        dotted="true"
        empspacing="1"
        originx="0.13229167"
-       originy="0.13229167" />
+       originy="0.13229167"
+       spacingy="1"
+       spacingx="1"
+       units="px"
+       visible="true" />
   </sodipodi:namedview>
   <defs
      id="defs5523">
-    <linearGradient
-       inkscape:collect="always"
-       id="linearGradient1190">
-      <stop
-         style="stop-color:#204a87;stop-opacity:1;"
-         offset="0"
-         id="stop1186" />
-      <stop
-         style="stop-color:#204a87;stop-opacity:0;"
-         offset="1"
-         id="stop1188" />
-    </linearGradient>
     <linearGradient
        inkscape:collect="always"
        id="linearGradient1058">
@@ -109,7 +102,7 @@
          offset="0"
          id="stop1054" />
       <stop
-         style="stop-color:#204a87;stop-opacity:0;"
+         style="stop-color:#812087;stop-opacity:0;"
          offset="1"
          id="stop1056" />
     </linearGradient>
@@ -125,20 +118,21 @@
        inkscape:collect="always"
        xlink:href="#linearGradient1058"
        id="linearGradient1060"
-       x1="5.9498177"
-       y1="1.2391309"
-       x2="3.6578646"
-       y2="1.2391309"
+       x1="5.1089296"
+       y1="1.6361367"
+       x2="3.8492506"
+       y2="1.031206"
        gradientUnits="userSpaceOnUse" />
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#linearGradient1190"
-       id="linearGradient1192"
-       x1="4.6996613"
-       y1="2.9060059"
-       x2="6.9916146"
-       y2="2.9060059"
-       gradientUnits="userSpaceOnUse" />
+       xlink:href="#linearGradient1058"
+       id="linearGradient2"
+       gradientUnits="userSpaceOnUse"
+       x1="5.1089296"
+       y1="1.6361367"
+       x2="3.8492506"
+       y2="1.031206"
+       gradientTransform="rotate(180,5.3247397,2.0725683)" />
   </defs>
   <g
      inkscape:label="Ebene 1"
@@ -147,13 +141,13 @@
      transform="matrix(1.2698412,0,0,1.2698412,-3.5865737,0.54316723)">
     <path
        style="fill:url(#linearGradient1060);fill-opacity:1;stroke:none;stroke-width:0.208359;stroke-dasharray:none;stroke-opacity:1"
-       d="M 3.6578645,1.6558496 V 0.82241211 l 2.9170314,-2e-8 0,-0.62507816 1.0417969,1.04179697 -1.0417969,1.0417969 0,-0.6250782 z"
+       d="M 3.6578643,1.6558495 V 0.822412 l 2.9170314,-2e-8 V 0.19733382 L 7.6166926,1.2391308 6.5748957,2.2809277 V 1.6558495 Z"
        id="path997"
        sodipodi:nodetypes="cccccccc" />
     <path
-       style="fill:url(#linearGradient1192);fill-opacity:1;stroke:none;stroke-width:0.208359;stroke-dasharray:none;stroke-opacity:1"
-       d="M 6.9916146,3.3227247 V 2.4892872 H 4.0745832 l 0,-0.6250782 -1.0417969,1.0417969 1.0417969,1.0417969 0,-0.6250781 z"
-       id="path997-2"
+       style="fill:url(#linearGradient2);fill-opacity:1;stroke:none;stroke-width:0.208359;stroke-dasharray:none;stroke-opacity:1"
+       d="M 6.9916146,2.4892872 V 3.3227246 H 4.0745832 V 3.9478028 L 3.0327863,2.9060058 4.0745832,1.864209 v 0.6250782 z"
+       id="path997-8"
        sodipodi:nodetypes="cccccccc" />
   </g>
   <g

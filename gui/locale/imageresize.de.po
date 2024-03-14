@@ -1455,10 +1455,14 @@ msgid "Seed:"
 msgstr "Saat:"
 
 #: tmaindialog.labelstep1.caption
+#, fuzzy
+#| msgid "Images"
 msgid "Images"
 msgstr "Bilder"
 
 #: tmaindialog.labelstep2.caption
+#, fuzzy
+#| msgid "Sizes and other Settings"
 msgid "Sizes and other Settings"
 msgstr "Größen und andere Einstellungen"
 

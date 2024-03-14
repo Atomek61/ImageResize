@@ -23,7 +23,7 @@ uses
   StringArrays, Language;
 
 type
-  TCopyMode = (cmValues, cmWeak, cmStrong, cmDeep);
+  TCopyMode = (cmValues, cmExisting, cmAll, cmDeep);
   TLoadMode = (lmEasygoing, lmStrict);
 
   TSetting = class;
@@ -460,13 +460,13 @@ begin
           for i:=0 to Items.Count-1 do
             Items[i].Assign(Source.Items[i]);
         end;
-      cmWeak:
+      cmExisting:
         // Assign existing only
         for SourceSetting in Source.Items do begin
           if TryGetValue(SourceSetting.Key, Setting) then
             Setting.AsText := SourceSetting.AsText;
         end;
-      cmStrong:
+      cmAll:
         // Assign existing, create missing
         for SourceSetting in Source.Items do begin
           if TryGetValue(SourceSetting.Key, Setting) then

@@ -224,7 +224,7 @@ type
     PageControlParams: TPageControl;
     PanelPreview: TPanel;
     ProgressBar: TPaintBox;
-    PanelDestination: TPanel;
+    PanelTarget: TPanel;
     PanelParams: TPanel;
     PanelSource: TPanel;
     PanelControls: TPanel;
@@ -1145,7 +1145,7 @@ begin
   EditSizes.Text := '360';
   Snapshot('step-sizes', PanelParams, -2, -40, 360, 95);
   EditTargetFolder.Text := 'mygallery\img{SIZE}';
-  Snapshot('step-targetfolder', PanelDestination, -200, -8, 360, 60);
+  Snapshot('step-targetfolder', PanelTarget, -200, -8, 360, 60);
   Snapshot('step-execute', ButtonExecute, 0, 0, 0, 0);
   Snapshot('buttons-project', ToolButtonNew, 0, 0, 4*ToolButtonNew.Width, ToolButtonNew.Height);
   EditSizes.Text := '120, 800, 1920';
@@ -1758,7 +1758,7 @@ var
     ActionPresentation.Enabled := Value;
     PanelSource.Enabled := Value;
     PanelParams.Enabled := Value;
-    PanelDestination.Enabled := Value;
+    PanelTarget.Enabled := Value;
   end;
 
 begin
