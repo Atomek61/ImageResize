@@ -16,7 +16,7 @@ uses
   presentations, galleryprocessor, appsettings, presentationmanagerfrm,
   colorfrm, tagids, webutils, webcolors, webcoloreditor, settingseditors,
   language, inttypes, stringutils, imgutils, colorsetting, controlshot,
-  taggingdlg;
+  taggingdlg, sizefrm;
 
 {$R *.res}
 

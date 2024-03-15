@@ -1,7 +1,7 @@
 object MainDialog: TMainDialog
-  Left = 368
+  Left = 571
   Height = 680
-  Top = 118
+  Top = 280
   Width = 900
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'ImageResize'
@@ -272,108 +272,54 @@ object MainDialog: TMainDialog
           ClientHeight = 352
           ClientWidth = 385
           ImageIndex = 7
-          object Label3: TLabel
-            AnchorSideTop.Control = EditSizes
-            AnchorSideRight.Control = EditSizes
-            Left = 6
-            Height = 15
-            Top = 8
-            Width = 114
-            Anchors = [akTop, akRight]
-            AutoSize = False
-            BorderSpacing.Top = 3
-            Caption = 'Sizes:'
-            FocusControl = EditSizes
-            ParentColor = False
-          end
-          object ButtonClearSizes: TBitBtn
-            AnchorSideLeft.Control = EditSizes
-            AnchorSideLeft.Side = asrBottom
-            AnchorSideTop.Control = EditSizes
-            AnchorSideTop.Side = asrCenter
-            Left = 349
-            Height = 25
-            Hint = 'Clear all sizes or the selected one'
-            Top = 4
-            Width = 34
-            Anchors = [akTop, akLeft, akRight]
-            BorderSpacing.Left = 1
-            Images = ImagesModule.ImageList20x20
-            ImageIndex = 8
-            OnClick = ButtonClearSizesClick
-            Spacing = 0
-            TabOrder = 1
-          end
-          object EditSizes: TEdit
-            Left = 120
-            Height = 23
-            Hint = 'Enter a comma-separated list of image sizes.'#13#10'The size refers to the longer side of an image.'#13#10'You can build a list by clicking the suggested'#13#10'sizes from the button field.'
-            Top = 5
-            Width = 228
-            Anchors = [akTop, akLeft, akRight]
+          object ComboBoxSize: TComboBox
+            Left = 240
+            Height = 30
+            Top = 32
+            Width = 144
+            DropDownCount = 16
+            ItemHeight = 24
+            Style = csOwnerDrawEditableFixed
             TabOrder = 0
-            OnChange = EditSizesChange
-            OnExit = EditSizesExit
-            OnKeyPress = EditSizesKeyPress
+            OnDrawItem = ComboBoxSizeDrawItem
           end
-          object ToolBarSizeButtons: TToolBar
-            Left = 6
-            Height = 273
-            Top = 71
-            Width = 375
-            Align = alNone
-            ButtonHeight = 20
-            ButtonWidth = 20
-            Color = clWindow
-            EdgeBorders = []
-            Images = ImagesModule.ImageList32x32
-            ParentColor = False
-            ShowCaptions = True
-            TabOrder = 4
-          end
-          object ButtonClearSizeNames: TBitBtn
-            AnchorSideLeft.Control = ComboBoxSizeNames
-            AnchorSideLeft.Side = asrBottom
-            AnchorSideTop.Control = ComboBoxSizeNames
-            AnchorSideTop.Side = asrCenter
-            Left = 349
-            Height = 25
-            Hint = 'Clear all size names or the selected one'
-            Top = 38
-            Width = 34
-            Anchors = [akTop, akLeft, akRight]
-            BorderSpacing.Left = 1
-            Images = ImagesModule.ImageList20x20
-            ImageIndex = 8
-            OnClick = ButtonClearSizeNamesClick
-            Spacing = 0
-            TabOrder = 3
-          end
-          object Label8: TLabel
-            AnchorSideTop.Control = ComboBoxSizeNames
-            AnchorSideRight.Control = ComboBoxSizeNames
-            Left = 6
-            Height = 15
-            Top = 42
-            Width = 114
-            Anchors = [akTop, akRight]
-            AutoSize = False
-            BorderSpacing.Top = 3
-            Caption = 'Size Names:'
-            FocusControl = ComboBoxSizeNames
-            ParentColor = False
-          end
-          object ComboBoxSizeNames: TComboBox
-            Left = 120
+          object ComboBoxSizeName: TComboBox
+            Left = 240
             Height = 23
-            Hint = 'Size names are required, if you want to create a presentation, which uses'#13#10'the {SIZENAME} template placeholder.'#13#10'For each size enter a name and separate names with commas.'#13#10#13#10'I.e. if you have the sizes "120,1920" and you enter the name list "_THUMBNAIL,",'#13#10'then for all 120px sized images the placeholder {SIZENAME} is "_THUMBNAIL"'#13#10'and for all 1920px sized images the placeholder will be an empty string.'#13#10'This is useful for presentations with a thumbnail view and where thumbnails and'#13#10'large views are rendered to a common folder.'
-            Top = 39
-            Width = 228
+            Top = 72
+            Width = 143
             ItemHeight = 15
             Items.Strings = (
-              '_THUMBNAIL,'
+              '_THUMBNAIL'
+              'SMALL'
+              'DOCUMENT'
+              'LARGE'
             )
+            TabOrder = 1
+            Text = 'ComboBoxSizeName'
+          end
+          object ButtonSizeAdd: TButton
+            Left = 248
+            Height = 25
+            Top = 144
+            Width = 75
+            Caption = 'Add'
             TabOrder = 2
+          end
+          object ListBoxSizes: TListBox
+            Left = 8
+            Height = 344
+            Top = 8
+            Width = 224
+            Items.Strings = (
+              'A'
+              'B'
+              'C'
+            )
+            ItemHeight = 28
+            Style = lbOwnerDrawFixed
+            TabOrder = 3
+            OnDrawItem = ListBoxSizesDrawItem
           end
         end
         object TabSheetRenaming: TTabSheet

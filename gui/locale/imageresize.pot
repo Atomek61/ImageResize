@@ -974,16 +974,6 @@ msgstr ""
 msgid "Select a folder with images"
 msgstr ""
 
-#: tmaindialog.buttonclearsizenames.hint
-msgctxt "tmaindialog.buttonclearsizenames.hint"
-msgid "Clear all size names or the selected one"
-msgstr ""
-
-#: tmaindialog.buttonclearsizes.hint
-msgctxt "tmaindialog.buttonclearsizes.hint"
-msgid "Clear all sizes or the selected one"
-msgstr ""
-
 #: tmaindialog.buttonclearsrcfiles.hint
 msgid "Clear image list"
 msgstr ""
@@ -991,6 +981,10 @@ msgstr ""
 #: tmaindialog.buttonmrkedit.hint
 msgctxt "tmaindialog.buttonmrkedit.hint"
 msgid "Opens the internal Watermark Editor"
+msgstr ""
+
+#: tmaindialog.buttonsizeadd.caption
+msgid "Add"
 msgstr ""
 
 #: tmaindialog.caption
@@ -1116,17 +1110,8 @@ msgctxt "tmaindialog.comboboxshuffleseed.text"
 msgid "<random>"
 msgstr ""
 
-#: tmaindialog.comboboxsizenames.hint
-msgid ""
-"Size names are required, if you want to create a presentation, which uses\n"
-"the {SIZENAME} template placeholder.\n"
-"For each size enter a name and separate names with commas.\n"
-"\n"
-"I.e. if you have the sizes \"120,1920\" and you enter the name list \"_THUMBNAIL,\",\n"
-"then for all 120px sized images the placeholder {SIZENAME} is \"_THUMBNAIL\"\n"
-"and for all 1920px sized images the placeholder will be an empty string.\n"
-"This is useful for presentations with a thumbnail view and where thumbnails and\n"
-"large views are rendered to a common folder."
+#: tmaindialog.comboboxsizename.text
+msgid "ComboBoxSizeName"
 msgstr ""
 
 #: tmaindialog.editmrkfilename.hint
@@ -1186,14 +1171,6 @@ msgid ""
 "Enter a filename template containing placeholders for special values.\n"
 "This template will be expanded for each resampled image. Insert the\n"
 "{SIZE} placeholder to enable multiple sizes in a common folder."
-msgstr ""
-
-#: tmaindialog.editsizes.hint
-msgid ""
-"Enter a comma-separated list of image sizes.\n"
-"The size refers to the longer side of an image.\n"
-"You can build a list by clicking the suggested\n"
-"sizes from the button field."
 msgstr ""
 
 #: tmaindialog.editsrcfolder.hint
@@ -1337,11 +1314,6 @@ msgstr ""
 msgid "Algorithm:"
 msgstr ""
 
-#: tmaindialog.label3.caption
-msgctxt "tmaindialog.label3.caption"
-msgid "Sizes:"
-msgstr ""
-
 #: tmaindialog.label4.caption
 msgid "Source Folder:"
 msgstr ""
@@ -1352,11 +1324,6 @@ msgstr ""
 
 #: tmaindialog.label6.caption
 msgid "Compression:"
-msgstr ""
-
-#: tmaindialog.label8.caption
-msgctxt "tmaindialog.label8.caption"
-msgid "Size Names:"
 msgstr ""
 
 #: tmaindialog.label9.caption

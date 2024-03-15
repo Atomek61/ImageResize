@@ -998,16 +998,6 @@ msgstr "Wählen Sie ein oder mehrere Bilder aus"
 msgid "Select a folder with images"
 msgstr "Wählen Sie einen Ordner mit Bildern"
 
-#: tmaindialog.buttonclearsizenames.hint
-msgctxt "tmaindialog.buttonclearsizenames.hint"
-msgid "Clear all size names or the selected one"
-msgstr "Löscht alle Größen-Bezeichner oder nur die markierten"
-
-#: tmaindialog.buttonclearsizes.hint
-msgctxt "tmaindialog.buttonclearsizes.hint"
-msgid "Clear all sizes or the selected one"
-msgstr "Löscht alle Größen oder nur die markierte"
-
 #: tmaindialog.buttonclearsrcfiles.hint
 msgid "Clear image list"
 msgstr "Löscht die Liste der Bilder"
@@ -1016,6 +1006,10 @@ msgstr "Löscht die Liste der Bilder"
 msgctxt "tmaindialog.buttonmrkedit.hint"
 msgid "Opens the internal Watermark Editor"
 msgstr "Öffnet den eingebauten Wasserzeichen-Editor"
+
+#: tmaindialog.buttonsizeadd.caption
+msgid "Add"
+msgstr ""
 
 #: tmaindialog.caption
 msgid "ImageResize"
@@ -1160,27 +1154,9 @@ msgctxt "tmaindialog.comboboxshuffleseed.text"
 msgid "<random>"
 msgstr "<random>"
 
-#: tmaindialog.comboboxsizenames.hint
-msgid ""
-"Size names are required, if you want to create a presentation, which uses\n"
-"the {SIZENAME} template placeholder.\n"
-"For each size enter a name and separate names with commas.\n"
-"\n"
-"I.e. if you have the sizes \"120,1920\" and you enter the name list \"_THUMBNAIL,\",\n"
-"then for all 120px sized images the placeholder {SIZENAME} is \"_THUMBNAIL\"\n"
-"and for all 1920px sized images the placeholder will be an empty string.\n"
-"This is useful for presentations with a thumbnail view and where thumbnails and\n"
-"large views are rendered to a common folder."
+#: tmaindialog.comboboxsizename.text
+msgid "ComboBoxSizeName"
 msgstr ""
-"Größennamen sind erforderlich, wenn Sie eine Präsentation erstellen wollen, die\n"
-"den Platzhalter {SIZENAME} verwendet.\n"
-"Geben Sie für jede Größe einen Namen ein und trennen Sie die Namen mit Kommas.\n"
-"\n"
-"Wenn Sie z.B. die Größen \"120,1920\" haben und Sie die Namensliste \"_THUMBNAIL,\" eingeben,\n"
-"dann ist der Platzhalter {SIZENAME} für alle Bilder in der Größe 120px \"_THUMBNAIL\"\n"
-"und für alle Bilder in der Größe 1920px ergibt der Platzhalter eine leere Zeichenkette.\n"
-"Dies ist nützlich für Präsentationen mit einer Thumbnail-Ansicht, bei denen Thumbnails und\n"
-"großen Ansichten in einen gemeinsamen Ordner gerendert werden."
 
 #: tmaindialog.editmrkfilename.hint
 msgid ""
@@ -1255,17 +1231,6 @@ msgstr ""
 "Geben Sie eine Dateinamen-Vorlage ein, die Platzhalter für bestimmte Werte enthält.\n"
 "Die Vorlage wird für jede skalierte Datei ausgewertet. Fügen Sie den {SIZE}-Platzhalter ein,\n"
 "um mehrere Größen eines Bildes in einem gemeinsamen Verzeichnis erzeugen zu können."
-
-#: tmaindialog.editsizes.hint
-msgid ""
-"Enter a comma-separated list of image sizes.\n"
-"The size refers to the longer side of an image.\n"
-"You can build a list by clicking the suggested\n"
-"sizes from the button field."
-msgstr ""
-"Enthält eine kommaseparierte Liste von Bildgrößen.\n"
-"Sie können die Liste erstellen, indem Sie auf die vorgeschlagenen Größen klicken.\n"
-"Die Größe bezieht sich auf die längere Seite des Bildes."
 
 #: tmaindialog.editsrcfolder.hint
 msgctxt "tmaindialog.editsrcfolder.hint"
@@ -1419,11 +1384,6 @@ msgstr "Klicken oder ziehen Sie das Wasserzeichen"
 msgid "Algorithm:"
 msgstr "Algorithmus:"
 
-#: tmaindialog.label3.caption
-msgctxt "tmaindialog.label3.caption"
-msgid "Sizes:"
-msgstr "Größen:"
-
 #: tmaindialog.label4.caption
 msgid "Source Folder:"
 msgstr "Quellverzeichnis:"
@@ -1435,11 +1395,6 @@ msgstr "Qualität (1..100):"
 #: tmaindialog.label6.caption
 msgid "Compression:"
 msgstr "Kompression:"
-
-#: tmaindialog.label8.caption
-msgctxt "tmaindialog.label8.caption"
-msgid "Size Names:"
-msgstr "Größen-Bezeichner:"
 
 #: tmaindialog.label9.caption
 msgid "Horizontal:"

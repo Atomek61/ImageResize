@@ -18,6 +18,7 @@ type
   { TImagesModule }
 
   TImagesModule = class(TDataModule)
+    ImageList24x24: TImageList;
     ImageList20x20: TImageList;
     ImageList32x32: TImageList;
   private

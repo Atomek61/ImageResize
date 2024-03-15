@@ -1,0 +1,18 @@
+object Frame1: TFrame1
+  Left = 0
+  Height = 105
+  Top = 0
+  Width = 414
+  ClientHeight = 105
+  ClientWidth = 414
+  TabOrder = 0
+  DesignLeft = 652
+  DesignTop = 428
+  object CheckBoxEnabled: TCheckBox
+    Left = 0
+    Height = 17
+    Top = 0
+    Width = 18
+    TabOrder = 0
+  end
+end
