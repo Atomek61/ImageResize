@@ -15,21 +15,21 @@ unit maindlg;
 interface
 
 uses
-  Windows, LCLTranslator, Classes, Types, SysUtils, Forms, Controls, Graphics, Dialogs,
-  StdCtrls, ComCtrls, ActnList, ExtCtrls, imgres, AboutDlg, IniFiles, StrUtils,
-  LMessages, LCLIntf, Buttons, ImgList, LCLType, LazHelpHTML, CheckLst,
-  BGRABitmap, BGRABitmapTypes, BGRASpeedButton, BGRAGraphicControl, RichMemo,
-  Generics.Collections, MrkEditDlg, WinDirs, UpdateUtils, AppSettings, Logging,
-  LoggingRichMemo, StringArrays, Presentations, PresentationDlg, Settings,
-  TagIds, LazFileUtils, Translations, Language, ControlShot, IniFilesHelper,
-  ImagesMod;
+  Windows, LCLTranslator, Classes, Types, SysUtils, Forms, Controls, Graphics,
+  Dialogs, StdCtrls, ComCtrls, ActnList, ExtCtrls, imgres, AboutDlg, IniFiles,
+  StrUtils, LMessages, LCLIntf, Buttons, ImgList, LCLType, LazHelpHTML,
+  BGRABitmap, BGRABitmapTypes, BGRASpeedButton, BGRAGraphicControl,
+  RichMemo, MrkEditDlg, WinDirs, UpdateUtils, Settings,
+  AppSettings, Logging, LoggingRichMemo, StringArrays, Presentations,
+  PresentationDlg, TagIds, LazFileUtils, Translations, Language,
+  ControlShot, IniFilesHelper, ImagesMod, TemplateEngine;
 
 const
   LM_RUN                = LM_USER + 1;
 
   GUIVER_APP            = 'ImageResize';
-  GUIVER_VERSION        = '4.1';
-  GUIVER_DATE           = '2024-02-24';
+  GUIVER_VERSION        = '4.2';
+  GUIVER_DATE           = '2024-03-17';
 
   GUIVER                :TVersionManifest = (App: GUIVER_APP; Version: GUIVER_VERSION; Date: GUIVER_DATE; Hint: '');
 
@@ -65,7 +65,6 @@ const
   SIZEBTNHINTFMT        = '%s - %dpx';
 
   MRKRECTRATIO          = 3.0;
-  LINESEP               = '|';
 
   IMGIDX_START          = 5;
   IMGIDX_CANCEL         = 6;
@@ -95,22 +94,12 @@ type
 
   { TMainDialog }
 
-//  TSizeDict = specialize TDictionary<integer, integer>;
-
   { TPos }
 
   TPos = record
     X, Y :single;
     constructor Create(ax, ay :single);
   end;
-
-  TSizeInfo = record
-    Size :integer;
-    Name :string;
-    Enabled :boolean;
-  end;
-
-  TSizeInfos = array of TSizeInfo;
 
   TMainDialog = class(TForm)
     ActionHelpScreenshots: TAction;
@@ -134,14 +123,19 @@ type
     ActionAbout: TAction;
     ActionExecute: TAction;
     BitBtn1: TBitBtn;
-    ButtonSizeAdd: TButton;
+    ButtonAddSize: TBitBtn;
+    ButtonClearSizes: TBitBtn;
     ComboBoxSize: TComboBox;
     ComboBoxSizeName: TComboBox;
     ImageStep1: TImage;
     ImageStep2: TImage;
     ImageStep3: TImage;
     Label2: TLabel;
+    Label3: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
     LabelRenTemplate: TLabel;
+    ListBoxSizesPalette: TListBox;
     ListBoxSizes: TListBox;
     PaintBoxMrkPreview: TBGRAGraphicControl;
     ButtonExecute: TBGRASpeedButton;
@@ -275,17 +269,21 @@ type
     procedure ActionSettingsExecute(Sender: TObject);
     procedure ActionPresentationExecute(Sender: TObject);
     procedure ActionSourceExecute(Sender: TObject);
+    procedure ButtonAddSizeClick(Sender: TObject);
     procedure ButtonBrowseTargetFolderClick(Sender: TObject);
     procedure ButtonBrowseMrkFilenameClick(Sender: TObject);
     procedure ButtonBrowseSrcFilesClick(Sender: TObject);
     procedure ButtonBrowseSrcFolderClick(Sender: TObject);
     procedure ButtonClearCopyrightClick(Sender: TObject);
+    procedure ButtonClearSizesClick(Sender: TObject);
     procedure ButtonClearSrcFilesClick(Sender: TObject);
     procedure ButtonInsertCopyrightClick(Sender: TObject);
     procedure ButtonInsertSIZEClick(Sender: TObject);
     procedure ActionParamExecute(Sender :TObject);
     procedure ComboBoxSizeDrawItem(Control: TWinControl; Index: Integer;
       ARect: TRect; State: TOwnerDrawState);
+    procedure ComboBoxSizeMeasureItem(Control: TWinControl; Index: Integer;
+      var AHeight: Integer);
     procedure EditSrcFolderChange(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormCreate(Sender: TObject);
@@ -306,7 +304,16 @@ type
     procedure EditMrkSizeChange(Sender: TObject);
     procedure FormDropFiles(Sender: TObject; const FileNames: array of String);
     procedure ApplicationProperties1Exception(Sender: TObject; E: Exception);
+    procedure ListBoxSizesClick(Sender: TObject);
     procedure ListBoxSizesDrawItem(Control: TWinControl; Index: Integer;
+      ARect: TRect; State: TOwnerDrawState);
+    procedure ListBoxSizesKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure ListBoxSizesMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure ListBoxSizesPaletteClick(Sender: TObject);
+    procedure ListBoxSizesPaletteDblClick(Sender: TObject);
+    procedure ListBoxSizesPaletteDrawItem(Control: TWinControl; Index: Integer;
       ARect: TRect; State: TOwnerDrawState);
     procedure MemoSrcFilenamesChange(Sender: TObject);
     procedure PaintBoxMrkPreviewMouseDown(Sender: TObject;
@@ -328,6 +335,7 @@ type
     FProjectDescription :string; // From project file
     FPresentationSettings :TPresentationSettings;
     FPresentationParamsList :TSettingsList;
+    FSizeInfos :TSizeInfos;
   private
     // Application
     FAutoExit :boolean;
@@ -342,7 +350,6 @@ type
     FProcessingSettings :TProcessingSettings;
     FDialogSettings :TDialogSettings;
     FWorkingDirectory :string;
-    FSizeInfos :TSizeInfos;
     procedure ChangeCurrentDir(const Path :string);
     function GetAppDataFilename(const Filetitle :string; CanCreate :boolean) :string;
     procedure SetDirty(AValue: boolean);
@@ -372,8 +379,7 @@ type
     function MouseToMrkSpace(X, Y :integer; out Value :TSize) :boolean;
     function CalcMarkRect(out Rect :TRect) :boolean;
     function HasFocus(Control :TWinControl) :boolean;
-    function StrToSizeInfos(const Sizes, SizeNames :string) :TSizeInfos;
-    procedure SizeInfosToStr(const SizeInfos :TSizeInfos; out SizeStr :string; out SizeNames :string);
+    procedure OnSizeInfosChanged(Sender :TSizeInfos; Change :TSizeInfos.TChange; Index :integer);
   public
     property RequiredSteps[Index :integer] :boolean read GetRequiredSteps write SetRequiredSteps;
     property Dirty :boolean read FIsDirty write SetDirty;
@@ -385,10 +391,7 @@ var
 implementation
 
 uses
-  math, Utils, helpintfs, FileUtil, SettingsDlg;
-
-const
-  SCptSizesDefault  = 'default';
+  math, helpintfs, FileUtil, SettingsDlg;
 
 resourcestring
   SCptProcessor                 = 'Processor';
@@ -402,9 +405,6 @@ resourcestring
   SCptCancel                    = 'Cancel';
   SCptExecute                   = 'Execute';
   SCptExecuteA                  = 'E&xecute';
-  SCptSizeClassSmall            = 'Small - Thumbnail size';
-  SCptSizeClassMedium           = 'Medium - Document size';
-  SCptSizeClassLarge            = 'Large - Desktop size';
   SCptInfoFmt                   = '%s %s %s, Processor %s, %d Cores';
   SLogErrorPrefix               = 'Error - ';
   SLogCantLoadProject           = 'Cant load ImageResize project File';
@@ -429,6 +429,16 @@ resourcestring
   SErrCancelledAtFmt            = 'Cancelled at %.0f%%';
   SMsgCurrentDirFmt             = 'Current directory: %s';
 
+const
+  TRSIZE:TTextStyle=(Alignment:taRightJustify;Layout:tlCenter;SingleLine:true;Clipping:true;ExpandTabs:false;
+    ShowPrefix:false;Wordbreak:false;Opaque:false;SystemFont:false;RightToLeft:false;EndEllipsis:true);
+
+  TRNAME:TTextStyle=(Alignment:taLeftJustify;Layout:tlCenter;SingleLine:true;Clipping:true;ExpandTabs:false;
+    ShowPrefix:false;Wordbreak:false;Opaque:false;SystemFont:false;RightToLeft:false;EndEllipsis:true);
+
+  TRDEFSIZE:TTextStyle=(Alignment:taCenter;Layout:tlCenter;SingleLine:true;Clipping:true;ExpandTabs:false;
+    ShowPrefix:false;Wordbreak:false;Opaque:false;SystemFont:false;RightToLeft:false;EndEllipsis:true);
+
 {$R *.lfm}
 
 function TMainDialog.HasFocus(Control :TWinControl) :boolean;
@@ -443,39 +453,25 @@ begin
   result := false;
 end;
 
-function TMainDialog.StrToSizeInfos(const Sizes, SizeNames: string): TSizeInfos;
-var
-  s :TStringArray;
-  Item :String;
-  Size :integer;
-  i :integer;
-begin
-  result := nil;
-  s := Sizes.Split(',');
-  for Item in s do begin
-    SetLength(result, Length(result)+1);
-    result[High(result)].Enabled := true;
-    if not TryStrToInt(Item, Size) then
-      raise Exception.Create(SErrInvalidSizes);
-    result[High(result)].Size := Size;
-  end;
-  s := SizeNames.Split(',');
-  for i:=0 to High(result) do begin
-    if i>=Length(s) then Exit;
-    result[i].Name := s[i];
-  end;
-end;
-
-procedure TMainDialog.SizeInfosToStr(const SizeInfos: TSizeInfos; out SizeStr: string; out SizeNames: string);
+procedure TMainDialog.OnSizeInfosChanged(Sender: TSizeInfos; Change: TSizeInfos.TChange; Index: integer);
 var
   i :integer;
 begin
-  SizeStr := '';
-  for i:=0 to High(SizeInfos) do
-    SizeStr := SizeStr + IfThen(i>0, ', ', '') + IntToStr(SizeInfos[i].Size);
-  SizeNames := '';
-  for i:=0 to High(SizeInfos) do
-    SizeNames := SizeNames + IfThen(i>0, ', ', '') + SizeInfos[i].Name;
+  case Change of
+  lcChanged:
+    ListBoxSizes.Invalidate;
+  lcInsert:
+    ListBoxSizes.Items.Insert(Index, IntToStr(FSizeInfos[Index].Size));
+  lcDelete:
+    ListBoxSizes.Items.Delete(Index);
+  lcInit:
+    begin
+      ListBoxSizes.Items.Clear;
+      for i:=0 to FSizeInfos.Count-1 do
+        ListBoxSizes.Items.Add(IntToStr(FSizeInfos[i].Size));
+    end;
+  end;
+  UpdateRequiredStep(2);
 end;
 
 procedure MoveChecked(ActionList :TActionList; Delta :integer);
@@ -570,8 +566,6 @@ end;
 procedure TMainDialog.FormCreate(Sender: TObject);
 var
   i :integer;
-  Button :TToolButton;
-  Cpt :string;
   LangCode, ExpliciteLangCode :string;
   Interpolation :TInterpolation;
   Item :string;
@@ -584,6 +578,9 @@ begin
   SetDefaultLang(TLanguage.Code);
 
   TLogger.DefaultLogger := TRichMemoLogger.Create(MemoMessages);
+
+  FSizeInfos := TSizeInfos.Create;
+  FSizeInfos.OnChanged := OnSizeInfosChanged;
 
   AllowDropFiles := true;
 
@@ -603,8 +600,11 @@ begin
   RadioButtonRenSimple.Hint := RENSIMPLETEMPLATE;
   RadioButtonRenAdvanced.Hint := RENADVANCEDTEMPLATE;
 
-  for i in DEFSIZES do
+  for i in TSizeInfos.DEFAULT_SIZES do
     ComboBoxSize.Items.Add(IntToStr(i));
+
+  for i in TSizeInfos.DEFAULT_SIZES do
+    ListBoxSizesPalette.Items.Add(IntToStr(i));
 
   for Interpolation in TInterpolation do
     ComboBoxInterpolation.Items.Add(INTERPOLATION_STRINGS[Interpolation]);
@@ -682,6 +682,7 @@ begin
   FDialogSettings.Free;
   FPresentationSettings.Free;
   FPresentationParamsList.Free;
+  FSizeInfos.Free;
 end;
 
 procedure TMainDialog.SaveSettings;
@@ -727,7 +728,9 @@ begin
     ActionSrcFilenames.Checked          := true;
     EditSrcFolder.Text                  := '';
     EditSrcMasks.Text                   := DEFAULT_SRCMASK;
-    ListBoxSizes.Items.Clear;
+    FSizeInfos.Clear;
+    ComboBoxSize.ItemIndex              := -1;
+    ComboBoxSizeName.ItemIndex          := 0;
     EditTargetFolder.Text               := '';
     ComboBoxJPEGQuality.ItemIndex       := 0;
     ComboBoxPNGCompression.ItemIndex    := 0;
@@ -838,7 +841,8 @@ function TMainDialog.LoadProjectFromIni(Ini :TCustomIniFile) :boolean;
 var
   IniVer :string;
   IniTyp :string;
-  i, Value :integer;
+  Value :integer;
+  Str :string;
 begin
   with Ini do begin
     IniTyp := Ini.ReadString('Common', 'Type', 'unknown');
@@ -861,14 +865,18 @@ begin
       ActionSrcFilenames.Execute
     else
       ActionSrcFolder.Execute;
-//    ActionSrcFilenames.Checked            := SameText(ReadString(PROJECT_SECTION, 'Source', 'Filenames'), 'Filenames');
     EditSrcFolder.Text                    := ReadString(PROJECT_SECTION,  'SourceFolder', EditSrcFolder.Text);
     EditSrcMasks.Text                     := ReadString(PROJECT_SECTION,  'SourceMasks', EditSrcMasks.Text);
-    MemoSrcFilenames.Text                 := ReplaceStr(ReadString(PROJECT_SECTION, 'SourceFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, LINESEP)), LINESEP, #13#10);
-    FSizeInfos                            := StrToSizeInfos(ReadString(PROJECT_SECTION,  'Sizes', ''), ReadString(PROJECT_SECTION,  'SizeNames', ''));
-    ListBoxSizes.Items.Clear;
-    for i:=0 to High(FSizeInfos) do ListBoxSizes.Items.Add(IntToStr(FSizeInfos[i].Size));
-    EditTargetFolder.Text                 := ReadString(PROJECT_SECTION,  'TargetFolder', EditTargetFolder.Text);
+    MemoSrcFilenames.Text                 := ReplaceStr(ReadString(PROJECT_SECTION, 'SourceFilenames', ReplaceStr(MemoSrcFilenames.Text, #13#10, '|')), '|', #13#10);
+    Str                                   := ReadString(PROJECT_SECTION,  'Sizes', '<missing>');
+    if Str<>'<missing>' then begin
+      if not FSizeInfos.TrySetSizeString(Str) then
+        Log(SErrInvalidSizes, llWarning);
+    end else
+      if not FSizeInfos.TrySetString(ReadString(PROJECT_SECTION,  'SizeNames', '')) then
+        Log(SErrInvalidSizes, llWarning);
+
+    EditTargetFolder.Text                 := CURLYBRACEDELIMITERS.UpgradeFrom(ReadString(PROJECT_SECTION,  'TargetFolder', EditTargetFolder.Text), PERCENTDELIMITERS);
     RequiredStepsUpdate;
     ComboBoxInterpolation.ItemIndex       := integer(TProcessor.NameToInterpolation(ReadString(PROJECT_SECTION,  'Interpolation', INTERPOLATION_NAMES[DEFAULT_INTERPOLATION])));
     Value := ReadInteger(PROJECT_SECTION,  'JPEGQuality', TProcessor.StrToJPEGQuality(ComboBoxJPEGQuality.Text));
@@ -884,7 +892,7 @@ begin
     RadioButtonRenSimple.Checked          := ReadBool(PROJECT_SECTION,    'RenSimple', RadioButtonRenSimple.Checked);
     RadioButtonRenAdvanced.Checked        := ReadBool(PROJECT_SECTION,    'RenAdvanced', RadioButtonRenAdvanced.Checked);
     RadioButtonRenCustom.Checked          := ReadBool(PROJECT_SECTION,    'RenCustom', RadioButtonRenCustom.Checked);
-    EditRenTemplate.Text                  := ReadString(PROJECT_SECTION,  'RenTemplate', EditRenTemplate.Text);
+    EditRenTemplate.Text                  := CURLYBRACEDELIMITERS.UpgradeFrom(ReadString(PROJECT_SECTION,  'RenTemplate', EditRenTemplate.Text), PERCENTDELIMITERS);
     CheckBoxShuffle.Checked               := ReadBool(PROJECT_SECTION,    'ShuffleEnabled', CheckBoxShuffle.Checked);
     ComboBoxShuffleSeed.Text              := ShuffleSeedToStr(ReadInteger(PROJECT_SECTION, 'ShuffleSeed', 0));
     CheckBoxTagsSourceEXIF.Checked        := ReadBool(PROJECT_SECTION,    'TagsSourceEXIF', CheckBoxTagsSourceEXIF.Checked);
@@ -925,7 +933,7 @@ var
         Filenames[i] := CreateRelativePath(Filename, ProjectDir, true);
       end;
     end;
-    result := ReplaceStr(Filenames.Text, #13#10, LINESEP)
+    result := ReplaceStr(Filenames.Text, #13#10, '|')
   end;
 
   function HandleFilenameRefs(Edit :TEdit) :string; overload;
@@ -938,7 +946,6 @@ var
       CurrentDir := GetCurrentDir;
       ProjectDir := ExtractFilePath(Ini.Filename);
       RelativePath := CreateRelativePath(CreateAbsolutePath(Edit.Text, CurrentDir), ProjectDir, true);
-      //if RelativePath='' then RelativePath := '.\';
       Edit.Text := RelativePath;
     end;
     result := Edit.Text;
@@ -955,8 +962,7 @@ begin
     WriteString(PROJECT_SECTION,  'SourceFolder',   HandleFilenameRefs(EditSrcFolder));
     WriteString(PROJECT_SECTION,  'SourceMasks',    EditSrcMasks.Text);
     WriteString(PROJECT_SECTION,  'SourceFilenames', HandleFilenameRefs(MemoSrcFilenames.Lines));
-//    WriteString(PROJECT_SECTION,  'Sizes',          EditSizes.Text);
-//    WriteString(PROJECT_SECTION,  'SizeNames',      ComboBoxSizeNames.Text);
+    WriteString(PROJECT_SECTION,  'SizeNames',      FSizeInfos.GetString);
     WriteString(PROJECT_SECTION,  'TargetFolder',   HandleFilenameRefs(EditTargetFolder));
     WriteString(PROJECT_SECTION,  'Interpolation',  INTERPOLATION_NAMES[TInterpolation(ComboBoxInterpolation.ItemIndex)]);
     Value := TProcessor.StrToJPEGQuality(ComboBoxJPEGQuality.Text);
@@ -1127,22 +1133,32 @@ end;
 procedure TMainDialog.ComboBoxSizeDrawItem(Control: TWinControl; Index: Integer; ARect: TRect; State: TOwnerDrawState);
 var
   Canvas :TCanvas;
+  tr :TRect;
   ImageIndex :integer;
   Size :integer;
 begin
-  if Index=-1 then Exit;
   Canvas := ComboBoxSize.Canvas;
-  Canvas.Brush.Color := IfThen(odSelected in State, clHighlight, clWindow);
+  if odSelected in State then
+    Canvas.Brush.Color := clHighlight
+  else
+    Canvas.Brush.Color := TSizeInfos.SIZENAMECOLORS[TSizeInfos.SizeToClassIndex(TSizeInfos.DEFAULT_SIZES[Index])];
+//  Canvas.Brush.Color := IfThen(odSelected in State, clHighlight, clWindow);
   Canvas.FillRect(ARect);
   Size := StrToInt(ComboBoxSize.Items[Index]);
-  if Size<=THUMBNAILIMGMAX then
-    ImageIndex := 0
-  else if Size<=DOCIMGMAX then
-    ImageIndex := 1
-  else
-    ImageIndex := 2;
+  ImageIndex := TSizeInfos.SizeToClassIndex(Size);
   ImagesModule.ImageList24x24.Draw(Canvas, 0, ARect.Top, ImageIndex);
-  Canvas.TextOut(28, ARect.Top+4, ComboBoxSize.Items[Index]);
+  Canvas.Font.Style := [fsbold];
+  tr := ARect; tr.Right := tr.Left + 64;
+  Canvas.TextRect(tr, 28, 2, ComboBoxSize.Items[Index], TRSIZE);
+end;
+
+procedure TMainDialog.ComboBoxSizeMeasureItem(Control: TWinControl;
+  Index: Integer; var AHeight: Integer);
+begin
+  if Index = -1 then
+    AHeight := 15
+  else
+    AHeight := 24;
 end;
 
 procedure TMainDialog.ActionSettingsExecute(Sender: TObject);
@@ -1171,14 +1187,19 @@ begin
   end;
   Snapshot('step-srcimages', PanelSource, -2, -40, 360, 165);
   ToolButtonSizes.Click;
-//  EditSizes.Text := '360';
+  FSizeInfos.Clear;
+  FSizeInfos.Add(True, 360, '<auto>');
   Snapshot('step-sizes', PanelParams, -2, -40, 360, 95);
   EditTargetFolder.Text := 'mygallery\img{SIZE}';
   Snapshot('step-targetfolder', PanelTarget, -200, -8, 360, 60);
   Snapshot('step-execute', ButtonExecute, 0, 0, 0, 0);
   Snapshot('buttons-project', ToolButtonNew, 0, 0, 4*ToolButtonNew.Width, ToolButtonNew.Height);
+  FSizeInfos.Clear;
+  FSizeInfos.Add(True, 120, '<auto>');
+  FSizeInfos.Add(False, 800, '<auto>');
+  FSizeInfos.Add(True, 1920, '<auto>');
 //  EditSizes.Text := '120, 800, 1920';
-//  Snapshot('sizes-multiple', EditSizes, -6, -24, 200, 32);
+  Snapshot('sizes-multiple', ListBoxSizes, -6, -24, 240, 90);
 
   ToolButtonQuality.Click;
   ComboBoxInterpolation.ItemIndex := 7;
@@ -1219,6 +1240,11 @@ begin
     UpdateRequiredStep(1);
     Dirty := true;
   end;
+end;
+
+procedure TMainDialog.ButtonAddSizeClick(Sender: TObject);
+begin
+  FSizeInfos.Add(True, StrToInt(ComboBoxSize.Text), ComboBoxSizeName.Text);
 end;
 
 procedure TMainDialog.ButtonBrowseTargetFolderClick(Sender: TObject);
@@ -1262,6 +1288,11 @@ begin
   EditCopyRight.Text := '';
 end;
 
+procedure TMainDialog.ButtonClearSizesClick(Sender: TObject);
+begin
+  FSizeInfos.Clear;
+end;
+
 procedure TMainDialog.ButtonClearSrcFilesClick(Sender: TObject);
 begin
   MemoSrcFilenames.Lines.Clear;
@@ -1283,33 +1314,102 @@ begin
   Log(SLogErrorPrefix+E.Message, llError);
 end;
 
+procedure TMainDialog.ListBoxSizesClick(Sender: TObject);
+begin
+  if ListBoxSizes.ItemIndex>=0 then begin
+    with FSizeInfos[ListBoxSizes.ItemIndex] do begin
+      ComboBoxSize.Text := IntToStr(Size);
+      ComboBoxSizeName.Text := Name;
+    end;
+  end;
+end;
+
+procedure TMainDialog.ListBoxSizesMouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+var
+  i :integer;
+begin
+  i := ListBoxSizes.ItemIndex;
+  if i>=0 then begin
+    if x<=24 then
+      FSizeInfos.Enabled[i] := not FSizeInfos.Enabled[i]
+    else if x>ListBoxSizes.ClientWidth-24 then
+      FSizeInfos.Delete(i);
+  end;
+end;
+
+procedure TMainDialog.ListBoxSizesPaletteClick(Sender: TObject);
+begin
+  ComboBoxSize.Text := ListBoxSizesPalette.Items[ListBoxSizesPalette.ItemIndex];
+end;
+
+procedure TMainDialog.ListBoxSizesPaletteDblClick(Sender: TObject);
+begin
+  ButtonAddSizeClick(nil);
+end;
+
+procedure TMainDialog.ListBoxSizesPaletteDrawItem(Control: TWinControl;
+  Index: Integer; ARect: TRect; State: TOwnerDrawState);
+var
+  Canvas :TCanvas;
+  tr :TRect;
+begin
+  Canvas := ListBoxSizesPalette.Canvas;
+  if odSelected in State then
+    Canvas.Brush.Color := clHighlight
+  else
+    Canvas.Brush.Color := TSizeInfos.SIZENAMECOLORS[TSizeInfos.SizeToClassIndex(TSizeInfos.DEFAULT_SIZES[Index])];
+  Canvas.FillRect(ARect);
+  Canvas.Font.Size := 10;
+  Canvas.Font.Style := [];
+  tr := ARect;
+  Canvas.TextRect(tr, 0, 0, IntToStr(TSizeInfos.DEFAULT_SIZES[Index]), TRDEFSIZE);
+end;
+
+procedure TMainDialog.ListBoxSizesKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if ListBoxSizes.ItemIndex=-1 then Exit;
+  if Key = VK_DELETE then
+    FSizeInfos.Delete(ListBoxSizes.ItemIndex)
+  else if Key = VK_SPACE then
+    FSizeInfos.Enabled[ListBoxSizes.ItemIndex] := not FSizeInfos.Enabled[ListBoxSizes.ItemIndex];
+end;
+
 procedure TMainDialog.ListBoxSizesDrawItem(Control: TWinControl; Index: Integer;
   ARect: TRect; State: TOwnerDrawState);
 var
   Canvas :TCanvas;
-  h :integer;
   tr :TRect;
-const
-  trSize:TTextStyle=(Alignment:taRightJustify;Layout:tlCenter;SingleLine:true;Clipping:true;ExpandTabs:false;
-    ShowPrefix:false;Wordbreak:false;Opaque:false;SystemFont:false;RightToLeft:false;EndEllipsis:true);
-  trName:TTextStyle=(Alignment:taLeftJustify;Layout:tlCenter;SingleLine:true;Clipping:true;ExpandTabs:false;
-    ShowPrefix:false;Wordbreak:false;Opaque:false;SystemFont:false;RightToLeft:false;EndEllipsis:true);
 begin
-  h := ListBoxSizes.ItemHeight;
+
+  // Background
   Canvas := ListBoxSizes.Canvas;
-  Canvas.Brush.Color := IfThen(odSelected in State, clHighlight, clWindow);
+  Canvas.Brush.Color := IfThen(odSelected in State, clHighlight, TSizeInfos.SIZENAMECOLORS[TSizeInfos.SizeToClassIndex(FSizeInfos[Index].Size)]);
+//  Canvas.Brush.Color := clWindow;
   Canvas.FillRect(ARect);
+
+  // CheckBox
   ImagesModule.ImageList24x24.Draw(Canvas, ARect.Left+2, ARect.Top+2, ifThen(FSizeInfos[Index].Enabled, 4, 3));
-  ImagesModule.ImageList24x24.Draw(Canvas, ARect.Left+2+h, ARect.Top+2, Index);
+
+  // Size
   Canvas.Font.Size := 10;
   Canvas.Font.Style := [fsbold];
-  tr := ARect; tr.Right := tr.Left + 100;
-  Canvas.TextRect(tr, 58, 2, IntToStr(FSizeInfos[Index].Size), trSize);
+//  Canvas.Font.Color := clWindowText;
+  tr := ARect; tr.Right := tr.Left + 64;
+  Canvas.TextRect(tr, 0, 2, IntToStr(FSizeInfos[Index].Size), TRSIZE);
+
+  // SizeImage
+  ImagesModule.ImageList24x24.Draw(Canvas, ARect.Left+70, ARect.Top+2, TSizeInfos.SizeToClassIndex(FSizeInfos[Index].Size));
+
+  // SizeName
   Canvas.Font.Style := [];
-  tr.Left := 104;
+  tr.Left := 98;
   tr.Right := ARect.Right;
-  Canvas.TextRect(tr, 104, 2, FSizeInfos[Index].Name, trName);
-  ImagesModule.ImageList24x24.Draw(Canvas, ARect.Right-h-2, ARect.Top+2, 5);
+  Canvas.TextRect(tr, 98, 2, FSizeInfos[Index].Name, TRNAME);
+
+  // Delete Symbol
+  ImagesModule.ImageList24x24.Draw(Canvas, ARect.Right-24, ARect.Top+2, 5);
 end;
 
 procedure TMainDialog.EditRenTemplateEnter(Sender: TObject);
@@ -1338,13 +1438,10 @@ begin
 end;
 
 procedure TMainDialog.SetDirty(AValue: boolean);
-//const
-//  INDICATORCOLORS :array[boolean] of TColor = (clDefault, clRed);
 begin
   if FIsDirty=AValue then Exit;
   FIsDirty:=AValue;
   ActionSave.ImageIndex := IfThen(Dirty, IMGIDX_DIRTY, IMGIDX_SAVE);
-//  PanelDirtyIndicator.Color := INDICATORCOLORS[Dirty];
 end;
 
 function TMainDialog.GetRequiredSteps(Index: integer): boolean;
@@ -1480,9 +1577,6 @@ end;
 procedure TMainDialog.UpdateRequiredStep(Index :integer);
 var
   Required :boolean;
-  i :integer;
-  //SizeDict :TSizeDict;
-  //Sizes :TSizes;
 begin
   case Index of
   1:
@@ -1493,23 +1587,7 @@ begin
     end;
   2:
     begin
-      //if TrySizesStrToSizes(EditSizes.Text, Sizes) then begin
-      //  EditSizes.Text := SizesToSizesStr(Sizes);
-      //  RequiredSteps[2] := Length(Sizes)=0;
-      //end else begin
-      //  RequiredSteps[2] := true;
-      //  if EditSizes.Focused then
-      //    Warning(SErrInvalidSizes);
-      //end;
-      //SizeDict := TSizeDict.Create;
-      //try
-      //  for i:=0 to High(Sizes) do
-      //    SizeDict.Add(Sizes[i], i);
-      //  with ToolBarSizeButtons do for i:=0 to ButtonCount-1 do
-      //    Buttons[i].Down := SizeDict.ContainsKey(Buttons[i].Tag);
-      //finally
-      //  SizeDict.Free;
-      //end;
+      RequiredSteps[2] := FSizeInfos.Required;
     end;
   3:
     RequiredSteps[3] :=  Length(EditTargetFolder.Text) = 0;
@@ -1723,8 +1801,6 @@ end;
 
 procedure TMainDialog.ActionExecuteExecute(Sender: TObject);
 var
-  //Sizes :TIntegerDynArray;
-  //SizeNames :TStringArray;
   x :single;
   p :TPos;
   TargetFolder :string;
@@ -1773,6 +1849,7 @@ begin
     Application.ProcessMessages;
     Processor := nil;
     try
+      Processor := TProcessor.Create;
       SourceFilenames := TStringList.Create;
       try
         // Source filenames
@@ -1788,23 +1865,15 @@ begin
           FindAllFiles(SourceFilenames, EditSrcFolder.Text, EditSrcMasks.Text, false);
         end;
 
+        // Sizes
+        Processor.Sizes := FSizeInfos.GetEnabledSizes;
+        Processor.SizeNames := FSizeInfos.GetEnabledSizeNames;
+
         // Destination folder
         if (EditTargetFolder.Text='') then
           raise Exception.Create(SErrMissingDestinationFolder);
 
-        // Sizes
-        //Sizes := nil;
-        //if EditSizes.Text = SCptSizesDefault then begin
-        //  SetLength(Sizes, 1);
-        //  Sizes[0] := DEFAULTSIZE;
-        //end else if not TrySizesStrToSizes(EditSizes.Text, Sizes) then
-        //  raise Exception.Create(SErrInvalidSizes);
-
-        //// SizeNames
-        //SizeNames := StrToStringArray(ComboBoxSizeNames.Text);
-
         // Quality
-        Processor := TProcessor.Create;
         if not TProcessor.TryStrToJPEGQuality(ComboBoxJPEGQuality.Text, IntValue) then
           raise Exception.Create(SErrInvalidJpgQuality);
         Processor.JPEGQuality := IntValue;
@@ -1871,14 +1940,14 @@ begin
         // stop, if %SIZE% placeholder is not contained either in
         // TargetFolder nor in FileTemplate
         TargetFolder := EditTargetFolder.Text;
-        //if (Length(Sizes)>1) and (Pos('{SIZE}', TargetFolder)+Pos('{SIZENAME}', TargetFolder)=0)
-        // and not (Processor.RenEnabled and (Pos('{SIZE}', Processor.TargetFiletemplate)+Pos('{SIZENAME}', Processor.TargetFiletemplate)>0)) then
-        //  raise Exception.Create(SErrEnterPlaceholder);
+        if (FSizeInfos.Count>1) and (Pos('{SIZE}', TargetFolder)+Pos('{SIZENAME}', TargetFolder)=0)
+         and not (Processor.RenEnabled and (Pos('{SIZE}', Processor.TargetFiletemplate)+Pos('{SIZENAME}', Processor.TargetFiletemplate)>0)) then
+          raise Exception.Create(SErrEnterPlaceholder);
+
         // Hook the processor
         Processor.OnPrint := OnPrint;
         Processor.OnProgress := OnProgress;
 
-        //Processor.Sizes := SizesToSizesStr(Sizes);
         //Processor.SizeNames := SizeNames;
         Processor.SourceFilenames := SourceFilenames;
         Processor.TargetFolder := TargetFolder;

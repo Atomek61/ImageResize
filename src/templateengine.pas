@@ -13,9 +13,11 @@ type
 
   TDelimiters = record
     Del1, Del2 :string;
+    constructor Create(const Del1, Del2 :string);
     function toString :string;
     class function TryStrToDelimiters(const Value :string; out Delimiters :TDelimiters) :boolean; static;
     class function StrToDelimiters(const Value :string) :TDelimiters; static;
+    function UpgradeFrom(const Subject :string; const Delimiters :TDelimiters) :string;
   end;
 
   TTypeDelimiters = TDictionary<string, TDelimiters>; // Pairs of fileytype/delimiters ('css', <,>), (html, {,}), ('js', %,%)
@@ -83,6 +85,7 @@ type
     property Values[Index :integer] :string read GetValue;
   end;
 
+
 implementation  // »SIZE«      «SIZE»
 
 resourcestring
@@ -90,6 +93,12 @@ resourcestring
   SErrInvalidDelimitersFmt = 'Invalid delimiters ''%s''.';
 
 { TDelimiters }
+
+constructor TDelimiters.Create(const Del1, Del2: string);
+begin
+  self.Del1 := Del1;
+  self.Del2 := Del2;
+end;
 
 function TDelimiters.toString: string;
 begin
@@ -111,6 +120,34 @@ class function TDelimiters.StrToDelimiters(const Value: string): TDelimiters;
 begin
   if not TryStrToDelimiters(Value, result) then
     raise Exception.CreateFmt(SErrInvalidDelimitersFmt, [Value]);
+end;
+
+function TDelimiters.UpgradeFrom(const Subject: string; const Delimiters: TDelimiters): string;
+var
+  i1, i2, i0 :integer;
+  n, n1, n2 :integer;
+begin
+  result := '';
+  i1 := 1;
+  i2 := 1;
+  n := Length(Subject);
+  n1 := Length(Delimiters.Del1);
+  n2 := Length(Delimiters.Del2);
+  while true do begin
+    i0 := i1;
+    i1 := PosEx(Delimiters.Del1, Subject, i0);
+    if i1=0 then begin
+      if result = '' then
+        Exit(Subject)
+      else
+        Exit(result + Copy(Subject, i0, n-i0+1));
+    end else begin
+      i2 := PosEx(Delimiters.Del2, Subject, i1+n1);
+      if i2=0 then Exit(result + Copy(Subject, i0, n-i0+1));
+      result := result + Copy(Subject, i0, i1-i0) + Del1 + Copy(Subject, i1+n1, i2-i1-n1) + Del2;
+      i1 := i2 + n2;
+    end;
+  end;
 end;
 
 { TSolver }
@@ -335,17 +372,14 @@ end;
 
 //procedure Test;
 //var
-//  Solver :TSolver;
-//  Stats :TSolver.TStats;
+//  s1, s2 :string;
+//  d1, d2 :TDelimiters;
 //begin
-//  Solver := TSolver.Create(PERCENTDELIMITERS);
-//  Solver.Add('v1', '1234');
-//  Solver.Add('v2', 'abcd+%v1%');
-//  Solver.Add('v3', '%v4%XYZ%v5%+%v1%');
-//  Solver.Add('v4', '4444x%v2%');
-//  Solver.Add('v5', 'aaaaa%v6%');
-//  Solver.Add('v6', '%v5%eeeeee');
-//  Solver.Solve(Stats);
+//  d1 := TDelimiters.Create('<', '>>');
+//  d2 := TDelimiters.Create('[', ']');
+//  s2 := d2.UpgradeFrom('Das<SIZE>>ist<SIZENAME>>dolle', d1);
+//  s2 := d2.UpgradeFrom('Das<SIZE>>ist<SIZENAME>>', d1);
+//  s2 := d2.UpgradeFrom('Das<SIZE>>ist<SIZENAME', d1);
 //end;
 //
 //initialization

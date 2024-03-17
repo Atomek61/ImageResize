@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Buttons, StdCtrls,
   ExtCtrls, ComCtrls, Presentations, LCLIntf, LCLType, RichMemo, HtmlView,
   Logging, Types, GetText, FileUtil, ImgRes,
-  LoggingRichMemo, Settings, AppSettings, HtmlLabel, HTMLUn2, HtmlGlobals;
+  LoggingRichMemo, Settings, AppSettings, HtmlLabel, HtmlGlobals;
 
 type
 
@@ -98,7 +98,7 @@ var
   MemStream :TMemoryStream;
 begin
   if not Assigned(FManager) then Exit;
-  FileStream := TFileStream.Create(FManager.RootDir + SRC, fmOpenRead);
+  FileStream := TFileStream.Create(FManager.RootDir + string(SRC), fmOpenRead);
   try
     MemStream := TMemoryStream.Create;
     try

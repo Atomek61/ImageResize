@@ -16,11 +16,11 @@ type
     function GetCount: integer;
     procedure SetCount(AValue: integer);
   public
+    function IsEqual(const o :TStringArray) :boolean;
     procedure Add(const Value :string);
     procedure Clear;
     function TryFind(const Value :string; out Index :integer; IgnoreCase :boolean = false) :boolean;
     function Contains(const Value: string; IgnoreCase :boolean = false): boolean;
-//    procedure Split(const Str :string; Separator :char = ',');
     function Join(const Delimiter :string) :string;
     property Count :integer read GetCount write SetCount;
   end;
@@ -37,6 +37,18 @@ end;
 procedure TStringArrayHelper.SetCount(AValue: integer);
 begin
   SetLength(self, AValue);
+end;
+
+function TStringArrayHelper.IsEqual(const o: TStringArray): boolean;
+var
+  i :integer;
+begin
+  result := o.Count = Count;
+  if result then
+    for i:=0 to High(o) do begin
+      result := o[i]<>self[i];
+      if not result then break;
+    end;
 end;
 
 procedure TStringArrayHelper.Add(const Value: string);

@@ -32,7 +32,13 @@
                     else
                         showImage(currentThumbnail.nextElementSibling);
                 });
-            }
+
+                display.addEventListener("keydown", (event) => {
+                    if (event.isComposing || event.keyCode === 37) {
+                        showImage(currentThumbnail.nextElementSibling);
+                    };
+                });
+            };
         </script>
     </head>
     <body>

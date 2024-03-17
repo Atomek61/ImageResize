@@ -7,7 +7,7 @@
    viewBox="0 0 128 128"
    version="1.1"
    id="svg1"
-   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
    sodipodi:docname="Delete2.svg"
    inkscape:export-filename="img24\CheckBoxFrame.png"
    inkscape:export-xdpi="18"
@@ -32,8 +32,8 @@
      guidecolor="#29e500"
      guideopacity="0.6"
      inkscape:zoom="9.6796875"
-     inkscape:cx="64.051655"
-     inkscape:cy="64"
+     inkscape:cx="64.103309"
+     inkscape:cy="63.948345"
      inkscape:window-width="2560"
      inkscape:window-height="1417"
      inkscape:window-x="-8"
@@ -91,22 +91,24 @@
      inkscape:label="Ebene 2"
      style="display:inline">
     <circle
-       style="fill:#bdcdd4;stroke:none;stroke-width:12;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
+       style="fill:#d6e0e4;fill-opacity:1;stroke:none;stroke-width:13.091;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
        id="path4"
        cx="64"
        cy="64"
-       r="44" />
+       r="48" />
     <g
        id="g3"
-       style="fill:#ff4141;stroke:#e27b7b;stroke-opacity:1">
+       style="fill:none;stroke:#dc5f5f;stroke-opacity:1;fill-opacity:1">
       <path
-         style="fill:#ff4141;stroke-width:12;stroke-linejoin:bevel;paint-order:markers fill stroke;stroke:#e27b7b;stroke-opacity:1;stroke-dasharray:none;stroke-linecap:round"
-         d="M 40,40 88,88"
-         id="path3" />
+         style="fill:none;fill-opacity:1;stroke:#dc5f5f;stroke-width:12;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
+         d="M 44,44 84,84"
+         id="path3"
+         sodipodi:nodetypes="cc" />
       <path
-         style="display:inline;fill:#ff4141;stroke:#e27b7b;stroke-width:12;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
-         d="M 88,40 40,88"
-         id="path3-2" />
+         style="display:inline;fill:none;fill-opacity:1;stroke:#dc5f5f;stroke-width:12;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
+         d="M 84,44 44,84"
+         id="path3-2"
+         sodipodi:nodetypes="cc" />
     </g>
   </g>
   <g

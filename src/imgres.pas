@@ -113,15 +113,10 @@ const
   DEFAULT_TAGSREPORTS       = [];
   DEFAULT_DRYRUN            = false;
 
-  DEFSIZES :array[0..15] of integer = (32, 48, 64, 120, 240, 360, 480, 640, 800, 960, 1280, 1600, 1920, 2560, 3840, 4096);
-  THUMBNAILIMGMAX       = 240;
-  DOCIMGMAX             = 960;
-  DEFAULTSIZE           = 640;
-
-
 type
 
   TSizes = array of integer;
+  TSizeNames = array of string;
 
   TPrintEvent = procedure(Sender :TObject; const Line :string; Level :TLogLevel = llInfo) of object;
   TProgressEvent = procedure(Sender :TObject; Progress :single) of object;
@@ -186,7 +181,7 @@ type
     FSourceFilenames  :TStrings;
     FTargetFolder     :string;
     FSizes            :TSizes;
-    FSizeNames        :TStringArray;
+    FSizeNames        :TSizeNames;
     FJPEGQuality      :integer;
     FPNGCompression   :integer;
     FResampleMode     :TResampleMode;
@@ -252,8 +247,8 @@ type
     property SourceFilenames :TStrings read GetSourceFilenames write SetSourceFilenames;
     property TargetFolder :string read FTargetFolder write SetTargetFolder;
     property TargetFiletemplate :string read GetTargetFiletemplate write SetTargetFiletemplate;
-    property Sizes :string read GetSizes write SetSizes;
-    property SizeNames :TStringArray read FSizeNames write FSizeNames;
+    property Sizes :TSizes read FSizes write FSizes;
+    property SizeNames :TSizeNames read FSizeNames write FSizeNames;
     property JPEGQuality :integer read FJPEGQuality write SetJPEGQuality;
     property PNGCompression :integer read FPNGCompression write SetPNGCompression;
     property Interpolation :TInterpolation read GetInterpolation write SetInterpolation;
@@ -272,8 +267,9 @@ type
     property OnProgress :TProgressEvent read FOnProgress write FOnProgress;
   end;
 
-function TrySizesStrToSizes(const Str :string; out Values :TSizes) :boolean;
-function SizesToSizesStr(const Sizes :TSizes) :string;
+function TryStrToSizes(const Str :string; out Values :TSizes) :boolean;
+function StrToSizes(const Str :string) :TSizes;
+function SizesToStr(const Sizes :TSizes) :string;
 //function TryJPEGQualityNameToIndex(const Name :string; out Index :integer) :boolean;
 
 resourcestring
@@ -345,7 +341,7 @@ begin
   result := '';
 end;
 
-function TrySizesStrToSizes(const Str :string; out Values :TSizes) :boolean;
+function TryStrToSizes(const Str :string; out Values :TSizes) :boolean;
 var
   Raw :TIntegerDynArray;
   i, n :integer;
@@ -374,7 +370,13 @@ begin
   result := true;
 end;
 
-function SizesToSizesStr(const Sizes :TSizes) :string;
+function StrToSizes(const Str: string): TSizes;
+begin
+  if not TryStrToSizes(Str, result) then
+    raise Exception.CreateFmt(SErrInvalidSizesFmt, [Str]);
+end;
+
+function SizesToStr(const Sizes :TSizes) :string;
 var
   i :integer;
 begin
@@ -595,7 +597,7 @@ begin
           SizeStr := IntToStr(Size);
 
           // {SIZENAME}
-          if i<Processor.SizeNames.Count then
+          if i<Length(Processor.SizeNames) then
             SizeName := Processor.SizeNames[i]
           else
             SizeName := SizeStr;
@@ -831,7 +833,7 @@ begin
     if ProcRes.IsMultipleTargetFolderStrategy then begin
       if Pos('{SIZENAME}', FTargetFolder)>0 then begin
         for i:=0 to m-1 do begin
-          if i<FSizeNames.Count then SizeName := FSizeNames[i] else SizeName := IntToStr(FSizes[i]);
+          if i<Length(FSizeNames) then SizeName := FSizeNames[i] else SizeName := IntToStr(FSizes[i]);
           ProcRes.TargetFolders[i] := IncludeTrailingPathDelimiter(ExpandFilename(ReplaceStr(FTargetFolder, '{SIZENAME}', SizeName)));
         end;
       end else begin
@@ -1179,13 +1181,13 @@ end;
 
 procedure TProcessor.SetSizes(AValue :string);
 begin
-  if not TrySizesStrToSizes(AValue, FSizes) then
+  if not TryStrToSizes(AValue, FSizes) then
     raise Exception.Create(Format(SErrInvalidSizesFmt, [AValue]));
 end;
 
 function TProcessor.GetSizes: string;
 begin
-  result := SizesToSizesStr(FSizes);
+  result := SizesToStr(FSizes);
 end;
 
 function TProcessor.GetTargetFiletemplate: string;

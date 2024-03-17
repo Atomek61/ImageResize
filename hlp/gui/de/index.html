@@ -16,6 +16,14 @@
       --backcolor2: hsl(var(--themeH), 50%, 40%);
       --fontcolor2: hsl(var(--themeH), 50%, 85%);
     }
+
+    .size-color {
+      display: inline-block;
+      color: darkslategrey;
+      padding: 0 4px 0 4px;
+      width: 8em;
+    }
+
   </style>
   <link rel="stylesheet" href="../../help.css"/>
   <link rel="stylesheet" href="../gui.css"/>
@@ -36,7 +44,7 @@
 
       <h1 id="overview">Übersicht</h1>
       <p>
-        <i>ImageResize</i> 4.0 ist eine App zur Größenänderung von JPEG- und PNG-Bildern
+        <i>ImageResize</i> 4.1 ist eine App zur Größenänderung von JPEG- und PNG-Bildern
         (auch Skalierung oder Resampling genannt).
         Sie kann viele Bilder verarbeiten und daraus Präsentationen (Web-Gallerien) erzeugen.
       </p>
@@ -121,17 +129,36 @@
       </p>
       <img src="img/sizes-multiple.png"/>
       <p>
-        ImageResize kann mehrere Größen für jedes Bild erzeugen. Geben Sie eine Liste von Größen ein,
-        die mit dem Komma getrennt sind, oder wählen Sie Größen aus den Vorschlägen aus.<br/>
-      </p>  
-      <p>
-        Sie können alle Größen angeben, die größer als 0 sind.
+        ImageResize kann mehrere Größen für jedes Bild erzeugen. Geben Sie eine Liste von Größen ein, indem
+        Sie die Größe im Feld "Größe" eingeben oder auswählen und "Zufügen" <img class="btn" src="../img/add2.svg"/>
+        drücken. Sie können alle Größen angeben, die größer als 0 sind.
       </p>
       <p>
         Sie können die Liste ändern, indem Sie die Löschen-Schaltfläche <img class="btn" src="../img/delete.svg"/>
-        klicken. Um eine einzelne Größe zu löschen, markieren Sie zuvor die Größe, oder sie klicken einen
-        bereits gewählten Vorschlag erneut.
+        klicken oder die &lt;ENTF&gt;-Taste drücken.
       </p>
+      <p>
+        Sie können Größen ihrer Liste abwählen, sodaß sie zwar in der Liste bleiben, aber nicht berücksichtigt werden.
+        Klicken Sie dazu die Checkbox oder drücken Sie die &lt;LEER&gt;-Taste.
+      </p>
+      <p>
+        Die farbige Hinterlegung der Größen sind nur ein Hinweis auf die übliche Verwendung:       
+      </p>
+      <ul>
+        <li><span class="size-color" style="background-color: #f7f5dc;">THUMBNAIL</span> für kleine Vorschaubilder</li>
+        <li><span class="size-color" style="background-color: #ddf7dc;">DOCUMENT</span> für Bilder die in Texten eingebettet werden sollen</li>
+        <li><span class="size-color" style="background-color: #dcf0f7;">SCREEN</span> für Bilder die auf dem Bildschirm voll dargestellt werden sollen</li>
+      </ul>
+      <p>
+        Die gewählten Größen erhalten Bezeichner, damit sie über einen Namen durch den Platzhalter <i>{SIZENAME}</i> verwendet werden können.
+        Der Platzhalter kann an folgenden Stellen verwendet werden:
+      </p>
+      <ul>
+        <li>Im Zielordner, z.B.: <i>img{SIZENAME}</i></li>
+        <li>In der Dateinamenvorlage bei Umbenennungen, z.B.: <i>img{INDEX:1,auto}{SIZENAME}.{FILEEXT}</i></li>
+        <li>In den Vorlagen (Templates) der Präsentationen</li>
+      </ul>
+
       <a class="chfot" href="#contents">Inhalt</a>
       
       <h1 id="dstfolder">Zielordner</h1>

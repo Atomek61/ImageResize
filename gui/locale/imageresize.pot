@@ -416,18 +416,6 @@ msgctxt "maindlg.scptquerysave"
 msgid "Project unsaved"
 msgstr ""
 
-#: maindlg.scptsizeclasslarge
-msgid "Large - Desktop size"
-msgstr ""
-
-#: maindlg.scptsizeclassmedium
-msgid "Medium - Document size"
-msgstr ""
-
-#: maindlg.scptsizeclasssmall
-msgid "Small - Thumbnail size"
-msgstr ""
-
 #: maindlg.scptsourcefilesfmt
 #, object-pascal-format
 msgid "%d source files"
@@ -966,12 +954,29 @@ msgstr ""
 msgid "&Folder"
 msgstr ""
 
+#: tmaindialog.buttonaddsize.caption
+msgctxt "tmaindialog.buttonaddsize.caption"
+msgid "Add"
+msgstr ""
+
+#: tmaindialog.buttonaddsize.hint
+msgid "Add a size or replace an existing one"
+msgstr ""
+
 #: tmaindialog.buttonbrowsesrcfiles.hint
 msgid "Browse for one or more images"
 msgstr ""
 
 #: tmaindialog.buttonbrowsesrcfolder.hint
 msgid "Select a folder with images"
+msgstr ""
+
+#: tmaindialog.buttonclearsizes.caption
+msgid "Clear"
+msgstr ""
+
+#: tmaindialog.buttonclearsizes.hint
+msgid "Clears all sizes from the list"
 msgstr ""
 
 #: tmaindialog.buttonclearsrcfiles.hint
@@ -981,10 +986,6 @@ msgstr ""
 #: tmaindialog.buttonmrkedit.hint
 msgctxt "tmaindialog.buttonmrkedit.hint"
 msgid "Opens the internal Watermark Editor"
-msgstr ""
-
-#: tmaindialog.buttonsizeadd.caption
-msgid "Add"
 msgstr ""
 
 #: tmaindialog.caption
@@ -1110,8 +1111,25 @@ msgctxt "tmaindialog.comboboxshuffleseed.text"
 msgid "<random>"
 msgstr ""
 
+#: tmaindialog.comboboxsize.hint
+msgid "Enter a size and press Add to either add or replace a list member"
+msgstr ""
+
+#: tmaindialog.comboboxsizename.hint
+msgid ""
+"Some presentations require named sizes especially for distinguish thumbnail\n"
+"sizes from large ones. If you plan to create presentations its a good idea to\n"
+"size names. Usually the name THUMBNAIL is used for small images.\n"
+"\n"
+"Take a look on your presentations requirements, which size names are required.\n"
+"\n"
+"You can use the size itself as a name of the size but this could be unconvenient\n"
+"if you decide to change the thumbnails size. In this case the presentations\n"
+"keywords may have to be changed."
+msgstr ""
+
 #: tmaindialog.comboboxsizename.text
-msgid "ComboBoxSizeName"
+msgid "<auto>"
 msgstr ""
 
 #: tmaindialog.editmrkfilename.hint
@@ -1285,6 +1303,7 @@ msgid "%"
 msgstr ""
 
 #: tmaindialog.label15.caption
+msgctxt "tmaindialog.label15.caption"
 msgid "Size:"
 msgstr ""
 
@@ -1314,6 +1333,10 @@ msgstr ""
 msgid "Algorithm:"
 msgstr ""
 
+#: tmaindialog.label3.caption
+msgid "Sizes:"
+msgstr ""
+
 #: tmaindialog.label4.caption
 msgid "Source Folder:"
 msgstr ""
@@ -1324,6 +1347,15 @@ msgstr ""
 
 #: tmaindialog.label6.caption
 msgid "Compression:"
+msgstr ""
+
+#: tmaindialog.label7.caption
+msgctxt "tmaindialog.label7.caption"
+msgid "Size:"
+msgstr ""
+
+#: tmaindialog.label8.caption
+msgid "Size Name:"
 msgstr ""
 
 #: tmaindialog.label9.caption
@@ -1349,6 +1381,16 @@ msgstr ""
 
 #: tmaindialog.labelstep3.caption
 msgid "Target &Folder"
+msgstr ""
+
+#: tmaindialog.listboxsizes.hint
+msgid ""
+"Enter a list of sizes by double-clicking a size from the list\n"
+"or by entering a size in the size combo and pressing Add."
+msgstr ""
+
+#: tmaindialog.listboxsizespalette.hint
+msgid "Add a size by double clicking one of the suggestions"
 msgstr ""
 
 #: tmaindialog.memosrcfilenames.hint

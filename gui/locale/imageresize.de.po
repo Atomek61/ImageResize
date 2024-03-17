@@ -427,18 +427,6 @@ msgctxt "maindlg.scptquerysave"
 msgid "Project unsaved"
 msgstr "Projekt ungespeichert"
 
-#: maindlg.scptsizeclasslarge
-msgid "Large - Desktop size"
-msgstr "Groß - Bildschirmgröße"
-
-#: maindlg.scptsizeclassmedium
-msgid "Medium - Document size"
-msgstr "Mittel - für Dokumente"
-
-#: maindlg.scptsizeclasssmall
-msgid "Small - Thumbnail size"
-msgstr "Klein - Vorschau"
-
 #: maindlg.scptsourcefilesfmt
 #, object-pascal-format
 msgid "%d source files"
@@ -464,7 +452,9 @@ msgstr "Abgebrochen bei %.0f%%"
 
 #: maindlg.serrenterplaceholder
 msgid "Enter placeholder {SIZE} or {SIZENAME} to either the target folder or the file template"
-msgstr "Geben Sie den Platzhalter {SIZE} oder {SIZENAME} an im Verzeichnisnamen, bzw. im Dateinamen-Template"
+msgstr ""
+"Geben Sie die Platzhalter {SIZE} oder {SIZENAME}  entweder im Zielordnernamen\n"
+"oder in der Dateiname-Vorlage des Umbenennens an, um den Dateinamenskonflikt zu lösen."
 
 #: maindlg.serrinvalidjpgquality
 msgid "Invalid JPEG quality"
@@ -990,6 +980,15 @@ msgstr "Datei&liste"
 msgid "&Folder"
 msgstr "&Ordner"
 
+#: tmaindialog.buttonaddsize.caption
+msgctxt "tmaindialog.buttonaddsize.caption"
+msgid "Add"
+msgstr "Zufügen"
+
+#: tmaindialog.buttonaddsize.hint
+msgid "Add a size or replace an existing one"
+msgstr "Füge eine Größe zur Liste zu oder ersetze sie, wenn sie existiert"
+
 #: tmaindialog.buttonbrowsesrcfiles.hint
 msgid "Browse for one or more images"
 msgstr "Wählen Sie ein oder mehrere Bilder aus"
@@ -997,6 +996,14 @@ msgstr "Wählen Sie ein oder mehrere Bilder aus"
 #: tmaindialog.buttonbrowsesrcfolder.hint
 msgid "Select a folder with images"
 msgstr "Wählen Sie einen Ordner mit Bildern"
+
+#: tmaindialog.buttonclearsizes.caption
+msgid "Clear"
+msgstr "Löschen"
+
+#: tmaindialog.buttonclearsizes.hint
+msgid "Clears all sizes from the list"
+msgstr "Löscht alle Größen der Liste"
 
 #: tmaindialog.buttonclearsrcfiles.hint
 msgid "Clear image list"
@@ -1006,10 +1013,6 @@ msgstr "Löscht die Liste der Bilder"
 msgctxt "tmaindialog.buttonmrkedit.hint"
 msgid "Opens the internal Watermark Editor"
 msgstr "Öffnet den eingebauten Wasserzeichen-Editor"
-
-#: tmaindialog.buttonsizeadd.caption
-msgid "Add"
-msgstr ""
 
 #: tmaindialog.caption
 msgid "ImageResize"
@@ -1154,9 +1157,35 @@ msgctxt "tmaindialog.comboboxshuffleseed.text"
 msgid "<random>"
 msgstr "<random>"
 
-#: tmaindialog.comboboxsizename.text
-msgid "ComboBoxSizeName"
+#: tmaindialog.comboboxsize.hint
+msgid "Enter a size and press Add to either add or replace a list member"
+msgstr "Wählen Sie eine Größe und drücken Sie Zufügen um die Größe zuzufügen oder  zu ersetzen falls sie bereits existiert."
+
+#: tmaindialog.comboboxsizename.hint
+msgid ""
+"Some presentations require named sizes especially for distinguish thumbnail\n"
+"sizes from large ones. If you plan to create presentations its a good idea to\n"
+"size names. Usually the name THUMBNAIL is used for small images.\n"
+"\n"
+"Take a look on your presentations requirements, which size names are required.\n"
+"\n"
+"You can use the size itself as a name of the size but this could be unconvenient\n"
+"if you decide to change the thumbnails size. In this case the presentations\n"
+"keywords may have to be changed."
 msgstr ""
+"Einige Präsentationen erfordern benannte Größen, insbesondere zur Unterscheidung zwischen Vorschau- (THUMBNAIL) und\n"
+"Bildschirmgrößen. Wenn vorhaben Präsentationen zu erstellen, ist es eine gute Idee Größenbenennungen zu verwenden.\n"
+"\n"
+"Normalerweise wird der Name THUMBNAIL für kleine Vorschau-Bilder verwendet.\n"
+"\n"
+"Achten Sie auf Ihre Präsentationsanforderungen, welche Größenbezeichnungen erforderlich sind.\n"
+"Sie können die Größe selbst als Namen für die Größe verwenden, aber das kann unpraktisch sein,\n"
+"wenn Sie sich später entscheiden, die Größe der Miniaturbilder zu ändern. In diesem Fall müssen\n"
+"möglicherweise die Schlüsselwörter der  Präsentationen geändert werden."
+
+#: tmaindialog.comboboxsizename.text
+msgid "<auto>"
+msgstr "<auto>"
 
 #: tmaindialog.editmrkfilename.hint
 msgid ""
@@ -1169,7 +1198,7 @@ msgid ""
 "watermark files. Or use the inbuilt\n"
 "editor."
 msgstr ""
-"Wählen Sie eine PNG-Datei mit deinem Wasserzeichen aus.\n"
+"Wählen Sie eine PNG-Datei mit Ihrem Wasserzeichen aus.\n"
 "\n"
 "Ein Wasserzeichen ist ein kleines Bild,\n"
 "das in einer Ecke des Bildes erscheint\n"
@@ -1355,6 +1384,7 @@ msgid "%"
 msgstr "%"
 
 #: tmaindialog.label15.caption
+msgctxt "tmaindialog.label15.caption"
 msgid "Size:"
 msgstr "Größe:"
 
@@ -1384,6 +1414,10 @@ msgstr "Klicken oder ziehen Sie das Wasserzeichen"
 msgid "Algorithm:"
 msgstr "Algorithmus:"
 
+#: tmaindialog.label3.caption
+msgid "Sizes:"
+msgstr "Größen:"
+
 #: tmaindialog.label4.caption
 msgid "Source Folder:"
 msgstr "Quellverzeichnis:"
@@ -1395,6 +1429,15 @@ msgstr "Qualität (1..100):"
 #: tmaindialog.label6.caption
 msgid "Compression:"
 msgstr "Kompression:"
+
+#: tmaindialog.label7.caption
+msgctxt "tmaindialog.label7.caption"
+msgid "Size:"
+msgstr "Größe:"
+
+#: tmaindialog.label8.caption
+msgid "Size Name:"
+msgstr "Größenbenennung:"
 
 #: tmaindialog.label9.caption
 msgid "Horizontal:"
@@ -1410,20 +1453,29 @@ msgid "Seed:"
 msgstr "Saat:"
 
 #: tmaindialog.labelstep1.caption
-#, fuzzy
-#| msgid "Images"
 msgid "Images"
 msgstr "Bilder"
 
 #: tmaindialog.labelstep2.caption
-#, fuzzy
-#| msgid "Sizes and other Settings"
 msgid "Sizes and other Settings"
 msgstr "Größen und andere Einstellungen"
 
 #: tmaindialog.labelstep3.caption
 msgid "Target &Folder"
 msgstr "&Zielordner"
+
+#: tmaindialog.listboxsizes.hint
+msgid ""
+"Enter a list of sizes by double-clicking a size from the list\n"
+"or by entering a size in the size combo and pressing Add."
+msgstr ""
+"Geben Sie eine Liste von Größen an, indem Sie entweder welche aus der Liste\n"
+"der vorgeschlagenen doppelklicken, oder indem Sie die Größe ins Combo-Feld\n"
+"eingeben und Zufügen drücken"
+
+#: tmaindialog.listboxsizespalette.hint
+msgid "Add a size by double clicking one of the suggestions"
+msgstr "Fügen Sie eine Größe hinzu, indem Sie einen Eintrag doppelklicken"
 
 #: tmaindialog.memosrcfilenames.hint
 msgid ""
@@ -1847,4 +1899,3 @@ msgstr ""
 msgctxt "webutils.serrinvalidhtmlcolorfmt"
 msgid "Invalid web color '%s'."
 msgstr "Ungültige Web-Farbe '%s'."
-

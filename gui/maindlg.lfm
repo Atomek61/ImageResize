@@ -1,7 +1,7 @@
 object MainDialog: TMainDialog
-  Left = 571
+  Left = 424
   Height = 680
-  Top = 280
+  Top = 444
   Width = 900
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'ImageResize'
@@ -256,14 +256,14 @@ object MainDialog: TMainDialog
         Top = 4
         Width = 393
         TabStop = False
-        ActivePage = TabSheetSizes
+        ActivePage = TabSheetRenaming
         Align = alClient
         BorderSpacing.Around = 4
         ImagesWidth = 32
         MultiLine = True
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 0
+        TabIndex = 1
         TabOrder = 1
         Options = [nboMultiLine]
         object TabSheetSizes: TTabSheet
@@ -273,53 +273,131 @@ object MainDialog: TMainDialog
           ClientWidth = 385
           ImageIndex = 7
           object ComboBoxSize: TComboBox
-            Left = 240
-            Height = 30
-            Top = 32
-            Width = 144
+            Left = 272
+            Height = 21
+            Hint = 'Enter a size and press Add to either add or replace a list member'
+            Top = 16
+            Width = 112
+            Anchors = [akTop, akRight]
             DropDownCount = 16
-            ItemHeight = 24
-            Style = csOwnerDrawEditableFixed
-            TabOrder = 0
+            ItemHeight = 15
+            Style = csOwnerDrawEditableVariable
+            TabOrder = 2
             OnDrawItem = ComboBoxSizeDrawItem
+            OnMeasureItem = ComboBoxSizeMeasureItem
           end
           object ComboBoxSizeName: TComboBox
-            Left = 240
+            Left = 272
             Height = 23
-            Top = 72
-            Width = 143
+            Hint = 'Some presentations require named sizes especially for distinguish thumbnail'#13#10'sizes from large ones. If you plan to create presentations its a good idea to'#13#10'size names. Usually the name THUMBNAIL is used for small images.'#13#10#13#10'Take a look on your presentations requirements, which size names are required.'#13#10#13#10'You can use the size itself as a name of the size but this could be unconvenient'#13#10'if you decide to change the thumbnails size. In this case the presentations'#13#10'keywords may have to be changed.'
+            Top = 64
+            Width = 112
+            Anchors = [akTop, akRight]
             ItemHeight = 15
+            ItemIndex = 0
             Items.Strings = (
-              '_THUMBNAIL'
-              'SMALL'
+              '<auto>'
+              '<size>'
+              'THUMBNAIL'
               'DOCUMENT'
               'LARGE'
             )
-            TabOrder = 1
-            Text = 'ComboBoxSizeName'
-          end
-          object ButtonSizeAdd: TButton
-            Left = 248
-            Height = 25
-            Top = 144
-            Width = 75
-            Caption = 'Add'
-            TabOrder = 2
+            TabOrder = 3
+            Text = '<auto>'
           end
           object ListBoxSizes: TListBox
-            Left = 8
-            Height = 344
-            Top = 8
+            Left = 0
+            Height = 328
+            Hint = 'Enter a list of sizes by double-clicking a size from the list'#13#10'or by entering a size in the size combo and pressing Add.'
+            Top = 16
             Width = 224
-            Items.Strings = (
-              'A'
-              'B'
-              'C'
-            )
+            Anchors = [akTop, akLeft, akRight, akBottom]
+            DoubleBuffered = False
             ItemHeight = 28
+            ParentDoubleBuffered = False
             Style = lbOwnerDrawFixed
-            TabOrder = 3
+            TabOrder = 0
+            OnClick = ListBoxSizesClick
             OnDrawItem = ListBoxSizesDrawItem
+            OnKeyDown = ListBoxSizesKeyDown
+            OnMouseDown = ListBoxSizesMouseDown
+          end
+          object Label3: TLabel
+            AnchorSideLeft.Control = ListBoxSizes
+            AnchorSideBottom.Control = ListBoxSizes
+            Left = 3
+            Height = 15
+            Top = -1
+            Width = 28
+            Anchors = [akLeft, akBottom]
+            BorderSpacing.Left = 3
+            BorderSpacing.Bottom = 2
+            Caption = 'Sizes:'
+          end
+          object Label7: TLabel
+            AnchorSideLeft.Control = ComboBoxSize
+            AnchorSideBottom.Control = ComboBoxSize
+            Left = 275
+            Height = 15
+            Top = -1
+            Width = 23
+            Anchors = [akLeft, akBottom]
+            BorderSpacing.Left = 3
+            BorderSpacing.Bottom = 2
+            Caption = 'Size:'
+          end
+          object Label8: TLabel
+            AnchorSideLeft.Control = ComboBoxSizeName
+            AnchorSideBottom.Control = ComboBoxSizeName
+            Left = 275
+            Height = 15
+            Top = 47
+            Width = 58
+            Anchors = [akLeft, akBottom]
+            BorderSpacing.Left = 3
+            BorderSpacing.Bottom = 2
+            Caption = 'Size Name:'
+          end
+          object ListBoxSizesPalette: TListBox
+            Left = 226
+            Height = 328
+            Hint = 'Add a size by double clicking one of the suggestions'
+            Top = 16
+            Width = 41
+            Anchors = [akTop, akRight, akBottom]
+            ItemHeight = 18
+            Style = lbOwnerDrawFixed
+            TabOrder = 1
+            TabStop = False
+            OnClick = ListBoxSizesPaletteClick
+            OnDblClick = ListBoxSizesPaletteDblClick
+            OnDrawItem = ListBoxSizesPaletteDrawItem
+          end
+          object ButtonAddSize: TBitBtn
+            Left = 272
+            Height = 32
+            Hint = 'Add a size or replace an existing one'
+            Top = 104
+            Width = 112
+            Anchors = [akTop, akRight]
+            Caption = 'Add'
+            Images = ImagesModule.ImageList24x24
+            ImageIndex = 6
+            OnClick = ButtonAddSizeClick
+            TabOrder = 4
+          end
+          object ButtonClearSizes: TBitBtn
+            Left = 272
+            Height = 32
+            Hint = 'Clears all sizes from the list'
+            Top = 312
+            Width = 112
+            Anchors = [akRight, akBottom]
+            Caption = 'Clear'
+            Images = ImagesModule.ImageList24x24
+            ImageIndex = 7
+            OnClick = ButtonClearSizesClick
+            TabOrder = 5
           end
         end
         object TabSheetRenaming: TTabSheet

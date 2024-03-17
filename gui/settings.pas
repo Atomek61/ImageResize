@@ -275,6 +275,20 @@ type
     function GetAsDisplay :string; override;
   end;
 
+  { TStringsSetting }
+  // Achtung Achtung never used, experimental
+  TStringsSetting = class(TSetting)
+  private
+    FValue :TStringArray;
+  protected
+    procedure SetAsText(const AValue: string); override;
+    function GetAsText :string; override;
+  public
+    procedure Assign(Source :TSetting); override;
+    function IsEqual(Other :TSetting) :boolean; override;
+    property Value :TStringArray read FValue;
+  end;
+
   function TryStrToBoolean(const Str :string; out Value :boolean) :boolean;
   function StrToBoolean(const Str :string) :boolean;
   function BooleanToStr(const Value :boolean) :string;
@@ -301,6 +315,7 @@ var
 
 const
   BOOLEANSTRINGS :array[boolean] of string = ('False', 'True');
+  LINESEP = '|';
 
 function RemoveQuotes(const Item :string) :string; overload;
 var
@@ -1067,21 +1082,38 @@ begin
     end;
 end;
 
+{ TStringsSetting }
+
+procedure TStringsSetting.SetAsText(const AValue: string);
+var
+  v :TStringArray;
+  Equal :boolean;
+  i :integer;
+begin
+  v := AValue.Split(LINESEP);
+  if FValue.IsEqual(v) then Exit;
+  FValue := v;
+  Change;
+end;
+
+function TStringsSetting.GetAsText: string;
+begin
+  result := FValue.Join(LINESEP);
+end;
+
+function TStringsSetting.IsEqual(Other: TSetting): boolean;
+begin
+  result := inherited IsEqual(Other) and FValue.IsEqual(TStringsSetting(Other).FValue);
+end;
+
+procedure TStringsSetting.Assign(Source: TSetting);
+begin
+  inherited;
+  FValue := Copy((Source as TStringsSetting).FValue);
+end;
+
 { TPicktextSetting }
 
-//procedure TPicktextSetting.SetAsDisplay(const AValue: string);
-//var
-//  i :integer;
-//begin
-//  result := ;
-//    for i:=0 to High(FText) do
-//      if SameText(result, FText[i]) then begin
-//        Exit(FDisplay[i]);
-//      end;
-//  end;
-//  inherited SetAsDisplay(AValue);
-//end;
-//
 //procedure Test;
 //var
 //  sa :TStringArray;
@@ -1091,7 +1123,7 @@ end;
 //  sa := STR.split([','], '"', '"');
 //  RemoveQuotes(sa);
 //end;
-//
+
 initialization
 begin
 //  Test;

@@ -1,7 +1,6 @@
 program imageresizecli;
 
 {$mode delphi}{$H+}
-{$MODESWITCH TYPEHELPERS}
 
 uses
   {$IFDEF UNIX}{$IFDEF UseCThreads}
@@ -12,7 +11,7 @@ uses
   Windows;
 
 const
-  IMGRESCLIVER = '4.0';
+  IMGRESCLIVER = '4.1';
   IMGRESCLICPR = 'imgres CLI '+IMGRESCLIVER+' for engine '+IMGRESVER+' (c) 2024 Jan Schirrmacher, www.atomek.de';
 
   ERRINVALIDNUMBEROFPARAMS = 'Invalid number of parameters.';
@@ -252,7 +251,7 @@ begin
 
     // Sizes
     Param := ParamStr(3);
-    if not TrySizesStrToSizes(Param, Sizes) or (Length(Sizes)=0) then
+    if not TryStrToSizes(Param, Sizes) or (Length(Sizes)=0) then
       raise Exception.CreateFmt('Invalid sizes ''%s''.', [Param]);
 
     // Dont allow empty parameters
@@ -286,7 +285,8 @@ begin
     // Prepare the processor
     Processor.SourceFilenames := SourceFilenames;
     Processor.TargetFolder := TargetFolder;
-    Processor.Sizes := SizesToSizesStr(Sizes);
+    Processor.Sizes := Sizes;
+    Processor.SizeNames := SizeNames;
     Processor.JPEGQuality := JPEGQuality;
     Processor.PNGCompression := PNGCompression;
     Processor.Interpolation := Interpolation;

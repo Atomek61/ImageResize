@@ -339,13 +339,6 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="TaggingDlg"/>
       </Unit>
-      <Unit>
-        <Filename Value="sizefrm.pas"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="Frame1"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Frame"/>
-      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
