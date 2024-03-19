@@ -336,6 +336,8 @@ type
     FPresentationSettings :TPresentationSettings;
     FPresentationParamsList :TSettingsList;
     FSizeInfos :TSizeInfos;
+    FDefSizes :TSizes;
+    FScreenSize :integer;
   private
     // Application
     FAutoExit :boolean;
@@ -600,10 +602,27 @@ begin
   RadioButtonRenSimple.Hint := RENSIMPLETEMPLATE;
   RadioButtonRenAdvanced.Hint := RENADVANCEDTEMPLATE;
 
-  for i in TSizeInfos.DEFAULT_SIZES do
+  SetLength(FDefSizes, Length(TSizeInfos.DEFAULT_SIZES));
+  for i:=0 to High(TSizeInfos.DEFAULT_SIZES) do
+    FDefSizes[i] := TSizeInfos.DEFAULT_SIZES[i];
+  FScreenSize := IfThen(Screen.Width>Screen.Height, Screen.Width, Screen.Height);
+  for i:=0 to High(FDefSizes) do
+    if FScreenSize=FDefSizes[i] then
+      break
+    else if FScreenSize<FDefSizes[i] then begin
+      SetLength(FDefSizes, Length(FDefSizes)+1);
+      Move(FDefSizes[i], FDefSizes[i+1], (Length(FDefSizes)-i)*sizeof(integer));
+      FDefSizes[i] := FScreenSize;
+      break
+    end else if i=High(FDefSizes) then begin
+      SetLength(FDefSizes, Length(FDefSizes)+1);
+      FDefSizes[i+1] := FScreenSize;
+    end;
+
+  for i in FDefSizes do
     ComboBoxSize.Items.Add(IntToStr(i));
 
-  for i in TSizeInfos.DEFAULT_SIZES do
+  for i in FDefSizes do
     ListBoxSizesPalette.Items.Add(IntToStr(i));
 
   for Interpolation in TInterpolation do
@@ -1137,19 +1156,25 @@ var
   ImageIndex :integer;
   Size :integer;
 begin
+  Size := FDefSizes[Index];
   Canvas := ComboBoxSize.Canvas;
   if odSelected in State then
     Canvas.Brush.Color := clHighlight
   else
-    Canvas.Brush.Color := TSizeInfos.SIZENAMECOLORS[TSizeInfos.SizeToClassIndex(TSizeInfos.DEFAULT_SIZES[Index])];
-//  Canvas.Brush.Color := IfThen(odSelected in State, clHighlight, clWindow);
+    Canvas.Brush.Color := TSizeInfos.SIZENAMECOLORS[TSizeInfos.SizeToClassIndex(Size)];
   Canvas.FillRect(ARect);
   Size := StrToInt(ComboBoxSize.Items[Index]);
   ImageIndex := TSizeInfos.SizeToClassIndex(Size);
   ImagesModule.ImageList24x24.Draw(Canvas, 0, ARect.Top, ImageIndex);
   Canvas.Font.Style := [fsbold];
+
+  // Screen-Size marker
+  if FScreenSize=Size then with ARect do
+    ImagesModule.ImageList8x8.Draw(Canvas, 28, ARect.Top+0, 0);
+
   tr := ARect; tr.Right := tr.Left + 64;
   Canvas.TextRect(tr, 28, 2, ComboBoxSize.Items[Index], TRSIZE);
+  Canvas.Brush.Color := clBlue;
 end;
 
 procedure TMainDialog.ComboBoxSizeMeasureItem(Control: TWinControl;
@@ -1353,17 +1378,22 @@ procedure TMainDialog.ListBoxSizesPaletteDrawItem(Control: TWinControl;
 var
   Canvas :TCanvas;
   tr :TRect;
+  Size :integer;
 begin
+  Size := FDefSizes[Index];
   Canvas := ListBoxSizesPalette.Canvas;
   if odSelected in State then
     Canvas.Brush.Color := clHighlight
   else
-    Canvas.Brush.Color := TSizeInfos.SIZENAMECOLORS[TSizeInfos.SizeToClassIndex(TSizeInfos.DEFAULT_SIZES[Index])];
+    Canvas.Brush.Color := TSizeInfos.SIZENAMECOLORS[TSizeInfos.SizeToClassIndex(Size)];
   Canvas.FillRect(ARect);
   Canvas.Font.Size := 10;
   Canvas.Font.Style := [];
   tr := ARect;
-  Canvas.TextRect(tr, 0, 0, IntToStr(TSizeInfos.DEFAULT_SIZES[Index]), TRDEFSIZE);
+  Canvas.TextRect(tr, 0, 0, IntToStr(Size), TRDEFSIZE);
+  // Screen-Size marker
+  if FScreenSize=Size then with ARect do
+    ImagesModule.ImageList8x8.Draw(Canvas, ARect.Left+0, ARect.Top+0, 0);
 end;
 
 procedure TMainDialog.ListBoxSizesKeyDown(Sender: TObject; var Key: Word;
@@ -1381,26 +1411,32 @@ procedure TMainDialog.ListBoxSizesDrawItem(Control: TWinControl; Index: Integer;
 var
   Canvas :TCanvas;
   tr :TRect;
+  Size :integer;
 begin
+  Size := FSizeInfos[Index].Size;
 
   // Background
   Canvas := ListBoxSizes.Canvas;
-  Canvas.Brush.Color := IfThen(odSelected in State, clHighlight, TSizeInfos.SIZENAMECOLORS[TSizeInfos.SizeToClassIndex(FSizeInfos[Index].Size)]);
+  Canvas.Brush.Color := IfThen(odSelected in State, clHighlight, TSizeInfos.SIZENAMECOLORS[TSizeInfos.SizeToClassIndex(Size)]);
 //  Canvas.Brush.Color := clWindow;
   Canvas.FillRect(ARect);
 
   // CheckBox
   ImagesModule.ImageList24x24.Draw(Canvas, ARect.Left+2, ARect.Top+2, ifThen(FSizeInfos[Index].Enabled, 4, 3));
 
+  // Screen-Size marker
+  tr := ARect; tr.Right := tr.Left + 64;
+  if Size=FScreenSize then with ARect do
+    ImagesModule.ImageList8x8.Draw(Canvas, 26, ARect.Top+2, 0);
+
   // Size
   Canvas.Font.Size := 10;
   Canvas.Font.Style := [fsbold];
 //  Canvas.Font.Color := clWindowText;
-  tr := ARect; tr.Right := tr.Left + 64;
-  Canvas.TextRect(tr, 0, 2, IntToStr(FSizeInfos[Index].Size), TRSIZE);
+  Canvas.TextRect(tr, 0, 2, IntToStr(Size), TRSIZE);
 
   // SizeImage
-  ImagesModule.ImageList24x24.Draw(Canvas, ARect.Left+70, ARect.Top+2, TSizeInfos.SizeToClassIndex(FSizeInfos[Index].Size));
+  ImagesModule.ImageList24x24.Draw(Canvas, ARect.Left+70, ARect.Top+2, TSizeInfos.SizeToClassIndex(Size));
 
   // SizeName
   Canvas.Font.Style := [];
@@ -1410,6 +1446,7 @@ begin
 
   // Delete Symbol
   ImagesModule.ImageList24x24.Draw(Canvas, ARect.Right-24, ARect.Top+2, 5);
+
 end;
 
 procedure TMainDialog.EditRenTemplateEnter(Sender: TObject);

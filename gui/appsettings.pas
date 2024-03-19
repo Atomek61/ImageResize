@@ -100,9 +100,10 @@ type
     end;
 
   public const
-    DEFAULT_SIZES     :array[0..15] of integer = (32, 48, 64, 120, 240, 360, 480, 640, 800, 960, 1280, 1600, 1920, 2560, 3840, 4096);
+    DEFAULT_SIZES     :array[0..14] of integer = (32, 48, 64, 120, 240, 360, 480, 640, 800, 960, 1280, 1600, 1920, 2560, 4096);
     DEFAULT_SIZENAMES :array[0..2] of string = ('THUMBNAIL', 'DOCUMENT', 'SCREEN');
     SIZENAMECOLORS    :array[0..2] of longint = ($dcf5f7, $dcf7dd, $f7f0dc);
+    SCREENSIZECOLOR   :longint = $f9f9df;
     THUMBNAILMAX      = 240;
     DOCUMENTMAX       = 960;
     ILLGCHARS         = '{}<>[]"'',|';

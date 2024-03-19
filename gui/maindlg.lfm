@@ -1,7 +1,7 @@
 object MainDialog: TMainDialog
-  Left = 424
+  Left = 427
   Height = 680
-  Top = 444
+  Top = 445
   Width = 900
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'ImageResize'

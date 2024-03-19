@@ -1,8 +1,8 @@
 object ImagesModule: TImagesModule
   OldCreateOrder = False
-  Height = 413
-  HorizontalOffset = 508
-  VerticalOffset = 121
+  Height = 586
+  HorizontalOffset = 510
+  VerticalOffset = 122
   Width = 140
   object ImageList20x20: TImageList
     Height = 20
@@ -601,6 +601,18 @@ object ImagesModule: TImagesModule
       A9BC08B806CCE4CDD0EF2F64BC90FEA9840A1EB7BFB9F1E300FF9302F263CACD
       7B0DE3F12FE6F3B5F3F85CF263BD5F66E6075FC201C21A336377371B33C79CDF
       5C9EAC9C3F658E9E9FC55E5F1CB13EFE2F957F03EB499AD5
+    }
+  end
+  object ImageList8x8: TImageList
+    DrawingStyle = dsTransparent
+    Height = 8
+    Width = 8
+    Left = 59
+    Top = 395
+    Bitmap = {
+      4C7A010000000800000008000000370000000000000078DABB1EC1F0FF3A1E7C
+      2382E1D18D708622200E45C3452039A09A2B6F37776BFFFFFF9F011983C44072
+      B49627C27D78FD0700AC949065
     }
   end
 end

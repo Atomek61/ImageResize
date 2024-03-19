@@ -36,7 +36,7 @@ Caption.de=Hintergrund
 Default=#000000
 
 [Settings.ThmbnSize]
-Class=Int32
+Class=String
 Min=32
 Max=400
 Caption=Thumbnail Width
