@@ -124,6 +124,7 @@ type
     ActionExecute: TAction;
     BitBtn1: TBitBtn;
     ButtonAddSize: TBitBtn;
+    ButtonReplaceSize: TBitBtn;
     ButtonClearSizes: TBitBtn;
     ComboBoxSize: TComboBox;
     ComboBoxSizeName: TComboBox;
@@ -280,6 +281,7 @@ type
     procedure ButtonInsertCopyrightClick(Sender: TObject);
     procedure ButtonInsertSIZEClick(Sender: TObject);
     procedure ActionParamExecute(Sender :TObject);
+    procedure ButtonReplaceSizeClick(Sender: TObject);
     procedure ComboBoxSizeDrawItem(Control: TWinControl; Index: Integer;
       ARect: TRect; State: TOwnerDrawState);
     procedure ComboBoxSizeMeasureItem(Control: TWinControl; Index: Integer;
@@ -1149,6 +1151,14 @@ begin
   end;
 end;
 
+procedure TMainDialog.ButtonReplaceSizeClick(Sender: TObject);
+begin
+  if ListBoxSizes.ItemIndex<>-1 then
+    FSizeInfos.Replace(ListBoxSizes.ItemIndex, True, StrToInt(ComboBoxSize.Text), ComboBoxSizeName.Text)
+  else
+    ButtonAddSizeClick(nil);
+end;
+
 procedure TMainDialog.ComboBoxSizeDrawItem(Control: TWinControl; Index: Integer; ARect: TRect; State: TOwnerDrawState);
 var
   Canvas :TCanvas;
@@ -1410,6 +1420,7 @@ begin
   Canvas.Font.Size := 10;
   Canvas.Font.Style := [];
   Canvas.TextRect(tr, tr.Left, tr.Top, IntToStr(Size), TRDEFSIZE);
+
 end;
 
 procedure TMainDialog.ListBoxSizesKeyDown(Sender: TObject; var Key: Word;
@@ -1465,6 +1476,13 @@ begin
   // Delete Symbol
   ImagesModule.ImageList24x24.Draw(Canvas, ARect.Right-24, ARect.Top+2, 5);
 
+  // TopLine
+  if Index>0 then begin
+    Canvas.Pen.Color := clSilver;
+    Canvas.Pen.Width := 1;
+    Canvas.MoveTo(ARect.Left, ARect.Top);
+    Canvas.LineTo(ARect.Right, ARect.Top);
+  end;
 end;
 
 procedure TMainDialog.EditRenTemplateEnter(Sender: TObject);

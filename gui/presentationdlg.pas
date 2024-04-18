@@ -29,6 +29,7 @@ type
     LabelManagers: TLabel;
     MemoMessages: TRichMemo;
     OpenImgTagsDialog: TOpenDialog;
+    PanelLongDescription: TPanel;
     PanelLeft: TPanel;
     PanelMain: TPanel;
     PanelManagerFrame: TPanel;
@@ -135,6 +136,7 @@ end;
 
 procedure TPresentationDialog.ButtonRescanClick(Sender: TObject);
 begin
+  MemoMessages.Clear;
   Scan;
 end;
 

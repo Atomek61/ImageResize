@@ -112,7 +112,7 @@ object PresentationDialog: TPresentationDialog
         Anchors = [akTop, akLeft, akRight, akBottom]
         BorderSpacing.Left = 8
         BorderSpacing.Around = 4
-        BevelOuter = bvNone
+        BevelOuter = bvLowered
         Caption = 'This presentation has no settings'
         Font.Color = clGrayText
         ParentFont = False
@@ -263,24 +263,40 @@ object PresentationDialog: TPresentationDialog
         OnChange = ComboBoxManagersChange
         OnDrawItem = ComboBoxManagersDrawItem
       end
-      object LabelLongDescription: THtmlLabel
+      object PanelLongDescription: TPanel
         Left = 8
-        Height = 362
+        Height = 358
         Top = 104
         Width = 352
-        DefFontName = 'default'
-        HistoryMaxCount = 0
-        MarginHeight = 0
-        MarginWidth = 0
-        NoSelect = False
-        PrintMarginBottom = 2
-        PrintMarginLeft = 2
-        PrintMarginRight = 2
-        PrintMarginTop = 2
-        PrintScale = 1
-        OnImageRequest = LabelLongDescriptionImageRequest
-        Anchors = [akTop, akLeft, akRight, akBottom]
+        Anchors = [akTop, akLeft, akBottom]
+        BevelOuter = bvLowered
+        ClientHeight = 358
+        ClientWidth = 352
         TabOrder = 1
+        object LabelLongDescription: THtmlLabel
+          Left = 1
+          Height = 356
+          Top = 1
+          Width = 350
+          BorderStyle = htSingle
+          DefFontName = 'default'
+          HistoryMaxCount = 0
+          MarginHeight = 0
+          MarginWidth = 0
+          NoSelect = False
+          PrintMarginBottom = 2
+          PrintMarginLeft = 2
+          PrintMarginRight = 2
+          PrintMarginTop = 2
+          PrintScale = 1
+          OnImageRequest = LabelLongDescriptionImageRequest
+          Align = alClient
+          TabOrder = 0
+          CSS.Strings = (
+            'article {padding: 0.5em}'
+            'img{margin: 0.5em}'
+          )
+        end
       end
     end
   end

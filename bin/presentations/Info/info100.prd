@@ -5,7 +5,8 @@ Version=100
 [Presentation]
 Id=Info100
 Processor=Presentation
-Delimiter.css=$(,)
+Delimiters.html={,}
+Delimiters.css=«,»
 Title=Info 1.0
 Description=Tabular Image Infos
 Description.de=Tabellarische Bildinformationen

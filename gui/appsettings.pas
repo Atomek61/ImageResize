@@ -101,7 +101,7 @@ type
 
   public const
     DEFAULT_SIZES     :array[0..14] of integer = (32, 48, 64, 120, 240, 360, 480, 640, 800, 960, 1280, 1600, 1920, 2560, 4096);
-    DEFAULT_SIZENAMES :array[0..2] of string = ('THUMBNAIL', 'DOCUMENT', 'SCREEN');
+    DEFAULT_SIZENAMES :array[0..2] of string = ('_THUMBNAIL', '_DOCUMENT', '');
     SIZENAMECOLORS    :array[0..2] of longint = ($dcf5f7, $dcf7dd, $f7f0dc);
     SCREENSIZECOLOR   :longint = $ff9933;
     THUMBNAILMAX      = 240;
@@ -115,6 +115,7 @@ type
     function GetEnabled(Index : integer): boolean;
     function GetItem(Index : integer): TSizeInfo;
     procedure SetEnabled(Index : integer; AValue: boolean);
+    function ProcessSizeName(const SizeName :string; Size :integer) :string;
   public
     class function SizeToClassIndex(Size :integer) :integer;
     constructor Create;
@@ -125,6 +126,7 @@ type
     function GetEnabledSizes :TSizes;
     function GetEnabledSizeNames :TStringArray;
     procedure Add(Enabled: boolean; Size: integer; const SizeName: string);
+    procedure Replace(Index :integer; Enabled: boolean; Size: integer; const SizeName: string);
     procedure Delete(Index :integer);
     procedure Clear;
     function Required :boolean;
@@ -300,6 +302,19 @@ begin
   result := true;
 end;
 
+function TSizeInfos.ProcessSizeName(const SizeName: string; Size: integer): string;
+begin
+  if SameText(SizeName, '<AUTO>') then
+    result := DEFAULT_SIZENAMES[SizeToClassIndex(Size)]
+  else if SameText(SizeName, '<SIZE>') then
+    result := IntToStr(Size)
+  else if SameText(SizeName, '<EMPTY>') then
+    result := ''
+  else
+    result := SizeName;
+  result := ReplaceIllegalChars(result, ILLGCHARS, '_');
+end;
+
 procedure TSizeInfos.Add(Enabled: boolean; Size: integer; const SizeName: string);
 var
   i, n :integer;
@@ -313,12 +328,7 @@ var
 
 begin
   if Size<=0 then Exit;
-  if SameText(SizeName, '<AUTO>') then
-    _SizeName := DEFAULT_SIZENAMES[SizeToClassIndex(Size)]
-  else if SameText(SizeName, '<SIZE>') then
-    _SizeName := IntToStr(Size)
-  else
-    _SizeName := SizeName;
+  _SizeName := ProcessSizeName(SizeName, Size);
   n := FItems.Count;
   if (n=0) or (Size<FItems[0].Size) then begin
     Insert(0, Enabled, Size, _SizeName);
@@ -327,7 +337,7 @@ begin
   for i:=0 to n-1 do begin
     if Size=FItems[i].Size then begin
       FItems[i].FEnabled := Enabled;
-      FItems[i].FName := ReplaceIllegalChars(_SizeName, ILLGCHARS, '_');
+      FItems[i].FName := _SizeName;
       Changed(lcChanged, i);
       Exit;
     end else if Size<FItems[i].Size then begin
@@ -338,6 +348,21 @@ begin
     end;
   end;
   Insert(n, Enabled, Size, _SizeName);
+end;
+
+procedure TSizeInfos.Replace(Index: integer; Enabled: boolean; Size: integer; const SizeName: string);
+var
+  _SizeName :string;
+begin
+  _SizeName := ProcessSizeName(SizeName, Size);
+  if FItems[Index].Size = Size then begin
+    FItems[Index].FName := _SizeName;
+    FItems[Index].FEnabled := Enabled;
+    Changed(lcChanged, Index);
+  end else begin
+    Delete(Index);
+    Add(Enabled, Size, _SizeName);
+  end;
 end;
 
 procedure TSizeInfos.Delete(Index: integer);

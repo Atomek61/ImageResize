@@ -1014,6 +1014,16 @@ msgctxt "tmaindialog.buttonmrkedit.hint"
 msgid "Opens the internal Watermark Editor"
 msgstr "Öffnet den eingebauten Wasserzeichen-Editor"
 
+#: tmaindialog.buttonreplacesize.caption
+msgctxt "tmaindialog.buttonreplacesize.caption"
+msgid "Replace"
+msgstr ""
+
+#: tmaindialog.buttonreplacesize.hint
+msgctxt "tmaindialog.buttonreplacesize.hint"
+msgid "Replace the selected size"
+msgstr ""
+
 #: tmaindialog.caption
 msgid "ImageResize"
 msgstr "ImageResize"
@@ -1899,3 +1909,4 @@ msgstr ""
 msgctxt "webutils.serrinvalidhtmlcolorfmt"
 msgid "Invalid web color '%s'."
 msgstr "Ungültige Web-Farbe '%s'."
+

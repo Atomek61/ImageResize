@@ -1,7 +1,7 @@
 object MainDialog: TMainDialog
-  Left = 427
+  Left = 478
   Height = 680
-  Top = 445
+  Top = 298
   Width = 900
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'ImageResize'
@@ -256,14 +256,14 @@ object MainDialog: TMainDialog
         Top = 4
         Width = 393
         TabStop = False
-        ActivePage = TabSheetRenaming
+        ActivePage = TabSheetSizes
         Align = alClient
         BorderSpacing.Around = 4
         ImagesWidth = 32
         MultiLine = True
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 1
+        TabIndex = 0
         TabOrder = 1
         Options = [nboMultiLine]
         object TabSheetSizes: TTabSheet
@@ -298,15 +298,16 @@ object MainDialog: TMainDialog
             Items.Strings = (
               '<auto>'
               '<size>'
+              '<empty>'
               'THUMBNAIL'
               'DOCUMENT'
-              'LARGE'
+              'SCREEN'
             )
             TabOrder = 3
             Text = '<auto>'
           end
           object ListBoxSizes: TListBox
-            Left = 0
+            Left = 43
             Height = 328
             Hint = 'Enter a list of sizes by double-clicking a size from the list'#13#10'or by entering a size in the size combo and pressing Add.'
             Top = 16
@@ -316,7 +317,7 @@ object MainDialog: TMainDialog
             ItemHeight = 28
             ParentDoubleBuffered = False
             Style = lbOwnerDrawFixed
-            TabOrder = 0
+            TabOrder = 1
             OnClick = ListBoxSizesClick
             OnDrawItem = ListBoxSizesDrawItem
             OnKeyDown = ListBoxSizesKeyDown
@@ -325,7 +326,7 @@ object MainDialog: TMainDialog
           object Label3: TLabel
             AnchorSideLeft.Control = ListBoxSizes
             AnchorSideBottom.Control = ListBoxSizes
-            Left = 3
+            Left = 46
             Height = 15
             Top = -1
             Width = 28
@@ -359,7 +360,7 @@ object MainDialog: TMainDialog
             Caption = 'Size Name:'
           end
           object ListBoxSizesPalette: TListBox
-            Left = 226
+            Left = 0
             Height = 328
             Hint = 'Add a size by double clicking one of the suggestions'
             Top = 16
@@ -367,7 +368,7 @@ object MainDialog: TMainDialog
             Anchors = [akTop, akRight, akBottom]
             ItemHeight = 18
             Style = lbOwnerDrawFixed
-            TabOrder = 1
+            TabOrder = 0
             TabStop = False
             OnClick = ListBoxSizesPaletteClick
             OnDblClick = ListBoxSizesPaletteDblClick
@@ -398,6 +399,19 @@ object MainDialog: TMainDialog
             ImageIndex = 7
             OnClick = ButtonClearSizesClick
             TabOrder = 5
+          end
+          object ButtonReplaceSize: TBitBtn
+            Left = 273
+            Height = 32
+            Hint = 'Replace the selected size'
+            Top = 144
+            Width = 112
+            Anchors = [akTop, akRight]
+            Caption = 'Replace'
+            Images = ImagesModule.ImageList24x24
+            ImageIndex = 8
+            OnClick = ButtonReplaceSizeClick
+            TabOrder = 6
           end
         end
         object TabSheetRenaming: TTabSheet

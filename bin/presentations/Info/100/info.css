@@ -2,15 +2,15 @@
 body {
   font: 11pt "Roboto Condensed";
   margin: 0;
-  background-color: $(BACKGROUNDCOLOR);
-  color: $(FONTCOLOR);
+  background-color: «BACKGROUNDCOLOR»;
+  color: «FONTCOLOR»;
 }
 
 header, footer {
   font-size: 18pt;
   padding: 1pc;
-  color: $(BACKGROUNDCOLOR);
-  background-color:$(HEADERCOLOR);
+  color: «BACKGROUNDCOLOR»;
+  background-color:«HEADERCOLOR»;
 }
 
 header {
@@ -32,8 +32,8 @@ footer {
   margin: 1pc;
   width: max-content;
   display: flex;
-  background-color: $(CARDCOLOR);
-  color: $(TABLEFONTCOLOR);
+  background-color: «CARDCOLOR»;
+  color: «TABLEFONTCOLOR»;
   padding: 1pc;
 }
 
@@ -44,7 +44,7 @@ footer {
   grid-template-columns: auto auto;      
   grid-template-rows: repeat(6, 2em);      
   align-items: center;
-  background-color: $(TABLECOLOR);
+  background-color: «TABLECOLOR»;
   margin-left: 1em;
   padding: 1em;
 }

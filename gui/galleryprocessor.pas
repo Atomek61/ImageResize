@@ -188,6 +188,7 @@ begin
       Log(SMsgLoadingDotImagesFmt, [FImgTagsFilename], llInfo);
       FFilesTags.LoadFromImgTagsFile(FImgTagsFilename);
       Stats.ItemsPerList := FFilesTags.Filenames.Count;
+      // The standard tags FILETITLE, TIMESTAMP
 
       // 3. Iterate over the images and build the lists
       Log(SMsgBuildingLists, llInfo);
@@ -196,7 +197,7 @@ begin
       for Fragment in FListFragments do
         Lists.Add(Fragment.Key, '');
 
-      // Iterate over the images
+      // Iterate over the images and the fragments
       ImgVars.Delimiters := CURLYBRACEDELIMITERS;
       for i:=0 to FFilesTags.Filenames.Count-1 do begin
         Ext := ExtractExt(FFilesTags.Filenames[i]);
@@ -235,6 +236,8 @@ begin
 
         inc(Stats.Dependencies, SolverStats.LeftDependencies + SolverStats.Solved);
         inc(Stats.Solved, SolverStats.Solved);
+
+        // Build the lists of fragments
         for Fragment in FListFragments do
           Lists[Fragment.Key] := Lists[Fragment.Key] + ImgVars[Fragment.Key];
       end;
@@ -243,7 +246,7 @@ begin
       for List in Lists do
         FDocVars[List.Key] := List.Value;
 
-      // 5. Load the template files and replace the global var
+      // 5. Load the template files and replace the global vars
       for TemplateFilename in FTemplateFiles do begin
         TargetFilename := TargetFolder+ExtractFilename(TemplateFilename);
         Log(SMsgProcessingTemplateFmt, [ExtractFilename(TemplateFilename)], llInfo);

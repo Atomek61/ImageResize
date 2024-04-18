@@ -988,6 +988,16 @@ msgctxt "tmaindialog.buttonmrkedit.hint"
 msgid "Opens the internal Watermark Editor"
 msgstr ""
 
+#: tmaindialog.buttonreplacesize.caption
+msgctxt "tmaindialog.buttonreplacesize.caption"
+msgid "Replace"
+msgstr ""
+
+#: tmaindialog.buttonreplacesize.hint
+msgctxt "tmaindialog.buttonreplacesize.hint"
+msgid "Replace the selected size"
+msgstr ""
+
 #: tmaindialog.caption
 msgid "ImageResize"
 msgstr ""

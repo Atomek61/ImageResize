@@ -17,7 +17,7 @@ Date=2024-02-26 22:00:00
 Icon=icon.png
 ;Copy=gallery.css
 Templates=100\index.html,100\gallery.css
-Fragment.THUMBNAILS=<img src="{IMGFILETITLE}_THUMBNAIL.{IMGFILEEXT}" data-src="{IMGFILENAME}"/>
+Fragment.THUMBNAILS=<img src="{IMGINDEX}_THUMBNAIL.{IMGFILEEXT}" data-src="{IMGFILETITLE}_SCREEN.{IMGFILEEXT}"/>
 
 [Settings.Ratio]
 Class=Picktext

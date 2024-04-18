@@ -22,6 +22,8 @@
 {"hash":18340,"name":"tmaindialog.buttonaddsize.caption","sourcebytes":[65,100,100],"value":"Add"},
 {"hash":169251972,"name":"tmaindialog.buttonclearsizes.hint","sourcebytes":[67,108,101,97,114,115,32,97,108,108,32,115,105,122,101,115,32,102,114,111,109,32,116,104,101,32,108,105,115,116],"value":"Clears all sizes from the list"},
 {"hash":4860802,"name":"tmaindialog.buttonclearsizes.caption","sourcebytes":[67,108,101,97,114],"value":"Clear"},
+{"hash":226032405,"name":"tmaindialog.buttonreplacesize.hint","sourcebytes":[82,101,112,108,97,99,101,32,116,104,101,32,115,101,108,101,99,116,101,100,32,115,105,122,101],"value":"Replace the selected size"},
+{"hash":147269573,"name":"tmaindialog.buttonreplacesize.caption","sourcebytes":[82,101,112,108,97,99,101],"value":"Replace"},
 {"hash":149741790,"name":"tmaindialog.checkboxrenenabled.hint","sourcebytes":[69,110,97,98,108,101,115,32,100,101,115,116,105,110,97,116,105,111,110,32,105,109,97,103,101,32,102,105,108,101,32,114,101,110,97,109,105,110,103,32,45,32,99,104,111,111,115,101,32,97,32,115,116,114,97,116,101,103,121,46],"value":"Enables destination image file renaming - choose a strategy."},
 {"hash":206017268,"name":"tmaindialog.checkboxrenenabled.caption","sourcebytes":[69,110,97,98,108,101,100],"value":"Enabled"},
 {"hash":193506889,"name":"tmaindialog.groupboxrename.caption","sourcebytes":[83,116,114,97,116,101,103,121],"value":"Strategy"},

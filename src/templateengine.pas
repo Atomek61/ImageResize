@@ -1,6 +1,12 @@
 unit templateengine;
 
 {$mode delphi}
+// TSolver is a class which reduces dependencies between vaiables.
+// A given list of names/values may contain references to other name/value-
+// pairs, i.e. FILENAME="img{SIZE}.{EXT}" refers to the other variables
+// SIZE and EXT. Those may againn refer to other variables.
+// Solving means to replace the references in a way that at the end even nested
+// dependencies are removed.
 
 interface
 
@@ -75,7 +81,8 @@ type
     procedure Add(const Key :string; const Value :string = '');
     procedure Load(const Key :string; const Value :string);
     procedure Reload(Index :integer; const Value :string);
-    function Solve(out Stats :TStats) :boolean;
+    function TrySolve(out Stats :TStats) :boolean;
+    procedure Solve(out Stats :TStats);
     function Replace(const Subject :string; out Replacements :integer) :string;
     function TryGetValue(const Key :string; out Value :string) :boolean;
     function GetValue(const Key :string) :string; overload;
@@ -91,6 +98,7 @@ implementation  // »SIZE«      «SIZE»
 resourcestring
   SErrVarNotFoundFmt = 'Variable ''%s'' not found in VarSolver.';
   SErrInvalidDelimitersFmt = 'Invalid delimiters ''%s''.';
+  SErrSolving = 'Cant solve valiables (circular dependencies?)';
 
 { TDelimiters }
 
@@ -228,7 +236,7 @@ begin
   FArray[Index].Value := Value;
 end;
 
-function TSolver.Solve(out Stats: TStats): boolean;
+function TSolver.TrySolve(out Stats: TStats): boolean;
 var
   Iterator :TIterator;
   l, r, d :TRec;
@@ -277,6 +285,12 @@ begin
     end;
   until (stats.LeftDependencies=0) or (Dependencies=Stats.LeftDependencies);
   result := stats.LeftDependencies=0;
+end;
+
+procedure TSolver.Solve(out Stats: TStats);
+begin
+  if not TrySolve(Stats) then
+    raise Exception.Create(SErrSolving);
 end;
 
 function TSolver.Replace(const Subject: string; out Replacements :integer): string;
