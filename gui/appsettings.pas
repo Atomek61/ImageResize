@@ -248,9 +248,10 @@ var
   i :integer;
 begin
   result := nil;
-  SetLength(result, Count);
-  for i:=0 to Count-1 do if FItems[i].Enabled then
-    result[i] := FItems[i].Size;
+  for i:=0 to Count-1 do if FItems[i].Enabled then begin
+    SetLength(result, Length(result)+1);
+    result[High(result)] := FItems[i].Size;
+  end;
 end;
 
 function TSizeInfos.GetEnabledSizeNames: TStringArray;
@@ -258,9 +259,10 @@ var
   i :integer;
 begin
   result := nil;
-  SetLength(result, Count);
-  for i:=0 to Count-1 do if FItems[i].Enabled then
-    result[i] := FItems[i].Name;
+  for i:=0 to Count-1 do if FItems[i].Enabled then begin
+    SetLength(result, Length(result)+1);
+    result[High(result)] := FItems[i].Name;
+  end;
 end;
 
 // '64, 400, 1920'
