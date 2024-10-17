@@ -198,13 +198,16 @@ type
     FTagsReports      :TTagsReports;
     FDryRun           :boolean;
   private
-    FCancel :boolean;
+    FActive :boolean;
+    FCancelled :boolean;
+    FSuccess :boolean;
     FOnPrint :TPrintEvent;
     FOnProgress :TProgressEvent;
     function GetTargetFiletemplate: string;
     function GetInterpolation: TInterpolation;
     function GetSizes: string;
     function GetSourceFilenames: TStrings;
+    procedure SetActive(AValue: boolean);
     procedure SetTargetFiletemplate(AValue: string);
     procedure SetInterpolation(AValue: TInterpolation);
     procedure SetSizes(AValue: string);
@@ -220,6 +223,7 @@ type
     procedure OnTaskPrint(Sender :TObject; WorkerId: integer; const Line :string; Level :TLevel);
     procedure OnTaskProgress(Sender :TObject; Progress :single);
     procedure Print(const Line :string; Level :TLevel = mlInfo);
+    procedure DoExecute;
   public
     class var FormatSettings :TFormatSettings;
   public
@@ -244,6 +248,8 @@ type
     class function TryStrToTagsReports(const Str :string; out Value :TTagsReports) :boolean;
     class procedure StrToWatermarkParams(const Str :string; out Value :TWatermarkParams);
 
+    property Active :boolean read FActive write SetActive;
+    property Success :boolean read FSuccess;
     property SourceFilenames :TStrings read GetSourceFilenames write SetSourceFilenames;
     property TargetFolder :string read FTargetFolder write SetTargetFolder;
     property TargetFiletemplate :string read GetTargetFiletemplate write SetTargetFiletemplate;
@@ -728,7 +734,7 @@ procedure TProcessor.OnTaskProgress(Sender: TObject; Progress: single);
 begin
   if Assigned(FOnProgress) then begin
     FOnProgress(self, Progress);
-    if FCancel then
+    if FCancelled then
       (Sender as TDispatcher).Cancel;
   end;
 end;
@@ -753,7 +759,7 @@ begin
   result := Img.Resample(Size.cx, Size.cy, FResampleMode) as TBGRABitmap;
 end;
 
-function TProcessor.Execute :boolean;
+procedure TProcessor.DoExecute;
 var
   ProcRes :TProcessorResources;
   Task :TImageTask;
@@ -765,14 +771,17 @@ var
   ImgTagsFilename :string;
   SizeName :string;
 begin
+  FActive     := false;
+  FCancelled  := false;
+  FSuccess    := true;
+
   // Check main parameters
   if FSourceFilenames.Count=0 then
-    Exit(true);
+    Exit;
 
   if Length(FSizes)=0 then
     raise Exception.Create(SErrMissingSizes);
 
-  FCancel     := false;
   ProcRes     := TProcessorResources.Create;
   Tasks       := TTasks.Create;
   Dispatcher  := TDispatcher.Create;
@@ -827,6 +836,8 @@ begin
     ProcRes.IsMultipleTargetFolderStrategy := Pos('{SIZE}', FTargetFolder)+Pos('{SIZENAME}', FTargetFolder)>0;
     if (Length(FSizes)>1) and not ProcRes.IsMultipleTargetFolderStrategy and not ProcRes.IsTargetFileRenamingStrategy then
         raise Exception.Create(SErrMultipleSizes);
+
+    FActive := true;
 
     // Create Destination Folders
     SetLength(ProcRes.TargetFolders, m);
@@ -899,8 +910,8 @@ begin
     Dispatcher.MaxWorkerCount := ThreadCount;
     Dispatcher.StopOnError := StopOnError;
 
-    result := Dispatcher.Execute(Tasks);
-    if result then begin
+    FSuccess := Dispatcher.Execute(Tasks);
+    if FSuccess then begin
       if trTagsReport in FTagsReports then begin
         if ProcRes.IsMultipleTargetFolderStrategy then
           TagsFilename := GetParentDirectory(FTargetFolder)+TAGSREPORTFILETITLE
@@ -932,13 +943,13 @@ begin
     Dispatcher.Free;
     Tasks.Free;
     ProcRes.Free;
+    FActive := false;
   end;
-
 end;
 
 procedure TProcessor.Cancel;
 begin
-  FCancel := true;
+  FCancelled := true;
 end;
 
 class function TProcessor.TryNameToPNGCompression(const Name: string; out Value: integer): boolean;
@@ -1208,6 +1219,16 @@ begin
   result := FSourceFilenames;
 end;
 
+procedure TProcessor.SetActive(AValue: boolean);
+begin
+  if AValue=Active then Exit;
+  if Active then begin
+    FCancelled := true;
+  end else begin
+    DoExecute;
+  end;
+end;
+
 procedure TProcessor.SetTargetFiletemplate(AValue: string);
 var
   ErrMsg :string;
@@ -1281,6 +1302,12 @@ end;
 class function TProcessor.GetVersion: string;
 begin
   result := IMGRESVER;
+end;
+
+function TProcessor.Execute: boolean;
+begin
+  Active := true;
+  result := FSuccess
 end;
 
 initialization

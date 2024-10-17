@@ -83,7 +83,7 @@ type
     property Id :integer read FId;
   end;
 
-  // Base of all messages from workers to the dispatcher. Is the asynchronously
+  // Base of all messages from workers to the dispatcher. Is the asynchronous
   // link between Worker and Dispatcher.
   TMessage = class
     Task :TCustomTask;
@@ -156,7 +156,7 @@ type
       Elapsed :integer; //ms
     end;
   private
-    FCancelled :boolean;
+    FCancel :boolean;
     FMaxWorkerCount :integer;
     FStopOnError :boolean;
     FStepCount :integer;
@@ -327,7 +327,7 @@ end;
 
 function TContext.GetCancelled: boolean;
 begin
-  result := FDispatcher.FCancelled;
+  result := FDispatcher.FCancel;
 end;
 
 constructor TContext.Create(Dispatcher: TDispatcher);
@@ -435,12 +435,12 @@ begin
     NextTask := 0;
     while true do begin
 
-      // If StopOnError and all Workers have stop then Exit
-      if FCancelled and StopOnError and (WorkingCount=0) then
+      // If StopOnError and all Workers have stopped then Exit
+      if FCancel and StopOnError and (WorkingCount=0) then
         Exit(false);
 
       // If a task is available then assign it to a free worker
-      if not FCancelled and (NextTask<Tasks.Count) and Pool.Pop(Worker) then begin
+      if not FCancel and (NextTask<Tasks.Count) and Pool.Pop(Worker) then begin
         Working[Worker.Id] := Worker;
         inc(WorkingCount);
         Worker.Start(Tasks[NextTask]);
@@ -473,7 +473,7 @@ begin
                 inc(FStats.Failed);
 
               // If all workers finished their work and aborted then finish
-              if (WorkingCount=0) and FCancelled then
+              if (WorkingCount=0) and FCancel then
                 Exit(false);
 
               // If all Tasks are done and no worker is currently running then finish
@@ -481,7 +481,7 @@ begin
                 Exit(FStats.Failed = 0);
 
               // When error occured and not already aborting and StopOnError then stop all workers
-              if (Level in [mlCancelled, mlFatal]) and not FCancelled and StopOnError then
+              if (Level in [mlCancelled, mlFatal]) and not FCancel and StopOnError then
                 // Terminate running workers and continue waiting for their ExitMessage
                 Cancel;
             end;
@@ -508,7 +508,7 @@ end;
 
 procedure TDispatcher.Cancel;
 begin
-  FCancelled := true;
+  FCancel := true;
 end;
 
 end.
