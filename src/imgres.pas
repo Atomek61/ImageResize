@@ -53,6 +53,11 @@ resourcestring
   SCptSingleThread  = 'Single';
   SCptMaximumThread = 'Maximum';
 
+  SCptSharpenDefault  = 'Default';
+  SCptSharpenNone     = 'None';
+  SCptSharpenLight    = 'Light';
+  SCptSharpenStrong   = 'Strong';
+
 type
   TTagsSource = (tsEXIF, tsTagsFiles); // Tags from EXIF and/or .tags files
   TTagsSources = set of TTagsSource;
@@ -83,8 +88,15 @@ const
   PNGCOMPRESSION_STRINGS :array[0..3] of string = (SCptPNGCompressionDefault,
     SCptPNGCompressionNone, SCptPNGCompressionFastest, SCptPNGCompressionMax);
 
+  SHARPEN_VALUES :array[0..3] of integer = (100, 0, 50, 200);
+
+  SHARPEN_NAMES :array[0..3] of string = ('Default', 'None', 'Light', 'Strong');
+
+  SHARPEN_STRINGS :array[0..3] of string = (SCptSharpenDefault, SCptSharpenNone,
+    SCptSharpenLight, SCptSharpenStrong);
+
 const
-  IMGRESVER = '4.1';
+  IMGRESVER = '4.2';
   IMGRESCPR = 'imgres '+IMGRESVER+' © 2024 Jan Schirrmacher, www.atomek.de';
 
   TAGSREPORTFILETITLE       = '.tagsreport';
@@ -107,6 +119,7 @@ const
   DEFAULT_RENINDEXDIGITS    = 3;
   DEFAULT_SHUFFLE           = false;
   DEFAULT_SHUFFLESEED       = 0;
+  DEFAULT_SHARPEN           = 100;
   DEFAULT_FILETAGS          = nil;
   DEFAULT_COPYRIGHT         = '';
   DEFAULT_TAGSSOURCES       = [];
@@ -192,6 +205,7 @@ type
     FRen              :TRenameParams;
     FShuffle          :boolean;
     FShuffleSeed      :integer;
+    FSharpen          :integer; // 0 = Off
     FTagsSources      :TTagsSources;
     FTagKeys          :TStringArray; // 'Copyright',
     FCopyright        :string;
@@ -203,11 +217,14 @@ type
     FSuccess :boolean;
     FOnPrint :TPrintEvent;
     FOnProgress :TProgressEvent;
+    function GetSize: integer;
     function GetTargetFiletemplate: string;
     function GetInterpolation: TInterpolation;
     function GetSizes: string;
     function GetSourceFilenames: TStrings;
     procedure SetActive(AValue: boolean);
+    procedure SetSharpen(AValue: integer);
+    procedure SetSize(AValue: integer);
     procedure SetTargetFiletemplate(AValue: string);
     procedure SetInterpolation(AValue: TInterpolation);
     procedure SetSizes(AValue: string);
@@ -242,6 +259,11 @@ type
     class function TryStrToJPEGQuality(const Str :string; out Value :integer) :boolean;
     class function StrToJPEGQuality(const Str :string) :integer;
     class function JPEGQualityToStr(Value :integer) :string;
+    class function TryStrToSharpen(const Str :string; out Value :integer) :boolean;
+    class function SharpenToStr(Value :integer) :string;
+    class function StrToSharpen(const Str :string) :integer;
+    class function NameToSharpen(const Name :string) :integer;
+    class function SharpenToName(Value :integer) :string;
     class function TryStrToRenameParams(const Str :string; out Params :TRenameParams; out ErrStr :string) :boolean;
     class function RenameParamsToStr(const Params :TRenameParams) :string;
     class function TryStrToTagsSources(const Str :string; out Value :TTagsSources) :boolean;
@@ -253,6 +275,7 @@ type
     property SourceFilenames :TStrings read GetSourceFilenames write SetSourceFilenames;
     property TargetFolder :string read FTargetFolder write SetTargetFolder;
     property TargetFiletemplate :string read GetTargetFiletemplate write SetTargetFiletemplate;
+    property Size :integer read GetSize write SetSize;
     property Sizes :TSizes read FSizes write FSizes;
     property SizeNames :TSizeNames read FSizeNames write FSizeNames;
     property JPEGQuality :integer read FJPEGQuality write SetJPEGQuality;
@@ -264,6 +287,7 @@ type
     property RenEnabled :boolean read FRen.Enabled;
     property Shuffle :boolean read FShuffle write FShuffle;
     property ShuffleSeed :integer read FShuffleSeed write SetShuffleSeed;
+    property Sharpen :integer read FSharpen write SetSharpen;
     property TagsSources :TTagsSources read FTagsSources write FTagsSources;
     property TagKeys :TStringArray read FTagKeys write FTagKeys;
     property Copyright :string read FCopyright write FCopyright;
@@ -306,6 +330,9 @@ resourcestring
   SErrInvalidPNGCompressionFmt    = 'Invalid PNG compression %d (0..3 expected)';
   SErrInvalidPNGCompressionNameFmt= 'Invalid PNG compression ''%s'' (Default, None, Fastest or Maximum expected)';
   SErrInvalidJPEGQualityFmt       = 'Invalid JPEG quality ''%s'' (1..100 expected)';
+  SErrInvalidSharpenNameFmt       = 'Invalid sharpen value ''%s'' (Default, None, Light, Strong or any integer >= 0 expected)';
+  SErrInvalidSharpenStringFmt     = 'Invalid sharpening amount ''%d'', 0..n expected';
+  SErrInvalidSharpenStrFmt        = 'Invalid sharpening amount ''%s'', 0..n expected';
   SErrInvalidRenamingParamFmt     = 'Invalid renaming parameter ''%s''';
   SErrInvalidINDEXPlaceholderFmt  = 'Invalid INDEX placeholder parameters ''%s''';
   SErrInvalidINDEXStartFmt        = 'Invalid INDEX start ''%s''';
@@ -433,6 +460,7 @@ var
   TargetFiletitleExt :string;
   TargetFilename :string;
   TargetImg :TBGRABitmap;
+  SharpImg :TBGRABitmap;
   Writer :TFPCustomImageWriter;
   Size :integer;
   SourceSize :TSize;
@@ -547,6 +575,13 @@ begin
         Print(Format(MsgScalingFmt, [
           ExtractFilename(SourceFilename), SourceSize.cx, SourceSize.cy, TargetSize.cx, TargetSize.cy]), MsgScalingLevel);
         TargetImg := Processor.ResampleImg(SourceImg, TargetSize);
+
+        // Sharpen...
+        if Processor.FSharpen>0 then begin
+          SharpImg := TargetImg.FilterSharpen(Processor.FSharpen/100.0);
+          TargetImg.Free;
+          TargetImg := SharpImg;
+        end;
 
         ////////////////////////////////////////////////////////////////////////////
         Progress(1);
@@ -682,6 +717,7 @@ begin
   FRen.IndexDigits  := DEFAULT_RENINDEXDIGITS;
   FShuffle          := DEFAULT_SHUFFLE;
   FShuffleSeed      := DEFAULT_SHUFFLESEED;
+  FSharpen          := DEFAULT_SHARPEN;
   FTagsSources      := DEFAULT_TAGSSOURCES;
   FTagKeys          := nil;
   FCopyright        := DEFAULT_COPYRIGHT;
@@ -1006,6 +1042,56 @@ begin
     result := IntToStr(Value);
 end;
 
+class function TProcessor.TryStrToSharpen(const Str: string; out Value: integer): boolean;
+var
+  i :integer;
+begin
+  for i:=0 to High(SHARPEN_STRINGS) do
+    if SameText(SHARPEN_STRINGS[i], Str) then begin
+      Value := SHARPEN_VALUES[i];
+      Exit(true);
+    end;
+  result := TryStrToInt(Str, Value) and (Value>=0);
+end;
+
+class function TProcessor.NameToSharpen(const Name: string): integer;
+var
+  i :integer;
+begin
+  for i:=0 to High(SHARPEN_NAMES) do
+    if SameText(SHARPEN_NAMES[i], Name) then
+      Exit(SHARPEN_VALUES[i]);
+  if not TryStrToInt(Name, result) and (result>=0) then
+    raise Exception.CreateFmt(SErrInvalidSharpenNameFmt, [Name]);
+end;
+
+class function TProcessor.SharpenToName(Value :integer): string;
+var
+  i :integer;
+begin
+  for i:=0 to High(SHARPEN_VALUES) do
+    if SHARPEN_VALUES[i]=Value then
+      Exit(SHARPEN_NAMES[i]);
+  result := IntToStr(Value);
+end;
+
+class function TProcessor.SharpenToStr(Value: integer): string;
+var
+  i :integer;
+begin
+  for i:=0 to High(SHARPEN_NAMES) do
+    if SHARPEN_VALUES[i]=Value then begin
+      Exit(SHARPEN_STRINGS[i]);
+    end;
+  result := IntToStr(Value);
+end;
+
+class function TProcessor.StrToSharpen(const Str: string): integer;
+begin
+  if not TryStrToSharpen(Str, result) then
+    raise Exception.CreateFmt(SErrInvalidSharpenStrFmt, [Str]);
+end;
+
 class function TProcessor.TryStrToRenameParams(const Str: string; out Params: TRenameParams; out ErrStr: string): boolean;
 var
   Placeholders :TStringArray;
@@ -1206,6 +1292,14 @@ begin
   result := RenameParamsToStr(FRen);
 end;
 
+function TProcessor.GetSize: integer;
+begin
+  if Length(FSizes)=0 then
+    result := 0
+  else
+    result := FSizes[0];
+end;
+
 function TProcessor.GetInterpolation: TInterpolation;
 begin
   if FResampleMode = rmSimpleStretch then
@@ -1227,6 +1321,19 @@ begin
   end else begin
     DoExecute;
   end;
+end;
+
+procedure TProcessor.SetSharpen(AValue: integer);
+begin
+  if FSharpen<0 then
+    raise Exception.CreateFmt(SErrInvalidSharpenStrFmt, [AValue]);
+  FSharpen:=AValue;
+end;
+
+procedure TProcessor.SetSize(AValue: integer);
+begin
+  if AValue<=0 then
+    raise Exception.CreateFmt(SErrInvalidSizesFmt, [IntToStr(AValue)]);
 end;
 
 procedure TProcessor.SetTargetFiletemplate(AValue: string);

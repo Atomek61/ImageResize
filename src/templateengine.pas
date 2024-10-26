@@ -4,7 +4,7 @@ unit templateengine;
 // TSolver is a class which reduces dependencies between vaiables.
 // A given list of names/values may contain references to other name/value-
 // pairs, i.e. FILENAME="img{SIZE}.{EXT}" refers to the other variables
-// SIZE and EXT. Those may againn refer to other variables.
+// SIZE and EXT. Those may again refer to other variables.
 // Solving means to replace the references in a way that at the end even nested
 // dependencies are removed.
 

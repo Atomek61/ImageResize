@@ -23,6 +23,7 @@ type
     TargetFolder        :TStringSetting;
     JPEGQuality         :TPicklistSetting;
     PNGCompression      :TPicklistSetting;
+    Sharpen             :TPicklistSetting;
     ResamplingFilter    :TPickListSetting;
     MrkEnabled          :TBooleanSetting;
     MrkFilename         :TStringSetting;
@@ -100,11 +101,11 @@ type
     end;
 
   public const
-    DEFAULT_SIZES     :array[0..14] of integer = (32, 48, 64, 120, 240, 360, 480, 640, 800, 960, 1280, 1600, 1920, 2560, 4096);
-    DEFAULT_SIZENAMES :array[0..2] of string = ('_THUMBNAIL', '_DOCUMENT', '');
+    DEFAULT_SIZES     :array[0..15] of integer = (32, 48, 64, 120, 240, 320, 360, 480, 640, 800, 960, 1280, 1600, 1920, 2560, 4096);
+    DEFAULT_SIZENAMES :array[0..2] of string = ('_THUMBNAIL', '_DOCUMENT', '_SCREEN');
     SIZENAMECOLORS    :array[0..2] of longint = ($dcf5f7, $dcf7dd, $f7f0dc);
     SCREENSIZECOLOR   :longint = $ff9933;
-    THUMBNAILMAX      = 240;
+    THUMBNAILMAX      = 120;
     DOCUMENTMAX       = 960;
     ILLGCHARS         = '{}<>[]"'',|';
   private
@@ -405,13 +406,14 @@ begin
   TargetFolder        := TStringSetting.Create(self,    'TargetFolder');
   JPEGQuality         := TPicklistSetting.Create(self,  'JPEGQuality');
   PNGCompression      := TPicklistSetting.Create(self,  'PNGCompression');
+  Sharpen             := TPicklistSetting.Create(self,  'Sharpen');
   ResamplingFilter    := TPickListSetting.Create(self,  'ResamplingFilter');
   MrkEnabled          := TBooleanSetting.Create(self,   'MrkEnabled');
   MrkFilename         := TStringSetting.Create(self,    'MrkFilename');
   MrkSize             := TUInt32Setting.Create(self,    'MrkSize');
   MrkX                := TUInt32Setting.Create(self,    'MrkX');
   MrkY                := TUInt32Setting.Create(self,    'MrkY');
-  MrkOpacity            := TUInt32Setting.Create(self,    'MrkAlpha');
+  MrkOpacity          := TUInt32Setting.Create(self,    'MrkAlpha');
   RenEnabled          := TBooleanSetting.Create(self,   'RenEnabled');
   RenSimple           := TBooleanSetting.Create(self,   'RenSimple');
   RenMode             := TPicklistSetting.Create(self,  'RenMode');

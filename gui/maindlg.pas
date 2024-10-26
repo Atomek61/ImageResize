@@ -124,13 +124,17 @@ type
     ActionExecute: TAction;
     BitBtn1: TBitBtn;
     ButtonAddSize: TBitBtn;
+    ButtonBrowseSrcFiles1: TBitBtn;
     ButtonReplaceSize: TBitBtn;
     ButtonClearSizes: TBitBtn;
+    ComboBoxSharpen: TComboBox;
     ComboBoxSize: TComboBox;
     ComboBoxSizeName: TComboBox;
+    GroupBoxSharpen: TGroupBox;
     ImageStep1: TImage;
     ImageStep2: TImage;
     ImageStep3: TImage;
+    Label19: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label7: TLabel;
@@ -424,6 +428,7 @@ resourcestring
   SErrMissingDestinationFolder  = 'Missing target folder';
   SErrInvalidSizes              = 'Invalid Sizes string';
   SErrInvalidJpgQuality         = 'Invalid JPEG quality';
+  SErrInvalidSharpen            = 'Invalid sharpen value';
   SErrInvalidMrkSize            = 'Invalid watermark size';
   SErrInvalidMrkXBrd            = 'Invalid watermark x border';
   SErrInvalidMrkYBrd            = 'Invalid watermark y border';
@@ -638,6 +643,10 @@ begin
   for Item in PNGCOMPRESSION_STRINGS do
     ComboBoxPNGCompression.Items.Add(Item);
 
+  ComboBoxSharpen.Items.Clear;
+  for Item in SHARPEN_STRINGS do
+    ComboBoxSharpen.Items.Add(Item);
+
   ComboBoxShuffleSeed.Items[0] := SCptRandomSeed;
 
   FWorkingDirectory := GetCurrentDir;
@@ -755,6 +764,7 @@ begin
     EditTargetFolder.Text               := '';
     ComboBoxJPEGQuality.ItemIndex       := 0;
     ComboBoxPNGCompression.ItemIndex    := 0;
+    ComboBoxSharpen.ItemIndex           := 0;
     ComboBoxInterpolation.ItemIndex     := 0;
     EditMrkFilename.Text                := '';
     with ImgResizer.WatermarkParams do begin
@@ -778,7 +788,7 @@ begin
     EditCopyright.Text                  := '';
     CheckBoxImageInfosEnabled.Checked   := true;
     CheckBoxTagsReportEnabled.Checked   := false;
-    CheckBoxDryRun.Checked            := false;
+    CheckBoxDryRun.Checked              := false;
 
     ActionSrcFilenames.Execute;
     ActionParamSizes.Execute;
@@ -903,6 +913,7 @@ begin
     Value := ReadInteger(PROJECT_SECTION,  'JPEGQuality', TProcessor.StrToJPEGQuality(ComboBoxJPEGQuality.Text));
     if Value = DEFAULTJPEGQUALITY then ComboBoxJPEGQuality.ItemIndex := 0 else ComboBoxJPEGQuality.Text := IntToStr(Value);
     ComboBoxPNGCompression.ItemIndex      := TProcessor.NameToPNGCompression(ReadString(PROJECT_SECTION,  'PNGCompression', PNGCOMPRESSION_NAMES[ComboBoxPNGCompression.ItemIndex]));
+    ComboBoxSharpen.Text                  := TProcessor.SharpenToStr(TProcessor.NameToSharpen(ReadString(PROJECT_SECTION, 'Sharpen', ComboBoxSharpen.Text)));
     CheckBoxMrkEnabled.Checked            := ReadBool(PROJECT_SECTION,    'MrkEnabled', CheckBoxMrkEnabled.Checked);
     EditMrkFilename.Text                  := ReadString(PROJECT_SECTION,  'MrkFilename', EditMrkFilename.Text);
     UpDownMrkSize.Position                := ReadInteger(PROJECT_SECTION, 'MrkSize', UpDownMrkSize.Position);
@@ -992,6 +1003,7 @@ begin
     else
       WriteInteger(PROJECT_SECTION, 'JPEGQuality',  Value);
     WriteString(PROJECT_SECTION,  'PNGCompression', PNGCOMPRESSION_NAMES[ComboBoxPNGCompression.ItemIndex]);
+    WriteString(PROJECT_SECTION,  'Sharpen',        TProcessor.SharpenToName(TProcessor.StrToSharpen(ComboBoxSharpen.Text)));
     WriteBool(PROJECT_SECTION,    'MrkEnabled',     CheckBoxMrkEnabled.Checked);
     WriteString(PROJECT_SECTION,  'MrkFilename',    HandleFilenameRefs(EditMrkFilename));
     WriteString(PROJECT_SECTION,  'MrkSize',        EditMrkSize.Text);
@@ -1255,6 +1267,10 @@ begin
   ComboBoxPNGCompression.DroppedDown := true;
   Snapshot('quality-PNG', GroupBoxPNGCompression, -8, 0, 270, 130);
   ComboBoxPNGCompression.DroppedDown := false;
+  ComboBoxSharpen.ItemIndex := 2;
+  ComboBoxSharpen.DroppedDown := true;
+  Snapshot('quality-sharpen', GroupBoxSharpen, -8, 0, 270, 130);
+  ComboBoxSharpen.DroppedDown := false;
 
   ToolButtonTagging.Click;
   Snapshot('tagging-save', GroupBoxTaggingSave, -8, 0, 0, 0);
@@ -1952,6 +1968,11 @@ begin
         Processor.JPEGQuality := IntValue;
         Processor.PngCompression := ComboBoxPNGCompression.ItemIndex;
         Processor.Interpolation := TInterpolation(ComboBoxInterpolation.ItemIndex);
+
+        // Sharpen
+        if not TProcessor.TryStrToSharpen(ComboBoxSharpen.Text, IntValue) then
+          raise Exception.Create(SErrInvalidSharpen);
+        Processor.Sharpen := IntValue;
 
         // Rename
         if CheckBoxRenEnabled.Checked then begin

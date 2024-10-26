@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.5\n"
 
 #: aboutdlg.scptavailable
 msgid "Available"
@@ -176,6 +176,7 @@ msgid "Maximum"
 msgstr "Maximal"
 
 #: imgres.scptpngcompressionnone
+msgctxt "imgres.scptpngcompressionnone"
 msgid "None"
 msgstr "Keine"
 
@@ -183,6 +184,24 @@ msgstr "Keine"
 msgctxt "imgres.scptrandomseed"
 msgid "Random"
 msgstr "Zufällig"
+
+#: imgres.scptsharpendefault
+msgctxt "imgres.scptsharpendefault"
+msgid "Default"
+msgstr "Voreinstellung"
+
+#: imgres.scptsharpenlight
+msgid "Light"
+msgstr "Leicht"
+
+#: imgres.scptsharpennone
+msgctxt "imgres.scptsharpennone"
+msgid "None"
+msgstr "Keine"
+
+#: imgres.scptsharpenstrong
+msgid "Strong"
+msgstr "Stark"
 
 #: imgres.scptsinglethread
 msgctxt "imgres.scptsinglethread"
@@ -276,6 +295,22 @@ msgstr "Ungültige PNG-Kompression %s (Voreinstellung, Keine, Schnellste oder Ma
 #, object-pascal-format
 msgid "Invalid renaming parameter '%s'"
 msgstr "Ungültiger Umbennennungs-Parameter '%s'"
+
+#: imgres.serrinvalidsharpennamefmt
+#, object-pascal-format
+msgid "Invalid sharpen value '%s' (Default, None, Light, Strong or any integer >= 0 expected)"
+msgstr "Ungültiger Schärfungswert '%s' (Voreinstellung, Keiner, Leicht, Stark oder ein beliebiger Wert >= 0 erwartet)"
+
+#: imgres.serrinvalidsharpenstrfmt
+#, object-pascal-format
+msgid "Invalid sharpening amount '%s', 0..n expected"
+msgstr "Ungültiger Schärfungsbetrag '%s', 0..n erwartet"
+
+#: imgres.serrinvalidsharpenstringfmt
+#, object-pascal-format
+msgctxt "imgres.serrinvalidsharpenstringfmt"
+msgid "Invalid sharpening amount '%d', 0..n expected"
+msgstr "Ungültiger Schärfungsbetrag '%1d', 0..n erwartet"
 
 #: imgres.serrinvalidsizesfmt
 #, object-pascal-format
@@ -475,6 +510,10 @@ msgstr "Ungültige Wasserbild-X-Position"
 #: maindlg.serrinvalidmrkybrd
 msgid "Invalid watermark y border"
 msgstr "Ungültige Wasserbild-Y-Position"
+
+#: maindlg.serrinvalidsharpen
+msgid "Invalid sharpen value"
+msgstr "Ungültiger Schärfungsbetrag"
 
 #: maindlg.serrinvalidshuffleseed
 msgid "Invalid Shuffle Seed"
@@ -1017,12 +1056,12 @@ msgstr "Öffnet den eingebauten Wasserzeichen-Editor"
 #: tmaindialog.buttonreplacesize.caption
 msgctxt "tmaindialog.buttonreplacesize.caption"
 msgid "Replace"
-msgstr ""
+msgstr "Ersetze"
 
 #: tmaindialog.buttonreplacesize.hint
 msgctxt "tmaindialog.buttonreplacesize.hint"
 msgid "Replace the selected size"
-msgstr ""
+msgstr "Ersetzt die ausgewählte Größe"
 
 #: tmaindialog.caption
 msgid "ImageResize"
@@ -1157,6 +1196,10 @@ msgstr ""
 "Wähle eine verlustlose Kompression für PNG.\n"
 "Sie ist immer verlustfrei aber eine Abwägung zwischen Dateigröße und Verarbeitungszeit.\n"
 "Je höher die Kompression, desto größer der Rechenaufwand."
+
+#: tmaindialog.comboboxsharpen.hint
+msgid "Enter a sharpening amount - Default (100, good), None (0, off), Light (50), Strong (200)"
+msgstr "Geben Sie einen Schärfungsbetrag ein - Voreinstellung (100, gut), Keine (0), Leicht (50), Stark (200)"
 
 #: tmaindialog.comboboxshuffleseed.hint
 msgid "Enter a number, lets say 1000, to create always the same mixed order or 0 for shuffeling always randomly."
@@ -1323,6 +1366,11 @@ msgstr "PNG"
 msgid "Strategy"
 msgstr "Strategie"
 
+#: tmaindialog.groupboxsharpen.caption
+msgctxt "tmaindialog.groupboxsharpen.caption"
+msgid "Sharpen"
+msgstr "Schärfen"
+
 #: tmaindialog.groupboxshuffle.caption
 msgid "Shuffle"
 msgstr "Mischen"
@@ -1410,6 +1458,10 @@ msgstr "(EXIF ImageDescription)"
 #: tmaindialog.label18.caption
 msgid "File Selection:"
 msgstr "Dateiauswahl:"
+
+#: tmaindialog.label19.caption
+msgid "Amount (0..100..):"
+msgstr "Betrag (0..100..)"
 
 #: tmaindialog.label2.caption
 msgctxt "tmaindialog.label2.caption"
@@ -1902,11 +1954,10 @@ msgstr "Speichern"
 
 #: ttaggingdialog.caption
 msgid "TaggingDialog"
-msgstr ""
+msgstr "Tagging"
 
 #: webutils.serrinvalidhtmlcolorfmt
 #, object-pascal-format
 msgctxt "webutils.serrinvalidhtmlcolorfmt"
 msgid "Invalid web color '%s'."
 msgstr "Ungültige Web-Farbe '%s'."
-

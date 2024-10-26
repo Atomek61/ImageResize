@@ -165,12 +165,31 @@ msgid "Maximum"
 msgstr ""
 
 #: imgres.scptpngcompressionnone
+msgctxt "imgres.scptpngcompressionnone"
 msgid "None"
 msgstr ""
 
 #: imgres.scptrandomseed
 msgctxt "imgres.scptrandomseed"
 msgid "Random"
+msgstr ""
+
+#: imgres.scptsharpendefault
+msgctxt "imgres.scptsharpendefault"
+msgid "Default"
+msgstr ""
+
+#: imgres.scptsharpenlight
+msgid "Light"
+msgstr ""
+
+#: imgres.scptsharpennone
+msgctxt "imgres.scptsharpennone"
+msgid "None"
+msgstr ""
+
+#: imgres.scptsharpenstrong
+msgid "Strong"
 msgstr ""
 
 #: imgres.scptsinglethread
@@ -264,6 +283,22 @@ msgstr ""
 #: imgres.serrinvalidrenamingparamfmt
 #, object-pascal-format
 msgid "Invalid renaming parameter '%s'"
+msgstr ""
+
+#: imgres.serrinvalidsharpennamefmt
+#, object-pascal-format
+msgid "Invalid sharpen value '%s' (Default, None, Light, Strong or any integer >= 0 expected)"
+msgstr ""
+
+#: imgres.serrinvalidsharpenstrfmt
+#, object-pascal-format
+msgid "Invalid sharpening amount '%s', 0..n expected"
+msgstr ""
+
+#: imgres.serrinvalidsharpenstringfmt
+#, object-pascal-format
+msgctxt "imgres.serrinvalidsharpenstringfmt"
+msgid "Invalid sharpening amount '%d', 0..n expected"
 msgstr ""
 
 #: imgres.serrinvalidsizesfmt
@@ -461,6 +496,10 @@ msgstr ""
 
 #: maindlg.serrinvalidmrkybrd
 msgid "Invalid watermark y border"
+msgstr ""
+
+#: maindlg.serrinvalidsharpen
+msgid "Invalid sharpen value"
 msgstr ""
 
 #: maindlg.serrinvalidshuffleseed
@@ -1112,6 +1151,10 @@ msgid ""
 "The higher the compression, the higher the compressing/decompressing time."
 msgstr ""
 
+#: tmaindialog.comboboxsharpen.hint
+msgid "Enter a sharpening amount - Default (100, good), None (0, off), Light (50), Strong (200)"
+msgstr ""
+
 #: tmaindialog.comboboxshuffleseed.hint
 msgid "Enter a number, lets say 1000, to create always the same mixed order or 0 for shuffeling always randomly."
 msgstr ""
@@ -1250,6 +1293,11 @@ msgstr ""
 msgid "Strategy"
 msgstr ""
 
+#: tmaindialog.groupboxsharpen.caption
+msgctxt "tmaindialog.groupboxsharpen.caption"
+msgid "Sharpen"
+msgstr ""
+
 #: tmaindialog.groupboxshuffle.caption
 msgid "Shuffle"
 msgstr ""
@@ -1328,6 +1376,10 @@ msgstr ""
 
 #: tmaindialog.label18.caption
 msgid "File Selection:"
+msgstr ""
+
+#: tmaindialog.label19.caption
+msgid "Amount (0..100..):"
 msgstr ""
 
 #: tmaindialog.label2.caption

@@ -14,10 +14,11 @@ const
   IMGRESCLIVER = '4.1';
   IMGRESCLICPR = 'imgres CLI '+IMGRESCLIVER+' for engine '+IMGRESVER+' (c) 2024 Jan Schirrmacher, www.atomek.de';
 
-  ERRINVALIDNUMBEROFPARAMS = 'Invalid number of parameters.';
+  ERRINVALIDNUMBEROFPARAMSFMT = 'Invalid number of parameters %d, %d expected.';
   ERRINVALIDSRCFILENAME = 'Invalid parameter srcfilename.';
   ERRINVALIDDSTFOLDER = 'Invalid parameter dstfolder.';
   ERRINVALIDSHAKESEED = 'Invalid shuffle seed value, 0..n expected.';
+  ERRINVALIDSHARPEN = 'Invalid sharpening amount value, 0..n expected.';
   ERRNOSRCFILES = 'No source files found.';
 
 type
@@ -80,6 +81,7 @@ var
   Mask :string;
   Shuffle :boolean;
   ShuffleSeed :integer;
+  Sharpen :integer;
   TagsSources :TTagsSources;
   TagKeys :TStringArray;
   Copyright :string;
@@ -236,6 +238,19 @@ begin
       ShuffleSeed := 0;
     end;
 
+    Param := GetOptionValue('z', 'zharpen');
+    if Param<>'' then begin
+      inc(OptionCount, 1);
+      Param := GetOptionValue('z', 'sharpen');
+      if Param<>'' then begin
+        inc(OptionCount, 1);
+        if not TryStrToInt(Param, Sharpen) or (Sharpen<0) then
+          raise Exception.Create(ERRINVALIDSHARPEN);
+      end else
+        Sharpen := 100;
+    end else
+      Sharpen := 0;
+
     // DryRun flag
     DryRun := HasOption('d', 'dryrun');
     if DryRun then
@@ -243,7 +258,7 @@ begin
 
     // Check number of parameters
     if ParamCount<>3+OptionCount then
-      raise Exception.Create(ERRINVALIDNUMBEROFPARAMS);
+      raise Exception.CreateFmt(ERRINVALIDNUMBEROFPARAMSFMT, [ParamCount, 3+OptionCount]);
 
     // Required Parameters: SourceFilename, Folder, Size.
     SourceFilename := ParamStr(1);
@@ -297,6 +312,7 @@ begin
     Processor.Sizenames := SizeNames;
     Processor.Shuffle := Shuffle;
     Processor.ShuffleSeed := ShuffleSeed;
+    Processor.Sharpen := Sharpen;
     Processor.TagsSources := TagsSources;
     Processor.TagKeys := TagKeys;
     Processor.Copyright := Copyright;
