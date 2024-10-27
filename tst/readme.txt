@@ -10,14 +10,14 @@ Recommended Tests
 3. JPEG PNG
    a. JPEG and PNG mixed
    b. Low and high Quality/Compression
-4. Interpolation
+4. Interpolation (no sharpening)
    a. Stretch up-scaling
    b. Lanczos R2 down-scaling
    d. Mitchell up-scaling
 5. Quality
    a. JPEG Quality Low 1%
    b. JPEG Quality Medium 50%
-   c. High Quality 100%
+   c. JPEG High Quality 100%
    d. PNG Low Compression
    e. PNG Maximum Compression
 6. Watermark

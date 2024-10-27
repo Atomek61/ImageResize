@@ -3,23 +3,19 @@
   <ProjectSession>
     <PathDelim Value="\"/>
     <Version Value="12"/>
-    <BuildModes Active="Debug"/>
+    <BuildModes Active="Release"/>
     <Units Count="105">
       <Unit0>
         <Filename Value="imageresizecli.pas"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="5"/>
-        <TopLine Value="74"/>
-        <CursorPos X="19" Y="84"/>
+        <EditorIndex Value="6"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="..\src\imgres.pas"/>
         <IsPartOfProject Value="True"/>
-        <TopLine Value="425"/>
-        <CursorPos X="3" Y="443"/>
+        <TopLine Value="226"/>
         <ExtraEditorCount Value="1"/>
         <ExtraEditor1>
           <EditorIndex Value="-1"/>
@@ -38,7 +34,7 @@
       <Unit2>
         <Filename Value="..\src\utils.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="9"/>
         <CursorPos Y="6"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
@@ -72,10 +68,12 @@
         <Filename Value="..\src\tags.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Tags"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="300"/>
-        <CursorPos Y="331"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="399"/>
+        <CursorPos Y="417"/>
         <UsageCount Value="111"/>
+        <Loaded Value="True"/>
       </Unit6>
       <Unit7>
         <Filename Value="..\src\stringarrays.pas"/>
@@ -576,7 +574,7 @@
       <Unit75>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\packages\fcl-base\src\custapp.pp"/>
         <UnitName Value="CustApp"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="8"/>
         <TopLine Value="407"/>
         <CursorPos X="3" Y="416"/>
         <UsageCount Value="20"/>
@@ -711,7 +709,7 @@
       <Unit94>
         <Filename Value="C:\lazarus\components\lazutils\fileutil.pas"/>
         <UnitName Value="FileUtil"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="7"/>
         <UsageCount Value="32"/>
         <Loaded Value="True"/>
       </Unit94>
@@ -752,9 +750,7 @@
       </Unit99>
       <Unit100>
         <Filename Value="clihelp.txt"/>
-        <EditorIndex Value="9"/>
-        <TopLine Value="18"/>
-        <CursorPos Y="49"/>
+        <EditorIndex Value="10"/>
         <UsageCount Value="15"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Text"/>
@@ -762,7 +758,7 @@
       <Unit101>
         <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgrabitmap.pas"/>
         <UnitName Value="BGRABitmap"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="2"/>
         <TopLine Value="59"/>
         <CursorPos X="9" Y="77"/>
         <UsageCount Value="11"/>
@@ -771,7 +767,7 @@
       <Unit102>
         <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgradefaultbitmap.pas"/>
         <UnitName Value="BGRADefaultBitmap"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="5"/>
         <TopLine Value="609"/>
         <CursorPos X="14" Y="624"/>
         <UsageCount Value="11"/>
@@ -780,7 +776,7 @@
       <Unit103>
         <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgrawinbitmap.pas"/>
         <UnitName Value="BGRAWinBitmap"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="3"/>
         <TopLine Value="6"/>
         <CursorPos X="34" Y="52"/>
         <UsageCount Value="10"/>
@@ -789,129 +785,132 @@
       <Unit104>
         <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgralclbitmap.pas"/>
         <UnitName Value="BGRALCLBitmap"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="4"/>
         <CursorPos X="3" Y="15"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
       </Unit104>
     </Units>
-    <JumpHistory Count="29" HistoryIndex="28">
+    <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="219" TopLine="191"/>
+        <Caret Line="245" TopLine="220"/>
       </Position1>
       <Position2>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="223" TopLine="195"/>
+        <Caret Line="246" TopLine="220"/>
       </Position2>
       <Position3>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="226" TopLine="198"/>
+        <Caret Line="247" TopLine="220"/>
       </Position3>
       <Position4>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="227" TopLine="199"/>
+        <Caret Line="255" TopLine="238"/>
       </Position4>
       <Position5>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="237" TopLine="220"/>
+        <Caret Line="254" TopLine="224"/>
       </Position5>
       <Position6>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="238" TopLine="220"/>
+        <Caret Line="104" TopLine="87"/>
       </Position6>
       <Position7>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="241" TopLine="220"/>
+        <Caret Line="255" TopLine="225"/>
       </Position7>
       <Position8>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="242" TopLine="220"/>
+        <Caret Line="104" TopLine="87"/>
       </Position8>
       <Position9>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="243" TopLine="220"/>
+        <Caret Line="304" Column="25" TopLine="284"/>
       </Position9>
       <Position10>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="244" TopLine="220"/>
+        <Caret Line="33" Column="60" TopLine="16"/>
       </Position10>
       <Position11>
-        <Filename Value="imageresizecli.pas"/>
-        <Caret Line="245" TopLine="220"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="560" TopLine="548"/>
       </Position11>
       <Position12>
-        <Filename Value="imageresizecli.pas"/>
-        <Caret Line="246" TopLine="220"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="561" Column="24" TopLine="548"/>
       </Position12>
       <Position13>
-        <Filename Value="imageresizecli.pas"/>
-        <Caret Line="247" TopLine="220"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="560" TopLine="548"/>
       </Position13>
       <Position14>
-        <Filename Value="imageresizecli.pas"/>
-        <Caret Line="255" TopLine="238"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="557" Column="15" TopLine="548"/>
       </Position14>
       <Position15>
-        <Filename Value="imageresizecli.pas"/>
-        <Caret Line="254" TopLine="224"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="443" Column="3" TopLine="425"/>
       </Position15>
       <Position16>
-        <Filename Value="imageresizecli.pas"/>
-        <Caret Line="104" TopLine="87"/>
+        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgrabitmap.pas"/>
+        <Caret Line="77" Column="9" TopLine="59"/>
       </Position16>
       <Position17>
-        <Filename Value="imageresizecli.pas"/>
-        <Caret Line="255" TopLine="225"/>
+        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgrawinbitmap.pas"/>
+        <Caret Line="52" Column="34" TopLine="6"/>
       </Position17>
       <Position18>
         <Filename Value="imageresizecli.pas"/>
-        <Caret Line="104" TopLine="87"/>
+        <Caret Line="252" TopLine="233"/>
       </Position18>
       <Position19>
-        <Filename Value="imageresizecli.pas"/>
-        <Caret Line="304" Column="25" TopLine="284"/>
+        <Filename Value="clihelp.txt"/>
+        <Caret Line="49" TopLine="18"/>
       </Position19>
       <Position20>
-        <Filename Value="imageresizecli.pas"/>
-        <Caret Line="33" Column="60" TopLine="16"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="386" Column="61" TopLine="377"/>
       </Position20>
       <Position21>
         <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="560" TopLine="548"/>
       </Position21>
       <Position22>
         <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="561" Column="24" TopLine="548"/>
+        <Caret Line="814" Column="11" TopLine="785"/>
       </Position22>
       <Position23>
         <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="560" TopLine="548"/>
+        <Caret Line="851" Column="13" TopLine="823"/>
       </Position23>
       <Position24>
         <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="557" Column="15" TopLine="548"/>
+        <Caret Line="856" Column="13" TopLine="828"/>
       </Position24>
       <Position25>
         <Filename Value="..\src\imgres.pas"/>
-        <Caret Line="443" Column="3" TopLine="425"/>
+        <Caret Line="870" Column="13" TopLine="842"/>
       </Position25>
       <Position26>
-        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgrabitmap.pas"/>
-        <Caret Line="77" Column="9" TopLine="59"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="846" Column="10" TopLine="843"/>
       </Position26>
       <Position27>
-        <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgrawinbitmap.pas"/>
-        <Caret Line="52" Column="34" TopLine="6"/>
+        <Filename Value="imageresizecli.pas"/>
+        <Caret Line="78" Column="48" TopLine="74"/>
       </Position27>
       <Position28>
-        <Filename Value="imageresizecli.pas"/>
-        <Caret Line="252" TopLine="233"/>
+        <Filename Value="clihelp.txt"/>
+        <Caret Line="25" Column="60" TopLine="18"/>
       </Position28>
       <Position29>
-        <Filename Value="clihelp.txt"/>
-        <Caret Line="49" TopLine="18"/>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret TopLine="226"/>
       </Position29>
+      <Position30>
+        <Filename Value="..\src\tags.pas"/>
+        <Caret Line="396" TopLine="378"/>
+      </Position30>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>

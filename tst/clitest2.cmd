@@ -1,1 +1,1 @@
-..\bin\imgres @srcA\.imglist .\tstcli2_%%SIZE%% 640,800 -j 10 -p max
+..\bin\imgres @srcA\.imglist .\tstcli2_{SIZE} 640,800 -j 10 -p max

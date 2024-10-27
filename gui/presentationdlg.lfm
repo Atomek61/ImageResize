@@ -12,7 +12,7 @@ object PresentationDialog: TPresentationDialog
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   ShowHint = True
-  LCLVersion = '3.0.0.3'
+  LCLVersion = '3.6.0.0'
   object MemoMessages: TRichMemo
     Left = 4
     Height = 106
@@ -292,6 +292,7 @@ object PresentationDialog: TPresentationDialog
           OnImageRequest = LabelLongDescriptionImageRequest
           Align = alClient
           TabOrder = 0
+          OnKeyUp = LabelLongDescriptionKeyUp
           CSS.Strings = (
             'article {padding: 0.5em}'
             'img{margin: 0.5em}'

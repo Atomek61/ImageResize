@@ -393,7 +393,6 @@ var
   Tags :TTags;
   s :TStringList;
   Line :string;
-  SizePrefix :string;
 
   function GetField(const TagKey :string) :string;
   begin
@@ -414,9 +413,7 @@ begin
       Line := Line + ', '+RemoveAnySizePrefix(Keys[i]);
     s.Add(Line);
 
-    SizePrefix := IntToStr(Size)+'.';
     // Create a line for each Filename
-    //SizeFilenameKey := SizePrefix+FILENAME_KEY;
     for i:=0 to FFilenames.Count-1 do if TryGetValue(FFilenames[i], Tags) then begin
       Line := Tags[Keys[0]];
       for j:=1 to High(Keys) do

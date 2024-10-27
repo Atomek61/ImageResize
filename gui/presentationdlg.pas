@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Buttons, StdCtrls,
   ExtCtrls, ComCtrls, Presentations, LCLIntf, LCLType, RichMemo, HtmlView,
-  Logging, Types, GetText, FileUtil, ImgRes,
+  Logging, Types, GetText, FileUtil, ImgRes, Clipbrd,
   LoggingRichMemo, Settings, AppSettings, HtmlLabel, HtmlGlobals;
 
 type
@@ -50,6 +50,8 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure LabelLongDescriptionImageRequest(Sender: TObject;
       const SRC: ThtString; var Stream: TStream);
+    procedure LabelLongDescriptionKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     FManagers :TManagers;
     FManagerIndex :integer;
@@ -113,6 +115,13 @@ begin
   finally
     FileStream.Free;
   end;
+end;
+
+procedure TPresentationDialog.LabelLongDescriptionKeyUp(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+  if (Key=67) and (Shift = [ssCtrl]) then
+    Clipboard.AsText := string(labelLongDescription.SelText);
 end;
 
 procedure TPresentationDialog.ButtonExecuteClick(Sender: TObject);

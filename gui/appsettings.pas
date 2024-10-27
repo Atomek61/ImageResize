@@ -114,6 +114,7 @@ type
     procedure Changed(Change :TChange; Index :integer);
     function GetCount: integer;
     function GetEnabled(Index : integer): boolean;
+    function GetEnabledCount: integer;
     function GetItem(Index : integer): TSizeInfo;
     procedure SetEnabled(Index : integer; AValue: boolean);
     function ProcessSizeName(const SizeName :string; Size :integer) :string;
@@ -134,6 +135,7 @@ type
     property OnChanged :TChangedEvent read FOnChanged write FOnChanged;
     property Items[Index :integer] :TSizeInfo read GetItem; default;
     property Count :integer read GetCount;
+    property EnabledCount :integer read GetEnabledCount;
     property Enabled[Index :integer] :boolean read GetEnabled write SetEnabled;
   end;
 
@@ -213,6 +215,15 @@ end;
 function TSizeInfos.GetEnabled(Index : integer): boolean;
 begin
   result := FItems[Index].Enabled;
+end;
+
+function TSizeInfos.GetEnabledCount: integer;
+var
+  i :integer;
+begin
+  result := 0;
+  for i:=0 to FItems.Count-1 do with FItems[i] do
+    if Enabled then inc(result);
 end;
 
 function TSizeInfos.GetItem(Index : integer): TSizeInfo;

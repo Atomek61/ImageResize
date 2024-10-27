@@ -307,7 +307,7 @@ msgid "Invalid sharpening amount '%s', 0..n expected"
 msgstr "Ungültiger Schärfungsbetrag '%s', 0..n erwartet"
 
 #: imgres.serrinvalidsharpenstringfmt
-#, object-pascal-format
+#, object-pascal-format, fuzzy, badformat
 msgctxt "imgres.serrinvalidsharpenstringfmt"
 msgid "Invalid sharpening amount '%d', 0..n expected"
 msgstr "Ungültiger Schärfungsbetrag '%1d', 0..n erwartet"
@@ -563,13 +563,15 @@ msgid "Warning: Unexpected settings format %s (%s expected)"
 msgstr "Warnung: Unerwartetes Einstellungen-Format %s (%s erwartet)"
 
 #: maindlg.smsgcurrentdirfmt
-#, object-pascal-format
-msgid "Current directory: %s"
+#, object-pascal-format, fuzzy
+#| msgid "Current directory: %s"
+msgid "Current directory is \"%s\""
 msgstr "Aktuelles Verzeichnis: %s"
 
 #: maindlg.smsgprojectdescriptionfmt
-#, object-pascal-format
-msgid "Description: %s"
+#, object-pascal-format, fuzzy
+#| msgid "Description: %s"
+msgid "Description: \"%s\""
 msgstr "Beschreibung: %s"
 
 #: maindlg.smsgprojectloadedfromfmt
@@ -1029,6 +1031,7 @@ msgid "Add a size or replace an existing one"
 msgstr "Füge eine Größe zur Liste zu oder ersetze sie, wenn sie existiert"
 
 #: tmaindialog.buttonbrowsesrcfiles.hint
+msgctxt "tmaindialog.buttonbrowsesrcfiles.hint"
 msgid "Browse for one or more images"
 msgstr "Wählen Sie ein oder mehrere Bilder aus"
 
@@ -1475,6 +1478,10 @@ msgstr "Klicken oder ziehen Sie das Wasserzeichen"
 #: tmaindialog.label21.caption
 msgid "Algorithm:"
 msgstr "Algorithmus:"
+
+#: tmaindialog.label22.caption
+msgid "Current directory:"
+msgstr ""
 
 #: tmaindialog.label3.caption
 msgid "Sizes:"
@@ -1961,3 +1968,4 @@ msgstr "Tagging"
 msgctxt "webutils.serrinvalidhtmlcolorfmt"
 msgid "Invalid web color '%s'."
 msgstr "Ungültige Web-Farbe '%s'."
+

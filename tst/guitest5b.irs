@@ -1,18 +1,20 @@
 [Common]
 Type=IRS
-Version=400
+Version=420
+CurrentDir=D:\Mf\dev\Lazarus\ImageResize\tst
 
 [Project]
-Description=Up- and Down-sampling to two sizes
-Source=Folder
-SourceFolder=srcA
+Description=
+Source=Filenames
+SourceFolder=
 SourceMasks=*.jpg;*.png
 SourceFilenames=
-SizeNames=1,480,|1,1280,
-TargetFolder=tst2\img{SIZE}
+SizeNames=1,1600,_SCREEN
+TargetFolder=tst5b
 Interpolation=Default
-JPEGQuality=Default
+JPEGQuality=50
 PNGCompression=Default
+Sharpen=Default
 MrkEnabled=0
 MrkFilename=
 MrkSize=20

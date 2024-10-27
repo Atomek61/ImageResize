@@ -149,10 +149,7 @@
 
       <h1 id="renaming"><img class="icon-right" src="../img/rename.svg"/>Rename and shuffle</h1>
       <p>
-        Renaming the target files becomes interesting if you don't have any size
-        a separate folder, but rather all files in a common folder.
-        Then the target files must be renamed, preferably by changing the target size
-        included for differentiation.
+        There are some reasons, why you must rename the created images. One is ff you want to create images of multiple sizes into one directory.
       </p>
       <p>
         Click <i>Apply</i> and choose one of the possible strategies:
@@ -194,7 +191,9 @@
       <p><span class="plh">img%INDEX:1.3%_%SIZE%.%FILEEXT%</span></p>
       <p>results e.g. <span class="plh">img012_1920.jpg</span></p>
       <p><span class="plh">%FILENAME%_%SIZE%.%FILEEXT%</span></p>
-      <p>results.e.g. <span class="plh">DSC3240_1920.jpg</span></p>
+      <p>results e.g. <span class="plh">DSC3240_1920.jpg</span></p>
+      <p><span class="plh">%FILENAME%_%SIZENAME%.%FILEEXT%</span></p>
+      <p>results e.g. <span class="plh">DSC3240_SCREEN.jpg</span></p>
     
       <h2 id="placeholders">Available placeholders</h2>
       <table class="partab">
@@ -215,14 +214,17 @@
             The 0-based index (sequential number) of the file in the list.<br/><br/>
             <i>N</i> is an offset. Lists usually start
             with the number 1, but by specifying an offset you can existing
-            Expand lists. D is the number of digits of the resulting number, which
-            if necessary, receives leading zeros. This creates the correct lexical order
-            the file name allows.<br/><br/>
+            Expand lists.<br/><br/>
+            D is the number of digits of the resulting number, which if required, is padded with leading zeros. This enables the correct lexical order. AUTO means that the number depends on the number of images to be created<br/><br/>
           </td>
         </tr>
         <tr>
           <td><span class="plh">%SIZE%</span></td>
           <td>The target size in pixels of the current file.</td>
+        </tr>
+        <tr>
+          <td><span class="plh">%SIZENAME%</span></td>
+          <td>The associated name of the size.</td>
         </tr>
         <tr>
           <td><span class="plh">%INTERPOLATION%</span></td>

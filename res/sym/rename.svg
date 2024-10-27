@@ -7,8 +7,11 @@
    viewBox="0 0 128 128.00001"
    version="1.1"
    id="svg138"
-   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
    sodipodi:docname="rename.svg"
+   inkscape:export-filename="rename.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -28,19 +31,23 @@
      inkscape:lockguides="true"
      inkscape:zoom="5.17549"
      inkscape:cx="58.545181"
-     inkscape:cy="87.624554"
-     inkscape:window-width="1548"
-     inkscape:window-height="1230"
-     inkscape:window-x="52"
-     inkscape:window-y="52"
-     inkscape:window-maximized="0"
+     inkscape:cy="87.624553"
+     inkscape:window-width="2560"
+     inkscape:window-height="1417"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
      inkscape:current-layer="layer3">
     <inkscape:grid
        type="xygrid"
        id="grid259"
        empspacing="4"
        originx="0"
-       originy="0" />
+       originy="0"
+       spacingy="1"
+       spacingx="1"
+       units="px"
+       visible="true" />
     <inkscape:grid
        type="xygrid"
        id="grid261"
@@ -49,7 +56,9 @@
        color="#e5001f"
        opacity="0.14901961"
        originx="0"
-       originy="0" />
+       originy="0"
+       units="px"
+       visible="true" />
     <sodipodi:guide
        position="-68,64.000005"
        orientation="0,-1"
@@ -98,7 +107,7 @@
     <path
        id="rect10171"
        style="fill:#888a85;fill-opacity:1;stroke-linecap:round;stroke-linejoin:round"
-       d="M 8 64 L 8 72 L 16 72 L 16 112 L 8 112 L 8 120 L 32 120 L 32 112 L 24 112 L 24 72 L 32 72 L 32 64 L 8 64 z " />
+       d="M 8 64 L 8 72 L 16 72 L 16 64 L 8 64 z M 16 72 L 16 112 L 24 112 L 24 72 L 16 72 z M 24 72 L 32 72 L 32 64 L 24 64 L 24 72 z M 24 112 L 24 120 L 32 120 L 32 112 L 24 112 z M 16 112 L 8 112 L 8 120 L 16 120 L 16 112 z " />
   </g>
   <g
      inkscape:label="Ebene 1"

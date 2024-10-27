@@ -551,12 +551,12 @@ msgstr ""
 
 #: maindlg.smsgcurrentdirfmt
 #, object-pascal-format
-msgid "Current directory: %s"
+msgid "Current directory is \"%s\""
 msgstr ""
 
 #: maindlg.smsgprojectdescriptionfmt
 #, object-pascal-format
-msgid "Description: %s"
+msgid "Description: \"%s\""
 msgstr ""
 
 #: maindlg.smsgprojectloadedfromfmt
@@ -1003,6 +1003,7 @@ msgid "Add a size or replace an existing one"
 msgstr ""
 
 #: tmaindialog.buttonbrowsesrcfiles.hint
+msgctxt "tmaindialog.buttonbrowsesrcfiles.hint"
 msgid "Browse for one or more images"
 msgstr ""
 
@@ -1393,6 +1394,10 @@ msgstr ""
 
 #: tmaindialog.label21.caption
 msgid "Algorithm:"
+msgstr ""
+
+#: tmaindialog.label22.caption
+msgid "Current directory:"
 msgstr ""
 
 #: tmaindialog.label3.caption

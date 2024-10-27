@@ -176,10 +176,8 @@
       
       <h1 id="renaming"><img class="icon-right" src="../img/rename.svg"/> Umbenennen und Mischen</h1>
       <p>
-        Umbenennen der Zieldateien wird interessant, wenn Sie nicht für jede Größe
-        einen eigenen Ordner, sondern alle Dateien in einem gemeinsamen Ordner erzeugen möchten.
-        Dann müssen die Zieldateien umbenannt werden, am besten indem sie die Zielgröße
-        zur Unterscheidung enthalten.
+        Es gibt verschiedene Gründe die erzeugten Dateien umzubenennen. Z.B. wenn Sie nicht für jede Größe
+        einen eigenen Ordner erzeugen möchten, sondern alle Dateien in einem gemeinsamen Ordner.
       </p>
 
       <p>
@@ -223,7 +221,9 @@
       <p><span class="plh">img%INDEX:1,3%_%SIZE%.%FILEEXT%</span></p>
       <p>ergibt z.B. <span class="plh">img012_1920.jpg</span></p>
       <p><span class="plh">%FILENAME%_%SIZE%.%FILEEXT%</span></p>
-      <p>ergibt.z.B. <span class="plh">DSC3240_1920.jpg</span></p>
+      <p>ergibt z.B. <span class="plh">DSC3240_1920.jpg</span></p>
+      <p><span class="plh">%FILENAME%_%SIZENAME%.%FILEEXT%</span></p>
+      <p>ergibt z.B. <span class="plh">DSC3240_SCREEN.jpg</span></p>
       
       <h2 id="placeholders">Verfügbare Platzhalter</h2>
       <table class="partab">
@@ -244,14 +244,17 @@
             Der 0-basierte Index (laufende Nummer) der Datei in der Liste.<br/><br/>
             <i>N</i> ist ein Offset (Versatz). Normalerweise beginnen Listen
             mit der Nummer 1, aber durch Angabe eines Versatzes können Sie vorhandene
-            Listen erweitern. D ist die Zahl der Stellen der resultierenden Zahl, die
-            ggf. führende Nullen erhält. Dadurch wird die korrekte lexikalische Ordnung
-            der Dateinamen ermöglicht.<br/><br/>
+            Listen erweitern.<br/><br/>
+            D ist die Zahl der Stellen der resultierenden Zahl, die ggf. führende Nullen erhält. Dadurch wird die korrekte lexikalische Ordnung der Dateinamen ermöglicht. AUTO an dieser Steller bewirkt, dass die Zahl der benötigten Stellen automatisch anhand der Zahl der Bilder ermittelt wird.<br/><br/>
           </td>
         </tr>
         <tr>
           <td><span class="plh">%SIZE%</span></td>
           <td>Die Zielgröße in Pixeln der aktuellen Datei.</td>
+        </tr>
+        <tr>
+          <td><span class="plh">%SIZENAME%</span></td>
+          <td>Der zugeordnete Name der Zielgröße.</td>
         </tr>
         <tr>
           <td><span class="plh">%INTERPOLATION%</span></td>

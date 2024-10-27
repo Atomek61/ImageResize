@@ -29,7 +29,7 @@ const
 
   GUIVER_APP            = 'ImageResize';
   GUIVER_VERSION        = '4.2';
-  GUIVER_DATE           = '2024-03-17';
+  GUIVER_DATE           = '2024-10-27';
 
   GUIVER                :TVersionManifest = (App: GUIVER_APP; Version: GUIVER_VERSION; Date: GUIVER_DATE; Hint: '');
 
@@ -44,7 +44,8 @@ const
   PRJVERSION200         = '200';
   PRJVERSION210         = '210';
   PRJVERSION300         = '300';
-  PRJVERSION            = '400';
+  PRJVERSION400         = '400';
+  PRJVERSION            = '420';
 
   SETTYPE               = 'IST';
   SETVERSION            = '100';
@@ -124,7 +125,6 @@ type
     ActionExecute: TAction;
     BitBtn1: TBitBtn;
     ButtonAddSize: TBitBtn;
-    ButtonBrowseSrcFiles1: TBitBtn;
     ButtonReplaceSize: TBitBtn;
     ButtonClearSizes: TBitBtn;
     ComboBoxSharpen: TComboBox;
@@ -136,6 +136,8 @@ type
     ImageStep3: TImage;
     Label19: TLabel;
     Label2: TLabel;
+    Label22: TLabel;
+    LabelCurrentDir: TLabel;
     Label3: TLabel;
     Label7: TLabel;
     Label8: TLabel;
@@ -337,6 +339,7 @@ type
     procedure ProjectChanged(Sender :TObject);
   private
     // Project settings. Most of the settings are stored in the MainDialog controls.
+    FProjectDir :string; // Only valid after loading from project file
     FProjectFilename :string;
     FProjectDescription :string; // From project file
     FPresentationSettings :TPresentationSettings;
@@ -357,7 +360,7 @@ type
     FRequiredSteps :array[1..3] of boolean;
     FProcessingSettings :TProcessingSettings;
     FDialogSettings :TDialogSettings;
-    FWorkingDirectory :string;
+//    FProjectDirectory :string;
     procedure ChangeCurrentDir(const Path :string);
     function GetAppDataFilename(const Filetitle :string; CanCreate :boolean) :string;
     procedure SetDirty(AValue: boolean);
@@ -405,7 +408,7 @@ resourcestring
   SCptProcessor                 = 'Processor';
   SMsgQuerySave                 = 'The project has been modified.'+#10+#10+'Do you want to save the changes?';
   SCptQuerySave                 = 'Project unsaved';
-  SMsgProjectDescriptionFmt     = 'Description: %s';
+  SMsgProjectDescriptionFmt     = 'Description: "%s"';
   SCptUnnamed                   = '<unnamed>';
   SErrInvalidShuffleSeed        = 'Invalid Shuffle Seed';
   SCptTitlePrefix               = 'ImageResize - ';
@@ -436,7 +439,7 @@ resourcestring
   SErrEnterPlaceholder          = 'Enter placeholder {SIZE} or {SIZENAME} to either the target folder or the file template';
   SErrAtFmt                     = 'Error at %.0f%% - %s';
   SErrCancelledAtFmt            = 'Cancelled at %.0f%%';
-  SMsgCurrentDirFmt             = 'Current directory: %s';
+  SMsgCurrentDirFmt             = 'Current directory is "%s"';
 
 const
   TRSIZE:TTextStyle=(Alignment:taRightJustify;Layout:tlCenter;SingleLine:true;Clipping:true;ExpandTabs:false;
@@ -649,7 +652,6 @@ begin
 
   ComboBoxShuffleSeed.Items[0] := SCptRandomSeed;
 
-  FWorkingDirectory := GetCurrentDir;
 end;
 
 procedure TMainDialog.FormShow(Sender: TObject);
@@ -658,20 +660,23 @@ var
   LocHelpDir :string;
 begin
 
+  // Evaluate commandline parameters
+  FAutoExit := IsSwitch('X', 'AUTOEXIT');
+  Filename := GetNonSwitch;
+  if IsSwitch('A', 'AUTOSTART') then
+    PostMessage(Handle, LM_RUN, 0, 0);
+
   LoadSettings;
   ActionNew.Execute;
 
-  if FDialogSettings.AutoSave.Value then
+  if Filename<>'' then begin
+    LoadProjectFromFile(Filename);
+  end else if FDialogSettings.AutoSave.Value then begin
     LoadLastProject;
+  end else
+    LabelCurrentDir.Caption := GetCurrentDir;
 
   RequiredStepsUpdate;
-
-  FAutoExit := IsSwitch('X', 'AUTOEXIT');
-  Filename := GetNonSwitch;
-  if Filename<>'' then
-    LoadProjectFromFile(Filename);
-  if IsSwitch('A', 'AUTOSTART') then
-    PostMessage(Handle, LM_RUN, 0, 0);
 
   // If no local help files, then use online help
   LocHelpDir := IncludeTrailingPathDelimiter(ExtractFilePath(Application.ExeName))+SLocDirHelp;
@@ -798,6 +803,7 @@ begin
 
     RequiredStepsUpdate;
     SetTitle(SCptUnnamed);
+//    FProjectDirectory := '';
     FProjectFilename := '';
     FIsSave := false;
     Dirty := false;
@@ -821,7 +827,6 @@ var
   IniVer :string;
   IniTyp :string;
   AHeight :integer;
-  Path :string;
 begin
   Filename := GetAppDataFilename(SETTINGS_FILENAME, false);
   if not FileExists(Filename) then Exit(false);
@@ -847,9 +852,9 @@ begin
     AHeight := Ini.ReadInteger(MAINDIALOG_SECTION, 'PanelControls.Height', PanelControls.Height);
     if AHeight+PanelControls.Top + 16 < ClientHeight then
       PanelControls.Height := AHeight;
-    Path := Ini.ReadString(MAINDIALOG_SECTION, 'CurrentDirectory', GetCurrentDir);
-    if DirectoryExists(Path) then
-      ChangeCurrentDir(Path);
+    //Path := Ini.ReadString(MAINDIALOG_SECTION, 'CurrentDirectory', GetCurrentDir);
+    //if DirectoryExists(Path) then
+    //  ChangeCurrentDir(Path);
     FDialogSettings.Load(Ini, MAINDIALOG_SECTION, lmStrict);
 
     with PresentationDialog do begin
@@ -876,22 +881,22 @@ var
   Str :string;
 begin
   with Ini do begin
-    IniTyp := Ini.ReadString('Common', 'Type', 'unknown');
+    IniTyp := Ini.ReadString(COMMON_SECTION, 'Type', 'unknown');
     result := IniTyp=PRJTYPE;
     if not result then begin
        Log(SLogCantLoadProject, llWarning);
        Exit;
     end;
-    IniVer := Ini.ReadString('Common', 'Version', '000');
-    result := (IniVer=PRJVERSION) or (IniVer=PRJVERSION200) or (IniVer=PRJVERSION210);
+    IniVer := Ini.ReadString(COMMON_SECTION, 'Version', '000');
+    result := (IniVer=PRJVERSION) or (IniVer>=PRJVERSION300);
     if not result then begin
       Log(Format(SLogWarningProjectVersionFmt, [IniVer, PRJVERSION]), llWarning);
       Exit;
     end;
 
     InitProject;
-
-    FProjectDescription                   := ReadLang(PROJECT_SECTION,  'Description', '', TLanguage.Code);
+    FProjectDir := Ini.ReadString(COMMON_SECTION, 'CurrentDir', GetCurrentDir);
+    FProjectDescription := ReadLang(PROJECT_SECTION,  'Description', '', TLanguage.Code);
     if SameText(ReadString(PROJECT_SECTION, 'Source', 'Filenames'), 'Filenames') then
       ActionSrcFilenames.Execute
     else
@@ -988,6 +993,7 @@ begin
   with Ini do begin
     WriteString(COMMON_SECTION, 'Type', PRJTYPE);
     WriteString(COMMON_SECTION, 'Version', PRJVERSION);
+    WriteString(COMMON_SECTION, 'CurrentDir', GetCurrentDir);
     EraseSection(PROJECT_SECTION);
     WriteString(PROJECT_SECTION,  'Description',    FProjectDescription);
     WriteString(PROJECT_SECTION,  'Source',         SRCMODES[ActionSrcFilenames.Checked]);
@@ -1042,6 +1048,7 @@ begin
   Ini := TIniFile.Create(Filename);
   try
     result := LoadProjectFromIni(Ini);
+    ChangeCurrentDir(FProjectDir);
   finally
     Ini.Free;
   end;
@@ -1514,7 +1521,7 @@ end;
 procedure TMainDialog.ChangeCurrentDir(const Path: string);
 begin
   SetCurrentDir(Path);
-  Log(Format(SMsgCurrentDirFmt, [Path]), llHint);
+  LabelCurrentDir.Caption := Path;
 end;
 
 function TMainDialog.GetAppDataFilename(const Filetitle :string; CanCreate :boolean): string;
@@ -2034,7 +2041,7 @@ begin
         // stop, if %SIZE% placeholder is not contained either in
         // TargetFolder nor in FileTemplate
         TargetFolder := EditTargetFolder.Text;
-        if (FSizeInfos.Count>1) and (Pos('{SIZE}', TargetFolder)+Pos('{SIZENAME}', TargetFolder)=0)
+        if (FSizeInfos.EnabledCount>1) and (Pos('{SIZE}', TargetFolder)+Pos('{SIZENAME}', TargetFolder)=0)
          and not (Processor.RenEnabled and (Pos('{SIZE}', Processor.TargetFiletemplate)+Pos('{SIZENAME}', Processor.TargetFiletemplate)>0)) then
           raise Exception.Create(SErrEnterPlaceholder);
 

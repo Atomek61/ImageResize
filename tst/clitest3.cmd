@@ -1,1 +1,1 @@
-..\bin\imgres @srcA\.imglist .\tstcli3_%%SIZE%% 960,1200 -w "watermarks\wwwatomekde.png?40,90,10?50"
+..\bin\imgres @srcA\.imglist .\tstcli3_{SIZE} 960,1200 -w "watermarks\wwwatomekde.png?40,90,10?50"

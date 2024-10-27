@@ -157,6 +157,36 @@ type
       Opacity :single;
     end;
 
+    { TParams }
+{
+    TParams = class
+    private
+      FSourceFilenames  :TStrings;
+      FTargetFolder     :string;
+      FSizes            :TSizes;
+      FSizeNames        :TSizeNames;
+      FJPEGQuality      :integer;
+      FPNGCompression   :integer;
+      FResampleMode     :TResampleMode;
+      FResampleFilter   :TResampleFilter;
+      FWaterMarkParams  :TWatermarkParams;
+      FThreadCount      :integer;
+      FStopOnError      :boolean;
+      FRen              :TRenameParams;
+      FShuffle          :boolean;
+      FShuffleSeed      :integer;
+      FSharpen          :integer; // 0 = Off
+      FTagsSources      :TTagsSources;
+      FTagKeys          :TStringArray; // 'Copyright',
+      FCopyright        :string;
+      FTagsReports      :TTagsReports;
+      FDryRun           :boolean;
+      function GetParam(const Name : string): string;
+      procedure SetParam(const Name : string; AValue: string);
+    public
+      property Param[const Name :string] :string read GetParam write SetParam;
+    end;
+}
   private type
 
     // Needed while processing
@@ -616,7 +646,7 @@ begin
         if Processor.FRen.Enabled then begin
           // Specialize the prepared template
 
-          // {FILENAME}
+          // {FILETITLE}
           TargetFiletitle := ExtractFilename(SourceFilename);
           if Length(TargetFileExt)>0 then
             TargetFiletitle := Copy(TargetFiletitle, 1, Length(TargetFiletitle)-Length(TargetFileExt)-1);
@@ -1127,14 +1157,14 @@ begin
   Params.IndexStart := 1;
   ParamCount := 0;
   if Length(Str)>0 then begin
-    // %FILENAME%, %FILEEXT%, %INDEX:N,W%, %SIZE%, %INTERPOLATION%, %SIZENAME%
+    // %FILETITLE%, %FILEEXT%, %INDEX:N,W%, %SIZE%, %INTERPOLATION%, %SIZENAME%
     // %0:s        %1:s       %2:s         %3:s    %4:s             %5:s
     // Default: img%2:s.%1:s
     Params.FmtStr := Str;
     if IsPlaceholder('FILEEXT', i) then
       Params.FmtStr := ReplaceStr(Params.FmtStr, '{FILEEXT}', '%1:s');
-    if IsPlaceholder('FILENAME', i) then
-      Params.FmtStr := ReplaceStr(Params.FmtStr, '{FILENAME}', '%0:s');
+    if IsPlaceholder('FILETITLE', i) then
+      Params.FmtStr := ReplaceStr(Params.FmtStr, '{FILETITLE}', '%0:s');
     if IsPlaceholder('INDEX', i) then begin
       // Parse Parameters
       if not TryParsePlaceholderParams(Placeholders[i], ':', Items) then
@@ -1170,7 +1200,7 @@ class function TProcessor.RenameParamsToStr(const Params: TRenameParams): string
 begin
   if Params.Enabled then begin
     result := Format(Params.FmtStr, [
-      '{FILENAME}',       // 0
+      '{FILETITLE}',       // 0
       '{FILEEXT}',        // 1
       '{'+Format('INDEX:%d,%d', [Params.IndexStart, Params.IndexDigits])+'}', // 2
       '{SIZE}',           // 3
@@ -1417,6 +1447,18 @@ begin
   result := FSuccess
 end;
 
+{ TProcessor.TParams }
+//
+//function TProcessor.TParams.GetParam(const Name : string): string;
+//begin
+//
+//end;
+//
+//procedure TProcessor.TParams.SetParam(const Name : string; AValue: string);
+//begin
+//
+//end;
+//
 initialization
 begin
   GetLocaleFormatSettings($409, TProcessor.FormatSettings);

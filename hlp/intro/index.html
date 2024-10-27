@@ -22,68 +22,73 @@
     <script>
       clitext = `Free tool for JPEG and PNG quality scaling.
 
-Usage: imgres source target size {-option [value]}
+  Usage: imgres source target size {-option [value]}
 
-source              Is one of the following:
-                    - a single JPEG or PNG file
-                    - the name of a text file preceeded by @ with a list of filenames
-                    - a path to a folder with semicolon-separated wildcards
-target              The folder where to store the resulting resampled and resized files.
-                    If the resulting filenames can conflict and this is not solved by renaming
-                    then the folder must contain the placeholder %SIZE%.
-                    Non-existend folders are created.
-size                Is a size in pixels or a comma-separated list of sizes, where the size refers to
-                    the longer side of the image.
-{-option [value]}   Is a list of pairs of option/value. Some options have no value.
+  source              Is one of the following:
+                      - a single JPEG or PNG file
+                      - the name of a text file preceeded by @ with a list of filenames
+                      - a path to a folder with semicolon-separated wildcards
+  target              The folder where to store the resulting resampled and resized files.
+                      If the resulting filenames can conflict and this is not solved by renaming
+                      then the folder must contain the placeholder {SIZE% or {SIZENAME%.
+                      Non-existend folders are created.
+  size                Is a size in pixels or a comma-separated list of sizes, where the size refers to
+                      the longer side of the image.
+  {-option [value]}   Is a list of pairs of option/value. Some options have no value.
 
 Options:
 
-short long          parameter comment
+short long            parameter comment
 -----------------------------------------
- -j -jpeg           1..100    A quality from 1 to 100 percent (default is 75)
- -p -png            compr     Compression: Default|None|Fastest|Maximum
- -i -interpolation  name      Stretch, Box, Linear, HalfCosine, Cosine, Bicubic, Mitchell, Spline,
-                              Lanczos2, Lanczos3, Lanczos4, BestQuality
-                              Default is BestQuality: Mitchell on up- and Spline on down-scaling
- -r -rename         template  Rename files by a template with placeholders.
-                              SIZE% and %INDEX[:n[,d]]% with n=startindex, d=number of digits/auto
- -w -watermark      file.png  A PNG watermark file and optional size, position and opacity, see example
- -s -shuffle        0..n      Mixes the image list, makes sense together with -r
-                              A random seed of 0 (assumed if ommited) means an unpredictable sequence.
-                              A fixed value will always shuffle a list in the same way if the number
-                              of files has not changed.
- -m -meta           sources   EXIF | TAGS | EXIF,TAGS
-                              EXIF loads tags from origin files, TAGS from .tags files
- -e -exif           taglist   Writes certain metadata into the resized files.
-                              Taglist is a list of special tagnames: "Title,Timestamp,Copyright"
-                              if no meta sources is defined, EXIF is assumed.
- -c -copyright      "text"    Writes (overrides) the EXIF or .tags copyright tag.
- -l -listing        listings  Exports infos - listings is a comma-separated combination of "tagsreport"
-                              and "imgtags", e.g. "imgtags" or "TagsReports,ImgTags".
- -t -threads        0..n      Number of threads to use, 0 means maximum
- -x -stoponerror              Stop all tasks if an error occures
- -h -help                     Outputs this text
- -d -dryrun                   Dry run, does not create images, but if applicable the listings
- -q -quiet                    Suppresses any message output
+   -j -JPEG           1..100    A quality from 1 to 100 percent (default is 75)
+   -p -PNG            compr     Compression: Default|None|Fastest|Maximum
+   -i -interpolation  name      Stretch, Box, Linear, HalfCosine, Cosine, Bicubic, Mitchell, Spline,
+                                Lanczos2, Lanczos3, Lanczos4, BestQuality
+                                Default is BestQuality: Mitchell on up- and Spline on down-scaling
+   -r -rename         template  Rename files by a template with placeholders.
+                                {SIZE} and {INDEX[:n[,d]]} with n=startindex, d=number of digits/auto
+   -n -sizenames      names     If using the {SIZENAME} placeholder in file renaming template, or in
+                                in the target folders name, then each size must have a corresponding
+                                list of comma-separated names
+   -w -watermark      file.png  A PNG watermark file and optional size, position and opacity, see example
+   -s -shuffle        0..n      Mixes the image list, makes sense together with -r.
+                                A random seed of 0 (assumed if ommited) means an unpredictable sequence.
+                                A fixed value will always shuffle a list in the same way if the number
+                                of files has not changed.
+   -z -sharpen        0..100..  Sharpen, a value >= 0: 0 off, 50 light, 100 good, 200 strong
+   -m -meta           sources   EXIF | TAGS | EXIF,TAGS
+                                EXIF loads tags from origin files, TAGS from .tags files
+   -e -exif           taglist   Writes certain metadata into the resized files.
+                                Taglist is a list of special tagnames: "Title,Timestamp,Copyright"
+                                if no meta sources is defined, EXIF is assumed.
+   -c -copyright      "text"    Writes (overrides) the EXIF or .tags copyright tag.
+   -l -listing        listings  Exports infos - listings is a comma-separated combination of "tagsreport"
+                                and "imgtags", e.g. "imgtags" or "TagsReports,ImgTags".
+   -t -threads        0..n      Number of threads to use, 0 means maximum
+   -x -stoponerror              Stop all tasks if an error occures
+   -h -help                     Outputs this text
+   -d -dryrun                   Dry run, does not create images, but if applicable the listings
+   -q -quiet                    Suppresses any message output
 
 Examples:
 
-imgres myimage.png \Images\res640 640
-  resamples a single png image with the default quality.
+  imgres myimage.png \Images\res640 640
+    resamples a single png image with the default quality.
 
-imgres ..\theimage.jpg C:\TEMP\res%SIZE% 480,640,800 -j 50
-  resamples a single jpg with 3 resolutions and stores them to different folders at 50% quality
+  imgres ..\theimage.jpg C:\TEMP\res{SIZE} 480,640,800 -j 50
+    resamples a single jpg with 3 resolutions and stores them to different folders at 50% quality
 
-imgres @mylist.txt img%SIZE% 640,1920 -j 1 -p maximum -q
-  resamples a list of files which path/name is stored in a file, with smallest file sizes in quiet mode.
+  imgres @mylist.txt img{SIZE} 640,1920 -j 1 -p maximum -q
+    resamples a list of files which path/name is stored in a file, with smallest file sizes in quiet mode.
 
-imgres myimages\*.jpg;*.png \MyImages 640 -w mywatermark.png:10,1,98:20
-  adds a watermark of 10% width, 1% from the left, 2% from the bottom, with 20% opacity.
+  imgres myimages\*.jpg;*.png \MyImages 640 -w mywatermark.png:10,1,98:20
+    adds a watermark of 10% width, 1% from the left, 2% from the bottom, with 20% opacity.
 
-imgres DSC4205.jpg C:\TEMP 640 -c "(c) 1941 ACME"
-  inserts an EXIF copyright note
+  imgres DSC4205.jpg C:\TEMP 640 -c "(c) 1941 ACME"
+    inserts an EXIF copyright note
 
-More info at www.atomek.de/imageresize/cli/index.html`;
+  More info at www.atomek.de/imageresize/cli/index.html
+`;
       
       window.onload = (event) => {      
         var list = document.getElementsByClassName("clitext");
@@ -119,19 +124,17 @@ More info at www.atomek.de/imageresize/cli/index.html`;
         <h1>ImageResize - free Tool for scaling JPEG and PNG Images</h1>
 
         <table class="styled-table">
-          <tr><td>GUI+CLI</td><td>Complete</td><td>Version 4.0.1</td><td>Windows 64Bit</td><td>2024-02-24</td><td><a href="../download/InstallImageResize.zip">Download</li></a></td></tr>
-          <tr><td>CLI</td><td>Commandline Interface</td><td>Version 4.0</td><td>Windows 64Bit</td><td>2024-02-24</td><td><a href="../download/imgres.zip">Download</li></a></td></tr>
+          <tr><td>GUI+CLI</td><td>Complete</td><td>Version 4.2</td><td>Windows 64Bit</td><td>2024-11-24</td><td><a href="../download/InstallImageResize.zip">Download</li></a></td></tr>
+          <tr><td>CLI</td><td>Commandline Interface</td><td>Version 4.2</td><td>Windows 64Bit</td><td>2024-11-24</td><td><a href="../download/imgres.zip">Download</li></a></td></tr>
           <tr><td>Source code</td><td>on GitHub</td><td colspan="3">https://github.com/Atomek61/ImageResize.git<td><a href="https://github.com/Atomek61/ImageResize.git">Repository</a></td></tr>
         </table>
 
-        <h2>Version 4.0 February 2024 - Windows 64 Bit</h2>
+        <h2>Version 4.2 November 2024 - Windows 64 Bit</h2>
         <p style="font-size: 16pt; font-style: bold;">          
           <ul>
-            <li>New Design</li>
-            <li>EXIF Tagging</li>
-            <li>Tags Report Export</li>
-            <li>Interpolation Control</li>
-            <li>Web Gallery Generator (Presentation)</li>
+            <li>Sharpening</li>
+            <li>Sizes table editor</li>
+            <li>Bugfixes</li>
           </ul>  
         </p>
 
@@ -272,6 +275,10 @@ More info at www.atomek.de/imageresize/cli/index.html`;
 
         <h2 id="history">Version History</h2>      
         <ul>
+          <li>V4.2 Presentation</li>
+          <ul>
+            <li>Sharpening</li>
+          </ul>
           <li>V4.0 Presentation</li>
           <ul>
             <li>Web Presentation</li>

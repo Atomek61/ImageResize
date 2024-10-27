@@ -1,7 +1,7 @@
 object MainDialog: TMainDialog
-  Left = 577
+  Left = 474
   Height = 680
-  Top = 446
+  Top = 288
   Width = 900
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'ImageResize'
@@ -166,22 +166,6 @@ object MainDialog: TMainDialog
             Anchors = [akTop, akRight]
             AutoSize = False
             ParentColor = False
-          end
-          object ButtonBrowseSrcFiles1: TBitBtn
-            AnchorSideRight.Control = ButtonBrowseSrcFiles
-            AnchorSideBottom.Control = MemoSrcFilenames
-            Left = 282
-            Height = 25
-            Hint = 'Browse for one or more images'
-            Top = 4
-            Width = 30
-            Anchors = [akRight, akBottom]
-            BorderSpacing.Bottom = 3
-            Images = ImagesModule.ImageList20x20
-            ImageIndex = 9
-            OnClick = ButtonBrowseSrcFilesClick
-            Spacing = 0
-            TabOrder = 3
           end
         end
         object TabSheetSrcFolder: TTabSheet
@@ -1522,6 +1506,23 @@ object MainDialog: TMainDialog
         Caption = 'Dry Run'
         TabOrder = 3
         OnClick = ProjectChanged
+      end
+      object Label22: TLabel
+        Left = 8
+        Height = 15
+        Top = 32
+        Width = 93
+        Caption = 'Current directory:'
+        Font.Color = clGrayText
+        ParentFont = False
+      end
+      object LabelCurrentDir: TLabel
+        Left = 112
+        Height = 1
+        Top = 32
+        Width = 1
+        Font.Color = clGrayText
+        ParentFont = False
       end
     end
     object ButtonExecute: TBGRASpeedButton
