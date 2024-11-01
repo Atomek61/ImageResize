@@ -339,6 +339,10 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="TaggingDlg"/>
       </Unit>
+      <Unit>
+        <Filename Value="..\src\templates.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

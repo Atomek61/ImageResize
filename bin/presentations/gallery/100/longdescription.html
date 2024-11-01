@@ -1,12 +1,22 @@
-<article>
-    <p>
-        To create a presentation of this type, the following is required:
-    </p>
-    <ul>
-        <li>All images are in the same dirctory</li>
-        <li>Two image sizes - a small one (<b>120px</b>) for the thumbnail and a large one (<b>1920</b>) for the full view</li>
-        <li>Custom renaming with this template:<br/>img{INDEX:1,3}{SIZENAME}.{FILEEXT}</li>
-        <li>These two size names: <b>_THUMBNAIL</b>, <b>_SCREEN</b></li>
-    </ul>
+<p>
+    To create a presentation with preview, the images must have been created beforehand using ImageResize with the settings shown below. This will create two .imgtags files, one of which must be specified in the presentation dialog.
+</p>
+<ul>
+    <li>All images are in the same directory</li>
+    <li>Two image sizes
+        <ol>
+            <li>a small one (e.g. <b>120px</b>) for the thumbnail</li>
+            <li>a large one (e.g. <b>1920</b>) for the full view</li>
+        </ol>
+    </li>
+    <li>Custom renaming with this template:<br/>img{INDEX.ifmt(1,auto)}{SIZENAME}.{FILEEXT}</li>
+    <li>These two size names:
+        <ol>
+            <li><b>THUMBNAIL</b></li>
+            <li><b>SCREEN</b></li>
+        </ol>
+    </li>
+</ul>
+<div class="preview">
     <img src="preview.jpg"></img>
-</article>
+<div>

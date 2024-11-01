@@ -1,4 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
+@import url(https://fonts.googleapis.com/css?family=Noto+Sans+Mono);
 
 main {
   background-image: url("../img/bkgshutter-bright.png");
@@ -99,7 +100,7 @@ td {
  }
 
 .plh {
-  font: italic 14pt "Courier New";
+  font: 12pt "Noto Sans Mono";
   color: rgb(162, 188, 238);
 }
 
@@ -115,6 +116,6 @@ td {
   background-color: rgb(45, 82, 142);
   color:rgb(245, 244, 178);
   padding: 0.5em;
-  font: 12pt "Courier New";
+  font: 12pt "Noto Sans Mono";
 }
 

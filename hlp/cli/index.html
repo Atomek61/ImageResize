@@ -30,7 +30,7 @@
                       - a path to a folder with semicolon-separated wildcards
   target              The folder where to store the resulting resampled and resized files.
                       If the resulting filenames can conflict and this is not solved by renaming
-                      then the folder must contain the placeholder {SIZE% or {SIZENAME%.
+                      then the folder must contain the placeholder {SIZE} or {SIZENAME}.
                       Non-existend folders are created.
   size                Is a size in pixels or a comma-separated list of sizes, where the size refers to
                       the longer side of the image.
@@ -51,7 +51,7 @@ short long            parameter comment
                                 in the target folders name, then each size must have a corresponding
                                 list of comma-separated names
    -w -watermark      file.png  A PNG watermark file and optional size, position and opacity, see example
-   -s -shuffle        0..n      Mixes the image list, makes sense together with -r.
+   -s -shuffle        [0..n]    Mixes the image list, makes sense together with -r.
                                 A random seed of 0 (assumed if ommited) means an unpredictable sequence.
                                 A fixed value will always shuffle a list in the same way if the number
                                 of files has not changed.
@@ -149,23 +149,15 @@ Examples:
       <div class="param">
         <div>target</div>
         <div>
-          The folder where to store the resulting file. This can be a relative
-          path. If its the dot '.' the result will be saved "inplaced", replacing
-          the source file.<br/>
-          If you create multiple files with different sizes, enter a placeholder
-          <span class="plh">%SIZE%</span> where the program will insert the size or
-          enter a <a href="#renaming">renaming</a> parameter.
+          The folder where to store the resulting file. This can be a relative path. If its the dot '.' the result will be saved "inplaced", replacing the source file.<br/>
+          If you create multiple files with different sizes, enter a placeholder <span class="plh">{SIZE}</span> or <span class="plh">{SIZENAME}</span> where the program will insert the size or enter a <a href="#renaming">renaming</a> parameter.
         </div>
       </div>
       <div class="param">
         <div>size</div>
         <div>
-          Size in pixels of the resampled image. The size refers to the longer
-          side of the image. This means, imgres always bewares the width/heigth ratio.<br/>
-          You can specify multiple sizes, separated by a comma to let the
-          process create multiple resampled files. Because the files will have the
-          same names, it is required to enter a placeholder <span class="plh">%SIZE%</span> in
-          the dstfolder.
+          Size in pixels of the resampled image. The size refers to the longer side of the image. This means, imgres always bewares the width/heigth ratio.<br/> You can specify multiple sizes, separated by a comma to let the
+          process create multiple resampled files. Because the files will have the same names, it is required to enter a placeholder <span class="plh">{SIZE}</span> or <span class="plh">{SIZENAME}</span>in the dstfolder.
         </div>
       </div>
 
@@ -356,7 +348,7 @@ Examples:
       <div class="option">
         <div>Stop on Error</div>
         <div>
-          <div>-s 0|1<br/>-stoponerror 0|1</div>
+          <div>-x<br/>-stoponerror</div>
           <div>
               If an error occures, this flag lets the program stop as soon as possible.
               Note: some tasks may run into the same error and report it.
@@ -367,29 +359,22 @@ Examples:
       <div class="option">
         <div>Renaming</div>
         <div>
-          <div>-r template<br/>-r template</div>
+          <div>-r template<br/>-rename template</div>
           <div>
             <p>
               Enables target file renaming. Enter a filename template as
-              parameter. The template can contain up to 4 placeholders:
-            </p><p>
-              <span class="plh">%FILENAME%</span> stands for the original file
-              title. That is the filename without path and without extension.
-            </p><p>
-              <span class="plh">%FILEEXT%</span> is the file extension without the
-              leading dot.
-            </p><p>
-              <span class="plh">%INDEX[:n[,d]]%</span> is the current number of
-              the source image in the list of files. <i>n</i> is the start index,
-              default is 1. <i>d</i> is the number of digits to print. The resulting
-              number will be filled with leading zeroes. if d is <u>auto</u>, the
-              program will calculate the number of digits automatically. This is
-              the default. <span class="plh">%INDEX%</span> is equivalent to
-              <span class="plh">%INDEX:1,auto%</span>.
-            </p><p>
-              Target file renaming with the <span class="plh">%SIZE%</span>
-              -placeholder enables you to create all resized images into the
-              same folder without any naming conflict.
+              parameter. The template can contain these placeholders:
+            </p>
+            <ul>
+              <li><span class="plh">{FILENAME}</span> stands for the original file name without path but including the extension.</li>
+              <li><span class="plh">{FILETITLE}</span> stands for the original file title. That is the filename without path and without extension.</li>
+              <li><span class="plh">{FILEEXT}</span> is the file extension without the leading dot.</li>
+              <li><span class="plh">{INDEX[.ifmt(n[,d | auto])]}</span> is the current number of the source image in the list of files. <i>n</i> is the start index, default is 0. <i>d</i> is the number of digits to print. The resulting number will be filled with leading zeroes. if d is ommited or <u>auto</u>, the              program will calculate the number of digits automatically. This is the default.</li>
+              <li><span class="plh">{SIZE}</span> is the destination size in pixels.</li>
+              <li><span class="plh">{SIZENAME}</span> is the name of the size.</li>
+            </ul>
+            <p>
+              Target file renaming with the <span class="plh">{SIZE}</span>-placeholder akes it possible to create all resized images into the same folder without a naming conflict.</li>
             </p><p>
               See <a href="../gui/en/index.html#placeholders">available placeholders</a>.              
             </p>
@@ -413,7 +398,7 @@ Examples:
             </p>
             <p>
               If you want to mix the target files, its recommended to insert
-              the %INDEX% placeholder at a first placeholder in the filename
+              the {INDEX} placeholder at a first placeholder in the filename
               template for renaming. The system uses a file attribute for sorting
               (usually the name of the the file), when listing them.
             </p>
@@ -444,9 +429,9 @@ Examples:
         To resample multiple files in multiple resolutions, just enter multiple
         comma separated sizes without spaces.
       </p><p>
-        Note: the placeholder %SIZE% in the target path is required.
+        Note: the placeholder {SIZE} in the target path is required.
       </p><p>
-        <span class="terminal">imgres @imglist.txt .\img%SIZE% 240,640,1280</span>
+        <span class="terminal">imgres @imglist.txt .\img{SIZE} 240,640,1280</span>
       </p><p>
         This creates a 640px jpg with a 640*60%=384px size watermark at the
         left bottom corner. 2% for the left margin, 98% percent means 2% from
@@ -458,11 +443,11 @@ Examples:
         folder. The trick is to build in the target size into the filename
         that all filenames become unique.
       </p><p>
-        <span class="terminal">imgres MyImages\*.jpg;*.png .\images 200,1920 -r "img%INDEX:1,3%_%SIZE%.%FILEEXT%"</span>
+        <span class="terminal">imgres MyImages\*.jpg;*.png .\images 200,1920 -r "img{INDEX:1,3}_{SIZE}.{FILEEXT}"</span>
       </p><p>
         This example mixes the files randomly with a random seed of 1000.
       </p><p>
-        <span class="terminal">imgres MyImages\*.jpg .\images 1920 -s 1000 -r "img%INDEX:1,3%.%FILEEXT%"</span>
+        <span class="terminal">imgres MyImages\*.jpg .\images 1920 -s 1000 -r "img{INDEX:1,3}.{FILEEXT}"</span>
       </p>
 
     </div>

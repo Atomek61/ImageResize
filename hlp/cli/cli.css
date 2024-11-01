@@ -1,5 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
-@import url(https://fonts.googleapis.com/css?family=Roboto+Mono);
+@import url(https://fonts.googleapis.com/css?family=Noto+Sans+Mono );
 
 :root {
   --bkghue: 216;
@@ -94,7 +94,7 @@ p {
   padding: 2px 4px 2px 4px;
   color: silver;
   background-color: black;
-  font: 11pt "Roboto Mono";
+  font: 11pt "Noto Sans Mono";
  }
 
  .dos {
@@ -102,11 +102,11 @@ p {
   padding: 2px 4px 2px 4px;
   color: rgb(144, 223, 144);
   background-color:rgb(8, 20, 8);
-  font: 8pt "Roboto Mono";
+  font: 8pt "Noto Sans Mono";
  }
 
 .plh {
-  font: italic bold 14pt "Courier New";
+  font: bold 14pt "Noto Sans Mono";
   color: hsl(20, 20%, 80%);
 }
 

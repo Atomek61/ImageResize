@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, Controls, Forms, IniFiles, Generics.Collections,
   Graphics, GetText, DateUtils, Generics.Defaults, FileUtil, StringUtils,
   GalleryProcessor, Logging, StrUtils, StringArrays, Settings,
-  PresentationManagerFrm, SettingsEditors, TemplateEngine, WebUtils, Language;
+  PresentationManagerFrm, SettingsEditors, Templates, WebUtils, Language;
 
 const
   SYSPRESENTATIONAPP      = 'ImageResize Presentation';

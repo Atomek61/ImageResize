@@ -170,7 +170,7 @@
         Um Konflikte der Zielnamen zu vermeiden, wenn mehrere Zielgrößen angegeben werden,
         können Sie entweder mit <a href="#renaming">Umbenennen</a> verschiedene Dateinamen erzeugen,
         oder indem jede Größe einen eigenen Zielordner enthält. Dazu muss der Name des Zielordners
-        den Platzhalter <span class="plh">%SIZE%</span> enthalten.
+        den Platzhalter <span class="plh">{SIZE}</span> enthalten.
       </p>
       <a class="chfot" href="#contents">Inhalt</a>
       
@@ -189,10 +189,10 @@
         Die einfache Dateinamenvorlage erzeugt Namen wie diesen: <i>img085.jpg</i>.
         Die Datei-Nummerierung beginnt bei 1 und enthält nicht die Größe (in Pixeln).
         Dann ist es erforderlich für jede Größe einen eigenes Verzeichnis zu erzeugen. Dazu
-        fügen Sie in die Vorlage des Zielordners den Platzhalter <span class="plh">%SIZE%</span> ein.
+        fügen Sie in die Vorlage des Zielordners den Platzhalter <span class="plh">{SIZE}</span> ein.
       </p>
       <p>
-        Die Dateinamen-Vorlage ist im einfachsten Falle <span class="plh">img%INDEX:1,3%.%FILEEXT%</span>.
+        Die Dateinamen-Vorlage ist im einfachsten Falle <span class="plh">img{INDEX.ifmt(1,3)}.{FILEEXT}</span>.
         Der INDEX ist die 0-basierte laufende Nummer der Quelldatei in der Liste. Die Zahlen
         1 und 3 hinter dem Schlüsselwort INDEX bedeuten, dass der Index bei 1 beginnt und 3
         Ziffern mit führenden Nullen enthalten wird.
@@ -201,10 +201,10 @@
       <h2 id="renadvanced">Strategie <b>"Erweitert"</b></h2>
       <p>
         Die Dateinamen-Vorlage in diesem Falle ist z.B.
-        <span class="plh">img%INDEX:1,3%_%SIZE%.%FILEEXT%</span>,
+        <span class="plh">img{INDEX.ifmt(1,3)}_{SIZE}.{FILEEXT}</span>,
         um alle Dateien ohne Namenskonflikt im selben Verzeichnis zu erzeugen.
         Sie erzeugt einen Dateinamen wie <i>img085_1920.jpg</i>. Der Dateinamenskonflikt wird
-        vermieden durch Verwendung des <span class="plh">%SIZE%</span>-Platzhalters.
+        vermieden durch Verwendung des <span class="plh">{SIZE}</span>-Platzhalters.
       </p>
       
       <h2 id="rencustom">Strategie <b>"Angepasst"</b></h2>
@@ -218,49 +218,61 @@
         für verschiedene Größen im gemeinsamen Verzeichnis keinen Konflikt erzeugen,
         könnten so aussehen:
       </p>
-      <p><span class="plh">img%INDEX:1,3%_%SIZE%.%FILEEXT%</span></p>
+      <p><span class="plh">img{INDEX.ifmt(1,3)}_{SIZE}.{FILEEXT}</span></p>
       <p>ergibt z.B. <span class="plh">img012_1920.jpg</span></p>
-      <p><span class="plh">%FILENAME%_%SIZE%.%FILEEXT%</span></p>
+      <p><span class="plh">{FILENAME}_{SIZE}.{FILEEXT}</span></p>
       <p>ergibt z.B. <span class="plh">DSC3240_1920.jpg</span></p>
-      <p><span class="plh">%FILENAME%_%SIZENAME%.%FILEEXT%</span></p>
+      <p><span class="plh">{FILENAME}_{SIZENAME}.{FILEEXT}</span></p>
       <p>ergibt z.B. <span class="plh">DSC3240_SCREEN.jpg</span></p>
       
       <h2 id="placeholders">Verfügbare Platzhalter</h2>
       <table class="partab">
         <tr>
-          <td><span class="plh">%FILENAME%</span></td>
+          <td><span class="plh">{FILENAME}</span></td>
+          <td>Dies ist der originale Dateiname, inklusive Erweiterung und ohne Pfad.</td>
+        </tr>
+        <tr>
+          <td><span class="plh">{FILETITLE}</span></td>
           <td>Dies ist der originale Dateiname, ohne die Erweiterung.</td>
         </tr>
         <tr>
-          <td><span class="plh">%FILEEXT%</span></td>
+          <td><span class="plh">{FILEEXT}</span></td>
           <td>Die Erweiterung des Originalnamens ohne den Punkt.<br/><br/>
           Sie können das Format der Zieldatei nicht ändern, indem Sie
           die Erweiterung ändern. Dies könnte Bildbetrachter verwirren.  
           </td>
         </tr>
         <tr>
-          <td><span class="plh">%INDEX:N,D%</span></td>
+          <td><span class="plh">{INDEX.ifmt(N[,D,AUTO])}</span></td>
           <td>
             Der 0-basierte Index (laufende Nummer) der Datei in der Liste.<br/><br/>
-            <i>N</i> ist ein Offset (Versatz). Normalerweise beginnen Listen
-            mit der Nummer 1, aber durch Angabe eines Versatzes können Sie vorhandene
-            Listen erweitern.<br/><br/>
-            D ist die Zahl der Stellen der resultierenden Zahl, die ggf. führende Nullen erhält. Dadurch wird die korrekte lexikalische Ordnung der Dateinamen ermöglicht. AUTO an dieser Steller bewirkt, dass die Zahl der benötigten Stellen automatisch anhand der Zahl der Bilder ermittelt wird.<br/><br/>
+            <i>N</i> ist ein Offset (Versatz). Da Listen normalerweise aber mit 1 beginnen, können sie diesen Offset angeben.<br/><br/>D ist die Zahl der Stellen der resultierenden Zahl, die ggf. führende Nullen erhält. Dadurch wird die korrekte lexikalische Ordnung der Dateinamen ermöglicht. AUTO an dieser Steller bewirkt, dass die Zahl der benötigten Stellen automatisch anhand der Zahl der Bilder ermittelt wird.<br/><br/>
           </td>
         </tr>
         <tr>
-          <td><span class="plh">%SIZE%</span></td>
+          <td><span class="plh">{SIZE}</span></td>
           <td>Die Zielgröße in Pixeln der aktuellen Datei.</td>
         </tr>
         <tr>
-          <td><span class="plh">%SIZENAME%</span></td>
+          <td><span class="plh">{SIZENAME}</span></td>
           <td>Der zugeordnete Name der Zielgröße.</td>
         </tr>
         <tr>
-          <td><span class="plh">%INTERPOLATION%</span></td>
+          <td><span class="plh">{INTERPOLATION}</span></td>
           <td>Der Name der aktuell gewählten Interpolation.</td>
         </tr>
       </table>
+      <p>
+        Neu ab Version 4.2 ist die erweiterte Template-Engine. Damit können überall wo Platzhalter eingesetzt werden, bestimme Funktionen verwendet werden. Neben der mehrfach erwähnten ifmt-Funktion können die folgenden Funktionen verwendet werden:
+        <table>
+          <tr>
+            <td><span class="plh">lower()</span></td><td>Kleinbuchstaben</td>
+          </tr>
+          <tr>
+            <td><span class="plh">upper()</span></td><td>Großbuchstaben</td>
+          </tr>
+        </table>
+      </p>
 
       <h2 id="shuffle">Mischen</h2>
       <p>
@@ -271,7 +283,7 @@
         ImageResize mischt zunächst die Reihenfolge der Bilder bevor es die resampelten Bilder erzeugt.
         Das hat nur Sinn, wenn dabei die Zieldateinamen den Index des Bildes am Beginn des variablen 
         Teiles des Namens enthält, damit die lexikalische Reihenfolge aufsteigend ist.
-        Eine geeignete Vorlage für den Zielnamen ist z.B. <span class="plh">img%INDEX:1,3%.%FILEEXT%</span>.
+        Eine geeignete Vorlage für den Zielnamen ist z.B. <span class="plh">img{INDEX.ifmt(1,3)}.{FILEEXT}</span>.
       </p>
       <p>
         Der Parameter <i>Saat</i> kontrolliert die zufällige Abfolge. Eine Saat von 0 ("Zufällig") wird
@@ -305,7 +317,7 @@
       </p>
       <p>
         Um für jede Zielgröße ein anderes Wasserbild festlegen zu können, müssen Sie
-        im Namen der Wasserbilddatei den Platzhalter <span class="plh">%SIZE%</span> angeben.
+        im Namen der Wasserbilddatei den Platzhalter <span class="plh">{SIZE}</span> angeben.
         ImageResize erwartet in diesem Falle ein Wasserbild für jede Größe, deren Name 
         der Vorlage entspricht, also die Größe enthält.
       </p>

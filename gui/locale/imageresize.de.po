@@ -59,6 +59,11 @@ msgstr "Ungültige Zeitangabe '%s'."
 msgid "Invalid format for datetime '%s'."
 msgstr "Ungültiges Fomat für Datum/Zeit '%s'."
 
+#: galleryprocessor.serrifmtparamsfmt
+msgctxt "galleryprocessor.serrifmtparamsfmt"
+msgid "invalid parameters (offset[,digits]) expected"
+msgstr ""
+
 #: galleryprocessor.serrimgtagsnotfoundfmt
 #, object-pascal-format
 msgctxt "galleryprocessor.serrimgtagsnotfoundfmt"
@@ -226,6 +231,11 @@ msgstr "Warnung"
 msgid "Format %s not supported"
 msgstr "Format %s nicht unterstützt"
 
+#: imgres.serrifmtparamsfmt
+msgctxt "imgres.serrifmtparamsfmt"
+msgid "invalid parameters (offset[,digits]) expected"
+msgstr ""
+
 #: imgres.serrinvalidindexdigitsfmt
 #, object-pascal-format
 msgid "Invalid INDEX digits number '%s'"
@@ -326,7 +336,9 @@ msgid "Missing sizes."
 msgstr "Fehlende Größe."
 
 #: imgres.serrmultiplesizes
-msgid "Multiple sizes but placeholder {SIZE} not found in either folder or filename template"
+#, fuzzy
+#| msgid "Multiple sizes but placeholder {SIZE} not found in either folder or filename template"
+msgid "Multiple sizes but placeholder SIZE or SIZENAME not found in either folder or filename template"
 msgstr "Mehrfache Größe, aber Platzhalter {SIZE} nicht gefunden im Verzeichnisnamen oder in der Dateinamen-Vorlage"
 
 #: imgres.sinfresultfmt
@@ -862,6 +874,46 @@ msgstr "mehr Werte als Tags"
 #: tcolorframe.label1.caption
 msgid "&Color:"
 msgstr "&Farbe:"
+
+#: templates.serrdynamicfunctionfmt
+#, object-pascal-format
+msgid "Error in engine dynamic function %s - %s"
+msgstr ""
+
+#: templates.serrinvaliddelimitersfmt
+#, object-pascal-format
+msgid "Invalid delimiters '%s'."
+msgstr ""
+
+#: templates.serrinvalidfunctionfmt
+#, object-pascal-format
+msgctxt "templates.serrinvalidfunctionfmt"
+msgid "Engine function %s not found"
+msgstr ""
+
+#: templates.serrinvalidparamsfmt
+#, object-pascal-format
+msgid "invalid parameter '%s'"
+msgstr ""
+
+#: templates.serrinvalidstaticfunctionparamsfmt
+#, object-pascal-format
+msgid "Invalid parameter '%s' for engine function %s"
+msgstr ""
+
+#: templates.serrsolving
+msgid "Cant solve valiables (circular dependencies?)"
+msgstr ""
+
+#: templates.serrstaticfunctionfmt
+#, object-pascal-format
+msgid "Error in engine function %s - %s"
+msgstr ""
+
+#: templates.serrvarnotfoundfmt
+#, object-pascal-format
+msgid "Variable '%s' not found in VarEngine."
+msgstr ""
 
 #: threading.dispatcher.scptcancelled
 msgid "Cancelled"

@@ -238,7 +238,7 @@ begin
       ShuffleSeed := 0;
     end;
 
-    Param := GetOptionValue('z', 'zharpen');
+    Param := GetOptionValue('z', 'sharpen');
     if Param<>'' then begin
       inc(OptionCount, 1);
       Param := GetOptionValue('z', 'sharpen');
@@ -308,7 +308,7 @@ begin
     Processor.WatermarkParams := MrkParams;
     Processor.ThreadCount := ThreadCount;
     Processor.StopOnError := StopOnError;
-    Processor.TargetFiletemplate := TargetFileTemplate;
+    Processor.TargetFilename := TargetFileTemplate;
     Processor.Sizenames := SizeNames;
     Processor.Shuffle := Shuffle;
     Processor.ShuffleSeed := ShuffleSeed;

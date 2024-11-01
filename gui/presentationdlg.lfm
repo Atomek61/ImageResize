@@ -1,12 +1,12 @@
 object PresentationDialog: TPresentationDialog
   Left = 765
-  Height = 584
+  Height = 594
   Top = 174
-  Width = 1000
+  Width = 1161
   BorderIcons = [biSystemMenu]
   Caption = 'Presentation'
-  ClientHeight = 584
-  ClientWidth = 1000
+  ClientHeight = 594
+  ClientWidth = 1161
   Constraints.MinHeight = 400
   Constraints.MinWidth = 900
   OnCreate = FormCreate
@@ -16,8 +16,8 @@ object PresentationDialog: TPresentationDialog
   object MemoMessages: TRichMemo
     Left = 4
     Height = 106
-    Top = 474
-    Width = 996
+    Top = 484
+    Width = 1157
     Align = alBottom
     BorderSpacing.Left = 4
     BorderSpacing.Bottom = 4
@@ -34,32 +34,32 @@ object PresentationDialog: TPresentationDialog
     Cursor = crVSplit
     Left = 0
     Height = 8
-    Top = 466
-    Width = 1000
+    Top = 476
+    Width = 1161
     Align = alBottom
     Constraints.MinHeight = 8
     ResizeAnchor = akBottom
   end
   object PanelMain: TPanel
     Left = 0
-    Height = 466
+    Height = 476
     Top = 0
-    Width = 1000
+    Width = 1161
     Align = alClient
     BevelOuter = bvNone
-    ClientHeight = 466
-    ClientWidth = 1000
+    ClientHeight = 476
+    ClientWidth = 1161
     Constraints.MinHeight = 314
     TabOrder = 0
     object PanelPresentation: TPanel
-      Left = 360
-      Height = 466
+      Left = 456
+      Height = 476
       Top = 0
-      Width = 514
+      Width = 579
       Align = alClient
       BevelOuter = bvNone
-      ClientHeight = 466
-      ClientWidth = 514
+      ClientHeight = 476
+      ClientWidth = 579
       ParentBackground = False
       TabOrder = 0
       object ButtonBrowseTargetFolder: TBitBtn
@@ -68,7 +68,7 @@ object PresentationDialog: TPresentationDialog
         AnchorSideTop.Control = EditImgTagsFilename
         AnchorSideTop.Side = asrCenter
         AnchorSideBottom.Side = asrBottom
-        Left = 449
+        Left = 514
         Height = 25
         Hint = 'Select the .imgtags file in the folder of the images to be dispayed.'
         Top = 25
@@ -85,7 +85,7 @@ object PresentationDialog: TPresentationDialog
         Height = 23
         Hint = 'The .imgtags file has important infomation how to create the presentation.'
         Top = 26
-        Width = 433
+        Width = 498
         Anchors = [akTop, akLeft, akRight]
         TabOrder = 0
         OnChange = EditImgTagsFilenameChange
@@ -105,9 +105,9 @@ object PresentationDialog: TPresentationDialog
       end
       object PanelManagerFrame: TPanel
         Left = 12
-        Height = 406
+        Height = 416
         Top = 56
-        Width = 498
+        Width = 563
         Align = alBottom
         Anchors = [akTop, akLeft, akRight, akBottom]
         BorderSpacing.Left = 8
@@ -124,7 +124,7 @@ object PresentationDialog: TPresentationDialog
         AnchorSideTop.Control = EditImgTagsFilename
         AnchorSideTop.Side = asrCenter
         AnchorSideBottom.Side = asrBottom
-        Left = 479
+        Left = 544
         Height = 25
         Hint = 'Tries to uses the current target folder from the main dialog.'
         Top = 25
@@ -138,8 +138,8 @@ object PresentationDialog: TPresentationDialog
       end
     end
     object PanelControls: TPanel
-      Left = 874
-      Height = 442
+      Left = 1035
+      Height = 452
       Top = 16
       Width = 126
       Align = alRight
@@ -147,7 +147,7 @@ object PresentationDialog: TPresentationDialog
       BorderSpacing.Top = 16
       BorderSpacing.Bottom = 8
       BevelOuter = bvNone
-      ClientHeight = 442
+      ClientHeight = 452
       ClientWidth = 126
       TabOrder = 1
       object ButtonWebShow: TBitBtn
@@ -170,7 +170,7 @@ object PresentationDialog: TPresentationDialog
         Left = 8
         Height = 30
         Hint = 'Closes the dialog and saves the settings'
-        Top = 374
+        Top = 384
         Width = 110
         Align = alBottom
         Anchors = []
@@ -185,7 +185,7 @@ object PresentationDialog: TPresentationDialog
         Left = 8
         Height = 30
         Hint = 'Closes the dialog and discards the settings'
-        Top = 412
+        Top = 422
         Width = 110
         Align = alBottom
         Anchors = []
@@ -232,13 +232,13 @@ object PresentationDialog: TPresentationDialog
     end
     object PanelLeft: TPanel
       Left = 0
-      Height = 466
+      Height = 476
       Top = 0
-      Width = 360
+      Width = 456
       Align = alLeft
       BevelOuter = bvNone
-      ClientHeight = 466
-      ClientWidth = 360
+      ClientHeight = 476
+      ClientWidth = 456
       TabOrder = 2
       object LabelManagers: TLabel
         AnchorSideLeft.Control = ComboBoxManagers
@@ -256,7 +256,7 @@ object PresentationDialog: TPresentationDialog
         Left = 8
         Height = 70
         Top = 26
-        Width = 352
+        Width = 448
         ItemHeight = 64
         Style = csOwnerDrawFixed
         TabOrder = 0
@@ -265,20 +265,21 @@ object PresentationDialog: TPresentationDialog
       end
       object PanelLongDescription: TPanel
         Left = 8
-        Height = 358
+        Height = 368
         Top = 104
-        Width = 352
+        Width = 456
         Anchors = [akTop, akLeft, akBottom]
         BevelOuter = bvLowered
-        ClientHeight = 358
-        ClientWidth = 352
+        ClientHeight = 368
+        ClientWidth = 456
         TabOrder = 1
         object LabelLongDescription: THtmlLabel
           Left = 1
-          Height = 356
+          Height = 366
           Top = 1
-          Width = 350
+          Width = 454
           BorderStyle = htSingle
+          DefBackground = clInfoBk
           DefFontName = 'default'
           HistoryMaxCount = 0
           MarginHeight = 0
@@ -294,8 +295,10 @@ object PresentationDialog: TPresentationDialog
           TabOrder = 0
           OnKeyUp = LabelLongDescriptionKeyUp
           CSS.Strings = (
-            'article {padding: 0.5em}'
-            'img{margin: 0.5em}'
+            'body {padding: 0.5em 1em 0 1em}'
+            '.preview {text-align: center;}'
+            'li {margin-top: 0.5em;}'
+            'p {margin: 0 0 0.5em 0}'
           )
         end
       end

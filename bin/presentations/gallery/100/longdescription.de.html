@@ -1,11 +1,21 @@
-<article>
-    <p>
-        Um eine Präsentation mit Vorschau zu erzeugen, müssen die folgenden Voraussetzungen erfüllt sein:
-    </p>
-    <ul>
-        <li>Zwei Bildgrößen - eine kleine (<b>120px</b>) für die Vorschau und eine große (<b>1920px</b>) für die Vollansicht</li>
-        <li>Angepasste Umbennennung mit dieser Vorlage: <b>img{INDEX:1,3}{SIZENAME}.{FILEEXT}</b></li>
-        <li>Diese Liste von Größenbezeichnern: <b>_THUMBNAIL, _SCREEN</b></li>
-    </ul>
+<p>
+    Um eine Präsentation mit Vorschau zu erzeugen, müssen die Bilder zuvor mit ImageResize mit den Einstellungen erzeugt worden sein, wie unten gezeigt. Dabei werden zwei .imgtags-Dateien erzeugt. Eine davon muss im Presentation-Dialog angegeben werde.
+</p>
+<ul>
+    <li>Zwei Bildgrößen
+        <ol>
+            <li>eine kleine (z.B. <b>120px</b>) für die Vorschau</li>
+            <li>eine große (z.B. <b>1920px</b>) für die Vollansicht</li>
+        </ol>
+    </li>
+    <li>Angepasste Umbennennung mit dieser Vorlage:<br/><b>img{INDEX.ifmt(1,auto)}{SIZENAME}.{FILEEXT}</b></li>
+    <li>Diese Liste von Größenbezeichnern:
+        <ol>
+            <li><b>THUMBNAIL</b></li>
+            <li><b>SCREEN</b></li>
+        </ol>
+    </li>
+</ul>
+<div class="preview">
     <img src="preview.jpg"></img>
-</article>    
+<div>

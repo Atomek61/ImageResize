@@ -22,7 +22,7 @@ uses
   RichMemo, MrkEditDlg, WinDirs, UpdateUtils, Settings,
   AppSettings, Logging, LoggingRichMemo, StringArrays, Presentations,
   PresentationDlg, TagIds, LazFileUtils, Translations, Language,
-  ControlShot, IniFilesHelper, ImagesMod, TemplateEngine;
+  ControlShot, IniFilesHelper, ImagesMod, Templates;
 
 const
   LM_RUN                = LM_USER + 1;
@@ -779,7 +779,7 @@ begin
       UpDownMrkOpacity.Position           := round(Opacity);
     end;
     FIsSave                             := false;
-    CheckBoxRenEnabled.Checked          := ImgResizer.RenEnabled;
+    CheckBoxRenEnabled.Checked          := ImgResizer.Rename;
     RadioButtonRenSimple.Checked        := true;
     EditRenTemplate.Text                := DEFAULT_RENFILETEMPLATE;
     CheckBoxShuffle.Checked             := DEFAULT_SHUFFLE;
@@ -1984,13 +1984,13 @@ begin
         // Rename
         if CheckBoxRenEnabled.Checked then begin
           if RadioButtonRenSimple.Checked then
-            Processor.TargetFiletemplate := RENSIMPLETEMPLATE
+            Processor.TargetFilename := RENSIMPLETEMPLATE
           else if RadioButtonRenAdvanced.Checked then
-            Processor.TargetFiletemplate := RENADVANCEDTEMPLATE
+            Processor.TargetFilename := RENADVANCEDTEMPLATE
           else
-            Processor.TargetFiletemplate := EditRenTemplate.Text;
+            Processor.TargetFilename := EditRenTemplate.Text;
         end else
-          Processor.TargetFiletemplate := '';
+          Processor.TargetFilename := '';
 
         Processor.Shuffle := CheckBoxShuffle.Checked;
         Processor.ShuffleSeed := StrToShuffleSeed(ComboBoxShuffleSeed.Text);
@@ -2038,18 +2038,18 @@ begin
         // DryRun flag
         Processor.DryRun := CheckBoxDryRun.Checked;
 
-        // stop, if %SIZE% placeholder is not contained either in
-        // TargetFolder nor in FileTemplate
+        // stop, if SIZE placeholder is not contained either in
+        // TargetFolder nor in TargetFilename
         TargetFolder := EditTargetFolder.Text;
-        if (FSizeInfos.EnabledCount>1) and (Pos('{SIZE}', TargetFolder)+Pos('{SIZENAME}', TargetFolder)=0)
-         and not (Processor.RenEnabled and (Pos('{SIZE}', Processor.TargetFiletemplate)+Pos('{SIZENAME}', Processor.TargetFiletemplate)>0)) then
+        if (FSizeInfos.EnabledCount>1)
+          and not templates.TEngine.Contains(TargetFolder, ['SIZE', 'SIZENAME'], CURLYBRACEDELIMITERS)
+          and not (Processor.Rename and (templates.TEngine.Contains(Processor.TargetFilename, ['SIZE', 'SIZENAME'], CURLYBRACEDELIMITERS))) then
           raise Exception.Create(SErrEnterPlaceholder);
 
         // Hook the processor
         Processor.OnPrint := OnPrint;
         Processor.OnProgress := OnProgress;
 
-        //Processor.SizeNames := SizeNames;
         Processor.SourceFilenames := SourceFilenames;
         Processor.TargetFolder := TargetFolder;
         Processor.ThreadCount := FProcessingSettings.ThreadsUsed.Value;

@@ -23,40 +23,40 @@ unit imgres;
 interface
 
 uses
-  Classes, SysUtils, StrUtils, Types, BGRABitmap, BGRABitmapTypes,
-  threading.dispatcher, Tags, Logging, StringArrays, FileUtil;
+  Classes, SysUtils, StrUtils, Types, BGRABitmap, BGRABitmapTypes, RegExpr,
+  threading.dispatcher, Tags, Logging, StringArrays, FileUtil, Templates;
 
 resourcestring
-  SCptInterpolationDefault   = 'Default';
-  SCptStretch     = 'Stretch';
-  SCptBox         = 'Box';
-  SCptLinear      = 'Linear';
-  SCptHalfCosine  = 'Half Cosine';
-  SCptCosine      = 'Cosine';
-  SCptBicubic     = 'Bicubic';
-  SCptMitchell    = 'Mitchell';
-  SCptSpline      = 'Spline';
-  SCptLanczos2    = 'Lanczos 2px Radius';
-  SCptLanczos3    = 'Lanczos 3px Radius';
-  SCptLanczos4    = 'Lanczos 4px Radius';
-  SCptBestQuality = 'Best Quality';
+  SCptInterpolationDefault  = 'Default';
+  SCptStretch               = 'Stretch';
+  SCptBox                   = 'Box';
+  SCptLinear                = 'Linear';
+  SCptHalfCosine            = 'Half Cosine';
+  SCptCosine                = 'Cosine';
+  SCptBicubic               = 'Bicubic';
+  SCptMitchell              = 'Mitchell';
+  SCptSpline                = 'Spline';
+  SCptLanczos2              = 'Lanczos 2px Radius';
+  SCptLanczos3              = 'Lanczos 3px Radius';
+  SCptLanczos4              = 'Lanczos 4px Radius';
+  SCptBestQuality           = 'Best Quality';
 
-  SCptJPEGQualityDefault     = 'Default';
+  SCptJPEGQualityDefault    = 'Default';
 
-  SCptPNGCompressionDefault  = 'Default';
-  SCptPNGCompressionNone     = 'None';
-  SCptPNGCompressionFastest  = 'Fastest';
-  SCptPNGCompressionMax      = 'Maximum';
+  SCptPNGCompressionDefault = 'Default';
+  SCptPNGCompressionNone    = 'None';
+  SCptPNGCompressionFastest = 'Fastest';
+  SCptPNGCompressionMax     = 'Maximum';
 
-  SCptRandomSeed             = 'Random';
+  SCptRandomSeed            = 'Random';
 
-  SCptSingleThread  = 'Single';
-  SCptMaximumThread = 'Maximum';
+  SCptSingleThread          = 'Single';
+  SCptMaximumThread         = 'Maximum';
 
-  SCptSharpenDefault  = 'Default';
-  SCptSharpenNone     = 'None';
-  SCptSharpenLight    = 'Light';
-  SCptSharpenStrong   = 'Strong';
+  SCptSharpenDefault        = 'Default';
+  SCptSharpenNone           = 'None';
+  SCptSharpenLight          = 'Light';
+  SCptSharpenStrong         = 'Strong';
 
 type
   TTagsSource = (tsEXIF, tsTagsFiles); // Tags from EXIF and/or .tags files
@@ -114,7 +114,7 @@ const
   DEFAULT_RENENABLED        = false;
   DEFAULT_RENFMTSTR         = 'img%2:s.%1:s';
   DEFAULT_RENFILETEMPLATE   = 'img{INDEX:1,3}.{FILEEXT}';
-  DEFAULT_SIZENAMES         = '_THUMBNAIL,';
+//  DEFAULT_SIZENAMES         = '_THUMBNAIL,';
   DEFAULT_RENINDEXSTART     = 1;
   DEFAULT_RENINDEXDIGITS    = 3;
   DEFAULT_SHUFFLE           = false;
@@ -140,14 +140,9 @@ type
   { TProcessor }
 
   TProcessor = class
+  private const
+    IFMT_PARAMS_REGEXPR = '^(\d+)(?:,(\d+|auto))?$';
   public type
-
-    TRenameParams = record
-      Enabled :boolean;
-      FmtStr :string;
-      IndexDigits :integer;
-      IndexStart :integer;
-    end;
 
     TWatermarkParams = record
       Filename :string;
@@ -157,36 +152,6 @@ type
       Opacity :single;
     end;
 
-    { TParams }
-{
-    TParams = class
-    private
-      FSourceFilenames  :TStrings;
-      FTargetFolder     :string;
-      FSizes            :TSizes;
-      FSizeNames        :TSizeNames;
-      FJPEGQuality      :integer;
-      FPNGCompression   :integer;
-      FResampleMode     :TResampleMode;
-      FResampleFilter   :TResampleFilter;
-      FWaterMarkParams  :TWatermarkParams;
-      FThreadCount      :integer;
-      FStopOnError      :boolean;
-      FRen              :TRenameParams;
-      FShuffle          :boolean;
-      FShuffleSeed      :integer;
-      FSharpen          :integer; // 0 = Off
-      FTagsSources      :TTagsSources;
-      FTagKeys          :TStringArray; // 'Copyright',
-      FCopyright        :string;
-      FTagsReports      :TTagsReports;
-      FDryRun           :boolean;
-      function GetParam(const Name : string): string;
-      procedure SetParam(const Name : string; AValue: string);
-    public
-      property Param[const Name :string] :string read GetParam write SetParam;
-    end;
-}
   private type
 
     // Needed while processing
@@ -232,7 +197,7 @@ type
     FWaterMarkParams  :TWatermarkParams;
     FThreadCount      :integer;
     FStopOnError      :boolean;
-    FRen              :TRenameParams;
+    FTargetFilename   :string; // may contain placeholders
     FShuffle          :boolean;
     FShuffleSeed      :integer;
     FSharpen          :integer; // 0 = Off
@@ -247,15 +212,14 @@ type
     FSuccess :boolean;
     FOnPrint :TPrintEvent;
     FOnProgress :TProgressEvent;
+    function GetRename: boolean;
     function GetSize: integer;
-    function GetTargetFiletemplate: string;
     function GetInterpolation: TInterpolation;
     function GetSizes: string;
     function GetSourceFilenames: TStrings;
     procedure SetActive(AValue: boolean);
     procedure SetSharpen(AValue: integer);
     procedure SetSize(AValue: integer);
-    procedure SetTargetFiletemplate(AValue: string);
     procedure SetInterpolation(AValue: TInterpolation);
     procedure SetSizes(AValue: string);
     procedure SetJPEGQuality(AValue: integer);
@@ -271,6 +235,7 @@ type
     procedure OnTaskProgress(Sender :TObject; Progress :single);
     procedure Print(const Line :string; Level :TLevel = mlInfo);
     procedure DoExecute;
+    function ifmt(const VarName, Value, Params :string) :string;
   public
     class var FormatSettings :TFormatSettings;
   public
@@ -294,17 +259,15 @@ type
     class function StrToSharpen(const Str :string) :integer;
     class function NameToSharpen(const Name :string) :integer;
     class function SharpenToName(Value :integer) :string;
-    class function TryStrToRenameParams(const Str :string; out Params :TRenameParams; out ErrStr :string) :boolean;
-    class function RenameParamsToStr(const Params :TRenameParams) :string;
     class function TryStrToTagsSources(const Str :string; out Value :TTagsSources) :boolean;
     class function TryStrToTagsReports(const Str :string; out Value :TTagsReports) :boolean;
     class procedure StrToWatermarkParams(const Str :string; out Value :TWatermarkParams);
-
     property Active :boolean read FActive write SetActive;
     property Success :boolean read FSuccess;
     property SourceFilenames :TStrings read GetSourceFilenames write SetSourceFilenames;
     property TargetFolder :string read FTargetFolder write SetTargetFolder;
-    property TargetFiletemplate :string read GetTargetFiletemplate write SetTargetFiletemplate;
+    property TargetFilename :string read FTargetFilename write FTargetFilename;
+    property Rename :boolean read GetRename;
     property Size :integer read GetSize write SetSize;
     property Sizes :TSizes read FSizes write FSizes;
     property SizeNames :TSizeNames read FSizeNames write FSizeNames;
@@ -314,7 +277,6 @@ type
     property WatermarkParams :TWatermarkParams read FWatermarkParams write SetWatermarkParams;
     property ThreadCount :integer read FThreadCount write SetThreadCount;
     property StopOnError :boolean read FStopOnError write FStopOnError;
-    property RenEnabled :boolean read FRen.Enabled;
     property Shuffle :boolean read FShuffle write FShuffle;
     property ShuffleSeed :integer read FShuffleSeed write SetShuffleSeed;
     property Sharpen :integer read FSharpen write SetSharpen;
@@ -330,7 +292,6 @@ type
 function TryStrToSizes(const Str :string; out Values :TSizes) :boolean;
 function StrToSizes(const Str :string) :TSizes;
 function SizesToStr(const Sizes :TSizes) :string;
-//function TryJPEGQualityNameToIndex(const Name :string; out Index :integer) :boolean;
 
 resourcestring
   SCptHint                        = 'Hint';
@@ -356,7 +317,7 @@ resourcestring
   SErrInvalidThreadCount          = 'Invalid threadcount';
   SErrMissingSizes                = 'Missing sizes.';
   SErrInvalidSizesFmt             = 'Invalid sizes ''%s''';
-  SErrMultipleSizes               = 'Multiple sizes but placeholder {SIZE} not found in either folder or filename template';
+  SErrMultipleSizes               = 'Multiple sizes but placeholder SIZE or SIZENAME not found in either folder or filename template';
   SErrInvalidPNGCompressionFmt    = 'Invalid PNG compression %d (0..3 expected)';
   SErrInvalidPNGCompressionNameFmt= 'Invalid PNG compression ''%s'' (Default, None, Fastest or Maximum expected)';
   SErrInvalidJPEGQualityFmt       = 'Invalid JPEG quality ''%s'' (1..100 expected)';
@@ -375,6 +336,7 @@ resourcestring
   SErrInvalidMrkFloatCountFmt     = 'Invalid watermark size/pos parameters ''%s'' (3 comma-separated floats expected)';
   SErrInvalidMrkFloatRangeFmt     = 'Invalid watermark size/position range ''%s'' (0..100.0 expected)';
   SErrInvalidMrkOpacityFmt        = 'Invalid watermark opacity value ''%s'' (0..100.0 expected)';
+  SErrIfmtParamsFmt               = 'invalid parameters (offset[,digits]) expected';
 
 implementation
 
@@ -488,6 +450,7 @@ var
   TargetFileExt :string;
   TargetFiletitle :string;
   TargetFiletitleExt :string;
+  TargetFilenameTemplateEngine :Templates.TEngine;
   TargetFilename :string;
   TargetImg :TBGRABitmap;
   SharpImg :TBGRABitmap;
@@ -498,10 +461,8 @@ var
   MrkImg :TBGRABitmap;
   MrkRectSize :TSize;
   MrkRect :TRect;
-  IndexStr :string; // Index to display
   SizeStr :string;
-  SizeName :string;
-  i, n, m :integer;
+  i, m :integer;
   ExifTags :TTags;
   ExifTagKeys :TStringArray;
   TagKey :string;
@@ -514,6 +475,7 @@ begin
     Exit;
 
   SourceImg := nil;
+  TargetFilenameTemplateEngine := nil;
 
   // Source File
   try
@@ -550,6 +512,11 @@ begin
       FileTags.AddOrSetValue('OrgHeight', IntToStr(SourceSize.cy));
       FileTags.AddOrSetValue('OrgFilename', ExtractFilename(SourceFilename));
       FileTags.AddOrSetValue('OrgFilesize', IntToStr(FileUtil.FileSize(SourceFilename)));
+    end;
+
+    if Processor.Rename then begin
+      TargetFilenameTemplateEngine := Templates.TEngine.Create;
+      TargetFilenameTemplateEngine.RegisterDynamicFunction('ifmt', Processor.ifmt);
     end;
 
     ////////////////////////////////////////////////////
@@ -642,41 +609,19 @@ begin
         Progress(1);
         if Context.Cancelled then Exit;
 
-        // Saving...
-        if Processor.FRen.Enabled then begin
-          // Specialize the prepared template
-
-          // {FILETITLE}
+        // Compile TargetFilename
+        if Processor.Rename then begin
           TargetFiletitle := ExtractFilename(SourceFilename);
           if Length(TargetFileExt)>0 then
             TargetFiletitle := Copy(TargetFiletitle, 1, Length(TargetFiletitle)-Length(TargetFileExt)-1);
-
-          // {FILEEXT} - has been extracted previously
-
-          // {INDEX}
-          if Processor.FRen.IndexDigits = 0 then
-            IndexStr := IntToStr(SourceFileIndex)
-          else begin
-            if Processor.FRen.IndexDigits = -1 then
-              n := round(log10(Processor.FSourceFilenames.Count))+1
-            else
-              n := Processor.FRen.IndexDigits;
-            IndexStr := Format('%*.*d', [n, n, SourceFileIndex+Processor.FRen.IndexStart]);
-          end;
-
-          // {SIZE}
-          SizeStr := IntToStr(Size);
-
-          // {SIZENAME}
-          if i<Length(Processor.SizeNames) then
-            SizeName := Processor.SizeNames[i]
-          else
-            SizeName := SizeStr;
-
-          // Create new filename
-          TargetFiletitleExt := Format(Processor.FRen.FmtStr,
-            [TargetFiletitle, TargetFileExt, IndexStr, SizeStr, INTERPOLATION_NAMES[Processor.Interpolation], SizeName]);
-
+          TargetFilenameTemplateEngine.Load('FILENAME', ExtractFilename(SourceFilename));
+          TargetFilenameTemplateEngine.Load('FILETITLE', TargetFiletitle);
+          TargetFilenameTemplateEngine.Load('FILEEXT', TargetFileExt);
+          TargetFilenameTemplateEngine.Load('INDEX', IntToStr(SourceFileIndex));
+          TargetFilenameTemplateEngine.Load('SIZE', IntToStr(Size));
+          TargetFilenameTemplateEngine.Load('SIZENAME', ifthen(Processor.SizeNames[i]='', IntToStr(Size), Processor.SizeNames[i]));
+          TargetFilenameTemplateEngine.Load('INTERPOLATION', INTERPOLATION_NAMES[Interpolation]);
+          TargetFiletitleExt := TargetFilenameTemplateEngine.Compile(Processor.TargetFilename);
         end else
           TargetFiletitleExt := ExtractFilename(SourceFilename);
 
@@ -714,6 +659,7 @@ begin
     end;
     result := true;
   finally
+    TargetFilenameTemplateEngine.Free;
     SourceImg.Free;
   end;
 end;
@@ -741,10 +687,7 @@ begin
   end;
   FThreadCount      := DEFAULT_THREADCOUNT;
   FStopOnError      := DEFAULT_STOPONERROR;
-  FRen.Enabled      := DEFAULT_RENENABLED;
-  FRen.FmtStr       := DEFAULT_RENFMTSTR;
-  FRen.IndexStart   := DEFAULT_RENINDEXSTART;
-  FRen.IndexDigits  := DEFAULT_RENINDEXDIGITS;
+  FTargetFilename   := '';
   FShuffle          := DEFAULT_SHUFFLE;
   FShuffleSeed      := DEFAULT_SHUFFLESEED;
   FSharpen          := DEFAULT_SHARPEN;
@@ -831,11 +774,11 @@ var
   Task :TImageTask;
   Tasks :TTasks;
   Dispatcher :TDispatcher;
+  TargetFolderTemplateEngine :templates.TEngine;
   i, j, n, m :integer;
   Item :string;
   TagsFilename :string;
   ImgTagsFilename :string;
-  SizeName :string;
 begin
   FActive     := false;
   FCancelled  := false;
@@ -851,6 +794,8 @@ begin
   ProcRes     := TProcessorResources.Create;
   Tasks       := TTasks.Create;
   Dispatcher  := TDispatcher.Create;
+  TargetFolderTemplateEngine := templates.TEngine.Create;
+//  TargetFolderTemplateEngine.RegisterDynamicFunction('ifmt', ifmt);
   try
 
     if FDryRun then
@@ -897,9 +842,9 @@ begin
     // Prepare the destination file renaming feature
     m := Length(FSizes);
 
-    // Check, if multiple sizes, then either {SIZE} or {SIZENAME} must be in folder or in renamed filename
-    ProcRes.IsTargetFileRenamingStrategy := FRen.Enabled and (Pos('%3:s', FRen.FmtStr)+Pos('%5:s', FRen.FmtStr)>0);
-    ProcRes.IsMultipleTargetFolderStrategy := Pos('{SIZE}', FTargetFolder)+Pos('{SIZENAME}', FTargetFolder)>0;
+    // Check, if multiple sizes, then either SIZE or SIZENAME must be in folder or in renamed filename
+    ProcRes.IsTargetFileRenamingStrategy := Rename and TargetFolderTemplateEngine.Contains(FTargetFolder, ['SIZE', 'SIZENAME'], CURLYBRACEDELIMITERS);
+    ProcRes.IsMultipleTargetFolderStrategy := TargetFolderTemplateEngine.Contains(FTargetFilename, ['SIZE', 'SIZENAME'], CURLYBRACEDELIMITERS);
     if (Length(FSizes)>1) and not ProcRes.IsMultipleTargetFolderStrategy and not ProcRes.IsTargetFileRenamingStrategy then
         raise Exception.Create(SErrMultipleSizes);
 
@@ -908,14 +853,10 @@ begin
     // Create Destination Folders
     SetLength(ProcRes.TargetFolders, m);
     if ProcRes.IsMultipleTargetFolderStrategy then begin
-      if Pos('{SIZENAME}', FTargetFolder)>0 then begin
-        for i:=0 to m-1 do begin
-          if i<Length(FSizeNames) then SizeName := FSizeNames[i] else SizeName := IntToStr(FSizes[i]);
-          ProcRes.TargetFolders[i] := IncludeTrailingPathDelimiter(ExpandFilename(ReplaceStr(FTargetFolder, '{SIZENAME}', SizeName)));
-        end;
-      end else begin
-        for i:=0 to m-1 do
-          ProcRes.TargetFolders[i] := IncludeTrailingPathDelimiter(ExpandFilename(ReplaceStr(FTargetFolder, '{SIZE}', IntToStr(FSizes[i]))))
+      for i:=0 to m-1 do begin
+        TargetFolderTemplateEngine.Load('SIZE', IntToStr(FSizes[i]));
+        TargetFolderTemplateEngine.Load('SIZENAME', FSizeNames[i]);
+        ProcRes.TargetFolders[i] := IncludeTrailingPathDelimiter(ExpandFilename(TargetFolderTemplateEngine.Compile(FTargetFolder)));
       end;
     end else
       for i:=0 to m-1 do
@@ -991,10 +932,10 @@ begin
       // Save .imgtags
       if trImgTags in FTagsReports then begin
         for i:=0 to m-1 do begin
-          if ProcRes.IsMultipleTargetFolderStrategy or not ProcRes.IsTargetFileRenamingStrategy then
-            ImgTagsFilename := ProcRes.TargetFolders[i]+IMAGEINFOSFILETITLE
-          else
-            ImgTagsFilename := ProcRes.TargetFolders[i]+IMAGEINFOSFILETITLE+IntToStr(FSizes[i]);
+          //if ProcRes.IsMultipleTargetFolderStrategy and not ProcRes.IsTargetFileRenamingStrategy then
+          //  ImgTagsFilename := ProcRes.TargetFolders[i]+IMAGEINFOSFILETITLE
+          //else
+          ImgTagsFilename := ProcRes.TargetFolders[i]+IMAGEINFOSFILETITLE+IntToStr(FSizes[i]);
           Print(Format(SMsgWritingTagsReportFmt, [ImgTagsFilename]));
           ForceDirectories(ExtractFilePath(ImgTagsFilename));
           ProcRes.FilesTags.SaveAllToImgTagsFile(ImgTagsFilename, FSizes[i]);
@@ -1009,7 +950,30 @@ begin
     Dispatcher.Free;
     Tasks.Free;
     ProcRes.Free;
+    TargetFolderTemplateEngine.Free;
     FActive := false;
+  end;
+end;
+
+function TProcessor.ifmt(const VarName, Value, Params: string): string;
+var
+  r :TRegExpr;
+  Offset :integer;
+  Digits :integer;
+begin
+  r := TRegExpr.Create(IFMT_PARAMS_REGEXPR);
+  r.ModifierI := true;
+  try
+    if not r.Exec(Params) then
+      raise Exception.CreateFmt(SErrIfmtParamsFmt, [Params]);
+    Offset := StrToInt(r.Match[1]);
+    if (r.Match[2]='') or SameText(r.Match[2], 'AUTO') then
+      Digits := round(log10(self.FSourceFilenames.Count))+1
+    else
+      Digits := StrToInt(r.Match[2]);
+    result := Format('%*.*d', [Digits, Digits, StrToInt(Value)+Offset])
+  finally
+    r.Free;
   end;
 end;
 
@@ -1122,95 +1086,6 @@ begin
     raise Exception.CreateFmt(SErrInvalidSharpenStrFmt, [Str]);
 end;
 
-class function TProcessor.TryStrToRenameParams(const Str: string; out Params: TRenameParams; out ErrStr: string): boolean;
-var
-  Placeholders :TStringArray;
-  Items :TStringArray;
-  i, ParamCount :integer;
-
-  function IsPlaceHolder(const Placeholder :string; out Index :integer) :boolean;
-  var
-    i :integer;
-  begin
-    for i:=0 to High(Placeholders) do
-      if SameText(Placeholder, Copy(Placeholders[i], 1, Length(Placeholder))) then begin
-        Index := i;
-        inc(ParamCount);
-        Exit(true);
-       end;
-    result := false;
-  end;
-
-  function Err(const Msg :string) :boolean;
-  begin
-    ErrStr := Msg;
-    result := false;
-  end;
-
-begin
-  if not TryStrToPlaceholders(Str, '{', '}', Placeholders) then
-    Exit(Err(Format(SErrInvalidRenamingParamFmt, [Str])));
-
-  Params.FmtStr := '';
-  Params.Enabled := false;
-  Params.IndexDigits := -1; // Default - as long as maximum Index needs + 1
-  Params.IndexStart := 1;
-  ParamCount := 0;
-  if Length(Str)>0 then begin
-    // %FILETITLE%, %FILEEXT%, %INDEX:N,W%, %SIZE%, %INTERPOLATION%, %SIZENAME%
-    // %0:s        %1:s       %2:s         %3:s    %4:s             %5:s
-    // Default: img%2:s.%1:s
-    Params.FmtStr := Str;
-    if IsPlaceholder('FILEEXT', i) then
-      Params.FmtStr := ReplaceStr(Params.FmtStr, '{FILEEXT}', '%1:s');
-    if IsPlaceholder('FILETITLE', i) then
-      Params.FmtStr := ReplaceStr(Params.FmtStr, '{FILETITLE}', '%0:s');
-    if IsPlaceholder('INDEX', i) then begin
-      // Parse Parameters
-      if not TryParsePlaceholderParams(Placeholders[i], ':', Items) then
-        Exit(Err(Format(SErrInvalidINDEXPlaceholderFmt, [Placeholders[i]])));
-      if (Length(Items)>0) then begin
-        if not (TryStrToInt(Items[0], Params.IndexStart)) or (Params.IndexStart<0) then
-          Exit(Err(Format(SErrInvalidINDEXStartFmt, [Items[0]])));
-        if (Length(Items)>1) then begin
-          // auto, 0, 1, ...
-          if SameText(Items[1], 'AUTO') then
-            Params.IndexDigits := -1
-          else if not (TryStrToInt(Items[1], Params.IndexDigits)) or (Params.IndexDigits<0) then
-            Exit(Err(Format(SErrInvalidINDEXDigitsFmt, [Items[1]])));
-        end else if (Length(Items)>2) then
-          Exit(Err(Format(SErrInvalidINDEXParamCountFmt, [Placeholders[i]])));
-      end;
-      Params.FmtStr := ReplaceStr(Params.FmtStr, '{'+Placeholders[i]+'}', '%2:s');
-    end;
-    if IsPlaceholder('SIZE', i) then
-      Params.FmtStr := ReplaceStr(Params.FmtStr, '{SIZE}', '%3:s');
-    if IsPlaceholder('INTERPOLATION', i) then
-      Params.FmtStr := ReplaceStr(Params.FmtStr, '{INTERPOLATION}', '%4:s');
-    if IsPlaceholder('SIZENAME', i) then
-      Params.FmtStr := ReplaceStr(Params.FmtStr, '{SIZENAME}', '%5:s');
-    if ParamCount<Length(Placeholders) then
-      Exit(Err(SErrInvalidPlaceholder));
-    Params.Enabled := true;
-  end;
-  result := true;
-end;
-
-class function TProcessor.RenameParamsToStr(const Params: TRenameParams): string;
-begin
-  if Params.Enabled then begin
-    result := Format(Params.FmtStr, [
-      '{FILETITLE}',       // 0
-      '{FILEEXT}',        // 1
-      '{'+Format('INDEX:%d,%d', [Params.IndexStart, Params.IndexDigits])+'}', // 2
-      '{SIZE}',           // 3
-      '{INTERPOLATION}',  // 4
-      '{SIZENAME}'        // 5
-    ]);
-  end else
-    result := '';
-end;
-
 class function TProcessor.TryStrToTagsSources(const Str :string; out Value :TTagsSources) :boolean;
 var
   Item :string;
@@ -1317,17 +1192,17 @@ begin
   result := SizesToStr(FSizes);
 end;
 
-function TProcessor.GetTargetFiletemplate: string;
-begin
-  result := RenameParamsToStr(FRen);
-end;
-
 function TProcessor.GetSize: integer;
 begin
   if Length(FSizes)=0 then
     result := 0
   else
     result := FSizes[0];
+end;
+
+function TProcessor.GetRename: boolean;
+begin
+  result := FTargetFilename<>'';
 end;
 
 function TProcessor.GetInterpolation: TInterpolation;
@@ -1364,16 +1239,6 @@ procedure TProcessor.SetSize(AValue: integer);
 begin
   if AValue<=0 then
     raise Exception.CreateFmt(SErrInvalidSizesFmt, [IntToStr(AValue)]);
-end;
-
-procedure TProcessor.SetTargetFiletemplate(AValue: string);
-var
-  ErrMsg :string;
-  Params :TRenameParams;
-begin
-  if not TryStrToRenameParams(AValue, Params, ErrMsg) then
-    raise Exception.Create(ErrMsg);
-  FRen := Params;
 end;
 
 procedure TProcessor.SetInterpolation(AValue: TInterpolation);
@@ -1447,18 +1312,6 @@ begin
   result := FSuccess
 end;
 
-{ TProcessor.TParams }
-//
-//function TProcessor.TParams.GetParam(const Name : string): string;
-//begin
-//
-//end;
-//
-//procedure TProcessor.TParams.SetParam(const Name : string; AValue: string);
-//begin
-//
-//end;
-//
 initialization
 begin
   GetLocaleFormatSettings($409, TProcessor.FormatSettings);

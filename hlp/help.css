@@ -1,5 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 @import url(https://fonts.googleapis.com/css?family=Nunito);
+@import url(https://fonts.googleapis.com/css?family=Noto+Sans+Mono );
 
 body {
   max-width: 1000px;
@@ -101,7 +102,7 @@ nav a:hover {
 
 .terminal {
   padding: 0.3em;
-  font: 11pt Courier;
+  font: 11pt "Noto Sans Mono";
   background-image: url("img/terminalbkg.png");
   font-size: 11pt;
   background-color: black;

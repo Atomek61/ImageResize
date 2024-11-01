@@ -256,14 +256,14 @@ object MainDialog: TMainDialog
         Top = 4
         Width = 393
         TabStop = False
-        ActivePage = TabSheetSizes
+        ActivePage = TabSheetRenaming
         Align = alClient
         BorderSpacing.Around = 4
         ImagesWidth = 32
         MultiLine = True
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 0
+        TabIndex = 1
         TabOrder = 1
         Options = [nboMultiLine]
         object TabSheetSizes: TTabSheet
@@ -486,7 +486,7 @@ object MainDialog: TMainDialog
               Items.Strings = (
                 'img{INDEX:1,auto}.{FILEEXT}'
                 'img{INDEX:1,auto}_{SIZE}.{FILEEXT}'
-                'img{INDEX:1,auto}{SIZENAME}.{FILEEXT}'
+                'img{INDEX:1,auto}_{SIZENAME}.{FILEEXT}'
               )
               TabOrder = 3
               OnChange = ProjectChanged

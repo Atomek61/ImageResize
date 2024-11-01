@@ -29,10 +29,10 @@ short long            parameter comment
                                 in the target folders name, then each size must have a corresponding
                                 list of comma-separated names
    -w -watermark      file.png  A PNG watermark file and optional size, position and opacity, see example
-   -s -shuffle        0..n      Mixes the image list, makes sense together with -r.
-                                A random seed of 0 (assumed if ommited) means an unpredictable sequence.
-                                A fixed value will always shuffle a list in the same way if the number
-                                of files has not changed.
+   -s -shuffle        [0..n]    Mixes the image list, makes sense together with -r.
+                                An optional random seed of 0 (assumed if ommited) means an unpredictable
+                                sequence. A fixed value will always shuffle a list in the same way if the
+                                number of files has not changed.
    -z -sharpen        0..100..  Sharpen, a value >= 0: 0 off, 50 light, 100 good, 200 strong
    -m -meta           sources   EXIF | TAGS | EXIF,TAGS
                                 EXIF loads tags from origin files, TAGS from .tags files
