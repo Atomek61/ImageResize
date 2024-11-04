@@ -44,7 +44,7 @@
 
       <h1 id="overview">Übersicht</h1>
       <p>
-        <i>ImageResize</i> 4.1 ist eine App zur Größenänderung von JPEG- und PNG-Bildern
+        <i>ImageResize</i> 4.2 ist eine App zur Größenänderung von JPEG- und PNG-Bildern
         (auch Skalierung oder Resampling genannt).
         Sie kann viele Bilder verarbeiten und daraus Präsentationen (Web-Gallerien) erzeugen.
       </p>
@@ -63,6 +63,7 @@
       <a href="#settings">Einstellungen</a><br/>
       <a href="#commandline">Kommandozeilen-Parameter</a><br/>
       <a href="#mrkeditor">Wasserzeichen-Editor</a><br/>
+      <a href="#templateengine">Vorlagen-Prozessor</a><br/>
       
       <p>
         Fähigkeiten  
@@ -150,12 +151,12 @@
         <li><span class="size-color" style="background-color: #dcf0f7;">SCREEN</span> für Bilder die auf dem Bildschirm voll dargestellt werden sollen</li>
       </ul>
       <p>
-        Die gewählten Größen erhalten Bezeichner, damit sie über einen Namen durch den Platzhalter <i>{SIZENAME}</i> verwendet werden können.
+        Die gewählten Größen erhalten Bezeichner, damit sie über einen Namen durch den Platzhalter {<span class="vn">SIZENAME</span>} verwendet werden können.
         Der Platzhalter kann an folgenden Stellen verwendet werden:
       </p>
       <ul>
-        <li>Im Zielordner, z.B.: <i>img{SIZENAME}</i></li>
-        <li>In der Dateinamenvorlage bei Umbenennungen, z.B.: <i>img{INDEX:1,auto}{SIZENAME}.{FILEEXT}</i></li>
+        <li>Im Zielordner, z.B.: img{<span class="vn">SIZENAME</span>}</li>
+        <li>In der Dateinamenvorlage bei Umbenennungen, z.B.: img{<span class="vn">INDEX</span>.<span class="vf">ifmt(1,auto)</span>}{<span class="vn">SIZENAME</span>}.{<span class="vn">FILEEXT</span>}</li>
         <li>In den Vorlagen (Templates) der Präsentationen</li>
       </ul>
 
@@ -170,7 +171,7 @@
         Um Konflikte der Zielnamen zu vermeiden, wenn mehrere Zielgrößen angegeben werden,
         können Sie entweder mit <a href="#renaming">Umbenennen</a> verschiedene Dateinamen erzeugen,
         oder indem jede Größe einen eigenen Zielordner enthält. Dazu muss der Name des Zielordners
-        den Platzhalter <span class="plh">{SIZE}</span> enthalten.
+        den Platzhalter {<span class="vn">SIZE</span>} enthalten.
       </p>
       <a class="chfot" href="#contents">Inhalt</a>
       
@@ -189,22 +190,22 @@
         Die einfache Dateinamenvorlage erzeugt Namen wie diesen: <i>img085.jpg</i>.
         Die Datei-Nummerierung beginnt bei 1 und enthält nicht die Größe (in Pixeln).
         Dann ist es erforderlich für jede Größe einen eigenes Verzeichnis zu erzeugen. Dazu
-        fügen Sie in die Vorlage des Zielordners den Platzhalter <span class="plh">{SIZE}</span> ein.
+        fügen Sie in die Vorlage des Zielordners den Platzhalter {<span class="vn">SIZE</span>} ein.
       </p>
       <p>
-        Die Dateinamen-Vorlage ist im einfachsten Falle <span class="plh">img{INDEX.ifmt(1,3)}.{FILEEXT}</span>.
-        Der INDEX ist die 0-basierte laufende Nummer der Quelldatei in der Liste. Die Zahlen
-        1 und 3 hinter dem Schlüsselwort INDEX bedeuten, dass der Index bei 1 beginnt und 3
+        Die Dateinamen-Vorlage ist im einfachsten Falle img{<span class="vn">INDEX</span>.<span class="vf">ifmt(1,3)</span>}.{<span class="vn">FILEEXT</span>}.
+        Der <span class="vn">INDEX</span> ist die 0-basierte laufende Nummer der Quelldatei in der Liste. Die Zahlen
+        1 und 3 hinter dem Schlüsselwort <span class="vn">INDEX</span> bedeuten, dass der Index bei 1 beginnt und 3
         Ziffern mit führenden Nullen enthalten wird.
       </p>
       
       <h2 id="renadvanced">Strategie <b>"Erweitert"</b></h2>
       <p>
         Die Dateinamen-Vorlage in diesem Falle ist z.B.
-        <span class="plh">img{INDEX.ifmt(1,3)}_{SIZE}.{FILEEXT}</span>,
+        img{<span class="vn">INDEX</span>.<span class="vf">ifmt(1,3)</span>}_{<span class="vn">SIZE</span>}.{<span class="vn">FILEEXT</span>},
         um alle Dateien ohne Namenskonflikt im selben Verzeichnis zu erzeugen.
         Sie erzeugt einen Dateinamen wie <i>img085_1920.jpg</i>. Der Dateinamenskonflikt wird
-        vermieden durch Verwendung des <span class="plh">{SIZE}</span>-Platzhalters.
+        vermieden durch Verwendung des {<span class="vn">SIZE</span>}-Platzhalters.
       </p>
       
       <h2 id="rencustom">Strategie <b>"Angepasst"</b></h2>
@@ -218,58 +219,58 @@
         für verschiedene Größen im gemeinsamen Verzeichnis keinen Konflikt erzeugen,
         könnten so aussehen:
       </p>
-      <p><span class="plh">img{INDEX.ifmt(1,3)}_{SIZE}.{FILEEXT}</span></p>
-      <p>ergibt z.B. <span class="plh">img012_1920.jpg</span></p>
-      <p><span class="plh">{FILENAME}_{SIZE}.{FILEEXT}</span></p>
-      <p>ergibt z.B. <span class="plh">DSC3240_1920.jpg</span></p>
-      <p><span class="plh">{FILENAME}_{SIZENAME}.{FILEEXT}</span></p>
-      <p>ergibt z.B. <span class="plh">DSC3240_SCREEN.jpg</span></p>
+      <p>img{<span class="vn">INDEX</span>.<span class="vf">ifmt(1,3)</span>}_{<span class="vn">SIZE</span>}.{<span class="vn">FILEEXT</span>}</p>
+      <p>ergibt z.B. img012_1920.jpg</p>
+      <p>{<span class="vn">FILENAME</span>}_{<span class="vn">SIZE</span>}.{<span class="vn">FILEEXT</span>}</p>
+      <p>ergibt z.B. DSC3240_1920.jpg</p>
+      <p>{<span class="vn">FILENAME</span>}_{<span class="vn">SIZENAME</span>}.{<span class="vn">FILEEXT</span>}</p>
+      <p>ergibt z.B. DSC3240_SCREEN.jpg</p>
       
       <h2 id="placeholders">Verfügbare Platzhalter</h2>
       <table class="partab">
         <tr>
-          <td><span class="plh">{FILENAME}</span></td>
+          <td>{<span class="vn">FILENAME</span>}</td>
           <td>Dies ist der originale Dateiname, inklusive Erweiterung und ohne Pfad.</td>
         </tr>
         <tr>
-          <td><span class="plh">{FILETITLE}</span></td>
+          <td>{<span class="vn">FILETITLE</span>}</td>
           <td>Dies ist der originale Dateiname, ohne die Erweiterung.</td>
         </tr>
         <tr>
-          <td><span class="plh">{FILEEXT}</span></td>
+          <td>{<span class="vn">FILEEXT</span>}</td>
           <td>Die Erweiterung des Originalnamens ohne den Punkt.<br/><br/>
           Sie können das Format der Zieldatei nicht ändern, indem Sie
           die Erweiterung ändern. Dies könnte Bildbetrachter verwirren.  
           </td>
         </tr>
         <tr>
-          <td><span class="plh">{INDEX.ifmt(N[,D,AUTO])}</span></td>
+          <td>{<span class="vn">INDEX</span>.<span class="vf">ifmt(N[,D,AUTO])</span>}</td>
           <td>
             Der 0-basierte Index (laufende Nummer) der Datei in der Liste.<br/><br/>
             <i>N</i> ist ein Offset (Versatz). Da Listen normalerweise aber mit 1 beginnen, können sie diesen Offset angeben.<br/><br/>D ist die Zahl der Stellen der resultierenden Zahl, die ggf. führende Nullen erhält. Dadurch wird die korrekte lexikalische Ordnung der Dateinamen ermöglicht. AUTO an dieser Steller bewirkt, dass die Zahl der benötigten Stellen automatisch anhand der Zahl der Bilder ermittelt wird.<br/><br/>
           </td>
         </tr>
         <tr>
-          <td><span class="plh">{SIZE}</span></td>
+          <td>{<span class="vn">SIZE</span>}</td>
           <td>Die Zielgröße in Pixeln der aktuellen Datei.</td>
         </tr>
         <tr>
-          <td><span class="plh">{SIZENAME}</span></td>
+          <td>{<span class="vn">SIZENAME</span>}</td>
           <td>Der zugeordnete Name der Zielgröße.</td>
         </tr>
         <tr>
-          <td><span class="plh">{INTERPOLATION}</span></td>
+          <td>{<span class="vn">INTERPOLATION</span>}</td>
           <td>Der Name der aktuell gewählten Interpolation.</td>
         </tr>
       </table>
       <p>
-        Neu ab Version 4.2 ist die erweiterte Template-Engine. Damit können überall wo Platzhalter eingesetzt werden, bestimme Funktionen verwendet werden. Neben der mehrfach erwähnten ifmt-Funktion können die folgenden Funktionen verwendet werden:
+        Neu ab Version 4.2 ist der erweiterte <a href="#templateengine">Vorlagen-Prozessor</a>. Damit können überall wo Platzhalter eingesetzt werden, bestimme Funktionen verwendet werden. Neben der mehrfach erwähnten ifmt()-Funktion können die folgenden Funktionen verwendet werden: lower, upper, slice, add, fmt, title, ext, dext, numin. Siehe <a href="#functions">Funktionen</a>
         <table>
           <tr>
-            <td><span class="plh">lower()</span></td><td>Kleinbuchstaben</td>
+            <td><span class="vf">lower()</span></td><td>Kleinbuchstaben</td>
           </tr>
           <tr>
-            <td><span class="plh">upper()</span></td><td>Großbuchstaben</td>
+            <td><span class="vf">upper()</span></td><td>Großbuchstaben</td>
           </tr>
         </table>
       </p>
@@ -283,7 +284,7 @@
         ImageResize mischt zunächst die Reihenfolge der Bilder bevor es die resampelten Bilder erzeugt.
         Das hat nur Sinn, wenn dabei die Zieldateinamen den Index des Bildes am Beginn des variablen 
         Teiles des Namens enthält, damit die lexikalische Reihenfolge aufsteigend ist.
-        Eine geeignete Vorlage für den Zielnamen ist z.B. <span class="plh">img{INDEX.ifmt(1,3)}.{FILEEXT}</span>.
+        Eine geeignete Vorlage für den Zielnamen ist z.B. img{<span class="vn">INDEX</span>.<span class="vf">ifmt(1,3)</span>}.{<span class="vn">FILEEXT</span>}.
       </p>
       <p>
         Der Parameter <i>Saat</i> kontrolliert die zufällige Abfolge. Eine Saat von 0 ("Zufällig") wird
@@ -317,7 +318,7 @@
       </p>
       <p>
         Um für jede Zielgröße ein anderes Wasserbild festlegen zu können, müssen Sie
-        im Namen der Wasserbilddatei den Platzhalter <span class="plh">{SIZE}</span> angeben.
+        im Namen der Wasserbilddatei den Platzhalter {<span class="vn">SIZE</span>} angeben.
         ImageResize erwartet in diesem Falle ein Wasserbild für jede Größe, deren Name 
         der Vorlage entspricht, also die Größe enthält.
       </p>
@@ -706,7 +707,7 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
         zunächst eine geeignete .irs-Datei und starten dann das Programm mit diesen Kommandozeilenparametern:
       </p>
       <p>
-        <span class="plh">C:\Programme\ImageResize\ImageResize.exe C:\mylist.irs -A -X</span>
+        C:\Programme\ImageResize\ImageResize.exe C:\mylist.irs -A -X
       </p>
       <a class="chfot" href="#contents">Inhalt</a>
       
@@ -812,6 +813,121 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
         </tr>
       </table>
       <a class="chfot" href="#contents">Inhalt</a>
+    </article>
+
+    <article id="templateengine">
+      <h1>Vorlagen-Prozessor</h1>
+      <p>
+        Der Vorlagen-Prozessor ersetzt Zeichenketten in anderen Zeichenketten. Er wird an verschiedenen Stellen des Programmes eingesetzt und kommt z.B. bei der Erzeugung von Bildern in mehreren Größen in einem gemeinsamen  Verzeichnis oder bei der Erzeugung von Präsentationen zum Einsatz.
+      </p>
+      <p>
+        Dazu wird zunächst eine Liste von Variablen angelegt. Die wichtigsten sind <span class="vn">INDEX</span>, <span class="vn">SIZE</span> und <span class="vn">SIZENAME</span>. Jede Variable hat eine Zeichenkette als Wert. Der Prozessor ersetzt die Platzhalter der Variablen in einer gegebenen Text-Vorlage durch ihren Wert.
+      </p>  
+      <p>
+        Beispiel:
+      </p>
+      <p>
+        Variablen: <span class="vn">INDEX</span>="<span class="vv">0</span>", <span class="vn">SIZE</span>="<span class="vv">1280</span>", <span class="vn">SIZENAME</span>="<span class="vv">SCREEN</span>"<br/>
+        Text-Vorlage: "C:\MyPhotos\{<span class="vn">SIZENAME</span>}\bild{<span class="vn">INDEX</span>}_{<span class="vn">SIZE</span>}px.jpg"<br/>
+        Ergebnis: "C:\MyPhotos\<span class="vv">SCREEN</span>\bild<span class="vv">0</span>_<span class="vv">1280</span>px.jpg"
+      </p>
+      <p>
+        Die Werte der Variablen sind letztlich immer Zeichenketten. Vor ihrer <i>Auflösung</i> können sie auch Referenzen auf andere Variablen enthalten und <i>Funktionen</i>. So könnte zum Beispiel eine Variable Namens <span class="vn">IMGFILENAME</span> den Wert "img{<span class="vn">INDEX</span>.<span class="vf">add(1)</span>.<span class="vf">fmt(3)</span>}_{<span class="vn">SIZE</span>}.{<span class="vn">ORGFILENAME</span>.<span class="vf">ext()</span>.<span class="vf">lower()</span>}" enthalten. Dieser Wert enthält Referenzen auf die Variablen <span class="vn">INDEX</span>, <span class="vn">SIZE</span> und <span class="vn">ORGFILENAME</span>. Auf den Wert der Variablen <span class="vn">INDEX</span> wird die Funktion "<span class="vf">add(1)</span>" angewendet, die dem Wert als Ganzzahl eine 1 zuaddiert und die Funktion "<span class="vf">fmt(3)</span>", die die Zahl in eine 3-stellige mit führenden Nummer umwandelt. Von der Variablen <span class="vn">ORGFILENAME</span> wird mit der Funktion "<span class="vf">ext()</span>" die Dateierweiterung genommen und mit der Funktion "<span class="vf">lower()</span>" in Kleinbuchstaben umgewandelt. 
+      </p>
+      <p>
+        Vor der Erzeugung jeden einzelnen Bildes werden die Variablen aktualisiert und auf Abhängigkeiten untereinander untersucht. Diese Abhängigkeiten werden vor der Ersetzung in der Text-Vorlage <i>aufgelöst</i>. Auflösen bedeutet dabei, dass zunächst alle Variablen, die nur von selbst unabhängigen Variablen abhängen, prozessiert werden. Damit sind diese Variablen selbst unabhängig und können wiederum in andere Variablen eingesetzt werden, die von ihnen abhängen. Dies geschieht solange, bis alle Variablen aufgelöst, d.h. unabhängig sind. Dabei werden zirkuläre (gegenseitige und indirekt gegenseitige) erkannt und als Fehler gemeldet. 
+      </p>
+      <p>
+        Die Liste der zur Verfügung stehenden Variablen ist vom Zusammenhang abhängig und wird in den jeweiligen Zusammenhängen genannt. Es gibt die Zusammenhänge <i>Zielverzeichnis</i>, <i>Zieldateinamen</i> und <i>Präsentation</i>.
+      </p>
+      <p>
+        Die Liste der zur Verfügung stehenden Funktionen ist ebenfalls vom Zusammenhang abhängig. Funktionen wie <span class="vf">lower()</span> und <span class="vf">upper()</span> stehen überall zur Verfügung und wirken gleich. Die Wirkung der Funktion <span class="vf">fmt(digits)</span> hängt vom Zusammenhang ab. Im Zusammenhang mit der Umbenennung kann sie zur Erzeugung des Zielverzeichnisnamens mit dem Parameter "AUTO" verwendet werden, der die Zahl der Stellen selbsttätig anhand der zur wandelnden Bilder ermittelt. Im Zusammenhang mit dem Zielverzeichnisnamen gibt es diesen Parameter nicht.
+      </p>
+
+    </article>
+    <article>
+      <h1 id="functions">Funktionen</h1>
+      <p>
+        Die Tabelle zeigt Funktionen, die im Zusammenhang mit jedem Vorlagen-Prozessor verfügbar sind. Um eine Funktion auf einen Variablenwert anzuwenden ist sie wie im Beispiel anzuhängen. Um weitere Funktionen anzuwenden, können sie diese an die letzte anhängen.
+      </p>
+      <p>
+        {<span class="vn">VARNAME</span>.<span class="vf">fnname(parameters)</span>}
+      </p>
+      <p>
+        Beispiel: {<span class="vn">MYVAR</span>.<span class="vf">fna(1)</span>.<span class="vf">fnb(2,3)</span>}
+      </p>  
+      <table class="fn-table">
+        <tr>
+          <td><span class="vf">add(n)</span></td><td>Zuaddieren einer konstanten Ganzzahl, um z.B. mit 1 aus dem 0-basierten Index eine 1-basiert Nummer zu machen, oder um eine bestehende Liste mit nummerierten Bildern zu ergänzen. Der Wert darf auch negativ sein.</td>
+        </tr><tr>
+          <td><span class="vf">dext()</span></td><td>Ermittelt die Dateinamenserweiterung mit Punkt</td>
+        </tr><tr>
+          <td><span class="vf">ext()</span></td><td>Ermittelt die Dateinamenserweiterung ohne Punkt</td>
+        </tr><tr>
+          <td><span class="vf">ifmt(n,[m|auto])</span></td><td>Formatiert eine Ganzzahl, indem der Wert n zuaddiert wird und dann mit führenden Nullen aufgefüllt wird, sodaß die Zahl m Stellen hat. "auto" bedeutet im Zusammenhang mit Dateinamen, dass die Stellenzahl aus der Gesamtzahl der Bilder ermitelt wird. m kann weggelassen werden, dann wird die auto-Formatierung verwendet.</td>
+        </tr><tr>
+          <td><span class="vf">fmt(d)</span></td><td>Zahl wird mit führenden Nullen aufgefüllt, dass das Ergebnis d Stellen hat. Im Zusammenhang mit dem <span class="vn">INDEX</span> kann "auto" verwendet werden. Dann wird die Zahl der Stellen aus der Zahl der Bilder ermittelt.</td>
+        </tr><tr>
+          <td><span class="vf">lower()</span></td><td>Wandelt in Kleinbuchstaben um</td>
+        </tr><tr>
+          <td><span class="vf">numin()</span></td><td>Ermittelt die in einem Text enthaltene Ganzzahl. Das kann nützlich sein, um aus dem Namen eines Fotos die Nummer des Fotos zu ermitteln, z.B. aus "DSC05023.jpg" wird "05023" gezogen. Ist keine Nummer vorhanden, wird eine leere Zeichenkette zurückgegeben.</td>
+        </tr><tr>
+          <td><span class="vf">slice(n:m)</span></td><td>Kopiert eine Teil-Zeichenkette heraus von Stelle n bis Stelle m. n kann weggelassen werden (dann Beginn mit dem ersten Zeichen), ebenso m, dann bis zum Ende der Zeichnekette. m kann einen negativen Wert haben. -4 bedeutet z.B. dass die letzten 4 Zeichen weggelassen werden.</td>
+        </tr><tr>
+          <td><span class="vf">title()</span></td><td>Ermittelt den Dateinamen ohne Pfad und Erweiterung</td>
+        </tr><tr>
+          <td><span class="vf">upper()</span></td><td>Wandelt in Großbuchstaben um</td>
+        </tr>
+      </table>
+    </article>
+
+    <article>
+      <h1>Variablen</h1>
+      <p>
+        Variablen sind benannte Speicher mit Zeichenketten darin. Sie werden vom <a href="templateengine">Vorlagen-Prozessor</a> verwendet, um Platzhalter in den Vorlagen zu ersetzen und ein Ergebnistext zu erzeugen.
+      </p> 
+      <p>
+        Vorlage-Prozessoren werden in verschiedenen Zusammenhängen in ImageResize eingesetzt. Welche Variablen in welchem Zusammenhang verwendet werden können ist in der Tabelle ersichtlich.
+      </p>  
+      <table>
+        <tr>
+          <td>INDEX</td><td></td><td></td>
+        </tr><tr>
+          <td>SIZE</td><td></td><td></td>
+        </tr><tr>
+          <td>SIZENAME</td><td></td><td></td>
+        </tr><tr>
+          <td>ORGWIDTH</td><td></td><td></td>
+        </tr><tr>
+          <td>ORGHEIGHT</td><td></td><td></td>
+        </tr><tr>
+          <td>ORGFILENAME</td><td></td><td></td>
+        </tr><tr>
+          <td>ORGFILESIZE</td><td></td><td></td>
+        </tr><tr>
+          <td>FILENAME</td><td></td><td></td>
+        </tr><tr>
+          <td>FILETITLE</td><td></td><td></td>
+        </tr><tr>
+          <td>FILEEXT</td><td></td><td></td>
+        </tr><tr>
+          <td>INTERPOLATION</td><td></td><td></td>
+        </tr><tr>
+          <td>IMGFILENAME</td><td></td><td></td>
+        </tr><tr>
+          <td>IMGWIDTH</td><td></td><td></td>
+        </tr><tr>
+          <td>IMGHEIGHT</td><td></td><td></td>
+        </tr><tr>
+          <td>IMGFILESIZE</td><td></td><td></td>
+        </tr><tr>
+          <td></td><td></td><td></td>
+        </tr><tr>
+          <td></td><td></td><td></td>
+        </tr><tr>
+        </tr>
+      </table>
+
     </article>
   </main>
 

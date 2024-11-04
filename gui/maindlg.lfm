@@ -481,12 +481,12 @@ object MainDialog: TMainDialog
               Height = 23
               Hint = 'Enter a filename template containing placeholders for special values.'#13#10'This template will be expanded for each resampled image. Insert the'#13#10'{SIZE} placeholder to enable multiple sizes in a common folder.'
               Top = 113
-              Width = 272
+              Width = 336
               ItemHeight = 15
               Items.Strings = (
-                'img{INDEX:1,auto}.{FILEEXT}'
-                'img{INDEX:1,auto}_{SIZE}.{FILEEXT}'
-                'img{INDEX:1,auto}_{SIZENAME}.{FILEEXT}'
+                'img{INDEX.ifmt(1)}.{FILEEXT}'
+                'img{INDEX.ifmt(1)}_{SIZE}.{FILEEXT}'
+                'img{INDEXifmt(1)}_{SIZENAME}.{FILEEXT}'
               )
               TabOrder = 3
               OnChange = ProjectChanged
@@ -1436,7 +1436,7 @@ object MainDialog: TMainDialog
       ParentFont = False
     end
     object PanelTarget: TPanel
-      Left = 200
+      Left = 192
       Height = 51
       Top = 416
       Width = 485
@@ -1517,10 +1517,14 @@ object MainDialog: TMainDialog
         ParentFont = False
       end
       object LabelCurrentDir: TLabel
-        Left = 112
+        AnchorSideLeft.Control = Label22
+        AnchorSideLeft.Side = asrBottom
+        AnchorSideTop.Control = Label22
+        Left = 110
         Height = 1
         Top = 32
         Width = 1
+        BorderSpacing.Left = 9
         Font.Color = clGrayText
         ParentFont = False
       end

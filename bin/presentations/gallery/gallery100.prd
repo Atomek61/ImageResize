@@ -5,7 +5,7 @@ Version=100
 [Presentation]
 Id=Gallery100
 Class=Presentation
-Delimiters.html={,}
+Delimiters.html=«,»
 Delimiters.css=«,»
 Title=Gallery 1.0
 RootDir=100

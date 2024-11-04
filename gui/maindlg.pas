@@ -59,8 +59,8 @@ const
   MAINDIALOG_SECTION    = 'MainDialog';
   PRESDIALOG_SECTION    = 'PresentationDialog';
 
-  RENSIMPLETEMPLATE     = 'img{INDEX:1,3}.{FILEEXT}';
-  RENADVANCEDTEMPLATE   = 'img{INDEX:1,3}_{SIZE}.{FILEEXT}';
+  RENSIMPLETEMPLATE     = 'img{INDEX.ifmt(1)}.{FILEEXT}';
+  RENADVANCEDTEMPLATE   = 'img{INDEX.ifmt(1)}_{SIZE}.{FILEEXT}';
   DEFAULT_SRCMASK       = '*.jpg;*.png';
 
   SIZEBTNHINTFMT        = '%s - %dpx';
@@ -88,7 +88,7 @@ const
 
 resourcestring
   SCptDependenciesFmt = 'Build with Lazarus %s, BGRABitmap %s, dExif %s, RichMemo';
-  SUrlWebHelp = 'http://www.atomek.de/imageresize/hlp40/gui/en';
+  SUrlWebHelp = 'http://www.atomek.de/imageresize/hlp42/gui/en';
   SLocDirHelp = 'hlp\gui\en';
 
 type
@@ -1253,14 +1253,13 @@ begin
   FSizeInfos.Add(True, 360, '<auto>');
   Snapshot('step-sizes', PanelParams, -2, -40, 360, 95);
   EditTargetFolder.Text := 'mygallery\img{SIZE}';
-  Snapshot('step-targetfolder', PanelTarget, -200, -8, 360, 60);
+  Snapshot('step-targetfolder', PanelTarget, -190, -8, 360, 60);
   Snapshot('step-execute', ButtonExecute, 0, 0, 0, 0);
   Snapshot('buttons-project', ToolButtonNew, 0, 0, 4*ToolButtonNew.Width, ToolButtonNew.Height);
   FSizeInfos.Clear;
   FSizeInfos.Add(True, 120, '<auto>');
   FSizeInfos.Add(False, 800, '<auto>');
   FSizeInfos.Add(True, 1920, '<auto>');
-//  EditSizes.Text := '120, 800, 1920';
   Snapshot('sizes-multiple', ListBoxSizes, -6, -24, 240, 90);
 
   ToolButtonQuality.Click;
@@ -2042,8 +2041,8 @@ begin
         // TargetFolder nor in TargetFilename
         TargetFolder := EditTargetFolder.Text;
         if (FSizeInfos.EnabledCount>1)
-          and not templates.TEngine.Contains(TargetFolder, ['SIZE', 'SIZENAME'], CURLYBRACEDELIMITERS)
-          and not (Processor.Rename and (templates.TEngine.Contains(Processor.TargetFilename, ['SIZE', 'SIZENAME'], CURLYBRACEDELIMITERS))) then
+          and not templates.TEngine.ContainsOneOf(TargetFolder, ['SIZE', 'SIZENAME'], CURLYBRACEDELIMITERS)
+          and not (Processor.Rename and (templates.TEngine.ContainsOneOf(Processor.TargetFilename, ['SIZE', 'SIZENAME'], CURLYBRACEDELIMITERS))) then
           raise Exception.Create(SErrEnterPlaceholder);
 
         // Hook the processor

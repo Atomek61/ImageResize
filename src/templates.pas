@@ -27,13 +27,6 @@ unit templates;
 //   result := Engine.Compile('My File {FILENAME} has a size of {SIZE} Pixels');
 //
 
-// \{(\w+)(?:\.((\w+)\(([\d,]*)\)))?\}
-// "Hier kann {FILENAME.slice(3,4)} was sein"
-// "Oder {INDEX.fmti(3,1)} hier"
-// match(1) INDEX
-// match(2) ifmt
-// match(3) 3,1
-
 interface
 
 uses
@@ -41,11 +34,18 @@ uses
 
 const
   // The Pattern must be without surrounding delimiters - they will be added automatically
-  DEFAULT_VARPATTERN = '(\w+)(?:\.(?:(\w+)\(([\w,]*)\)))?'; // VARIABLE.fn(p1,p2)
+//  VARPATTERN = '^(\w+)(?:\.(?:(\w+)\(([\w,:\-]*)\)))?$'; // VARIABLE.fn(p1,p2)
+  EXPPATTERN = '^(\w+)((?:\.(?:\w+)\((?:[\w\d\-,:]*)\))*)$';
+  FNCPATTERN = '\.(\w+)\(([\w\d\-,:]*)\)';
+
+  IFMT_PARAMS_PATTERN   = '(\d+)(?:,(\d+))';
+  SLICE_PARAMS_PATTERN  = '(\d+)*:((?:-?\d+)*)';
+  //ADD_PARAMS_PATTERN    = '(\d+)';
+  //FMT_PARAMS_PATTERN    = '(\d+)';
 
 type
 
-  TParamsArray = array of integer;
+  TIntegerArray = array of integer;
 
   { TDelimiters }
 
@@ -79,8 +79,7 @@ type
   TEngine = class
   public type
 
-    TStaticFunction = function(const Value :string; const Params :TParamsArray) :string;
-    TDynamicFunction = function(const VarName, Value, Params :string) :string of object;
+    TTemplateFunction = function(const Value :string; const Params :string) :string of object;
 
     TStats = record
       DepsTotal :integer; // Is 0 after successfull solving all
@@ -88,14 +87,9 @@ type
       Unknown :integer;
     end;
 
-    { TStaticFunctionDef }
-
-    TStaticFunctionDef = record
+    TFunctionDef = record
       Name :string;
-      StaticFn :TStaticFunction;
-      ParamsExpr :string;
-      ParamCount :integer;
-      function Call(const Value, Params :string) :string;
+      Fn :TTemplateFunction;
     end;
 
   private type
@@ -107,35 +101,40 @@ type
       DepsCount :integer;  // Number of vars which do refer to this
     end;
 
-    { TVarExpr }
+    { TExpression }
 
-    TVarExpr = record
-      Name :string;
-      Fn :string;
-      Params :string;
-      From :integer;
-      Len :integer;
-      function Top :integer;
+    TExpression = record
+      VarName :string;
+      FnCalls :string;
     end;
+
+    TFnCall = record
+      FnName :string;
+      Params :string;
+    end;
+    TFnCalls = TArray<TFnCall>;
 
     { TIterator }
 
     TIterator = record
-      Engine :TEngine;
+      Delimiters :TDelimiters;
+      Cursor1 :integer;
+      Cursor2 :integer;
       Subject :string;
+      From :integer;
+      Len :integer;
       IsMatch :boolean;
-      constructor Create(Engine :TEngine; const Subject :string);
-      function Next(out Expr :TVarExpr) :boolean;
+      constructor Create(const Subject :string; const Delimiters :TDelimiters);
+      function Next(out Expression :string) :boolean;
     end;
 
   private
     FVarDict :TDictionary<string, TKeyVar>;
     FVars :TObjectList<TKeyVar>;
     FDelimiters :TDelimiters;
-    FVarPattern :string;
-    FVarExpr :TRegExpr;
-    FStaticFns :TDictionary<string, TStaticFunctionDef>;
-    FDynamicFunctions :TDictionary<string, TDynamicFunction>;
+    FExpRegExpr :TRegExpr;
+    FFnCallsRegExpr :TRegExpr;
+    FFunctions :TDictionary<string, TTemplateFunction>;
     FReplacementCount :integer;
     function GetCount: integer;
     function GetItem(const Key :string): string;
@@ -144,82 +143,250 @@ type
     procedure SetDelimiters(const AValue: TDelimiters);
     //function Next(const Txt :string; var Iterator :TIterator; out Key :string) :boolean;
     procedure SetItem(const Key :string; const Value: string);
-    procedure CompileVarPattern;
-    procedure SetVarPattern(AValue: string);
+    //procedure CompileVarPattern;
+    //procedure SetVarPattern(AValue: string);
+    class function ParseName(const Expression :string) :string;
+    function ParseExpression(const Expression :string) :TExpression;
+    function ParseFnCalls(const FnCalls :string) :TArray<TFnCall>;
+    function FnLower(const Value, Params :string) :string;
+    function FnUpper(const Value, Params :string) :string;
+    function FnIFmt(const Value, Params :string) :string;
+    function FnSlice(const Value, Params :string) :string;
+    function FnAdd(const Value, Params :string) :string;
+    function FnFmt(const Value, Params :string) :string;
+    function FnTitle(const Value, Params :string) :string;
+    function FnExt(const Value, Params :string) :string;
+    function FnDext(const Value, Params :string) :string;
+    function FnNumIn(const Value, Params :string) :string;
   public
-    constructor Create(RegisterDefaultStaticFunctions :boolean = true);
+    Stats :TStats;
+    constructor Create(RegisterDefaultFunctions :boolean = true);
     destructor Destroy; override;
     procedure Clear;
     procedure Add(const Key :string; const Value :string = '');
     procedure Load(const Key :string; const Value :string);
     procedure Reload(Index :integer; const Value :string);
-    procedure RegisterStaticFunction(const Definition :TStaticFunctionDef);
-    procedure RegisterDefaultStaticFunctions;
-    procedure RegisterDynamicFunction(const Name :string; Fn :TDynamicFunction);
-    function TrySolve(out Stats :TStats) :boolean;
-    procedure Solve(out Stats :TStats);
+    procedure RegisterFunction(const Name :string; Fn :TTemplateFunction);
+    function TrySolve :boolean;
+    procedure Solve;
     function Compile(const Subject :string) :string;
     function TryGetValue(const Key :string; out Value :string) :boolean;
     function GetValue(const Key :string) :string; overload;
-    class function DecoratePattern(const Pattern :string; const Delimiters :TDelimiters) :string;
-    class function Contains(const Template :string; const Names :array of string; const Delimiters :TDelimiters) :boolean;
+//    class function DecoratePattern(const Pattern :string; const Delimiters :TDelimiters) :string;
+    class function ContainsOneOf(const Template :string; const Names :array of string; const Delimiters :TDelimiters) :boolean;
     property Count :integer read GetCount;
     property Items[const Key :string] :string read GetItem write SetItem; default;
     property Keys[Index :integer] :string read GetKey;
     property Values[Index :integer] :string read GetValue;
     property Delimiters  :TDelimiters read FDelimiters write SetDelimiters;
-    property VarPattern :string read FVarPattern write SetVarPattern;
+//    property VarPattern :string read FVarPattern write SetVarPattern;
     property ReplacementCount :integer read FReplacementCount;
   end;
 
 // Checks against the default syntax VARNAME.fn(..)
 
 
-implementation  // »SIZE«      «SIZE»
-
 resourcestring
-  SErrVarNotFoundFmt = 'Variable ''%s'' not found in VarEngine.';
-  SErrInvalidDelimitersFmt = 'Invalid delimiters ''%s''.';
-  SErrSolving = 'Cant solve valiables (circular dependencies?)';
-  SErrInvalidFunctionFmt = 'Engine function %s not found';
-  SErrInvalidStaticFunctionParamsFmt = 'Invalid parameter ''%s'' for engine function %s';
-  SErrInvalidParamsFmt = 'invalid parameter ''%s''';
-  SErrStaticFunctionFmt = 'Error in engine function %s - %s';
-  SErrDynamicFunctionFmt = 'Error in engine dynamic function %s - %s';
+  SErrInvalidExpressionFmt      = 'Invalid template expression "%s"';
+  SErrVarNotFoundFmt            = 'Variable "%s" not found in template engine.';
+  SErrInvalidDelimitersFmt      = 'Invalid delimiters "%s".';
+  SErrSolving                   = 'Cant solve variables (circular dependencies?)';
+  SErrInvalidParamsFmt          = 'invalid parameter "%s"';
+  SErrInvalidNumberOfParamsFmt  = 'invalid number of parameters (%d expected)';
+  SErrInvalidNoParamsExpected   = 'no parameter expected';
+  SErrTemplateFunctionNotFoundFmt = 'Function "%s" not found';
+  SErrDynamicFunctionFmt        = 'Error in template engine function %s - %s';
+  SErrInvalidParamNotInt        = 'integer expected';
 
-const
-  FN_LOWER_NAME = 'lower';
-  FN_UPPER_NAME = 'upper';
-  FN_IFMT_NAME  = 'ifmt';
+implementation
 
-type
-  TIntegerArray = array of integer;
-
-function FnLower(const Value :string; const Params :TParamsArray) :string;
+function IsWordChar(c: Char): Boolean;
 begin
+  Result := c in ['A'..'Z', 'a'..'z', '0'..'9', '_'];
+end;
+
+function Split(const Input: string; const Separators: array of Char): TArray<string>;
+var
+  s, e, i: Integer;
+  IsSeparator: Boolean;
+begin
+  Result := nil;
+  s := 1;
+  while s <= Length(Input) do begin
+    e := s;
+    while e <= Length(Input) do begin
+      IsSeparator := False;
+      for i := Low(Separators) to High(Separators) do begin
+        if Input[e] = Separators[i] then begin
+          IsSeparator := True;
+          Break;
+        end;
+      end;
+      if IsSeparator then
+        Break;
+      Inc(e);
+    end;
+    SetLength(Result, Length(Result) + 1);
+    Result[High(Result)] := Copy(Input, s, e - s);
+    s := e + 1;
+  end;
+end;
+
+function StrToIntegerArray(const Value: string; const Delimiters :array of char): TIntegerArray;
+var
+  s :TArray<string>;
+  i, n :integer;
+begin
+  result := nil;
+  s := Split(Value, Delimiters);
+  for i:=0 to High(s) do
+    if not TryStrToInt(s[i], n) then
+      raise Exception.Create(SErrInvalidParamNotInt)
+    else begin
+      SetLength(result, Length(result)+1);
+      result[High(result)] := n;
+    end;
+end;
+
+function TEngine.FnLower(const Value, Params: string): string;
+begin
+  if Params<>'' then
+    raise Exception.CreateFmt(SErrInvalidNumberOfParamsFmt, [0]);
   result := LowerCase(Value);
 end;
 
-function FnUpper(const Value :string; const Params :TParamsArray) :string;
+function TEngine.FnUpper(const Value, Params: string): string;
 begin
+  if Params<>'' then
+    raise Exception.CreateFmt(SErrInvalidNumberOfParamsFmt, [0]);
   result := UpperCase(Value);
 end;
 
 // INDEX.ifmt(1,3)  0 => 001
-function FnIfmt(const Value :string; const Params :TParamsArray) :string;
+function TEngine.FnIFmt(const Value, Params: string): string;
 var
+  IntParams :TIntegerArray;
+  Offset, Digits :integer;
   IntValue :integer;
+  r :TRegExpr;
 begin
-  IntValue := StrToInt(Value);
-  result := Format('%.*d', [Params[1], IntValue + Params[0]]);
+  if not TryStrToInt(Value, IntValue) then
+    raise Exception.Create(SErrInvalidParamNotInt);
+  r := TRegExpr.Create(IFMT_PARAMS_PATTERN);
+  if not r.Exec(Params) then
+    raise Exception.CreateFmt(SErrInvalidParamsFmt, [Params]);
+  IntParams := StrToIntegerArray(Params, [',']);
+  Offset := IntParams[0];
+  if Length(IntParams)=2 then Digits := IntParams[1] else Digits := 0;
+  if Digits=0 then
+    result := IntToStr(IntValue+Offset)
+  else
+    result := Format('%*.*d', [Digits, Digits, IntValue + Offset]);
 end;
 
-const
-  DEFAULT_SOLVERFUNCTIONS :array[0..2] of TEngine.TStaticFunctionDef = (
-    (Name: FN_LOWER_NAME; StaticFn: FnLower; ParamsExpr: ''; ParamCount: 0),
-    (Name: FN_UPPER_NAME; StaticFn: FnUpper; ParamsExpr: ''; ParamCount: 0),
-    (Name: FN_IFMT_NAME;  StaticFn: FnIFmt;  ParamsExpr: '(\d+),(\d+)'; ParamCount: 2)
-  );
+function TEngine.FnSlice(const Value, Params: string): string;
+var
+  r :TRegExpr;
+  p0, p1 :integer;
+begin
+  r := TRegExpr.Create(SLICE_PARAMS_PATTERN);
+  if not r.Exec(Params) then
+    raise Exception.CreateFmt(SErrInvalidParamsFmt, [Params]);
+  if r.Match[1]='' then
+    p0 := 1
+  else
+    p0 := StrToInt(r.Match[1]);
+  if r.Match[2]='' then
+    p1 := Length(Value)
+  else begin
+    p1 := StrToInt(r.Match[2]);
+    if p1<0 then
+      p1 := Length(Value)+p1;
+  end;
+  result := Copy(Value, p0, p1-p0+1);
+end;
+
+function TEngine.FnAdd(const Value, Params: string): string;
+var
+  Int :integer;
+  Offset :integer;
+begin
+  if not TryStrToInt(Value, Int) then
+    raise Exception.Create(SErrInvalidParamNotInt);
+  if not TryStrToInt(Params, Offset) then
+    raise Exception.CreateFmt(SErrInvalidParamsFmt, [Params]);
+  result := IntToStr(Int + Offset);
+end;
+
+function TEngine.FnFmt(const Value, Params: string): string;
+var
+  Int, Digits :integer;
+begin
+  if not TryStrToInt(Value, Int) then
+    raise Exception.Create(SErrInvalidParamNotInt);
+  if not TryStrToInt(Params, Digits) then
+    raise Exception.CreateFmt(SErrInvalidParamsFmt, [Params]);
+  result := Format('%*.*d', [Digits, Digits, Int]);
+end;
+
+function TEngine.FnTitle(const Value, Params: string): string;
+var
+  i :integer;
+begin
+  if Params<>'' then
+    raise Exception.Create(SErrInvalidNoParamsExpected);
+  i := Length(Value);
+  while true do begin
+    if i=0 then Exit(Value);
+    if Value[i]='.' then Exit(Copy(Value, 1, i-1));
+    dec(i);
+  end;
+end;
+
+function TEngine.FnExt(const Value, Params: string): string;
+var
+  i :integer;
+begin
+  if Params<>'' then
+    raise Exception.Create(SErrInvalidNoParamsExpected);
+  i := Length(Value);
+  while true do begin
+    if i=0 then Exit('');
+    if Value[i]='.' then Exit(Copy(Value, i+1, Length(Value)-i));
+    dec(i);
+  end;
+end;
+
+function TEngine.FnDext(const Value, Params: string): string;
+var
+  i :integer;
+begin
+  if Params<>'' then
+    raise Exception.Create(SErrInvalidNoParamsExpected);
+  i := Length(Value);
+  while true do begin
+    if i=0 then Exit('');
+    if Value[i]='.' then Exit(Copy(Value, i, Length(Value)-i+1));
+    dec(i);
+  end;
+end;
+
+function TEngine.FnNumIn(const Value, Params: string): string;
+var
+  r :TRegExpr;
+begin
+  if Params<>'' then
+    raise Exception.Create(SErrInvalidNoParamsExpected);
+  r := TRegExpr.Create('\d+');
+  try
+    if r.Exec(Value) then
+      result := r.Match[0]
+    else
+      result := '';
+  finally
+    r.Free;
+  end;
+end;
 
 { TDelimiters }
 
@@ -311,49 +478,35 @@ begin
     Add(Key, Value);
 end;
 
-procedure TEngine.CompileVarPattern;
-
-  function escaped(const Delimiter :string) :string;
-  var
-    c :Char;
-  begin
-    result := '';
-    for c in Delimiter do
-      result := result + '\' + c;
-  end;
-
-begin
-  FVarExpr.Free;
-  FVarExpr := TRegExpr.Create(escaped(FDelimiters.Del1) + FVarPattern + escaped(FDelimiters.Del2));
-end;
-
-procedure TEngine.SetVarPattern(AValue: string);
-begin
-  if FVarPattern=AValue then Exit;
-  FVarPattern:=AValue;
-  CompileVarPattern;
-end;
-
-constructor TEngine.Create(RegisterDefaultStaticFunctions :boolean);
+constructor TEngine.Create(RegisterDefaultFunctions :boolean);
 begin
   FVarDict := TDictionary<string, TKeyVar>.Create;
   FVars := TObjectList<TKeyVar>.Create;
   FDelimiters := CURLYBRACEDELIMITERS;
-  FVarPattern := DEFAULT_VARPATTERN;
-  FStaticFns := TDictionary<string, TStaticFunctionDef>.Create;
-  if RegisterDefaultStaticFunctions then
-    self.RegisterDefaultStaticFunctions;
-  FDynamicFunctions := TDictionary<string, TDynamicFunction>.Create;
-  CompileVarPattern;
+  FExpRegExpr := TRegExpr.Create(EXPPATTERN);
+  FFnCallsRegExpr := TRegExpr.Create(FNCPATTERN);
+  FFunctions := TDictionary<string, TTemplateFunction>.Create;
+  if RegisterDefaultFunctions then begin
+    RegisterFunction('lower', FnLower);
+    RegisterFunction('upper', FnUpper);
+    RegisterFunction('ifmt', FnIFmt);
+    RegisterFunction('slice', FnSlice);
+    RegisterFunction('add', FnAdd);
+    RegisterFunction('fmt', FnFmt);
+    RegisterFunction('title', FnTitle);
+    RegisterFunction('ext', FnExt);
+    RegisterFunction('dext', FnDext);
+    RegisterFunction('numin', FnNumIn);
+  end;
 end;
 
 destructor TEngine.Destroy;
 begin
   FVarDict.Free;
   FVars.Free;
-  FVarExpr.Free;
-  FStaticFns.Free;
-  FDynamicFunctions.Free;
+  FExpRegExpr.Free;
+  FFnCallsRegExpr.Free;
+  FFunctions.Free;
   inherited Destroy;
 end;
 
@@ -394,32 +547,19 @@ begin
   FVars[Index].Value := Value;
 end;
 
-procedure TEngine.RegisterStaticFunction(const Definition :TStaticFunctionDef);
+procedure TEngine.RegisterFunction(const Name :string; Fn :TTemplateFunction);
 begin
-  FStaticFns.Add(Definition.Name, Definition);
+  FFunctions.AddOrSetValue(Name, Fn);
 end;
 
-procedure TEngine.RegisterDefaultStaticFunctions;
-var
-  Def :TStaticFunctionDef;
-begin
-  for Def in DEFAULT_SOLVERFUNCTIONS do
-    RegisterStaticFunction(Def);
-end;
-
-procedure TEngine.RegisterDynamicFunction(const Name: string;
-  Fn: TDynamicFunction);
-begin
-  FDynamicFunctions.Add(Name, Fn);
-end;
-
-function TEngine.TrySolve(out Stats: TStats): boolean;
+function TEngine.TrySolve: boolean;
 var
   Iterator :TIterator;
   l, r, d :TKeyVar;
-  Expr :TVarExpr;
+  Expression :string;
   found :boolean;
   Dependencies :integer;
+  Name :string;
 begin
   Stats.DepsTotal := 0;
   Stats.Solved := 0;
@@ -428,23 +568,23 @@ begin
 
   // Find all dependencies
   for l in FVars do begin
-    Iterator := TIterator.Create(self, l.Value);
-    while Iterator.Next(Expr) do begin
-      if FVarDict.TryGetValue(Expr.Name, r) then begin
-        // Check, if the dependency is counted only once
-        found := false;
-        for d in r.Deps do begin
-          found := d=l;
-          if found then break;
-        end;
-        if not found then begin
-          inc(Stats.DepsTotal);
-          inc(l.DepsCount);
-          SetLength(r.Deps, Length(r.Deps)+1);
-          r.Deps[High(r.Deps)] := l;
-        end;
-      end else
-        inc(Stats.Unknown);
+    Iterator := TIterator.Create(l.Value, FDelimiters);
+    while Iterator.Next(Expression) do begin
+      Name := ParseName(Expression);
+      if not FVarDict.TryGetValue(Name, r) then
+        raise Exception.CreateFmt(SErrVarNotFoundFmt, [Name]);
+      // Check, if the dependency is counted only once
+      found := false;
+      for d in r.Deps do begin
+        found := d=l;
+        if found then break;
+      end;
+      if not found then begin
+        inc(Stats.DepsTotal);
+        inc(l.DepsCount);
+        SetLength(r.Deps, Length(r.Deps)+1);
+        r.Deps[High(r.Deps)] := l;
+      end;
     end;
   end;
 
@@ -464,62 +604,54 @@ begin
   result := stats.DepsTotal=0;
 end;
 
-procedure TEngine.Solve(out Stats: TStats);
+procedure TEngine.Solve;
 begin
-  if not TrySolve(Stats) then
+  if not TrySolve then
     raise Exception.Create(SErrSolving);
 end;
 
 function TEngine.Compile(const Subject: string): string;
 var
   Iterator :TIterator;
-  Expr :TVarExpr;
+  ExprStr :string;
+  Expr :TExpression;
   KeyVar :TKeyVar;
-  p :integer;
   Value :string;
-  FnDef :TStaticFunctionDef;
-  DynFn :TDynamicFunction;
+  FnCall :TFnCall;
+  FnCalls :TFnCalls;
+  Fn :TTemplateFunction;
+  Cursor :integer;
 begin
   FReplacementCount := 0;
-  Iterator := TIterator.Create(self, Subject);
   result := '';
-  p := 1;
-  while Iterator.Next(Expr) do begin
-    if FVarDict.TryGetValue(Expr.Name, KeyVar) then begin
-      inc(FReplacementCount);
-      // Ceck if function required
-      if Expr.Fn<>'' then begin
-        // 1st look for a dynamic function
-        if FDynamicFunctions.TryGetValue(Expr.Fn, DynFn) then begin
-          try
-            Value := DynFn(Expr.Name, KeyVar.Value, Expr.Params);
-          except on E :Exception do
-            begin
-              raise Exception.CreateFmt(SErrDynamicFunctionFmt, [Expr.Fn, E.Message]);
-            end;
-          end;
-        end else begin
-          // 2nd look for a static function
-          if not FStaticFns.TryGetValue(Expr.Fn, FnDef) then
-            raise Exception.CreateFmt(SErrInvalidFunctionFmt, [Expr.Fn]);
-          try
-            Value := FnDef.Call(KeyVar.Value, Expr.Params);
-          except on E :Exception do
-            begin
-              raise Exception.CreateFmt(SErrStaticFunctionFmt, [Expr.Fn, E.Message]);
-            end;
+  Cursor := 1;
+  Iterator := TIterator.Create(Subject, FDelimiters);
+  while Iterator.Next(ExprStr) do begin
+    // Parse Expression
+    Expr := ParseExpression(ExprStr);
+    if not FVarDict.TryGetValue(Expr.VarName, KeyVar) then
+      raise Exception.CreateFmt(SErrVarNotFoundFmt, [Expr.VarName]);
+    Value := KeyVar.Value;
+    if Expr.FnCalls<>'' then begin
+      FnCalls := ParseFnCalls(Expr.FnCalls);
+      for FnCall in FnCalls do begin
+        if not FFunctions.TryGetValue(FnCall.FnName, Fn) then
+          raise Exception.CreateFmt(SErrTemplateFunctionNotFoundFmt, [FnCall.FnName]);
+        try
+          Value := Fn(Value, FnCall.Params);
+        except on E :Exception do
+          begin
+            raise Exception.CreateFmt(SErrDynamicFunctionFmt, [FnCall.FnName, E.Message]);
           end;
         end;
-      end else
-        // 3rd ignore replacement
-        Value := KeyVar.Value;
-      result := result + Copy(Subject, p, Expr.From-p) + Value;
-    end else
-      result := result + Copy(Subject, p, Expr.From-p+Expr.Len);
-    p := Expr.From + Expr.Len;
+      end;
+    end;
+    result := result + Copy(Subject, Cursor, Iterator.From - Cursor) + Value;
+    Cursor := Iterator.From + Iterator.Len;
+    inc(FReplacementCount);
   end;
   if FReplacementCount>0 then
-    result := result + Copy(Subject, p, Length(Subject)-p+1)
+    result := result + Copy(Subject, Cursor, Length(Subject)-Cursor+1)
   else
     Exit(Subject);
 end;
@@ -539,35 +671,32 @@ begin
     raise Exception.CreateFmt(SErrVarNotFoundFmt, [Key]);
 end;
 
-class function TEngine.DecoratePattern(const Pattern: string; const Delimiters: TDelimiters): string;
+//class function TEngine.DecoratePattern(const Pattern: string; const Delimiters: TDelimiters): string;
 
-function escaped(const Delimiter :string) :string;
-  var
-    c :Char;
-  begin
-    result := '';
-    for c in Delimiter do
-      result := result + '\' + c;
-  end;
-
-begin
-  result := escaped(Delimiters.Del1) + Pattern + escaped(Delimiters.Del2);
-end;
-
-class function TEngine.Contains(const Template: string; const Names: array of string; const Delimiters: TDelimiters): boolean;
+//function escaped(const Delimiter :string) :string;
+//  var
+//    c :Char;
+//  begin
+//    result := '';
+//    for c in Delimiter do
+//      result := result + '\' + c;
+//  end;
+//
+//begin
+//  result := escaped(Delimiters.Del1) + Pattern + escaped(Delimiters.Del2);
+//end;
+//
+class function TEngine.ContainsOneOf(const Template: string; const Names: array of string; const Delimiters: TDelimiters): boolean;
 var
-  r :TRegExpr;
-  Name :string;
+  VarName, Name :string;
+  Expression :string;
+  Iterator :TIterator;
 begin
-  r := TRegExpr.Create(DecoratePattern(DEFAULT_VARPATTERN, Delimiters));
-  try
-    r.InputString := Template;
-    if r.Exec then repeat
-      for Name in Names do
-        if Name = r.Match[1] then Exit(True);
-    until not r.ExecNext;
-  finally
-    r.Free;
+  Iterator := TIterator.Create(Template, Delimiters);
+  while Iterator.Next(Expression) do begin
+    VarName := ParseName(Expression);
+    for Name in Names do
+      if Name = VarName then Exit(True);
   end;
   result := False;
 end;
@@ -581,61 +710,89 @@ procedure TEngine.SetDelimiters(const AValue: TDelimiters);
 begin
   if FDelimiters = AValue then Exit;
   FDelimiters:=AValue;
-  CompileVarPattern;
 end;
 
 { TEngine.TStaticFunctionDef }
 
-function TEngine.TStaticFunctionDef.Call(const Value, Params: string): string;
-var
-  r :TRegExpr;
-  ParamList :TParamsArray;
-  i :integer;
-  IntParam :integer;
-begin
-  ParamList := nil;
-  if ParamCount<>0 then begin
-    r := TRegExpr.Create(ParamsExpr);
-    if not r.Exec(Params) then
-      raise Exception.CreateFmt(SErrInvalidParamsFmt, [Params]);
-    for i:=0 to ParamCount-1 do begin
-      IntParam := StrToInt(r.Match[i+1]);
-      SetLength(ParamList, Length(ParamList)+1);
-      ParamList[High(ParamList)] := IntParam;
-    end;
-  end else
-    if Params<>'' then
-      raise Exception.CreateFmt(SErrInvalidParamsFmt, [Params]);
-  result := StaticFn(Value, ParamList);
-end;
-
-{ TEngine.TVarExpr }
-
-function TEngine.TVarExpr.Top: integer;
-begin
-  result := From+Len;
-end;
-
+//function TEngine.TStaticFunctionDef.Call(const Value, Params: string): string;
+//var
+//  r :TRegExpr;
+//begin
+//  if ParamCount<>0 then begin
+//    r := TRegExpr.Create('^'+ParamsExpr+'$');
+//    if not r.Exec(Params) then
+//      raise Exception.CreateFmt(SErrInvalidParamsFmt, [Params]);
+//  end else
+//    if Params<>'' then
+//      raise Exception.CreateFmt(SErrInvalidParamsFmt, [Params]);
+//  result := StaticFn(Value, ParamCount, Params);
+//end;
+//
 { TEngine.TIterator }
 
-constructor TEngine.TIterator.Create(Engine: TEngine; const Subject :string);
+constructor TEngine.TIterator.Create(const Subject :string; const Delimiters :TDelimiters);
 begin
-  self.Engine := Engine;
-  self.Engine.FVarExpr.InputString := Subject;
-  self.IsMatch := Engine.FVarExpr.Exec;
+  self.Delimiters := Delimiters;
+  self.Subject := Subject;
+  Cursor1 := Pos(Delimiters.Del1, Subject);
+  IsMatch := Cursor1>0;
+  if IsMatch then begin
+    Cursor2 := Pos(Delimiters.Del2, Subject, Cursor1+Length(Delimiters.Del1));
+    IsMatch := Cursor2>0;
+  end;
 end;
 
-function TEngine.TIterator.Next(out Expr :TVarExpr): boolean;
+function TEngine.TIterator.Next(out Expression :string): boolean;
 begin
   result := IsMatch;
-  if result then with Expr do begin
-    Name    := Engine.FVarExpr.Match[1];
-    Fn      := Engine.FVarExpr.Match[2];
-    Params  := Engine.FVarExpr.Match[3];
-    From    := Engine.FVarExpr.MatchPos[0];
-    Len     := Engine.FVarExpr.MatchLen[0];
-    IsMatch := Engine.FVarExpr.ExecNext;
+  if result then begin
+    From := Cursor1;
+    Len := Cursor2 - Cursor1 + Length(Delimiters.Del2);
+    Expression := Copy(Subject, Cursor1 + Length(Delimiters.Del1), Cursor2 - Cursor1 - Length(Delimiters.Del1));
+    Cursor1 := Pos(Delimiters.Del1, Subject, Cursor2 + Length(Delimiters.Del2));
+    IsMatch := Cursor1>0;
+    if IsMatch then begin
+      Cursor2 := Pos(Delimiters.Del2, Subject, Cursor1+Length(Delimiters.Del1));
+      IsMatch := Cursor2>0;
+    end;
   end;
+end;
+
+class function TEngine.ParseName(const Expression: string): string;
+var
+  p :integer;
+begin
+  p :=1;
+  if Length(Expression)>0 then while true do begin
+    if (p>Length(Expression)) or not IsWordChar(Expression[p]) then
+      Exit(Copy(Expression, 1, p-1));
+    inc(p);
+  end;
+  raise Exception.CreateFmt(SErrInvalidExpressionFmt, [Expression]);
+end;
+
+function TEngine.ParseExpression(const Expression: string): TExpression;
+begin
+  if not FExpRegExpr.Exec(Expression) then
+    raise Exception.CreateFmt(SErrInvalidExpressionFmt, [Expression]);
+  result.VarName := FExpRegExpr.Match[1];
+  result.FnCalls := FExpRegExpr.Match[2];
+end;
+
+function TEngine.ParseFnCalls(const FnCalls: string): TArray<TFnCall>;
+var
+  FnCall :TFnCall;
+begin
+  result := nil;
+  if not FFnCallsRegExpr.Exec(FnCalls) then
+    raise Exception.CreateFmt(SErrInvalidExpressionFmt, [FnCalls]);
+  repeat
+    FnCall.FnName := FFnCallsRegExpr.Match[1];
+    FnCall.Params := FFnCallsRegExpr.Match[2];
+    SetLength(result, Length(result)+1);
+    result[High(result)] := FnCall;
+  until not FFnCallsRegExpr.ExecNext;
+
 end;
 
 //procedure Test;
@@ -645,20 +802,32 @@ end;
 //  x :string;
 //begin
 //  Engine := TEngine.Create;
-//  Engine.RegisterDefaultStaticFunctions;
 //  try
-//    Engine.Add('INDEX', '1');
-//    Engine.Add('FILETITLE', 'dsc00123');
-//    Engine.Add('FILEEXT', 'JPG');
-//    Engine.Add('FILENAME', '{FILETITLE.upper()}_{INDEX.ifmt(1,3)}.{FILEEXT.lower()}');
+//    Engine.Add('INDEX', '12345');
+//    Engine.Add('FILENAME', 'dsc00123.jpg');
+//    //Engine.Add('FILEEXT', 'JPG');
+//    //Engine.Add('FILENAME', '{FILETITLE.upper()}_{INDEX.ifmt(1,3)}.{FILEEXT.lower()}');
 //
 //    Engine.TrySolve(Stats);
+//    x := Engine.Compile('abc{FILENAME.lower()}xyz');
+//    x := Engine.Compile('abc{FILENAME.upper()}xyz');
+//    x := Engine.Compile('abc{INDEX.ifmt(10,8)}xyz');
 //
-//    x := Engine.Compile('Ab {INDEX} ist {FILENAME}.');
+//    x := Engine.Compile('abc{INDEX.slice(2:-1)}xyz{FILENAME.lower()}');
 //
 //  finally
 //    Engine.Free;
 //  end;
+//end;
+//
+
+//procedure Test;
+//var
+//  x :TArray<string>;
+//begin
+//  x := Split('1,2,3', [',', ':']);
+//  x := Split(',2,3', [',', ':']);
+//  x := Split('1,2,', [',', ':']);
 //end;
 //
 initialization

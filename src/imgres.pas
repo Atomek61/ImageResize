@@ -113,8 +113,7 @@ const
   DEFAULT_STOPONERROR       = true;
   DEFAULT_RENENABLED        = false;
   DEFAULT_RENFMTSTR         = 'img%2:s.%1:s';
-  DEFAULT_RENFILETEMPLATE   = 'img{INDEX:1,3}.{FILEEXT}';
-//  DEFAULT_SIZENAMES         = '_THUMBNAIL,';
+  DEFAULT_RENFILETEMPLATE   = 'img{INDEX.ifmt(1)}.{FILEEXT}';
   DEFAULT_RENINDEXSTART     = 1;
   DEFAULT_RENINDEXDIGITS    = 3;
   DEFAULT_SHUFFLE           = false;
@@ -235,7 +234,8 @@ type
     procedure OnTaskProgress(Sender :TObject; Progress :single);
     procedure Print(const Line :string; Level :TLevel = mlInfo);
     procedure DoExecute;
-    function ifmt(const VarName, Value, Params :string) :string;
+    function ifmt(const Value, Params :string) :string;
+    function fmt(const Value, Params :string) :string;
   public
     class var FormatSettings :TFormatSettings;
   public
@@ -337,6 +337,8 @@ resourcestring
   SErrInvalidMrkFloatRangeFmt     = 'Invalid watermark size/position range ''%s'' (0..100.0 expected)';
   SErrInvalidMrkOpacityFmt        = 'Invalid watermark opacity value ''%s'' (0..100.0 expected)';
   SErrIfmtParamsFmt               = 'invalid parameters (offset[,digits]) expected';
+  SErrFmtParamsFmt                = 'invalid parameter (digits|AUTO|<none>) expected';
+  SErrInExpected                  = 'integer expected';
 
 implementation
 
@@ -516,7 +518,8 @@ begin
 
     if Processor.Rename then begin
       TargetFilenameTemplateEngine := Templates.TEngine.Create;
-      TargetFilenameTemplateEngine.RegisterDynamicFunction('ifmt', Processor.ifmt);
+      TargetFilenameTemplateEngine.RegisterFunction('ifmt', Processor.ifmt);
+      TargetFilenameTemplateEngine.RegisterFunction('fmt', Processor.fmt);
     end;
 
     ////////////////////////////////////////////////////
@@ -620,7 +623,7 @@ begin
           TargetFilenameTemplateEngine.Load('INDEX', IntToStr(SourceFileIndex));
           TargetFilenameTemplateEngine.Load('SIZE', IntToStr(Size));
           TargetFilenameTemplateEngine.Load('SIZENAME', ifthen(Processor.SizeNames[i]='', IntToStr(Size), Processor.SizeNames[i]));
-          TargetFilenameTemplateEngine.Load('INTERPOLATION', INTERPOLATION_NAMES[Interpolation]);
+          TargetFilenameTemplateEngine.Load('INTERPOLATION', INTERPOLATION_NAMES[Processor.Interpolation]);
           TargetFiletitleExt := TargetFilenameTemplateEngine.Compile(Processor.TargetFilename);
         end else
           TargetFiletitleExt := ExtractFilename(SourceFilename);
@@ -795,7 +798,6 @@ begin
   Tasks       := TTasks.Create;
   Dispatcher  := TDispatcher.Create;
   TargetFolderTemplateEngine := templates.TEngine.Create;
-//  TargetFolderTemplateEngine.RegisterDynamicFunction('ifmt', ifmt);
   try
 
     if FDryRun then
@@ -843,8 +845,8 @@ begin
     m := Length(FSizes);
 
     // Check, if multiple sizes, then either SIZE or SIZENAME must be in folder or in renamed filename
-    ProcRes.IsTargetFileRenamingStrategy := Rename and TargetFolderTemplateEngine.Contains(FTargetFolder, ['SIZE', 'SIZENAME'], CURLYBRACEDELIMITERS);
-    ProcRes.IsMultipleTargetFolderStrategy := TargetFolderTemplateEngine.Contains(FTargetFilename, ['SIZE', 'SIZENAME'], CURLYBRACEDELIMITERS);
+    ProcRes.IsTargetFileRenamingStrategy := Rename and TargetFolderTemplateEngine.ContainsOneOf(FTargetFilename, ['SIZE', 'SIZENAME'], CURLYBRACEDELIMITERS);
+    ProcRes.IsMultipleTargetFolderStrategy := TargetFolderTemplateEngine.ContainsOneOf(FTargetFolder, ['SIZE', 'SIZENAME'], CURLYBRACEDELIMITERS);
     if (Length(FSizes)>1) and not ProcRes.IsMultipleTargetFolderStrategy and not ProcRes.IsTargetFileRenamingStrategy then
         raise Exception.Create(SErrMultipleSizes);
 
@@ -955,7 +957,7 @@ begin
   end;
 end;
 
-function TProcessor.ifmt(const VarName, Value, Params: string): string;
+function TProcessor.ifmt(const Value, Params: string): string;
 var
   r :TRegExpr;
   Offset :integer;
@@ -975,6 +977,35 @@ begin
   finally
     r.Free;
   end;
+end;
+
+function TProcessor.fmt(const Value, Params: string): string;
+var
+  r :TRegExpr;
+  Digits :integer;
+  Int :integer;
+begin
+  if not TryStrToInt(Value, Int) then
+    raise Exception.Create(SErrInExpected);
+  if Params='' then
+    Digits := -1
+  else begin
+    r := TRegExpr.Create('^\d+|auto$');
+    r.ModifierI := true;
+    try
+      if not r.Exec(Params) then
+        raise Exception.CreateFmt(SErrFmtParamsFmt, [Params]);
+      if SameText(r.Match[0], 'AUTO') then
+        Digits := -1
+      else
+        Digits := StrToInt(r.Match[0]);
+    finally
+      r.Free;
+    end;
+  end;
+  if Digits<0 then
+    Digits := round(log10(self.FSourceFilenames.Count))+1;
+  result := Format('%*.*d', [Digits, Digits, Int]);
 end;
 
 procedure TProcessor.Cancel;

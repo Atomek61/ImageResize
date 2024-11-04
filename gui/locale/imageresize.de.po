@@ -61,8 +61,8 @@ msgstr "Ungültiges Fomat für Datum/Zeit '%s'."
 
 #: galleryprocessor.serrifmtparamsfmt
 msgctxt "galleryprocessor.serrifmtparamsfmt"
-msgid "invalid parameters (offset[,digits]) expected"
-msgstr ""
+msgid "invalid parameters (offset[,digits] expected)"
+msgstr "ungültige Parameter (Versatz[,Ziffern] erwartet)"
 
 #: galleryprocessor.serrimgtagsnotfoundfmt
 #, object-pascal-format
@@ -226,6 +226,10 @@ msgctxt "imgres.scptwarning"
 msgid "Warning"
 msgstr "Warnung"
 
+#: imgres.serrfmtparamsfmt
+msgid "invalid parameter (digits|AUTO|<none>) expected"
+msgstr "ungültiger Parameter (Ziffern|AUTO|<leer>) erwartet"
+
 #: imgres.serrformatnotsupportedfmt
 #, object-pascal-format
 msgid "Format %s not supported"
@@ -234,7 +238,12 @@ msgstr "Format %s nicht unterstützt"
 #: imgres.serrifmtparamsfmt
 msgctxt "imgres.serrifmtparamsfmt"
 msgid "invalid parameters (offset[,digits]) expected"
-msgstr ""
+msgstr "ungültige Parameter (Versatz[,Ziffern] erwartet)"
+
+#: imgres.serrinexpected
+msgctxt "imgres.serrinexpected"
+msgid "integer expected"
+msgstr "Ganzzahl erwartet"
 
 #: imgres.serrinvalidindexdigitsfmt
 #, object-pascal-format
@@ -317,10 +326,10 @@ msgid "Invalid sharpening amount '%s', 0..n expected"
 msgstr "Ungültiger Schärfungsbetrag '%s', 0..n erwartet"
 
 #: imgres.serrinvalidsharpenstringfmt
-#, object-pascal-format, fuzzy, badformat
+#, object-pascal-format
 msgctxt "imgres.serrinvalidsharpenstringfmt"
 msgid "Invalid sharpening amount '%d', 0..n expected"
-msgstr "Ungültiger Schärfungsbetrag '%1d', 0..n erwartet"
+msgstr "Ungültiger Schärfungsbetrag '%d', 0..n erwartet"
 
 #: imgres.serrinvalidsizesfmt
 #, object-pascal-format
@@ -336,10 +345,8 @@ msgid "Missing sizes."
 msgstr "Fehlende Größe."
 
 #: imgres.serrmultiplesizes
-#, fuzzy
-#| msgid "Multiple sizes but placeholder {SIZE} not found in either folder or filename template"
 msgid "Multiple sizes but placeholder SIZE or SIZENAME not found in either folder or filename template"
-msgstr "Mehrfache Größe, aber Platzhalter {SIZE} nicht gefunden im Verzeichnisnamen oder in der Dateinamen-Vorlage"
+msgstr "Mehrfache Größe, aber Platzhalter SIZE oder SIZENAME nicht gefunden im Verzeichnisnamen oder in der Dateinamen-Vorlage"
 
 #: imgres.sinfresultfmt
 #, object-pascal-format
@@ -575,16 +582,14 @@ msgid "Warning: Unexpected settings format %s (%s expected)"
 msgstr "Warnung: Unerwartetes Einstellungen-Format %s (%s erwartet)"
 
 #: maindlg.smsgcurrentdirfmt
-#, object-pascal-format, fuzzy
-#| msgid "Current directory: %s"
+#, object-pascal-format
 msgid "Current directory is \"%s\""
 msgstr "Aktuelles Verzeichnis: %s"
 
 #: maindlg.smsgprojectdescriptionfmt
-#, object-pascal-format, fuzzy
-#| msgid "Description: %s"
+#, object-pascal-format
 msgid "Description: \"%s\""
-msgstr "Beschreibung: %s"
+msgstr "Beschreibung: \"%s\""
 
 #: maindlg.smsgprojectloadedfromfmt
 #, object-pascal-format
@@ -608,8 +613,8 @@ msgstr ""
 "Wollen Sie die Änderungen speichern?"
 
 #: maindlg.surlwebhelp
-msgid "http://www.atomek.de/imageresize/hlp40/gui/en"
-msgstr "http://www.atomek.de/imageresize/hlp40/gui/de"
+msgid "http://www.atomek.de/imageresize/hlp42/gui/en"
+msgstr "http://www.atomek.de/imageresize/hlp42/gui/de"
 
 #: mrkeditdlg.scptdialogtitle
 msgid "Watermark Editor"
@@ -877,43 +882,51 @@ msgstr "&Farbe:"
 
 #: templates.serrdynamicfunctionfmt
 #, object-pascal-format
-msgid "Error in engine dynamic function %s - %s"
-msgstr ""
+msgid "Error in template engine function %s - %s"
+msgstr "Fehler in Funktion des Vorlagen-Prozessors %s - %s"
 
 #: templates.serrinvaliddelimitersfmt
 #, object-pascal-format
-msgid "Invalid delimiters '%s'."
-msgstr ""
+msgid "Invalid delimiters \"%s\"."
+msgstr "Ungültige Begrenzerzeichen \"%s\""
 
-#: templates.serrinvalidfunctionfmt
+#: templates.serrinvalidexpressionfmt
 #, object-pascal-format
-msgctxt "templates.serrinvalidfunctionfmt"
-msgid "Engine function %s not found"
-msgstr ""
+msgid "Invalid template expression \"%s\""
+msgstr "ungültiger Vorlagen-Ausdruck \"%s\""
+
+#: templates.serrinvalidnoparamsexpected
+msgid "no parameter expected"
+msgstr "kein Parameter erwartet"
+
+#: templates.serrinvalidnumberofparamsfmt
+#, object-pascal-format
+msgid "invalid number of parameters (%d expected)"
+msgstr "ungültige Zahl von Parametern (%d erwartet)"
+
+#: templates.serrinvalidparamnotint
+msgctxt "templates.serrinvalidparamnotint"
+msgid "integer expected"
+msgstr "Ganzzahl erwartet"
 
 #: templates.serrinvalidparamsfmt
 #, object-pascal-format
-msgid "invalid parameter '%s'"
-msgstr ""
-
-#: templates.serrinvalidstaticfunctionparamsfmt
-#, object-pascal-format
-msgid "Invalid parameter '%s' for engine function %s"
-msgstr ""
+msgid "invalid parameter \"%s\""
+msgstr "ungültiger Parameter \"%s\""
 
 #: templates.serrsolving
-msgid "Cant solve valiables (circular dependencies?)"
-msgstr ""
+msgid "Cant solve variables (circular dependencies?)"
+msgstr "Kann die Variable nicht auflösen (zirkuläre Abhängigkeit?)"
 
-#: templates.serrstaticfunctionfmt
+#: templates.serrtemplatefunctionnotfoundfmt
 #, object-pascal-format
-msgid "Error in engine function %s - %s"
-msgstr ""
+msgid "Function \"%s\" not found"
+msgstr "Funktion \"%s\" nicht gefunden"
 
 #: templates.serrvarnotfoundfmt
 #, object-pascal-format
-msgid "Variable '%s' not found in VarEngine."
-msgstr ""
+msgid "Variable \"%s\" not found in template engine."
+msgstr "Variable \"%s\" nicht gefunden im Vorlagen-Prozessor"
 
 #: threading.dispatcher.scptcancelled
 msgid "Cancelled"
@@ -1533,7 +1546,7 @@ msgstr "Algorithmus:"
 
 #: tmaindialog.label22.caption
 msgid "Current directory:"
-msgstr ""
+msgstr "Aktuelles Verzeichnis:"
 
 #: tmaindialog.label3.caption
 msgid "Sizes:"
@@ -2011,13 +2024,8 @@ msgstr "Verarbeitung"
 msgid "Saving"
 msgstr "Speichern"
 
-#: ttaggingdialog.caption
-msgid "TaggingDialog"
-msgstr "Tagging"
-
 #: webutils.serrinvalidhtmlcolorfmt
 #, object-pascal-format
 msgctxt "webutils.serrinvalidhtmlcolorfmt"
 msgid "Invalid web color '%s'."
 msgstr "Ungültige Web-Farbe '%s'."
-

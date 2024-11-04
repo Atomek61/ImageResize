@@ -332,14 +332,6 @@
         <UnitName Value="SettingsEditors"/>
       </Unit>
       <Unit>
-        <Filename Value="taggingdlg.pas"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="TaggingDialog"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <UnitName Value="TaggingDlg"/>
-      </Unit>
-      <Unit>
         <Filename Value="..\src\templates.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>

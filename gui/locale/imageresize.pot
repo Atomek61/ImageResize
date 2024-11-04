@@ -50,7 +50,7 @@ msgstr ""
 
 #: galleryprocessor.serrifmtparamsfmt
 msgctxt "galleryprocessor.serrifmtparamsfmt"
-msgid "invalid parameters (offset[,digits]) expected"
+msgid "invalid parameters (offset[,digits] expected)"
 msgstr ""
 
 #: galleryprocessor.serrimgtagsnotfoundfmt
@@ -215,6 +215,10 @@ msgctxt "imgres.scptwarning"
 msgid "Warning"
 msgstr ""
 
+#: imgres.serrfmtparamsfmt
+msgid "invalid parameter (digits|AUTO|<none>) expected"
+msgstr ""
+
 #: imgres.serrformatnotsupportedfmt
 #, object-pascal-format
 msgid "Format %s not supported"
@@ -223,6 +227,11 @@ msgstr ""
 #: imgres.serrifmtparamsfmt
 msgctxt "imgres.serrifmtparamsfmt"
 msgid "invalid parameters (offset[,digits]) expected"
+msgstr ""
+
+#: imgres.serrinexpected
+msgctxt "imgres.serrinexpected"
+msgid "integer expected"
 msgstr ""
 
 #: imgres.serrinvalidindexdigitsfmt
@@ -588,7 +597,7 @@ msgid ""
 msgstr ""
 
 #: maindlg.surlwebhelp
-msgid "http://www.atomek.de/imageresize/hlp40/gui/en"
+msgid "http://www.atomek.de/imageresize/hlp42/gui/en"
 msgstr ""
 
 #: mrkeditdlg.scptdialogtitle
@@ -853,42 +862,50 @@ msgstr ""
 
 #: templates.serrdynamicfunctionfmt
 #, object-pascal-format
-msgid "Error in engine dynamic function %s - %s"
+msgid "Error in template engine function %s - %s"
 msgstr ""
 
 #: templates.serrinvaliddelimitersfmt
 #, object-pascal-format
-msgid "Invalid delimiters '%s'."
+msgid "Invalid delimiters \"%s\"."
 msgstr ""
 
-#: templates.serrinvalidfunctionfmt
+#: templates.serrinvalidexpressionfmt
 #, object-pascal-format
-msgctxt "templates.serrinvalidfunctionfmt"
-msgid "Engine function %s not found"
+msgid "Invalid template expression \"%s\""
+msgstr ""
+
+#: templates.serrinvalidnoparamsexpected
+msgid "no parameter expected"
+msgstr ""
+
+#: templates.serrinvalidnumberofparamsfmt
+#, object-pascal-format
+msgid "invalid number of parameters (%d expected)"
+msgstr ""
+
+#: templates.serrinvalidparamnotint
+msgctxt "templates.serrinvalidparamnotint"
+msgid "integer expected"
 msgstr ""
 
 #: templates.serrinvalidparamsfmt
 #, object-pascal-format
-msgid "invalid parameter '%s'"
-msgstr ""
-
-#: templates.serrinvalidstaticfunctionparamsfmt
-#, object-pascal-format
-msgid "Invalid parameter '%s' for engine function %s"
+msgid "invalid parameter \"%s\""
 msgstr ""
 
 #: templates.serrsolving
-msgid "Cant solve valiables (circular dependencies?)"
+msgid "Cant solve variables (circular dependencies?)"
 msgstr ""
 
-#: templates.serrstaticfunctionfmt
+#: templates.serrtemplatefunctionnotfoundfmt
 #, object-pascal-format
-msgid "Error in engine function %s - %s"
+msgid "Function \"%s\" not found"
 msgstr ""
 
 #: templates.serrvarnotfoundfmt
 #, object-pascal-format
-msgid "Variable '%s' not found in VarEngine."
+msgid "Variable \"%s\" not found in template engine."
 msgstr ""
 
 #: threading.dispatcher.scptcancelled
@@ -1902,10 +1919,6 @@ msgstr ""
 
 #: tsettingsdialog.labelsaving.caption
 msgid "Saving"
-msgstr ""
-
-#: ttaggingdialog.caption
-msgid "TaggingDialog"
 msgstr ""
 
 #: webutils.serrinvalidhtmlcolorfmt

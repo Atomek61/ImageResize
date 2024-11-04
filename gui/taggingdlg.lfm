@@ -6,7 +6,7 @@ object TaggingDialog: TTaggingDialog
   Caption = 'TaggingDialog'
   ClientHeight = 705
   ClientWidth = 683
-  LCLVersion = '3.0.0.3'
+  LCLVersion = '3.6.0.0'
   object StringGrid1: TStringGrid
     Left = 16
     Height = 680

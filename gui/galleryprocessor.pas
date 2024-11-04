@@ -77,7 +77,7 @@ resourcestring
   SMsgCopyingFmt            = 'Copying ''%s''...';
   SMsgStatisticsFmt         = 'Copied: %d/%d (%.0f%%), processed: %d/%d (%.0f%%), solved: %d/%d (%.0f%%), lists: %d, rows: %d, replaced: %d, elapsed %.1fs.';
   SMsgFinalOk               = 'Ok';
-  SErrIfmtParamsFmt         = 'invalid parameters (offset[,digits]) expected';
+  SErrIfmtParamsFmt         = 'invalid parameters (offset[,digits] expected)';
 
 { TProcessor }
 
@@ -125,7 +125,6 @@ var
   Key, Value :string;
   Fragment :TPair<string, string>;
   List :TPair<string, string>;
-  EngineStats :TEngine.TStats;
   ImgVars :TEngine;
   FileSource :TStringList;
   Filename, FileText :string;
@@ -243,11 +242,11 @@ begin
           ImgVars.Load(Fragment.Key, Fragment.Value);
 
         // Solve the vars (solve dependencies between the vars)
-        ImgVars.Solve(EngineStats);
+        ImgVars.Solve;
         // Todo: check errors of solving
 
-        inc(Stats.Dependencies, EngineStats.DepsTotal + EngineStats.Solved);
-        inc(Stats.Solved, EngineStats.Solved);
+        inc(Stats.Dependencies, ImgVars.Stats.DepsTotal + ImgVars.Stats.Solved);
+        inc(Stats.Solved, ImgVars.Stats.Solved);
 
         // Build the lists of fragments
         for Fragment in FListFragments do

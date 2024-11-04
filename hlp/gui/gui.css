@@ -88,7 +88,7 @@ td {
   padding: 0.5em;
 }
 .simple-table td, .simple-table th {
-  border: 2px solid  hsl(var(--fgdhue), 50%, 40%);
+  border: 2px solid var(--backcolor2);
 }
 
 .cmd {
@@ -119,3 +119,29 @@ td {
   font: 12pt "Noto Sans Mono";
 }
 
+.vn {
+  font-family: "Noto Sans Mono";
+  color: rgb(162, 188, 238);
+}
+
+.vv {
+  font-family: "Noto Sans Mono";
+  color: rgb(162, 238, 192);
+}
+
+.vf {
+  font-family: "Noto Sans Mono";
+  color: rgb(162, 238, 238);
+}
+
+.fn-table {border-collapse: collapse;}
+.fn-table td{
+  padding: 0.5em;
+}
+.fn-table td, .simple-table th {
+  border: 2px solid var(--backcolor2);
+}
+
+.fn-table td:first-child {
+  white-space: nowrap;  
+}
