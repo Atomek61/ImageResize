@@ -14,4 +14,4 @@ Date=2024-01-01 00:00:00
 Icon=icon.png
 Preview=100\preview.jpg
 Templates=100\index.html
-Fragment.IMAGES=<img src="{IMGFILENAME}" alt="{IMGTITLE}"/>{CRLF}
+Fragment.IMAGES=<img src="${IMGFILENAME}" alt="${IMGTITLE}"/>${CRLF}

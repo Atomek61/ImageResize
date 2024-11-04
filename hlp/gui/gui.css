@@ -121,7 +121,7 @@ td {
 
 .vn {
   font-family: "Noto Sans Mono";
-  color: rgb(162, 188, 238);
+  color: rgb(193, 235, 125);
 }
 
 .vv {
@@ -140,6 +140,10 @@ td {
 }
 .fn-table td, .simple-table th {
   border: 2px solid var(--backcolor2);
+}
+
+.simple-table th {
+  background-color: var(--backcolor3);
 }
 
 .fn-table td:first-child {

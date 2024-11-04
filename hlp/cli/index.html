@@ -113,9 +113,7 @@ Examples:
     <div class="contents">
       <h1 id="overview">Overview</h1>
       <p>
-        <i>imgres</i> 4.2 is a command line interface (CLI) for the bulk scaling
-        tool <i>ImageResize</i>. It converts (resamples)
-        JPEG and PNG images.
+        <i>imgres</i> 4.2 is a command line interface (CLI) for the bulk scaling tool <i>ImageResize</i>. It converts (resamples) JPEG and PNG images.
       </p>
 
 <pre class="terminal-box clitext" style="font-size: 10pt;"></pre>
@@ -134,8 +132,7 @@ Examples:
           One of either
           <ul>
             <li>
-              Path/filename of an image file to be scaled. This can be a JPEG file
-              or a PNG file.<br/>
+              Path/filename of an image file to be scaled. This can be a JPEG file or a PNG file.<br/>
             </li>
             <li>
               Text file with a filename list. The filename must be preceeded by @.
@@ -156,8 +153,7 @@ Examples:
       <div class="param">
         <div>size</div>
         <div>
-          Size in pixels of the resampled image. The size refers to the longer side of the image. This means, imgres always bewares the width/heigth ratio.<br/> You can specify multiple sizes, separated by a comma to let the
-          process create multiple resampled files. Because the files will have the same names, it is required to enter a placeholder <span class="plh">{SIZE}</span> or <span class="plh">{SIZENAME}</span>in the dstfolder.
+          Size in pixels of the resampled image. The size refers to the longer side of the image. This means, imgres always bewares the width/heigth ratio.<br/> You can specify multiple sizes, separated by a comma to let the process create multiple resampled files. Because the files will have the same names, it is required to enter a placeholder <span class="plh">{SIZE}</span> or <span class="plh">{SIZENAME}</span>in the dstfolder.
         </div>
       </div>
 
@@ -191,8 +187,7 @@ Examples:
               <u>Lanczos2</u>, <u>Lanczos3</u>, <u>Lanczos4</u>, <u>BestQuality</u>
             </p>
             <p>
-              The interpolation algorithm wich is applied while resampling. Default is <u>Lanczos2</u>. <u>Best Quality</u> means, that
-              depending on upsampling or downsampling either <u>Spline</u> or <u>Mitchell</u> is selected automatically.
+              The interpolation algorithm wich is applied while resampling. Default is <u>Lanczos2</u>. <u>Best Quality</u> means, that depending on upsampling or downsampling either <u>Spline</u> or <u>Mitchell</u> is selected automatically.
             </p>
           </div>
         </div>
@@ -203,8 +198,7 @@ Examples:
         <div>
           <div>-j quality<br/>-jpeg quality</div>
           <div>
-            A value between 1 and 100, where 1 is the lowest and 100 is
-            the highest quality. This parameter refers only to JPEG files.
+            A value between 1 and 100, where 1 is the lowest and 100 is the highest quality. This parameter refers only to JPEG files.
           </div>
         </div>
       </div>
@@ -214,10 +208,7 @@ Examples:
         <div>
           <div>-p compression<br/>-png compression</div>
           <div>
-            One of: <u>none</u>, <u>fastest</u>, <u>default</u> and <u>max</u>.
-            The PNG format has a loss-less compression, so this parameter has
-            an impact to the compression/decompression effort, not to the
-            image quality.
+            One of: <u>none</u>, <u>fastest</u>, <u>default</u> and <u>max</u>. The PNG format has a loss-less compression, so this parameter has an impact to the compression/decompression effort, not to the image quality.
           </div>
         </div>
       </div>
@@ -240,8 +231,7 @@ Examples:
               <li><i>Strong (200)</i> - strongly sharpened</li>
             </ul>
             <p>
-              Instead of choosing one of the predefined sharpening amounts, you can enter any Value from 0.0 (none)
-              to any positive value. 1.0 is a good sharpening for natural pictures.
+              Instead of choosing one of the predefined sharpening amounts, you can enter any Value from 0.0 (none) to any positive value. 1.0 is a good sharpening for natural pictures.
             </p>
           </div>
         </div>
@@ -253,23 +243,16 @@ Examples:
           <div>-w descriptor<br/>-watermark descriptor</div>
           <div>
             <p>
-              A watermark is a PNG image containing a copyright or what ever. The
-              watermark can be printed an any position. The position is in percent
-              and refers to the images width resp. height. The <i>Size</i> is in
-              percent of the images width.
+              A watermark is a PNG image containing a copyright or what ever. The watermark can be printed an any position. The position is in percent and refers to the images width resp. height. The <i>Size</i> is in percent of the images width.
             </p>
             <p>
-              The positions in percent refers to the difference of the images
-              size and the watermarks size. Thus, 50%/50% centeres the image.
-              0% is left/upper alignment, 100% results in a right/bottom
-              aligment.
+              The positions in percent refers to the difference of the images size and the watermarks size. Thus, 50%/50% centeres the image. 0% is left/upper alignment, 100% results in a right/bottom aligment.
             </p><p>
               The descriptor format is:
             </p><p>
               <b><code>filename.png[?size,x,y[?opacity]]</code></b>
             </p><p>
-              If you want to use spaces, set the parameter in quotes.
-              Defaults are size=20%, x=98%, y=98%, opacity=50%
+              If you want to use spaces, set the parameter in quotes. Defaults are size=20%, x=98%, y=98%, opacity=50%
             </p>
           </div>
         </div>
@@ -281,8 +264,7 @@ Examples:
           <div>-e keywords<br/>-exif keywords</div>
           <div>
             Inserts EXIF tags listed in the taglist into the target files. The keywords are comma-separated
-            <u>Title</u>, <u>Timestamp</u> and <u>Copyright</u>. Other tags are not supported.
-            The source of tags are either existing EXIF tags or .tags files.
+            <u>Title</u>, <u>Timestamp</u> and <u>Copyright</u>. Other tags are not supported. The source of tags are either existing EXIF tags or .tags files.
             <a href="../gui/en/index.html#tagging">More details here</a>.
           </div>
         </div>
@@ -293,8 +275,7 @@ Examples:
         <div>
           <div>-c text<br/>-copyright text</div>
           <div>
-            Inserts an EXIF Copyright tag with the given text. This overrides any existing Copyright tags in
-            the original files.
+            Inserts an EXIF Copyright tag with the given text. This overrides any existing Copyright tags in the original files.
             <a href="../gui/en/index.html#tagging">More details here</a>.
           </div>
         </div>
@@ -305,10 +286,7 @@ Examples:
         <div>
           <div>-m keywords<br/>-meta keywords</div>
           <div>
-            Controls the source of the EXIF tagging by the -e switch. <i>keywords</i> are <u>EXIF</u> and <u>TAGS</u>.
-            EXIF means the internal tags dictionary is filled with EXIF tags from the original files.
-            TAGS means, that files named .tags are interpreted, if they exist. If both keywords are selected, separate
-            them with a comma. See more details <a href="../gui/en/index.html#tagging">here</a>.
+            Controls the source of the EXIF tagging by the -e switch. <i>keywords</i> are <u>EXIF</u> and <u>TAGS</u>. EXIF means the internal tags dictionary is filled with EXIF tags from the original files. TAGS means, that files named .tags are interpreted, if they exist. If both keywords are selected, separate them with a comma. See more details <a href="../gui/en/index.html#tagging">here</a>.
           </div>
         </div>
       </div>
@@ -319,9 +297,7 @@ Examples:
           <div>-l keywords<br/>-listings keywords</div>
           <div>
             imgres maintains an internal dictionary with tags. It is filled either by EXIF tags or by additional
-            .tags files in each source folder. The -l switch lets imgres dump its contents to a .csv formatted
-            UTF-8 encoded file. <i>keywords</i> stands for a combination of <u>TagsReport</u> and <u>Images</u>.
-            See more details <a href="../gui/en/index.html#tagging"></a>here</a>.
+            .tags files in each source folder. The -l switch lets imgres dump its contents to a .csv formatted UTF-8 encoded file. <i>keywords</i> stands for a combination of <u>TagsReport</u> and <u>Images</u>. See more details <a href="../gui/en/index.html#tagging"></a>here</a>.
           </div>
         </div>
       </div>
@@ -336,8 +312,7 @@ Examples:
             </p><p>
               1 - single thread, all resamplings are in sequential order
             </p><p>
-              n - number of threads to use. n is automatically limited to either
-              the number of available processors or the number of <i>tasks</i>.
+              n - number of threads to use. n is automatically limited to either the number of available processors or the number of <i>tasks</i>.
             </p><p>
               A "task" is a resampling request. For each source file a task is launched.
             </p>
@@ -350,8 +325,7 @@ Examples:
         <div>
           <div>-x<br/>-stoponerror</div>
           <div>
-              If an error occures, this flag lets the program stop as soon as possible.
-              Note: some tasks may run into the same error and report it.
+              If an error occures, this flag lets the program stop as soon as possible. Note: some tasks may run into the same error and report it.
           </div>
         </div>
       </div>
@@ -362,8 +336,7 @@ Examples:
           <div>-r template<br/>-rename template</div>
           <div>
             <p>
-              Enables target file renaming. Enter a filename template as
-              parameter. The template can contain these placeholders:
+              Enables target file renaming. Enter a filename template as parameter. The template can contain these placeholders:
             </p>
             <ul>
               <li><span class="plh">{FILENAME}</span> stands for the original file name without path but including the extension.</li>
@@ -389,17 +362,13 @@ Examples:
           <div>
             <p>
               Mixes (shuffles) the renamed target files randomly. To get the same
-              (random) sequence of files, enter a <i>seed</i> not equal to zero. Multiple
-              executions of the resampling processor will then result in the same order,
-              as long as the number of files does not change.
+              (random) sequence of files, enter a <i>seed</i> not equal to zero. Multiple executions of the resampling processor will then result in the same order, as long as the number of files does not change.
             </p>
             <p>
               A seed of 0 results in another sequence of files you press Execute.
             </p>
             <p>
-              If you want to mix the target files, its recommended to insert
-              the {INDEX} placeholder at a first placeholder in the filename
-              template for renaming. The system uses a file attribute for sorting
+              If you want to mix the target files, its recommended to insert the {INDEX} placeholder at a first placeholder in the filename template for renaming. The system uses a file attribute for sorting
               (usually the name of the the file), when listing them.
             </p>
           </div>
@@ -426,22 +395,17 @@ Examples:
       </p><p>
         <span class="terminal">imgres @imglist.txt .\img640 640</span>
       </p><p>
-        To resample multiple files in multiple resolutions, just enter multiple
-        comma separated sizes without spaces.
+        To resample multiple files in multiple resolutions, just enter multiple comma separated sizes without spaces.
       </p><p>
         Note: the placeholder {SIZE} in the target path is required.
       </p><p>
         <span class="terminal">imgres @imglist.txt .\img{SIZE} 240,640,1280</span>
       </p><p>
-        This creates a 640px jpg with a 640*60%=384px size watermark at the
-        left bottom corner. 2% for the left margin, 98% percent means 2% from
-        the bottom border.
+        This creates a 640px jpg with a 640*60%=384px size watermark at the left bottom corner. 2% for the left margin, 98% percent means 2% from the bottom border.
       </p><p>
         <span class="terminal">imgres image.jpg img640 640 -w "watermark.png?60,2,98?20"</span>
       </p><p>
-        This example demonstrates how to create all resized image files to a single
-        folder. The trick is to build in the target size into the filename
-        that all filenames become unique.
+        This example demonstrates how to create all resized image files to a single folder. The trick is to build in the target size into the filename that all filenames become unique.
       </p><p>
         <span class="terminal">imgres MyImages\*.jpg;*.png .\images 200,1920 -r "img{INDEX:1,3}_{SIZE}.{FILEEXT}"</span>
       </p><p>

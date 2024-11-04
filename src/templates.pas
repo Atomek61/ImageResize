@@ -21,10 +21,10 @@ unit templates;
 //     Add('INDEX', '1');
 //     Add('SIZE', '1920');
 //     Add('EXT', '.jpg');
-//     Add('FILENAME', 'img{SIZE.ifmt(1,3)}.{EXT}');
+//     Add('FILENAME', 'img${SIZE.ifmt(1,3)}.${EXT}');
 //   end;
 //   Engine.Solve;
-//   result := Engine.Compile('My File {FILENAME} has a size of {SIZE} Pixels');
+//   result := Engine.Compile('My File ${FILENAME} has a size of ${SIZE} Pixels');
 //
 
 interface
@@ -65,7 +65,7 @@ type
     PERCENTDELIMITERS       :TDelimiters = (Del1: '%'; Del2: '%');
     BROSTDELIMITERS         :TDelimiters = (Del1: '«'; Del2: '»');
     MUSTACHEDELIMITERS      :TDelimiters = (Del1: '{{'; Del2: '}}');
-    CURLYBRACEDELIMITERS    :TDelimiters = (Del1: '{'; Del2: '}');
+    SAVEDELIMITERS          :TDelimiters = (Del1: '${'; Del2: '}');
 
     MAXKEYLENGTH = 24;
 
@@ -78,6 +78,8 @@ type
 
   TEngine = class
   public type
+
+    TUnknownVarHandling = (uvhError, uvhIgnore, uvhClear);
 
     TTemplateFunction = function(const Value :string; const Params :string) :string of object;
 
@@ -136,15 +138,13 @@ type
     FFnCallsRegExpr :TRegExpr;
     FFunctions :TDictionary<string, TTemplateFunction>;
     FReplacementCount :integer;
+    FUnknownVarHandling :TUnknownVarHandling;
     function GetCount: integer;
     function GetItem(const Key :string): string;
     function GetKey(Index :integer): string;
     function GetValue(Index :integer) :string; overload;
     procedure SetDelimiters(const AValue: TDelimiters);
-    //function Next(const Txt :string; var Iterator :TIterator; out Key :string) :boolean;
     procedure SetItem(const Key :string; const Value: string);
-    //procedure CompileVarPattern;
-    //procedure SetVarPattern(AValue: string);
     class function ParseName(const Expression :string) :string;
     function ParseExpression(const Expression :string) :TExpression;
     function ParseFnCalls(const FnCalls :string) :TArray<TFnCall>;
@@ -172,15 +172,14 @@ type
     function Compile(const Subject :string) :string;
     function TryGetValue(const Key :string; out Value :string) :boolean;
     function GetValue(const Key :string) :string; overload;
-//    class function DecoratePattern(const Pattern :string; const Delimiters :TDelimiters) :string;
     class function ContainsOneOf(const Template :string; const Names :array of string; const Delimiters :TDelimiters) :boolean;
     property Count :integer read GetCount;
     property Items[const Key :string] :string read GetItem write SetItem; default;
     property Keys[Index :integer] :string read GetKey;
     property Values[Index :integer] :string read GetValue;
     property Delimiters  :TDelimiters read FDelimiters write SetDelimiters;
-//    property VarPattern :string read FVarPattern write SetVarPattern;
     property ReplacementCount :integer read FReplacementCount;
+    property UnknownVarHandling :TUnknownVarHandling read FUnknownVarHandling write FUnknownVarHandling;
   end;
 
 // Checks against the default syntax VARNAME.fn(..)
@@ -482,7 +481,7 @@ constructor TEngine.Create(RegisterDefaultFunctions :boolean);
 begin
   FVarDict := TDictionary<string, TKeyVar>.Create;
   FVars := TObjectList<TKeyVar>.Create;
-  FDelimiters := CURLYBRACEDELIMITERS;
+  FDelimiters := SAVEDELIMITERS;
   FExpRegExpr := TRegExpr.Create(EXPPATTERN);
   FFnCallsRegExpr := TRegExpr.Create(FNCPATTERN);
   FFunctions := TDictionary<string, TTemplateFunction>.Create;
@@ -571,8 +570,14 @@ begin
     Iterator := TIterator.Create(l.Value, FDelimiters);
     while Iterator.Next(Expression) do begin
       Name := ParseName(Expression);
-      if not FVarDict.TryGetValue(Name, r) then
-        raise Exception.CreateFmt(SErrVarNotFoundFmt, [Name]);
+      if not FVarDict.TryGetValue(Name, r) then begin
+        case FUnknownVarHandling of
+        uvhError:
+          raise Exception.CreateFmt(SErrVarNotFoundFmt, [Name]);
+        else
+          continue;
+        end;
+      end;
       // Check, if the dependency is counted only once
       found := false;
       for d in r.Deps do begin
@@ -629,9 +634,17 @@ begin
   while Iterator.Next(ExprStr) do begin
     // Parse Expression
     Expr := ParseExpression(ExprStr);
-    if not FVarDict.TryGetValue(Expr.VarName, KeyVar) then
-      raise Exception.CreateFmt(SErrVarNotFoundFmt, [Expr.VarName]);
-    Value := KeyVar.Value;
+    if not FVarDict.TryGetValue(Expr.VarName, KeyVar) then begin
+      case FUnknownVarHandling of
+      uvhError:
+        raise Exception.CreateFmt(SErrVarNotFoundFmt, [Expr.VarName]);
+      uvhIgnore:
+        break;
+      else
+        Value := '';
+      end;
+    end else
+      Value := KeyVar.Value;
     if Expr.FnCalls<>'' then begin
       FnCalls := ParseFnCalls(Expr.FnCalls);
       for FnCall in FnCalls do begin
@@ -806,14 +819,14 @@ end;
 //    Engine.Add('INDEX', '12345');
 //    Engine.Add('FILENAME', 'dsc00123.jpg');
 //    //Engine.Add('FILEEXT', 'JPG');
-//    //Engine.Add('FILENAME', '{FILETITLE.upper()}_{INDEX.ifmt(1,3)}.{FILEEXT.lower()}');
+//    //Engine.Add('FILENAME', '${FILETITLE.upper()}_${INDEX.ifmt(1,3)}.${FILEEXT.lower()}');
 //
 //    Engine.TrySolve(Stats);
-//    x := Engine.Compile('abc{FILENAME.lower()}xyz');
-//    x := Engine.Compile('abc{FILENAME.upper()}xyz');
-//    x := Engine.Compile('abc{INDEX.ifmt(10,8)}xyz');
+//    x := Engine.Compile('abc${FILENAME.lower()}xyz');
+//    x := Engine.Compile('abc${FILENAME.upper()}xyz');
+//    x := Engine.Compile('abc${INDEX.ifmt(10,8)}xyz');
 //
-//    x := Engine.Compile('abc{INDEX.slice(2:-1)}xyz{FILENAME.lower()}');
+//    x := Engine.Compile('abc${INDEX.slice(2:-1)}xyz${FILENAME.lower()}');
 //
 //  finally
 //    Engine.Free;

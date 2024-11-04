@@ -505,9 +505,9 @@ msgid "Cancelled at %.0f%%"
 msgstr "Abgebrochen bei %.0f%%"
 
 #: maindlg.serrenterplaceholder
-msgid "Enter placeholder {SIZE} or {SIZENAME} to either the target folder or the file template"
+msgid "Enter placeholder ${SIZE} or ${SIZENAME} to either the target folder or the file template"
 msgstr ""
-"Geben Sie die Platzhalter {SIZE} oder {SIZENAME}  entweder im Zielordnernamen\n"
+"Geben Sie die Platzhalter ${SIZE} oder ${SIZENAME}  entweder im Zielordnernamen\n"
 "oder in der Dateiname-Vorlage des Umbenennens an, um den Dateinamenskonflikt zu lösen."
 
 #: maindlg.serrinvalidjpgquality
@@ -1376,10 +1376,10 @@ msgstr "1"
 msgid ""
 "Enter a filename template containing placeholders for special values.\n"
 "This template will be expanded for each resampled image. Insert the\n"
-"{SIZE} placeholder to enable multiple sizes in a common folder."
+"${SIZE} placeholder to enable multiple sizes in a common folder."
 msgstr ""
 "Geben Sie eine Dateinamen-Vorlage ein, die Platzhalter für bestimmte Werte enthält.\n"
-"Die Vorlage wird für jede skalierte Datei ausgewertet. Fügen Sie den {SIZE}-Platzhalter ein,\n"
+"Die Vorlage wird für jede skalierte Datei ausgewertet. Fügen Sie den ${SIZE}-Platzhalter ein,\n"
 "um mehrere Größen eines Bildes in einem gemeinsamen Verzeichnis erzeugen zu können."
 
 #: tmaindialog.editsrcfolder.hint
@@ -1399,12 +1399,12 @@ msgstr "*.jpg;*.png"
 #: tmaindialog.edittargetfolder.hint
 msgid ""
 "Enter a destination for the resampled images.\n"
-"If multiple sizes are entered, insert placeholder {SIZE}\n"
-"or {SIZENAME} into the path where the program\n"
+"If multiple sizes are entered, insert placeholder ${SIZE}\n"
+"or ${SIZENAME} into the path where the program\n"
 "shall insert the current size ."
 msgstr ""
 "Geben Sie ein Ziel für die skalierten Bilder an.\n"
-"Wenn mehrere Größen angegeben werden, muss der Platzhalter {SIZE} im Pfad\n"
+"Wenn mehrere Größen angegeben werden, muss der Platzhalter ${SIZE} im Pfad\n"
 " an der Stelle eingefügt werden, wo die aktuelle Größe erscheinen soll."
 
 #: tmaindialog.groupboxinterpolationquality.caption

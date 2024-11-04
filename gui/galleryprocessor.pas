@@ -14,6 +14,7 @@ type
   { TProcessor }
 
   TProcessor = class
+
   private const
 
     IFMT_PARAMS_REGEXPR = '^(\d+)(?:,(\d+|auto))?$';
@@ -43,6 +44,8 @@ type
       Elapsed :integer;             // ms
     end;
 
+  private
+
     function ifmt(const VarName, Value, Params: string): string;
 
   public
@@ -60,9 +63,6 @@ type
     property Delimiters :TTypeDelimiters read FDelimiters;
 
   end;
-
-//const
-//  DOTIMAGESFILETITLE = '.imgtags';
 
 implementation
 
@@ -175,6 +175,7 @@ var
 begin
   Lists := TStringDictionary.Create;
   ImgVars := TEngine.Create;
+  ImgVars.UnknownVarHandling := uvhClear;
   FileSource := TStringList.Create;
   Stats := Default(TStats);
   t0 := TThread.GetTickCount64;
@@ -206,7 +207,7 @@ begin
         Lists.Add(Fragment.Key, '');
 
       // Iterate over the images and the fragments
-      ImgVars.Delimiters := CURLYBRACEDELIMITERS;
+      ImgVars.Delimiters := SAVEDELIMITERS;
       for i:=0 to FFilesTags.Filenames.Count-1 do begin
         // Build the ImgVars for each image
         ImgVars.Clear;
@@ -265,7 +266,7 @@ begin
         if FDelimiters.TryGetValue(LowerCase(ExtractExt(TemplateFilename)), Delimiters) then
           FDocVars.Delimiters := Delimiters
         else
-          FDocVars.Delimiters := CURLYBRACEDELIMITERS;
+          FDocVars.Delimiters := SAVEDELIMITERS;
         FileText := FDocVars.Compile(FileSource.Text);
         inc(Stats.Replacements, FDocVars.ReplacementCount);
         FileSource.Text := FileText;
@@ -337,7 +338,7 @@ end;
 //  d :string;
 //begin
 //  Vars := TEngine.Create;
-//  Vars.Delimiters := CURLYBRACEDELIMITERS;
+//  Vars.Delimiters := SAVEDELIMITERS;
 //  Vars.Add('THUMBNAILS', 'mein kleiner Daumennagel');
 //
 //  d := Vars.Compile('XXXX {THUMBNAILS} YYYY');

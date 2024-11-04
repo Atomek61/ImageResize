@@ -113,7 +113,7 @@ const
   DEFAULT_STOPONERROR       = true;
   DEFAULT_RENENABLED        = false;
   DEFAULT_RENFMTSTR         = 'img%2:s.%1:s';
-  DEFAULT_RENFILETEMPLATE   = 'img{INDEX.ifmt(1)}.{FILEEXT}';
+  DEFAULT_RENFILETEMPLATE   = 'img${INDEX.ifmt(1)}.${FILEEXT}';
   DEFAULT_RENINDEXSTART     = 1;
   DEFAULT_RENINDEXDIGITS    = 3;
   DEFAULT_SHUFFLE           = false;
@@ -845,8 +845,8 @@ begin
     m := Length(FSizes);
 
     // Check, if multiple sizes, then either SIZE or SIZENAME must be in folder or in renamed filename
-    ProcRes.IsTargetFileRenamingStrategy := Rename and TargetFolderTemplateEngine.ContainsOneOf(FTargetFilename, ['SIZE', 'SIZENAME'], CURLYBRACEDELIMITERS);
-    ProcRes.IsMultipleTargetFolderStrategy := TargetFolderTemplateEngine.ContainsOneOf(FTargetFolder, ['SIZE', 'SIZENAME'], CURLYBRACEDELIMITERS);
+    ProcRes.IsTargetFileRenamingStrategy := Rename and TargetFolderTemplateEngine.ContainsOneOf(FTargetFilename, ['SIZE', 'SIZENAME'], SAVEDELIMITERS);
+    ProcRes.IsMultipleTargetFolderStrategy := TargetFolderTemplateEngine.ContainsOneOf(FTargetFolder, ['SIZE', 'SIZENAME'], SAVEDELIMITERS);
     if (Length(FSizes)>1) and not ProcRes.IsMultipleTargetFolderStrategy and not ProcRes.IsTargetFileRenamingStrategy then
         raise Exception.Create(SErrMultipleSizes);
 
@@ -887,10 +887,10 @@ begin
     if FWatermarkParams.Filename='' then begin
       SetLength(ProcRes.MrkImages, 0);
     end else begin
-      if Pos('{SIZE}', FWatermarkParams.Filename)>0 then begin
+      if Pos('${SIZE}', FWatermarkParams.Filename)>0 then begin
         SetLength(ProcRes.MrkImages, m);
         for i:=0 to m-1 do begin
-          Item := ReplaceStr(FWatermarkParams.Filename, '{SIZE}', IntToStr(FSizes[i]));
+          Item := ReplaceStr(FWatermarkParams.Filename, '${SIZE}', IntToStr(FSizes[i]));
           Print(Format(SMsgLoadMrkFileFmt, [ExtractFilename(Item)]));
           ProcRes.MrkImages[i] := TBGRABitmap.Create(Item);
         end;

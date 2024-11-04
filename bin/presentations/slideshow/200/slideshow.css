@@ -1,13 +1,13 @@
 body {
     margin: 0;
-    background-color: {BACKGROUNDCOLOR};
+    background-color: ${BACKGROUNDCOLOR};
 }
 
 .slideshow {
     position: absolute;
     width: 100%;
     aspect-ratio: 16/9;
-    background-color: {IMGBKGCOLOR};
+    background-color: ${IMGBKGCOLOR};
 }
 
 .slideshow img {
@@ -21,12 +21,12 @@ body {
 
 .title-bar {
     font-family: Arial;
-	font-size: calc(2*{SYMBOLSIZE})em;
+	font-size: calc(2*${SYMBOLSIZE})em;
     position: absolute;
     height: 1em;
     top: 5%;
     left: 50%; transform: translatex(-50%);
-    color: {FONTCOLOR};
+    color: ${FONTCOLOR};
     transition: 0.3s;
 }
 
@@ -35,13 +35,13 @@ body {
 }
 
 .navigation-bar, .control-bar {
-    fill: {CONTROLSCOLOR};
+    fill: ${CONTROLSCOLOR};
     fill-opacity: 1;
 }
 
 .navigation-bar {
     position: absolute;
-    height: 100%; width: {SYMBOLSIZE}em;
+    height: 100%; width: ${SYMBOLSIZE}em;
     xtransition: 0.3s;
 }
 
@@ -65,7 +65,7 @@ body {
 
 .control-bar {
     position: absolute;
-    width: 100%; height: {SYMBOLSIZE}em; bottom: 1%;
+    width: 100%; height: ${SYMBOLSIZE}em; bottom: 1%;
     display: flex;
     justify-content: center;
     transition: 0.3s;

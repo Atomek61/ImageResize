@@ -479,14 +479,14 @@ object MainDialog: TMainDialog
             object EditRenTemplate: TComboBox
               Left = 27
               Height = 23
-              Hint = 'Enter a filename template containing placeholders for special values.'#13#10'This template will be expanded for each resampled image. Insert the'#13#10'{SIZE} placeholder to enable multiple sizes in a common folder.'
+              Hint = 'Enter a filename template containing placeholders for special values.'#13#10'This template will be expanded for each resampled image. Insert the'#13#10'${SIZE} placeholder to enable multiple sizes in a common folder.'
               Top = 113
               Width = 336
               ItemHeight = 15
               Items.Strings = (
-                'img{INDEX.ifmt(1)}.{FILEEXT}'
-                'img{INDEX.ifmt(1)}_{SIZE}.{FILEEXT}'
-                'img{INDEXifmt(1)}_{SIZENAME}.{FILEEXT}'
+                'img${INDEX.ifmt(1)}.${FILEEXT}'
+                'img${INDEX.ifmt(1)}_${SIZE}.${FILEEXT}'
+                'img${INDEXifmt(1)}_${SIZENAME}.${FILEEXT}'
               )
               TabOrder = 3
               OnChange = ProjectChanged
@@ -1452,7 +1452,7 @@ object MainDialog: TMainDialog
       object EditTargetFolder: TEdit
         Left = 8
         Height = 23
-        Hint = 'Enter a destination for the resampled images.'#13#10'If multiple sizes are entered, insert placeholder {SIZE}'#13#10'or {SIZENAME} into the path where the program'#13#10'shall insert the current size .'
+        Hint = 'Enter a destination for the resampled images.'#13#10'If multiple sizes are entered, insert placeholder ${SIZE}'#13#10'or ${SIZENAME} into the path where the program'#13#10'shall insert the current size .'
         Top = 7
         Width = 410
         Anchors = [akTop, akLeft, akRight]

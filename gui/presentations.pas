@@ -38,7 +38,7 @@ type
     FTemplateFolder :string;
     FImgTagsFilename :string;
     FSettings :TSettings;
-    FDelimiters :TTypeDelimiters;
+    FTypeDelimiters :TTypeDelimiters;
     FPrdDir :string;
     FRootDir :string;
     function GetIcon: TGraphic;
@@ -63,7 +63,7 @@ type
     property Icon :TGraphic read GetIcon;
     property ImgTagsFilename :string read FImgTagsFilename write FImgTagsFilename;
     property Settings :TSettings read FSettings;
-    property Delimiters :TTypeDelimiters read FDelimiters;
+    property Delimiters :TTypeDelimiters read FTypeDelimiters;
   end;
 
   { TManagers }
@@ -149,7 +149,7 @@ var
   Key :string;
 begin
   inherited Create;
-  FDelimiters       := TTypeDelimiters.Create;
+  FTypeDelimiters       := TTypeDelimiters.Create;
   FPrdDir           := IncludeTrailingPathDelimiter(CreateAbsolutePath(ExtractFilePath(IniFile.Filename), ExtractFilePath(IniFile.Filename)));
   FRootDir          := IncludeTrailingPathDelimiter(CreateAbsolutePath(IniFile.ReadString(PRESENTATION_SECTION, 'RootDir', FPrdDir), FPrdDir));
   FTitle            := IniRead('Title');
@@ -164,7 +164,7 @@ begin
   try
     IniFile.ReadSection(PRESENTATION_SECTION, Keys);
     for Key in Keys do if Key.StartsWith('Delimiters.') then
-      FDelimiters.Add(LowerCase(Copy(Key, 12, Length(Key)-11)), TDelimiters.StrToDelimiters(IniRead(Key)));
+      FTypeDelimiters.Add(LowerCase(Copy(Key, 12, Length(Key)-11)), TDelimiters.StrToDelimiters(IniRead(Key)));
   finally
     Keys.Free;
   end;
@@ -175,7 +175,7 @@ end;
 
 destructor TCustomManager.Destroy;
 begin
-  FDelimiters.Free;
+  FTypeDelimiters.Free;
   FIcon.Free;
   FSettings.Free;
   inherited Destroy;

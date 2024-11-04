@@ -30,7 +30,7 @@
                       - a path to a folder with semicolon-separated wildcards
   target              The folder where to store the resulting resampled and resized files.
                       If the resulting filenames can conflict and this is not solved by renaming
-                      then the folder must contain the placeholder {SIZE% or {SIZENAME%.
+                      then the folder must contain the placeholder ${SIZE} or ${SIZENAME}.
                       Non-existend folders are created.
   size                Is a size in pixels or a comma-separated list of sizes, where the size refers to
                       the longer side of the image.
@@ -170,12 +170,10 @@ Examples:
 
         <h2 id="overview">Overview</h2>
         <p>
-          I wrote this little tool for my website, where I sometimes have to resample
-          high resolution images to web images at a lower resolution.
+          I wrote this little tool for my website, where I sometimes have to resample high resolution images to web images at a lower resolution.
         </p>
         <p>
-          Formerly I used JpgIlluminator or IrfanView, which are excellent tools for their purposes. I decided to write a tool of
-          my own, which fullfills my special needs:
+          Formerly I used JpgIlluminator or IrfanView, which are excellent tools for their purposes. I decided to write a tool of my own, which fullfills my special needs:
         </p>
         <ul>
           <li>Resampling JPEG and PNG files with a good quality</li>
@@ -212,14 +210,11 @@ Examples:
 
         <h2 id="gui">Windows GUI Application - ImageResize.exe</h2>
         <p>
-          This application is compiled for Microsoft Windows 64 Bit, but
-          the source could be ported for Linux or OSX.
+          This application is compiled for Microsoft Windows 64 Bit, but the source could be ported for Linux or OSX.
         </p>
         <h3>Getting Help</h3>
         <p>
-          After installing the GUI application you have either a local copy of the 
-          HTML-Help files (an installation option) or you can access the web documentation 
-          on my homepage.
+          After installing the GUI application you have either a local copy of the  HTML-Help files (an installation option) or you can access the web documentation  on my homepage.
         </p>
         <p>
           To get help from inside the application, many controls have <i>hints</i> or simply press 
@@ -237,8 +232,7 @@ Examples:
 
         <h2 id="commandline">Commandline Interface imgres.exe</h2>
         <p>
-          Download the <a href="../download/imgres.zip">imgres.exe</a> file, copy it to your Windows folder, open the
-          commandline with cmd.exe and type <span class="terminal">imgres</span>. This will display a help text.
+          Download the <a href="../download/imgres.zip">imgres.exe</a> file, copy it to your Windows folder, open the commandline with cmd.exe and type <span class="terminal">imgres</span>. This will display a help text.
         </p>
         <p>
           Example to scale an image with source image, target folder and new size in pixel of the larger side:<br/>
@@ -253,10 +247,7 @@ Examples:
 
         <h2>And the best (beside its free) - the NEW feature: A Web Gallery Generator</h2>
         <p>
-          ImageResize at the beginning was a simple image resizing and renaming tool but kept in
-          mind, that its the base for creation of Web Galleries. Now this old dream became true.
-          With adding the new Web Gallery Generator (called <i>Presentation</i>) all my dreams
-          became reality (Ok, I have other dreams too - universal peace for instance - but they have to wait...)
+          ImageResize at the beginning was a simple image resizing and renaming tool but kept in mind, that its the base for creation of Web Galleries. Now this old dream became true. With adding the new Web Gallery Generator (called <i>Presentation</i>) all my dreams became reality (Ok, I have other dreams too - universal peace for instance - but they have to wait...)
         </p>
         <p>
           <img src="img/presentationdlg.png"/>
@@ -266,8 +257,7 @@ Examples:
             <li>The presentation is a complete website for your browser</li>
             <li>Its designed to be copied to your web-server</li>
             <li>You can choose different designs</li>
-            <li>The Presentation Manager is designed to be customizeable, 
-              create new web presentations with HTML, CSS and JavaScript</li>
+            <li>The Presentation Manager is designed to be customizeable,  create new web presentations with HTML, CSS and JavaScript</li>
           </ul>
         </p>
         <p>
@@ -276,7 +266,7 @@ Examples:
 
         <h2 id="history">Version History</h2>      
         <ul>
-          <li>V4.2 Presentation</li>
+          <li>V4.2 Sharpening</li>
           <ul>
             <li>Sharpening</li>
             <li>Enhanced Template Engine</li>

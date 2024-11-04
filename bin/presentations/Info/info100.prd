@@ -5,8 +5,8 @@ Version=100
 [Presentation]
 Id=Info100
 Processor=Presentation
-Delimiters.html={,}
-Delimiters.css=«,»
+Delimiters.html=${,}
+Delimiters.css=${,}
 Title=Info 1.0
 Description=Tabular Image Infos
 Description.de=Tabellarische Bildinformationen
@@ -50,16 +50,16 @@ Caption=Card Background
 Caption.de=Kartenhintergrund
 Default=#210C21
 
-[Settings.TableFontColor]
+[Settings.FontColor]
 Class=HTMLColor
 Presentation=WebColor
 Caption=Font Color
-Caption.de=Tabellenschrift
+Caption.de=Schriftfarbe
 Default=#EDF0BF
 
 [Settings.TableColor]
 Class=HTMLColor
 Presentation=WebColor
-Caption=Font Color
+Caption=Table Color
 Caption.de=Tabellenhintergrund
 Default=#782C78
