@@ -7,7 +7,7 @@
    viewBox="0 0 128 128.00001"
    version="1.1"
    id="svg138"
-   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
    sodipodi:docname="cancel.svg"
    inkscape:export-filename="img20\cancel.png"
    inkscape:export-xdpi="18"
@@ -30,7 +30,7 @@
      showguides="true"
      inkscape:lockguides="true"
      inkscape:zoom="3.659624"
-     inkscape:cx="16.258501"
+     inkscape:cx="16.121875"
      inkscape:cy="114.90251"
      inkscape:window-width="2560"
      inkscape:window-height="1417"
@@ -78,9 +78,13 @@
      inkscape:label="Dots"
      style="display:inline">
     <path
-       style="fill:#ef2929;stroke-linecap:round;stroke-linejoin:round"
-       d="M 36,24 24,36 52,64 24,92 36,104 64,76 92,104 104,92 76,64 104,36 92,24 64,52 Z"
-       id="path2" />
+       style="fill:none;stroke:#cc0000;stroke-width:16;stroke-linecap:round;stroke-linejoin:round"
+       d="M 32.000004,31.999998 96.000011,96.000004"
+       id="path1" />
+    <path
+       style="fill:none;stroke:#cc0000;stroke-width:16;stroke-linecap:round;stroke-linejoin:round"
+       d="M 32,95.999993 96.000011,31.999998"
+       id="path3" />
   </g>
   <g
      inkscape:label="Ebene 1"

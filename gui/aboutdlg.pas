@@ -23,6 +23,7 @@ type
     ButtonDownload: TBitBtn;
     ButtonClose: TButton;
     FPHTTPClient: TFPHTTPClient;
+    Image1: TImage;
     ImageMainIcon: TImage;
     LabelAppVersion: TLabel;
     LabelImgresGuiCpr1: TLabel;

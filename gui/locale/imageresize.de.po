@@ -1116,6 +1116,16 @@ msgstr "Löscht alle Größen der Liste"
 msgid "Clear image list"
 msgstr "Löscht die Liste der Bilder"
 
+#: tmaindialog.buttondeletesize.caption
+msgid "Delete"
+msgstr ""
+
+#: tmaindialog.buttondeletesize.hint
+#, fuzzy
+msgctxt "tmaindialog.buttondeletesize.hint"
+msgid "Replace the selected size"
+msgstr "Ersetzt die ausgewählte Größe"
+
 #: tmaindialog.buttonmrkedit.hint
 msgctxt "tmaindialog.buttonmrkedit.hint"
 msgid "Opens the internal Watermark Editor"
@@ -1866,9 +1876,13 @@ msgid "Re&scan"
 msgstr "Re&scan"
 
 #: tpresentationdialog.buttonrescan.hint
+#, fuzzy
+#| msgid ""
+#| "Load all available presentations again.\n"
+#| "\n"
+#| "This makes sense, when you are creating and testing your customized presentation."
 msgid ""
-"Load all available presentations again.\n"
-"\n"
+"Reload all available presentations again.\n"
 "This makes sense, when you are creating and testing your customized presentation."
 msgstr ""
 "Lade alle verfügbaren Präsentationen erneut.\n"
@@ -1927,8 +1941,10 @@ msgid "Cancel"
 msgstr "Abbrechen"
 
 #: tsettingsdialog.buttonok.caption
+#, fuzzy
+#| msgid "Ok"
 msgctxt "tsettingsdialog.buttonok.caption"
-msgid "Ok"
+msgid "&Ok"
 msgstr "Ok"
 
 #: tsettingsdialog.caption
@@ -2029,3 +2045,4 @@ msgstr "Speichern"
 msgctxt "webutils.serrinvalidhtmlcolorfmt"
 msgid "Invalid web color '%s'."
 msgstr "Ungültige Web-Farbe '%s'."
+

@@ -127,6 +127,7 @@ type
     ButtonAddSize: TBitBtn;
     ButtonReplaceSize: TBitBtn;
     ButtonClearSizes: TBitBtn;
+    ButtonDeleteSize: TBitBtn;
     ComboBoxSharpen: TComboBox;
     ComboBoxSize: TComboBox;
     ComboBoxSizeName: TComboBox;
@@ -284,6 +285,7 @@ type
     procedure ButtonClearCopyrightClick(Sender: TObject);
     procedure ButtonClearSizesClick(Sender: TObject);
     procedure ButtonClearSrcFilesClick(Sender: TObject);
+    procedure ButtonDeleteSizeClick(Sender: TObject);
     procedure ButtonInsertCopyrightClick(Sender: TObject);
     procedure ButtonInsertSIZEClick(Sender: TObject);
     procedure ActionParamExecute(Sender :TObject);
@@ -473,9 +475,18 @@ begin
   lcChanged:
     ListBoxSizes.Invalidate;
   lcInsert:
-    ListBoxSizes.Items.Insert(Index, IntToStr(FSizeInfos[Index].Size));
+    begin
+      ListBoxSizes.Items.Insert(Index, IntToStr(FSizeInfos[Index].Size));
+      ListBoxSizes.ItemIndex := Index;
+    end;
   lcDelete:
-    ListBoxSizes.Items.Delete(Index);
+    begin
+      ListBoxSizes.Items.Delete(Index);
+      if Index>=ListBoxSizes.Items.Count then
+        ListBoxSizes.ItemIndex := ListBoxSizes.Items.Count-1
+      else
+        ListBoxSizes.ItemIndex := Index;
+    end;
   lcInit:
     begin
       ListBoxSizes.Items.Clear;
@@ -1361,6 +1372,12 @@ end;
 procedure TMainDialog.ButtonClearSrcFilesClick(Sender: TObject);
 begin
   MemoSrcFilenames.Lines.Clear;
+end;
+
+procedure TMainDialog.ButtonDeleteSizeClick(Sender: TObject);
+begin
+  if ListBoxSizes.ItemIndex<>-1 then
+    FSizeInfos.Delete(ListBoxSizes.ItemIndex);
 end;
 
 procedure TMainDialog.ButtonInsertCopyrightClick(Sender: TObject);

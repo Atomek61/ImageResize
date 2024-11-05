@@ -256,14 +256,14 @@ object MainDialog: TMainDialog
         Top = 4
         Width = 393
         TabStop = False
-        ActivePage = TabSheetRenaming
+        ActivePage = TabSheetSizes
         Align = alClient
         BorderSpacing.Around = 4
         ImagesWidth = 32
         MultiLine = True
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 1
+        TabIndex = 0
         TabOrder = 1
         Options = [nboMultiLine]
         object TabSheetSizes: TTabSheet
@@ -398,7 +398,7 @@ object MainDialog: TMainDialog
             Images = ImagesModule.ImageList24x24
             ImageIndex = 7
             OnClick = ButtonClearSizesClick
-            TabOrder = 6
+            TabOrder = 7
           end
           object ButtonReplaceSize: TBitBtn
             Left = 273
@@ -412,6 +412,19 @@ object MainDialog: TMainDialog
             ImageIndex = 8
             OnClick = ButtonReplaceSizeClick
             TabOrder = 5
+          end
+          object ButtonDeleteSize: TBitBtn
+            Left = 273
+            Height = 32
+            Hint = 'Replace the selected size'
+            Top = 184
+            Width = 112
+            Anchors = [akTop, akRight]
+            Caption = 'Delete'
+            Images = ImagesModule.ImageList24x24
+            ImageIndex = 9
+            OnClick = ButtonDeleteSizeClick
+            TabOrder = 6
           end
         end
         object TabSheetRenaming: TTabSheet

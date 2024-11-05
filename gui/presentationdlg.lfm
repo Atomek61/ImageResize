@@ -61,7 +61,7 @@ object PresentationDialog: TPresentationDialog
       ClientHeight = 476
       ClientWidth = 579
       ParentBackground = False
-      TabOrder = 0
+      TabOrder = 1
       object ButtonBrowseTargetFolder: TBitBtn
         AnchorSideLeft.Control = EditImgTagsFilename
         AnchorSideLeft.Side = asrBottom
@@ -149,7 +149,7 @@ object PresentationDialog: TPresentationDialog
       BevelOuter = bvNone
       ClientHeight = 452
       ClientWidth = 126
-      TabOrder = 1
+      TabOrder = 2
       object ButtonWebShow: TBitBtn
         Left = 8
         Height = 68
@@ -179,7 +179,7 @@ object PresentationDialog: TPresentationDialog
         Images = ImagesModule.ImageList20x20
         ImageIndex = 2
         OnClick = ButtonOkClick
-        TabOrder = 2
+        TabOrder = 3
       end
       object ButtonCancel: TBitBtn
         Left = 8
@@ -196,7 +196,7 @@ object PresentationDialog: TPresentationDialog
         ModalResult = 2
         Images = ImagesModule.ImageList20x20
         ImageIndex = 14
-        TabOrder = 3
+        TabOrder = 4
       end
       object ButtonExecute: TBitBtn
         Left = 8
@@ -218,7 +218,7 @@ object PresentationDialog: TPresentationDialog
       object ButtonRescan: TBitBtn
         Left = 8
         Height = 30
-        Hint = 'Load all available presentations again.'#13#10#13#10'This makes sense, when you are creating and testing your customized presentation.'
+        Hint = 'Reload all available presentations again.'#13#10'This makes sense, when you are creating and testing your customized presentation.'
         Top = 160
         Width = 110
         Align = alTop
@@ -227,7 +227,7 @@ object PresentationDialog: TPresentationDialog
         Images = ImagesModule.ImageList20x20
         ImageIndex = 19
         OnClick = ButtonRescanClick
-        TabOrder = 4
+        TabOrder = 2
       end
     end
     object PanelLeft: TPanel
@@ -239,7 +239,7 @@ object PresentationDialog: TPresentationDialog
       BevelOuter = bvNone
       ClientHeight = 476
       ClientWidth = 456
-      TabOrder = 2
+      TabOrder = 0
       object LabelManagers: TLabel
         AnchorSideLeft.Control = ComboBoxManagers
         AnchorSideBottom.Control = ComboBoxManagers

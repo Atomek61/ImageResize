@@ -8,10 +8,10 @@
    version="1.1"
    id="svg1"
    inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
-   sodipodi:docname="ok.svg"
-   inkscape:export-filename="img20\ok.png"
-   inkscape:export-xdpi="15"
-   inkscape:export-ydpi="15"
+   sodipodi:docname="del2.svg"
+   inkscape:export-filename="img24\CheckBoxFrame.png"
+   inkscape:export-xdpi="18"
+   inkscape:export-ydpi="18"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -31,15 +31,15 @@
      inkscape:lockguides="true"
      guidecolor="#29e500"
      guideopacity="0.6"
-     inkscape:zoom="6.8445724"
-     inkscape:cx="57.125555"
-     inkscape:cy="62.312147"
+     inkscape:zoom="9.6796875"
+     inkscape:cx="64.258273"
+     inkscape:cy="63.793382"
      inkscape:window-width="2560"
      inkscape:window-height="1417"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1">
+     inkscape:current-layer="layer2">
     <inkscape:grid
        id="grid1"
        units="px"
@@ -86,13 +86,32 @@
   <defs
      id="defs1" />
   <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Ebene 2"
+     style="display:inline">
+    <circle
+       style="fill:#3465a4;fill-opacity:1;stroke:none;stroke-width:13.091;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path4"
+       cx="64"
+       cy="64"
+       r="48" />
+    <g
+       id="g1140"
+       style="fill:#eeeeec;stroke:#d3d7cf"
+       transform="rotate(45,64,64)">
+      <path
+         style="fill:#eeeeec;stroke:#d3d7cf;stroke-width:16;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+         d="M 64,40 V 88"
+         id="path418" />
+      <path
+         style="fill:#eeeeec;stroke:#d3d7cf;stroke-width:16;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+         d="M 40,64 H 88"
+         id="path1136" />
+    </g>
+  </g>
+  <g
      inkscape:label="Ebene 1"
      inkscape:groupmode="layer"
-     id="layer1">
-    <path
-       style="fill:none;stroke:#20876f;stroke-width:18.2858;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
-       d="M 36.571145,68.571603 63.999847,96.000305 C 63.999847,96.000305 86.857099,41.142901 96,32"
-       id="path2195"
-       sodipodi:nodetypes="ccc" />
-  </g>
+     id="layer1" />
 </svg>

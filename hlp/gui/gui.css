@@ -3,6 +3,7 @@
 
 main {
   background-image: url("../img/bkgshutter-bright.png");
+  padding: 1rem;
 }
 
 a:link {color: hsl(240, 100%, 80%);}
@@ -72,7 +73,10 @@ td {
   border-radius: 3px;
 }
 
-.chfot {margin-bottom: 2em; margin-top: 1.5em;}
+.chfot {
+  width: 100%; display: flex; justify-content: flex-end;
+  transform: translateY(1.5em);
+}
 
 .ct {display: flex; justify-content: space-around;}
 

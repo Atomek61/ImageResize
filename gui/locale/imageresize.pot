@@ -1090,6 +1090,15 @@ msgstr ""
 msgid "Clear image list"
 msgstr ""
 
+#: tmaindialog.buttondeletesize.caption
+msgid "Delete"
+msgstr ""
+
+#: tmaindialog.buttondeletesize.hint
+msgctxt "tmaindialog.buttondeletesize.hint"
+msgid "Replace the selected size"
+msgstr ""
+
 #: tmaindialog.buttonmrkedit.hint
 msgctxt "tmaindialog.buttonmrkedit.hint"
 msgid "Opens the internal Watermark Editor"
@@ -1776,8 +1785,7 @@ msgstr ""
 
 #: tpresentationdialog.buttonrescan.hint
 msgid ""
-"Load all available presentations again.\n"
-"\n"
+"Reload all available presentations again.\n"
 "This makes sense, when you are creating and testing your customized presentation."
 msgstr ""
 
@@ -1832,7 +1840,7 @@ msgstr ""
 
 #: tsettingsdialog.buttonok.caption
 msgctxt "tsettingsdialog.buttonok.caption"
-msgid "Ok"
+msgid "&Ok"
 msgstr ""
 
 #: tsettingsdialog.caption

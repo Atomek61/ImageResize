@@ -12,7 +12,7 @@
 {"hash":188069977,"name":"tsettingsdialog.checkboxwarndirty.caption","sourcebytes":[83,97,118,105,110,103,32,38,81,117,101,114,121],"value":"Saving &Query"},
 {"hash":251807385,"name":"tsettingsdialog.comboboxbehavior.hint","sourcebytes":[81,117,105,99,107,32,83,101,116,116,105,110,103,115,32,102,111,114,32,65,117,116,111,32,83,97,118,101,32,97,110,100,32,83,97,118,105,110,103,32,81,117,101,114,121],"value":"Quick Settings for Auto Save and Saving Query"},
 {"hash":149350330,"name":"tsettingsdialog.labelbehavior.caption","sourcebytes":[38,66,101,104,97,118,105,111,117,114,58],"value":"&Behaviour:"},
-{"hash":1371,"name":"tsettingsdialog.buttonok.caption","sourcebytes":[79,107],"value":"Ok"},
+{"hash":11099,"name":"tsettingsdialog.buttonok.caption","sourcebytes":[38,79,107],"value":"&Ok"},
 {"hash":77089212,"name":"tsettingsdialog.buttoncancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
 {"hash":217855253,"name":"tsettingsdialog.checkboxrelpathes.hint","sourcebytes":[80,97,116,104,101,115,32,119,105,108,108,32,98,101,32,115,97,118,101,100,32,114,101,108,97,116,105,118,101,32,116,111,32,116,104,101,32,112,114,111,106,101,99,116,32,102,105,108,101],"value":"Pathes will be saved relative to the project file"},
 {"hash":254205827,"name":"tsettingsdialog.checkboxrelpathes.caption","sourcebytes":[83,97,118,101,32,114,101,108,97,116,105,118,101,32,80,97,116,104,101,115],"value":"Save relative Pathes"},

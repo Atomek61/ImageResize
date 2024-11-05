@@ -16,7 +16,7 @@ object SettingsDialog: TSettingsDialog
   OnShow = FormShow
   ParentDoubleBuffered = False
   ShowHint = True
-  LCLVersion = '3.0.0.3'
+  LCLVersion = '3.6.0.0'
   object CheckBoxStopOnError: TCheckBox
     Left = 128
     Height = 19
@@ -156,7 +156,8 @@ object SettingsDialog: TSettingsDialog
       Align = alRight
       Anchors = [akRight, akBottom]
       BorderSpacing.Around = 8
-      Caption = 'Ok'
+      Caption = '&Ok'
+      Default = True
       ModalResult = 1
       Images = ImagesModule.ImageList20x20
       ImageIndex = 2
