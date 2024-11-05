@@ -8,6 +8,8 @@ body {
   margin: 0;
   font: 13pt "Open Sans";
   background-color: var(--backcolor);
+  margin-left: auto;
+  margin-right: auto;
 }
 
 header {
