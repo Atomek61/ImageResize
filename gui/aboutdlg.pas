@@ -86,7 +86,7 @@ end;
 
 procedure TAboutDialog.LabelLinkImageResizeHomeClick(Sender: TObject);
 begin
-  OpenURL(APPWEBURL);
+  OpenURL(LabelLinkImageResizeHome.Caption);
 end;
 
 procedure TAboutDialog.TabButtonClick(Sender: TObject);
@@ -144,7 +144,7 @@ end;
 
 procedure TAboutDialog.LabelLinkGithubClick(Sender: TObject);
 begin
-  OpenURL(APPGITHUBURL);
+  OpenURL(LabelLinkGithub.Caption);
 end;
 
 class function TAboutDialog.Execute(const Text1, Text2, LicenseResName :string): boolean;

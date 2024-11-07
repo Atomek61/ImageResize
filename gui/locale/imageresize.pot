@@ -798,7 +798,7 @@ msgstr ""
 
 #: taboutdialog.labellinkimageresizehome.caption
 msgctxt "taboutdialog.labellinkimageresizehome.caption"
-msgid "www.atomek.de/imageresize/index.hml"
+msgid "www.atomek.de/imageresize/hlp42/intro/index.html"
 msgstr ""
 
 #: taboutdialog.labelprocessorversion.caption

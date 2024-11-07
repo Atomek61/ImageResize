@@ -33,9 +33,9 @@ const
 
   GUIVER                :TVersionManifest = (App: GUIVER_APP; Version: GUIVER_VERSION; Date: GUIVER_DATE; Hint: '');
 
-  APPWEBURL             = 'www.atomek.de/imageresize/index.html';
+  //APPWEBURL             = 'www.atomek.de/imageresize/index.html';
   APPDOWNLOADURL        = 'www.atomek.de/imageresize/download/InstallImageResize.zip';
-  APPGITHUBURL          = 'https://github.com/Atomek61/ImageResize';
+  //APPGITHUBURL          = 'https://github.com/Atomek61/ImageResize';
   GUIVERURL             = 'https://www.atomek.de/imageresize/download/version.manifest';
 
   IMGRESGUICPR          =  GUIVER_APP+' '+GUIVER_VERSION+' © 2024 Jan Schirrmacher, www.atomek.de';

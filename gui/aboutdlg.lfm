@@ -2,18 +2,18 @@ object AboutDialog: TAboutDialog
   Left = 415
   Height = 384
   Top = 384
-  Width = 832
+  Width = 945
   BorderIcons = [biSystemMenu]
   Caption = 'About ImageResize'
   ClientHeight = 384
-  ClientWidth = 832
+  ClientWidth = 945
   Constraints.MinHeight = 381
   Constraints.MinWidth = 832
   OnCreate = FormCreate
   Position = poScreenCenter
   LCLVersion = '3.6.0.0'
   object ButtonClose: TButton
-    Left = 731
+    Left = 844
     Height = 29
     Top = 14
     Width = 80
@@ -45,7 +45,7 @@ object AboutDialog: TAboutDialog
     Left = 216
     Height = 244
     Top = 128
-    Width = 611
+    Width = 724
     ActivePage = TabSheetUpdate
     Anchors = [akTop, akLeft, akRight, akBottom]
     ShowTabs = False
@@ -54,13 +54,13 @@ object AboutDialog: TAboutDialog
     object TabSheetLicense: TTabSheet
       Caption = '&License'
       ClientHeight = 236
-      ClientWidth = 603
+      ClientWidth = 716
       ImageIndex = 4
       object MemoLicense: TMemo
         Left = 6
         Height = 224
         Top = 6
-        Width = 591
+        Width = 704
         Align = alClient
         BorderSpacing.Around = 6
         BorderStyle = bsNone
@@ -74,7 +74,7 @@ object AboutDialog: TAboutDialog
     object TabSheetVersion: TTabSheet
       Caption = '&Version'
       ClientHeight = 236
-      ClientWidth = 603
+      ClientWidth = 716
       ImageIndex = 5
       object LabelProcessorVersion: TLabel
         Left = 24
@@ -104,10 +104,10 @@ object AboutDialog: TAboutDialog
     object TabSheetUpdate: TTabSheet
       Caption = '&Update'
       ClientHeight = 236
-      ClientWidth = 603
+      ClientWidth = 716
       ImageIndex = 6
       object ButtonCheckUpdate: TBitBtn
-        Left = 512
+        Left = 625
         Height = 64
         Top = 72
         Width = 80
@@ -122,7 +122,7 @@ object AboutDialog: TAboutDialog
         Left = 16
         Height = 32
         Top = 24
-        Width = 576
+        Width = 689
         Anchors = [akTop, akLeft, akRight]
         AutoSize = False
         Caption = 'Press "Check" to look for an available update...'
@@ -161,7 +161,7 @@ object AboutDialog: TAboutDialog
         OnClick = LabelLinkImageResizeDownloadClick
       end
       object ButtonDownload: TBitBtn
-        Left = 512
+        Left = 625
         Height = 64
         Top = 164
         Width = 80
@@ -176,7 +176,7 @@ object AboutDialog: TAboutDialog
         Left = 464
         Height = 160
         Top = 72
-        Width = 40
+        Width = 153
         Anchors = [akTop, akLeft, akRight]
         AutoSize = False
         Font.Color = clNavy
@@ -192,8 +192,8 @@ object AboutDialog: TAboutDialog
     Left = 296
     Height = 15
     Top = 62
-    Width = 225
-    Caption = 'www.atomek.de/imageresize/index.hml'
+    Width = 298
+    Caption = 'www.atomek.de/imageresize/hlp42/intro/index.html'
     Font.Color = clHighlight
     Font.Style = [fsBold, fsUnderline]
     ParentColor = False
@@ -201,7 +201,7 @@ object AboutDialog: TAboutDialog
     OnClick = LabelLinkImageResizeHomeClick
   end
   object ToolBar: TToolBar
-    Left = 571
+    Left = 684
     Height = 62
     Top = 64
     Width = 241

@@ -818,8 +818,8 @@ msgstr "www.atomek.de/imageresize/download/InstallImageResize.zip"
 
 #: taboutdialog.labellinkimageresizehome.caption
 msgctxt "taboutdialog.labellinkimageresizehome.caption"
-msgid "www.atomek.de/imageresize/index.hml"
-msgstr "www.atomek.de/imageresize/index.hml"
+msgid "www.atomek.de/imageresize/hlp42/intro/index.html"
+msgstr "www.atomek.de/imageresize/hlp42/intro/index.html"
 
 #: taboutdialog.labelprocessorversion.caption
 msgctxt "taboutdialog.labelprocessorversion.caption"
@@ -2045,4 +2045,3 @@ msgstr "Speichern"
 msgctxt "webutils.serrinvalidhtmlcolorfmt"
 msgid "Invalid web color '%s'."
 msgstr "Ungültige Web-Farbe '%s'."
-
