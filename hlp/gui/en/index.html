@@ -154,11 +154,11 @@
       <li><span class="size-color" style="background-color: #dcf0f7;">SCREEN</span> for a full screen view</li>
     </ul>
     <p>
-      The selected sizes are given identifiers so that they can be used via a name using the placeholder <span class="vn">${SIZENAME}</span>. The placeholder can be used in the following places:
+      The selected sizes are given identifiers so that they can be used via a name using the placeholder <span class="vn">$(SIZENAME)</span>. The placeholder can be used in the following places:
     </p>
     <ul>
-      <li>In the target folder, e.g.: "img<span class="vn">${SIZENAME}</span>"</li>
-      <li>In a renaminf template string, e.g.: "img<span class="vn">${INDEX.<span class="vf">ifmt(1,auto)</span>}</span><span class="vn">${SIZENAME}</span>.<span class="vn">${FILEEXT}</span>"</li>
+      <li>In the target folder, e.g.: "img<span class="vn">$(SIZENAME)</span>"</li>
+      <li>In a renaminf template string, e.g.: "img<span class="vn">$(INDEX.<span class="vf">ifmt(1,auto)</span>)</span><span class="vn">$(SIZENAME)</span>.<span class="vn">$(FILEEXT)</span>"</li>
       <li>In a presentation template</li>
     </ul>
   
@@ -168,7 +168,7 @@
       A destination folder must be specified. You can type it directly or select with the <img class="btn" src="../img/folder-open.svg"/> button.
     </p>
     <p>
-      To avoid target name conflicts when multiple target sizes are specified, you can either create different file names with <a href="#renaming">Rename</a>, or by each size containing its own destination folder. The name of the target folder must be entered contain the placeholder <span class="vn">${SIZE}</span> or <span class="vn">${SIZENAME}</span>.
+      To avoid target name conflicts when multiple target sizes are specified, you can either create different file names with <a href="#renaming">Rename</a>, or by each size containing its own destination folder. The name of the target folder must be entered contain the placeholder <span class="vn">$(SIZE)</span> or <span class="vn">$(SIZENAME)</span>.
     </p>
 
     <div class="chfot"><a href="#contents">Contents</a></div>
@@ -181,16 +181,16 @@
     </p>
     <h2 id="rensimple">Strategy <b>"Simple"</b></h2>
     <p>
-      The simple filename template produces names like this: <i>img085.jpg</i>. File numbering starts at 1 and does not include size (in pixels). Then it is necessary to create a separate directory for each size. In addition Insert the placeholder <span class="vn">${SIZE}</span> or <span class="vn">${SIZENAME}</span> into the template of the target folder.
+      The simple filename template produces names like this: <i>img085.jpg</i>. File numbering starts at 1 and does not include size (in pixels). Then it is necessary to create a separate directory for each size. In addition Insert the placeholder <span class="vn">$(SIZE)</span> or <span class="vn">$(SIZENAME)</span> into the template of the target folder.
     </p>
     <p>
-      In the simplest case, the file name template is "img<span class="vn">${INDEX<span class="vf">.ifmt(1,3)</span></span>.<span class="vn">${FILEEXT}</span>". The <span class="vn">INDEX</span> is the 0-based sequential number of the source file in the list. The numbers 1 and 3 after the <span class="vn">INDEX</span> keyword mean that the index starts at 1 and will contain 3 digits with leading zeros.
+      In the simplest case, the file name template is "img<span class="vn">$(INDEX<span class="vf">.ifmt(1,3)</span></span>.<span class="vn">$(FILEEXT)</span>". The <span class="vn">INDEX</span> is the 0-based sequential number of the source file in the list. The numbers 1 and 3 after the <span class="vn">INDEX</span> keyword mean that the index starts at 1 and will contain 3 digits with leading zeros.
     </p>
   
     <h2 id="renadvanced">Strategy <b>"Advanced"</b></h2>
     <p>
       The file name template in this case is e.g.
-      "img<span class="vn">${INDEX<span class="vf">.ifmt(1,3)</span>}</span>_<span class="vn">${SIZE}</span>.<span class="vn">${FILEEXT}</span>", to create all files in the same directory without naming conflicts. It creates a file name like <i>img085_1920.jpg</i>. The filename conflict becomes avoided by using the <span class="vn">${SIZE}</span> wildcard.
+      "img<span class="vn">$(INDEX<span class="vf">.ifmt(1,3)</span>)</span>_<span class="vn">$(SIZE)</span>.<span class="vn">$(FILEEXT)</span>", to create all files in the same directory without naming conflicts. It creates a file name like <i>img085_1920.jpg</i>. The filename conflict becomes avoided by using the <span class="vn">$(SIZE)</span> wildcard.
     </p>
   
     <h2 id="rencustom">Strategy <b>"Custom"</b></h2>
@@ -200,11 +200,11 @@
     <p>
       Examples of valid templates in the case where the resulting filenames do not create a conflict for different sizes in the common directory, could look like this:
     </p>
-    <p>"img<span class="vn">${INDEX.<span class="vf">ifmt(1,3)</span>}</span>_<span class="vn">${SIZE}</span>.<span class="vn">${FILEEXT}</span>"</p>
+    <p>"img<span class="vn">$(INDEX.<span class="vf">ifmt(1,3)</span>)</span>_<span class="vn">$(SIZE)</span>.<span class="vn">$(FILEEXT)</span>"</p>
     <p>results in "img012_1920.jpg"</p>
-    <p>"<span class="vn">${FILETITLE}</span>_<span class="vn">${SIZE}</span>.<span class="vn">${FILEEXT}</span>"</p>
+    <p>"<span class="vn">$(FILETITLE)</span>_<span class="vn">$(SIZE)</span>.<span class="vn">$(FILEEXT)</span>"</p>
     <p>results in "DSC3240_1920.jpg"</p>
-    <p>"<span class="vn">${FILETITLE}</span>_<span class="vn">${SIZENAME}</span>.<span class="vn">${FILEEXT}</span>"</p>
+    <p>"<span class="vn">$(FILETITLE)</span>_<span class="vn">$(SIZENAME)</span>.<span class="vn">$(FILEEXT)</span>"</p>
     <p>results in "DSC3240_SCREEN.jpg"</p>
     <p>
       The available placeholders in the context of <i>Renaming</i> are in this <a href="#varindex">Table</a> and the available functions are <a href="#fnindex">here</a>.
@@ -215,7 +215,7 @@
       <i>Shuffling</i> means that the lexical order of the target file names is random. This requires the automatic renaming of the target files.
     </p>
     <p>
-      ImageResize first shuffles the order of the images before producing the resampled images. This only makes sense if the target file name contains the index of the image at the beginning of the variable part of the name so that the lexical order is ascending. A suitable template for the target name is, for example "img<span class="vn">${INDEX<span class="vf">.ifmt(1,3)</span>}</span>.<span class="vn">${FILEEXT}</span>".
+      ImageResize first shuffles the order of the images before producing the resampled images. This only makes sense if the target file name contains the index of the image at the beginning of the variable part of the name so that the lexical order is ascending. A suitable template for the target name is, for example "img<span class="vn">$(INDEX<span class="vf">.ifmt(1,3)</span>)</span>.<span class="vn">$(FILEEXT)</span>".
     </p>
     <p>
       The <i>Seed</i> parameter controls the random sequence. A seed of 0 ("Random") will produce a different sequence each time processing is started. Any other constant value will shuffle the sequence in the same way, as long as the length of the image list does not change.
@@ -240,7 +240,7 @@
       Normally it is sufficient to specify a common file for all target sizes because the size is adjusted for each image. A watermark image in good resolution is unique created for everyone.
     </p>
     <p>
-      In order to be able to set a different water image for each target size, you must Specify the placeholder <span class="vn">${SIZE}</span> in the name of the water image file. In this case, ImageResize expects a water image for each size, its name corresponds to the template, i.e. contains the size.
+      In order to be able to set a different water image for each target size, you must Specify the placeholder <span class="vn">$(SIZE)</span> in the name of the water image file. In this case, ImageResize expects a water image for each size, its name corresponds to the template, i.e. contains the size.
     </p>
     <p>
       You can create watermark files with any program that supports the PNG format, for example:
@@ -697,11 +697,11 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
     </p>
     <p>
       Variables: <span class="vn">INDEX</span>="<span class="vv">0</span>", <span class="vn">SIZE</span>="<span class="vv">1280</span>", <span class="vn">SIZENAME</span>="<span class="vv">SCREEN</span>"<br/>
-      Text template: "C:\MyPhotos\<span class="vn">${SIZENAME}</span>\bild<span class="vn">${INDEX}</span>_<span class="vn">${SIZE}</span>px.jpg"<br/>
+      Text template: "C:\MyPhotos\<span class="vn">$(SIZENAME)</span>\bild<span class="vn">$(INDEX)</span>_<span class="vn">$(SIZE)</span>px.jpg"<br/>
       Result: "C:\MyPhotos\<span class="vv">SCREEN</span>\bild<span class="vv">0</span>_<span class="vv">1280</span>px.jpg"
     </p>
     <p>
-      The values ​​of the variables are always character strings. Before they are resolved, they can also contain references to other variables and functions. For example, a variable called <span class="vn">IMGFILENAME</span> could contain the value "img<span class="vn">${INDEX<span class="vf">.add(1).fmt(3)</span>}</span>_<span class="vn">${SIZE}</span>.<span class="vn">${ORGFILENAME<span class="vf">.ext().lower()</span>}</span>". This value contains references to the variables <span class="vn">INDEX</span>, <span class="vn">SIZE</span> and <span class="vn">ORGFILENAME</span>. The function "<span class="vf">add(1)</span>" is applied to the value of the variable <span class="vn">INDEX</span>, which adds a 1 to the value as an integer, and the function "<span class="vf">fmt(3)</span>" is applied, which converts the number into a 3-digit number with a leading number. The file extension of the variable <span class="vn">ORGFILENAME</span> is taken with the function "<span class="vf">ext()</span>" and converted to lowercase with the function "<span class="vf">lower()</span>".
+      The values ​​of the variables are always character strings. Before they are resolved, they can also contain references to other variables and functions. For example, a variable called <span class="vn">IMGFILENAME</span> could contain the value "img<span class="vn">$(INDEX<span class="vf">.add(1).fmt(3)</span>)</span>_<span class="vn">$(SIZE)</span>.<span class="vn">$(ORGFILENAME<span class="vf">.ext().lower()</span>)</span>". This value contains references to the variables <span class="vn">INDEX</span>, <span class="vn">SIZE</span> and <span class="vn">ORGFILENAME</span>. The function "<span class="vf">add(1)</span>" is applied to the value of the variable <span class="vn">INDEX</span>, which adds a 1 to the value as an integer, and the function "<span class="vf">fmt(3)</span>" is applied, which converts the number into a 3-digit number with a leading number. The file extension of the variable <span class="vn">ORGFILENAME</span> is taken with the function "<span class="vf">ext()</span>" and converted to lowercase with the function "<span class="vf">lower()</span>".
     </p>
     <p>
       Before each individual image is created, the variables are updated and checked for dependencies between each other. These dependencies are <i>resolved</i> before being replaced in the text template. Resolving means that all variables that only depend on independent variables are processed first. This means that these variables are independent themselves and can in turn be inserted into other variables that depend on them. This continues until all variables are resolved, i.e. independent. Circular (mutual and indirectly mutual) variables are recognized and reported as errors.
@@ -767,10 +767,10 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
       The table shows functions available in the context of each template processor. To apply a function to a variable value, append it as in the example. To apply further functions, you can append them to the last one.
     </p>
     <p>
-      <span class="vn">${VARNAME<span class="vf">.fnname(parameters)</span>}</span>
+      <span class="vn">$(VARNAME<span class="vf">.fnname(parameters)</span>)</span>
     </p>
     <p>
-      Beispiel: <span class="vn">${MYVAR<span class="vf">.fna(1).fnb(2,3)</span>}</span>
+      Beispiel: <span class="vn">$(MYVAR<span class="vf">.fna(1).fnb(2,3)</span>)</span>
     </p>  
     <table class="fn-table">
       <tr>
@@ -789,7 +789,7 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
         <td><span class="vf">numin()</span></td><td>Determines the integer contained in a text. This can be useful to determine the number of a photo from the name of the photo, e.g. "05023" is extracted from "DSC05023.jpg". If no number is present, an empty string is returned.
         </td>
       </tr><tr>
-        <td><span class="vf">slice(n:m)</span></td><td>Copies a substring from position n to position m. n can be omitted (then start with the first character), as can m, then to the end of the string. m can have a negative value. For example, -4 means that the last 4 characters are omitted.</td>
+        <td><span class="vf">slice(n:m)</span></td><td>Copies a substring from position n to position m. If n is ommited, then from start of the text is to be copied. If m is ommited the string is copied to the end. n and m can be negative. For example slice(-3:) means that the last 3 characters are copied.</td>
       </tr><tr>
         <td><span class="vf">title()</span></td><td>Determines the file name without path and extension</td>
       </tr><tr>

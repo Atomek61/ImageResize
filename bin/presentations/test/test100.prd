@@ -12,7 +12,7 @@ Date=2024-03-01 00:00:00
 Icon=icon.png
 Preview=100\preview.jpg
 Templates=100\index.html
-Fragment.IMAGES=<img src="{IMGFILENAME}" alt="{TITLE}"/>{CRLF}
+Fragment.IMAGES.html=<img src="{IMGFILENAME}" alt="{TITLE}"/>{CRLF}
 Delimiter.css=<,>
 Delimiter.html={,}
 Delimiter.js=%,%

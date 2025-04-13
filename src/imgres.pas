@@ -9,7 +9,7 @@ unit imgres;
 //  imgres.pas has the processing core of both, the CLI and the GUI
 //  applications. The core is called the "Processor".
 //
-//  The Processor can spawn a Task for each image to be processed.
+//  The Processor can spawn a Task for each source image to be processed.
 //
 //  It bases heavily on the BGRABitmap library and Atomeks threading.dispatcher
 //  library.
@@ -113,7 +113,7 @@ const
   DEFAULT_STOPONERROR       = true;
   DEFAULT_RENENABLED        = false;
   DEFAULT_RENFMTSTR         = 'img%2:s.%1:s';
-  DEFAULT_RENFILETEMPLATE   = 'img${INDEX.ifmt(1)}.${FILEEXT}';
+  DEFAULT_RENFILETEMPLATE   = 'img$(INDEX.ifmt(1)).$(FILEEXT)';
   DEFAULT_RENINDEXSTART     = 1;
   DEFAULT_RENINDEXDIGITS    = 3;
   DEFAULT_SHUFFLE           = false;
@@ -723,9 +723,8 @@ end;
 
 procedure TProcessor.Print(const Line: string; Level: TLevel);
 begin
-  if Assigned(FOnPrint) then begin
+  if Assigned(FOnPrint) then
     OnTaskPrint(self, -1, Line, Level);
-  end;
 end;
 
 procedure TProcessor.OnTaskPrint(Sender: TObject; WorkerId: integer; const Line: string; Level: TLevel);
@@ -841,12 +840,15 @@ begin
       end;
     end;
 
+    // Check, if Sizenames are prepared, if not - create them
+    SetLength(FSizeNames, Length(FSizes));
+
     // Prepare the destination file renaming feature
     m := Length(FSizes);
 
     // Check, if multiple sizes, then either SIZE or SIZENAME must be in folder or in renamed filename
-    ProcRes.IsTargetFileRenamingStrategy := Rename and TargetFolderTemplateEngine.ContainsOneOf(FTargetFilename, ['SIZE', 'SIZENAME'], SAVEDELIMITERS);
-    ProcRes.IsMultipleTargetFolderStrategy := TargetFolderTemplateEngine.ContainsOneOf(FTargetFolder, ['SIZE', 'SIZENAME'], SAVEDELIMITERS);
+    ProcRes.IsTargetFileRenamingStrategy := Rename and TargetFolderTemplateEngine.ContainsOneOf(FTargetFilename, ['SIZE', 'SIZENAME'], DOSDELIMITERS);
+    ProcRes.IsMultipleTargetFolderStrategy := TargetFolderTemplateEngine.ContainsOneOf(FTargetFolder, ['SIZE', 'SIZENAME'], DOSDELIMITERS);
     if (Length(FSizes)>1) and not ProcRes.IsMultipleTargetFolderStrategy and not ProcRes.IsTargetFileRenamingStrategy then
         raise Exception.Create(SErrMultipleSizes);
 
@@ -857,8 +859,9 @@ begin
     if ProcRes.IsMultipleTargetFolderStrategy then begin
       for i:=0 to m-1 do begin
         TargetFolderTemplateEngine.Load('SIZE', IntToStr(FSizes[i]));
-        TargetFolderTemplateEngine.Load('SIZENAME', FSizeNames[i]);
+        TargetFolderTemplateEngine.Load('SIZENAME', ifthen(FSizeNames[i]='', IntToStr(FSizes[i]), FSizeNames[i]));
         ProcRes.TargetFolders[i] := IncludeTrailingPathDelimiter(ExpandFilename(TargetFolderTemplateEngine.Compile(FTargetFolder)));
+        TargetFolderTemplateEngine.Clear;
       end;
     end else
       for i:=0 to m-1 do
@@ -887,10 +890,10 @@ begin
     if FWatermarkParams.Filename='' then begin
       SetLength(ProcRes.MrkImages, 0);
     end else begin
-      if Pos('${SIZE}', FWatermarkParams.Filename)>0 then begin
+      if Pos('$(SIZE)', FWatermarkParams.Filename)>0 then begin
         SetLength(ProcRes.MrkImages, m);
         for i:=0 to m-1 do begin
-          Item := ReplaceStr(FWatermarkParams.Filename, '${SIZE}', IntToStr(FSizes[i]));
+          Item := ReplaceStr(FWatermarkParams.Filename, '$(SIZE)', IntToStr(FSizes[i]));
           Print(Format(SMsgLoadMrkFileFmt, [ExtractFilename(Item)]));
           ProcRes.MrkImages[i] := TBGRABitmap.Create(Item);
         end;

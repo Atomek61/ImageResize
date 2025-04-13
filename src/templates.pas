@@ -38,8 +38,10 @@ const
   EXPPATTERN = '^(\w+)((?:\.(?:\w+)\((?:[\w\d\-,:]*)\))*)$';
   FNCPATTERN = '\.(\w+)\(([\w\d\-,:]*)\)';
 
+  VARPATTERN = '(\w+)((?:\.(?:\w+)\((?:[\w\d\-,:]*)\))*)';
+
   IFMT_PARAMS_PATTERN   = '(\d+)(?:,(\d+))';
-  SLICE_PARAMS_PATTERN  = '(\d+)*:((?:-?\d+)*)';
+  SLICE_PARAMS_PATTERN  = '(-?\d+)*:((?:-?\d+)*)';
   //ADD_PARAMS_PATTERN    = '(\d+)';
   //FMT_PARAMS_PATTERN    = '(\d+)';
 
@@ -62,10 +64,11 @@ type
   TTypeDelimiters = TDictionary<string, TDelimiters>; // Pairs of fileytype/delimiters ('css', <,>), (html, {,}), ('js', %,%)
 
   const
-    PERCENTDELIMITERS       :TDelimiters = (Del1: '%'; Del2: '%');
-    BROSTDELIMITERS         :TDelimiters = (Del1: '«'; Del2: '»');
+    PERCENTDELIMITERS       :TDelimiters = (Del1: '%';  Del2: '%');
+    BROSTDELIMITERS         :TDelimiters = (Del1: '«';  Del2: '»');
     MUSTACHEDELIMITERS      :TDelimiters = (Del1: '{{'; Del2: '}}');
-    SAVEDELIMITERS          :TDelimiters = (Del1: '${'; Del2: '}');
+    DOSDELIMITERS           :TDelimiters = (Del1: '$('; Del2: ')');
+    DEFAULTDELIMITERS       :TDelimiters = (Del1: '${'; Del2: '}');
 
     MAXKEYLENGTH = 24;
 
@@ -116,19 +119,19 @@ type
     end;
     TFnCalls = TArray<TFnCall>;
 
-    { TIterator }
-
-    TIterator = record
-      Delimiters :TDelimiters;
-      Cursor1 :integer;
-      Cursor2 :integer;
-      Subject :string;
-      From :integer;
-      Len :integer;
-      IsMatch :boolean;
-      constructor Create(const Subject :string; const Delimiters :TDelimiters);
-      function Next(out Expression :string) :boolean;
-    end;
+    //{ TIterator }
+    //
+    //TIterator = record
+    //  Delimiters :TDelimiters;
+    //  Cursor1 :integer;
+    //  Cursor2 :integer;
+    //  Subject :string;
+    //  From :integer;
+    //  Len :integer;
+    //  IsMatch :boolean;
+    //  constructor Create(const Subject :string; const Delimiters :TDelimiters);
+    //  function Next(out Expression :string) :boolean;
+    //end;
 
   private
     FVarDict :TDictionary<string, TKeyVar>;
@@ -146,6 +149,7 @@ type
     procedure SetDelimiters(const AValue: TDelimiters);
     procedure SetItem(const Key :string; const Value: string);
     class function ParseName(const Expression :string) :string;
+    class function DecoratePattern(const Pattern: string; const Delimiters: TDelimiters): string;
     function ParseExpression(const Expression :string) :TExpression;
     function ParseFnCalls(const FnCalls :string) :TArray<TFnCall>;
     function FnLower(const Value, Params :string) :string;
@@ -293,15 +297,23 @@ begin
     raise Exception.CreateFmt(SErrInvalidParamsFmt, [Params]);
   if r.Match[1]='' then
     p0 := 1
-  else
+  else begin
     p0 := StrToInt(r.Match[1]);
+    if p0<0 then begin
+      p0 := Length(Value)+p0;
+      if p0<1 then p0 := 1;
+    end;
+  end;
   if r.Match[2]='' then
     p1 := Length(Value)
   else begin
     p1 := StrToInt(r.Match[2]);
-    if p1<0 then
+    if p1<0 then begin
       p1 := Length(Value)+p1;
+      if p1<1 then p1 := 1;
+    end;
   end;
+  if p1<p0 then p1 := p0;
   result := Copy(Value, p0, p1-p0+1);
 end;
 
@@ -481,7 +493,7 @@ constructor TEngine.Create(RegisterDefaultFunctions :boolean);
 begin
   FVarDict := TDictionary<string, TKeyVar>.Create;
   FVars := TObjectList<TKeyVar>.Create;
-  FDelimiters := SAVEDELIMITERS;
+  FDelimiters := DOSDELIMITERS;
   FExpRegExpr := TRegExpr.Create(EXPPATTERN);
   FFnCallsRegExpr := TRegExpr.Create(FNCPATTERN);
   FFunctions := TDictionary<string, TTemplateFunction>.Create;
@@ -553,44 +565,47 @@ end;
 
 function TEngine.TrySolve: boolean;
 var
-  Iterator :TIterator;
   l, r, d :TKeyVar;
-  Expression :string;
   found :boolean;
   Dependencies :integer;
   Name :string;
+  VarExpr :TRegExpr;
 begin
   Stats.DepsTotal := 0;
   Stats.Solved := 0;
   Stats.Unknown := 0;
   if Count=0 then Exit(true);
 
-  // Find all dependencies
-  for l in FVars do begin
-    Iterator := TIterator.Create(l.Value, FDelimiters);
-    while Iterator.Next(Expression) do begin
-      Name := ParseName(Expression);
-      if not FVarDict.TryGetValue(Name, r) then begin
-        case FUnknownVarHandling of
-        uvhError:
-          raise Exception.CreateFmt(SErrVarNotFoundFmt, [Name]);
-        else
-          continue;
+  VarExpr := TRegExpr.Create(DecoratePattern(VARPATTERN, FDelimiters));
+  try
+    // Find all dependencies
+    for l in FVars do begin
+      if VarExpr.Exec(l.Value) then repeat
+        Name := ParseName(VarExpr.Match[1]);
+        if not FVarDict.TryGetValue(Name, r) then begin
+          case FUnknownVarHandling of
+          uvhError:
+            raise Exception.CreateFmt(SErrVarNotFoundFmt, [Name]);
+          else
+            continue;
+          end;
         end;
-      end;
-      // Check, if the dependency is counted only once
-      found := false;
-      for d in r.Deps do begin
-        found := d=l;
-        if found then break;
-      end;
-      if not found then begin
-        inc(Stats.DepsTotal);
-        inc(l.DepsCount);
-        SetLength(r.Deps, Length(r.Deps)+1);
-        r.Deps[High(r.Deps)] := l;
-      end;
+        // Check, if the dependency is counted only once
+        found := false;
+        for d in r.Deps do begin
+          found := d=l;
+          if found then break;
+        end;
+        if not found then begin
+          inc(Stats.DepsTotal);
+          inc(l.DepsCount);
+          SetLength(r.Deps, Length(r.Deps)+1);
+          r.Deps[High(r.Deps)] := l;
+        end;
+      until not VarExpr.ExecNext;
     end;
+  finally
+    VarExpr.Free;
   end;
 
   // Solve all vars until no dependencies
@@ -617,56 +632,57 @@ end;
 
 function TEngine.Compile(const Subject: string): string;
 var
-  Iterator :TIterator;
-  ExprStr :string;
-  Expr :TExpression;
   KeyVar :TKeyVar;
   Value :string;
   FnCall :TFnCall;
   FnCalls :TFnCalls;
   Fn :TTemplateFunction;
   Cursor :integer;
+  VarExpr :TRegExpr;
 begin
   FReplacementCount := 0;
   result := '';
   Cursor := 1;
-  Iterator := TIterator.Create(Subject, FDelimiters);
-  while Iterator.Next(ExprStr) do begin
-    // Parse Expression
-    Expr := ParseExpression(ExprStr);
-    if not FVarDict.TryGetValue(Expr.VarName, KeyVar) then begin
-      case FUnknownVarHandling of
-      uvhError:
-        raise Exception.CreateFmt(SErrVarNotFoundFmt, [Expr.VarName]);
-      uvhIgnore:
-        break;
-      else
-        Value := '';
-      end;
-    end else
-      Value := KeyVar.Value;
-    if Expr.FnCalls<>'' then begin
-      FnCalls := ParseFnCalls(Expr.FnCalls);
-      for FnCall in FnCalls do begin
-        if not FFunctions.TryGetValue(FnCall.FnName, Fn) then
-          raise Exception.CreateFmt(SErrTemplateFunctionNotFoundFmt, [FnCall.FnName]);
-        try
-          Value := Fn(Value, FnCall.Params);
-        except on E :Exception do
-          begin
-            raise Exception.CreateFmt(SErrDynamicFunctionFmt, [FnCall.FnName, E.Message]);
+  VarExpr := TRegExpr.Create(DecoratePattern(VARPATTERN, FDelimiters));
+  try
+    if VarExpr.Exec(Subject) then repeat
+      // Parse Expression
+      if not FVarDict.TryGetValue(VarExpr.Match[1], KeyVar) then begin
+        case FUnknownVarHandling of
+        uvhError:
+          raise Exception.CreateFmt(SErrVarNotFoundFmt, [VarExpr.Match[1]]);
+        uvhIgnore:
+          break;
+        else
+          Value := '';
+        end;
+      end else
+        Value := KeyVar.Value;
+      if VarExpr.Match[2]<>'' then begin
+        FnCalls := ParseFnCalls(VarExpr.Match[2]);
+        for FnCall in FnCalls do begin
+          if not FFunctions.TryGetValue(FnCall.FnName, Fn) then
+            raise Exception.CreateFmt(SErrTemplateFunctionNotFoundFmt, [FnCall.FnName]);
+          try
+            Value := Fn(Value, FnCall.Params);
+          except on E :Exception do
+            begin
+              raise Exception.CreateFmt(SErrDynamicFunctionFmt, [FnCall.FnName, E.Message]);
+            end;
           end;
         end;
       end;
-    end;
-    result := result + Copy(Subject, Cursor, Iterator.From - Cursor) + Value;
-    Cursor := Iterator.From + Iterator.Len;
-    inc(FReplacementCount);
+      result := result + Copy(Subject, Cursor, VarExpr.MatchPos[0] - Cursor) + Value;
+      Cursor := VarExpr.MatchPos[0] + VarExpr.MatchLen[0];
+      inc(FReplacementCount);
+    until not VarExpr.ExecNext;
+  finally
+    VarExpr.Free;
   end;
   if FReplacementCount>0 then
     result := result + Copy(Subject, Cursor, Length(Subject)-Cursor+1)
   else
-    Exit(Subject);
+    result := Subject;
 end;
 
 function TEngine.TryGetValue(const Key: string; out Value: string): boolean;
@@ -684,32 +700,34 @@ begin
     raise Exception.CreateFmt(SErrVarNotFoundFmt, [Key]);
 end;
 
-//class function TEngine.DecoratePattern(const Pattern: string; const Delimiters: TDelimiters): string;
+class function TEngine.DecoratePattern(const Pattern: string; const Delimiters: TDelimiters): string;
 
-//function escaped(const Delimiter :string) :string;
-//  var
-//    c :Char;
-//  begin
-//    result := '';
-//    for c in Delimiter do
-//      result := result + '\' + c;
-//  end;
-//
-//begin
-//  result := escaped(Delimiters.Del1) + Pattern + escaped(Delimiters.Del2);
-//end;
-//
+function escaped(const Delimiter :string) :string;
+  var
+    c :Char;
+  begin
+    result := '';
+    for c in Delimiter do
+      result := result + '\' + c;
+  end;
+
+begin
+  result := escaped(Delimiters.Del1) + Pattern + escaped(Delimiters.Del2);
+end;
+
 class function TEngine.ContainsOneOf(const Template: string; const Names: array of string; const Delimiters: TDelimiters): boolean;
 var
-  VarName, Name :string;
-  Expression :string;
-  Iterator :TIterator;
+  VarExpr :TRegExpr;
+  Name :string;
 begin
-  Iterator := TIterator.Create(Template, Delimiters);
-  while Iterator.Next(Expression) do begin
-    VarName := ParseName(Expression);
-    for Name in Names do
-      if Name = VarName then Exit(True);
+  VarExpr := TRegExpr.Create(DecoratePattern(VARPATTERN, Delimiters));
+  try
+    if VarExpr.Exec(Template) then repeat
+      for Name in Names do
+        if VarExpr.Match[1]=Name then Exit(True);
+    until not VarExpr.ExecNext;
+  finally
+    VarExpr.Free;
   end;
   result := False;
 end;
@@ -741,35 +759,35 @@ end;
 //  result := StaticFn(Value, ParamCount, Params);
 //end;
 //
-{ TEngine.TIterator }
-
-constructor TEngine.TIterator.Create(const Subject :string; const Delimiters :TDelimiters);
-begin
-  self.Delimiters := Delimiters;
-  self.Subject := Subject;
-  Cursor1 := Pos(Delimiters.Del1, Subject);
-  IsMatch := Cursor1>0;
-  if IsMatch then begin
-    Cursor2 := Pos(Delimiters.Del2, Subject, Cursor1+Length(Delimiters.Del1));
-    IsMatch := Cursor2>0;
-  end;
-end;
-
-function TEngine.TIterator.Next(out Expression :string): boolean;
-begin
-  result := IsMatch;
-  if result then begin
-    From := Cursor1;
-    Len := Cursor2 - Cursor1 + Length(Delimiters.Del2);
-    Expression := Copy(Subject, Cursor1 + Length(Delimiters.Del1), Cursor2 - Cursor1 - Length(Delimiters.Del1));
-    Cursor1 := Pos(Delimiters.Del1, Subject, Cursor2 + Length(Delimiters.Del2));
-    IsMatch := Cursor1>0;
-    if IsMatch then begin
-      Cursor2 := Pos(Delimiters.Del2, Subject, Cursor1+Length(Delimiters.Del1));
-      IsMatch := Cursor2>0;
-    end;
-  end;
-end;
+//{ TEngine.TIterator }
+//
+//constructor TEngine.TIterator.Create(const Subject :string; const Delimiters :TDelimiters);
+//begin
+//  self.Delimiters := Delimiters;
+//  self.Subject := Subject;
+//  Cursor1 := Pos(Delimiters.Del1, Subject);
+//  IsMatch := Cursor1>0;
+//  if IsMatch then begin
+//    Cursor2 := Pos(Delimiters.Del2, Subject, Cursor1+Length(Delimiters.Del1));
+//    IsMatch := Cursor2>0;
+//  end;
+//end;
+//
+//function TEngine.TIterator.Next(out Expression :string): boolean;
+//begin
+//  result := IsMatch;
+//  if result then begin
+//    From := Cursor1;
+//    Len := Cursor2 - Cursor1 + Length(Delimiters.Del2);
+//    Expression := Copy(Subject, Cursor1 + Length(Delimiters.Del1), Cursor2 - Cursor1 - Length(Delimiters.Del1));
+//    Cursor1 := Pos(Delimiters.Del1, Subject, Cursor2 + Length(Delimiters.Del2));
+//    IsMatch := Cursor1>0;
+//    if IsMatch then begin
+//      Cursor2 := Pos(Delimiters.Del2, Subject, Cursor1+Length(Delimiters.Del1));
+//      IsMatch := Cursor2>0;
+//    end;
+//  end;
+//end;
 
 class function TEngine.ParseName(const Expression: string): string;
 var

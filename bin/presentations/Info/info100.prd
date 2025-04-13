@@ -17,7 +17,7 @@ Icon=icon.png
 Preview=100\preview.jpg
 Copy=shutter.png
 Templates=100\index.html,100\info.css
-Fragment.IMAGES=@100\fragment.images.html
+Fragment.IMAGES.html=@100\fragment.images.html
 
 [Settings.Title]
 Class=String

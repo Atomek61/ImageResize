@@ -149,7 +149,10 @@ var
   Key :string;
 begin
   inherited Create;
-  FTypeDelimiters       := TTypeDelimiters.Create;
+  FTypeDelimiters   := TTypeDelimiters.Create;
+  FTypeDelimiters.Add('html', DEFAULTDELIMITERS);
+  FTypeDelimiters.Add('css', DEFAULTDELIMITERS);
+  FTypeDelimiters.Add('js', DEFAULTDELIMITERS);
   FPrdDir           := IncludeTrailingPathDelimiter(CreateAbsolutePath(ExtractFilePath(IniFile.Filename), ExtractFilePath(IniFile.Filename)));
   FRootDir          := IncludeTrailingPathDelimiter(CreateAbsolutePath(IniFile.ReadString(PRESENTATION_SECTION, 'RootDir', FPrdDir), FPrdDir));
   FTitle            := IniRead('Title');
@@ -164,7 +167,7 @@ begin
   try
     IniFile.ReadSection(PRESENTATION_SECTION, Keys);
     for Key in Keys do if Key.StartsWith('Delimiters.') then
-      FTypeDelimiters.Add(LowerCase(Copy(Key, 12, Length(Key)-11)), TDelimiters.StrToDelimiters(IniRead(Key)));
+      FTypeDelimiters.AddOrSetValue(LowerCase(Copy(Key, 12, Length(Key)-11)), TDelimiters.StrToDelimiters(IniRead(Key)));
   finally
     Keys.Free;
   end;
@@ -310,7 +313,7 @@ constructor TPresentationManager.Create(IniFile: TCustomIniFile);
 var
   SectionKeys :TStringList;
   Key :string;
-  VarName, VarValue :string;
+  Template :string;
 
   function MakeAbsoluteList(const Line :string) :TStringArray;
   var
@@ -338,11 +341,10 @@ begin
     IniFile.ReadSection(PRESENTATION_SECTION, SectionKeys);
     for Key in SectionKeys do
       if StartsText('Fragment.', Key) then begin
-        VarName := Copy(Key, 10, Length(Key)-9);
-        VarValue := IniFile.ReadString(PRESENTATION_SECTION, Key, '');
-        if VarValue.StartsWith('@') then
-          VarValue := LoadStringFromFile(FPrdDir+Copy(VarValue, 2, Length(VarValue)-1));
-        FProcessor.ListFragments.Add(VarName, VarValue);
+        Template := IniFile.ReadString(PRESENTATION_SECTION, Key, '');
+        if Template.StartsWith('@') then
+          Template := LoadStringFromFile(FPrdDir+Copy(Template, 2, Length(Template)-1));
+        FProcessor.ListFragments.AddFromString(Key, Template);
       end;
   finally
     SectionKeys.Free;
@@ -362,7 +364,6 @@ var
   Stats :TProcessor.TStats;
   Setting :TSetting;
   ValuePresentation :string;
-//  SettingPresentationFn :TSettingPresentationFn;
 begin
   FParamsEditor.Flush;
   FProcessor.ImgTagsFilename := ImgTagsFilename;
@@ -376,9 +377,6 @@ begin
 
   // Make Settings available to the Processor
   for Setting in Settings.Items do begin
-    //if SettingPresentationFns.TryGetValue(Setting.PresentationHint, SettingPresentationFn) then
-    //  ValuePresentation := SettingPresentationFn(Setting)
-    //else
     ValuePresentation := Setting.AsDisplay;
     FProcessor.DocVars.Load(UpperCase(Setting.Key), ValuePresentation);
   end;

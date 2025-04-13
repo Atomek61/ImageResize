@@ -75,7 +75,7 @@ td {
 
 .chfot {
   width: 100%; display: flex; justify-content: flex-end;
-  transform: translateY(1.5em);
+  transform: translateY(-0.5em);
 }
 
 .ct {display: flex; justify-content: space-around;}

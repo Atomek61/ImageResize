@@ -33,6 +33,7 @@ footer {
   width: max-content;
   display: flex;
   background-color: ${CARDCOLOR};
+  border-radius: 0.5pc;
   color: ${FONTCOLOR};
   padding: 1pc;
 }
@@ -45,6 +46,7 @@ footer {
   grid-template-rows: repeat(6, 2em);      
   align-items: center;
   background-color: ${TABLECOLOR};
+  border-radius: 0.4pc;
   margin-left: 1em;
   padding: 1em;
 }

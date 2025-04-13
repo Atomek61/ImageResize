@@ -16,8 +16,8 @@ Icon=icon.png
 Preview=200\preview.jpg
 Copy=200\slideshow.js
 Templates=200\index.html,200\slideshow.css
-Fragment.IMAGES=<img class="image-hidden" src="${IMGFILENAME}" alt="${IMGTITLE}"/>${CRLF}
-Fragment.BULLETS=<svg class="button-image" viewbox="0 0 128 128"><use href="#svg-circle"/></svg>${CRLF}
+Fragment.IMAGES.html=<img class="image-hidden" src="${IMGFILENAME}" alt="${IMGTITLE}"/>${CRLF}
+Fragment.BULLETS.html=<svg class="button-image" viewbox="0 0 128 128"><use href="#svg-circle"/></svg>${CRLF}
 
 [Settings.Title]
 Class=String

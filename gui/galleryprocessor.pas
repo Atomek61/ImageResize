@@ -18,14 +18,31 @@ type
   private const
 
     IFMT_PARAMS_REGEXPR = '^(\d+)(?:,(\d+|auto))?$';
+    FRAGMENTKEY_REGEXPR = '^(\w+)\.(\w+)\.(\w+)$';
 
+  private type
+    TFragment = record
+      Name :string;
+      Template :string;
+      Extension :string;
+    end;
+
+    { TFragmentDictionary }
+
+    TFragmentDictionary = class(TDictionary<string, TFragment>)
+      FRegExpr :TRegExpr;
+      constructor Create;
+      destructor Destroy; override;
+      procedure AddFromString(const Key, Value :string);
+    end;
   private
+
     FDelimiters :TTypeDelimiters;   // Delimiters depending on extension
     FImgTagsFilename :string;       // Folder with images and meta info in .images file
     FTemplateFiles :TStringArray;   // Template files - .html, .js, .css or whatever
     FCopyFiles :TStringArray;       // Tobecopied files - .html, .js, .css or whatever
     FFilesTags :TFilesTags;         // Table with tags for each image file, usually from .images file in folder
-    FListFragments :TStringDictionary;  // List fragments - each List, built by the FListEngine uses one
+    FListFragments :TFragmentDictionary;  // List fragments - each List, built by the FListEngine uses one
     FSysVars :TEngine;              // Global Vars like CR, LF
     FDocVars :TEngine;              // Global Vars like TITLE, DATE, OWNER, IMG-LIST, NAV-LIST
 
@@ -57,7 +74,7 @@ type
     property ImgTagsFilename :string read FImgTagsFilename write FImgTagsFilename;
     property SysVars :TEngine read FSysVars;
     property DocVars :TEngine read FDocVars;
-    property ListFragments :TStringDictionary read FListFragments;
+    property ListFragments :TFragmentDictionary read FListFragments;
     property CopyFiles :TStringArray read FCopyFiles write FCopyFiles;
     property TemplateFiles :TStringArray read FTemplateFiles write FTemplateFiles;
     property Delimiters :TTypeDelimiters read FDelimiters;
@@ -78,6 +95,7 @@ resourcestring
   SMsgStatisticsFmt         = 'Copied: %d/%d (%.0f%%), processed: %d/%d (%.0f%%), solved: %d/%d (%.0f%%), lists: %d, rows: %d, replaced: %d, elapsed %.1fs.';
   SMsgFinalOk               = 'Ok';
   SErrIfmtParamsFmt         = 'invalid parameters (offset[,digits] expected)';
+  SErrInvalidFragmentFmt    = 'Invalid list fragment "%s" (Fragment.NAME.ext expected).';
 
 { TProcessor }
 
@@ -85,7 +103,7 @@ constructor TProcessor.Create(const Delimiters :TTypeDelimiters);
 begin
   FDelimiters := Delimiters;
   FFilesTags := TFilesTags.Create;
-  FListFragments := TStringDictionary.Create;
+  FListFragments := TFragmentDictionary.Create;
   FDocVars := TEngine.Create;
   FSysVars := TEngine.Create;
   with FSysVars do begin
@@ -123,7 +141,7 @@ var
   i, j :integer;
   Tags :TTags;
   Key, Value :string;
-  Fragment :TPair<string, string>;
+  Fragment :TFragment;
   List :TPair<string, string>;
   ImgVars :TEngine;
   FileSource :TStringList;
@@ -197,17 +215,15 @@ begin
       Log(SMsgLoadingDotImagesFmt, [FImgTagsFilename], llInfo);
       FFilesTags.LoadFromImgTagsFile(FImgTagsFilename);
       Stats.ItemsPerList := FFilesTags.Filenames.Count;
-      // The standard tags FILETITLE, TIMESTAMP
 
       // 3. Iterate over the images and build the lists
       Log(SMsgBuildingLists, llInfo);
 
       // Prepare the array of lists
-      for Fragment in FListFragments do
-        Lists.Add(Fragment.Key, '');
+      for Fragment in FListFragments.Values do
+        Lists.Add(Fragment.Name, '');
 
-      // Iterate over the images and the fragments
-      ImgVars.Delimiters := SAVEDELIMITERS;
+      // Image- and Fragments-loop
       for i:=0 to FFilesTags.Filenames.Count-1 do begin
         // Build the ImgVars for each image
         ImgVars.Clear;
@@ -238,20 +254,24 @@ begin
         for j:=0 to FSysVars.Count-1 do
           ImgVars.Load(FSysVars.Keys[j], FSysVars.Values[j]);
 
-        // Add the fragments
-        for Fragment in FListFragments do
-          ImgVars.Load(Fragment.Key, Fragment.Value);
-
-        // Solve the vars (solve dependencies between the vars)
+        // Solve the vars (dependencies between the vars)
+        ImgVars.Delimiters := DOSDELIMITERS;
         ImgVars.Solve;
         // Todo: check errors of solving
+
+        // Compile the Fragments
+        // Add the fragments
+        for Fragment in FListFragments.Values do begin
+          ImgVars.Delimiters := FDelimiters[LowerCase(Fragment.Extension)];
+          ImgVars.Load(Fragment.Name, ImgVars.Compile(Fragment.Template));
+        end;
 
         inc(Stats.Dependencies, ImgVars.Stats.DepsTotal + ImgVars.Stats.Solved);
         inc(Stats.Solved, ImgVars.Stats.Solved);
 
         // Build the lists of fragments
-        for Fragment in FListFragments do
-          Lists[Fragment.Key] := Lists[Fragment.Key] + ImgVars[Fragment.Key];
+        for Fragment in FListFragments.Values do
+          Lists[Fragment.Name] := Lists[Fragment.Name] + ImgVars[Fragment.Name];
       end;
 
       // 4. Add the builded lists as global variables
@@ -266,7 +286,7 @@ begin
         if FDelimiters.TryGetValue(LowerCase(ExtractExt(TemplateFilename)), Delimiters) then
           FDocVars.Delimiters := Delimiters
         else
-          FDocVars.Delimiters := SAVEDELIMITERS;
+          FDocVars.Delimiters := DOSDELIMITERS;
         FileText := FDocVars.Compile(FileSource.Text);
         inc(Stats.Replacements, FDocVars.ReplacementCount);
         FileSource.Text := FileText;
@@ -332,13 +352,40 @@ begin
   end;
 end;
 
+{ TProcessor.TFragmentDictionary }
+
+constructor TProcessor.TFragmentDictionary.Create;
+begin
+  inherited;
+  FRegExpr := TRegExpr.Create(FRAGMENTKEY_REGEXPR);
+end;
+
+destructor TProcessor.TFragmentDictionary.Destroy;
+begin
+  FRegExpr.Free;
+  inherited Destroy;
+end;
+
+procedure TProcessor.TFragmentDictionary.AddFromString(const Key, Value: string);
+var
+  Fragment :TFragment;
+begin
+  // Fragment.NAME.ext
+  if not FRegExpr.Exec(Key) then
+    raise Exception.CreateFmt(SErrInvalidFragmentFmt, [Key]);
+  Fragment.Name := FRegExpr.Match[2];
+  Fragment.Extension := FRegExpr.Match[3];
+  Fragment.Template := Value;
+  inherited Add(Fragment.Name, Fragment);
+end;
+
 //procedure Test;
 //var
 //  Vars :TEngine;
 //  d :string;
 //begin
 //  Vars := TEngine.Create;
-//  Vars.Delimiters := SAVEDELIMITERS;
+//  Vars.Delimiters := DOSDELIMITERS;
 //  Vars.Add('THUMBNAILS', 'mein kleiner Daumennagel');
 //
 //  d := Vars.Compile('XXXX {THUMBNAILS} YYYY');

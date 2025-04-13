@@ -8,10 +8,10 @@
    version="1.1"
    id="svg5526"
    inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
-   sodipodi:docname="sizes.svg"
-   inkscape:export-filename="..\png48\icon.png"
-   inkscape:export-xdpi="192"
-   inkscape:export-ydpi="192"
+   sodipodi:docname="mainicon.svg"
+   inkscape:export-filename="mainicon20.png"
+   inkscape:export-xdpi="80"
+   inkscape:export-ydpi="80"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -121,27 +121,27 @@
      id="g9"
      inkscape:label="Ebene 2 Kopie">
     <path
-       style="fill:#0e8fbe;fill-opacity:1;stroke-width:4.23333;stroke-linejoin:bevel;paint-order:markers fill stroke"
-       d="M 0.79374994,0.26458332 H 5.5562497 V 1.3229166 H 1.8520832 V 2.3812499 H 0.79374996 Z"
+       style="fill:#1388b0;fill-opacity:1;stroke-width:4.23333;stroke-linejoin:bevel;paint-order:markers fill stroke"
+       d="M 1.0583333,0.52916664 H 5.820833 l 0,0.79374996 H 2.1166666 V 2.3812499 H 1.0583333 Z"
        id="path7"
        sodipodi:nodetypes="ccccccc" />
     <path
-       style="fill:#12b3ed;fill-opacity:1;stroke-width:4.23333;stroke-linejoin:bevel;paint-order:markers fill stroke"
-       d="m 2.3812498,1.8520832 h 3.9687499 l 2e-7,2.9104167 -0.79375,1e-7 -2e-7,-1.0583335 -2.1166664,-10e-8 -10e-8,-1.3229165 H 2.3812499 Z"
+       style="fill:#159bcb;fill-opacity:1;stroke-width:4.23333;stroke-linejoin:bevel;paint-order:markers fill stroke"
+       d="m 2.3812498,1.5874999 h 3.9687499 v 3.7041665 h -0.79375 V 3.7041665 l -1.5874999,0 -10e-8,-1.3229165 -1.5874998,-1e-7 z"
        id="path8"
        sodipodi:nodetypes="ccccccccc" />
     <path
-       style="fill:#41c2f1;fill-opacity:1;stroke-width:4.23333;stroke-linejoin:bevel;paint-order:markers fill stroke"
-       d="m 1.8520829,5.5562496 1.5875003,1e-7 V 4.2333332 l 1.5874999,-10e-8 -10e-8,1.8520832 H 1.8520832 Z"
+       style="fill:#2db7e8;fill-opacity:1;stroke-width:4.38191;stroke-linejoin:bevel;paint-order:markers fill stroke"
+       d="m 0.52916664,5.2916664 3.43958316,0 V 3.9687498 l 1.3229166,0 V 5.8208331 H 0.52916663 Z"
        id="path9"
        sodipodi:nodetypes="ccccccc" />
     <rect
-       style="fill:#71d1f4;fill-opacity:1;stroke-width:4.23333;stroke-linejoin:bevel;paint-order:markers fill stroke"
+       style="fill:#72cff0;fill-opacity:1;stroke-width:4.68978;stroke-linejoin:bevel;paint-order:markers fill stroke"
        id="rect9"
-       width="2.9104164"
-       height="2.1166666"
+       width="3.7041664"
+       height="2.3812499"
        x="0"
-       y="2.9104164" />
+       y="2.6458333" />
   </g>
   <g
      inkscape:label="Ebene 1"

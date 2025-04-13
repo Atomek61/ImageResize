@@ -59,8 +59,8 @@ const
   MAINDIALOG_SECTION    = 'MainDialog';
   PRESDIALOG_SECTION    = 'PresentationDialog';
 
-  RENSIMPLETEMPLATE     = 'img${INDEX.ifmt(1)}.${FILEEXT}';
-  RENADVANCEDTEMPLATE   = 'img${INDEX.ifmt(1)}_${SIZE}.${FILEEXT}';
+  RENSIMPLETEMPLATE     = 'img$(INDEX.ifmt(1)).$(FILEEXT)';
+  RENADVANCEDTEMPLATE   = 'img$(INDEX.ifmt(1))_$(SIZE).$(FILEEXT)';
   DEFAULT_SRCMASK       = '*.jpg;*.png';
 
   SIZEBTNHINTFMT        = '%s - %dpx';
@@ -103,6 +103,7 @@ type
   end;
 
   TMainDialog = class(TForm)
+    ActionParamPresentation: TAction;
     ActionHelpScreenshots: TAction;
     ActionPresentation: TAction;
     ActionListParams: TActionList;
@@ -138,6 +139,7 @@ type
     Label19: TLabel;
     Label2: TLabel;
     Label22: TLabel;
+    Label23: TLabel;
     LabelCurrentDir: TLabel;
     Label3: TLabel;
     Label7: TLabel;
@@ -209,7 +211,6 @@ type
     Label14: TLabel;
     Label15: TLabel;
     Label16: TLabel;
-    Label17: TLabel;
     Label21: TLabel;
     LabelShuffleSeed: TLabel;
     Label18: TLabel;
@@ -249,6 +250,7 @@ type
     ToolBar: TToolBar;
     ToolBarSrc: TToolBar;
     ToolBarParameters: TToolBar;
+    ToolButtonPresentation: TToolButton;
     ToolButtonSep2: TToolButton;
     ToolButtonSep1: TToolButton;
     ToolButtonNew: TToolButton;
@@ -325,6 +327,8 @@ type
     procedure ListBoxSizesPaletteDblClick(Sender: TObject);
     procedure ListBoxSizesPaletteDrawItem(Control: TWinControl; Index: Integer;
       ARect: TRect; State: TOwnerDrawState);
+    procedure ListBoxSizesPaletteMeasureItem(Control: TWinControl;
+      Index: Integer; var AHeight: Integer);
     procedure MemoSrcFilenamesChange(Sender: TObject);
     procedure PaintBoxMrkPreviewMouseDown(Sender: TObject;
       Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -438,10 +442,9 @@ resourcestring
   SErrInvalidMrkXBrd            = 'Invalid watermark x border';
   SErrInvalidMrkYBrd            = 'Invalid watermark y border';
   SErrInvalidMrkOpacity         = 'Invalid watermark opacity';
-  SErrEnterPlaceholder          = 'Enter placeholder ${SIZE} or ${SIZENAME} to either the target folder or the file template';
+  SErrEnterPlaceholder          = 'Enter placeholder $(SIZE) or $(SIZENAME) to either the target folder or the file template';
   SErrAtFmt                     = 'Error at %.0f%% - %s';
   SErrCancelledAtFmt            = 'Cancelled at %.0f%%';
-  SMsgCurrentDirFmt             = 'Current directory is "%s"';
 
 const
   TRSIZE:TTextStyle=(Alignment:taRightJustify;Layout:tlCenter;SingleLine:true;Clipping:true;ExpandTabs:false;
@@ -923,7 +926,7 @@ begin
       if not FSizeInfos.TrySetString(ReadString(PROJECT_SECTION,  'SizeNames', '')) then
         Log(SErrInvalidSizes, llWarning);
 
-    EditTargetFolder.Text                 := SAVEDELIMITERS.UpgradeFrom(ReadString(PROJECT_SECTION,  'TargetFolder', EditTargetFolder.Text), PERCENTDELIMITERS);
+    EditTargetFolder.Text                 := DOSDELIMITERS.UpgradeFrom(ReadString(PROJECT_SECTION,  'TargetFolder', EditTargetFolder.Text), PERCENTDELIMITERS);
     RequiredStepsUpdate;
     ComboBoxInterpolation.ItemIndex       := integer(TProcessor.NameToInterpolation(ReadString(PROJECT_SECTION,  'Interpolation', INTERPOLATION_NAMES[DEFAULT_INTERPOLATION])));
     Value := ReadInteger(PROJECT_SECTION,  'JPEGQuality', TProcessor.StrToJPEGQuality(ComboBoxJPEGQuality.Text));
@@ -940,7 +943,7 @@ begin
     RadioButtonRenSimple.Checked          := ReadBool(PROJECT_SECTION,    'RenSimple', RadioButtonRenSimple.Checked);
     RadioButtonRenAdvanced.Checked        := ReadBool(PROJECT_SECTION,    'RenAdvanced', RadioButtonRenAdvanced.Checked);
     RadioButtonRenCustom.Checked          := ReadBool(PROJECT_SECTION,    'RenCustom', RadioButtonRenCustom.Checked);
-    EditRenTemplate.Text                  := SAVEDELIMITERS.UpgradeFrom(ReadString(PROJECT_SECTION,  'RenTemplate', EditRenTemplate.Text), PERCENTDELIMITERS);
+    EditRenTemplate.Text                  := DOSDELIMITERS.UpgradeFrom(ReadString(PROJECT_SECTION,  'RenTemplate', EditRenTemplate.Text), PERCENTDELIMITERS);
     CheckBoxShuffle.Checked               := ReadBool(PROJECT_SECTION,    'ShuffleEnabled', CheckBoxShuffle.Checked);
     ComboBoxShuffleSeed.Text              := ShuffleSeedToStr(ReadInteger(PROJECT_SECTION, 'ShuffleSeed', 0));
     CheckBoxTagsSourceEXIF.Checked        := ReadBool(PROJECT_SECTION,    'TagsSourceEXIF', CheckBoxTagsSourceEXIF.Checked);
@@ -1263,7 +1266,7 @@ begin
   FSizeInfos.Clear;
   FSizeInfos.Add(True, 360, '<auto>');
   Snapshot('step-sizes', PanelParams, -2, -40, 360, 95);
-  EditTargetFolder.Text := 'mygallery\img${SIZE}';
+  EditTargetFolder.Text := 'mygallery\img$(SIZE)';
   Snapshot('step-targetfolder', PanelTarget, -190, -8, 360, 60);
   Snapshot('step-execute', ButtonExecute, 0, 0, 0, 0);
   Snapshot('buttons-project', ToolButtonNew, 0, 0, 4*ToolButtonNew.Width, ToolButtonNew.Height);
@@ -1330,7 +1333,8 @@ var
 begin
   s := EditTargetFolder.Text;
   f := '';
-  if Pos('${SIZE}', s)>0 then
+  if TEngine.ContainsOneOf(s, ['SIZE', 'SIZENAME'], DOSDELIMITERS) then
+//  if (Pos('$(SIZE)', s)>0) or (Pos('$(SIZE)', s)>0) then
     f := ExtractFilename(s);
   BrowseTargetFolder.Filename := LeftStr(s, Length(s)-Length(f));
   if BrowseTargetFolder.Execute then
@@ -1387,7 +1391,7 @@ end;
 
 procedure TMainDialog.ButtonInsertSIZEClick(Sender: TObject);
 begin
-  EditTargetFolder.SelText := '${SIZE}';
+  EditTargetFolder.SelText := '$(SIZE)';
 end;
 
 procedure TMainDialog.ApplicationProperties1Exception(Sender: TObject;
@@ -1460,6 +1464,12 @@ begin
   Canvas.Font.Style := [];
   Canvas.TextRect(tr, tr.Left, tr.Top, IntToStr(Size), TRDEFSIZE);
 
+end;
+
+procedure TMainDialog.ListBoxSizesPaletteMeasureItem(Control: TWinControl;
+  Index: Integer; var AHeight: Integer);
+begin
+  AHeight := ListBoxSizesPalette.ClientHeight div 4;
 end;
 
 procedure TMainDialog.ListBoxSizesKeyDown(Sender: TObject; var Key: Word;
@@ -2058,8 +2068,8 @@ begin
         // TargetFolder nor in TargetFilename
         TargetFolder := EditTargetFolder.Text;
         if (FSizeInfos.EnabledCount>1)
-          and not templates.TEngine.ContainsOneOf(TargetFolder, ['SIZE', 'SIZENAME'], SAVEDELIMITERS)
-          and not (Processor.Rename and (templates.TEngine.ContainsOneOf(Processor.TargetFilename, ['SIZE', 'SIZENAME'], SAVEDELIMITERS))) then
+          and not templates.TEngine.ContainsOneOf(TargetFolder, ['SIZE', 'SIZENAME'], DOSDELIMITERS)
+          and not (Processor.Rename and (templates.TEngine.ContainsOneOf(Processor.TargetFilename, ['SIZE', 'SIZENAME'], DOSDELIMITERS))) then
           raise Exception.Create(SErrEnterPlaceholder);
 
         // Hook the processor

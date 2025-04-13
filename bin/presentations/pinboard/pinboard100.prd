@@ -16,7 +16,7 @@ Icon=icon.png
 Preview=100\preview.jpg
 Copy=shutter.png
 Templates=100\index.html,100\pinboard.css
-Fragment.IMAGES=<figure><img src="${IMGFILENAME}"/><figcaption>${TITLE} (${ORGFILENAME})</figcaption></figure>${CRLF}
+Fragment.IMAGES.html=<figure><img src="${IMGFILENAME}"/><figcaption>${TITLE} (${ORGFILENAME})</figcaption></figure>${CRLF}
 
 [Settings.Title]
 Class=String

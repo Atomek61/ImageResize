@@ -70,6 +70,11 @@ msgctxt "galleryprocessor.serrimgtagsnotfoundfmt"
 msgid "Tags file '%s' not found."
 msgstr "Tags-Datei '%s' nicht gefunden."
 
+#: galleryprocessor.serrinvalidfragmentfmt
+#, object-pascal-format
+msgid "Invalid list fragment \"%s\" (Fragment.NAME.ext expected)."
+msgstr ""
+
 #: galleryprocessor.smsgbuildinglists
 msgid "Building lists..."
 msgstr "Baue Listen..."
@@ -505,9 +510,9 @@ msgid "Cancelled at %.0f%%"
 msgstr "Abgebrochen bei %.0f%%"
 
 #: maindlg.serrenterplaceholder
-msgid "Enter placeholder ${SIZE} or ${SIZENAME} to either the target folder or the file template"
+msgid "Enter placeholder $(SIZE) or $(SIZENAME) to either the target folder or the file template"
 msgstr ""
-"Geben Sie die Platzhalter ${SIZE} oder ${SIZENAME}  entweder im Zielordnernamen\n"
+"Geben Sie die Platzhalter $(SIZE) oder $(SIZENAME)  entweder im Zielordnernamen\n"
 "oder in der Dateiname-Vorlage des Umbenennens an, um den Dateinamenskonflikt zu lösen."
 
 #: maindlg.serrinvalidjpgquality
@@ -580,11 +585,6 @@ msgstr "Warnung: Unerwartetes Projekt-Format %s (%s erwartet)"
 #, object-pascal-format
 msgid "Warning: Unexpected settings format %s (%s expected)"
 msgstr "Warnung: Unerwartetes Einstellungen-Format %s (%s erwartet)"
-
-#: maindlg.smsgcurrentdirfmt
-#, object-pascal-format
-msgid "Current directory is \"%s\""
-msgstr "Aktuelles Verzeichnis: %s"
 
 #: maindlg.smsgprojectdescriptionfmt
 #, object-pascal-format
@@ -988,6 +988,11 @@ msgstr "&Öffnen"
 msgid "Load saved settings"
 msgstr "Lädt gespeicherte Einstellungen"
 
+#: tmaindialog.actionparampresentation.caption
+msgctxt "tmaindialog.actionparampresentation.caption"
+msgid "Presentation"
+msgstr "Präsentation"
+
 #: tmaindialog.actionparamquality.caption
 msgid "&Quality"
 msgstr "&Qualität"
@@ -1033,10 +1038,12 @@ msgid "Optional Watermark printing"
 msgstr "Optionales Drucken eines Wasserzeichens"
 
 #: tmaindialog.actionpresentation.caption
+msgctxt "tmaindialog.actionpresentation.caption"
 msgid "&Presentation..."
 msgstr "&Präsentation..."
 
 #: tmaindialog.actionpresentation.hint
+msgctxt "tmaindialog.actionpresentation.hint"
 msgid ""
 "Creates a Web gallery.\n"
 "You can choose between different presentations:\n"
@@ -1118,10 +1125,9 @@ msgstr "Löscht die Liste der Bilder"
 
 #: tmaindialog.buttondeletesize.caption
 msgid "Delete"
-msgstr ""
+msgstr "Löschen"
 
 #: tmaindialog.buttondeletesize.hint
-#, fuzzy
 msgctxt "tmaindialog.buttondeletesize.hint"
 msgid "Replace the selected size"
 msgstr "Ersetzt die ausgewählte Größe"
@@ -1134,7 +1140,7 @@ msgstr "Öffnet den eingebauten Wasserzeichen-Editor"
 #: tmaindialog.buttonreplacesize.caption
 msgctxt "tmaindialog.buttonreplacesize.caption"
 msgid "Replace"
-msgstr "Ersetze"
+msgstr "Ersetzen"
 
 #: tmaindialog.buttonreplacesize.hint
 msgctxt "tmaindialog.buttonreplacesize.hint"
@@ -1386,10 +1392,10 @@ msgstr "1"
 msgid ""
 "Enter a filename template containing placeholders for special values.\n"
 "This template will be expanded for each resampled image. Insert the\n"
-"${SIZE} placeholder to enable multiple sizes in a common folder."
+"$(SIZE) placeholder to enable multiple sizes in a common folder."
 msgstr ""
 "Geben Sie eine Dateinamen-Vorlage ein, die Platzhalter für bestimmte Werte enthält.\n"
-"Die Vorlage wird für jede skalierte Datei ausgewertet. Fügen Sie den ${SIZE}-Platzhalter ein,\n"
+"Die Vorlage wird für jede skalierte Datei ausgewertet. Fügen Sie den $(SIZE)-Platzhalter ein,\n"
 "um mehrere Größen eines Bildes in einem gemeinsamen Verzeichnis erzeugen zu können."
 
 #: tmaindialog.editsrcfolder.hint
@@ -1409,12 +1415,12 @@ msgstr "*.jpg;*.png"
 #: tmaindialog.edittargetfolder.hint
 msgid ""
 "Enter a destination for the resampled images.\n"
-"If multiple sizes are entered, insert placeholder ${SIZE}\n"
-"or ${SIZENAME} into the path where the program\n"
+"If multiple sizes are entered, insert placeholder $(SIZE)\n"
+"or $(SIZENAME) into the path where the program\n"
 "shall insert the current size ."
 msgstr ""
 "Geben Sie ein Ziel für die skalierten Bilder an.\n"
-"Wenn mehrere Größen angegeben werden, muss der Platzhalter ${SIZE} im Pfad\n"
+"Wenn mehrere Größen angegeben werden, muss der Platzhalter $(SIZE) im Pfad\n"
 " an der Stelle eingefügt werden, wo die aktuelle Größe erscheinen soll."
 
 #: tmaindialog.groupboxinterpolationquality.caption
@@ -1529,10 +1535,6 @@ msgctxt "tmaindialog.label16.caption"
 msgid "%"
 msgstr "%"
 
-#: tmaindialog.label17.caption
-msgid "(EXIF ImageDescription)"
-msgstr "(EXIF ImageDescription)"
-
 #: tmaindialog.label18.caption
 msgid "File Selection:"
 msgstr "Dateiauswahl:"
@@ -1557,6 +1559,10 @@ msgstr "Algorithmus:"
 #: tmaindialog.label22.caption
 msgid "Current directory:"
 msgstr "Aktuelles Verzeichnis:"
+
+#: tmaindialog.label23.caption
+msgid "Suggestions:"
+msgstr "Vorschläge:"
 
 #: tmaindialog.label3.caption
 msgid "Sizes:"
@@ -1876,17 +1882,11 @@ msgid "Re&scan"
 msgstr "Re&scan"
 
 #: tpresentationdialog.buttonrescan.hint
-#, fuzzy
-#| msgid ""
-#| "Load all available presentations again.\n"
-#| "\n"
-#| "This makes sense, when you are creating and testing your customized presentation."
 msgid ""
 "Reload all available presentations again.\n"
 "This makes sense, when you are creating and testing your customized presentation."
 msgstr ""
 "Lade alle verfügbaren Präsentationen erneut.\n"
-"\n"
 "Das hat Sinn, wenn Sie eigene Präsentationen entwickeln und testen wollen."
 
 #: tpresentationdialog.buttontargetfromdoc.hint
@@ -1903,6 +1903,7 @@ msgid "Shows the presentation in your systems web browser."
 msgstr "Startet den ausgewählten Prozessor um die Präsentation zu erzeugen."
 
 #: tpresentationdialog.caption
+msgctxt "tpresentationdialog.caption"
 msgid "Presentation"
 msgstr "Präsentation"
 
@@ -1941,11 +1942,9 @@ msgid "Cancel"
 msgstr "Abbrechen"
 
 #: tsettingsdialog.buttonok.caption
-#, fuzzy
-#| msgid "Ok"
 msgctxt "tsettingsdialog.buttonok.caption"
 msgid "&Ok"
-msgstr "Ok"
+msgstr "&Ok"
 
 #: tsettingsdialog.caption
 msgctxt "tsettingsdialog.caption"

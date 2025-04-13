@@ -154,11 +154,11 @@
       <li><span class="size-color" style="background-color: #dcf0f7;">SCREEN</span> für Bilder die auf dem Bildschirm voll dargestellt werden sollen</li>
     </ul>
     <p>
-      Die gewählten Größen erhalten Bezeichner, damit sie über einen Namen durch den Platzhalter <span class="vn">${SIZENAME}</span> verwendet werden können. Der Platzhalter kann an folgenden Stellen verwendet werden:
+      Die gewählten Größen erhalten Bezeichner, damit sie über einen Namen durch den Platzhalter <span class="vn">$(SIZENAME)</span> verwendet werden können. Der Platzhalter kann an folgenden Stellen verwendet werden:
     </p>
     <ul>
-      <li>Im Zielordner, z.B.: "img<span class="vn">${SIZENAME}</span>"</li>
-      <li>In der Dateinamenvorlage bei Umbenennungen, z.B.: "img<span class="vn">${INDEX.<span class="vf">ifmt(1,auto)</span>}</span><span class="vn">${SIZENAME}</span>.<span class="vn">${FILEEXT}</span>"</li>
+      <li>Im Zielordner, z.B.: "img<span class="vn">$(SIZENAME)</span>"</li>
+      <li>In der Dateinamenvorlage bei Umbenennungen, z.B.: "img<span class="vn">$(INDEX.<span class="vf">ifmt(1,auto)</span>)</span><span class="vn">$(SIZENAME)</span>.<span class="vn">$(FILEEXT)</span>"</li>
       <li>In den Vorlagen (Templates) der Präsentationen</li>
     </ul>
 
@@ -169,7 +169,7 @@
       Ein Zielordner muss angegeben werden. Sie können ihn direkt eintippen oder mit der Schaltfläche <img class="btn" src="../img/folder-open.svg"/> auswählen.
     </p>
     <p>
-      Um Konflikte der Zielnamen zu vermeiden, wenn mehrere Zielgrößen angegeben werden, können Sie entweder mit <a href="#renaming">Umbenennen</a> verschiedene Dateinamen erzeugen, oder indem jede Größe einen eigenen Zielordner enthält. Dazu muss der Name des Zielordners den Platzhalter <span class="vn">${SIZE}</span> oder <span class="vn">${SIZENAME}</span> enthalten.
+      Um Konflikte der Zielnamen zu vermeiden, wenn mehrere Zielgrößen angegeben werden, können Sie entweder mit <a href="#renaming">Umbenennen</a> verschiedene Dateinamen erzeugen, oder indem jede Größe einen eigenen Zielordner enthält. Dazu muss der Name des Zielordners den Platzhalter <span class="vn">$(SIZE)</span> oder <span class="vn">$(SIZENAME)</span> enthalten.
     </p>
     <div class="chfot"><a href="#contents">Inhalt</a></div>
     
@@ -184,15 +184,15 @@
 
     <h2 id="rensimple">Strategie <b>"Einfach"</b></h2>
     <p>
-      Die einfache Dateinamenvorlage erzeugt Namen wie diesen: <i>img085.jpg</i>. Die Datei-Nummerierung beginnt bei 1 und enthält nicht die Größe (in Pixeln). Dann ist es erforderlich für jede Größe einen eigenes Verzeichnis zu erzeugen. Dazu fügen Sie in die Vorlage des Zielordners den Platzhalter <span class="vn">${SIZE}</span> oder <span class="vn">${SIZENAME}</span> ein.
+      Die einfache Dateinamenvorlage erzeugt Namen wie diesen: <i>img085.jpg</i>. Die Datei-Nummerierung beginnt bei 1 und enthält nicht die Größe (in Pixeln). Dann ist es erforderlich für jede Größe einen eigenes Verzeichnis zu erzeugen. Dazu fügen Sie in die Vorlage des Zielordners den Platzhalter <span class="vn">$(SIZE)</span> oder <span class="vn">$(SIZENAME)</span> ein.
     </p>
     <p>
-      Die Dateinamen-Vorlage ist im einfachsten Falle img<span class="vn">${INDEX<span class="vf">.ifmt(1,3)</span>}</span>.<span class="vn">${FILEEXT}</span>. Der <span class="vn">INDEX</span> ist die 0-basierte laufende Nummer der Quelldatei in der Liste. Die Zahlen 1 und 3 hinter dem Schlüsselwort <span class="vn">INDEX</span> bedeuten, dass der Index bei 1 beginnt und 3 Ziffern mit führenden Nullen enthalten wird.
+      Die Dateinamen-Vorlage ist im einfachsten Falle img<span class="vn">$(INDEX<span class="vf">.ifmt(1,3)</span>)</span>.<span class="vn">$(FILEEXT)</span>. Der <span class="vn">INDEX</span> ist die 0-basierte laufende Nummer der Quelldatei in der Liste. Die Zahlen 1 und 3 hinter dem Schlüsselwort <span class="vn">INDEX</span> bedeuten, dass der Index bei 1 beginnt und 3 Ziffern mit führenden Nullen enthalten wird.
     </p>
     
     <h2 id="renadvanced">Strategie <b>"Erweitert"</b></h2>
     <p>
-      Die Dateinamen-Vorlage in diesem Falle ist z.B. "img<span class="vn">${INDEX<span class="vf">.ifmt(1,3)</span>}</span>_<span class="vn">${SIZE}</span>.<span class="vn">${FILEEXT}</span>", um alle Dateien ohne Namenskonflikt im selben Verzeichnis zu erzeugen. Sie erzeugt einen Dateinamen wie <i>img085_1920.jpg</i>. Der Dateinamenskonflikt wird vermieden durch Verwendung des <span class="vn">${SIZE}</span>-Platzhalters.
+      Die Dateinamen-Vorlage in diesem Falle ist z.B. "img<span class="vn">$(INDEX<span class="vf">.ifmt(1,3)</span>)</span>_<span class="vn">$(SIZE)</span>.<span class="vn">$(FILEEXT)</span>", um alle Dateien ohne Namenskonflikt im selben Verzeichnis zu erzeugen. Sie erzeugt einen Dateinamen wie <i>img085_1920.jpg</i>. Der Dateinamenskonflikt wird vermieden durch Verwendung des <span class="vn">$(SIZE)</span>-Platzhalters.
     </p>
     
     <h2 id="rencustom">Strategie <b>"Angepasst"</b></h2>
@@ -202,11 +202,11 @@
     <p>
       Beispiele für gültige Vorlagen im Falle, wo die resultierenden Dateinamen für verschiedene Größen im gemeinsamen Verzeichnis keinen Konflikt erzeugen, könnten so aussehen:
     </p>
-    <p>"img<span class="vn">${INDEX.<span class="vf">ifmt(1,3)</span>}</span>_<span class="vn">${SIZE}</span>.<span class="vn">${FILEEXT}</span>"</p>
+    <p>"img<span class="vn">$(INDEX.<span class="vf">ifmt(1,3)</span>)</span>_<span class="vn">$(SIZE)</span>.<span class="vn">$(FILEEXT)</span>"</p>
     <p>ergibt z.B. "img012_1920.jpg"</p>
-    <p>"<span class="vn">${FILETITLE}</span>_<span class="vn">${SIZE}</span>.<span class="vn">${FILEEXT}</span>"</p>
+    <p>"<span class="vn">$(FILETITLE)</span>_<span class="vn">$(SIZE)</span>.<span class="vn">$(FILEEXT)</span>"</p>
     <p>ergibt z.B. "DSC3240_1920.jpg"</p>
-    <p>"<span class="vn">${FILETITLE}</span>_<span class="vn">${SIZENAME}</span>.<span class="vn">${FILEEXT}</span>"</p>
+    <p>"<span class="vn">$(FILETITLE)</span>_<span class="vn">$(SIZENAME)</span>.<span class="vn">$(FILEEXT)</span>"</p>
     <p>ergibt z.B. "DSC3240_SCREEN.jpg"</p>
     
     <p>
@@ -218,7 +218,7 @@
       <i>Mischen</i> bedeutet, dass die lexikalische Reihenfolge der Zieldateinamen zufällig ist. Dazu ist die automatische Umbenennung der Zieldateien nötig.
     </p>
     <p>
-      ImageResize mischt zunächst die Reihenfolge der Bilder bevor es die resampelten Bilder erzeugt. Das hat nur Sinn, wenn dabei die Zieldateinamen den Index des Bildes am Beginn des variablen Teiles des Namens enthält, damit die lexikalische Reihenfolge aufsteigend ist. Eine geeignete Vorlage für den Zielnamen ist z.B. "img<span class="vn">${INDEX<span class="vf">.ifmt(1,3)</span>}</span>.<span class="vn">${FILEEXT}</span>".
+      ImageResize mischt zunächst die Reihenfolge der Bilder bevor es die resampelten Bilder erzeugt. Das hat nur Sinn, wenn dabei die Zieldateinamen den Index des Bildes am Beginn des variablen Teiles des Namens enthält, damit die lexikalische Reihenfolge aufsteigend ist. Eine geeignete Vorlage für den Zielnamen ist z.B. "img<span class="vn">$(INDEX<span class="vf">.ifmt(1,3)</span>)</span>.<span class="vn">$(FILEEXT)</span>".
     </p>
     <p>
       Der Parameter <i>Saat</i> kontrolliert die zufällige Abfolge. Eine Saat von 0 ("Zufällig") wird jedesmal eine andere Abfolge erzeugen, wenn die Verarbeitung gestartet wird. Jeder andere konstante Wert wird die Abfolge in der selben Art mischen, solange die Länge der Bildliste sich nicht ändert.
@@ -243,7 +243,7 @@
       Normalerweise genügt es für alle Zielgrößen eine gemeinsame Datei anzugeben, weil die Größe für jedes Bild angepasst wird. Dafür wird ein Wasserzeichenbild in guter Auflösung einmalig für alle erzeugt.
     </p>
     <p>
-      Um für jede Zielgröße ein anderes Wasserbild festlegen zu können, müssen Sie im Namen der Wasserbilddatei den Platzhalter <span class="vn">${SIZE}</span> angeben. ImageResize erwartet in diesem Falle ein Wasserbild für jede Größe, deren Name der Vorlage entspricht, also die Größe enthält.
+      Um für jede Zielgröße ein anderes Wasserbild festlegen zu können, müssen Sie im Namen der Wasserbilddatei den Platzhalter <span class="vn">$(SIZE)</span> angeben. ImageResize erwartet in diesem Falle ein Wasserbild für jede Größe, deren Name der Vorlage entspricht, also die Größe enthält.
     </p>
     <p>
       Sie können Wasserbilddateien mit jedem Programm erzeugen welches das PNG-Format unterstützt, z.B:
@@ -375,7 +375,7 @@
     <h1 id="tagging"><img class="icon-right" src="../img/tagging.svg"/>Taggen</h1>
     <h2>Allgemeines</h2>
     <p>
-      Sie könne den erzeugten Bildern gewisse Metainformationen zufügen. Normalerweise werden solche Metainformationen bei Fotos (z.B. JPEG) im EXIF-Format innerhalb der Datei gespeichert. Die modernen Fotoapparate legen damit viele technische Informationen ab. Die wichtigsten Metainformationen für ImageResize sind <i>Titel</i>, <i>Timestamp</i> und <i>Copyright</i>.
+      Sie können den erzeugten Bildern gewisse Metainformationen zufügen. Normalerweise werden solche Metainformationen bei Fotos (z.B. JPEG) im EXIF-Format innerhalb der Datei gespeichert. Die modernen Fotoapparate legen damit viele technische Informationen ab. Die wichtigsten Metainformationen für ImageResize sind <i>Titel</i>, <i>Timestamp</i> und <i>Copyright</i>.
     </p>
     <p>
       <i>Taggen</i> (engl. "anhängen") bedeutet bei ImageResize, dass Sie den mit ImageResize erzeugten Bildern bestimmte dieser Informationen mitgeben. Es wird aus zwei Gründen von ImageResize unterstützt:
@@ -526,7 +526,7 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
     </p>
     <p>
       <img class="icon-left" src="../img/save-dirty.svg"/>
-      Wenn Einstellungen geändert werden, wird dies durch einen roten Punkt im Speichern-Symbol ausgedrückt.
+      Wenn Einstellungen geändert wurden, wird dies durch einen roten Punkt im Speichern-Symbol ausgedrückt.
     </p>
     <div class="chfot"><a href="#contents">Inhalt</a></div>
     
@@ -699,11 +699,11 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
     </p>
     <p>
       Variablen: <span class="vn">INDEX</span>="<span class="vv">0</span>", <span class="vn">SIZE</span>="<span class="vv">1280</span>", <span class="vn">SIZENAME</span>="<span class="vv">SCREEN</span>"<br/>
-      Text-Vorlage: "C:\MyPhotos\<span class="vn">${SIZENAME}</span>\bild<span class="vn">${INDEX}</span>_<span class="vn">${SIZE}</span>px.jpg"<br/>
+      Text-Vorlage: "C:\MyPhotos\<span class="vn">$(SIZENAME)</span>\bild<span class="vn">$(INDEX)</span>_<span class="vn">$(SIZE)</span>px.jpg"<br/>
       Ergebnis: "C:\MyPhotos\<span class="vv">SCREEN</span>\bild<span class="vv">0</span>_<span class="vv">1280</span>px.jpg"
     </p>
     <p>
-      Die Werte der Variablen sind letztlich immer Zeichenketten. Vor ihrer <i>Auflösung</i> können sie auch Referenzen auf andere Variablen enthalten und <i>Funktionen</i>. So könnte zum Beispiel eine Variable namens <span class="vn">IMGFILENAME</span> den Wert "img<span class="vn">${INDEX<span class="vf">.add(1).fmt(3)</span>}</span>_<span class="vn">${SIZE}</span>.<span class="vn">${ORGFILENAME<span class="vf">.ext().lower()</span>}</span>" enthalten. Dieser Wert enthält Referenzen auf die Variablen <span class="vn">INDEX</span>, <span class="vn">SIZE</span> und <span class="vn">ORGFILENAME</span>. Auf den Wert der Variablen <span class="vn">INDEX</span> wird die Funktion "<span class="vf">add(1)</span>" angewendet, die dem Wert als Ganzzahl eine 1 zuaddiert und die Funktion "<span class="vf">fmt(3)</span>", die die Zahl in eine 3-stellige mit führenden Nummer umwandelt. Von der Variablen <span class="vn">ORGFILENAME</span> wird mit der Funktion "<span class="vf">ext()</span>" die Dateierweiterung genommen und mit der Funktion "<span class="vf">lower()</span>" in Kleinbuchstaben umgewandelt. 
+      Die Werte der Variablen sind letztlich immer Zeichenketten. Vor ihrer <i>Auflösung</i> können sie auch Referenzen auf andere Variablen enthalten und <i>Funktionen</i>. So könnte zum Beispiel eine Variable namens <span class="vn">IMGFILENAME</span> den Wert "img<span class="vn">$(INDEX<span class="vf">.add(1).fmt(3)</span>)</span>_<span class="vn">$(SIZE)</span>.<span class="vn">$(ORGFILENAME<span class="vf">.ext().lower()</span>)</span>" enthalten. Dieser Wert enthält Referenzen auf die Variablen <span class="vn">INDEX</span>, <span class="vn">SIZE</span> und <span class="vn">ORGFILENAME</span>. Auf den Wert der Variablen <span class="vn">INDEX</span> wird die Funktion "<span class="vf">add(1)</span>" angewendet, die dem Wert als Ganzzahl eine 1 zuaddiert und die Funktion "<span class="vf">fmt(3)</span>", die die Zahl in eine 3-stellige mit führenden Nummer umwandelt. Von der Variablen <span class="vn">ORGFILENAME</span> wird mit der Funktion "<span class="vf">ext()</span>" die Dateierweiterung genommen und mit der Funktion "<span class="vf">lower()</span>" in Kleinbuchstaben umgewandelt. 
     </p>
     <p>
       Vor der Erzeugung jeden einzelnen Bildes werden die Variablen aktualisiert und auf Abhängigkeiten untereinander untersucht. Diese Abhängigkeiten werden vor der Ersetzung in der Text-Vorlage <i>aufgelöst</i>. Auflösen bedeutet dabei, dass zunächst alle Variablen, die nur von selbst unabhängigen Variablen abhängen, prozessiert werden. Damit sind diese Variablen selbst unabhängig und können wiederum in andere Variablen eingesetzt werden, die von ihnen abhängen. Dies geschieht solange, bis alle Variablen aufgelöst, d.h. unabhängig sind. Dabei werden zirkuläre (gegenseitige und indirekt gegenseitige) erkannt und als Fehler gemeldet. 
@@ -771,10 +771,10 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
       Die Tabelle zeigt Funktionen, die im Zusammenhang mit jedem Vorlagen-Prozessor verfügbar sind. Um eine Funktion auf einen Variablenwert anzuwenden ist sie wie im Beispiel anzuhängen. Um weitere Funktionen anzuwenden, können sie diese an die letzte anhängen.
     </p>
     <p>
-      <span class="vn">${VARNAME<span class="vf">.fnname(parameters)</span>}</span>
+      <span class="vn">$(VARNAME<span class="vf">.fnname(parameters)</span>)</span>
     </p>
     <p>
-      Beispiel: <span class="vn">${MYVAR<span class="vf">.fna(1).fnb(2,3)</span>}</span>
+      Beispiel: <span class="vn">$(MYVAR<span class="vf">.ext().upper()</span>)</span>
     </p>  
     <table class="fn-table">
       <tr>
@@ -792,7 +792,7 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
       </tr><tr>
         <td><span class="vf">numin()</span></td><td>Ermittelt die in einem Text enthaltene Ganzzahl. Das kann nützlich sein, um aus dem Namen eines Fotos die Nummer des Fotos zu ermitteln, z.B. aus "DSC05023.jpg" wird "05023" gezogen. Ist keine Nummer vorhanden, wird eine leere Zeichenkette zurückgegeben.</td>
       </tr><tr>
-        <td><span class="vf">slice(n:m)</span></td><td>Kopiert eine Teil-Zeichenkette heraus von Stelle n bis Stelle m. n kann weggelassen werden (dann Beginn mit dem ersten Zeichen), ebenso m, dann bis zum Ende der Zeichnekette. m kann einen negativen Wert haben. -4 bedeutet z.B. dass die letzten 4 Zeichen weggelassen werden.</td>
+        <td><span class="vf">slice(n:m)</span></td><td>Kopiert eine Teil-Zeichenkette von Stelle n bis Stelle m. Wird n wegglassen, wird der Beginn angenommen. Wird m weggelassen wird bis zum Ende kopiert. Wenn n oder m negativ sind, wird vom Ende gezählt. slice(-3:) bedeutet z.B. dass die letzten 3 Zeichen kopiert werden.</td>
       </tr><tr>
         <td><span class="vf">title()</span></td><td>Ermittelt den Dateinamen ohne Pfad und Erweiterung</td>
       </tr><tr>

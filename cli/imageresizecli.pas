@@ -11,7 +11,7 @@ uses
   Windows;
 
 const
-  IMGRESCLIVER = '4.1';
+  IMGRESCLIVER = '4.2';
   IMGRESCLICPR = 'imgres CLI '+IMGRESCLIVER+' for engine '+IMGRESVER+' (c) 2024 Jan Schirrmacher, www.atomek.de';
 
   ERRINVALIDNUMBEROFPARAMSFMT = 'Invalid number of parameters %d, %d expected.';
@@ -98,8 +98,8 @@ var
   end;
 
 begin
+  writeln(ParamStr(6));
   OptionCount := 0;
-
   // parse parameters
   if (ParamCount=0) or HasOption('h', 'help') then begin
     WriteLn(IMGRESCLICPR);

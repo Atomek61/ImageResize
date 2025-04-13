@@ -59,6 +59,11 @@ msgctxt "galleryprocessor.serrimgtagsnotfoundfmt"
 msgid "Tags file '%s' not found."
 msgstr ""
 
+#: galleryprocessor.serrinvalidfragmentfmt
+#, object-pascal-format
+msgid "Invalid list fragment \"%s\" (Fragment.NAME.ext expected)."
+msgstr ""
+
 #: galleryprocessor.smsgbuildinglists
 msgid "Building lists..."
 msgstr ""
@@ -494,7 +499,7 @@ msgid "Cancelled at %.0f%%"
 msgstr ""
 
 #: maindlg.serrenterplaceholder
-msgid "Enter placeholder ${SIZE} or ${SIZENAME} to either the target folder or the file template"
+msgid "Enter placeholder $(SIZE) or $(SIZENAME) to either the target folder or the file template"
 msgstr ""
 
 #: maindlg.serrinvalidjpgquality
@@ -566,11 +571,6 @@ msgstr ""
 #: maindlg.slogwarningsettingversionfmt
 #, object-pascal-format
 msgid "Warning: Unexpected settings format %s (%s expected)"
-msgstr ""
-
-#: maindlg.smsgcurrentdirfmt
-#, object-pascal-format
-msgid "Current directory is \"%s\""
 msgstr ""
 
 #: maindlg.smsgprojectdescriptionfmt
@@ -968,6 +968,11 @@ msgstr ""
 msgid "Load saved settings"
 msgstr ""
 
+#: tmaindialog.actionparampresentation.caption
+msgctxt "tmaindialog.actionparampresentation.caption"
+msgid "Presentation"
+msgstr ""
+
 #: tmaindialog.actionparamquality.caption
 msgid "&Quality"
 msgstr ""
@@ -1013,10 +1018,12 @@ msgid "Optional Watermark printing"
 msgstr ""
 
 #: tmaindialog.actionpresentation.caption
+msgctxt "tmaindialog.actionpresentation.caption"
 msgid "&Presentation..."
 msgstr ""
 
 #: tmaindialog.actionpresentation.hint
+msgctxt "tmaindialog.actionpresentation.hint"
 msgid ""
 "Creates a Web gallery.\n"
 "You can choose between different presentations:\n"
@@ -1318,7 +1325,7 @@ msgstr ""
 msgid ""
 "Enter a filename template containing placeholders for special values.\n"
 "This template will be expanded for each resampled image. Insert the\n"
-"${SIZE} placeholder to enable multiple sizes in a common folder."
+"$(SIZE) placeholder to enable multiple sizes in a common folder."
 msgstr ""
 
 #: tmaindialog.editsrcfolder.hint
@@ -1338,8 +1345,8 @@ msgstr ""
 #: tmaindialog.edittargetfolder.hint
 msgid ""
 "Enter a destination for the resampled images.\n"
-"If multiple sizes are entered, insert placeholder ${SIZE}\n"
-"or ${SIZENAME} into the path where the program\n"
+"If multiple sizes are entered, insert placeholder $(SIZE)\n"
+"or $(SIZENAME) into the path where the program\n"
 "shall insert the current size ."
 msgstr ""
 
@@ -1447,10 +1454,6 @@ msgctxt "tmaindialog.label16.caption"
 msgid "%"
 msgstr ""
 
-#: tmaindialog.label17.caption
-msgid "(EXIF ImageDescription)"
-msgstr ""
-
 #: tmaindialog.label18.caption
 msgid "File Selection:"
 msgstr ""
@@ -1474,6 +1477,10 @@ msgstr ""
 
 #: tmaindialog.label22.caption
 msgid "Current directory:"
+msgstr ""
+
+#: tmaindialog.label23.caption
+msgid "Suggestions:"
 msgstr ""
 
 #: tmaindialog.label3.caption
@@ -1803,6 +1810,7 @@ msgid "Shows the presentation in your systems web browser."
 msgstr ""
 
 #: tpresentationdialog.caption
+msgctxt "tpresentationdialog.caption"
 msgid "Presentation"
 msgstr ""
 

@@ -7,8 +7,11 @@
    viewBox="0 0 128 128.00001"
    version="1.1"
    id="svg138"
-   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
    sodipodi:docname="delete.svg"
+   inkscape:export-filename="img20\clear.png"
+   inkscape:export-xdpi="15"
+   inkscape:export-ydpi="15"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -27,8 +30,8 @@
      showguides="true"
      inkscape:lockguides="true"
      inkscape:zoom="2.587745"
-     inkscape:cx="-111.10059"
-     inkscape:cy="159.98485"
+     inkscape:cx="-111.29381"
+     inkscape:cy="159.79163"
      inkscape:window-width="2560"
      inkscape:window-height="1417"
      inkscape:window-x="-8"
@@ -40,7 +43,11 @@
        id="grid259"
        empspacing="4"
        originx="0"
-       originy="0" />
+       originy="0"
+       spacingy="1"
+       spacingx="1"
+       units="px"
+       visible="true" />
     <inkscape:grid
        type="xygrid"
        id="grid261"
@@ -49,7 +56,9 @@
        color="#e5001f"
        opacity="0.14901961"
        originx="0"
-       originy="0" />
+       originy="0"
+       units="px"
+       visible="true" />
     <sodipodi:guide
        position="-68,64.000005"
        orientation="0,-1"
