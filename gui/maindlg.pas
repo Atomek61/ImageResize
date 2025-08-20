@@ -17,7 +17,7 @@ interface
 uses
   Windows, LCLTranslator, Classes, Types, SysUtils, Forms, Controls, Graphics,
   Dialogs, StdCtrls, ComCtrls, ActnList, ExtCtrls, imgres, AboutDlg, IniFiles,
-  StrUtils, LMessages, LCLIntf, Buttons, ImgList, LCLType, LazHelpHTML,
+  StrUtils, LMessages, LCLIntf, Buttons, ImgList, LCLType, LazHelpHTML, Menus,
   BGRABitmap, BGRABitmapTypes, BGRASpeedButton, BGRAGraphicControl,
   RichMemo, MrkEditDlg, WinDirs, UpdateUtils, Settings,
   AppSettings, Logging, LoggingRichMemo, StringArrays, Presentations,
@@ -58,6 +58,9 @@ const
   PROCESSING_SECTION    = 'Processor';
   MAINDIALOG_SECTION    = 'MainDialog';
   PRESDIALOG_SECTION    = 'PresentationDialog';
+  MAINDIALOG_FILEHISTORY= 'FileHistory';
+
+  FILEHISTORY_NUMENTRIES= 8;
 
   RENSIMPLETEMPLATE     = 'img$(INDEX.ifmt(1)).$(FILEEXT)';
   RENADVANCEDTEMPLATE   = 'img$(INDEX.ifmt(1))_$(SIZE).$(FILEEXT)';
@@ -228,6 +231,7 @@ type
     PageControlSource: TPageControl;
     PageControlParams: TPageControl;
     PanelPreview: TPanel;
+    PopupMenuFileHistory: TPopupMenu;
     ProgressBar: TPaintBox;
     PanelTarget: TPanel;
     PanelParams: TPanel;
@@ -382,6 +386,8 @@ type
     procedure SaveLastProject;
     function LoadProjectFromFile(const Filename :string) :boolean;
     procedure SaveProjectToFile(const Filename :string);
+    procedure AddToFileHistory(const Filename :string);
+    procedure HistoryFileClick(Sender :TObject);
     function CheckSave :boolean;
 //    procedure Log(const Msg :string; Level :TLogLevel = llInfo);
     function BoostStrToThreadCount(const Value :string) :integer;
@@ -495,8 +501,11 @@ begin
       ListBoxSizes.Items.Clear;
       for i:=0 to FSizeInfos.Count-1 do
         ListBoxSizes.Items.Add(IntToStr(FSizeInfos[i].Size));
+      ComboBoxSize.ItemIndex := -1;
+      ComboBoxSizeName.Text := TSizeInfos.SIZENAMES[snAuto];
     end;
   end;
+  Dirty := True;
   UpdateRequiredStep(2);
 end;
 
@@ -734,38 +743,6 @@ begin
   FSizeInfos.Free;
 end;
 
-procedure TMainDialog.SaveSettings;
-var
-  Ini :TCustomIniFile;
-begin
-  Ini := TIniFile.Create(GetAppDataFilename(SETTINGS_FILENAME, true));
-  with Ini do try
-    WriteString(COMMON_SECTION, 'Type', SETTYPE);
-    WriteString(COMMON_SECTION, 'Version', SETVERSION);
-
-    Ini.WriteInteger(MAINDIALOG_SECTION, 'Width', Width);
-    Ini.WriteInteger(MAINDIALOG_SECTION, 'Height', Height);
-    Ini.WriteInteger(MAINDIALOG_SECTION, 'Left', Left);
-    Ini.WriteInteger(MAINDIALOG_SECTION, 'Top', Top);
-    Ini.WriteInteger(MAINDIALOG_SECTION, 'PanelControls.Height', PanelControls.Height);
-    Ini.WriteString(MAINDIALOG_SECTION, 'CurrentDirectory', GetCurrentDir);
-
-    FDialogSettings.Save(Ini, MAINDIALOG_SECTION);
-
-    with PresentationDialog do begin
-      Ini.WriteInteger(PRESDIALOG_SECTION, 'Top', Top);
-      Ini.WriteInteger(PRESDIALOG_SECTION, 'Left', Left);
-      Ini.WriteInteger(PRESDIALOG_SECTION, 'Width', Width);
-      Ini.WriteInteger(PRESDIALOG_SECTION, 'Height', Height);
-      Ini.WriteInteger(PRESDIALOG_SECTION, 'PanelMain.Height', PanelMain.Height);
-    end;
-
-    FProcessingSettings.Save(Ini, PROCESSING_SECTION);
-  finally
-    Free;
-  end;
-end;
-
 procedure TMainDialog.InitProject;
 var
   ImgResizer :TProcessor;
@@ -841,6 +818,9 @@ var
   IniVer :string;
   IniTyp :string;
   AHeight :integer;
+  i :integer;
+  Item :string;
+  MenuItem :TMenuItem;
 begin
   Filename := GetAppDataFilename(SETTINGS_FILENAME, false);
   if not FileExists(Filename) then Exit(false);
@@ -881,10 +861,107 @@ begin
         PanelMain.Height := AHeight;
     end;
 
+    i := 1;
+    while true do begin
+      Item := Ini.ReadString(MAINDIALOG_FILEHISTORY, IntToStr(i), '');
+      if Item='' then break;
+      MenuItem := TMenuItem.Create(self);
+      MenuItem.OnClick := HistoryFileClick;
+//      MenuItem.Caption := IntToStr(i)+'. '+Item;
+      MenuItem.Caption := Item;
+      PopupMenuFileHistory.Items.Add(MenuItem);
+      inc(i);
+    end;
+
     FProcessingSettings.Load(Ini, PROCESSING_SECTION);
   finally
     Free;
   end;
+end;
+
+procedure TMainDialog.SaveSettings;
+var
+  Ini :TCustomIniFile;
+  Item :string;
+  i :integer;
+begin
+  Ini := TIniFile.Create(GetAppDataFilename(SETTINGS_FILENAME, true));
+  with Ini do try
+    WriteString(COMMON_SECTION, 'Type', SETTYPE);
+    WriteString(COMMON_SECTION, 'Version', SETVERSION);
+
+    Ini.WriteInteger(MAINDIALOG_SECTION, 'Width', Width);
+    Ini.WriteInteger(MAINDIALOG_SECTION, 'Height', Height);
+    Ini.WriteInteger(MAINDIALOG_SECTION, 'Left', Left);
+    Ini.WriteInteger(MAINDIALOG_SECTION, 'Top', Top);
+    Ini.WriteInteger(MAINDIALOG_SECTION, 'PanelControls.Height', PanelControls.Height);
+    Ini.WriteString(MAINDIALOG_SECTION, 'CurrentDirectory', GetCurrentDir);
+
+    FDialogSettings.Save(Ini, MAINDIALOG_SECTION);
+
+    with PresentationDialog do begin
+      Ini.WriteInteger(PRESDIALOG_SECTION, 'Top', Top);
+      Ini.WriteInteger(PRESDIALOG_SECTION, 'Left', Left);
+      Ini.WriteInteger(PRESDIALOG_SECTION, 'Width', Width);
+      Ini.WriteInteger(PRESDIALOG_SECTION, 'Height', Height);
+      Ini.WriteInteger(PRESDIALOG_SECTION, 'PanelMain.Height', PanelMain.Height);
+    end;
+
+    for i:=0 to PopupMenuFileHistory.Items.Count-1 do begin
+      Item := PopupMenuFileHistory.Items[i].Caption;
+//      Item := Copy(Item, 4, Length(Item)-3);
+      Ini.WriteString(MAINDIALOG_FILEHISTORY, IntToStr(i+1), Item);
+    end;
+
+    FProcessingSettings.Save(Ini, PROCESSING_SECTION);
+  finally
+    Free;
+  end;
+end;
+
+procedure TMainDialog.AddToFileHistory(const Filename: string);
+var
+  Item :string;
+  i :integer;
+  NewItem :TMenuItem;
+
+  procedure MoveDown(i0, i1 :integer);
+  var
+    i :integer;
+  begin
+    for i := i1 downto i0+1 do
+      PopupMenuFileHistory.Items[i].Caption := PopupMenuFileHistory.Items[i-1].Caption;
+  end;
+
+begin
+
+  // Check, if already exists
+  for i:=0 to PopupMenuFileHistory.Items.Count-1 do begin
+    Item := PopupMenuFileHistory.Items[i].Caption;
+    //Item := Copy(Item, 4, Length(Item)-3);
+    if SameText(Item, Filename) then begin
+      MoveDown(0, i);
+      // Exists, put on first place
+      PopupMenuFileHistory.Items[0].Caption := Filename;
+      Exit;
+    end;
+  end;
+  if PopupMenuFileHistory.Items.Count < FILEHISTORY_NUMENTRIES then begin
+    NewItem := TMenuItem.Create(self);
+    NewItem.OnClick := HistoryFileClick;
+    PopupMenuFileHistory.Items.Add(NewItem);
+  end;
+  MoveDown(0, PopupMenuFileHistory.Items.Count-1);
+  PopupMenuFileHistory.Items[0].Caption := Filename;
+end;
+
+procedure TMainDialog.HistoryFileClick(Sender: TObject);
+var
+  Item :string;
+begin
+  if not CheckSave then Exit;
+  Item := (Sender as TMenuItem).Caption;
+  LoadProjectFromFile(Item);
 end;
 
 function TMainDialog.LoadProjectFromIni(Ini :TCustomIniFile) :boolean;
@@ -895,13 +972,13 @@ var
   Str :string;
 begin
   with Ini do begin
-    IniTyp := Ini.ReadString(COMMON_SECTION, 'Type', 'unknown');
+    IniTyp := ReadString(COMMON_SECTION, 'Type', 'unknown');
     result := IniTyp=PRJTYPE;
     if not result then begin
        Log(SLogCantLoadProject, llWarning);
        Exit;
     end;
-    IniVer := Ini.ReadString(COMMON_SECTION, 'Version', '000');
+    IniVer := ReadString(COMMON_SECTION, 'Version', '000');
     result := (IniVer=PRJVERSION) or (IniVer>=PRJVERSION300);
     if not result then begin
       Log(Format(SLogWarningProjectVersionFmt, [IniVer, PRJVERSION]), llWarning);
@@ -909,7 +986,7 @@ begin
     end;
 
     InitProject;
-    FProjectDir := Ini.ReadString(COMMON_SECTION, 'CurrentDir', GetCurrentDir);
+    FProjectDir := ReadString(COMMON_SECTION, 'CurrentDir', GetCurrentDir);
     FProjectDescription := ReadLang(PROJECT_SECTION,  'Description', '', TLanguage.Code);
     if SameText(ReadString(PROJECT_SECTION, 'Source', 'Filenames'), 'Filenames') then
       ActionSrcFilenames.Execute
@@ -1103,6 +1180,7 @@ begin
       ChangeCurrentDir(ExtractFilePath(Filename));
       FIsSave := true;
       Dirty := false;
+      AddToFileHistory(Filename);
     end;
   finally
      Ini.Free;
@@ -1122,6 +1200,7 @@ begin
     Log(Format(SMsgProjectSavedToFmt, [FProjectFilename]), llHint);
     FIsSave := true;
     Dirty := false;
+    AddToFileHistory(Filename);
   finally
     Ini.Free;
   end;
@@ -1205,7 +1284,7 @@ begin
   if odSelected in State then
     Canvas.Brush.Color := clHighlight
   else
-    Canvas.Brush.Color := TSizeInfos.SIZENAMECOLORS[TSizeInfos.SizeToClassIndex(Size)];
+    Canvas.Brush.Color := TSizeInfos.SIZENAMECOLORS[TSizeInfos.SizeToSizename(Size)];
   Canvas.FillRect(ARect);
 
   // Size
@@ -1224,7 +1303,7 @@ begin
   Canvas.Brush.Color := clBlue;
 
   // Size Icon
-  ImagesModule.ImageList24x24.Draw(Canvas, ARect.Right-26, ARect.Top, TSizeInfos.SizeToClassIndex(Size));
+  ImagesModule.ImageList24x24.Draw(Canvas, ARect.Right-26, ARect.Top, integer(TSizeInfos.SizeToSizename(Size)));
 
 end;
 
@@ -1322,8 +1401,11 @@ begin
 end;
 
 procedure TMainDialog.ButtonAddSizeClick(Sender: TObject);
+var
+  Size :integer;
 begin
-  FSizeInfos.Add(True, StrToInt(ComboBoxSize.Text), ComboBoxSizeName.Text);
+  Size := StrToInt(ComboBoxSize.Text);
+  FSizeInfos.Add(True, Size, TSizeInfos.SizeNameToStr(ComboBoxSizeName.Text, Size));
 end;
 
 procedure TMainDialog.ButtonBrowseTargetFolderClick(Sender: TObject);
@@ -1405,7 +1487,7 @@ begin
   if ListBoxSizes.ItemIndex>=0 then begin
     with FSizeInfos[ListBoxSizes.ItemIndex] do begin
       ComboBoxSize.Text := IntToStr(Size);
-      ComboBoxSizeName.Text := Name;
+      ComboBoxSizeName.Text := FSizeInfos.StrToSizeName(Name);
     end;
   end;
 end;
@@ -1448,7 +1530,7 @@ begin
   if odSelected in State then
     Canvas.Brush.Color := clHighlight
   else
-    Canvas.Brush.Color := TSizeInfos.SIZENAMECOLORS[TSizeInfos.SizeToClassIndex(Size)];
+    Canvas.Brush.Color := TSizeInfos.SIZENAMECOLORS[TSizeInfos.SizeToSizename(Size)];
   Canvas.FillRect(ARect);
 
   // Size
@@ -1489,21 +1571,24 @@ var
   tr, fr :TRect;
   Size :integer;
 begin
+
+  // Layout:
+
   Size := FSizeInfos[Index].Size;
   Canvas := ListBoxSizes.Canvas;
 
   // Background
-  Canvas.Brush.Color := IfThen(odSelected in State, clHighlight, TSizeInfos.SIZENAMECOLORS[TSizeInfos.SizeToClassIndex(Size)]);
+  Canvas.Brush.Color := IfThen(odSelected in State, clHighlight, TSizeInfos.SIZENAMECOLORS[TSizeInfos.SizeToSizename(Size)]);
   Canvas.FillRect(ARect);
 
   // CheckBox
   ImagesModule.ImageList24x24.Draw(Canvas, ARect.Left+2, ARect.Top+2, ifThen(FSizeInfos[Index].Enabled, 4, 3));
 
   // Size
-  with ARect do tr := Rect(Left + 26, Top, Left+64, Bottom);
+  with ARect do tr := Rect(Left + 26, Top, Left+72, Bottom);
 
   // Screen Marker
-  if FScreenSize=Size then with ARect do begin
+  if FScreenSize=Size then begin
     fr := tr; fr.right += 4; fr.Inflate(-1, -2);
     Canvas.Pen.Color := TSizeInfos.SCREENSIZECOLOR;
     Canvas.Frame(fr);
@@ -1515,10 +1600,10 @@ begin
   Canvas.TextRect(tr, tr.Left, tr.Top+2, IntToStr(Size), TRSIZE);
 
   // Size Icon
-  ImagesModule.ImageList24x24.Draw(Canvas, ARect.Left+70, ARect.Top+2, TSizeInfos.SizeToClassIndex(Size));
+  ImagesModule.ImageList24x24.Draw(Canvas, ARect.Left+78, ARect.Top+2, integer(TSizeInfos.SizeToSizename(Size)));
 
   // SizeName
-  with ARect do tr := Rect(Left + 98, Top, Right-26, Bottom);
+  with ARect do tr := Rect(Left + 106, Top, Right-26, Bottom);
   Canvas.Font.Style := [];
   Canvas.TextRect(tr, tr.Left, tr.Top+2, FSizeInfos[Index].Name, TRNAME);
 

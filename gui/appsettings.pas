@@ -87,7 +87,7 @@ type
   public type
     TChange = (lcChanged, lcInsert, lcDelete, lcInit);
     TChangedEvent = procedure(Sender :TSizeInfos; Change :TChange; Index :integer) of object;
-
+    TSizename = (snThumbnail, snDocument, snScreen, snAuto, snSize, snEmpty, snCustom);
     TSizeInfo = class
     private
       FEnabled :boolean;
@@ -101,9 +101,11 @@ type
     end;
 
   public const
+    SPECIALSIZENAMES = [snAuto, snSize, snEmpty];
+    DEFAULTSIZENAMES = [snThumbnail, snDocument, snScreen];
     DEFAULT_SIZES     :array[0..17] of integer = (32, 48, 64, 120, 180, 240, 320, 360, 480, 640, 800, 960, 1280, 1600, 1920, 2560, 3840, 4096);
-    DEFAULT_SIZENAMES :array[0..2] of string = ('THUMBNAIL', 'DOCUMENT', 'SCREEN');
-    SIZENAMECOLORS    :array[0..2] of longint = ($dcf5f7, $dcf7dd, $f7f0dc);
+    SIZENAMES         :array[TSizename] of string = ('THUMBNAIL', 'DOCUMENT', 'SCREEN', '<auto>', '<size>', '<empty>', '<custom>');
+    SIZENAMECOLORS    :array[snThumbnail..snScreen] of longint = ($dcf5f7, $dcf7dd, $f7f0dc);
     SCREENSIZECOLOR   :longint = $ff9933;
     THUMBNAILMAX      = 120;
     DOCUMENTMAX       = 960;
@@ -117,9 +119,10 @@ type
     function GetEnabledCount: integer;
     function GetItem(Index : integer): TSizeInfo;
     procedure SetEnabled(Index : integer; AValue: boolean);
-    function ProcessSizeName(const SizeName :string; Size :integer) :string;
   public
-    class function SizeToClassIndex(Size :integer) :integer;
+    class function SizeToSizename(Size :integer) :TSizename;
+    class function SizeNameToStr(const SizeName :string; Size :integer) :string;
+    class function StrToSizeName(const Value :string) :string;
     constructor Create;
     destructor Destroy; override;
     function TrySetSizeString(const Str :string) :boolean;
@@ -239,11 +242,40 @@ begin
   end;
 end;
 
-class function TSizeInfos.SizeToClassIndex(Size: integer): integer;
+class function TSizeInfos.SizeToSizename(Size: integer): TSizename;
 begin
-  if Size<=THUMBNAILMAX then Exit(0);
-  if Size<DOCUMENTMAX then Exit(1);
-  result := 2;
+  if Size<=THUMBNAILMAX then Exit(snThumbnail);
+  if Size<DOCUMENTMAX then Exit(snDocument);
+  result := snScreen;
+end;
+
+// ComboBoxSizeName =>
+class function TSizeInfos.SizeNameToStr(const SizeName: string; Size: integer): string;
+begin
+  if SameText(SizeName, SIZENAMES[snAuto]) then
+    result := SIZENAMES[SizeToSizename(Size)]
+  else if SameText(SizeName, SIZENAMES[snSize]) then
+    result := IntToStr(Size)
+  else if SameText(SizeName, SIZENAMES[snEmpty]) then
+    result := ''
+  else
+    result := SizeName;
+  result := ReplaceIllegalChars(result, ILLGCHARS, '_');
+end;
+
+class function TSizeInfos.StrToSizeName(const Value: string): string;
+var
+  Size :integer;
+  i :TSizename;
+begin
+  for i := snThumbnail to snScreen do
+    if SameText(SIZENAMES[i], Value) then
+      Exit(SIZENAMES[snAuto]);
+  if TryStrToInt(Value, Size) then
+    Exit(SIZENAMES[snSize]);
+  if Trim(Value)='' then
+    Exit(SIZENAMES[snEmpty]);
+  result := Value;
 end;
 
 function TSizeInfos.GetString: string;
@@ -316,19 +348,6 @@ begin
   result := true;
 end;
 
-function TSizeInfos.ProcessSizeName(const SizeName: string; Size: integer): string;
-begin
-  if SameText(SizeName, '<AUTO>') then
-    result := DEFAULT_SIZENAMES[SizeToClassIndex(Size)]
-  else if SameText(SizeName, '<SIZE>') then
-    result := IntToStr(Size)
-  else if SameText(SizeName, '<EMPTY>') then
-    result := ''
-  else
-    result := SizeName;
-  result := ReplaceIllegalChars(result, ILLGCHARS, '_');
-end;
-
 procedure TSizeInfos.Add(Enabled: boolean; Size: integer; const SizeName: string);
 var
   i, n :integer;
@@ -342,7 +361,7 @@ var
 
 begin
   if Size<=0 then Exit;
-  _SizeName := ProcessSizeName(SizeName, Size);
+  _SizeName := SizeNameToStr(SizeName, Size);
   n := FItems.Count;
   if (n=0) or (Size<FItems[0].Size) then begin
     Insert(0, Enabled, Size, _SizeName);
@@ -368,7 +387,7 @@ procedure TSizeInfos.Replace(Index: integer; Enabled: boolean; Size: integer; co
 var
   _SizeName :string;
 begin
-  _SizeName := ProcessSizeName(SizeName, Size);
+  _SizeName := SizeNameToStr(SizeName, Size);
   if FItems[Index].Size = Size then begin
     FItems[Index].FName := _SizeName;
     FItems[Index].FEnabled := Enabled;

@@ -1,7 +1,7 @@
 object MainDialog: TMainDialog
   Left = 846
   Height = 841
-  Top = 324
+  Top = 207
   Width = 900
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'ImageResize'
@@ -10,6 +10,9 @@ object MainDialog: TMainDialog
   Constraints.MinHeight = 680
   Constraints.MinWidth = 900
   KeyPreview = True
+  Position = poDefaultPosOnly
+  ShowHint = True
+  LCLVersion = '4.2.0.0'
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
@@ -17,9 +20,6 @@ object MainDialog: TMainDialog
   OnDropFiles = FormDropFiles
   OnKeyDown = FormKeyDown
   OnShow = FormShow
-  Position = poDefaultPosOnly
-  ShowHint = True
-  LCLVersion = '3.6.0.0'
   object PanelControls: TPanel
     Left = 0
     Height = 512
@@ -131,9 +131,9 @@ object MainDialog: TMainDialog
             BorderSpacing.Bottom = 3
             Images = ImagesModule.ImageList20x20
             ImageIndex = 9
-            OnClick = ButtonBrowseSrcFilesClick
             Spacing = 0
             TabOrder = 1
+            OnClick = ButtonBrowseSrcFilesClick
           end
           object ButtonClearSrcFiles: TBitBtn
             AnchorSideRight.Control = MemoSrcFilenames
@@ -148,9 +148,9 @@ object MainDialog: TMainDialog
             BorderSpacing.Bottom = 3
             Images = ImagesModule.ImageList20x20
             ImageIndex = 8
-            OnClick = ButtonClearSrcFilesClick
             Spacing = 0
             TabOrder = 2
+            OnClick = ButtonClearSrcFilesClick
           end
           object LabelSourceFileListMessage: TLabel
             AnchorSideTop.Control = MemoSrcFilenames
@@ -183,9 +183,9 @@ object MainDialog: TMainDialog
             Width = 30
             Images = ImagesModule.ImageList20x20
             ImageIndex = 0
-            OnClick = ButtonBrowseSrcFolderClick
             Spacing = 0
             TabOrder = 1
+            OnClick = ButtonBrowseSrcFolderClick
           end
           object Label4: TLabel
             AnchorSideLeft.Control = EditSrcFolder
@@ -256,16 +256,16 @@ object MainDialog: TMainDialog
         Top = 70
         Width = 480
         TabStop = False
-        ActivePage = TabSheetRenaming
+        ActivePage = TabSheetSizes
         Align = alClient
         BorderSpacing.Around = 4
         ImagesWidth = 32
         MultiLine = True
+        Options = [nboMultiLine]
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 1
+        TabIndex = 0
         TabOrder = 1
-        Options = [nboMultiLine]
         object TabSheetSizes: TTabSheet
           HelpType = htKeyword
           HelpKeyword = 'HTML/index.html#sizes'
@@ -307,11 +307,11 @@ object MainDialog: TMainDialog
             Text = '<auto>'
           end
           object ListBoxSizes: TListBox
-            Left = 120
+            Left = 101
             Height = 295
             Hint = 'Enter a list of sizes by double-clicking a size from the list'#13#10'or by entering a size in the size combo and pressing Add.'
             Top = 15
-            Width = 226
+            Width = 245
             Anchors = [akTop, akLeft, akRight, akBottom]
             DoubleBuffered = False
             ItemHeight = 28
@@ -326,7 +326,7 @@ object MainDialog: TMainDialog
           object Label3: TLabel
             AnchorSideLeft.Control = ListBoxSizes
             AnchorSideBottom.Control = ListBoxSizes
-            Left = 123
+            Left = 104
             Height = 15
             Top = -2
             Width = 28
@@ -364,7 +364,7 @@ object MainDialog: TMainDialog
             Height = 294
             Hint = 'Add a size by double clicking one of the suggestions'
             Top = 16
-            Width = 112
+            Width = 96
             Anchors = [akTop, akRight, akBottom]
             Columns = 2
             IntegralHeight = True
@@ -378,60 +378,60 @@ object MainDialog: TMainDialog
             OnMeasureItem = ListBoxSizesPaletteMeasureItem
           end
           object ButtonAddSize: TBitBtn
-            Left = 356
+            Left = 355
             Height = 32
             Hint = 'Add a size or replace an existing one'
-            Top = 104
+            Top = 103
             Width = 112
             Anchors = [akTop, akRight]
             Caption = 'Add'
             Margin = 16
             Images = ImagesModule.ImageList20x20
             ImageIndex = 20
-            OnClick = ButtonAddSizeClick
             TabOrder = 4
+            OnClick = ButtonAddSizeClick
           end
           object ButtonClearSizes: TBitBtn
             Left = 355
             Height = 32
             Hint = 'Clears all sizes from the list'
-            Top = 279
+            Top = 278
             Width = 112
             Anchors = [akRight, akBottom]
             Caption = 'Clear'
             Margin = 16
             Images = ImagesModule.ImageList20x20
             ImageIndex = 8
-            OnClick = ButtonClearSizesClick
             TabOrder = 7
+            OnClick = ButtonClearSizesClick
           end
           object ButtonReplaceSize: TBitBtn
-            Left = 356
+            Left = 355
             Height = 32
             Hint = 'Replace the selected size'
-            Top = 144
+            Top = 143
             Width = 112
             Anchors = [akTop, akRight]
             Caption = 'Replace'
             Margin = 16
             Images = ImagesModule.ImageList20x20
             ImageIndex = 21
-            OnClick = ButtonReplaceSizeClick
             TabOrder = 5
+            OnClick = ButtonReplaceSizeClick
           end
           object ButtonDeleteSize: TBitBtn
-            Left = 356
+            Left = 355
             Height = 32
             Hint = 'Replace the selected size'
-            Top = 184
+            Top = 183
             Width = 112
             Anchors = [akTop, akRight]
             Caption = 'Delete'
             Margin = 16
             Images = ImagesModule.ImageList20x20
             ImageIndex = 22
-            OnClick = ButtonDeleteSizeClick
             TabOrder = 6
+            OnClick = ButtonDeleteSizeClick
           end
           object Label23: TLabel
             AnchorSideLeft.Control = ListBoxSizesPalette
@@ -530,7 +530,7 @@ object MainDialog: TMainDialog
               Left = 30
               Height = 15
               Top = 96
-              Width = 51
+              Width = 52
               Anchors = [akLeft, akBottom]
               BorderSpacing.Left = 3
               BorderSpacing.Bottom = 2
@@ -1337,9 +1337,9 @@ object MainDialog: TMainDialog
               BorderSpacing.Left = 1
               Images = ImagesModule.ImageList20x20
               ImageIndex = 9
-              OnClick = ButtonBrowseMrkFilenameClick
               Spacing = 0
               TabOrder = 1
+              OnClick = ButtonBrowseMrkFilenameClick
             end
             object ButtonMrkEdit: TBitBtn
               AnchorSideLeft.Control = ButtonBrowseMrkFilename
@@ -1353,10 +1353,10 @@ object MainDialog: TMainDialog
               Width = 30
               Images = ImagesModule.ImageList20x20
               ImageIndex = 7
-              OnClick = ActionEditWatermarkExecute
               ParentShowHint = False
               Spacing = 0
               TabOrder = 2
+              OnClick = ActionEditWatermarkExecute
             end
           end
         end
@@ -1585,9 +1585,9 @@ object MainDialog: TMainDialog
               Layout = blGlyphTop
               Images = ImagesModule.ImageList20x20
               ImageIndex = 4
-              OnClick = ButtonInsertCopyrightClick
               Spacing = 0
               TabOrder = 5
+              OnClick = ButtonInsertCopyrightClick
             end
             object ButtonClearCopyright: TBitBtn
               AnchorSideLeft.Control = EditCopyright
@@ -1602,9 +1602,9 @@ object MainDialog: TMainDialog
               BorderSpacing.Left = 1
               Images = ImagesModule.ImageList20x20
               ImageIndex = 8
-              OnClick = ButtonClearCopyrightClick
               Spacing = 0
               TabOrder = 4
+              OnClick = ButtonClearCopyrightClick
             end
             object Label2: TLabel
               AnchorSideLeft.Control = EditCopyright
@@ -1837,9 +1837,9 @@ object MainDialog: TMainDialog
         BorderSpacing.Left = 1
         Images = ImagesModule.ImageList20x20
         ImageIndex = 0
-        OnClick = ButtonBrowseTargetFolderClick
         Spacing = 0
         TabOrder = 1
+        OnClick = ButtonBrowseTargetFolderClick
       end
       object ButtonInsertSIZE: TBitBtn
         AnchorSideLeft.Control = ButtonBrowseTargetFolder
@@ -1852,9 +1852,9 @@ object MainDialog: TMainDialog
         Width = 30
         Images = ImagesModule.ImageList20x20
         ImageIndex = 5
-        OnClick = ButtonInsertSIZEClick
         Spacing = 0
         TabOrder = 2
+        OnClick = ButtonInsertSIZEClick
       end
       object CheckBoxDryRun: TCheckBox
         AnchorSideTop.Control = EditTargetFolder
@@ -1997,63 +1997,65 @@ object MainDialog: TMainDialog
       Left = 81
       Top = 0
       Action = ActionOpen
+      DropdownMenu = PopupMenuFileHistory
+      Style = tbsDropDown
     end
     object ToolButtonSaveAs: TToolButton
-      Left = 241
+      Left = 253
       Hint = 'Save current settings to another file'
       Top = 0
       Action = ActionSaveAs
     end
     object ToolButtonSave: TToolButton
-      Left = 161
+      Left = 173
       Top = 0
       Action = ActionSave
     end
     object ToolButtonExecute: TToolButton
-      Left = 329
+      Left = 341
       Top = 0
       Action = ActionExecute
     end
     object ToolButtonHelp: TToolButton
-      Left = 662
+      Left = 674
       Top = 0
       Action = ActionHelp
     end
     object ToolButtonSep0: TToolButton
-      Left = 657
+      Left = 669
       Height = 64
       Top = 0
       Style = tbsDivider
     end
     object ToolButtonEditor: TToolButton
-      Left = 494
+      Left = 506
       Top = 0
       Action = ActionEditWatermark
     end
     object ToolButtonAbout: TToolButton
-      Left = 742
+      Left = 754
       Hint = 'License and Vendor Infos'
       Top = 0
       Action = ActionAbout
     end
     object ToolButtonSlideshowAfterburner: TToolButton
-      Left = 574
+      Left = 586
       Top = 0
       Action = ActionPresentation
     end
     object ToolButtonSettings: TToolButton
-      Left = 414
+      Left = 426
       Top = 0
       Action = ActionSettings
     end
     object ToolButtonSep2: TToolButton
-      Left = 409
+      Left = 421
       Height = 64
       Top = 0
       Style = tbsDivider
     end
     object ToolButtonSep1: TToolButton
-      Left = 321
+      Left = 333
       Height = 64
       Top = 0
       Style = tbsSeparator
@@ -2140,8 +2142,8 @@ object MainDialog: TMainDialog
       OnExecute = ActionSettingsExecute
     end
     object ActionHelpScreenshots: TAction
-      OnExecute = ActionHelpScreenshotsExecute
       Visible = False
+      OnExecute = ActionHelpScreenshotsExecute
     end
   end
   object OpenDialogSrcFilenames: TOpenDialog
@@ -2280,5 +2282,9 @@ object MainDialog: TMainDialog
       ImageIndex = 24
       OnExecute = ActionParamExecute
     end
+  end
+  object PopupMenuFileHistory: TPopupMenu
+    Left = 536
+    Top = 576
   end
 end

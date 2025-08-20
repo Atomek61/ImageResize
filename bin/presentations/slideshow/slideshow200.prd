@@ -3,6 +3,7 @@ Type=PRP
 Version=100
 
 [Presentation]
+Default=True
 Id=Slideshow200
 Class=Presentation
 ;Delimiters={{,}}

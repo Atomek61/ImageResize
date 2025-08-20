@@ -9,10 +9,10 @@ object PresentationDialog: TPresentationDialog
   ClientWidth = 1161
   Constraints.MinHeight = 400
   Constraints.MinWidth = 900
+  ShowHint = True
+  LCLVersion = '4.2.0.0'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  ShowHint = True
-  LCLVersion = '3.6.0.0'
   object MemoMessages: TRichMemo
     Left = 4
     Height = 106
@@ -76,9 +76,9 @@ object PresentationDialog: TPresentationDialog
         BorderSpacing.Left = 1
         Images = ImagesModule.ImageList20x20
         ImageIndex = 9
-        OnClick = ButtonBrowseTargetFolderClick
         Spacing = 0
         TabOrder = 1
+        OnClick = ButtonBrowseTargetFolderClick
       end
       object EditImgTagsFilename: TEdit
         Left = 15
@@ -132,9 +132,9 @@ object PresentationDialog: TPresentationDialog
         BorderSpacing.Left = 31
         Images = ImagesModule.ImageList20x20
         ImageIndex = 15
-        OnClick = ButtonTargetFromDocClick
         Spacing = 0
         TabOrder = 2
+        OnClick = ButtonTargetFromDocClick
       end
     end
     object PanelControls: TPanel
@@ -163,8 +163,8 @@ object PresentationDialog: TPresentationDialog
         Layout = blGlyphTop
         Images = ImagesModule.ImageList32x32
         ImageIndex = 26
-        OnClick = ButtonWebShowClick
         TabOrder = 1
+        OnClick = ButtonWebShowClick
       end
       object ButtonOk: TBitBtn
         Left = 8
@@ -178,8 +178,8 @@ object PresentationDialog: TPresentationDialog
         Caption = '&Ok'
         Images = ImagesModule.ImageList20x20
         ImageIndex = 2
-        OnClick = ButtonOkClick
         TabOrder = 3
+        OnClick = ButtonOkClick
       end
       object ButtonCancel: TBitBtn
         Left = 8
@@ -212,8 +212,8 @@ object PresentationDialog: TPresentationDialog
         Layout = blGlyphTop
         Images = ImagesModule.ImageList32x32
         ImageIndex = 25
-        OnClick = ButtonExecuteClick
         TabOrder = 0
+        OnClick = ButtonExecuteClick
       end
       object ButtonRescan: TBitBtn
         Left = 8
@@ -226,8 +226,8 @@ object PresentationDialog: TPresentationDialog
         Caption = 'Re&scan'
         Images = ImagesModule.ImageList20x20
         ImageIndex = 19
-        OnClick = ButtonRescanClick
         TabOrder = 2
+        OnClick = ButtonRescanClick
       end
     end
     object PanelLeft: TPanel

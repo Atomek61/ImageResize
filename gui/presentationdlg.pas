@@ -298,6 +298,8 @@ procedure TPresentationDialog.Scan;
 var
   Folder :string;
   wp :TCustomManager;
+  i :integer;
+  Setting :TSetting;
 begin
   ManagerIndex := -1;
   Folder := IncludeTrailingPathDelimiter(ExtractFilePath(Application.Exename)+PRESENTATIONS_FOLDER);
@@ -306,6 +308,12 @@ begin
   ComboBoxManagers.Items.Clear;
   for wp in FManagers do
     ComboBoxManagers.Items.Add(wp.Title);
+  // Find out default presentation...
+  for i:=0 to FManagers.Count-1 do
+    if FManagers[i].Settings.TryGetValue('Default', Setting)
+      and ((Setting as TBooleanSetting).value) then begin
+        ManagerIndex := i;
+      end;
 end;
 
 end.

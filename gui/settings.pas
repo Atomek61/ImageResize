@@ -37,7 +37,7 @@ type
 
   { TSettingsList }
 
-  // A list of Section/Setting-Pairs
+  // A list of Section/Settings-Pairs
   TSettingsList = class(TSettingsDictionary)
   private
     FDirty :boolean;
