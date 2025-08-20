@@ -150,6 +150,7 @@ type
     LabelRenTemplate: TLabel;
     ListBoxSizesPalette: TListBox;
     ListBoxSizes: TListBox;
+    ProgressBar: TPaintBox;
     PaintBoxMrkPreview: TBGRAGraphicControl;
     ButtonExecute: TBGRASpeedButton;
     CheckBoxDryRun: TCheckBox;
@@ -232,7 +233,6 @@ type
     PageControlParams: TPageControl;
     PanelPreview: TPanel;
     PopupMenuFileHistory: TPopupMenu;
-    ProgressBar: TPaintBox;
     PanelTarget: TPanel;
     PanelParams: TPanel;
     PanelSource: TPanel;
@@ -843,9 +843,9 @@ begin
     Left    := Ini.ReadInteger(MAINDIALOG_SECTION, 'Left', Left);
     Width   := Ini.ReadInteger(MAINDIALOG_SECTION, 'Width', Width);
     Height  := Ini.ReadInteger(MAINDIALOG_SECTION, 'Height', Height);
-    AHeight := Ini.ReadInteger(MAINDIALOG_SECTION, 'PanelControls.Height', PanelControls.Height);
-    if AHeight+PanelControls.Top + 16 < ClientHeight then
-      PanelControls.Height := AHeight;
+    //AHeight := Ini.ReadInteger(MAINDIALOG_SECTION, 'PanelControls.Height', PanelControls.Height);
+    //if AHeight+PanelControls.Top + 16 < ClientHeight then
+    //  PanelControls.Height := AHeight;
     //Path := Ini.ReadString(MAINDIALOG_SECTION, 'CurrentDirectory', GetCurrentDir);
     //if DirectoryExists(Path) then
     //  ChangeCurrentDir(Path);
@@ -1313,7 +1313,7 @@ begin
   if Index = -1 then
     AHeight := 15
   else
-    AHeight := 24;
+    AHeight := 28;
 end;
 
 procedure TMainDialog.ActionSettingsExecute(Sender: TObject);

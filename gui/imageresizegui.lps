@@ -8,7 +8,7 @@
       <Unit>
         <Filename Value="imageresizegui.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="11"/>
+        <EditorIndex Value="12"/>
         <CursorPos Y="33"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
@@ -19,8 +19,8 @@
         <ComponentName Value="MainDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <TopLine Value="998"/>
-        <CursorPos X="25" Y="1008"/>
+        <TopLine Value="1309"/>
+        <CursorPos X="18" Y="1316"/>
         <ExtraEditorCount Value="1"/>
         <ExtraEditor1>
           <EditorIndex Value="-1"/>
@@ -59,7 +59,7 @@
       <Unit>
         <Filename Value="..\src\imgres.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="10"/>
+        <EditorIndex Value="11"/>
         <TopLine Value="1017"/>
         <CursorPos X="3" Y="785"/>
         <UsageCount Value="200"/>
@@ -118,7 +118,7 @@
       <Unit>
         <Filename Value="settings.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="7"/>
         <TopLine Value="55"/>
         <CursorPos X="3" Y="63"/>
         <UsageCount Value="200"/>
@@ -151,12 +151,12 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="PresentationDlg"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="281"/>
-        <CursorPos Y="313"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="293"/>
+        <CursorPos Y="316"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="imagesmod.pas"/>
@@ -171,7 +171,7 @@
         <Filename Value="presentations.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Presentations"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="2"/>
         <TopLine Value="36"/>
         <CursorPos X="23" Y="97"/>
         <UsageCount Value="200"/>
@@ -180,7 +180,7 @@
       <Unit>
         <Filename Value="galleryprocessor.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="8"/>
         <TopLine Value="22"/>
         <CursorPos X="3" Y="239"/>
         <UsageCount Value="200"/>
@@ -192,7 +192,7 @@
         <ComponentName Value="PresentationManagerFrame"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="5"/>
         <CursorPos Y="10"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
@@ -303,7 +303,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="475"/>
         <CursorPos X="23" Y="500"/>
-        <UsageCount Value="146"/>
+        <UsageCount Value="149"/>
         <Bookmarks Count="1">
           <Item0 Y="637" ID="1"/>
         </Bookmarks>
@@ -540,10 +540,9 @@
       </Unit>
       <Unit>
         <Filename Value="..\lib\inc\generics.dictionariesh.inc"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="243"/>
-        <CursorPos X="14" Y="264"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="245"/>
+        <CursorPos X="88" Y="249"/>
         <UsageCount Value="102"/>
         <Loaded Value="True"/>
       </Unit>
@@ -623,10 +622,10 @@
       <Unit>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\packages\fcl-base\src\inifiles.pp"/>
         <UnitName Value="IniFiles"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="9"/>
         <TopLine Value="149"/>
         <CursorPos X="14" Y="175"/>
-        <UsageCount Value="16"/>
+        <UsageCount Value="17"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -742,9 +741,9 @@
       </Unit>
       <Unit>
         <Filename Value="..\src\inifileshelper.pas"/>
-        <EditorIndex Value="9"/>
+        <EditorIndex Value="10"/>
         <CursorPos X="14" Y="16"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="21"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -766,10 +765,10 @@
       <Unit>
         <Filename Value="C:\lazarus\lcl\valedit.pas"/>
         <UnitName Value="ValEdit"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="6"/>
         <TopLine Value="100"/>
         <CursorPos X="3" Y="120"/>
-        <UsageCount Value="15"/>
+        <UsageCount Value="16"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -1240,51 +1239,19 @@
         <CursorPos X="3" Y="1372"/>
         <UsageCount Value="14"/>
       </Unit>
+      <Unit>
+        <Filename Value="C:\lazarus\lcl\include\winapi.inc"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="276"/>
+        <CursorPos X="10" Y="290"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
     </Units>
     <OtherDefines Count="1">
       <Define0 Value="_DEBUG"/>
     </OtherDefines>
     <JumpHistory HistoryIndex="29">
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="313" TopLine="281"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="312" TopLine="281"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="313" TopLine="281"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="312" TopLine="281"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="313" TopLine="281"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="312" TopLine="281"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="313" TopLine="281"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="312" TopLine="281"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="313" TopLine="281"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="312" TopLine="281"/>
-      </Position>
       <Position>
         <Filename Value="presentationdlg.pas"/>
         <Caret Line="303" TopLine="281"/>
@@ -1364,6 +1331,46 @@
       <Position>
         <Filename Value="presentationdlg.pas"/>
         <Caret Line="313" TopLine="281"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1008" Column="25" TopLine="998"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1007" Column="25" TopLine="997"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1938" Column="8" TopLine="1925"/>
+      </Position>
+      <Position>
+        <Filename Value="C:\lazarus\lcl\include\winapi.inc"/>
+        <Caret Line="290" Column="10" TopLine="276"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1930" Column="14" TopLine="1925"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="308" TopLine="304"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="694" Column="3" TopLine="679"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="380" Column="14" TopLine="368"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="820" Column="3" TopLine="819"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1316" Column="18" TopLine="1309"/>
       </Position>
     </JumpHistory>
     <CustomSessionData Count="2">
@@ -1464,20 +1471,6 @@
         <WatchKind Value="wpkWrite"/>
         <Source Value="..\src\templates.pas"/>
         <Line Value="830"/>
-      </Item>
-      <Item>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="presentationdlg.pas"/>
-        <Line Value="315"/>
-      </Item>
-      <Item>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="presentationdlg.pas"/>
-        <Line Value="316"/>
       </Item>
     </BreakPoints>
   </Debugging>

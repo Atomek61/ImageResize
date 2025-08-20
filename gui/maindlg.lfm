@@ -1,14 +1,15 @@
 object MainDialog: TMainDialog
-  Left = 846
-  Height = 841
-  Top = 207
-  Width = 900
+  Left = 465
+  Height = 800
+  Top = 13
+  Width = 1125
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'ImageResize'
-  ClientHeight = 841
-  ClientWidth = 900
-  Constraints.MinHeight = 680
-  Constraints.MinWidth = 900
+  ClientHeight = 800
+  ClientWidth = 1125
+  Constraints.MinHeight = 800
+  Constraints.MinWidth = 1125
+  DesignTimePPI = 120
   KeyPreview = True
   Position = poDefaultPosOnly
   ShowHint = True
@@ -22,41 +23,41 @@ object MainDialog: TMainDialog
   OnShow = FormShow
   object PanelControls: TPanel
     Left = 0
-    Height = 512
-    Top = 64
-    Width = 900
+    Height = 640
+    Top = 80
+    Width = 1125
     Align = alTop
     BevelOuter = bvNone
-    ClientHeight = 512
-    ClientWidth = 900
+    ClientHeight = 640
+    ClientWidth = 1125
     Color = 15850953
-    Constraints.MinHeight = 456
+    Constraints.MinHeight = 570
     ParentBackground = False
     ParentColor = False
     TabOrder = 1
     object PanelSource: TPanel
-      Left = 7
-      Height = 400
-      Top = 40
-      Width = 392
+      Left = 9
+      Height = 500
+      Top = 50
+      Width = 490
       HelpType = htKeyword
       HelpKeyword = 'HTML/index.html#srcfilelist'
       Anchors = [akTop, akLeft, akRight]
       BevelOuter = bvNone
-      ClientHeight = 400
-      ClientWidth = 392
+      ClientHeight = 500
+      ClientWidth = 490
       ParentBackground = False
       ParentColor = False
       TabOrder = 0
       object ToolBarSrc: TToolBar
-        Left = 4
-        Height = 62
-        Top = 4
-        Width = 384
+        Left = 5
+        Height = 77
+        Top = 5
+        Width = 480
         AutoSize = True
-        BorderSpacing.Around = 4
-        ButtonHeight = 60
-        ButtonWidth = 80
+        BorderSpacing.Around = 5
+        ButtonHeight = 75
+        ButtonWidth = 100
         EdgeBorders = [ebBottom]
         Images = ImagesModule.ImageList32x32
         ShowCaptions = True
@@ -70,7 +71,7 @@ object MainDialog: TMainDialog
           Style = tbsCheck
         end
         object ToolButtonSrcFolder: TToolButton
-          Left = 82
+          Left = 102
           Top = 0
           Action = ActionSrcFolder
           Grouped = True
@@ -78,27 +79,27 @@ object MainDialog: TMainDialog
         end
       end
       object PageControlSource: TPageControl
-        Left = 4
-        Height = 326
-        Top = 70
-        Width = 384
+        Left = 5
+        Height = 408
+        Top = 87
+        Width = 480
         TabStop = False
         ActivePage = TabSheetSrcFilenames
         Align = alClient
-        BorderSpacing.Around = 4
+        BorderSpacing.Around = 5
         ShowTabs = False
         Style = tsFlatButtons
         TabIndex = 0
         TabOrder = 1
         object TabSheetSrcFilenames: TTabSheet
-          ClientHeight = 318
-          ClientWidth = 376
+          ClientHeight = 400
+          ClientWidth = 472
           object MemoSrcFilenames: TMemo
-            Left = 8
-            Height = 263
+            Left = 10
+            Height = 331
             Hint = 'Enter a list of files with absolute or relative paths.'#13#10'A relative path refers to the current directory, which is the directory'#13#10'where the project file was stored.'
-            Top = 32
-            Width = 364
+            Top = 40
+            Width = 457
             Anchors = [akTop, akLeft, akRight, akBottom]
             ScrollBars = ssAutoVertical
             TabOrder = 0
@@ -108,13 +109,13 @@ object MainDialog: TMainDialog
           object Label1: TLabel
             AnchorSideLeft.Control = MemoSrcFilenames
             AnchorSideBottom.Control = MemoSrcFilenames
-            Left = 11
-            Height = 15
-            Top = 14
-            Width = 65
+            Left = 14
+            Height = 20
+            Top = 16
+            Width = 81
             Anchors = [akLeft, akBottom]
-            BorderSpacing.Left = 3
-            BorderSpacing.Bottom = 3
+            BorderSpacing.Left = 4
+            BorderSpacing.Bottom = 4
             Caption = 'Source Files:'
             FocusControl = MemoSrcFilenames
             ParentColor = False
@@ -122,13 +123,13 @@ object MainDialog: TMainDialog
           object ButtonBrowseSrcFiles: TBitBtn
             AnchorSideRight.Control = ButtonClearSrcFiles
             AnchorSideBottom.Control = MemoSrcFilenames
-            Left = 312
-            Height = 25
+            Left = 391
+            Height = 31
             Hint = 'Browse for one or more images'
-            Top = 4
-            Width = 30
+            Top = 5
+            Width = 38
             Anchors = [akRight, akBottom]
-            BorderSpacing.Bottom = 3
+            BorderSpacing.Bottom = 4
             Images = ImagesModule.ImageList20x20
             ImageIndex = 9
             Spacing = 0
@@ -139,13 +140,13 @@ object MainDialog: TMainDialog
             AnchorSideRight.Control = MemoSrcFilenames
             AnchorSideRight.Side = asrBottom
             AnchorSideBottom.Control = MemoSrcFilenames
-            Left = 342
-            Height = 25
+            Left = 429
+            Height = 31
             Hint = 'Clear image list'
-            Top = 4
-            Width = 30
+            Top = 5
+            Width = 38
             Anchors = [akRight, akBottom]
-            BorderSpacing.Bottom = 3
+            BorderSpacing.Bottom = 4
             Images = ImagesModule.ImageList20x20
             ImageIndex = 8
             Spacing = 0
@@ -158,10 +159,10 @@ object MainDialog: TMainDialog
             AnchorSideRight.Control = MemoSrcFilenames
             AnchorSideRight.Side = asrBottom
             AnchorSideBottom.Side = asrBottom
-            Left = 261
-            Height = 16
-            Top = 295
-            Width = 111
+            Left = 328
+            Height = 20
+            Top = 371
+            Width = 139
             Alignment = taRightJustify
             Anchors = [akTop, akRight]
             AutoSize = False
@@ -169,18 +170,18 @@ object MainDialog: TMainDialog
           end
         end
         object TabSheetSrcFolder: TTabSheet
-          ClientHeight = 318
-          ClientWidth = 376
+          ClientHeight = 400
+          ClientWidth = 472
           object ButtonBrowseSrcFolder: TBitBtn
             AnchorSideLeft.Control = EditSrcFolder
             AnchorSideLeft.Side = asrBottom
             AnchorSideTop.Control = EditSrcFolder
             AnchorSideTop.Side = asrCenter
-            Left = 344
-            Height = 25
+            Left = 432
+            Height = 31
             Hint = 'Select a folder with images'
-            Top = 31
-            Width = 30
+            Top = 39
+            Width = 38
             Images = ImagesModule.ImageList20x20
             ImageIndex = 0
             Spacing = 0
@@ -190,23 +191,23 @@ object MainDialog: TMainDialog
           object Label4: TLabel
             AnchorSideLeft.Control = EditSrcFolder
             AnchorSideBottom.Control = EditSrcFolder
-            Left = 11
-            Height = 13
-            Top = 16
-            Width = 75
+            Left = 14
+            Height = 16
+            Top = 20
+            Width = 94
             Anchors = [akTop, akLeft, akBottom]
-            BorderSpacing.Left = 3
-            BorderSpacing.Bottom = 3
+            BorderSpacing.Left = 4
+            BorderSpacing.Bottom = 4
             Caption = 'Source Folder:'
             FocusControl = EditSrcFolder
             ParentColor = False
           end
           object EditSrcFolder: TEdit
-            Left = 8
-            Height = 23
+            Left = 10
+            Height = 28
             Hint = 'Enter a source folder with your images'
-            Top = 32
-            Width = 336
+            Top = 40
+            Width = 422
             Anchors = [akTop, akLeft, akRight]
             TabOrder = 0
             OnChange = EditSrcFolderChange
@@ -214,23 +215,23 @@ object MainDialog: TMainDialog
           object Label18: TLabel
             AnchorSideLeft.Control = EditSrcMasks
             AnchorSideBottom.Control = EditSrcMasks
-            Left = 11
-            Height = 13
-            Top = 72
-            Width = 72
+            Left = 14
+            Height = 16
+            Top = 90
+            Width = 91
             Anchors = [akTop, akLeft, akBottom]
-            BorderSpacing.Left = 3
-            BorderSpacing.Bottom = 3
+            BorderSpacing.Left = 4
+            BorderSpacing.Bottom = 4
             Caption = 'File Selection:'
             FocusControl = EditSrcMasks
             ParentColor = False
           end
           object EditSrcMasks: TEdit
-            Left = 8
-            Height = 23
+            Left = 10
+            Height = 28
             Hint = 'Semicolon separated list of wildcards - filename templates with ? and * placeholders.'
-            Top = 88
-            Width = 112
+            Top = 110
+            Width = 140
             TabOrder = 2
             Text = '*.jpg;*.png'
             OnChange = ProjectChanged
@@ -239,26 +240,26 @@ object MainDialog: TMainDialog
       end
     end
     object PanelParams: TPanel
-      Left = 406
-      Height = 400
-      Top = 40
-      Width = 488
+      Left = 507
+      Height = 500
+      Top = 50
+      Width = 610
       Anchors = [akTop, akRight]
       BevelOuter = bvNone
-      ClientHeight = 400
-      ClientWidth = 488
+      ClientHeight = 500
+      ClientWidth = 610
       ParentBackground = False
       ParentColor = False
       TabOrder = 1
       object PageControlParams: TPageControl
-        Left = 4
-        Height = 326
-        Top = 70
-        Width = 480
+        Left = 5
+        Height = 408
+        Top = 87
+        Width = 600
         TabStop = False
         ActivePage = TabSheetSizes
         Align = alClient
-        BorderSpacing.Around = 4
+        BorderSpacing.Around = 5
         ImagesWidth = 32
         MultiLine = True
         Options = [nboMultiLine]
@@ -269,31 +270,32 @@ object MainDialog: TMainDialog
         object TabSheetSizes: TTabSheet
           HelpType = htKeyword
           HelpKeyword = 'HTML/index.html#sizes'
-          ClientHeight = 318
-          ClientWidth = 472
+          ClientHeight = 400
+          ClientWidth = 592
           ImageIndex = 7
           object ComboBoxSize: TComboBox
-            Left = 355
-            Height = 21
+            Left = 446
+            Height = 25
             Hint = 'Enter a size and press Add to either add or replace a list member'
-            Top = 16
-            Width = 112
+            Top = 20
+            Width = 140
             Anchors = [akTop, akRight]
+            AutoSize = False
             DropDownCount = 16
-            ItemHeight = 15
+            ItemHeight = 19
             Style = csOwnerDrawEditableVariable
             TabOrder = 2
             OnDrawItem = ComboBoxSizeDrawItem
             OnMeasureItem = ComboBoxSizeMeasureItem
           end
           object ComboBoxSizeName: TComboBox
-            Left = 355
-            Height = 23
+            Left = 446
+            Height = 28
             Hint = 'Some presentations require named sizes especially for distinguish thumbnail'#13#10'sizes from large ones. If you plan to create presentations its a good idea to'#13#10'size names. Usually the name THUMBNAIL is used for small images.'#13#10#13#10'Take a look on your presentations requirements, which size names are required.'#13#10#13#10'You can use the size itself as a name of the size but this could be unconvenient'#13#10'if you decide to change the thumbnails size. In this case the presentations'#13#10'keywords may have to be changed.'
-            Top = 64
-            Width = 112
+            Top = 72
+            Width = 138
             Anchors = [akTop, akRight]
-            ItemHeight = 15
+            ItemHeight = 20
             ItemIndex = 0
             Items.Strings = (
               '<auto>'
@@ -307,14 +309,14 @@ object MainDialog: TMainDialog
             Text = '<auto>'
           end
           object ListBoxSizes: TListBox
-            Left = 101
-            Height = 295
+            Left = 126
+            Height = 370
             Hint = 'Enter a list of sizes by double-clicking a size from the list'#13#10'or by entering a size in the size combo and pressing Add.'
-            Top = 15
-            Width = 245
+            Top = 20
+            Width = 308
             Anchors = [akTop, akLeft, akRight, akBottom]
             DoubleBuffered = False
-            ItemHeight = 28
+            ItemHeight = 35
             ParentDoubleBuffered = False
             Style = lbOwnerDrawFixed
             TabOrder = 1
@@ -326,49 +328,49 @@ object MainDialog: TMainDialog
           object Label3: TLabel
             AnchorSideLeft.Control = ListBoxSizes
             AnchorSideBottom.Control = ListBoxSizes
-            Left = 104
-            Height = 15
+            Left = 130
+            Height = 20
             Top = -2
-            Width = 28
+            Width = 36
             Anchors = [akLeft, akBottom]
-            BorderSpacing.Left = 3
+            BorderSpacing.Left = 4
             BorderSpacing.Bottom = 2
             Caption = 'Sizes:'
           end
           object Label7: TLabel
             AnchorSideLeft.Control = ComboBoxSize
             AnchorSideBottom.Control = ComboBoxSize
-            Left = 358
-            Height = 15
-            Top = -1
-            Width = 23
+            Left = 450
+            Height = 20
+            Top = -2
+            Width = 30
             Anchors = [akLeft, akBottom]
-            BorderSpacing.Left = 3
+            BorderSpacing.Left = 4
             BorderSpacing.Bottom = 2
             Caption = 'Size:'
           end
           object Label8: TLabel
             AnchorSideLeft.Control = ComboBoxSizeName
             AnchorSideBottom.Control = ComboBoxSizeName
-            Left = 358
-            Height = 15
-            Top = 47
-            Width = 58
+            Left = 450
+            Height = 20
+            Top = 50
+            Width = 74
             Anchors = [akLeft, akBottom]
-            BorderSpacing.Left = 3
+            BorderSpacing.Left = 4
             BorderSpacing.Bottom = 2
             Caption = 'Size Name:'
           end
           object ListBoxSizesPalette: TListBox
-            Left = 0
-            Height = 294
+            Left = 2
+            Height = 370
             Hint = 'Add a size by double clicking one of the suggestions'
-            Top = 16
-            Width = 96
+            Top = 20
+            Width = 120
             Anchors = [akTop, akRight, akBottom]
             Columns = 2
             IntegralHeight = True
-            ItemHeight = 24
+            ItemHeight = 30
             Style = lbOwnerDrawFixed
             TabOrder = 0
             TabStop = False
@@ -378,11 +380,11 @@ object MainDialog: TMainDialog
             OnMeasureItem = ListBoxSizesPaletteMeasureItem
           end
           object ButtonAddSize: TBitBtn
-            Left = 355
-            Height = 32
+            Left = 446
+            Height = 40
             Hint = 'Add a size or replace an existing one'
-            Top = 103
-            Width = 112
+            Top = 129
+            Width = 140
             Anchors = [akTop, akRight]
             Caption = 'Add'
             Margin = 16
@@ -392,11 +394,11 @@ object MainDialog: TMainDialog
             OnClick = ButtonAddSizeClick
           end
           object ButtonClearSizes: TBitBtn
-            Left = 355
-            Height = 32
+            Left = 446
+            Height = 40
             Hint = 'Clears all sizes from the list'
-            Top = 278
-            Width = 112
+            Top = 350
+            Width = 140
             Anchors = [akRight, akBottom]
             Caption = 'Clear'
             Margin = 16
@@ -406,11 +408,11 @@ object MainDialog: TMainDialog
             OnClick = ButtonClearSizesClick
           end
           object ButtonReplaceSize: TBitBtn
-            Left = 355
-            Height = 32
+            Left = 446
+            Height = 40
             Hint = 'Replace the selected size'
-            Top = 143
-            Width = 112
+            Top = 179
+            Width = 140
             Anchors = [akTop, akRight]
             Caption = 'Replace'
             Margin = 16
@@ -420,11 +422,11 @@ object MainDialog: TMainDialog
             OnClick = ButtonReplaceSizeClick
           end
           object ButtonDeleteSize: TBitBtn
-            Left = 355
-            Height = 32
+            Left = 446
+            Height = 40
             Hint = 'Replace the selected size'
-            Top = 183
-            Width = 112
+            Top = 229
+            Width = 140
             Anchors = [akTop, akRight]
             Caption = 'Delete'
             Margin = 16
@@ -436,12 +438,12 @@ object MainDialog: TMainDialog
           object Label23: TLabel
             AnchorSideLeft.Control = ListBoxSizesPalette
             AnchorSideBottom.Control = ListBoxSizes
-            Left = 3
-            Height = 15
+            Left = 6
+            Height = 20
             Top = -2
-            Width = 67
+            Width = 83
             Anchors = [akLeft, akBottom]
-            BorderSpacing.Left = 3
+            BorderSpacing.Left = 4
             BorderSpacing.Bottom = 2
             Caption = 'Suggestions:'
           end
@@ -449,37 +451,37 @@ object MainDialog: TMainDialog
         object TabSheetRenaming: TTabSheet
           HelpType = htKeyword
           HelpKeyword = 'HTML/index.html#renaming'
-          ClientHeight = 318
-          ClientWidth = 472
+          ClientHeight = 400
+          ClientWidth = 592
           ImageIndex = 9
           object CheckBoxRenEnabled: TCheckBox
-            Left = 4
-            Height = 19
+            Left = 5
+            Height = 24
             Hint = 'Enables destination image file renaming - choose a strategy.'
-            Top = 4
-            Width = 464
+            Top = 5
+            Width = 582
             Align = alTop
-            BorderSpacing.Around = 4
+            BorderSpacing.Around = 5
             Caption = 'Enabled'
             TabOrder = 0
             OnChange = ProjectChanged
           end
           object GroupBoxRename: TGroupBox
-            Left = 4
-            Height = 173
-            Top = 27
-            Width = 464
+            Left = 5
+            Height = 216
+            Top = 34
+            Width = 582
             Align = alTop
-            BorderSpacing.Around = 4
+            BorderSpacing.Around = 5
             Caption = 'Strategy'
-            ClientHeight = 153
-            ClientWidth = 460
+            ClientHeight = 191
+            ClientWidth = 578
             TabOrder = 1
             object RadioButtonRenSimple: TRadioButton
-              Left = 8
-              Height = 19
-              Top = 8
-              Width = 182
+              Left = 10
+              Height = 24
+              Top = 10
+              Width = 232
               HelpType = htKeyword
               HelpKeyword = 'HTML/index.html#rensimple'
               Caption = '1 Simple - a folder for each size'
@@ -487,10 +489,10 @@ object MainDialog: TMainDialog
               OnChange = ProjectChanged
             end
             object RadioButtonRenCustom: TRadioButton
-              Left = 8
-              Height = 19
-              Top = 64
-              Width = 69
+              Left = 10
+              Height = 24
+              Top = 80
+              Width = 83
               HelpType = htKeyword
               HelpKeyword = 'HTML/index.html#rencustom'
               Caption = '3 Custom'
@@ -498,10 +500,10 @@ object MainDialog: TMainDialog
               OnChange = ProjectChanged
             end
             object RadioButtonRenAdvanced: TRadioButton
-              Left = 8
-              Height = 19
-              Top = 36
-              Width = 197
+              Left = 10
+              Height = 24
+              Top = 45
+              Width = 249
               HelpType = htKeyword
               HelpKeyword = 'HTML/index.html#renadvanced'
               Caption = '2 Advanced - all files in one folder'
@@ -509,12 +511,12 @@ object MainDialog: TMainDialog
               OnChange = ProjectChanged
             end
             object EditRenTemplate: TComboBox
-              Left = 27
-              Height = 23
+              Left = 34
+              Height = 28
               Hint = 'Enter a filename template containing placeholders for special values.'#13#10'This template will be expanded for each resampled image. Insert the'#13#10'$(SIZE) placeholder to enable multiple sizes in a common folder.'
-              Top = 113
-              Width = 336
-              ItemHeight = 15
+              Top = 141
+              Width = 420
+              ItemHeight = 20
               Items.Strings = (
                 'img$(INDEX.ifmt(1)).$(FILEEXT)'
                 'img$(INDEX.ifmt(1))_$(SIZE).$(FILEEXT)'
@@ -527,54 +529,54 @@ object MainDialog: TMainDialog
             object LabelRenTemplate: TLabel
               AnchorSideLeft.Control = EditRenTemplate
               AnchorSideBottom.Control = EditRenTemplate
-              Left = 30
-              Height = 15
-              Top = 96
-              Width = 52
+              Left = 38
+              Height = 20
+              Top = 119
+              Width = 65
               Anchors = [akLeft, akBottom]
-              BorderSpacing.Left = 3
+              BorderSpacing.Left = 4
               BorderSpacing.Bottom = 2
               Caption = 'Template:'
             end
           end
           object GroupBoxShuffle: TGroupBox
-            Left = 4
-            Height = 91
-            Top = 204
-            Width = 464
+            Left = 5
+            Height = 114
+            Top = 255
+            Width = 582
             HelpType = htKeyword
             HelpKeyword = 'HTML/index.html#shuffle'
             Align = alTop
-            BorderSpacing.Around = 4
+            BorderSpacing.Around = 5
             Caption = 'Shuffle'
-            ClientHeight = 71
-            ClientWidth = 460
+            ClientHeight = 89
+            ClientWidth = 578
             TabOrder = 2
             object CheckBoxShuffle: TCheckBox
-              Left = 16
-              Height = 19
+              Left = 20
+              Height = 24
               Hint = 'Enables the image file names to be mixed randomly (shuffled)'
-              Top = 8
-              Width = 53
+              Top = 10
+              Width = 66
               Caption = 'Enable'
               TabOrder = 0
               OnChange = ProjectChanged
             end
             object LabelShuffleSeed: TLabel
-              Left = 32
-              Height = 15
-              Top = 40
-              Width = 28
+              Left = 40
+              Height = 20
+              Top = 50
+              Width = 36
               Caption = 'Seed:'
               ParentColor = False
             end
             object ComboBoxShuffleSeed: TComboBox
-              Left = 88
-              Height = 23
+              Left = 110
+              Height = 28
               Hint = 'Enter a number, lets say 1000, to create always the same mixed order or 0 for shuffeling always randomly.'
-              Top = 37
-              Width = 152
-              ItemHeight = 15
+              Top = 46
+              Width = 190
+              ItemHeight = 20
               ItemIndex = 0
               Items.Strings = (
                 '<random>'
@@ -588,79 +590,79 @@ object MainDialog: TMainDialog
         object TabSheetWatermark: TTabSheet
           HelpType = htKeyword
           HelpKeyword = 'HTML/index.html#watermark'
-          ClientHeight = 318
-          ClientWidth = 472
+          ClientHeight = 400
+          ClientWidth = 592
           ImageIndex = 10
           object GroupBoxMrkLayout: TGroupBox
-            Left = 4
-            Height = 231
-            Top = 83
-            Width = 464
+            Left = 5
+            Height = 291
+            Top = 104
+            Width = 582
             Align = alClient
-            BorderSpacing.Around = 4
+            BorderSpacing.Around = 5
             Caption = 'Layout'
-            ClientHeight = 211
-            ClientWidth = 460
+            ClientHeight = 266
+            ClientWidth = 578
             TabOrder = 2
             object Label15: TLabel
-              Left = 288
-              Height = 15
-              Top = 11
-              Width = 23
+              Left = 360
+              Height = 20
+              Top = 14
+              Width = 30
               Caption = 'Size:'
               FocusControl = EditMrkSize
               ParentColor = False
             end
             object Label13: TLabel
-              Left = 288
-              Height = 15
-              Top = 51
-              Width = 44
+              Left = 360
+              Height = 20
+              Top = 64
+              Width = 54
               Caption = 'Opacity:'
               FocusControl = EditMrkOpacity
               ParentColor = False
             end
             object EditMrkOpacity: TEdit
-              Left = 376
-              Height = 23
+              Left = 470
+              Height = 28
               Hint = 'Choose the watermarks opacity.'#13#10#13#10'A strong watermark has 100%,'#13#10'a weak one has 10% opacity.'
-              Top = 48
-              Width = 34
+              Top = 60
+              Width = 42
               TabOrder = 2
               Text = '50'
               OnChange = EditMrkSizeChange
             end
             object Label14: TLabel
-              Left = 429
-              Height = 15
-              Top = 51
-              Width = 10
+              Left = 536
+              Height = 20
+              Top = 64
+              Width = 12
               Caption = '%'
               ParentColor = False
             end
             object EditMrkSize: TEdit
-              Left = 376
-              Height = 23
+              Left = 470
+              Height = 28
               Hint = 'Size in percent of the watermark image in relation to the resampled image width.'
-              Top = 8
-              Width = 34
+              Top = 10
+              Width = 42
               TabOrder = 0
               Text = '10'
               OnChange = EditMrkSizeChange
             end
             object Label16: TLabel
-              Left = 429
-              Height = 15
-              Top = 11
-              Width = 10
+              Left = 536
+              Height = 20
+              Top = 14
+              Width = 12
               Caption = '%'
               ParentColor = False
             end
             object UpDownMrkOpacity: TUpDown
-              Left = 410
-              Height = 23
-              Top = 48
-              Width = 17
+              Left = 640
+              Height = 35
+              Top = 75
+              Width = 21
               Associate = EditMrkOpacity
               Increment = 5
               Min = 0
@@ -669,10 +671,10 @@ object MainDialog: TMainDialog
               Flat = True
             end
             object UpDownMrkSize: TUpDown
-              Left = 410
-              Height = 23
-              Top = 8
-              Width = 17
+              Left = 640
+              Height = 35
+              Top = 12
+              Width = 21
               Associate = EditMrkSize
               Increment = 5
               Min = 1
@@ -681,64 +683,64 @@ object MainDialog: TMainDialog
               Flat = True
             end
             object Label9: TLabel
-              Left = 288
-              Height = 15
-              Top = 91
-              Width = 58
+              Left = 360
+              Height = 20
+              Top = 114
+              Width = 73
               Caption = 'Horizontal:'
               FocusControl = EditMrkX
               ParentColor = False
             end
             object EditMrkX: TEdit
-              Left = 376
-              Height = 23
+              Left = 470
+              Height = 28
               Hint = 'Horizontal space of the watermark to the border in percent of the destination image width.'
-              Top = 88
-              Width = 34
+              Top = 110
+              Width = 42
               TabOrder = 4
               Text = '1'
               OnChange = EditMrkSizeChange
             end
             object Label10: TLabel
-              Left = 429
-              Height = 15
-              Top = 91
-              Width = 10
+              Left = 536
+              Height = 20
+              Top = 114
+              Width = 12
               Caption = '%'
               ParentColor = False
             end
             object Label11: TLabel
-              Left = 288
-              Height = 15
-              Top = 131
-              Width = 41
+              Left = 360
+              Height = 20
+              Top = 164
+              Width = 52
               Caption = 'Vertical:'
               FocusControl = EditMrkY
               ParentColor = False
             end
             object EditMrkY: TEdit
-              Left = 376
-              Height = 23
+              Left = 470
+              Height = 28
               Hint = 'Vertical space of the watermark to the border in percent of the destination image height.'
-              Top = 128
-              Width = 34
+              Top = 160
+              Width = 42
               TabOrder = 6
               Text = '1'
               OnChange = EditMrkSizeChange
             end
             object Label12: TLabel
-              Left = 429
-              Height = 15
-              Top = 131
-              Width = 10
+              Left = 536
+              Height = 20
+              Top = 164
+              Width = 12
               Caption = '%'
               ParentColor = False
             end
             object UpDownMrkX: TUpDown
-              Left = 410
-              Height = 23
-              Top = 88
-              Width = 17
+              Left = 640
+              Height = 35
+              Top = 138
+              Width = 21
               Associate = EditMrkX
               Min = 0
               Position = 1
@@ -746,10 +748,10 @@ object MainDialog: TMainDialog
               Flat = True
             end
             object UpDownMrkY: TUpDown
-              Left = 410
-              Height = 23
-              Top = 128
-              Width = 17
+              Left = 640
+              Height = 35
+              Top = 200
+              Width = 21
               Associate = EditMrkY
               Min = 0
               Position = 1
@@ -757,10 +759,10 @@ object MainDialog: TMainDialog
               Flat = True
             end
             object LabelMrkSpace: TLabel
-              Left = 155
-              Height = 15
-              Top = 133
-              Width = 90
+              Left = 194
+              Height = 19
+              Top = 166
+              Width = 112
               Alignment = taCenter
               AutoSize = False
               Font.Color = clGrayText
@@ -768,9 +770,9 @@ object MainDialog: TMainDialog
               ParentFont = False
             end
             object PanelPreview: TPanel
-              Left = 16
+              Left = 20
               Height = 182
-              Top = 8
+              Top = 10
               Width = 242
               AutoSize = True
               BevelOuter = bvLowered
@@ -1281,10 +1283,10 @@ object MainDialog: TMainDialog
               end
             end
             object Label20: TLabel
-              Left = 16
-              Height = 15
-              Top = 192
-              Width = 146
+              Left = 20
+              Height = 20
+              Top = 240
+              Width = 183
               Caption = 'Click or drag the watermark'
               Enabled = False
               Font.Color = clGrayText
@@ -1293,33 +1295,33 @@ object MainDialog: TMainDialog
             end
           end
           object CheckBoxMrkEnabled: TCheckBox
-            Left = 4
-            Height = 19
-            Top = 4
-            Width = 464
+            Left = 5
+            Height = 24
+            Top = 5
+            Width = 582
             Align = alTop
-            BorderSpacing.Around = 4
+            BorderSpacing.Around = 5
             Caption = 'Enabled'
             TabOrder = 0
             OnChange = ProjectChanged
           end
           object GroupBoxMrkFilename: TGroupBox
-            Left = 4
-            Height = 52
-            Top = 27
-            Width = 464
+            Left = 5
+            Height = 65
+            Top = 34
+            Width = 582
             Align = alTop
-            BorderSpacing.Around = 4
+            BorderSpacing.Around = 5
             Caption = 'Filename'
-            ClientHeight = 32
-            ClientWidth = 460
+            ClientHeight = 40
+            ClientWidth = 578
             TabOrder = 1
             object EditMrkFilename: TEdit
-              Left = 8
-              Height = 23
+              Left = 10
+              Height = 29
               Hint = 'Select a png file with the desired watermark.'#13#10#13#10'A watermark is a little image, which usually'#13#10'appears in a corner of the image.'#13#10#13#10'Inkscape is a good tool for creating'#13#10'watermark files. Or use the inbuilt'#13#10'editor.'
               Top = 1
-              Width = 387
+              Width = 487
               Anchors = [akTop, akLeft, akRight]
               AutoSize = False
               TabOrder = 0
@@ -1330,10 +1332,10 @@ object MainDialog: TMainDialog
               AnchorSideLeft.Side = asrBottom
               AnchorSideTop.Control = EditMrkFilename
               AnchorSideTop.Side = asrCenter
-              Left = 396
-              Height = 25
+              Left = 498
+              Height = 31
               Top = 0
-              Width = 30
+              Width = 38
               BorderSpacing.Left = 1
               Images = ImagesModule.ImageList20x20
               ImageIndex = 9
@@ -1346,11 +1348,11 @@ object MainDialog: TMainDialog
               AnchorSideLeft.Side = asrBottom
               AnchorSideTop.Control = EditMrkFilename
               AnchorSideTop.Side = asrCenter
-              Left = 426
-              Height = 25
+              Left = 536
+              Height = 31
               Hint = 'Opens the internal Watermark Editor'
               Top = 0
-              Width = 30
+              Width = 38
               Images = ImagesModule.ImageList20x20
               ImageIndex = 7
               ParentShowHint = False
@@ -1363,140 +1365,140 @@ object MainDialog: TMainDialog
         object TabSheetQuality: TTabSheet
           HelpType = htKeyword
           HelpKeyword = 'HTML/index.html#quality'
-          ClientHeight = 318
-          ClientWidth = 472
+          ClientHeight = 400
+          ClientWidth = 592
           ImageIndex = 8
           object GroupBoxJPEGQuality: TGroupBox
-            Left = 4
-            Height = 65
-            Top = 73
-            Width = 464
+            Left = 5
+            Height = 81
+            Top = 91
+            Width = 582
             HelpType = htKeyword
             HelpKeyword = 'HTML/index.html#quality-jpeg'
             Align = alTop
-            BorderSpacing.Around = 4
+            BorderSpacing.Around = 5
             Caption = 'JPEG'
-            ClientHeight = 45
-            ClientWidth = 460
+            ClientHeight = 56
+            ClientWidth = 578
             TabOrder = 1
             object Label5: TLabel
-              Left = 13
-              Height = 15
-              Top = 8
-              Width = 82
+              Left = 16
+              Height = 20
+              Top = 10
+              Width = 102
               Caption = 'Quality (1..100):'
               FocusControl = ComboBoxJPEGQuality
               ParentColor = False
             end
             object ComboBoxJPEGQuality: TComboBox
-              Left = 128
-              Height = 23
+              Left = 160
+              Height = 28
               Hint = 'Enter a JPEG quality from'#13#10#13#10'1 - poor quality but high compression, small image'#13#10'75 - good compression, good quality, medium size'#13#10'100 - low compression, highest quality, large file'
-              Top = 5
-              Width = 120
-              ItemHeight = 15
+              Top = 6
+              Width = 150
+              ItemHeight = 20
               TabOrder = 0
               OnChange = ProjectChanged
             end
           end
           object GroupBoxPNGCompression: TGroupBox
-            Left = 4
-            Height = 65
-            Top = 142
-            Width = 464
+            Left = 5
+            Height = 81
+            Top = 177
+            Width = 582
             HelpType = htKeyword
             HelpKeyword = 'HTML/index.html#quality-png'
             Align = alTop
-            BorderSpacing.Around = 4
+            BorderSpacing.Around = 5
             Caption = 'PNG'
-            ClientHeight = 45
-            ClientWidth = 460
+            ClientHeight = 56
+            ClientWidth = 578
             TabOrder = 2
             object Label6: TLabel
-              Left = 13
-              Height = 15
-              Top = 8
-              Width = 73
+              Left = 16
+              Height = 20
+              Top = 10
+              Width = 89
               Caption = 'Compression:'
               FocusControl = ComboBoxPNGCompression
               ParentColor = False
             end
             object ComboBoxPNGCompression: TComboBox
-              Left = 128
-              Height = 23
+              Left = 160
+              Height = 28
               Hint = 'Select a PNG lossless compression degree.'#13#10'Its always lossless but a tradeoff between size and processing time.'#13#10'The higher the compression, the higher the compressing/decompressing time.'
-              Top = 4
-              Width = 120
-              ItemHeight = 15
+              Top = 5
+              Width = 150
+              ItemHeight = 20
               Style = csDropDownList
               TabOrder = 0
               OnChange = ProjectChanged
             end
           end
           object GroupBoxInterpolationQuality: TGroupBox
-            Left = 4
-            Height = 65
-            Top = 4
-            Width = 464
+            Left = 5
+            Height = 81
+            Top = 5
+            Width = 582
             HelpType = htKeyword
             HelpKeyword = 'HTML/index.html#quality-resampling'
             Align = alTop
-            BorderSpacing.Around = 4
+            BorderSpacing.Around = 5
             Caption = 'Interpolation'
-            ClientHeight = 45
-            ClientWidth = 460
+            ClientHeight = 56
+            ClientWidth = 578
             TabOrder = 0
             object Label21: TLabel
-              Left = 13
-              Height = 15
-              Top = 8
-              Width = 57
+              Left = 16
+              Height = 20
+              Top = 10
+              Width = 70
               Caption = 'Algorithm:'
               FocusControl = ComboBoxInterpolation
               ParentColor = False
             end
             object ComboBoxInterpolation: TComboBox
-              Left = 128
-              Height = 23
+              Left = 160
+              Height = 28
               Hint = 'When resampling an image the interpolation algorithm'#13#10'controls processing speed and resulting quality.'#13#10'The default means Mitchell for down-scaling and Spline for up-scaling.'#13#10'The choice of an algorithm also depends on up- or down-scaling.'#13#10'RTFM.'
-              Top = 5
-              Width = 152
+              Top = 6
+              Width = 190
               DropDownCount = 13
-              ItemHeight = 15
+              ItemHeight = 20
               Style = csDropDownList
               TabOrder = 0
               OnChange = ProjectChanged
             end
           end
           object GroupBoxSharpen: TGroupBox
-            Left = 4
-            Height = 65
-            Top = 211
-            Width = 464
+            Left = 5
+            Height = 81
+            Top = 263
+            Width = 582
             HelpType = htKeyword
             HelpKeyword = 'HTML/index.html#quality-sharpen'
             Align = alTop
-            BorderSpacing.Around = 4
+            BorderSpacing.Around = 5
             Caption = 'Sharpen'
-            ClientHeight = 45
-            ClientWidth = 460
+            ClientHeight = 56
+            ClientWidth = 578
             TabOrder = 3
             object Label19: TLabel
-              Left = 13
-              Height = 15
-              Top = 8
-              Width = 94
+              Left = 16
+              Height = 20
+              Top = 10
+              Width = 114
               Caption = 'Amount (0..100..):'
               FocusControl = ComboBoxSharpen
               ParentColor = False
             end
             object ComboBoxSharpen: TComboBox
-              Left = 128
-              Height = 23
+              Left = 160
+              Height = 28
               Hint = 'Enter a sharpening amount - Default (100, good), None (0, off), Light (50), Strong (200)'
-              Top = 5
-              Width = 120
-              ItemHeight = 15
+              Top = 6
+              Width = 150
+              ItemHeight = 20
               TabOrder = 0
               OnChange = ProjectChanged
             end
@@ -1505,57 +1507,57 @@ object MainDialog: TMainDialog
         object TabSheetTagging: TTabSheet
           HelpType = htKeyword
           HelpKeyword = 'HTML/index.html#tagging'
-          ClientHeight = 318
-          ClientWidth = 472
+          ClientHeight = 400
+          ClientWidth = 592
           object GroupBoxTaggingEXIF: TGroupBox
-            Left = 4
-            Height = 157
+            Left = 5
+            Height = 196
             Hint = 'Define which EXIF tags are to be copied from the origin to the resampled images.'#13#10'This option is valid only for JPEG files.'#13#10'To change the EXIF tags of your source images, you can change them in the'#13#10'Windows Explorer or with a photo editor like RawTherapee.'
-            Top = 160
-            Width = 464
+            Top = 201
+            Width = 582
             HelpType = htKeyword
             HelpKeyword = 'HTML/index.html#tagging-exif'
             Align = alTop
             AutoSize = True
-            BorderSpacing.Around = 4
-            BorderSpacing.InnerBorder = 9
+            BorderSpacing.Around = 5
+            BorderSpacing.InnerBorder = 11
             Caption = 'EXIF Tagging'
-            ClientHeight = 137
-            ClientWidth = 460
+            ClientHeight = 171
+            ClientWidth = 578
             TabOrder = 2
             object CheckBoxTagTitle: TCheckBox
-              Left = 9
-              Height = 19
-              Top = 4
-              Width = 151
+              Left = 11
+              Height = 24
+              Top = 5
+              Width = 192
               Align = alTop
-              BorderSpacing.Left = 9
-              BorderSpacing.Top = 4
-              BorderSpacing.Right = 300
+              BorderSpacing.Left = 11
+              BorderSpacing.Top = 5
+              BorderSpacing.Right = 375
               Caption = 'Title'
               TabOrder = 0
               OnChange = ProjectChanged
             end
             object CheckBoxTagTimestamp: TCheckBox
-              Left = 9
-              Height = 19
-              Top = 27
-              Width = 451
+              Left = 11
+              Height = 24
+              Top = 34
+              Width = 567
               Align = alTop
-              BorderSpacing.Left = 9
-              BorderSpacing.Top = 4
+              BorderSpacing.Left = 11
+              BorderSpacing.Top = 5
               Caption = 'Timestamp'
               TabOrder = 1
               OnChange = ProjectChanged
             end
             object CheckBoxTagCopyright: TCheckBox
-              Left = 9
-              Height = 19
-              Top = 50
-              Width = 451
+              Left = 11
+              Height = 24
+              Top = 63
+              Width = 567
               Align = alTop
-              BorderSpacing.Left = 9
-              BorderSpacing.Top = 4
+              BorderSpacing.Left = 11
+              BorderSpacing.Top = 5
               Caption = 'Copyright'
               TabOrder = 2
               OnChange = ProjectChanged
@@ -1563,13 +1565,13 @@ object MainDialog: TMainDialog
             object EditCopyright: TEdit
               AnchorSideLeft.Control = GroupBoxTaggingEXIF
               AnchorSideTop.Control = CheckBoxTagCopyright
-              Left = 29
-              Height = 23
-              Top = 95
-              Width = 368
+              Left = 36
+              Height = 28
+              Top = 119
+              Width = 463
               Anchors = [akTop, akLeft, akRight]
-              BorderSpacing.Left = 29
-              BorderSpacing.Top = 45
+              BorderSpacing.Left = 36
+              BorderSpacing.Top = 56
               TabOrder = 3
               OnChange = ProjectChanged
             end
@@ -1578,10 +1580,10 @@ object MainDialog: TMainDialog
               AnchorSideLeft.Side = asrBottom
               AnchorSideTop.Control = ButtonClearCopyright
               AnchorSideTop.Side = asrCenter
-              Left = 425
-              Height = 25
-              Top = 94
-              Width = 25
+              Left = 534
+              Height = 31
+              Top = 118
+              Width = 31
               Layout = blGlyphTop
               Images = ImagesModule.ImageList20x20
               ImageIndex = 4
@@ -1595,10 +1597,10 @@ object MainDialog: TMainDialog
               AnchorSideTop.Control = EditCopyright
               AnchorSideTop.Side = asrCenter
               AnchorSideBottom.Side = asrCenter
-              Left = 398
-              Height = 25
-              Top = 94
-              Width = 27
+              Left = 500
+              Height = 31
+              Top = 118
+              Width = 34
               BorderSpacing.Left = 1
               Images = ImagesModule.ImageList20x20
               ImageIndex = 8
@@ -1610,96 +1612,96 @@ object MainDialog: TMainDialog
               AnchorSideLeft.Control = EditCopyright
               AnchorSideTop.Side = asrCenter
               AnchorSideBottom.Side = asrCenter
-              Left = 32
-              Height = 15
-              Top = 77
-              Width = 102
-              BorderSpacing.Left = 3
-              BorderSpacing.Top = 77
+              Left = 40
+              Height = 20
+              Top = 96
+              Width = 126
+              BorderSpacing.Left = 4
+              BorderSpacing.Top = 96
               Caption = 'Overwrite with this:'
             end
           end
           object GroupBoxTaggingSave: TGroupBox
-            Left = 4
-            Height = 74
+            Left = 5
+            Height = 93
             Hint = 'A Tags Report is a list of filenames and tags, which may be usefull for creating'#13#10'a slideshow.'
-            Top = 4
-            Width = 464
+            Top = 5
+            Width = 582
             HelpType = htKeyword
             HelpKeyword = 'HTML/index.html#tagging-tagssave'
             Align = alTop
             AutoSize = True
-            BorderSpacing.Around = 4
-            BorderSpacing.InnerBorder = 4
+            BorderSpacing.Around = 5
+            BorderSpacing.InnerBorder = 5
             Caption = 'Tags Saving'
-            ClientHeight = 54
-            ClientWidth = 460
+            ClientHeight = 68
+            ClientWidth = 578
             TabOrder = 0
             object CheckBoxImageInfosEnabled: TCheckBox
-              Left = 9
-              Height = 19
+              Left = 11
+              Height = 24
               Hint = 'The Presentation afterburner requires such files with '#13#10'names, titles and other information about the images.'
-              Top = 4
-              Width = 451
+              Top = 5
+              Width = 567
               Align = alTop
-              BorderSpacing.Left = 9
-              BorderSpacing.Top = 4
+              BorderSpacing.Left = 11
+              BorderSpacing.Top = 5
               Caption = 'Presentation Infos (.imgtags)'
               TabOrder = 0
               OnChange = ProjectChanged
             end
             object CheckBoxTagsReportEnabled: TCheckBox
-              Left = 9
-              Height = 19
+              Left = 11
+              Height = 24
               Hint = 'A .tagsreport file contains all the gathered tags of all origin images.'#13#10#13#10'The source may be the EXIF tags or from .tags files.'
-              Top = 27
-              Width = 451
+              Top = 34
+              Width = 567
               HelpType = htKeyword
               Align = alTop
-              BorderSpacing.Left = 9
-              BorderSpacing.Top = 4
+              BorderSpacing.Left = 11
+              BorderSpacing.Top = 5
               Caption = 'Tags Report (.tagsreport)'
               TabOrder = 1
               OnChange = ProjectChanged
             end
           end
           object GroupBoxTaggingLoad: TGroupBox
-            Left = 4
-            Height = 74
-            Top = 82
-            Width = 464
+            Left = 5
+            Height = 93
+            Top = 103
+            Width = 582
             HelpType = htKeyword
             HelpKeyword = 'HTML/index.html#tagsload'
             Align = alTop
             AutoSize = True
-            BorderSpacing.Around = 4
-            BorderSpacing.InnerBorder = 4
+            BorderSpacing.Around = 5
+            BorderSpacing.InnerBorder = 5
             Caption = 'Tags Loading'
-            ClientHeight = 54
-            ClientWidth = 460
+            ClientHeight = 68
+            ClientWidth = 578
             TabOrder = 1
             object CheckBoxTagsSourceEXIF: TCheckBox
-              Left = 9
-              Height = 19
+              Left = 11
+              Height = 24
               Hint = 'You can edit EXIF tags of your fotos with many programs'
-              Top = 4
-              Width = 451
+              Top = 5
+              Width = 567
               Align = alTop
-              BorderSpacing.Left = 9
-              BorderSpacing.Top = 4
+              BorderSpacing.Left = 11
+              BorderSpacing.Top = 5
               Caption = 'From images EXIF tags'
               TabOrder = 0
               OnChange = ProjectChanged
             end
             object CheckBoxTagsSourceTagsFiles: TCheckBox
-              Left = 9
-              Height = 19
+              Left = 11
+              Height = 24
               Hint = 'You can put a .tags file to each of folder with your fotos'
-              Top = 27
-              Width = 451
+              Top = 34
+              Width = 567
               Align = alTop
-              BorderSpacing.Left = 9
-              BorderSpacing.Top = 4
+              BorderSpacing.Left = 11
+              BorderSpacing.Top = 5
               Caption = 'From .tags files in each origins folder'
               TabOrder = 1
               OnChange = ProjectChanged
@@ -1708,14 +1710,14 @@ object MainDialog: TMainDialog
         end
       end
       object ToolBarParameters: TToolBar
-        Left = 4
-        Height = 62
-        Top = 4
-        Width = 480
+        Left = 5
+        Height = 77
+        Top = 5
+        Width = 600
         AutoSize = True
-        BorderSpacing.Around = 4
-        ButtonHeight = 60
-        ButtonWidth = 76
+        BorderSpacing.Around = 5
+        ButtonHeight = 75
+        ButtonWidth = 95
         EdgeBorders = [ebBottom]
         Images = ImagesModule.ImageList32x32
         ShowCaptions = True
@@ -1729,21 +1731,21 @@ object MainDialog: TMainDialog
           Style = tbsCheck
         end
         object ToolButtonQuality: TToolButton
-          Left = 229
+          Left = 286
           Top = 0
           Action = ActionParamQuality
           Grouped = True
           Style = tbsCheck
         end
         object ToolButtonRenaming: TToolButton
-          Left = 153
+          Left = 191
           Top = 0
           Action = ActionParamWatermark
           Grouped = True
           Style = tbsCheck
         end
         object ToolButtonWatermark: TToolButton
-          Left = 77
+          Left = 96
           Top = 0
           HelpType = htKeyword
           Action = ActionParamRenaming
@@ -1751,14 +1753,14 @@ object MainDialog: TMainDialog
           Style = tbsCheck
         end
         object ToolButtonTagging: TToolButton
-          Left = 305
+          Left = 381
           Top = 0
           Action = ActionParamTagging
           Grouped = True
           Style = tbsCheck
         end
         object ToolButtonPresentation: TToolButton
-          Left = 381
+          Left = 476
           Top = 0
           Action = ActionParamPresentation
           Grouped = True
@@ -1770,15 +1772,15 @@ object MainDialog: TMainDialog
     object LabelStep1: TLabel
       AnchorSideLeft.Control = ImageStep1
       AnchorSideLeft.Side = asrBottom
-      Left = 50
-      Height = 25
-      Top = 8
-      Width = 63
-      BorderSpacing.Left = 6
+      Left = 55
+      Height = 32
+      Top = 10
+      Width = 82
+      BorderSpacing.Left = 8
       Caption = 'Images'
       FocusControl = PanelSource
       Font.Color = 9785877
-      Font.Height = -19
+      Font.Height = -24
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
@@ -1786,40 +1788,39 @@ object MainDialog: TMainDialog
     object LabelStep3: TLabel
       AnchorSideLeft.Control = ImageStep3
       AnchorSideLeft.Side = asrBottom
-      Left = 50
-      Height = 25
-      Top = 459
-      Width = 118
-      Anchors = [akLeft, akBottom]
-      BorderSpacing.Left = 6
+      Left = 55
+      Height = 32
+      Top = 573
+      Width = 151
+      BorderSpacing.Left = 8
       Caption = 'Target &Folder'
       FocusControl = PanelTarget
       Font.Color = 9785877
-      Font.Height = -19
+      Font.Height = -24
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
     end
     object PanelTarget: TPanel
-      Left = 192
-      Height = 51
-      Top = 448
-      Width = 485
+      Left = 240
+      Height = 64
+      Top = 560
+      Width = 606
       HelpType = htKeyword
       HelpKeyword = 'HTML/index.html#dstfolder'
-      Anchors = [akLeft, akRight, akBottom]
+      Anchors = [akTop, akLeft, akRight]
       BevelOuter = bvNone
-      ClientHeight = 51
-      ClientWidth = 485
+      ClientHeight = 64
+      ClientWidth = 606
       ParentBackground = False
       ParentColor = False
       TabOrder = 2
       object EditTargetFolder: TEdit
-        Left = 8
-        Height = 23
+        Left = 10
+        Height = 28
         Hint = 'Enter a destination for the resampled images.'#13#10'If multiple sizes are entered, insert placeholder $(SIZE)'#13#10'or $(SIZENAME) into the path where the program'#13#10'shall insert the current size .'
-        Top = 7
-        Width = 410
+        Top = 9
+        Width = 512
         Anchors = [akTop, akLeft, akRight]
         TabOrder = 0
         OnChange = EditTargetFolderChange
@@ -1830,10 +1831,10 @@ object MainDialog: TMainDialog
         AnchorSideTop.Control = EditTargetFolder
         AnchorSideTop.Side = asrCenter
         AnchorSideBottom.Side = asrBottom
-        Left = 419
-        Height = 25
-        Top = 6
-        Width = 30
+        Left = 523
+        Height = 31
+        Top = 8
+        Width = 38
         BorderSpacing.Left = 1
         Images = ImagesModule.ImageList20x20
         ImageIndex = 0
@@ -1846,10 +1847,10 @@ object MainDialog: TMainDialog
         AnchorSideLeft.Side = asrBottom
         AnchorSideTop.Control = EditTargetFolder
         AnchorSideTop.Side = asrCenter
-        Left = 449
-        Height = 25
-        Top = 6
-        Width = 30
+        Left = 561
+        Height = 31
+        Top = 8
+        Width = 38
         Images = ImagesModule.ImageList20x20
         ImageIndex = 5
         Spacing = 0
@@ -1861,11 +1862,11 @@ object MainDialog: TMainDialog
         AnchorSideTop.Side = asrBottom
         AnchorSideRight.Control = EditTargetFolder
         AnchorSideRight.Side = asrBottom
-        Left = 358
-        Height = 19
+        Left = 449
+        Height = 24
         Hint = 'No image or folder will be created, but'#13#10'.imgtags and .tagsreport on demand.'
-        Top = 30
-        Width = 60
+        Top = 37
+        Width = 73
         Alignment = taLeftJustify
         Anchors = [akTop, akRight]
         Caption = 'Dry Run'
@@ -1873,10 +1874,10 @@ object MainDialog: TMainDialog
         OnClick = ProjectChanged
       end
       object Label22: TLabel
-        Left = 8
-        Height = 15
-        Top = 32
-        Width = 93
+        Left = 10
+        Height = 20
+        Top = 40
+        Width = 114
         Caption = 'Current directory:'
         Font.Color = clGrayText
         ParentFont = False
@@ -1885,25 +1886,25 @@ object MainDialog: TMainDialog
         AnchorSideLeft.Control = Label22
         AnchorSideLeft.Side = asrBottom
         AnchorSideTop.Control = Label22
-        Left = 110
+        Left = 135
         Height = 1
-        Top = 32
+        Top = 40
         Width = 1
-        BorderSpacing.Left = 9
+        BorderSpacing.Left = 11
         Font.Color = clGrayText
         ParentFont = False
       end
     end
     object ButtonExecute: TBGRASpeedButton
-      Left = 700
-      Height = 37
-      Top = 453
-      Width = 194
+      Left = 875
+      Height = 46
+      Top = 566
+      Width = 242
       Action = ActionExecute
-      Anchors = [akRight, akBottom]
+      Anchors = [akTop, akRight]
       Flat = True
       Font.Color = 9785877
-      Font.Height = -19
+      Font.Height = -24
       Font.Style = [fsBold]
       Images = ImagesModule.ImageList32x32
       ImageIndex = 5
@@ -1914,74 +1915,76 @@ object MainDialog: TMainDialog
     object LabelStep2: TLabel
       AnchorSideLeft.Control = ImageStep2
       AnchorSideLeft.Side = asrBottom
-      Left = 448
-      Height = 25
-      Top = 8
-      Width = 212
-      BorderSpacing.Left = 6
+      Left = 561
+      Height = 32
+      Top = 10
+      Width = 273
+      BorderSpacing.Left = 8
       Caption = 'Sizes and other Settings'
       FocusControl = PanelParams
       Font.Color = 9785877
-      Font.Height = -19
+      Font.Height = -24
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
     end
-    object ProgressBar: TPaintBox
-      Left = 0
-      Height = 4
-      Top = 505
-      Width = 900
-      Align = alBottom
-      BorderSpacing.Bottom = 3
-      Visible = False
-      OnPaint = ProgressBarPaint
-    end
     object ImageStep1: TImage
-      Left = 12
+      Left = 15
       Height = 32
-      Top = 5
+      Top = 6
       Width = 32
+      AutoSize = True
       ImageIndex = 22
       Images = ImagesModule.ImageList32x32
     end
     object ImageStep2: TImage
-      Left = 410
+      Left = 521
       Height = 32
-      Top = 5
+      Top = 6
       Width = 32
       Anchors = [akTop, akRight]
+      AutoSize = True
       ImageIndex = 22
       Images = ImagesModule.ImageList32x32
     end
     object ImageStep3: TImage
-      Left = 12
+      Left = 15
       Height = 32
-      Top = 456
+      Top = 570
       Width = 32
+      AutoSize = True
       ImageIndex = 22
       Images = ImagesModule.ImageList32x32
     end
     object BitBtn1: TBitBtn
-      Left = 864
-      Height = 30
-      Top = 3
-      Width = 27
+      Left = 1080
+      Height = 38
+      Top = 4
+      Width = 34
       Action = ActionHelpScreenshots
       Anchors = [akTop, akRight]
       Images = ImagesModule.ImageList20x20
       ImageIndex = 18
       TabOrder = 3
     end
+    object ProgressBar: TPaintBox
+      Left = 0
+      Height = 4
+      Top = 632
+      Width = 1125
+      Align = alBottom
+      BorderSpacing.Bottom = 4
+      OnPaint = ProgressBarPaint
+    end
   end
   object ToolBar: TToolBar
     Left = 0
-    Height = 64
+    Height = 80
     Top = 0
-    Width = 900
+    Width = 1125
     AutoSize = True
-    ButtonHeight = 64
-    ButtonWidth = 80
+    ButtonHeight = 80
+    ButtonWidth = 100
     EdgeBorders = []
     Images = ImagesModule.ImageList32x32
     ShowCaptions = True
@@ -1994,84 +1997,84 @@ object MainDialog: TMainDialog
       Action = ActionNew
     end
     object ToolButtonOpen: TToolButton
-      Left = 81
+      Left = 101
       Top = 0
       Action = ActionOpen
       DropdownMenu = PopupMenuFileHistory
       Style = tbsDropDown
     end
     object ToolButtonSaveAs: TToolButton
-      Left = 253
+      Left = 316
       Hint = 'Save current settings to another file'
       Top = 0
       Action = ActionSaveAs
     end
     object ToolButtonSave: TToolButton
-      Left = 173
+      Left = 216
       Top = 0
       Action = ActionSave
     end
     object ToolButtonExecute: TToolButton
-      Left = 341
+      Left = 426
       Top = 0
       Action = ActionExecute
     end
     object ToolButtonHelp: TToolButton
-      Left = 674
+      Left = 838
       Top = 0
       Action = ActionHelp
     end
     object ToolButtonSep0: TToolButton
-      Left = 669
-      Height = 64
+      Left = 832
+      Height = 80
       Top = 0
       Style = tbsDivider
     end
     object ToolButtonEditor: TToolButton
-      Left = 506
+      Left = 632
       Top = 0
       Action = ActionEditWatermark
     end
     object ToolButtonAbout: TToolButton
-      Left = 754
+      Left = 938
       Hint = 'License and Vendor Infos'
       Top = 0
       Action = ActionAbout
     end
     object ToolButtonSlideshowAfterburner: TToolButton
-      Left = 586
+      Left = 732
       Top = 0
       Action = ActionPresentation
     end
     object ToolButtonSettings: TToolButton
-      Left = 426
+      Left = 532
       Top = 0
       Action = ActionSettings
     end
     object ToolButtonSep2: TToolButton
-      Left = 421
-      Height = 64
+      Left = 526
+      Height = 80
       Top = 0
       Style = tbsDivider
     end
     object ToolButtonSep1: TToolButton
-      Left = 333
-      Height = 64
+      Left = 416
+      Height = 80
       Top = 0
       Style = tbsSeparator
     end
   end
   object MemoMessages: TRichMemo
-    Left = 4
-    Height = 257
-    Top = 580
-    Width = 896
+    Left = 5
+    Height = 70
+    Top = 725
+    Width = 1120
     Align = alClient
-    BorderSpacing.Left = 4
-    BorderSpacing.Top = 4
-    BorderSpacing.Bottom = 4
+    BorderSpacing.Left = 5
+    BorderSpacing.Top = 5
+    BorderSpacing.Bottom = 5
     BorderStyle = bsNone
-    Font.Height = -13
+    Font.Height = -16
     HideSelection = False
     ParentFont = False
     ReadOnly = True
@@ -2080,8 +2083,8 @@ object MainDialog: TMainDialog
     ZoomFactor = 1
   end
   object MainActionList: TActionList
-    Left = 40
-    Top = 552
+    Left = 50
+    Top = 690
     object ActionNew: TAction
       Caption = '&New'
       Hint = 'Reset all settings to default values.'
@@ -2150,73 +2153,73 @@ object MainDialog: TMainDialog
     Title = 'Select one or more Images'
     Filter = 'Image Files (*.jpg, *.png)|*.jpg;*.png|All Files|*.*'
     Options = [ofAllowMultiSelect, ofEnableSizing, ofViewDetail]
-    Left = 608
-    Top = 624
+    Left = 760
+    Top = 780
   end
   object BrowseTargetFolder: TSelectDirectoryDialog
     Options = [ofNoTestFileCreate, ofEnableSizing]
-    Left = 48
-    Top = 624
+    Left = 60
+    Top = 780
   end
   object OpenDialogMrkFilename: TOpenDialog
     Filter = 'Image Files (*.png)|*.png|All Files|*.*'
-    Left = 760
-    Top = 624
+    Left = 950
+    Top = 780
   end
   object TimerProgressBarOff: TTimer
     Enabled = False
     Interval = 500
     OnTimer = TimerProgressBarOffTimer
-    Left = 336
-    Top = 568
+    Left = 420
+    Top = 710
   end
   object SaveAsDialog: TSaveDialog
     DefaultExt = '.irs'
     Filter = 'Image Resize Settings (*.irs)|*.irs|All Files|*.*'
-    Left = 368
-    Top = 624
+    Left = 460
+    Top = 780
   end
   object OpenDialog: TOpenDialog
     DefaultExt = '.irs'
     Filter = 'Image Resize Settings (*.irs)|*.irs|All Files|*.*'
-    Left = 144
-    Top = 624
+    Left = 180
+    Top = 780
   end
   object ApplicationProperties1: TApplicationProperties
     OnException = ApplicationProperties1Exception
-    Left = 440
-    Top = 568
+    Left = 616
+    Top = 704
   end
   object HTMLHelpDatabase: THTMLHelpDatabase
     AutoRegister = True
     KeywordPrefix = 'HTML/'
-    Left = 760
-    Top = 16
+    Left = 950
+    Top = 20
   end
   object HTMLBrowserHelpViewer: THTMLBrowserHelpViewer
     BrowserParams = '%s'
     AutoRegister = True
-    Left = 840
-    Top = 8
+    Left = 1050
+    Top = 10
   end
   object BrowseSrcFolder: TSelectDirectoryDialog
     Filter = '*.jpg;*.png'
     FilterIndex = 0
     Options = [ofPathMustExist, ofEnableSizing]
-    Left = 488
-    Top = 624
+    Left = 610
+    Top = 780
   end
   object SaveAsDialogTagsReport: TSaveDialog
     Title = 'Save Tags Report as'
     DefaultExt = '.csv'
     Filter = 'Tags Report (*.csv)|*.csv|Alle Dateien (*.*)|*.*'
     Options = [ofPathMustExist, ofEnableSizing, ofViewDetail]
-    Left = 248
-    Top = 624
+    Left = 310
+    Top = 780
   end
   object ActionListSource: TActionList
-    Left = 128
-    Top = 552
+    Left = 160
+    Top = 690
     object ActionSrcFilenames: TAction
       Caption = '&List of Images'
       Checked = True
@@ -2234,8 +2237,8 @@ object MainDialog: TMainDialog
   end
   object ActionListParams: TActionList
     Images = ImagesModule.ImageList32x32
-    Left = 221
-    Top = 552
+    Left = 276
+    Top = 690
     object ActionParamSizes: TAction
       Caption = 'Si&zes'
       Checked = True
@@ -2284,7 +2287,7 @@ object MainDialog: TMainDialog
     end
   end
   object PopupMenuFileHistory: TPopupMenu
-    Left = 536
-    Top = 576
+    Left = 670
+    Top = 720
   end
 end
