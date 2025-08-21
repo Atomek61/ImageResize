@@ -635,6 +635,8 @@ begin
   RadioButtonRenSimple.Hint := RENSIMPLETEMPLATE;
   RadioButtonRenAdvanced.Hint := RENADVANCEDTEMPLATE;
 
+  // Geht leider nicht: ComboBoxSize.ItemHeight := MulDiv(ComboBoxSize.ItemHeight, Screen.PixelsPerInch, 96) + 8;
+
   SetLength(FDefSizes, Length(TSizeInfos.DEFAULT_SIZES));
   for i:=0 to High(TSizeInfos.DEFAULT_SIZES) do
     FDefSizes[i] := TSizeInfos.DEFAULT_SIZES[i];
