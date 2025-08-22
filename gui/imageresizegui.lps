@@ -20,8 +20,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="652"/>
-        <CursorPos X="25" Y="638"/>
+        <TopLine Value="1567"/>
+        <CursorPos Y="1590"/>
         <ExtraEditorCount Value="1"/>
         <ExtraEditor1>
           <EditorIndex Value="-1"/>
@@ -304,7 +304,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="475"/>
         <CursorPos X="23" Y="500"/>
-        <UsageCount Value="150"/>
+        <UsageCount Value="151"/>
         <Bookmarks Count="1">
           <Item0 Y="637" ID="1"/>
         </Bookmarks>
@@ -626,7 +626,7 @@
         <EditorIndex Value="9"/>
         <TopLine Value="149"/>
         <CursorPos X="14" Y="175"/>
-        <UsageCount Value="17"/>
+        <UsageCount Value="18"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -744,7 +744,7 @@
         <Filename Value="..\src\inifileshelper.pas"/>
         <EditorIndex Value="10"/>
         <CursorPos X="14" Y="16"/>
-        <UsageCount Value="21"/>
+        <UsageCount Value="22"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -769,7 +769,7 @@
         <EditorIndex Value="6"/>
         <TopLine Value="100"/>
         <CursorPos X="3" Y="120"/>
-        <UsageCount Value="16"/>
+        <UsageCount Value="17"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -1245,7 +1245,7 @@
         <EditorIndex Value="1"/>
         <TopLine Value="276"/>
         <CursorPos X="10" Y="290"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="11"/>
         <Loaded Value="True"/>
       </Unit>
     </Units>
@@ -1253,86 +1253,6 @@
       <Define0 Value="_DEBUG"/>
     </OtherDefines>
     <JumpHistory HistoryIndex="29">
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="303" TopLine="281"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="312" TopLine="281"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="313" TopLine="281"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="312" TopLine="281"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="313" TopLine="281"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="312" TopLine="281"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="313" TopLine="281"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="312" TopLine="281"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="313" TopLine="281"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="312" TopLine="281"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="313" TopLine="281"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="312" TopLine="281"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="313" TopLine="281"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="312" TopLine="281"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="303" TopLine="281"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="315" TopLine="281"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="294" Column="137" TopLine="281"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="313" Column="46" TopLine="282"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="312" TopLine="282"/>
-      </Position>
-      <Position>
-        <Filename Value="presentationdlg.pas"/>
-        <Caret Line="313" TopLine="281"/>
-      </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
         <Caret Line="1008" Column="25" TopLine="998"/>
@@ -1372,6 +1292,86 @@
       <Position>
         <Filename Value="maindlg.pas"/>
         <Caret Line="1316" Column="18" TopLine="1309"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="638" Column="25" TopLine="652"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1604" TopLine="1578"/>
+      </Position>
+      <Position>
+        <Filename Value="imageresizegui.lpr"/>
+        <Caret Line="33"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1601" TopLine="1576"/>
+      </Position>
+      <Position>
+        <Filename Value="imageresizegui.lpr"/>
+        <Caret Line="33"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1608" Column="57" TopLine="1582"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1594" Column="23" TopLine="1576"/>
+      </Position>
+      <Position>
+        <Filename Value="imageresizegui.lpr"/>
+        <Caret Line="33"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1580" TopLine="1573"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1581" TopLine="1573"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1584" TopLine="1573"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1585" TopLine="1573"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1588" TopLine="1573"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1591" TopLine="1573"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1592" TopLine="1573"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1593" TopLine="1573"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1594" TopLine="1573"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1595" TopLine="1573"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1600" TopLine="1573"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1573" Column="22" TopLine="1555"/>
       </Position>
     </JumpHistory>
     <CustomSessionData Count="2">

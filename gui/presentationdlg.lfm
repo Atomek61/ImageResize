@@ -1,7 +1,7 @@
 object PresentationDialog: TPresentationDialog
-  Left = 139
+  Left = 140
   Height = 594
-  Top = 119
+  Top = 120
   Width = 1161
   BorderIcons = [biSystemMenu]
   Caption = 'Presentation'

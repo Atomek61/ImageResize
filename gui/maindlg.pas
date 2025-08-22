@@ -1570,44 +1570,43 @@ procedure TMainDialog.ListBoxSizesDrawItem(Control: TWinControl; Index: Integer;
   ARect: TRect; State: TOwnerDrawState);
 var
   Canvas :TCanvas;
-  tr, fr :TRect;
+  TextRect, FrameRect :TRect;
   Size :integer;
+  CharWidth :integer;
+  SizeStr :string;
 begin
 
   // Layout:
-
   Size := FSizeInfos[Index].Size;
   Canvas := ListBoxSizes.Canvas;
+  Canvas.Font.Size := 10;
+  CharWidth := Canvas.TextWidth('0');
 
   // Background
   Canvas.Brush.Color := IfThen(odSelected in State, clHighlight, TSizeInfos.SIZENAMECOLORS[TSizeInfos.SizeToSizename(Size)]);
   Canvas.FillRect(ARect);
 
   // CheckBox
-  ImagesModule.ImageList24x24.Draw(Canvas, ARect.Left+2, ARect.Top+2, ifThen(FSizeInfos[Index].Enabled, 4, 3));
+  ImagesModule.ImageList24x24.Draw(Canvas, ARect.Left + CharWidth div 4, ARect.Top + CharWidth div 4, ifThen(FSizeInfos[Index].Enabled, 4, 3));
 
   // Size
-  with ARect do tr := Rect(Left + 26, Top, Left+72, Bottom);
-
-  // Screen Marker
-  if FScreenSize=Size then begin
-    fr := tr; fr.right += 4; fr.Inflate(-1, -2);
-    Canvas.Pen.Color := TSizeInfos.SCREENSIZECOLOR;
-    Canvas.Frame(fr);
-  end;
-
-  // Size
-  Canvas.Font.Size := 10;
+  SizeStr := IntToStr(Size);
   Canvas.Font.Style := [fsbold];
-  Canvas.TextRect(tr, tr.Left, tr.Top+2, IntToStr(Size), TRSIZE);
+  with ARect do TextRect := Rect(Left + Height, Top, Left+Height+Canvas.TextWidth('00000'), Bottom);
+  if FScreenSize=Size then begin
+    FrameRect := TextRect; FrameRect.Inflate(-1, -2);
+    Canvas.Pen.Color := TSizeInfos.SCREENSIZECOLOR;
+    Canvas.Frame(FrameRect);
+  end;
+  Canvas.TextRect(TextRect, TextRect.Left, TextRect.Top+2, SizeStr, TRSIZE);
 
   // Size Icon
   ImagesModule.ImageList24x24.Draw(Canvas, ARect.Left+78, ARect.Top+2, integer(TSizeInfos.SizeToSizename(Size)));
 
   // SizeName
-  with ARect do tr := Rect(Left + 106, Top, Right-26, Bottom);
+  with ARect do TextRect := Rect(Left + 106, Top, Right-26, Bottom);
   Canvas.Font.Style := [];
-  Canvas.TextRect(tr, tr.Left, tr.Top+2, FSizeInfos[Index].Name, TRNAME);
+  Canvas.TextRect(TextRect, TextRect.Left, TextRect.Top+2, FSizeInfos[Index].Name, TRNAME);
 
   // Delete Symbol
   ImagesModule.ImageList24x24.Draw(Canvas, ARect.Right-24, ARect.Top+2, 5);
