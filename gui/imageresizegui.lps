@@ -8,7 +8,7 @@
       <Unit>
         <Filename Value="imageresizegui.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="12"/>
+        <EditorIndex Value="17"/>
         <CursorPos Y="33"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
@@ -20,8 +20,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="1567"/>
-        <CursorPos Y="1590"/>
+        <TopLine Value="1582"/>
+        <CursorPos Y="1599"/>
         <ExtraEditorCount Value="1"/>
         <ExtraEditor1>
           <EditorIndex Value="-1"/>
@@ -60,7 +60,7 @@
       <Unit>
         <Filename Value="..\src\imgres.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="11"/>
+        <EditorIndex Value="16"/>
         <TopLine Value="1017"/>
         <CursorPos X="3" Y="785"/>
         <UsageCount Value="200"/>
@@ -119,7 +119,7 @@
       <Unit>
         <Filename Value="settings.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="12"/>
         <TopLine Value="55"/>
         <CursorPos X="3" Y="63"/>
         <UsageCount Value="200"/>
@@ -152,7 +152,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="PresentationDlg"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="8"/>
         <TopLine Value="278"/>
         <CursorPos Y="316"/>
         <UsageCount Value="200"/>
@@ -165,14 +165,16 @@
         <ComponentName Value="ImagesModule"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
-        <EditorIndex Value="-1"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="25" Y="22"/>
         <UsageCount Value="200"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="presentations.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Presentations"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="7"/>
         <TopLine Value="36"/>
         <CursorPos X="23" Y="97"/>
         <UsageCount Value="200"/>
@@ -181,7 +183,7 @@
       <Unit>
         <Filename Value="galleryprocessor.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="13"/>
         <TopLine Value="22"/>
         <CursorPos X="3" Y="239"/>
         <UsageCount Value="200"/>
@@ -193,7 +195,7 @@
         <ComponentName Value="PresentationManagerFrame"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="10"/>
         <CursorPos Y="10"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
@@ -304,7 +306,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="475"/>
         <CursorPos X="23" Y="500"/>
-        <UsageCount Value="151"/>
+        <UsageCount Value="152"/>
         <Bookmarks Count="1">
           <Item0 Y="637" ID="1"/>
         </Bookmarks>
@@ -541,7 +543,7 @@
       </Unit>
       <Unit>
         <Filename Value="..\lib\inc\generics.dictionariesh.inc"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="9"/>
         <TopLine Value="245"/>
         <CursorPos X="88" Y="249"/>
         <UsageCount Value="102"/>
@@ -550,10 +552,11 @@
       <Unit>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\types.pp"/>
         <UnitName Value="Types"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="144"/>
-        <CursorPos X="48" Y="167"/>
-        <UsageCount Value="5"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="73"/>
+        <CursorPos X="3" Y="91"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\lib\inc\generics.dictionaries.inc"/>
@@ -623,7 +626,7 @@
       <Unit>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\packages\fcl-base\src\inifiles.pp"/>
         <UnitName Value="IniFiles"/>
-        <EditorIndex Value="9"/>
+        <EditorIndex Value="14"/>
         <TopLine Value="149"/>
         <CursorPos X="14" Y="175"/>
         <UsageCount Value="18"/>
@@ -646,10 +649,11 @@
       <Unit>
         <Filename Value="C:\lazarus\lcl\imglist.pp"/>
         <UnitName Value="ImgList"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="253"/>
-        <CursorPos X="21" Y="367"/>
-        <UsageCount Value="9"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="91"/>
+        <CursorPos X="3" Y="110"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\lcl\lcltype.pp"/>
@@ -742,7 +746,7 @@
       </Unit>
       <Unit>
         <Filename Value="..\src\inifileshelper.pas"/>
-        <EditorIndex Value="10"/>
+        <EditorIndex Value="15"/>
         <CursorPos X="14" Y="16"/>
         <UsageCount Value="22"/>
         <Loaded Value="True"/>
@@ -766,7 +770,7 @@
       <Unit>
         <Filename Value="C:\lazarus\lcl\valedit.pas"/>
         <UnitName Value="ValEdit"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="11"/>
         <TopLine Value="100"/>
         <CursorPos X="3" Y="120"/>
         <UsageCount Value="17"/>
@@ -915,10 +919,11 @@
       <Unit>
         <Filename Value="C:\lazarus\components\lazutils\graphtype.pp"/>
         <UnitName Value="GraphType"/>
-        <EditorIndex Value="-1"/>
+        <EditorIndex Value="5"/>
         <TopLine Value="32"/>
-        <CursorPos X="3" Y="55"/>
-        <UsageCount Value="9"/>
+        <CursorPos X="3" Y="57"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\sysconst.pp"/>
@@ -1242,10 +1247,18 @@
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\lcl\include\winapi.inc"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="6"/>
         <TopLine Value="276"/>
         <CursorPos X="10" Y="290"/>
         <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\inc\typshrdh.inc"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="20"/>
+        <CursorPos X="3" Y="38"/>
+        <UsageCount Value="10"/>
         <Loaded Value="True"/>
       </Unit>
     </Units>
@@ -1255,47 +1268,7 @@
     <JumpHistory HistoryIndex="29">
       <Position>
         <Filename Value="maindlg.pas"/>
-        <Caret Line="1008" Column="25" TopLine="998"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1007" Column="25" TopLine="997"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1938" Column="8" TopLine="1925"/>
-      </Position>
-      <Position>
-        <Filename Value="C:\lazarus\lcl\include\winapi.inc"/>
-        <Caret Line="290" Column="10" TopLine="276"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1930" Column="14" TopLine="1925"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="308" TopLine="304"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="694" Column="3" TopLine="679"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="380" Column="14" TopLine="368"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="820" Column="3" TopLine="819"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
         <Caret Line="1316" Column="18" TopLine="1309"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="638" Column="25" TopLine="652"/>
       </Position>
       <Position>
         <Filename Value="maindlg.pas"/>
@@ -1372,6 +1345,46 @@
       <Position>
         <Filename Value="maindlg.pas"/>
         <Caret Line="1573" Column="22" TopLine="1555"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1590" Column="36" TopLine="1567"/>
+      </Position>
+      <Position>
+        <Filename Value="C:\lazarus\lcl\imglist.pp"/>
+        <Caret Line="375" Column="61" TopLine="344"/>
+      </Position>
+      <Position>
+        <Filename Value="C:\lazarus\lcl\imglist.pp"/>
+        <Caret Line="368" Column="96" TopLine="344"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1580" Column="8" TopLine="1559"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1582" Column="35" TopLine="1559"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1586" TopLine="1576"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1582" Column="37" TopLine="1564"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1602" TopLine="1572"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1572" Column="16" TopLine="1554"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1578" Column="36" TopLine="1563"/>
       </Position>
     </JumpHistory>
     <CustomSessionData Count="2">

@@ -1569,54 +1569,67 @@ end;
 procedure TMainDialog.ListBoxSizesDrawItem(Control: TWinControl; Index: Integer;
   ARect: TRect; State: TOwnerDrawState);
 var
-  Canvas :TCanvas;
+  ControlCanvas :TCanvas;
   TextRect, FrameRect :TRect;
   Size :integer;
   CharWidth :integer;
   SizeStr :string;
+
+  procedure DrawCentered(const r :TRect; Index :integer);
+  var
+    s :TSize;
+  begin
+    with ImagesModule.ImageList24x24 do begin
+      s.cx := Width;
+      s.cy := Height;
+    end;
+    ImagesModule.ImageList24x24.Draw(ControlCanvas, (r.Width - s.cx) div 2, (r.Height - s.cy) div 2, Index);
+  end;
+
 begin
 
   // Layout:
   Size := FSizeInfos[Index].Size;
-  Canvas := ListBoxSizes.Canvas;
-  Canvas.Font.Size := 10;
-  CharWidth := Canvas.TextWidth('0');
+  ControlCanvas := ListBoxSizes.Canvas;
+  ControlCanvas.Font.Size := 10;
+  CharWidth := ControlCanvas.TextWidth('0');
 
   // Background
-  Canvas.Brush.Color := IfThen(odSelected in State, clHighlight, TSizeInfos.SIZENAMECOLORS[TSizeInfos.SizeToSizename(Size)]);
-  Canvas.FillRect(ARect);
+  ControlCanvas.Brush.Color := IfThen(odSelected in State, clHighlight, TSizeInfos.SIZENAMECOLORS[TSizeInfos.SizeToSizename(Size)]);
+  ControlCanvas.FillRect(ARect);
 
   // CheckBox
-  ImagesModule.ImageList24x24.Draw(Canvas, ARect.Left + CharWidth div 4, ARect.Top + CharWidth div 4, ifThen(FSizeInfos[Index].Enabled, 4, 3));
+  DrawCentered(Rect(ARect.Left, ARect.Top, ARect.Left + ARect.Height, ARect.Top + ARect.Height), ifthen(FSizeInfos[Index].Enabled, 4, 3));
+//  ImagesModule.ImageList24x24.Draw(ControlCanvas, ARect.Left + CharWidth div 4, ARect.Top + CharWidth div 4, ifThen(FSizeInfos[Index].Enabled, 4, 3));
 
   // Size
   SizeStr := IntToStr(Size);
-  Canvas.Font.Style := [fsbold];
-  with ARect do TextRect := Rect(Left + Height, Top, Left+Height+Canvas.TextWidth('00000'), Bottom);
+  ControlCanvas.Font.Style := [fsbold];
+  with ARect do TextRect := Rect(Left + Height, Top, Left+Height+ControlCanvas.TextWidth('00000'), Bottom);
   if FScreenSize=Size then begin
     FrameRect := TextRect; FrameRect.Inflate(-1, -2);
-    Canvas.Pen.Color := TSizeInfos.SCREENSIZECOLOR;
-    Canvas.Frame(FrameRect);
+    ControlCanvas.Pen.Color := TSizeInfos.SCREENSIZECOLOR;
+    ControlCanvas.Frame(FrameRect);
   end;
-  Canvas.TextRect(TextRect, TextRect.Left, TextRect.Top+2, SizeStr, TRSIZE);
+  ControlCanvas.TextRect(TextRect, TextRect.Left, TextRect.Top+2, SizeStr, TRSIZE);
 
   // Size Icon
-  ImagesModule.ImageList24x24.Draw(Canvas, ARect.Left+78, ARect.Top+2, integer(TSizeInfos.SizeToSizename(Size)));
+  ImagesModule.ImageList24x24.Draw(ControlCanvas, ARect.Left+78, ARect.Top+2, integer(TSizeInfos.SizeToSizename(Size)));
 
   // SizeName
   with ARect do TextRect := Rect(Left + 106, Top, Right-26, Bottom);
-  Canvas.Font.Style := [];
-  Canvas.TextRect(TextRect, TextRect.Left, TextRect.Top+2, FSizeInfos[Index].Name, TRNAME);
+  ControlCanvas.Font.Style := [];
+  ControlCanvas.TextRect(TextRect, TextRect.Left, TextRect.Top+2, FSizeInfos[Index].Name, TRNAME);
 
   // Delete Symbol
-  ImagesModule.ImageList24x24.Draw(Canvas, ARect.Right-24, ARect.Top+2, 5);
+  ImagesModule.ImageList24x24.Draw(ControlCanvas, ARect.Right-24, ARect.Top+2, 5);
 
   // TopLine
   if Index>0 then begin
-    Canvas.Pen.Color := clSilver;
-    Canvas.Pen.Width := 1;
-    Canvas.MoveTo(ARect.Left, ARect.Top);
-    Canvas.LineTo(ARect.Right, ARect.Top);
+    ControlCanvas.Pen.Color := clSilver;
+    ControlCanvas.Pen.Width := 1;
+    ControlCanvas.MoveTo(ARect.Left, ARect.Top);
+    ControlCanvas.LineTo(ARect.Right, ARect.Top);
   end;
 end;
 
