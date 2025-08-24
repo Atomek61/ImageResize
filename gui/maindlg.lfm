@@ -529,7 +529,7 @@ object MainDialog: TMainDialog
               Left = 30
               Height = 15
               Top = 96
-              Width = 52
+              Width = 51
               Anchors = [akLeft, akBottom]
               BorderSpacing.Left = 3
               BorderSpacing.Bottom = 2
