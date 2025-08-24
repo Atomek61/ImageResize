@@ -1,11 +1,11 @@
 object MainDialog: TMainDialog
   Left = 467
-  Height = 640
+  Height = 678
   Top = 72
   Width = 900
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'ImageResize'
-  ClientHeight = 640
+  ClientHeight = 678
   ClientWidth = 900
   Constraints.MinHeight = 640
   Constraints.MinWidth = 900
@@ -2063,7 +2063,7 @@ object MainDialog: TMainDialog
   end
   object MemoMessages: TRichMemo
     Left = 4
-    Height = 56
+    Height = 94
     Top = 580
     Width = 896
     Align = alClient
