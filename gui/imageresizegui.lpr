@@ -23,7 +23,6 @@ uses
 begin
   RequireDerivedFormResource:=True;
   Application.Title:='ImageResize';
-  Application.Scaled:=True;
   Application.Initialize;
   Application.CreateForm(TMainDialog, MainDialog);
   Application.CreateForm(TSettingsDialog, SettingsDialog);

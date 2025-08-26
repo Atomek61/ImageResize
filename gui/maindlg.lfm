@@ -1,7 +1,7 @@
 object MainDialog: TMainDialog
-  Left = 467
+  Left = 630
   Height = 678
-  Top = 72
+  Top = 53
   Width = 900
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'ImageResize'
@@ -9,6 +9,7 @@ object MainDialog: TMainDialog
   ClientWidth = 900
   Constraints.MinHeight = 640
   Constraints.MinWidth = 900
+  Font.Height = -12
   KeyPreview = True
   Position = poDefaultPosOnly
   ShowHint = True
@@ -70,7 +71,7 @@ object MainDialog: TMainDialog
           Style = tbsCheck
         end
         object ToolButtonSrcFolder: TToolButton
-          Left = 82
+          Left = 90
           Top = 0
           Action = ActionSrcFolder
           Grouped = True
@@ -256,7 +257,7 @@ object MainDialog: TMainDialog
         Top = 70
         Width = 480
         TabStop = False
-        ActivePage = TabSheetSizes
+        ActivePage = TabSheetWatermark
         Align = alClient
         BorderSpacing.Around = 4
         ImagesWidth = 32
@@ -264,7 +265,7 @@ object MainDialog: TMainDialog
         Options = [nboMultiLine]
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 0
+        TabIndex = 2
         TabOrder = 1
         object TabSheetSizes: TTabSheet
           HelpType = htKeyword
@@ -529,7 +530,7 @@ object MainDialog: TMainDialog
               Left = 30
               Height = 15
               Top = 96
-              Width = 51
+              Width = 52
               Anchors = [akLeft, akBottom]
               BorderSpacing.Left = 3
               BorderSpacing.Bottom = 2
@@ -1287,6 +1288,7 @@ object MainDialog: TMainDialog
               Caption = 'Click or drag the watermark'
               Enabled = False
               Font.Color = clGrayText
+              Font.Height = -12
               ParentColor = False
               ParentFont = False
             end
@@ -1872,11 +1874,13 @@ object MainDialog: TMainDialog
       end
       object Label22: TLabel
         Left = 8
-        Height = 15
+        Height = 20
         Top = 32
         Width = 93
+        AutoSize = False
         Caption = 'Current directory:'
         Font.Color = clGrayText
+        Font.Height = -12
         ParentFont = False
       end
       object LabelCurrentDir: TLabel
@@ -1884,11 +1888,14 @@ object MainDialog: TMainDialog
         AnchorSideLeft.Side = asrBottom
         AnchorSideTop.Control = Label22
         Left = 110
-        Height = 1
+        Height = 20
         Top = 32
-        Width = 1
+        Width = 240
+        Anchors = [akTop, akLeft, akRight]
+        AutoSize = False
         BorderSpacing.Left = 9
         Font.Color = clGrayText
+        Font.Height = -12
         ParentFont = False
       end
     end
@@ -2017,12 +2024,12 @@ object MainDialog: TMainDialog
       Action = ActionExecute
     end
     object ToolButtonHelp: TToolButton
-      Left = 674
+      Left = 681
       Top = 0
       Action = ActionHelp
     end
     object ToolButtonSep0: TToolButton
-      Left = 669
+      Left = 676
       Height = 64
       Top = 0
       Style = tbsDivider
@@ -2033,13 +2040,13 @@ object MainDialog: TMainDialog
       Action = ActionEditWatermark
     end
     object ToolButtonAbout: TToolButton
-      Left = 754
+      Left = 761
       Hint = 'License and Vendor Infos'
       Top = 0
       Action = ActionAbout
     end
     object ToolButtonSlideshowAfterburner: TToolButton
-      Left = 586
+      Left = 587
       Top = 0
       Action = ActionPresentation
     end

@@ -9,9 +9,10 @@ object AboutDialog: TAboutDialog
   ClientWidth = 945
   Constraints.MinHeight = 381
   Constraints.MinWidth = 832
-  OnCreate = FormCreate
+  Font.Height = -12
   Position = poScreenCenter
-  LCLVersion = '3.6.0.0'
+  LCLVersion = '4.2.0.0'
+  OnCreate = FormCreate
   object ButtonClose: TButton
     Left = 844
     Height = 29
@@ -250,7 +251,7 @@ object AboutDialog: TAboutDialog
     Left = 296
     Height = 15
     Top = 48
-    Width = 132
+    Width = 133
     Caption = 'On ATOMEKs homepage:'
     ParentColor = False
   end

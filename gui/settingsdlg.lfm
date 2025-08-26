@@ -11,12 +11,13 @@ object SettingsDialog: TSettingsDialog
   ClientHeight = 327
   ClientWidth = 502
   DoubleBuffered = True
+  Font.Height = -12
+  ParentDoubleBuffered = False
+  ShowHint = True
+  LCLVersion = '4.2.0.0'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  ParentDoubleBuffered = False
-  ShowHint = True
-  LCLVersion = '3.6.0.0'
   object CheckBoxStopOnError: TCheckBox
     Left = 128
     Height = 19
@@ -32,7 +33,7 @@ object SettingsDialog: TSettingsDialog
     Left = 128
     Height = 15
     Top = 27
-    Width = 44
+    Width = 45
     Caption = '&Threads:'
     FocusControl = ComboBoxThreadsUsed
     ParentColor = False

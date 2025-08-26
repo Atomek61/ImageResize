@@ -1,7 +1,7 @@
 object MrkEditDialog: TMrkEditDialog
-  Left = 1002
+  Left = 1016
   Height = 487
-  Top = 366
+  Top = 437
   Width = 658
   HelpType = htKeyword
   HelpKeyword = 'HTML/index.html#mrkeditor'
@@ -11,12 +11,13 @@ object MrkEditDialog: TMrkEditDialog
   ClientWidth = 658
   Constraints.MinHeight = 429
   Constraints.MinWidth = 658
+  Font.Height = -12
+  ShowHint = True
+  LCLVersion = '4.2.0.0'
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  ShowHint = True
-  LCLVersion = '3.0.0.3'
   object PanelPreview: TPanel
     Left = 8
     Height = 148
@@ -2979,8 +2980,8 @@ object MrkEditDialog: TMrkEditDialog
       Selected = clNone
       Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbPrettyNames]
       ItemHeight = 16
-      OnChange = EditChanged
       TabOrder = 6
+      OnChange = EditChanged
     end
     object Bevel1: TBevel
       Left = 9
@@ -3004,9 +3005,9 @@ object MrkEditDialog: TMrkEditDialog
       Width = 27
       Images = ImagesModule.ImageList20x20
       ImageIndex = 4
-      OnClick = ButtonInsertCopyrightClick
       Spacing = 0
       TabOrder = 1
+      OnClick = ButtonInsertCopyrightClick
     end
     object ButtonBrowseFont: TBitBtn
       Left = 344
@@ -3016,9 +3017,9 @@ object MrkEditDialog: TMrkEditDialog
       Anchors = [akTop, akRight]
       Images = ImagesModule.ImageList20x20
       ImageIndex = 10
-      OnClick = ButtonBrowseFontClick
       Spacing = 0
       TabOrder = 3
+      OnClick = ButtonBrowseFontClick
     end
     object UpDownShadowBlur: TUpDown
       Left = 620
@@ -3027,9 +3028,9 @@ object MrkEditDialog: TMrkEditDialog
       Width = 17
       Associate = EditShadowBlur
       Min = 0
-      OnChanging = UpDownShadowBlurChanging
       Position = 6
       TabOrder = 11
+      OnChanging = UpDownShadowBlurChanging
     end
     object EditShadowBlur: TEdit
       Left = 516
@@ -3074,8 +3075,8 @@ object MrkEditDialog: TMrkEditDialog
       Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbPrettyNames]
       Anchors = [akTop, akRight]
       ItemHeight = 16
-      OnChange = EditChanged
       TabOrder = 9
+      OnChange = EditChanged
     end
     object Label3: TLabel
       Left = 17
@@ -3096,8 +3097,8 @@ object MrkEditDialog: TMrkEditDialog
       Selected = clNone
       Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbPrettyNames]
       ItemHeight = 16
-      OnChange = EditChanged
       TabOrder = 4
+      OnChange = EditChanged
     end
     object EditFont: TEdit
       Left = 112
@@ -3193,9 +3194,9 @@ object MrkEditDialog: TMrkEditDialog
       Width = 17
       Associate = EditOutlineWidth
       Min = 1
-      OnChanging = UpDownShadowBlurChanging
       Position = 6
       TabOrder = 13
+      OnChanging = UpDownShadowBlurChanging
     end
   end
   object PanelControls: TPanel
@@ -3250,8 +3251,8 @@ object MrkEditDialog: TMrkEditDialog
       Default = True
       Images = ImagesModule.ImageList20x20
       ImageIndex = 1
-      OnClick = ButtonSaveClick
       TabOrder = 0
+      OnClick = ButtonSaveClick
     end
   end
   object Bevel4: TBevel

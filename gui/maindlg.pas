@@ -1527,6 +1527,7 @@ var
 begin
   Size := FDefSizes[Index];
   Canvas := ListBoxSizesPalette.Canvas;
+  Canvas.Font := Font;
 
   // Background
   if odSelected in State then
@@ -1544,7 +1545,7 @@ begin
     Canvas.Pen.Color := TSizeInfos.SCREENSIZECOLOR;
     Canvas.Frame(fr);
   end;
-  Canvas.Font.Size := 10;
+//  Canvas.Font.Size := 10;
   Canvas.Font.Style := [];
   Canvas.TextRect(tr, tr.Left, tr.Top, IntToStr(Size), TRDEFSIZE);
 
@@ -1593,7 +1594,7 @@ begin
   // Layout
   Size := FSizeInfos[Index].Size;
   ControlCanvas := ListBoxSizes.Canvas;
-  ControlCanvas.Font.Size := 10;
+  Canvas.Font := Font;
   Gap := ControlCanvas.TextWidth('0');
 
   // Background

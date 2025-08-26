@@ -8,8 +8,8 @@
       <Unit>
         <Filename Value="imageresizegui.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="20"/>
-        <CursorPos Y="33"/>
+        <EditorIndex Value="23"/>
+        <CursorPos Y="32"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
       </Unit>
@@ -20,8 +20,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="615"/>
-        <CursorPos X="23" Y="630"/>
+        <TopLine Value="1614"/>
+        <CursorPos X="54" Y="1598"/>
         <ExtraEditorCount Value="1"/>
         <ExtraEditor1>
           <EditorIndex Value="-1"/>
@@ -41,10 +41,11 @@
         <ComponentName Value="AboutDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="130"/>
+        <EditorIndex Value="13"/>
+        <TopLine Value="131"/>
         <CursorPos X="5" Y="133"/>
         <UsageCount Value="201"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="mrkeditdlg.pas"/>
@@ -52,15 +53,16 @@
         <ComponentName Value="MrkEditDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
+        <EditorIndex Value="14"/>
         <TopLine Value="396"/>
         <CursorPos X="37" Y="403"/>
         <UsageCount Value="201"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\imgres.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="19"/>
+        <EditorIndex Value="22"/>
         <TopLine Value="1017"/>
         <CursorPos X="3" Y="785"/>
         <UsageCount Value="200"/>
@@ -111,15 +113,16 @@
         <ComponentName Value="SettingsDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="86"/>
+        <EditorIndex Value="12"/>
+        <TopLine Value="87"/>
         <CursorPos X="45" Y="87"/>
         <UsageCount Value="201"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="settings.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="15"/>
+        <EditorIndex Value="18"/>
         <TopLine Value="55"/>
         <CursorPos X="3" Y="63"/>
         <UsageCount Value="200"/>
@@ -182,7 +185,7 @@
       <Unit>
         <Filename Value="galleryprocessor.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="16"/>
+        <EditorIndex Value="19"/>
         <TopLine Value="22"/>
         <CursorPos X="3" Y="239"/>
         <UsageCount Value="200"/>
@@ -194,7 +197,7 @@
         <ComponentName Value="PresentationManagerFrame"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
-        <EditorIndex Value="13"/>
+        <EditorIndex Value="16"/>
         <CursorPos Y="10"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
@@ -307,7 +310,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="475"/>
         <CursorPos X="23" Y="500"/>
-        <UsageCount Value="156"/>
+        <UsageCount Value="157"/>
         <Bookmarks Count="1">
           <Item0 Y="637" ID="1"/>
         </Bookmarks>
@@ -545,7 +548,7 @@
       </Unit>
       <Unit>
         <Filename Value="..\lib\inc\generics.dictionariesh.inc"/>
-        <EditorIndex Value="12"/>
+        <EditorIndex Value="15"/>
         <TopLine Value="245"/>
         <CursorPos X="53" Y="249"/>
         <UsageCount Value="102"/>
@@ -628,7 +631,7 @@
       <Unit>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\packages\fcl-base\src\inifiles.pp"/>
         <UnitName Value="IniFiles"/>
-        <EditorIndex Value="17"/>
+        <EditorIndex Value="20"/>
         <TopLine Value="149"/>
         <CursorPos X="14" Y="175"/>
         <UsageCount Value="19"/>
@@ -748,7 +751,7 @@
       </Unit>
       <Unit>
         <Filename Value="..\src\inifileshelper.pas"/>
-        <EditorIndex Value="18"/>
+        <EditorIndex Value="21"/>
         <CursorPos X="14" Y="16"/>
         <UsageCount Value="23"/>
         <Loaded Value="True"/>
@@ -772,7 +775,7 @@
       <Unit>
         <Filename Value="C:\lazarus\lcl\valedit.pas"/>
         <UnitName Value="ValEdit"/>
-        <EditorIndex Value="14"/>
+        <EditorIndex Value="17"/>
         <TopLine Value="100"/>
         <CursorPos X="3" Y="120"/>
         <UsageCount Value="18"/>
@@ -1043,7 +1046,6 @@
         <TopLine Value="542"/>
         <CursorPos X="14" Y="558"/>
         <UsageCount Value="18"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="C:\Users\Jan\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\universaldrawer.pas"/>
@@ -1103,7 +1105,6 @@
         <TopLine Value="145"/>
         <CursorPos X="36" Y="161"/>
         <UsageCount Value="7"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\lcl\stdctrls.pp"/>
@@ -1271,14 +1272,6 @@
     </OtherDefines>
     <JumpHistory HistoryIndex="29">
       <Position>
-        <Filename Value="appsettings.pas"/>
-        <Caret Line="234" TopLine="215"/>
-      </Position>
-      <Position>
-        <Filename Value="..\lib\generics.collections.pas"/>
-        <Caret Line="1440" TopLine="1422"/>
-      </Position>
-      <Position>
         <Filename Value="..\lib\generics.collections.pas"/>
         <Caret Line="1441" TopLine="1422"/>
       </Position>
@@ -1388,6 +1381,14 @@
       <Position>
         <Filename Value="..\src\controlshot.pas"/>
         <Caret Line="14" Column="29"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="630" TopLine="618"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1531" TopLine="1525"/>
       </Position>
     </JumpHistory>
     <CustomSessionData Count="2">

@@ -1,7 +1,7 @@
 object PresentationDialog: TPresentationDialog
-  Left = 140
+  Left = 369
   Height = 594
-  Top = 120
+  Top = 410
   Width = 1161
   BorderIcons = [biSystemMenu]
   Caption = 'Presentation'
@@ -9,6 +9,7 @@ object PresentationDialog: TPresentationDialog
   ClientWidth = 1161
   Constraints.MinHeight = 400
   Constraints.MinWidth = 900
+  Font.Height = -12
   ShowHint = True
   LCLVersion = '4.2.0.0'
   OnCreate = FormCreate
