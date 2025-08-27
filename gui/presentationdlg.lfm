@@ -1,7 +1,7 @@
 object PresentationDialog: TPresentationDialog
-  Left = 369
+  Left = 301
   Height = 594
-  Top = 410
+  Top = 238
   Width = 1161
   BorderIcons = [biSystemMenu]
   Caption = 'Presentation'
@@ -23,9 +23,7 @@ object PresentationDialog: TPresentationDialog
     BorderSpacing.Left = 4
     BorderSpacing.Bottom = 4
     BorderStyle = bsNone
-    Font.Height = -13
     HideSelection = False
-    ParentFont = False
     ReadOnly = True
     ScrollBars = ssVertical
     TabOrder = 2
@@ -115,8 +113,6 @@ object PresentationDialog: TPresentationDialog
         BorderSpacing.Around = 4
         BevelOuter = bvLowered
         Caption = 'This presentation has no settings'
-        Font.Color = clGrayText
-        ParentFont = False
         TabOrder = 3
       end
       object ButtonTargetFromDoc: TBitBtn

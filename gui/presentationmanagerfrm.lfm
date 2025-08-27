@@ -5,11 +5,9 @@ object PresentationManagerFrame: TPresentationManagerFrame
   Width = 428
   ClientHeight = 171
   ClientWidth = 428
-  Font.Color = clWindowText
-  ParentFont = False
   TabOrder = 0
-  DesignLeft = 381
-  DesignTop = 439
+  DesignLeft = 304
+  DesignTop = 352
   object ValueListEditor: TValueListEditor
     Left = 0
     Height = 150
@@ -19,7 +17,6 @@ object PresentationManagerFrame: TPresentationManagerFrame
     DefaultColWidth = 180
     DefaultRowHeight = 24
     ExtendedSelect = False
-    FixedCols = 0
     Flat = True
     ParentColor = True
     RowCount = 1

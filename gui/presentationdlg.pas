@@ -192,6 +192,7 @@ begin
     hr := ARect.Height;
     Cnvs.Draw(ARect.Left+4, ARect.Top+(hr-hi) div 2, ManagerIcon);
   end;
+  Cnvs.Font := Font;
   Cnvs.Font.Color := IfThen(odSelected in State, clHighlightText, clBtnText);
   Cnvs.Font.Size := 11;
   Cnvs.Font.Style := [fsBold];
