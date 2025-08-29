@@ -248,6 +248,7 @@ object PresentationDialog: TPresentationDialog
         BorderSpacing.Left = 3
         BorderSpacing.Bottom = 3
         Caption = 'L&ayout:'
+        FocusControl = ComboBoxManagers
       end
       object ComboBoxManagers: TComboBox
         Left = 8
@@ -305,6 +306,6 @@ object PresentationDialog: TPresentationDialog
     Title = 'Open .imgtags File'
     Options = [ofFileMustExist, ofEnableSizing, ofViewDetail]
     Left = 512
-    Top = 16
+    Top = 80
   end
 end
