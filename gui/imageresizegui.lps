@@ -8,7 +8,7 @@
       <Unit>
         <Filename Value="imageresizegui.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="22"/>
+        <EditorIndex Value="24"/>
         <CursorPos Y="32"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
@@ -28,9 +28,6 @@
           <CursorPos Y="2082"/>
         </ExtraEditor1>
         <UsageCount Value="201"/>
-        <Bookmarks Count="1">
-          <Item0 X="29" Y="605"/>
-        </Bookmarks>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -60,10 +57,14 @@
       <Unit>
         <Filename Value="..\src\imgres.pas"/>
         <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="21"/>
-        <TopLine Value="1017"/>
-        <CursorPos X="3" Y="785"/>
+        <TopLine Value="47"/>
+        <CursorPos Y="75"/>
         <UsageCount Value="200"/>
+        <Bookmarks Count="1">
+          <Item0 Y="595" Left="1" Top="577"/>
+        </Bookmarks>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -152,7 +153,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="PresentationDlg"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="11"/>
         <TopLine Value="172"/>
         <CursorPos X="12" Y="195"/>
@@ -310,7 +310,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="475"/>
         <CursorPos X="23" Y="500"/>
-        <UsageCount Value="157"/>
+        <UsageCount Value="158"/>
         <Bookmarks Count="1">
           <Item0 Y="637" ID="1"/>
         </Bookmarks>
@@ -1266,59 +1266,29 @@
         <UsageCount Value="11"/>
         <Loaded Value="True"/>
       </Unit>
+      <Unit>
+        <Filename Value="C:\Users\jschirrmacher\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgrabitmap.pas"/>
+        <UnitName Value="BGRABitmap"/>
+        <EditorIndex Value="22"/>
+        <TopLine Value="134"/>
+        <CursorPos X="14" Y="149"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\Users\jschirrmacher\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgrabitmaptypes.pas"/>
+        <UnitName Value="BGRABitmapTypes"/>
+        <EditorIndex Value="23"/>
+        <TopLine Value="42"/>
+        <CursorPos X="16" Y="59"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
     </Units>
     <OtherDefines Count="1">
       <Define0 Value="_DEBUG"/>
     </OtherDefines>
-    <JumpHistory HistoryIndex="29">
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1624" TopLine="1613"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1625" TopLine="1613"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1626" TopLine="1613"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1630" TopLine="1613"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1631" TopLine="1613"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1632" TopLine="1613"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1620" Column="27" TopLine="1605"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1632" Column="57" TopLine="1615"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1639" Column="48" TopLine="1618"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1614" Column="19" TopLine="1611"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="305" TopLine="302"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="702" Column="24" TopLine="702"/>
-      </Position>
+    <JumpHistory HistoryIndex="27">
       <Position>
         <Filename Value="maindlg.pas"/>
         <Caret Line="15" Column="34"/>
@@ -1388,6 +1358,46 @@
       <Position>
         <Filename Value="presentationdlg.pas"/>
         <Caret Line="201" Column="12" TopLine="172"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="1035" Column="18" TopLine="1016"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="582" TopLine="564"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="203" Column="15" TopLine="185"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="583" TopLine="566"/>
+      </Position>
+      <Position>
+        <Filename Value="C:\Users\jschirrmacher\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgrabitmap.pas"/>
+        <Caret Line="149" Column="14" TopLine="134"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="570" Column="95" TopLine="566"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="107" TopLine="72"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="106" Column="48" TopLine="76"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="214" Column="23" TopLine="186"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="191" Column="83" TopLine="185"/>
       </Position>
     </JumpHistory>
     <CustomSessionData Count="2">

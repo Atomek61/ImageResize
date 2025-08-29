@@ -124,6 +124,30 @@ msgstr "Box"
 msgid "Cosine"
 msgstr "Cosinus"
 
+#: imgres.scptdenoisedefault
+#, fuzzy
+msgctxt "imgres.scptdenoisedefault"
+msgid "Default"
+msgstr "Voreinstellung"
+
+#: imgres.scptdenoisehigh
+msgid "High"
+msgstr ""
+
+#: imgres.scptdenoiselow
+msgid "Low"
+msgstr ""
+
+#: imgres.scptdenoisemedium
+msgid "Medium"
+msgstr ""
+
+#: imgres.scptdenoisenone
+#, fuzzy
+msgctxt "imgres.scptdenoisenone"
+msgid "None"
+msgstr "Keine"
+
 #: imgres.scptfatal
 msgid "Fatal"
 msgstr "Fatal"
@@ -2044,3 +2068,4 @@ msgstr "Speichern"
 msgctxt "webutils.serrinvalidhtmlcolorfmt"
 msgid "Invalid web color '%s'."
 msgstr "Ungültige Web-Farbe '%s'."
+

@@ -113,6 +113,28 @@ msgstr ""
 msgid "Cosine"
 msgstr ""
 
+#: imgres.scptdenoisedefault
+msgctxt "imgres.scptdenoisedefault"
+msgid "Default"
+msgstr ""
+
+#: imgres.scptdenoisehigh
+msgid "High"
+msgstr ""
+
+#: imgres.scptdenoiselow
+msgid "Low"
+msgstr ""
+
+#: imgres.scptdenoisemedium
+msgid "Medium"
+msgstr ""
+
+#: imgres.scptdenoisenone
+msgctxt "imgres.scptdenoisenone"
+msgid "None"
+msgstr ""
+
 #: imgres.scptfatal
 msgid "Fatal"
 msgstr ""

@@ -58,6 +58,12 @@ resourcestring
   SCptSharpenLight          = 'Light';
   SCptSharpenStrong         = 'Strong';
 
+  SCptDenoiseDefault        = 'Default';
+  SCptDenoiseNone           = 'None';
+  SCptDenoiseLow            = 'Low';
+  SCptDenoiseMedium         = 'Medium';
+  SCptDenoiseHigh           = 'High';
+
 type
   TTagsSource = (tsEXIF, tsTagsFiles); // Tags from EXIF and/or .tags files
   TTagsSources = set of TTagsSource;
@@ -66,6 +72,7 @@ type
     ipMitchell, ipSpline, ipLanczos2, ipLanczos3, ipLanczos4, ipBestQuality);
   TTagsReport = (trTagsReport, trImgTags);
   TTagsReports = set of TTagsReport;
+  TDenoise = (dnNone, dnLow, dnMedium, dnHigh);
 
 const
   INTERPOLATION_NAMES :array[TInterpolation] of string = ('Default',
@@ -95,6 +102,10 @@ const
   SHARPEN_STRINGS :array[0..3] of string = (SCptSharpenDefault, SCptSharpenNone,
     SCptSharpenLight, SCptSharpenStrong);
 
+  DENOISE_NAMES :array[0..4] of string = ('Default', 'None', 'Low', 'Medium', 'High');
+
+  DENOISE_STRINGS :array[0..4] of string = (SCptDenoiseDefault, SCptDenoiseNone, SCptDenoiseLow, SCptDenoiseMedium, SCptDenoiseHigh);
+
 const
   IMGRESVER = '4.2';
   IMGRESCPR = 'imgres '+IMGRESVER+' © 2024 Jan Schirrmacher, www.atomek.de';
@@ -119,6 +130,7 @@ const
   DEFAULT_SHUFFLE           = false;
   DEFAULT_SHUFFLESEED       = 0;
   DEFAULT_SHARPEN           = 100;
+  DEFAULT_DENOISE           = 1;
   DEFAULT_FILETAGS          = nil;
   DEFAULT_COPYRIGHT         = '';
   DEFAULT_TAGSSOURCES       = [];
@@ -200,6 +212,7 @@ type
     FShuffle          :boolean;
     FShuffleSeed      :integer;
     FSharpen          :integer; // 0 = Off
+    FDenoise          :TDenoise; // 0 = Off
     FTagsSources      :TTagsSources;
     FTagKeys          :TStringArray; // 'Copyright',
     FCopyright        :string;
@@ -575,6 +588,9 @@ begin
         Print(Format(MsgScalingFmt, [
           ExtractFilename(SourceFilename), SourceSize.cx, SourceSize.cy, TargetSize.cx, TargetSize.cy]), MsgScalingLevel);
         TargetImg := Processor.ResampleImg(SourceImg, TargetSize);
+
+        // Median...
+        TargetImg.FilterMedian(moHighSmooth);
 
         // Sharpen...
         if Processor.FSharpen>0 then begin
