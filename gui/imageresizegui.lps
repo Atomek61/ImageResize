@@ -59,11 +59,11 @@
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="21"/>
-        <TopLine Value="47"/>
-        <CursorPos Y="75"/>
+        <TopLine Value="577"/>
+        <CursorPos Y="594"/>
         <UsageCount Value="200"/>
         <Bookmarks Count="1">
-          <Item0 Y="595" Left="1" Top="577"/>
+          <Item0 Y="599" Left="1" Top="577"/>
         </Bookmarks>
         <Loaded Value="True"/>
       </Unit>
@@ -1270,8 +1270,8 @@
         <Filename Value="C:\Users\jschirrmacher\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgrabitmap.pas"/>
         <UnitName Value="BGRABitmap"/>
         <EditorIndex Value="22"/>
-        <TopLine Value="134"/>
-        <CursorPos X="14" Y="149"/>
+        <TopLine Value="135"/>
+        <CursorPos X="20" Y="149"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
       </Unit>
@@ -1288,26 +1288,7 @@
     <OtherDefines Count="1">
       <Define0 Value="_DEBUG"/>
     </OtherDefines>
-    <JumpHistory HistoryIndex="27">
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="15" Column="34"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="130" Column="12" TopLine="120"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="131" Column="11" TopLine="120"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="1333" Column="3" TopLine="1330"/>
-      </Position>
+    <JumpHistory HistoryIndex="29">
       <Position>
         <Filename Value="maindlg.pas"/>
         <Caret Line="25" Column="3" TopLine="7"/>
@@ -1398,6 +1379,34 @@
       <Position>
         <Filename Value="..\src\imgres.pas"/>
         <Caret Line="191" Column="83" TopLine="185"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="593" Column="3" TopLine="569"/>
+      </Position>
+      <Position>
+        <Filename Value="C:\Users\jschirrmacher\AppData\Local\lazarus\onlinepackagemanager\packages\BGRABitmap\bgrabitmap\bgrabitmap.pas"/>
+        <Caret Line="149" TopLine="134"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="594" TopLine="569"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="469" Column="7" TopLine="453"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="592" TopLine="572"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="593" Column="31" TopLine="576"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\imgres.pas"/>
+        <Caret Line="594" Column="59" TopLine="576"/>
       </Position>
     </JumpHistory>
     <CustomSessionData Count="2">

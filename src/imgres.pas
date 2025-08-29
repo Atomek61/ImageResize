@@ -468,7 +468,7 @@ var
   TargetFilenameTemplateEngine :Templates.TEngine;
   TargetFilename :string;
   TargetImg :TBGRABitmap;
-  SharpImg :TBGRABitmap;
+  TempImg :TBGRABitmap;
   Writer :TFPCustomImageWriter;
   Size :integer;
   SourceSize :TSize;
@@ -589,14 +589,18 @@ begin
           ExtractFilename(SourceFilename), SourceSize.cx, SourceSize.cy, TargetSize.cx, TargetSize.cy]), MsgScalingLevel);
         TargetImg := Processor.ResampleImg(SourceImg, TargetSize);
 
-        // Median...
-        TargetImg.FilterMedian(moHighSmooth);
+        // Denoise...
+        if Processor.FDenoise <> dnNone then begin
+          TempImg := TargetImg.FilterMedian(TMedianOption(Processor.FDenoise));
+          TargetImg.Free;
+          TargetImg := TempImg;
+        end;
 
         // Sharpen...
         if Processor.FSharpen>0 then begin
-          SharpImg := TargetImg.FilterSharpen(Processor.FSharpen/100.0);
+          TempImg := TargetImg.FilterSharpen(Processor.FSharpen/100.0);
           TargetImg.Free;
-          TargetImg := SharpImg;
+          TargetImg := TempImg;
         end;
 
         ////////////////////////////////////////////////////////////////////////////
