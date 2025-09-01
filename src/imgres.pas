@@ -103,7 +103,7 @@ const
     SCptSharpenLight, SCptSharpenStrong);
 
   DENOISE_NAMES :array[0..4] of string = ('Default', 'None', 'Low', 'Medium', 'High');
-
+  DENOISE_VALUES :array[0..4] of TDenoise = (dnMedium, dnNone, dnLow, dnMedium, dnHigh);
   DENOISE_STRINGS :array[0..4] of string = (SCptDenoiseDefault, SCptDenoiseNone, SCptDenoiseLow, SCptDenoiseMedium, SCptDenoiseHigh);
 
 const
@@ -275,6 +275,7 @@ type
     class function TryStrToTagsSources(const Str :string; out Value :TTagsSources) :boolean;
     class function TryStrToTagsReports(const Str :string; out Value :TTagsReports) :boolean;
     class procedure StrToWatermarkParams(const Str :string; out Value :TWatermarkParams);
+    class function TryStrToDenoise(const Str :string; out Value :TDenoise) :boolean;
     property Active :boolean read FActive write SetActive;
     property Success :boolean read FSuccess;
     property SourceFilenames :TStrings read GetSourceFilenames write SetSourceFilenames;
@@ -1197,6 +1198,18 @@ begin
   end;
   if (n>2) and not (TryStrToFloat(Items[2], Value.Opacity, FormatSettings) and (Value.Opacity>=0.0) and (Value.Opacity<=100.0)) then
     raise Exception.CreateFmt(SErrInvalidMrkOpacityFmt, [Items[2]]);
+end;
+
+class function TProcessor.TryStrToDenoise(const Str: string; out Value: TDenoise): boolean;
+var
+  i :integer;
+begin
+  for i:=0 to High(DENOISE_STRINGS) do
+    if SameText(Str, DENOISE_STRINGS[i]) then begin
+      Value := DENOISE_VALUES[i];
+      Exit(true);
+    end;
+  result := false;
 end;
 
 class function TProcessor.TryStrToInterpolation(const Str: string; out Value: TInterpolation): boolean;

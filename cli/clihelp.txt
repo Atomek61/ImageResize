@@ -34,6 +34,7 @@ short long            parameter comment
                                 sequence. A fixed value will always shuffle a list in the same way if the
                                 number of files has not changed.
    -z -sharpen        0..100..  Sharpen, a value >= 0: 0 off, 50 light, 100 good, 200 strong
+   -o -denoise        level     Median de-noising: low, medium, high
    -m -meta           sources   EXIF | TAGS | EXIF,TAGS
                                 EXIF loads tags from origin files, TAGS from .tags files
    -e -exif           taglist   Writes certain metadata into the resized files.

@@ -19,6 +19,7 @@ const
   ERRINVALIDDSTFOLDER = 'Invalid parameter dstfolder.';
   ERRINVALIDSHAKESEED = 'Invalid shuffle seed value, 0..n expected.';
   ERRINVALIDSHARPEN = 'Invalid sharpening amount value, 0..n expected.';
+  ERRINVALIDDENOISE = 'Invalid denoising value - default, none, low, medium or high expected.';
   ERRNOSRCFILES = 'No source files found.';
 
 type
@@ -82,6 +83,7 @@ var
   Shuffle :boolean;
   ShuffleSeed :integer;
   Sharpen :integer;
+  Denoise :TDenoise;
   TagsSources :TTagsSources;
   TagKeys :TStringArray;
   Copyright :string;
@@ -240,16 +242,19 @@ begin
 
     Param := GetOptionValue('z', 'sharpen');
     if Param<>'' then begin
-      inc(OptionCount, 1);
-      Param := GetOptionValue('z', 'sharpen');
-      if Param<>'' then begin
-        inc(OptionCount, 1);
-        if not TryStrToInt(Param, Sharpen) or (Sharpen<0) then
-          raise Exception.Create(ERRINVALIDSHARPEN);
-      end else
-        Sharpen := 100;
+      inc(OptionCount, 2);
+      if not TryStrToInt(Param, Sharpen) or (Sharpen<0) then
+        raise Exception.Create(ERRINVALIDSHARPEN);
     end else
       Sharpen := 0;
+
+    Param := GetOptionValue('o', 'denoise');
+    if Param<>'' then begin
+      inc(OptionCount, 2);
+      if not TProcessor.TryStrToDenoise(Param, Denoise) then
+        raise Exception.Create(ERRINVALIDDENOISE);
+    end else
+      Denoise := dnNone;
 
     // DryRun flag
     DryRun := HasOption('d', 'dryrun');
