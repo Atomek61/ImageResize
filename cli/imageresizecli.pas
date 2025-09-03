@@ -12,7 +12,7 @@ uses
 
 const
   IMGRESCLIVER = '4.2';
-  IMGRESCLICPR = 'imgres CLI '+IMGRESCLIVER+' for engine '+IMGRESVER+' (c) 2024 Jan Schirrmacher, www.atomek.de';
+  IMGRESCLICPR = 'imgres CLI '+IMGRESCLIVER+' for engine '+IMGRESVER+' (c) 2025 Jan Schirrmacher, www.atomek.de';
 
   ERRINVALIDNUMBEROFPARAMSFMT = 'Invalid number of parameters %d, %d expected.';
   ERRINVALIDSRCFILENAME = 'Invalid parameter srcfilename.';
@@ -318,6 +318,7 @@ begin
     Processor.Shuffle := Shuffle;
     Processor.ShuffleSeed := ShuffleSeed;
     Processor.Sharpen := Sharpen;
+    Processor.Denoise := Denoise;
     Processor.TagsSources := TagsSources;
     Processor.TagKeys := TagKeys;
     Processor.Copyright := Copyright;

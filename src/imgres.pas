@@ -294,6 +294,7 @@ type
     property Shuffle :boolean read FShuffle write FShuffle;
     property ShuffleSeed :integer read FShuffleSeed write SetShuffleSeed;
     property Sharpen :integer read FSharpen write SetSharpen;
+    property Denoise :TDenoise read FDenoise write FDenoise;
     property TagsSources :TTagsSources read FTagsSources write FTagsSources;
     property TagKeys :TStringArray read FTagKeys write FTagKeys;
     property Copyright :string read FCopyright write FCopyright;
