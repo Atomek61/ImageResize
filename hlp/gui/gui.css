@@ -88,11 +88,9 @@ td {
 }
 
 .simple-table {border-collapse: collapse;}
-.simple-table td{
-  padding: 0.5em;
-}
 .simple-table td, .simple-table th {
   border: 2px solid var(--backcolor2);
+  padding-left: 0.5em; padding-right: 0.5em;
 }
 
 .cmd {
@@ -152,4 +150,8 @@ td {
 
 .fn-table td:first-child {
   white-space: nowrap;  
+}
+
+.var-table td:first-child {
+  color: rgb(193, 235, 125);
 }

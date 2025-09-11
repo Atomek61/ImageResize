@@ -30,7 +30,7 @@
                       - a path to a folder with semicolon-separated wildcards
   target              The folder where to store the resulting resampled and resized files.
                       If the resulting filenames can conflict and this is not solved by renaming
-                      then the folder must contain the placeholder ${SIZE} or ${SIZENAME}.
+                      then the folder must contain the placeholder $(SIZE) or $(SIZENAME).
                       Non-existend folders are created.
   size                Is a size in pixels or a comma-separated list of sizes, where the size refers to
                       the longer side of the image.
@@ -46,16 +46,17 @@ short long            parameter comment
                                 Lanczos2, Lanczos3, Lanczos4, BestQuality
                                 Default is BestQuality: Mitchell on up- and Spline on down-scaling
    -r -rename         template  Rename files by a template with placeholders.
-                                {SIZE} and {INDEX[:n[,d]]} with n=startindex, d=number of digits/auto
-   -n -sizenames      names     If using the {SIZENAME} placeholder in file renaming template, or in
+                                $(SIZE) and $(INDEX.ifmt(n,3)) with n=startindex, d=number of digits/auto
+   -n -sizenames      names     If using the $(SIZENAME) placeholder in file renaming template, or in
                                 in the target folders name, then each size must have a corresponding
                                 list of comma-separated names
    -w -watermark      file.png  A PNG watermark file and optional size, position and opacity, see example
-   -s -shuffle        0..n      Mixes the image list, makes sense together with -r.
-                                A random seed of 0 (assumed if ommited) means an unpredictable sequence.
-                                A fixed value will always shuffle a list in the same way if the number
-                                of files has not changed.
+   -s -shuffle        [0..n]    Mixes the image list, makes sense together with -r.
+                                An optional random seed of 0 (assumed if ommited) means an unpredictable
+                                sequence. A fixed value will always shuffle a list in the same way if the
+                                number of files has not changed.
    -z -sharpen        0..100..  Sharpen, a value >= 0: 0 off, 50 light, 100 good, 200 strong
+   -o -denoise        level     Median de-noising: none, low, medium, high
    -m -meta           sources   EXIF | TAGS | EXIF,TAGS
                                 EXIF loads tags from origin files, TAGS from .tags files
    -e -exif           taglist   Writes certain metadata into the resized files.
@@ -63,7 +64,7 @@ short long            parameter comment
                                 if no meta sources is defined, EXIF is assumed.
    -c -copyright      "text"    Writes (overrides) the EXIF or .tags copyright tag.
    -l -listing        listings  Exports infos - listings is a comma-separated combination of "tagsreport"
-                                and "imgtags", e.g. "imgtags" or "TagsReports,ImgTags".
+                                and "imgtags", e.g. "imgtags" or "tagsreports,imgtags".
    -t -threads        0..n      Number of threads to use, 0 means maximum
    -x -stoponerror              Stop all tasks if an error occures
    -h -help                     Outputs this text
@@ -75,10 +76,10 @@ Examples:
   imgres myimage.png \Images\res640 640
     resamples a single png image with the default quality.
 
-  imgres ..\theimage.jpg C:\TEMP\res{SIZE} 480,640,800 -j 50
+  imgres ..\theimage.jpg C:\TEMP\res$(SIZE) 480,640,800 -j 50
     resamples a single jpg with 3 resolutions and stores them to different folders at 50% quality
 
-  imgres @mylist.txt img{SIZE} 640,1920 -j 1 -p maximum -q
+  imgres @mylist.txt img$(SIZE) 640,1920 -j 1 -p maximum -q
     resamples a list of files which path/name is stored in a file, with smallest file sizes in quiet mode.
 
   imgres myimages\*.jpg;*.png \MyImages 640 -w mywatermark.png:10,1,98:20
@@ -87,8 +88,8 @@ Examples:
   imgres DSC4205.jpg C:\TEMP 640 -c "(c) 1941 ACME"
     inserts an EXIF copyright note
 
-  More info at www.atomek.de/imageresize/cli/index.html
-`;
+  More info at www.atomek.de/imageresize/hlp43/gui/en/index.htm
+  `;
       
       window.onload = (event) => {      
         var list = document.getElementsByClassName("clitext");
@@ -124,15 +125,15 @@ Examples:
         <h1>ImageResize - free Tool for scaling JPEG and PNG Images</h1>
 
         <table class="styled-table">
-          <tr><td>GUI+CLI</td><td>Complete</td><td>Version 4.2</td><td>Windows 64Bit</td><td>2024-11-01</td><td><a href="../download/InstallImageResize.zip">Download</li></a></td></tr>
-          <tr><td>CLI</td><td>Commandline Interface</td><td>Version 4.2</td><td>Windows 64Bit</td><td>2024-11-01</td><td><a href="../download/imgres.zip">Download</li></a></td></tr>
+          <tr><td>GUI+CLI</td><td>Complete</td><td>Version 4.3</td><td>Windows 64Bit</td><td>2025-09-07</td><td><a href="../download/InstallImageResize.zip">Download</li></a></td></tr>
+          <tr><td>CLI</td><td>Commandline Interface</td><td>Version 4.3</td><td>Windows 64Bit</td><td>2025-09-07</td><td><a href="../download/imgres.zip">Download</li></a></td></tr>
           <tr><td>Source code</td><td>on GitHub</td><td colspan="3">https://github.com/Atomek61/ImageResize.git<td><a href="https://github.com/Atomek61/ImageResize.git">Repository</a></td></tr>
         </table>
 
-        <h2>Version 4.2 November 2024 - Windows 64 Bit</h2>
+        <h2>Version 4.3 September 2025 - Windows 64 Bit</h2>
         <p style="font-size: 16pt; font-style: bold;">          
           <ul>
-            <li>Sharpening</li>
+            <li>Sharpening, Denoising</li>
             <li>Sizes table editor</li>
             <li>Enhanced Template Engine</li>
             <li>Bugfixes</li>
@@ -162,7 +163,7 @@ Examples:
         
         <h2 id="license">Copyright and license</h2>
         <div class="license-box">
-          <p>ImageResize Copyright (c) 2024 Jan Schirrmacher, www.atomek.de</p>
+          <p>ImageResize Copyright (c) 2025 Jan Schirrmacher, www.atomek.de</p>
           <p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy and merge copies of the Software, subject to the following conditions:</p>
           <p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
           <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHOR OR COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
@@ -266,7 +267,12 @@ Examples:
 
         <h2 id="history">Version History</h2>      
         <ul>
-          <li>V4.2 Sharpening</li>
+          <li>V4.3 Denoising</li>
+          <ul>
+            <li>Denoising</li>
+            <li>Improved HDPI behaviour</li>
+          </ul>
+          <li>V4.2 Sharpening (published with 4.3)</li>
           <ul>
             <li>Sharpening</li>
             <li>Enhanced Template Engine</li>
@@ -275,7 +281,7 @@ Examples:
           <ul>
             <li>Web Presentation</li>
           </ul>
-          <li>V3.5 New Design (unpublished)</li>
+          <li>V3.5 New Design (published with 4.0)</li>
           <ul>
             <li>GUI face lifting</li>
             <li>More interpolation algorithms</li>
@@ -406,7 +412,7 @@ Examples:
     </main>
     
     <footer>
-      © 2024 Jan Schirrmacher
+      © 2025 Jan Schirrmacher
     </footer>
   </body>
 </html>

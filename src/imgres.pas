@@ -2,7 +2,7 @@ unit imgres;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
-//  ImageResize (c) 2024 Jan Schirrmacher, www.atomek.de
+//  ImageResize (c) 2025 Jan Schirrmacher, www.atomek.de
 //
 //  See https://github.com/Atomek61/ImageResize.git for licensing
 //
@@ -75,6 +75,37 @@ type
   TDenoise = (dnNone, dnLow, dnMedium, dnHigh);
 
 const
+  IMGRESVER = '4.3';
+  IMGRESCPR = 'imgres '+IMGRESVER+' © 2025 Jan Schirrmacher, www.atomek.de';
+
+  TAGSREPORTFILETITLE       = '.tagsreport';
+  IMAGEINFOSFILETITLE       = '.imgtags';
+
+  DEFAULT_PNGCOMPRESSION    = 2;
+  DEFAULT_JPEGQUALITY       = 75;
+  DEFAULT_INTERPOLATION     = ipLanczos2;
+  DEFAULT_MRKSIZE           = 20.0;
+  DEFAULT_MRKX              = 98.0;
+  DEFAULT_MRKY              = 98.0;
+  DEFAULT_MRKOPACITY        = 50.0;
+  DEFAULT_THREADCOUNT       = 0;
+  DEFAULT_STOPONERROR       = true;
+  DEFAULT_RENENABLED        = false;
+  DEFAULT_RENFMTSTR         = 'img%2:s.%1:s';
+  DEFAULT_RENFILETEMPLATE   = 'img$(INDEX.ifmt(1)).$(FILEEXT)';
+  DEFAULT_RENINDEXSTART     = 1;
+  DEFAULT_RENINDEXDIGITS    = 3;
+  DEFAULT_SHUFFLE           = false;
+  DEFAULT_SHUFFLESEED       = 0;
+  DEFAULT_SHARPEN           = 100;
+  DEFAULT_DENOISE           = dnNone;
+  DEFAULT_FILETAGS          = nil;
+  DEFAULT_COPYRIGHT         = '';
+  DEFAULT_TAGSSOURCES       = [];
+  DEFAULT_TAGSREPORTS       = [];
+  DEFAULT_DRYRUN            = false;
+
+const
   INTERPOLATION_NAMES :array[TInterpolation] of string = ('Default',
     'Stretch', 'Box', 'Linear', 'HalfCosine', 'Cosine', 'Bicubic',
     'Mitchell', 'Spline', 'Lanczos2', 'Lanczos3', 'Lanczos4', 'BestQuality');
@@ -95,47 +126,14 @@ const
   PNGCOMPRESSION_STRINGS :array[0..3] of string = (SCptPNGCompressionDefault,
     SCptPNGCompressionNone, SCptPNGCompressionFastest, SCptPNGCompressionMax);
 
-  SHARPEN_VALUES :array[0..3] of integer = (100, 0, 50, 200);
-
+  SHARPEN_VALUES :array[0..3] of integer = (DEFAULT_SHARPEN, 0, 50, 200);
   SHARPEN_NAMES :array[0..3] of string = ('Default', 'None', 'Light', 'Strong');
-
   SHARPEN_STRINGS :array[0..3] of string = (SCptSharpenDefault, SCptSharpenNone,
     SCptSharpenLight, SCptSharpenStrong);
 
+  DENOISE_VALUES :array[0..4] of TDenoise = (DEFAULT_DENOISE, dnNone, dnLow, dnMedium, dnHigh);
   DENOISE_NAMES :array[0..4] of string = ('Default', 'None', 'Low', 'Medium', 'High');
-  DENOISE_VALUES :array[0..4] of TDenoise = (dnMedium, dnNone, dnLow, dnMedium, dnHigh);
   DENOISE_STRINGS :array[0..4] of string = (SCptDenoiseDefault, SCptDenoiseNone, SCptDenoiseLow, SCptDenoiseMedium, SCptDenoiseHigh);
-
-const
-  IMGRESVER = '4.2';
-  IMGRESCPR = 'imgres '+IMGRESVER+' © 2024 Jan Schirrmacher, www.atomek.de';
-
-  TAGSREPORTFILETITLE       = '.tagsreport';
-  IMAGEINFOSFILETITLE       = '.imgtags';
-
-  DEFAULTPNGCOMPRESSION     = 2;
-  DEFAULTJPEGQUALITY        = 75;
-  DEFAULT_INTERPOLATION     = ipLanczos2;
-  DEFAULT_MRKSIZE           = 20.0;
-  DEFAULT_MRKX              = 98.0;
-  DEFAULT_MRKY              = 98.0;
-  DEFAULT_MRKOPACITY        = 50.0;
-  DEFAULT_THREADCOUNT       = 0;
-  DEFAULT_STOPONERROR       = true;
-  DEFAULT_RENENABLED        = false;
-  DEFAULT_RENFMTSTR         = 'img%2:s.%1:s';
-  DEFAULT_RENFILETEMPLATE   = 'img$(INDEX.ifmt(1)).$(FILEEXT)';
-  DEFAULT_RENINDEXSTART     = 1;
-  DEFAULT_RENINDEXDIGITS    = 3;
-  DEFAULT_SHUFFLE           = false;
-  DEFAULT_SHUFFLESEED       = 0;
-  DEFAULT_SHARPEN           = 100;
-  DEFAULT_DENOISE           = 1;
-  DEFAULT_FILETAGS          = nil;
-  DEFAULT_COPYRIGHT         = '';
-  DEFAULT_TAGSSOURCES       = [];
-  DEFAULT_TAGSREPORTS       = [];
-  DEFAULT_DRYRUN            = false;
 
 type
 
@@ -212,7 +210,7 @@ type
     FShuffle          :boolean;
     FShuffleSeed      :integer;
     FSharpen          :integer; // 0 = Off
-    FDenoise          :TDenoise; // 0 = Off
+    FDenoise          :TDenoise; // dnNone
     FTagsSources      :TTagsSources;
     FTagKeys          :TStringArray; // 'Copyright',
     FCopyright        :string;
@@ -276,6 +274,10 @@ type
     class function TryStrToTagsReports(const Str :string; out Value :TTagsReports) :boolean;
     class procedure StrToWatermarkParams(const Str :string; out Value :TWatermarkParams);
     class function TryStrToDenoise(const Str :string; out Value :TDenoise) :boolean;
+    class function DenoiseToStr(Value :TDenoise) :string;
+    class function StrToDenoise(const Str :string) :TDenoise;
+    class function NameToDenoise(const Name :string) :TDenoise;
+    class function DenoiseToName(Value :TDenoise) :string;
     property Active :boolean read FActive write SetActive;
     property Success :boolean read FSuccess;
     property SourceFilenames :TStrings read GetSourceFilenames write SetSourceFilenames;
@@ -339,13 +341,15 @@ resourcestring
   SErrInvalidSharpenNameFmt       = 'Invalid sharpen value ''%s'' (Default, None, Light, Strong or any integer >= 0 expected)';
   SErrInvalidSharpenStringFmt     = 'Invalid sharpening amount ''%d'', 0..n expected';
   SErrInvalidSharpenStrFmt        = 'Invalid sharpening amount ''%s'', 0..n expected';
+  SErrInvalidDenoiseStrFmt        = 'Invalid denoise value ''%s'', None, Low, Medium or High expected.';
+  SErrInvalidDenoiseNameFmt       = 'Invalid denoise name ''%s'', None, Low, Medium or High expected.';
   SErrInvalidRenamingParamFmt     = 'Invalid renaming parameter ''%s''';
   SErrInvalidINDEXPlaceholderFmt  = 'Invalid INDEX placeholder parameters ''%s''';
   SErrInvalidINDEXStartFmt        = 'Invalid INDEX start ''%s''';
   SErrInvalidINDEXDigitsFmt       = 'Invalid INDEX digits number ''%s''';
   SErrInvalidINDEXParamCountFmt   = 'Invalid INDEX parameter count ''%s'' (2 expected)';
   SErrInvalidPlaceholder          = 'Unknown or invalid placeholder';
-  SInfResultFmt                   = 'Images: %d, Filter: %s, Sizes: %d, Tasks: %d, Successful: %d, Failed: %d, Elapsed: %.2fs';
+  SInfResultFmt                   = 'Images: %d, Interpolation: %s, Sizes: %d, Tasks: %d, Successful: %d, Failed: %d, Elapsed: %.2fs';
   SErrInvalidInterpolationFmt     = 'Invalid interpolation name ''%s''';
   SErrInvalidMrkParamCountFmt     = 'Invalid number of watermark parameters ''%s'' (1, 2 or 3 expected)';
   SErrInvalidMrkFloatCountFmt     = 'Invalid watermark size/pos parameters ''%s'' (3 comma-separated floats expected)';
@@ -639,13 +643,13 @@ begin
           TargetFiletitle := ExtractFilename(SourceFilename);
           if Length(TargetFileExt)>0 then
             TargetFiletitle := Copy(TargetFiletitle, 1, Length(TargetFiletitle)-Length(TargetFileExt)-1);
-          TargetFilenameTemplateEngine.Load('FILENAME', ExtractFilename(SourceFilename));
-          TargetFilenameTemplateEngine.Load('FILETITLE', TargetFiletitle);
-          TargetFilenameTemplateEngine.Load('FILEEXT', TargetFileExt);
-          TargetFilenameTemplateEngine.Load('INDEX', IntToStr(SourceFileIndex));
-          TargetFilenameTemplateEngine.Load('SIZE', IntToStr(Size));
-          TargetFilenameTemplateEngine.Load('SIZENAME', ifthen(Processor.SizeNames[i]='', IntToStr(Size), Processor.SizeNames[i]));
-          TargetFilenameTemplateEngine.Load('INTERPOLATION', INTERPOLATION_NAMES[Processor.Interpolation]);
+          TargetFilenameTemplateEngine['FILENAME']  := ExtractFilename(SourceFilename);
+          TargetFilenameTemplateEngine['FILETITLE'] := TargetFiletitle;
+          TargetFilenameTemplateEngine['FILEEXT']   := TargetFileExt;
+          TargetFilenameTemplateEngine['INDEX']     := IntToStr(SourceFileIndex);
+          TargetFilenameTemplateEngine['SIZE']      := IntToStr(Size);
+          TargetFilenameTemplateEngine['SIZENAME']  := ifthen(Processor.SizeNames[i]='', IntToStr(Size), Processor.SizeNames[i]);
+          TargetFilenameTemplateEngine['INTERPOLATION'] := INTERPOLATION_NAMES[Processor.Interpolation];
           TargetFiletitleExt := TargetFilenameTemplateEngine.Compile(Processor.TargetFilename);
         end else
           TargetFiletitleExt := ExtractFilename(SourceFilename);
@@ -700,8 +704,8 @@ constructor TProcessor.Create;
 begin
   FSourceFilenames  := TStringList.Create;
   FSizes            := nil;
-  FJPEGQuality      := DEFAULTJPEGQUALITY;
-  FPNGCompression   := DEFAULTPNGCOMPRESSION;
+  FJPEGQuality      := DEFAULT_JPEGQUALITY;
+  FPNGCompression   := DEFAULT_PNGCOMPRESSION;
   Interpolation     := DEFAULT_INTERPOLATION;
   with FWatermarkParams do begin
     Filename  := '';
@@ -716,6 +720,7 @@ begin
   FShuffle          := DEFAULT_SHUFFLE;
   FShuffleSeed      := DEFAULT_SHUFFLESEED;
   FSharpen          := DEFAULT_SHARPEN;
+  FDenoise          := DEFAULT_DENOISE;
   FTagsSources      := DEFAULT_TAGSSOURCES;
   FTagKeys          := nil;
   FCopyright        := DEFAULT_COPYRIGHT;
@@ -798,7 +803,7 @@ var
   Task :TImageTask;
   Tasks :TTasks;
   Dispatcher :TDispatcher;
-  TargetFolderTemplateEngine :templates.TEngine;
+  SizeTemplateEngine :templates.TEngine;
   i, j, n, m :integer;
   Item :string;
   TagsFilename :string;
@@ -818,7 +823,8 @@ begin
   ProcRes     := TProcessorResources.Create;
   Tasks       := TTasks.Create;
   Dispatcher  := TDispatcher.Create;
-  TargetFolderTemplateEngine := templates.TEngine.Create;
+  SizeTemplateEngine := templates.TEngine.Create;
+  SizeTemplateEngine.RegisterFunction('ifmt', ifmt);
   try
 
     if FDryRun then
@@ -869,8 +875,8 @@ begin
     m := Length(FSizes);
 
     // Check, if multiple sizes, then either SIZE or SIZENAME must be in folder or in renamed filename
-    ProcRes.IsTargetFileRenamingStrategy := Rename and TargetFolderTemplateEngine.ContainsOneOf(FTargetFilename, ['SIZE', 'SIZENAME'], DOSDELIMITERS);
-    ProcRes.IsMultipleTargetFolderStrategy := TargetFolderTemplateEngine.ContainsOneOf(FTargetFolder, ['SIZE', 'SIZENAME'], DOSDELIMITERS);
+    ProcRes.IsTargetFileRenamingStrategy := Rename and SizeTemplateEngine.ContainsOneOf(FTargetFilename, ['SIZE', 'SIZENAME'], DOSDELIMITERS);
+    ProcRes.IsMultipleTargetFolderStrategy := SizeTemplateEngine.ContainsOneOf(FTargetFolder, ['SIZE', 'SIZENAME'], DOSDELIMITERS);
     if (Length(FSizes)>1) and not ProcRes.IsMultipleTargetFolderStrategy and not ProcRes.IsTargetFileRenamingStrategy then
         raise Exception.Create(SErrMultipleSizes);
 
@@ -880,10 +886,9 @@ begin
     SetLength(ProcRes.TargetFolders, m);
     if ProcRes.IsMultipleTargetFolderStrategy then begin
       for i:=0 to m-1 do begin
-        TargetFolderTemplateEngine.Load('SIZE', IntToStr(FSizes[i]));
-        TargetFolderTemplateEngine.Load('SIZENAME', ifthen(FSizeNames[i]='', IntToStr(FSizes[i]), FSizeNames[i]));
-        ProcRes.TargetFolders[i] := IncludeTrailingPathDelimiter(ExpandFilename(TargetFolderTemplateEngine.Compile(FTargetFolder)));
-        TargetFolderTemplateEngine.Clear;
+        SizeTemplateEngine['SIZE'] := IntToStr(FSizes[i]);
+        SizeTemplateEngine['SIZENAME'] := ifthen(FSizeNames[i]='', IntToStr(FSizes[i]), FSizeNames[i]);
+        ProcRes.TargetFolders[i] := IncludeTrailingPathDelimiter(ExpandFilename(SizeTemplateEngine.Compile(FTargetFolder)));
       end;
     end else
       for i:=0 to m-1 do
@@ -912,17 +917,19 @@ begin
     if FWatermarkParams.Filename='' then begin
       SetLength(ProcRes.MrkImages, 0);
     end else begin
-      if Pos('$(SIZE)', FWatermarkParams.Filename)>0 then begin
-        SetLength(ProcRes.MrkImages, m);
-        for i:=0 to m-1 do begin
-          Item := ReplaceStr(FWatermarkParams.Filename, '$(SIZE)', IntToStr(FSizes[i]));
-          Print(Format(SMsgLoadMrkFileFmt, [ExtractFilename(Item)]));
-          ProcRes.MrkImages[i] := TBGRABitmap.Create(Item);
-        end;
-      end else begin
+      if not TEngine.ContainsOneOf(FWatermarkParams.Filename, ['SIZE', 'SIZENAME'], DOSDELIMITERS) then begin
         SetLength(ProcRes.MrkImages, 1);
         Print(Format(SMsgLoadMrkFileFmt, [ExtractFilename(FWatermarkParams.Filename)]));
         ProcRes.MrkImages[0] := TBGRABitmap.Create(FWatermarkParams.Filename);
+      end else begin
+        SetLength(ProcRes.MrkImages, m);
+        for i:=0 to m-1 do begin
+          SizeTemplateEngine['SIZE'] := IntToStr(FSizes[i]);
+          SizeTemplateEngine['SIZENAME'] := FSizeNames[i];
+          Item := SizeTemplateEngine.Compile(FWatermarkParams.Filename);
+          Print(Format(SMsgLoadMrkFileFmt, [ExtractFilename(Item)]));
+          ProcRes.MrkImages[i] := TBGRABitmap.Create(Item);
+        end;
       end;
     end;
 
@@ -977,7 +984,7 @@ begin
     Dispatcher.Free;
     Tasks.Free;
     ProcRes.Free;
-    TargetFolderTemplateEngine.Free;
+    SizeTemplateEngine.Free;
     FActive := false;
   end;
 end;
@@ -1068,7 +1075,7 @@ class function TProcessor.TryStrToJPEGQuality(const Str :string; out Value :inte
 begin
   result := TryStrToInt(Str, Value);
   if not result then begin
-    Value := DEFAULTJPEGQUALITY;
+    Value := DEFAULT_JPEGQUALITY;
     result := true;
   end else begin
     if Value<1 then Value := 1;
@@ -1086,7 +1093,7 @@ class function TProcessor.JPEGQualityToStr(Value :integer) :string;
 begin
   if Value<1 then Value := 1;
   if Value>100 then Value := 100;
-  if Value=DEFAULTJPEGQUALITY then
+  if Value=DEFAULT_JPEGQUALITY then
     result := JPEGQUALITY_NAMES[0]
   else
     result := IntToStr(Value);
@@ -1211,6 +1218,38 @@ begin
       Exit(true);
     end;
   result := false;
+end;
+
+class function TProcessor.DenoiseToStr(Value: TDenoise): string;
+begin
+  if Value=DEFAULT_DENOISE then
+    result := DENOISE_STRINGS[0]
+  else
+    result := DENOISE_STRINGS[1+integer(Value)];
+end;
+
+class function TProcessor.StrToDenoise(const Str: string): TDenoise;
+begin
+  if not TryStrToDenoise(Str, result) then
+    raise Exception.CreateFmt(SErrInvalidDenoiseStrFmt, [Str]);
+end;
+
+class function TProcessor.NameToDenoise(const Name: string): TDenoise;
+var
+  i :integer;
+begin
+  for i:=0 to High(DENOISE_NAMES) do
+    if SameText(Name, DENOISE_NAMES[i]) then
+      Exit(DENOISE_VALUES[i]);
+  raise Exception.CreateFmt(SErrInvalidDenoiseNameFmt, [Name]);
+end;
+
+class function TProcessor.DenoiseToName(Value: TDenoise): string;
+begin
+  if Value = DEFAULT_DENOISE then
+    result := DENOISE_NAMES[0]
+  else
+    result := DENOISE_NAMES[1 + integer(Value)];
 end;
 
 class function TProcessor.TryStrToInterpolation(const Str: string; out Value: TInterpolation): boolean;

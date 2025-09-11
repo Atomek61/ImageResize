@@ -2,7 +2,7 @@ unit maindlg;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
-//  ImageResize (c) 2024 Jan Schirrmacher, www.atomek.de
+//  ImageResize (c) 2025 Jan Schirrmacher, www.atomek.de
 //
 //  See https://github.com/Atomek61/ImageResize.git for licensing
 //
@@ -28,8 +28,8 @@ const
   LM_RUN                = LM_USER + 1;
 
   GUIVER_APP            = 'ImageResize';
-  GUIVER_VERSION        = '4.2';
-  GUIVER_DATE           = '2024-10-27';
+  GUIVER_VERSION        = '4.3';
+  GUIVER_DATE           = '2025-09-07';
 
   GUIVER                :TVersionManifest = (App: GUIVER_APP; Version: GUIVER_VERSION; Date: GUIVER_DATE; Hint: '');
 
@@ -38,14 +38,15 @@ const
   //APPGITHUBURL          = 'https://github.com/Atomek61/ImageResize';
   GUIVERURL             = 'https://www.atomek.de/imageresize/download/version.manifest';
 
-  IMGRESGUICPR          =  GUIVER_APP+' '+GUIVER_VERSION+' © 2024 Jan Schirrmacher, www.atomek.de';
+  IMGRESGUICPR          =  GUIVER_APP+' '+GUIVER_VERSION+' © 2025 Jan Schirrmacher, www.atomek.de';
 
   PRJTYPE               = 'IRS';
   PRJVERSION200         = '200';
   PRJVERSION210         = '210';
   PRJVERSION300         = '300';
   PRJVERSION400         = '400';
-  PRJVERSION            = '420';
+  PRJVERSION420         = '420';
+  PRJVERSION            = '430';
 
   SETTYPE               = 'IST';
   SETVERSION            = '100';
@@ -106,6 +107,7 @@ type
   end;
 
   TMainDialog = class(TForm)
+    ActionParamInfo: TAction;
     ActionParamPresentation: TAction;
     ActionHelpScreenshots: TAction;
     ActionPresentation: TAction;
@@ -133,16 +135,21 @@ type
     ButtonClearSizes: TBitBtn;
     ButtonDeleteSize: TBitBtn;
     ComboBoxSharpen: TComboBox;
+    ComboBoxDenoise: TComboBox;
     ComboBoxSize: TComboBox;
     ComboBoxSizeName: TComboBox;
-    GroupBoxSharpen: TGroupBox;
+    EditTitle: TEdit;
+    GroupBoxFilter: TGroupBox;
     ImageStep1: TImage;
     ImageStep2: TImage;
     ImageStep3: TImage;
+    Label17: TLabel;
     Label19: TLabel;
+    LabelSharpen: TLabel;
     Label2: TLabel;
     Label22: TLabel;
     Label23: TLabel;
+    LabelDenoise: TLabel;
     LabelCurrentDir: TLabel;
     Label3: TLabel;
     Label7: TLabel;
@@ -150,6 +157,7 @@ type
     LabelRenTemplate: TLabel;
     ListBoxSizesPalette: TListBox;
     ListBoxSizes: TListBox;
+    MemoDescription: TMemo;
     ProgressBar: TPaintBox;
     PaintBoxMrkPreview: TBGRAGraphicControl;
     ButtonExecute: TBGRASpeedButton;
@@ -243,6 +251,7 @@ type
     MemoMessages: TRichMemo;
     SaveAsDialog: TSaveDialog;
     SaveAsDialogTagsReport: TSaveDialog;
+    TabSheetInfo: TTabSheet;
     TabSheetSrcFilenames: TTabSheet;
     TabSheetSrcFolder: TTabSheet;
     TabSheetTagging: TTabSheet;
@@ -254,7 +263,7 @@ type
     ToolBar: TToolBar;
     ToolBarSrc: TToolBar;
     ToolBarParameters: TToolBar;
-    ToolButtonPresentation: TToolButton;
+    Info: TToolButton;
     ToolButtonSep2: TToolButton;
     ToolButtonSep1: TToolButton;
     ToolButtonNew: TToolButton;
@@ -351,7 +360,6 @@ type
     // Project settings. Most of the settings are stored in the MainDialog controls.
     FProjectDir :string; // Only valid after loading from project file
     FProjectFilename :string;
-    FProjectDescription :string; // From project file
     FPresentationSettings :TPresentationSettings;
     FPresentationParamsList :TSettingsList;
     FSizeInfos :TSizeInfos;
@@ -420,7 +428,7 @@ resourcestring
   SCptProcessor                 = 'Processor';
   SMsgQuerySave                 = 'The project has been modified.'+#10+#10+'Do you want to save the changes?';
   SCptQuerySave                 = 'Project unsaved';
-  SMsgProjectDescriptionFmt     = 'Description: "%s"';
+  SMsgTitleFmt                  = 'Title: "%s"';
   SCptUnnamed                   = '<unnamed>';
   SErrInvalidShuffleSeed        = 'Invalid Shuffle Seed';
   SCptTitlePrefix               = 'ImageResize - ';
@@ -444,6 +452,7 @@ resourcestring
   SErrInvalidSizes              = 'Invalid Sizes string';
   SErrInvalidJpgQuality         = 'Invalid JPEG quality';
   SErrInvalidSharpen            = 'Invalid sharpen value';
+  SErrInvalidDenoiseValue       = 'Invalid denoise value';
   SErrInvalidMrkSize            = 'Invalid watermark size';
   SErrInvalidMrkXBrd            = 'Invalid watermark x border';
   SErrInvalidMrkYBrd            = 'Invalid watermark y border';
@@ -675,6 +684,10 @@ begin
   for Item in SHARPEN_STRINGS do
     ComboBoxSharpen.Items.Add(Item);
 
+  ComboBoxDenoise.Items.Clear;
+  for Item in DENOISE_STRINGS do
+    ComboBoxDenoise.Items.Add(Item);
+
   ComboBoxShuffleSeed.Items[0] := SCptRandomSeed;
 
 end;
@@ -751,8 +764,9 @@ var
 begin
   ImgResizer := TProcessor.Create;
   try
+    EditTitle.Clear;
+    MemoDescription.Lines.Clear;
     MemoSrcFilenames.Lines.Clear;
-    FProjectDescription                 := '';
     ActionSrcFilenames.Checked          := true;
     EditSrcFolder.Text                  := '';
     EditSrcMasks.Text                   := DEFAULT_SRCMASK;
@@ -763,6 +777,7 @@ begin
     ComboBoxJPEGQuality.ItemIndex       := 0;
     ComboBoxPNGCompression.ItemIndex    := 0;
     ComboBoxSharpen.ItemIndex           := 0;
+    ComboBoxDenoise.ItemIndex           := 0;
     ComboBoxInterpolation.ItemIndex     := 0;
     EditMrkFilename.Text                := '';
     with ImgResizer.WatermarkParams do begin
@@ -897,7 +912,7 @@ begin
     Ini.WriteInteger(MAINDIALOG_SECTION, 'Left', Left);
     Ini.WriteInteger(MAINDIALOG_SECTION, 'Top', Top);
     Ini.WriteInteger(MAINDIALOG_SECTION, 'PanelControls.Height', PanelControls.Height);
-    Ini.WriteString(MAINDIALOG_SECTION, 'CurrentDirectory', GetCurrentDir);
+    Ini.WriteString(MAINDIALOG_SECTION,  'CurrentDirectory', GetCurrentDir);
 
     FDialogSettings.Save(Ini, MAINDIALOG_SECTION);
 
@@ -911,7 +926,6 @@ begin
 
     for i:=0 to PopupMenuFileHistory.Items.Count-1 do begin
       Item := PopupMenuFileHistory.Items[i].Caption;
-//      Item := Copy(Item, 4, Length(Item)-3);
       Ini.WriteString(MAINDIALOG_FILEHISTORY, IntToStr(i+1), Item);
     end;
 
@@ -989,7 +1003,8 @@ begin
 
     InitProject;
     FProjectDir := ReadString(COMMON_SECTION, 'CurrentDir', GetCurrentDir);
-    FProjectDescription := ReadLang(PROJECT_SECTION,  'Description', '', TLanguage.Code);
+    EditTitle.Text := ReadString(PROJECT_SECTION, 'Title', '');
+    MemoDescription.Text := settings.StrToMemoText(ReadString(PROJECT_SECTION, 'Description', ''), '¶');
     if SameText(ReadString(PROJECT_SECTION, 'Source', 'Filenames'), 'Filenames') then
       ActionSrcFilenames.Execute
     else
@@ -1009,9 +1024,10 @@ begin
     RequiredStepsUpdate;
     ComboBoxInterpolation.ItemIndex       := integer(TProcessor.NameToInterpolation(ReadString(PROJECT_SECTION,  'Interpolation', INTERPOLATION_NAMES[DEFAULT_INTERPOLATION])));
     Value := ReadInteger(PROJECT_SECTION,  'JPEGQuality', TProcessor.StrToJPEGQuality(ComboBoxJPEGQuality.Text));
-    if Value = DEFAULTJPEGQUALITY then ComboBoxJPEGQuality.ItemIndex := 0 else ComboBoxJPEGQuality.Text := IntToStr(Value);
+    if Value = DEFAULT_JPEGQUALITY then ComboBoxJPEGQuality.ItemIndex := 0 else ComboBoxJPEGQuality.Text := IntToStr(Value);
     ComboBoxPNGCompression.ItemIndex      := TProcessor.NameToPNGCompression(ReadString(PROJECT_SECTION,  'PNGCompression', PNGCOMPRESSION_NAMES[ComboBoxPNGCompression.ItemIndex]));
-    ComboBoxSharpen.Text                  := TProcessor.SharpenToStr(TProcessor.NameToSharpen(ReadString(PROJECT_SECTION, 'Sharpen', ComboBoxSharpen.Text)));
+    ComboBoxSharpen.Text                  := TProcessor.SharpenToStr(TProcessor.NameToSharpen(ReadString(PROJECT_SECTION, 'Sharpen', SHARPEN_NAMES[ComboBoxSharpen.ItemIndex])));
+    ComboBoxDenoise.Text                  := TProcessor.DenoiseToStr(TProcessor.NameToDenoise(ReadString(PROJECT_SECTION, 'Denoise', DENOISE_NAMES[ComboBoxDenoise.ItemIndex])));
     CheckBoxMrkEnabled.Checked            := ReadBool(PROJECT_SECTION,    'MrkEnabled', CheckBoxMrkEnabled.Checked);
     EditMrkFilename.Text                  := ReadString(PROJECT_SECTION,  'MrkFilename', EditMrkFilename.Text);
     UpDownMrkSize.Position                := ReadInteger(PROJECT_SECTION, 'MrkSize', UpDownMrkSize.Position);
@@ -1088,7 +1104,8 @@ begin
     WriteString(COMMON_SECTION, 'Version', PRJVERSION);
     WriteString(COMMON_SECTION, 'CurrentDir', GetCurrentDir);
     EraseSection(PROJECT_SECTION);
-    WriteString(PROJECT_SECTION,  'Description',    FProjectDescription);
+    WriteString(PROJECT_SECTION,  'Title',          EditTitle.Text);
+    WriteString(PROJECT_SECTION,  'Description',    settings.MemoTextToStr(MemoDescription.Text, '¶'));
     WriteString(PROJECT_SECTION,  'Source',         SRCMODES[ActionSrcFilenames.Checked]);
     WriteString(PROJECT_SECTION,  'SourceFolder',   HandleFilenameRefs(EditSrcFolder));
     WriteString(PROJECT_SECTION,  'SourceMasks',    EditSrcMasks.Text);
@@ -1097,12 +1114,13 @@ begin
     WriteString(PROJECT_SECTION,  'TargetFolder',   HandleFilenameRefs(EditTargetFolder));
     WriteString(PROJECT_SECTION,  'Interpolation',  INTERPOLATION_NAMES[TInterpolation(ComboBoxInterpolation.ItemIndex)]);
     Value := TProcessor.StrToJPEGQuality(ComboBoxJPEGQuality.Text);
-    if Value = DEFAULTJPEGQUALITY then
+    if Value = DEFAULT_JPEGQUALITY then
       WriteString(PROJECT_SECTION, 'JPEGQuality',   JPEGQUALITY_NAMES[0])
     else
       WriteInteger(PROJECT_SECTION, 'JPEGQuality',  Value);
     WriteString(PROJECT_SECTION,  'PNGCompression', PNGCOMPRESSION_NAMES[ComboBoxPNGCompression.ItemIndex]);
     WriteString(PROJECT_SECTION,  'Sharpen',        TProcessor.SharpenToName(TProcessor.StrToSharpen(ComboBoxSharpen.Text)));
+    WriteString(PROJECT_SECTION,  'Denoise',        TProcessor.DenoiseToName(TProcessor.StrToDenoise(ComboBoxDenoise.Text)));
     WriteBool(PROJECT_SECTION,    'MrkEnabled',     CheckBoxMrkEnabled.Checked);
     WriteString(PROJECT_SECTION,  'MrkFilename',    HandleFilenameRefs(EditMrkFilename));
     WriteString(PROJECT_SECTION,  'MrkSize',        EditMrkSize.Text);
@@ -1177,8 +1195,8 @@ begin
       FProjectFilename := Filename;
       SetTitle(''''+Filename+'''');
       Log(Format(SMsgProjectLoadedFromFmt, [Filename]), llHint);
-      if FProjectDescription<>'' then
-        Log(Format(SMsgProjectDescriptionFmt, [FProjectDescription]), llNews);
+      if EditTitle.Text<>'' then
+        Log(Format(SMsgTitleFmt, [EditTitle.Text]), llNews);
       ChangeCurrentDir(ExtractFilePath(Filename));
       FIsSave := true;
       Dirty := false;
@@ -1332,7 +1350,7 @@ procedure TMainDialog.ActionHelpScreenshotsExecute(Sender: TObject);
 begin
   ActionHelpScreenshots.Visible := false;
   ActionNew.Execute;
-  ControlShot.SnapshotFolder := ExtractFilepath(Application.Exename) + '..\hlp\gui\'+TLanguage.Code+'\img';
+  ControlShot.SnapshotFolder := ExpandFilename(ExtractFilepath(Application.Exename) + '..\hlp\gui\'+TLanguage.Code+'\img');
 //  ControlShot.SnapshotFolder := 'C:\TEMP\hlp';
   ToolButtonSrcFilenames.Click;
   with MemoSrcFilenames.Lines do begin
@@ -1342,20 +1360,20 @@ begin
     Add('myphotos\DSC06227.jpg');
     Add('myphotos\DSC06403.jpg');
   end;
-  Snapshot('step-srcimages', PanelSource, -2, -40, 360, 165);
+  Snapshot('step-srcimages', ImageStep1, -8, -8, 400, 220);
   ToolButtonSizes.Click;
   FSizeInfos.Clear;
   FSizeInfos.Add(True, 360, '<auto>');
-  Snapshot('step-sizes', PanelParams, -2, -40, 360, 95);
+  Snapshot('step-sizes', ImageStep2, -8, -8, 400, 102);
   EditTargetFolder.Text := 'mygallery\img$(SIZE)';
-  Snapshot('step-targetfolder', PanelTarget, -190, -8, 360, 60);
+  Snapshot('step-targetfolder', PanelTarget, -190, -8, 400, 60);
   Snapshot('step-execute', ButtonExecute, 0, 0, 0, 0);
   Snapshot('buttons-project', ToolButtonNew, 0, 0, 4*ToolButtonNew.Width, ToolButtonNew.Height);
   FSizeInfos.Clear;
-  FSizeInfos.Add(True, 120, '<auto>');
+  FSizeInfos.Add(True,  120, '<auto>');
   FSizeInfos.Add(False, 800, '<auto>');
   FSizeInfos.Add(True, 1920, '<auto>');
-  Snapshot('sizes-multiple', ListBoxSizes, -6, -24, 240, 90);
+  Snapshot('sizes-multiple', ListBoxSizes, -6, -24, 256, 100);
 
   ToolButtonQuality.Click;
   ComboBoxInterpolation.ItemIndex := 7;
@@ -1370,8 +1388,12 @@ begin
   ComboBoxPNGCompression.DroppedDown := false;
   ComboBoxSharpen.ItemIndex := 2;
   ComboBoxSharpen.DroppedDown := true;
-  Snapshot('quality-sharpen', GroupBoxSharpen, -8, 0, 270, 130);
+  Snapshot('quality-sharpen', LabelSharpen, -8, -8, 270, 110);
   ComboBoxSharpen.DroppedDown := false;
+  ComboBoxDenoise.ItemIndex := 3;
+  ComboBoxDenoise.DroppedDown := true;
+  Snapshot('quality-denoise', LabelDenoise, -8, -8, 270, 100);
+  ComboBoxDenoise.DroppedDown := false;
 
   ToolButtonTagging.Click;
   Snapshot('tagging-save', GroupBoxTaggingSave, -8, 0, 0, 0);
@@ -1418,7 +1440,6 @@ begin
   s := EditTargetFolder.Text;
   f := '';
   if TEngine.ContainsOneOf(s, ['SIZE', 'SIZENAME'], DOSDELIMITERS) then
-//  if (Pos('$(SIZE)', s)>0) or (Pos('$(SIZE)', s)>0) then
     f := ExtractFilename(s);
   BrowseTargetFolder.Filename := LeftStr(s, Length(s)-Length(f));
   if BrowseTargetFolder.Execute then
@@ -2038,6 +2059,7 @@ var
   p :TPos;
   TargetFolder :string;
   IntValue :integer;
+  DenoiseValue :TDenoise;
   SourceFilenames :TStringList;
   TagsSources :TTagsSources;
   TagsReports :TTagsReports;
@@ -2117,6 +2139,11 @@ begin
         if not TProcessor.TryStrToSharpen(ComboBoxSharpen.Text, IntValue) then
           raise Exception.Create(SErrInvalidSharpen);
         Processor.Sharpen := IntValue;
+
+        // Denoise
+        if not TProcessor.TryStrToDenoise(ComboBoxDenoise.Text, DenoiseValue) then
+          raise Exception.Create(SErrInvalidDenoiseValue);
+        Processor.Denoise := DenoiseValue;
 
         // Rename
         if CheckBoxRenEnabled.Checked then begin

@@ -54,7 +54,7 @@
 
     <h1 id="overview">Übersicht</h1>
     <p>
-      <i>ImageResize</i> 4.2 ist eine App zur Größenänderung von JPEG- und PNG-Bildern
+      <i>ImageResize</i> 4.3 ist eine App zur Größenänderung von JPEG- und PNG-Bildern
       (auch Skalierung oder Resampling genannt). Sie kann viele Bilder verarbeiten und daraus Präsentationen (Web-Gallerien) erzeugen.
     </p>
     
@@ -73,8 +73,6 @@
     <a href="#commandline">Kommandozeilen-Parameter</a><br/>
     <a href="#mrkeditor">Wasserzeichen-Editor</a><br/>
     <a href="#templateengine">Vorlagen-Prozessor</a><br/>
-    <a href="#varindex">Listen verfügbarer Platzhalter</a><br/>
-    <a href="#fnindex">Liste verfügbarer Funktionen</a><br/>
     
     <p>
       Fähigkeiten  
@@ -84,7 +82,7 @@
       <li>Parallelverarbeitung vieler Bilder</li>
       <li>Skalieren jedes Bildes in mehrere Größen</li>
       <li>Vergrößern und verkleinern</li>
-      <li>Schärfen der erzeugten Bilder</li>
+      <li>Filtern der erzeugten Bilder (Schärfen, Entrauschen)</li>
       <li>Erzeugen verschiedener Präsentationen (für den Web-Browser)</li>
       <li>Erstellung eigener Präsentations-Vorlagen</li>
       <li>Auswahl der Interpolation für gute Ergebnisse</li>
@@ -119,17 +117,16 @@
     
     <h1 id="srcfilelist">Bilder</h1>
     <p>
-      ImageResize kann viele Bilddateien verarbeiten. Die Liste der Bilder besteht aus Pfad/Dateiname und kann
+      ImageResize kann viele Bilddateien verarbeiten. Die Liste der Bilder besteht aus Zeilen mit Pfad/Dateiname. Sie können
     </p>
     <ol>
-      <li>manuell bearbeitet werden</li>
-      <li>im Auswahldialog ausgewählt werden <img class="btn" src="../img/doc-open.svg"/> mit &lt;STRG&gt; und &lt;UMSCHALT&gt;</li>
-      <li>durch Ziehen von Bilddateien aus dem Windows-Explorer ergänzt werden</li>
-      <li>durch Angabe eines Quellordners mit Dateifilter angegeben werden</li>
-      <li>relative Pfadangaben beinhalten</li>
+      <li>die Liste als Text bearbeiten</li>
+      <li>die Bilder im Auswahldialog <img class="btn" src="../img/doc-open.svg"/> mit &lt;STRG&gt; und &lt;UMSCHALT&gt; auswählen</li>
+      <li>Bilder aus dem Windows-Explorer in die Liste ziehen</li>
+      <li>einen Ordner angegeben und einen Dateifilter (Wildcard)</li>
     </ol>
     <p>
-      Die Liste darf JPEG- und PNG-Dateien enthalten. Die Dateinamen können beibehalten oder <a href="#renaming">umbenannt</a> werden. Relative Pfade beziehen sich auf den Speicherort der Projektdatei (.irs) oder auf das letzte aktuelle Verzeichnis.
+      Die Liste darf JPEG- und PNG-Dateien enthalten. Die Dateinamen können beibehalten oder <a href="#renaming">umbenannt</a> werden. Es können auch relative Pfade verwendet werden, die sich auf den Speicherort der Projektdatei (.irs) beziehen oder auf das letzte aktuelle Verzeichnis.
     </p>
 
     <div class="chfot"><a href="#contents">Inhalt</a></div>
@@ -334,7 +331,8 @@
       <li><i>Maximal</i> - größte und langsamste Kompression</li>
     </ul>
 
-    <h2 id="quality-sharpen">Schärfen</h2>
+    <h2 id="quality-filter">Filter</h2>
+    <h3 id="quality-sharpen">Schärfen</h3>
     <img class="img-left" src="img/quality-sharpen.png"/>
     <p>
       Das resampelte Bild wir anschließend geschärft.
@@ -370,6 +368,39 @@
       </div>
     </div>
 
+    <h3 id="quality-denoise">Entrauschen</h3>
+    <img class="img-left" src="img/quality-denoise.png"/>
+    <p>
+      Das resampelte Bild wird durch Anwendung eines einfachen Medianfilters entrauscht. Das bedeutet eine Art Glättung des Bildes, um das Sensorsrauschen zu reduzieren. Rauschen tritt auf, wenn eine Fotoaufnahme unterbelichtet ist und die Signalverstärkung des Sensors erhöht wird.
+    </p>
+    <p style="clear: both">
+      Es stehen 4 vordefinierte Stärken des Medianfilters zur Verfügung:
+    </p>  
+    <div class="sharpen-table">
+      <div>
+        <img width=128 src="../img/orgA.png"/>
+        <div>Keine - Voreinstellung</div>
+      </div>
+      <div>
+        <img width=128 src="../img/orgA_low.png"/>
+        <div>Niedrig</div>
+      </div>
+      <div>
+        <img width=128 src="../img/orgA_medium.png"/>
+        <div>Mittel</div>
+      </div>
+      <div>
+        <img width=128 src="../img/orgA_high.png"/>
+        <div>Hoch</div>
+      </div>
+    </div>
+    <p>
+      Wie man sehen kann – es gibt keinen großen Unterschied zwischen den drei Entrauschungsstufen.
+    </p>  
+    <p>
+      Um Bildrauschen zu vermeiden, ist der beste Weg, einen großen Sensor, eine lange Belichtungszeit und eine offene Blende zu verwenden. Es gibt weitaus bessere Möglichkeiten, ein Bild per Software zu entrauschen, als die eingebaute Variante, aber diese war einfach zu implementieren.
+    </p>
+    
     <div class="chfot"><a href="#contents">Inhalt</a></div>
     
     <h1 id="tagging"><img class="icon-right" src="../img/tagging.svg"/>Taggen</h1>
@@ -511,6 +542,14 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
     <p>
       Wenn Sie den Dialog mit Ok schließen, werden die Einstellungen ins aktuelle Projekt übernommen.
     </p>
+    <p>
+      Die Präsentationen haben jeweils unterschiedliche Anforderungen an die Einstellungen mit denen die Bilder erzeugt wurden. Diese Anforderungen stehen in den Hinweisen zu den jeweiligen Präsentationen. Leider werden Sie derzeit nicht automatisch berücksichtigt, sondern müssen ggf. vor der Erzeugung der Bilder richtig eingestellt werden. 
+    </p>
+    <ol>
+      <li>Auswahl bestimmter Zielgrößen (z.B. 64 und 1920 Pixel - THUMBNAIL und SCREEN)
+      <li>Vorlage des Zielordners</li>
+      <li>Vorlage bei Dateiumbenennung</li>
+    </ol>
     <div class="chfot"><a href="#contents">Inhalt</a></div>
 
     <h1 id="saving">Öffnen und Speichern von Projektdateien</h1>
@@ -684,98 +723,79 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
         </td>
       </tr>
     </table>
-
     <div class="chfot"><a href="#contents">Inhalt</a></div>
+
     <h1 id="templateengine">Vorlagen-Prozessor</h1>
-    <img style="float: right;" src="../img/templateengine.jpg"/>
+    <img style="float: right; margin-left: 2em;" src="../img/templateengine.jpg"/>
     <p>
       Der Vorlagen-Prozessor ersetzt Zeichenketten in anderen Zeichenketten. Er wird an verschiedenen Stellen des Programmes eingesetzt und kommt z.B. bei der Erzeugung von Bildern in mehreren Größen in einem gemeinsamen Verzeichnis oder bei der Erzeugung von Präsentationen zum Einsatz.
     </p>
     <p>
-      Dazu wird zunächst eine Liste von Variablen angelegt. Die wichtigsten sind <span class="vn">INDEX</span>, <span class="vn">SIZE</span> und <span class="vn">SIZENAME</span>. Jede Variable hat eine Zeichenkette als Wert. Der Prozessor ersetzt die Platzhalter der Variablen in einer gegebenen Text-Vorlage durch ihren Wert.
+      Dazu wird zunächst eine Liste von Variablen angelegt. Wichtigste Beispiele sind <span class="vn">INDEX</span>, <span class="vn">SIZE</span> und <span class="vn">SIZENAME</span>. Jede Variable hat eine Zeichenkette als Wert. Der Prozessor ersetzt die Platzhalter der Variablen in einer gegebenen Vorlage durch ihren Wert.
+    </p>
+    <p>
+      Bei der Erzeugung von <a href="#presentation">Präsentationen</a> werden HTML- und CSSS-Dateien oder -Fragmente mit Hilfe des Vorlagen-Prozessors zum Webseiten verarbeitet.
     </p>  
+
+    <h2>Beispiele</h2>
     <p>
-      Beispiel:
+      Zielordner mit Zielgröße erzeugen
     </p>
+    <ol>
+      <li>
+        Variable für aktuelle Zielgröße in Pixeln
+        <ul>
+          <li><span class="vn">SIZE</span>="<span class="vv">1920</span>"</li>
+        </ul>
+      </li>
+      <li>
+        Vorlage für Zielordner  
+        <ul>
+          <li>C:\User\Jan\Photos\img<span class="vn">$(SIZE)</span></li>
+        </ul>
+      </li>
+      <li>
+        Ergebnis
+        <ul>
+          <li>C:\User\Jan\Photos\img<span class="vv">1920</span></li>
+        </ul>
+      </li>
+    </ol>
     <p>
-      Variablen: <span class="vn">INDEX</span>="<span class="vv">0</span>", <span class="vn">SIZE</span>="<span class="vv">1280</span>", <span class="vn">SIZENAME</span>="<span class="vv">SCREEN</span>"<br/>
-      Text-Vorlage: "C:\MyPhotos\<span class="vn">$(SIZENAME)</span>\bild<span class="vn">$(INDEX)</span>_<span class="vn">$(SIZE)</span>px.jpg"<br/>
-      Ergebnis: "C:\MyPhotos\<span class="vv">SCREEN</span>\bild<span class="vv">0</span>_<span class="vv">1280</span>px.jpg"
+      Umbenennen der Zieldatei
     </p>
+    <ol>
+      <li>
+        Variablen
+        <ul>
+          <li><span class="vn">INDEX</span>="<span class="vv">0</span>"</li>
+          <li><span class="vn">SIZE</span>="<span class="vv">1280</span>"</li>
+          <li><span class="vn">SIZENAME</span>="<span class="vv">SCREEN</span>"</li>
+        </ul>
+      </li>
+      <li>
+        Vorlage referenziert <i>Variablen</i> und <i>Funktionen</i>
+        <ul>
+          <li>"C:\MyPhotos\<span class="vn">$(SIZENAME)</span>\bild<span class="vn">$(INDEX.add(1).fmt(3))</span>_<span class="vn">$(SIZE)</span>px.jpg"</li>
+        </ul>
+      </li>
+      <li>
+        Ergebnis
+        <ul>
+          <li>"C:\MyPhotos\<span class="vv">SCREEN</span>\bild<span class="vv">001</span>_<span class="vv">1280</span>px.jpg"</li>
+        </ul>
+      </li>
+    </ol>
+
+    <h2>Details</h2>
     <p>
-      Die Werte der Variablen sind letztlich immer Zeichenketten. Vor ihrer <i>Auflösung</i> können sie auch Referenzen auf andere Variablen enthalten und <i>Funktionen</i>. So könnte zum Beispiel eine Variable namens <span class="vn">IMGFILENAME</span> den Wert "img<span class="vn">$(INDEX<span class="vf">.add(1).fmt(3)</span>)</span>_<span class="vn">$(SIZE)</span>.<span class="vn">$(ORGFILENAME<span class="vf">.ext().lower()</span>)</span>" enthalten. Dieser Wert enthält Referenzen auf die Variablen <span class="vn">INDEX</span>, <span class="vn">SIZE</span> und <span class="vn">ORGFILENAME</span>. Auf den Wert der Variablen <span class="vn">INDEX</span> wird die Funktion "<span class="vf">add(1)</span>" angewendet, die dem Wert als Ganzzahl eine 1 zuaddiert und die Funktion "<span class="vf">fmt(3)</span>", die die Zahl in eine 3-stellige mit führenden Nummer umwandelt. Von der Variablen <span class="vn">ORGFILENAME</span> wird mit der Funktion "<span class="vf">ext()</span>" die Dateierweiterung genommen und mit der Funktion "<span class="vf">lower()</span>" in Kleinbuchstaben umgewandelt. 
+      Die Werte der Variablen sind letztlich immer Zeichenketten. Vor ihrer <i>Auflösung</i> können sie auch Referenzen auf andere Variablen enthalten und <i>Funktionen</i>. So könnte zum Beispiel eine Variable namens <span class="vn">IMGFILENAME</span> den Wert "img<span class="vn">$(INDEX<span class="vf">.add(1).fmt(3)</span>)</span>_<span class="vn">$(SIZE)</span>.<span class="vn">$(ORGFILENAME<span class="vf">.ext().lower()</span>)</span>" enthalten. Dieser Wert enthält Referenzen auf die Variablen <span class="vn">INDEX</span>, <span class="vn">SIZE</span> und <span class="vn">ORGFILENAME</span>. Auf den Wert der Variablen <span class="vn">INDEX</span> wird die Funktion "<span class="vf">add(1)</span>" angewendet, die dem Wert als Ganzzahl eine 1 zuaddiert und die Funktion "<span class="vf">fmt(3)</span>", die die Zahl in eine 3-stellige mit führenden Nummer umwandelt. Von der Variablen <span class="vn">ORGFILENAME</span> wird mit der Funktion "<span class="vf">ext()</span>" die Dateierweiterung genommen und mit der Funktion "<span class="vf">lower()</span>" in Kleinbuchstaben umgewandelt. d
     </p>
     <p>
       Vor der Erzeugung jeden einzelnen Bildes werden die Variablen aktualisiert und auf Abhängigkeiten untereinander untersucht. Diese Abhängigkeiten werden vor der Ersetzung in der Text-Vorlage <i>aufgelöst</i>. Auflösen bedeutet dabei, dass zunächst alle Variablen, die nur von selbst unabhängigen Variablen abhängen, prozessiert werden. Damit sind diese Variablen selbst unabhängig und können wiederum in andere Variablen eingesetzt werden, die von ihnen abhängen. Dies geschieht solange, bis alle Variablen aufgelöst, d.h. unabhängig sind. Dabei werden zirkuläre (gegenseitige und indirekt gegenseitige) erkannt und als Fehler gemeldet. 
     </p>
-    <p>
-      Die Liste der zur Verfügung stehenden Variablen ist vom Zusammenhang abhängig und wird in den jeweiligen Zusammenhängen genannt. Es gibt die Zusammenhänge <i>Zielverzeichnis</i>, <i>Zieldateinamen</i> und <i>Präsentation</i>.
-    </p>
-    <p>
-      Die Liste der zur Verfügung stehenden Funktionen ist ebenfalls vom Zusammenhang abhängig. Funktionen wie <span class="vf">lower()</span> und <span class="vf">lower()</span> stehen überall zur Verfügung und wirken gleich. Die Wirkung der Funktion <span class="vf">fmt(digits)</span> hängt vom Zusammenhang ab. Im Zusammenhang mit der Umbenennung kann sie zur Erzeugung des Zielverzeichnisnamens mit dem Parameter "AUTO" verwendet werden, der die Zahl der Stellen selbsttätig anhand der zur wandelnden Bilder ermittelt. Im Zusammenhang mit dem Zielverzeichnisnamen gibt es diesen Parameter nicht.
-    </p>
 
-    <div class="chfot"><a href="#contents">Inhalt</a></div>
-    <h1 id="varindex">Variablen</h1>
-    <p>
-      Variablen sind benannte Speicher mit Zeichenketten darin. Sie werden vom <a href="templateengine">Vorlagen-Prozessor</a> verwendet, um Platzhalter in den Vorlagen zu ersetzen und ein Ergebnistext zu erzeugen.
-    </p> 
-    <p>
-      Vorlage-Prozessoren werden in verschiedenen Zusammenhängen in ImageResize eingesetzt. Welche Variablen in welchem Zusammenhang verwendet werden können ist in der Tabelle ersichtlich.
-    </p>  
-    <table class="simple-table">
-      <tr>
-        <th>Name</th><th>Zusamenhang</th><th>Bedeutung</th>
-      </tr>
-      <tr>
-        <td>INDEX</td><td></td><td></td>
-      </tr><tr>
-        <td>SIZE</td><td></td><td></td>
-      </tr><tr>
-        <td>SIZENAME</td><td></td><td></td>
-      </tr><tr>
-        <td>ORGWIDTH</td><td></td><td></td>
-      </tr><tr>
-        <td>ORGHEIGHT</td><td></td><td></td>
-      </tr><tr>
-        <td>ORGFILENAME</td><td></td><td></td>
-      </tr><tr>
-        <td>ORGFILESIZE</td><td></td><td></td>
-      </tr><tr>
-        <td>FILENAME</td><td></td><td></td>
-      </tr><tr>
-        <td>FILETITLE</td><td></td><td></td>
-      </tr><tr>
-        <td>FILEEXT</td><td></td><td></td>
-      </tr><tr>
-        <td>INTERPOLATION</td><td></td><td></td>
-      </tr><tr>
-        <td>IMGFILENAME</td><td></td><td></td>
-      </tr><tr>
-        <td>IMGWIDTH</td><td></td><td></td>
-      </tr><tr>
-        <td>IMGHEIGHT</td><td></td><td></td>
-      </tr><tr>
-        <td>IMGFILESIZE</td><td></td><td></td>
-      </tr><tr>
-        <td></td><td></td><td></td>
-      </tr><tr>
-        <td></td><td></td><td></td>
-      </tr><tr>
-      </tr>
-    </table>
-
-    <div class="chfot"><a href="#contents">Inhalt</a></div>
-    <h1 id="fnindex">Funktionen</h1>
-    <p>
-      Die Tabelle zeigt Funktionen, die im Zusammenhang mit jedem Vorlagen-Prozessor verfügbar sind. Um eine Funktion auf einen Variablenwert anzuwenden ist sie wie im Beispiel anzuhängen. Um weitere Funktionen anzuwenden, können sie diese an die letzte anhängen.
-    </p>
-    <p>
-      <span class="vn">$(VARNAME<span class="vf">.fnname(parameters)</span>)</span>
-    </p>
-    <p>
-      Beispiel: <span class="vn">$(MYVAR<span class="vf">.ext().upper()</span>)</span>
-    </p>  
+    <h2>Funktionen</h2>
     <table class="fn-table">
       <tr>
         <td><span class="vf">add(n)</span></td><td>Zuaddieren einer konstanten Ganzzahl, um z.B. mit 1 aus dem 0-basierten Index eine 1-basiert Nummer zu machen, oder um eine bestehende Liste mit nummerierten Bildern zu ergänzen. Der Wert darf auch negativ sein.</td>
@@ -784,9 +804,9 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
       </tr><tr>
         <td><span class="vf">ext()</span></td><td>Ermittelt die Dateinamenserweiterung ohne Punkt</td>
       </tr><tr>
-        <td><span class="vf">ifmt(n,[m|auto])</span></td><td>Formatiert eine Ganzzahl, indem der Wert n zuaddiert wird und dann mit führenden Nullen aufgefüllt wird, sodaß die Zahl m Stellen hat. "auto" bedeutet im Zusammenhang mit Dateinamen, dass die Stellenzahl aus der Gesamtzahl der Bilder ermitelt wird. m kann weggelassen werden, dann wird die auto-Formatierung verwendet.</td>
+        <td><span class="vf">fmt(d)</span></td><td>Zahl wird mit führenden Nullen aufgefüllt, dass das Ergebnis d Stellen hat.</td>
       </tr><tr>
-        <td><span class="vf">fmt(d)</span></td><td>Zahl wird mit führenden Nullen aufgefüllt, dass das Ergebnis d Stellen hat. Im Zusammenhang mit dem <span class="vn">INDEX</span> kann "auto" verwendet werden. Dann wird die Zahl der Stellen aus der Zahl der Bilder ermittelt.</td>
+        <td><span class="vf">ifmt(n[,m])</span></td><td>Formatiert eine Ganzzahl, indem der Wert n zuaddiert wird und dann mit führenden Nullen aufgefüllt wird, sodaß die Zahl m Stellen hat.</td>
       </tr><tr>
         <td><span class="vf">lower()</span></td><td>Wandelt in Kleinbuchstaben um</td>
       </tr><tr>
@@ -800,10 +820,75 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
       </tr>
     </table>
 
+    <h2>Variablen im Zielordner und Wasserzeichendateinamen</h2>
+    <table class="simple-table">
+      <tr>
+        <td>SIZE</td><td>Gewählte Zielgröße des Bildes als Pixelbreite/-höhe</td>
+      </tr><tr>
+        <td>SIZENAME</td><td>Name der Größe - üblicherweise THUMBNAIL, DOCUMENT oder SCREEN</td>
+      </tr>
+    </table>
+
+    <h2>Variablen beim Umbenennen der Zieldateien</h2>
+    <table class="simple-table">
+      <tr>
+        <td>INDEX</td><td>Laufende Nummer des Bildes beginnend bei 0. Soll das erste Bild mit einer anderen Zahl als 0 beginnen, kann die Funktion <span class="vf">.add(n)</span> verwendet werden. Soll die Nummer mit führenden Nullen aufgefüllt werden, kann die Funktion <span class="vf">fmt(m)</span> angehängt werdem, wobei m die Zahl der Stellen ist. wird statt einer Zahl, das Schlüsselwort <i>auto</i> verwendet, wird die Zahl der Stellen anhand der Gesamtzahl der zu verwendetenden Bilder bestimmt. Beispiel: INDEX=5 und Vorlage="img$(SIZE.add(1).fmt(3)).$(FILEEXT)" => "img006.jpg</td>
+      </tr><tr>
+        <td>SIZE</td><td>Gewählte Zielgröße des Bildes als Pixelbreite/-höhe</td>
+      </tr><tr>
+        <td>SIZENAME</td><td>Name der Größe - üblicherweise THUMBNAIL, DOCUMENT oder SCREEN</td>
+      </tr><tr>
+        <td>FILENAME</td><td>Name der Quelldatei ohne Pfad, mit Erweiterung</td>
+      </tr><tr>
+        <td>FILETITLE</td><td>Name der Quelldatei ohne Pfad, ohne Erweiterung</td>
+      </tr><tr>
+        <td>FILEEXT</td><td>Erweiterung des Zieldateinames ohne Punkt</td>
+      </tr><tr>
+        <td>INTERPOLATION</td><td>Name des Interpolationsalgorithmus</td>
+      </tr>
+    </table>
+
+    <h2>Variablen in Präsentationen</h2>
+    <table class="simple-table">
+      <tr>
+        <td>IMGINDEX</td><td>Laufende Nummer des Bildes beginnend bei 0</td>
+      </tr><tr>
+        <td>IMGNUMBER</td><td>Laufende Nummer des Bildes beginnend bei 1</td>
+      </tr><tr>
+        <td>IMGCOUNT</td><td>Zahl der Originalbilder</td>
+      </tr><tr>
+        <td>IMGFILENAME</td><td>Zieldateiname mit Erweiterung</td>
+      </tr><tr>
+        <td>IMGFILETITLE</td><td>Zieldateiname ohne Erweiterung</td>
+      </tr><tr>
+        <td>IMGFILEEXT</td><td>Erweiterung des Zieldateinames ohne Punkt</td>
+      </tr><tr>
+        <td>IMGFILEFORMAT</td><td>Bildformat JPEG oder PNG</td>
+      </tr><tr>
+        <td>IMGFILESIZE</td><td>Größe der resampelten Bilddatei in Bytes</td>
+      </tr><tr>
+        <td>IMGPRETTYFILESIZE</td><td>Größe der Bilddatei mit einer Einheit wie KB oder MB</td>
+      </tr><tr>
+        <td>ORGWIDTH</td><td>Breite des Originalbildes</td>
+      </tr><tr>
+        <td>ORGHEIGHT</td><td>Höhe des Originalbildes</td>
+      </tr><tr>
+        <td>ORGFILENAME</td><td>Originalname des Bildes ohne Pfad</td>
+      </tr><tr>
+        <td>ORGFILESIZE</td><td>Größe der der Original-Bilddatei in Bytes</td>
+      </tr><tr>
+        <td>ORGRATIO</td><td>Bildverhältnis, z.B. 4/3, 16/9 oder "custom"</td>
+      </tr><tr>
+        <td>ORGORIENTATION</td><td>Bildausrichtung: Landscape, Portrait, Icon (1:1)</td>
+      </tr><tr>
+        <td>ORGPRETTYFILESIZE</td><td>Größe der Original-Bilddatei mit einer Einheit wie KB oder MB</td>
+      </tr>
+    </table>
+    <div class="chfot"><a href="#contents">Inhalt</a></div>
   </main>
 
   <footer>
-    © 2024 Jan Schirrmacher, www.atomek.de
+    © 2025 Jan Schirrmacher, www.atomek.de
   </footer>
 </body>
 </html>

@@ -55,7 +55,7 @@
 
     <h1 id="overview">Overview</h1>
     <p>
-      <i>ImageResize</i> 4.2 is an app for resizing JPEG and PNG images
+      <i>ImageResize</i> 4.3 is an app for resizing JPEG and PNG images
       (also called scaling or resampling). It can process many images and create presentations (web galleries).
     </p>
     
@@ -74,8 +74,6 @@
     <a href="#commandline">Commandline Parameters</a><br/>
     <a href="#mrkeditor">Watermark Editor</a><br/>
     <a href="#templateengine">Template Engine</a><br/>
-    <a href="#varindex">List of available Placeholders</a><br/>
-    <a href="#fnindex">List of available Functions</a><br/>
     
     <p>
       Features
@@ -85,7 +83,7 @@
       <li>Parallel processing of many images</li>
       <li>Scale any image into multiple sizes</li>
       <li>Up- and down-scaling</li>
-      <li>Sharpen the created Images
+      <li>Filtering: Sharpen and denoise
       <li>Creates various presentations (for the web browser)</li>
       <li>Integration of customized presentation templates</li>
       <li>Choosing of interpolation for good results</li>
@@ -120,17 +118,16 @@
 
     <h1 id="srcfilelist">Source files</h1>
     <p>
-      ImageResize can resample many image files. The list of images consists of path/filename and
+      ImageResize can process many image files. The list of images consists of lines with path/filename. You can
     </p>
     <ol>
-      <li>can be edited manually</li>
-      <li>can be selected in the selection dialog <img class="btn" src="../img/doc-open.svg"/> with &lt;CTRL&gt; and &lt;SHIFT&gt;</li>
-      <li>can be supplemented by dragging image files from Windows Explorer</li>
-      <li>can be specified by specifying a source folder with a file filter</li>
-      <li>can include relative path information</li>
+      <li>edit the list as text</li>
+      <li>select the images in the selection dialog <img class="btn" src="../img/doc-open.svg"/> using &lt;CTRL&gt; and &lt;SHIFT&gt;</li>
+      <li>drag images from Windows Explorer into the list</li>
+      <li>specify a folder and a file filter (wildcard)</li>
     </ol>
     <p>
-      The list may contain JPEG and PNG files. The file names can be retained or <a href="#renaming">renamed</a>. Relative paths refer to the location of the project file (.irs) or the last current directory.
+      The list may contain JPEG and PNG files. The filenames can be kept or <a href="#renaming">renamed</a>. Relative paths can also be used that refer to the location of the project file (.irs) or to the last current directory.
     </p>
 
     <div class="chfot"><a href="#contents">Contents</a></div>
@@ -168,13 +165,13 @@
       A destination folder must be specified. You can type it directly or select with the <img class="btn" src="../img/folder-open.svg"/> button.
     </p>
     <p>
-      To avoid target name conflicts when multiple target sizes are specified, you can either create different file names with <a href="#renaming">Rename</a>, or by each size containing its own destination folder. The name of the target folder must be entered contain the placeholder <span class="vn">$(SIZE)</span> or <span class="vn">$(SIZENAME)</span>.
+      To avoid target name conflicts when multiple target sizes are specified, you can either create different file names with <a href="#renaming">Rename</a>, or by each size containing its own destination folder. The name of the target folder must contain the placeholder <span class="vn">$(SIZE)</span> or <span class="vn">$(SIZENAME)</span>.
     </p>
 
     <div class="chfot"><a href="#contents">Contents</a></div>
     <h1 id="renaming"><img class="icon-right" src="../img/rename.svg"/>Rename and shuffle</h1>
     <p>
-      There are some reasons, why you must rename the created images. One is ff you want to create images of multiple sizes into one directory.
+      There are some reasons, why you must rename the created images. One is if you want to create images of multiple sizes into one directory.
     </p>
     <p>
       Click <i>Apply</i> and choose one of the possible strategies:
@@ -291,7 +288,7 @@
     <div class="chfot"><a href="#contents">Contents</a></div>
     <h1 id="quality"><img class="icon-right" src="../img/quality.svg"/>Quality</h1>
     <p>
-      The quality of the result depends on these settings. You can set the compression level for JPEG and PNG formats, control the resampling algorithm (<i>interpolation</i>) an sharpening.
+      The quality of the result depends on these settings. You can set the compression level for JPEG and PNG formats, control the resampling algorithm (<i>interpolation</i>) and filter the resampled image (sharpening, denoising).
     </p>
     
     <h2 id="interpolation">Interpolation</h2>
@@ -330,7 +327,8 @@
       <li><i>Maximum</i> - highest and slowest compression</li>
     </ul>
 
-    <h2 id="quality-sharpen">Sharpen</h2>
+    <h2 id="quality-filter">Filtering</h2>
+    <h3 id="quality-sharpen">Sharpen</h3>
     <img class="img-left" src="img/quality-sharpen.png"/>
     <p>
       The resampled image will be sharpened.
@@ -367,6 +365,39 @@
       </div>
     </div>
 
+    <h3 id="quality-denoise">Denoising</h3>
+    <img class="img-left" src="img/quality-denoise.png"/>
+    <p>
+      The resampled image will be denoised by applying a simple median filter. This means a kind of smoothing the image to reduce the sensor noise. Noise occures when a photos exposure is low and the sensors signal gain increases.
+    </p>
+    <p style="clear: both">
+      There are 4 predefined amounts of median levels available:
+    </p>  
+    <div class="sharpen-table">
+      <div>
+        <img width=128 src="../img/orgA.png"/>
+        <div>None - default</div>
+      </div>
+      <div>
+        <img width=128 src="../img/orgA_low.png"/>
+        <div>Low</div>
+      </div>
+      <div>
+        <img width=128 src="../img/orgA_medium.png"/>
+        <div>Medium</div>
+      </div>
+      <div>
+        <img width=128 src="../img/orgA_high.png"/>
+        <div>High</div>
+      </div>
+    </div>
+    <p>
+      You can see - there is no big difference between the three denoising levels.
+    </p>  
+    <p>
+     To avoid image noise the best way is to have a large sensor, long exposure time and a wide aperture. There are much better ways to denoise an image by software than the inbuilt one, but this was simple to implement.
+    </p>
+    
     <div class="chfot"><a href="#contents">Contents</a></div>
     <h1 id="tagging"><img class="icon-right" src="../img/tagging.svg"/></span>Tagging</h1>
     <h2>General</h2>
@@ -507,6 +538,14 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
     <p>
       If you close the dialog with Ok, the settings will be adopted into the current project.
     </p>
+    <p>
+      The presentations each have different requirements for the settings with which the images were generated. These requirements are listed in the notes for each presentation. Unfortunately, they are currently not taken into account automatically and may need to be set correctly before generating the images. 
+    </p>
+    <ol>
+      <li>Selection of specific target sizes (e.g. 64 and 1920 pixels - THUMBNAIL and SCREEN)
+      <li>Specification of the target folder</li>
+      <li>Specification for file renaming</li>
+    </ol>
     
     <div class="chfot"><a href="#contents">Contents</a></div>
     <h1 id="saving">Open and save Project Files</h1>
@@ -684,122 +723,170 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
     </table>
     
     <div class="chfot"><a href="#contents">Contents</a></div>
-    <h1 id="templateengine">Template Engine</h1>
-    <img style="float: right;" src="../img/templateengine.jpg"/>
-    <p>
-      The template engine replaces character strings in other character strings. It is used in various places in the program and is used, for example, when creating images in several sizes in a common directory or when creating presentations.
-    </p>
-    <p>
-      To do this, a list of variables is first created. The most important are <span class="vn">INDEX</span>, <span class="vn">SIZE</span> and <span class="vn">SIZENAME</span>. Each variable has a character string as its value. The engine replaces the placeholders of the variables in a given text template with their value.
-    </p>
-    <p>
-      Example:
-    </p>
-    <p>
-      Variables: <span class="vn">INDEX</span>="<span class="vv">0</span>", <span class="vn">SIZE</span>="<span class="vv">1280</span>", <span class="vn">SIZENAME</span>="<span class="vv">SCREEN</span>"<br/>
-      Text template: "C:\MyPhotos\<span class="vn">$(SIZENAME)</span>\bild<span class="vn">$(INDEX)</span>_<span class="vn">$(SIZE)</span>px.jpg"<br/>
-      Result: "C:\MyPhotos\<span class="vv">SCREEN</span>\bild<span class="vv">0</span>_<span class="vv">1280</span>px.jpg"
-    </p>
-    <p>
-      The values ​​of the variables are always character strings. Before they are resolved, they can also contain references to other variables and functions. For example, a variable called <span class="vn">IMGFILENAME</span> could contain the value "img<span class="vn">$(INDEX<span class="vf">.add(1).fmt(3)</span>)</span>_<span class="vn">$(SIZE)</span>.<span class="vn">$(ORGFILENAME<span class="vf">.ext().lower()</span>)</span>". This value contains references to the variables <span class="vn">INDEX</span>, <span class="vn">SIZE</span> and <span class="vn">ORGFILENAME</span>. The function "<span class="vf">add(1)</span>" is applied to the value of the variable <span class="vn">INDEX</span>, which adds a 1 to the value as an integer, and the function "<span class="vf">fmt(3)</span>" is applied, which converts the number into a 3-digit number with a leading number. The file extension of the variable <span class="vn">ORGFILENAME</span> is taken with the function "<span class="vf">ext()</span>" and converted to lowercase with the function "<span class="vf">lower()</span>".
-    </p>
-    <p>
-      Before each individual image is created, the variables are updated and checked for dependencies between each other. These dependencies are <i>resolved</i> before being replaced in the text template. Resolving means that all variables that only depend on independent variables are processed first. This means that these variables are independent themselves and can in turn be inserted into other variables that depend on them. This continues until all variables are resolved, i.e. independent. Circular (mutual and indirectly mutual) variables are recognized and reported as errors.
-    </p>
-    <p>
-      The list of available variables depends on the context and is mentioned in the respective contexts. There are the contexts <i>target folder</i>, <i>target file</i> name and <i>presentation</i>.
-    </p>
-    <p>
-      The list of the available functions also depends on the context. Functions such as <span class="vf">lower()</span> and <span class="vf">lower()</span> are available everywhere and work the same. The effect of the <span class="vf">fmt(digits)</span> function depends on the context. In connection with the renaming, it can be used to generate the target directory name with the "Auto" parameter, which automatically determines the number of jobs based on the converting images. This parameter does not exist in connection with the target directory name.
-    </p>
 
-    <h1 id="varindex">Variables</h1>
-    <p>
-      The table shows functions available in the context of each <a href="templateengine">template engine</a>. To apply a function to a variable value, append it as in the example. To apply further functions, you can append them to the last one.
-    </p> 
-    <p>
-      Template processors are used in various contexts in ImageResize. Which variables can be used in which context is shown in the table.
-    </p>  
-    <table class="simple-table">
-      <tr>
-        <th>Name</th><th>Context</th><th>Meaning</th>
-      </tr>
-      <tr>
-        <td>INDEX</td><td></td><td></td>
-      </tr><tr>
-        <td>SIZE</td><td></td><td></td>
-      </tr><tr>
-        <td>SIZENAME</td><td></td><td></td>
-      </tr><tr>
-        <td>ORGWIDTH</td><td></td><td></td>
-      </tr><tr>
-        <td>ORGHEIGHT</td><td></td><td></td>
-      </tr><tr>
-        <td>ORGFILENAME</td><td></td><td></td>
-      </tr><tr>
-        <td>ORGFILESIZE</td><td></td><td></td>
-      </tr><tr>
-        <td>FILENAME</td><td></td><td></td>
-      </tr><tr>
-        <td>FILETITLE</td><td></td><td></td>
-      </tr><tr>
-        <td>FILEEXT</td><td></td><td></td>
-      </tr><tr>
-        <td>INTERPOLATION</td><td></td><td></td>
-      </tr><tr>
-        <td>IMGFILENAME</td><td></td><td></td>
-      </tr><tr>
-        <td>IMGWIDTH</td><td></td><td></td>
-      </tr><tr>
-        <td>IMGHEIGHT</td><td></td><td></td>
-      </tr><tr>
-        <td>IMGFILESIZE</td><td></td><td></td>
-      </tr><tr>
-        <td></td><td></td><td></td>
-      </tr><tr>
-        <td></td><td></td><td></td>
-      </tr><tr>
-      </tr>
-    </table>
+<h1 id="templateengine">Template Processor</h1>
+<img style="float: right; margin-left: 2em;" src="../img/templateengine.jpg"/>
+<p>
+  The template processor replaces strings within other strings. It is used in various parts of the program and is, for example, used when generating images in multiple sizes in a common directory or when generating presentations[web:1].
+</p>
+<p>
+  For this purpose, a list of variables is first created. The most important examples are <span class="vn">INDEX</span>, <span class="vn">SIZE</span> and <span class="vn">SIZENAME</span>. Each variable has a string as its value. The processor replaces the variable placeholders in a given template with their respective value.
+</p>
+<p>
+  When generating <a href="#presentation">presentations</a>, HTML and CSS files or fragments are processed into web pages using the template processor[web:1].
+</p>
 
-    <h1 id="fnindex">Functions</h1>
-    <p>
-      The table shows functions available in the context of each template processor. To apply a function to a variable value, append it as in the example. To apply further functions, you can append them to the last one.
-    </p>
-    <p>
-      <span class="vn">$(VARNAME<span class="vf">.fnname(parameters)</span>)</span>
-    </p>
-    <p>
-      Beispiel: <span class="vn">$(MYVAR<span class="vf">.fna(1).fnb(2,3)</span>)</span>
-    </p>  
-    <table class="fn-table">
-      <tr>
-        <td><span class="vf">add(n)</span></td><td>Adding a constant integer, e.g. to make a 1-based number from a 0-based index, or to add numbered images to an existing list. The value can also be negative.</td>
-      </tr><tr>
-        <td><span class="vf">dext()</span></td><td>Determines the file name extension with dot</td>
-      </tr><tr>
-        <td><span class="vf">ext()</span></td><td>Determines the file name extension without dot</td>
-      </tr><tr>
-        <td><span class="vf">ifmt(n,[m|auto])</span></td><td>Formats an integer by adding the value n and then padding it with leading zeros so that the number has m digits. In the context of file names, "auto" means that the number of digits is determined from the total number of images. m can be omitted, in which case auto formatting is used.</td>
-      </tr><tr>
-        <td><span class="vf">fmt(d)</span></td><td>Number is padded with leading zeros so that the result has d digits. "auto" can be used in conjunction with the INDEX</span>. The number of digits is then determined from the number of images..</td>
-      </tr><tr>
-        <td><span class="vf">lower()</span></td><td>Converts to lowercase</td>
-      </tr><tr>
-        <td><span class="vf">numin()</span></td><td>Determines the integer contained in a text. This can be useful to determine the number of a photo from the name of the photo, e.g. "05023" is extracted from "DSC05023.jpg". If no number is present, an empty string is returned.
-        </td>
-      </tr><tr>
-        <td><span class="vf">slice(n:m)</span></td><td>Copies a substring from position n to position m. If n is ommited, then from start of the text is to be copied. If m is ommited the string is copied to the end. n and m can be negative. For example slice(-3:) means that the last 3 characters are copied.</td>
-      </tr><tr>
-        <td><span class="vf">title()</span></td><td>Determines the file name without path and extension</td>
-      </tr><tr>
-        <td><span class="vf">upper()</span></td><td>Converts to uppercase</td>
-      </tr>
-    </table>
+<h2>Examples</h2>
+<p>
+  Create target folder with target size
+</p>
+<ol>
+  <li>
+    Variable for current target size in pixels
+    <ul>
+      <li><span class="vn">SIZE</span>="<span class="vv">1920</span>"</li>
+    </ul>
+  </li>
+  <li>
+    Template for the target folder
+    <ul>
+      <li>C:\User\Jan\Photos\img<span class="vn">$(SIZE)</span></li>
+    </ul>
+  </li>
+  <li>
+    Result
+    <ul>
+      <li>C:\User\Jan\Photos\img<span class="vv">1920</span></li>
+    </ul>
+  </li>
+</ol>
+<p>
+  Rename target file
+</p>
+<ol>
+  <li>
+    Variables
+    <ul>
+      <li><span class="vn">INDEX</span>="<span class="vv">0</span>"</li>
+      <li><span class="vn">SIZE</span>="<span class="vv">1280</span>"</li>
+      <li><span class="vn">SIZENAME</span>="<span class="vv">SCREEN</span>"</li>
+    </ul>
+  </li>
+  <li>
+    Template referencing <i>variables</i> and <i>functions</i>
+    <ul>
+      <li>"C:\MyPhotos\<span class="vn">$(SIZENAME)</span>\bild<span class="vn">$(INDEX.add(1).fmt(3))</span>_<span class="vn">$(SIZE)</span>px.jpg"</li>
+    </ul>
+  </li>
+  <li>
+    Result
+    <ul>
+      <li>"C:\MyPhotos\<span class="vv">SCREEN</span>\bild<span class="vv">001</span>_<span class="vv">1280</span>px.jpg"</li>
+    </ul>
+  </li>
+</ol>
+
+<h2>Details</h2>
+<p>
+  The values of the variables are always strings. Before their <i>resolution</i>, they may also contain references to other variables and <i>functions</i>. For example, a variable called <span class="vn">IMGFILENAME</span> might have the value "img<span class="vn">$(INDEX<span class="vf">.add(1).fmt(3)</span>)</span>_<span class="vn">$(SIZE)</span>.<span class="vn">$(ORGFILENAME<span class="vf">.ext().lower()</span>)</span>". This value contains references to the variables <span class="vn">INDEX</span>, <span class="vn">SIZE</span>, and <span class="vn">ORGFILENAME</span>. The function "<span class="vf">add(1)</span>" is applied to the value of the variable <span class="vn">INDEX</span>, which adds 1 to the integer value, and the function "<span class="vf">fmt(3)</span>", which transforms the number into a 3-digit, zero-padded number. For the variable <span class="vn">ORGFILENAME</span>, the function "<span class="vf">ext()</span>" extracts the file extension and the function "<span class="vf">lower()</span>" converts it to lowercase.
+</p>
+<p>
+  Before creating each individual image, the variables are updated and checked for their interdependencies. These dependencies are resolved before substitution in the text template. Resolving means that first, all variables that only depend on self-independent variables are processed. These variables become themselves independent and can in turn be inserted into other variables that depend on them. This continues until all variables are resolved, i.e., independent. Circular (mutual and indirect mutual) dependencies are detected and reported as errors.
+</p>
+
+<h2>Functions</h2>
+<table class="fn-table">
+  <tr>
+    <td><span class="vf">add(n)</span></td><td>Adds a fixed integer, e.g., to turn a 0-based index into a 1-based number, or to extend an existing list with numbered images. The value may also be negative.</td>
+  </tr><tr>
+    <td><span class="vf">dext()</span></td><td>Determines the file extension including the dot.</td>
+  </tr><tr>
+    <td><span class="vf">ext()</span></td><td>Determines the file extension without the dot.</td>
+  </tr><tr>
+    <td><span class="vf">fmt(d)</span></td><td>The number is zero-padded to d digits.</td>
+  </tr><tr>
+    <td><span class="vf">ifmt(n[,m])</span></td><td>Formats an integer, adds the value n and then zero-pads the number so it has m digits.</td>
+  </tr><tr>
+    <td><span class="vf">lower()</span></td><td>Converts to lowercase.</td>
+  </tr><tr>
+    <td><span class="vf">numin()</span></td><td>Extracts integer numbers contained in text. This can be useful for extracting the photo number from a photo name, e.g., from "DSC05023.jpg" it extracts "05023". If no number is present, an empty string is returned.</td>
+  </tr><tr>
+    <td><span class="vf">slice(n:m)</span></td><td>Copies a substring from position n to position m. Omitting n assumes the start. Omitting m copies to the end. If n or m are negative, counting starts from the end. slice(-3:) copies the last 3 characters.</td>
+  </tr><tr>
+    <td><span class="vf">title()</span></td><td>Extracts the file name without path and extension.</td>
+  </tr><tr>
+    <td><span class="vf">upper()</span></td><td>Converts to uppercase.</td>
+  </tr>
+</table>
+
+<h2>Variables in Target Folder and Watermark File Names</h2>
+<table class="simple-table var-table">
+  <tr>
+    <td>SIZE</td><td>Selected target size of the image as pixel width/height</td>
+  </tr><tr>
+    <td>SIZENAME</td><td>Name of the size – usually THUMBNAIL, DOCUMENT or SCREEN</td>
+  </tr>
+</table>
+
+<h2>Variables When Renaming Target Files</h2>
+<table class="simple-table var-table">
+  <tr>
+    <td>INDEX</td><td>Sequential number of the image starting with 0. If the first image should start with a number other than 0, the function <span class="vf">.add(n)</span> can be used. If the number should be zero-padded, the function <span class="vf">fmt(m)</span> can be appended, where m is the number of digits. If instead of a number, the keyword <i>auto</i> is used, the number of digits is determined based on the total number of images. Example: INDEX=5 and template="img$(SIZE.add(1).fmt(3)).$(FILEEXT)" => "img006.jpg</td>
+  </tr><tr>
+    <td>SIZE</td><td>Selected target size of the image as pixel width/height</td>
+  </tr><tr>
+    <td>SIZENAME</td><td>Name of the size – usually THUMBNAIL, DOCUMENT or SCREEN</td>
+  </tr><tr>
+    <td>FILENAME</td><td>Name of the source file without path, with extension</td>
+  </tr><tr>
+    <td>FILETITLE</td><td>Name of the source file without path, without extension</td>
+  </tr><tr>
+    <td>FILEEXT</td><td>Extension of the target file name without dot</td>
+  </tr><tr>
+    <td>INTERPOLATION</td><td>Name of the interpolation algorithm</td>
+  </tr>
+</table>
+
+<h2>Variables in Presentations</h2>
+<table class="simple-table var-table">
+  <tr>
+    <td>IMGINDEX</td><td>Sequential number of the image starting at 0</td>
+  </tr><tr>
+    <td>IMGNUMBER</td><td>Sequential number of the image starting at 1</td>
+  </tr><tr>
+    <td>IMGCOUNT</td><td>Number of original images</td>
+  </tr><tr>
+    <td>IMGFILENAME</td><td>Target file name with extension</td>
+  </tr><tr>
+    <td>IMGFILETITLE</td><td>Target file name without extension</td>
+  </tr><tr>
+    <td>IMGFILEEXT</td><td>Extension of the target file name without dot</td>
+  </tr><tr>
+    <td>IMGFILEFORMAT</td><td>Image format JPEG or PNG</td>
+  </tr><tr>
+    <td>IMGFILESIZE</td><td>Size of the resampled image file in bytes</td>
+  </tr><tr>
+    <td>IMGPRETTYFILESIZE</td><td>Size of the image file including a unit like KB or MB</td>
+  </tr><tr>
+    <td>ORGWIDTH</td><td>Width of the original image</td>
+  </tr><tr>
+    <td>ORGHEIGHT</td><td>Height of the original image</td>
+  </tr><tr>
+    <td>ORGFILENAME</td><td>Original name of the image without path</td>
+  </tr><tr>
+    <td>ORGFILESIZE</td><td>Size of the original image file in bytes</td>
+  </tr><tr>
+    <td>ORGRATIO</td><td>Image ratio, e.g., 4/3, 16/9, or "custom"</td>
+  </tr><tr>
+    <td>ORGORIENTATION</td><td>Image orientation: Landscape, Portrait, Icon (1:1)</td>
+  </tr><tr>
+    <td>ORGPRETTYFILESIZE</td><td>Size of the original image file including a unit like KB or MB</td>
+  </tr>
+</table>
   
   </main>
   <footer>
-    © 2024 Jan Schirrmacher, www.atomek.de
+    © 2025 Jan Schirrmacher, www.atomek.de
   </footer>
 </body>
 </html>

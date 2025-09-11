@@ -1,0 +1,15 @@
+[Common]
+Type=WAMS
+Version=200
+
+[Settings]
+Text=© 2025 Jan Schirrmacher
+Font=48Pt, "Arial", bold
+FontColor=$FFFFFF
+Shadow=1
+ShadowBlur=6
+ShadowColor=$800000
+ShadowQuality=0
+Outline=1
+OutlineColor=$000000
+OutlineWidth=4

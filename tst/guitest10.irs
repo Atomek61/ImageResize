@@ -1,6 +1,7 @@
 [Common]
 Type=IRS
-Version=400
+Version=430
+CurrentDir=D:\Mf\dev\Lazarus\ImageResize\tst
 
 [Presentation.Info100]
 Title=Kirchen in Hildesheim
@@ -16,27 +17,30 @@ TableFontColor=12579053
 TableColor=7875704
 
 [Project]
+Title=3 images with portrait/landscape and watermark
 Description=
 Source=Filenames
 SourceFolder=
 SourceMasks=*.jpg;*.png
 SourceFilenames=srcI\DSC02329.jpg|srcI\DSC02361.jpg|srcI\DSC02380.jpg|
-Sizes=480
+SizeNames=1,480,
 TargetFolder=tst10
 Interpolation=Default
 JPEGQuality=Default
 PNGCompression=Default
-MrkEnabled=0
-MrkFilename=
+Sharpen=Default
+Denoise=Default
+MrkEnabled=1
+MrkFilename=..\tst\watermarks\jan2025.png
 MrkSize=20
 MrkX=98
 MrkY=98
-MrkAlpha=50
+MrkOpacity=50
 RenEnabled=0
 RenSimple=1
 RenAdvanced=0
 RenCustom=0
-RenTemplate=img%INDEX:1,3%.%FILEEXT%
+RenTemplate=img$(INDEX.ifmt(1)).$(FILEEXT)
 ShuffleEnabled=0
 ShuffleSeed=0
 TagsSourceEXIF=0

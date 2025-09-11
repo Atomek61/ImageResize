@@ -5,6 +5,7 @@ unit controlshot;
 interface
 
 uses
+  Logging,
   LCLIntf, LCLType, Forms, Windows, Classes, SysUtils, Controls, Graphics, BGRABitmap, FPWritePNG;
 
 var
@@ -19,6 +20,9 @@ procedure DelayForSnapshot(MilliSeconds :integer);
 
 implementation
 
+const
+  SCptSnapshotSavedFmt = 'Snapshot saved to %s';
+
 procedure Snapshot(const Filetitle :string; Control :TControl; dx, dy, Width, Height :integer);
 var
   ScreenBmp :TBitmap;
@@ -27,6 +31,7 @@ var
   Bmpa :TBGRABitmap;
   PNGWriter :TFPWriterPNG;
   ScreenDC :HDC;
+  Filename :string;
 
   function GetParentForm(Control :TControl) :TCustomForm;
   var
@@ -63,7 +68,10 @@ begin
     Bmp.Canvas.CopyRect(DstRect, ScreenBmp.Canvas, SrcRect);
     PNGWriter := TFPWriterPNG.Create;
     Bmpa := TBGRABitmap.Create(Bmp);
-    Bmpa.SaveToFile(IncludeTrailingPathDelimiter(SnapshotFolder)+Filetitle+'.png', PngWriter);
+    Filename := IncludeTrailingPathDelimiter(SnapshotFolder)+Filetitle+'.png';
+    Bmpa.SaveToFile(Filename, PngWriter);
+
+    Log(SCptSnapshotSavedFmt, [Filename], llInfo);
   finally
     ScreenBmp.Free;
     Bmp.Free;

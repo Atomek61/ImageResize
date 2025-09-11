@@ -11,7 +11,7 @@ uses
   Windows;
 
 const
-  IMGRESCLIVER = '4.2';
+  IMGRESCLIVER = '4.3';
   IMGRESCLICPR = 'imgres CLI '+IMGRESCLIVER+' for engine '+IMGRESVER+' (c) 2025 Jan Schirrmacher, www.atomek.de';
 
   ERRINVALIDNUMBEROFPARAMSFMT = 'Invalid number of parameters %d, %d expected.';
@@ -202,7 +202,7 @@ begin
         raise Exception.CreateFmt('Invalid threads number ''%s'', -1..n expected.', [Param]);
       inc(OptionCount, 2);
     end else
-      ThreadCount := 0;
+      ThreadCount := DEFAULT_THREADCOUNT;
 
     // StopOnError-Flag
     StopOnError := HasOption('x', 'stoponerror');
@@ -234,10 +234,10 @@ begin
         if not TryStrToInt(Param, ShuffleSeed) or (ShuffleSeed<0) then
           raise Exception.Create(ERRINVALIDSHAKESEED);
       end else
-        ShuffleSeed := 0;
+        ShuffleSeed := DEFAULT_SHUFFLESEED;
     end else begin
       Shuffle := false;
-      ShuffleSeed := 0;
+      ShuffleSeed := DEFAULT_SHUFFLESEED;
     end;
 
     Param := GetOptionValue('z', 'sharpen');
@@ -246,7 +246,7 @@ begin
       if not TryStrToInt(Param, Sharpen) or (Sharpen<0) then
         raise Exception.Create(ERRINVALIDSHARPEN);
     end else
-      Sharpen := 0;
+      Sharpen := DEFAULT_SHARPEN;
 
     Param := GetOptionValue('o', 'denoise');
     if Param<>'' then begin
@@ -254,7 +254,7 @@ begin
       if not TProcessor.TryStrToDenoise(Param, Denoise) then
         raise Exception.Create(ERRINVALIDDENOISE);
     end else
-      Denoise := dnNone;
+      Denoise := DEFAULT_DENOISE;
 
     // DryRun flag
     DryRun := HasOption('d', 'dryrun');

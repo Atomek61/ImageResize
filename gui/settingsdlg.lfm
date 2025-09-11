@@ -33,7 +33,7 @@ object SettingsDialog: TSettingsDialog
     Left = 128
     Height = 15
     Top = 27
-    Width = 45
+    Width = 44
     Caption = '&Threads:'
     FocusControl = ComboBoxThreadsUsed
     ParentColor = False
@@ -232,6 +232,7 @@ object SettingsDialog: TSettingsDialog
     Width = 176
     Anchors = [akRight, akBottom]
     BorderSpacing.Bottom = 1
+    Visible = False
     OnPaint = PaintBoxChuckyPaint
   end
   object ImageListChucky: TImageList

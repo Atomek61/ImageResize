@@ -3,5 +3,5 @@
 @goto ok
 :usage
 @echo usage: guitest n
-@echo   n is the test number from 1..5
+@echo   n is the test number (1a, 3c or what ever)
 :ok

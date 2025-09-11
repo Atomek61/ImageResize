@@ -31,7 +31,7 @@ type
 
     TFragmentDictionary = class(TDictionary<string, TFragment>)
       FRegExpr :TRegExpr;
-      constructor Create;
+      constructor Create; override;
       destructor Destroy; override;
       procedure AddFromString(const Key, Value :string);
     end;
@@ -143,7 +143,7 @@ var
   Key, Value :string;
   Fragment :TFragment;
   List :TPair<string, string>;
-  ImgVars :TEngine;
+  Engine :TEngine;
   FileSource :TStringList;
   Filename, FileText :string;
   Replacements :integer;
@@ -160,12 +160,12 @@ var
 
   function LargerSize(const Width, Height :string) :string;
   begin
-    result := IfThen(StrToInt(ImgVars[Width])>StrToInt(ImgVars[Height]), Width, Height);
+    result := IfThen(StrToInt(Engine[Width])>StrToInt(Engine[Height]), Width, Height);
   end;
 
   function PrettySize(const Size :string) :string;
   begin
-    result := Int64ToPrettySize(StrToInt64(ImgVars[Size]));
+    result := Int64ToPrettySize(StrToInt64(Engine[Size]));
   end;
 
   function PrettyRatio(const Width, Height :string) :string;
@@ -173,7 +173,7 @@ var
     Ratio :TImageRatio;
     Orientation :TImageOrientation;
   begin
-    if WidthHeightToRatioAndOrientation(StrToInt(ImgVars[Width]), StrToInt(ImgVars[Height]), Ratio, Orientation) then
+    if WidthHeightToRatioAndOrientation(StrToInt(Engine[Width]), StrToInt(Engine[Height]), Ratio, Orientation) then
       result := RatioToStr(Ratio)
     else
       result := '';
@@ -184,7 +184,7 @@ var
     Ratio :TImageRatio;
     Orientation :TImageOrientation;
   begin
-    if WidthHeightToRatioAndOrientation(StrToInt(ImgVars[Width]), StrToInt(ImgVars[Height]), Ratio, Orientation) then
+    if WidthHeightToRatioAndOrientation(StrToInt(Engine[Width]), StrToInt(Engine[Height]), Ratio, Orientation) then
       result := OrientationToStr(Orientation)
     else
       result := '';
@@ -192,8 +192,8 @@ var
 
 begin
   Lists := TStringDictionary.Create;
-  ImgVars := TEngine.Create;
-  ImgVars.UnknownVarHandling := uvhClear;
+  Engine := TEngine.Create;
+  Engine.UnknownVarHandling := uvhClear;
   FileSource := TStringList.Create;
   Stats := Default(TStats);
   t0 := TThread.GetTickCount64;
@@ -225,53 +225,54 @@ begin
 
       // Image- and Fragments-loop
       for i:=0 to FFilesTags.Filenames.Count-1 do begin
-        // Build the ImgVars for each image
-        ImgVars.Clear;
-        ImgVars.Add('IMGINDEX', IntToStr(i));
-        ImgVars.Add('IMGNUMBER', IntToStr(i+1));
-        ImgVars.Add('IMGCOUNT', IntToStr(FFilesTags.Filenames.Count));
-        ImgVars.Add('IMGFILENAME', ExtractFilename(FFilesTags.Filenames[i]));
-        ImgVars.Add('IMGFILETITLE', ChangeFileExt(ExtractFilename(FFilesTags.Filenames[i]), ''));
-        ImgVars.Add('IMGFILEEXT', ExtractExt(FFilesTags.Filenames[i]));
-        ImgVars.Add('IMGFILEFORMAT', FileFormat(FFilesTags.Filenames[i]));
+        // Build the Engine for each image
+        Engine.Clear;
+        Engine.Add('IMGINDEX', IntToStr(i));
+        Engine.Add('IMGNUMBER', IntToStr(i+1));
+        Engine.Add('IMGCOUNT', IntToStr(FFilesTags.Filenames.Count));
+        Engine.Add('IMGFILENAME', ExtractFilename(FFilesTags.Filenames[i]));
+        Engine.Add('IMGFILETITLE', ChangeFileExt(ExtractFilename(FFilesTags.Filenames[i]), ''));
+        Engine.Add('IMGFILEEXT', ExtractExt(FFilesTags.Filenames[i]));
+        Engine.Add('IMGFILEFORMAT', FileFormat(FFilesTags.Filenames[i]));
 
-        // Add the ImgVars from the row of the .imagetags file
+        // Add the Engine from the row of the .imagetags file
         Tags := FFilesTags[FFilesTags.Filenames[i]];
         for Key in FFilesTags.TagKeys do begin
           if not Tags.TryGetValue(Key, Value) then Value := '';
-          ImgVars.Load(UpperCase(Key), Value);
+          Engine.Load(UpperCase(Key), Value);
         end;
 
         // Add some calculated vars
-        ImgVars.Add('IMGSIZE', LargerSize('IMGWIDTH', 'IMGHEIGHT'));
-        ImgVars.Add('IMGPRETTYFILESIZE', PrettySize('IMGFILESIZE'));
-        ImgVars.Add('ORGRATIO', PrettyRatio('ORGWIDTH', 'ORGHEIGHT'));
-        ImgVars.Add('ORGORIENTATION', PrettyOrientation('ORGWIDTH', 'ORGHEIGHT'));
-        ImgVars.Add('ORGPRETTYFILESIZE', PrettySize('ORGFILESIZE'));
-        ImgVars.Add('ORGSIZE', LargerSize('ORGWIDTH', 'ORGHEIGHT'));
+        Engine.Add('IMGSIZE', LargerSize('IMGWIDTH', 'IMGHEIGHT'));
+        Engine.Add('IMGPRETTYFILESIZE', PrettySize('IMGFILESIZE'));
+        Engine.Add('ORGRATIO', PrettyRatio('ORGWIDTH', 'ORGHEIGHT'));
+        Engine.Add('ORGORIENTATION', PrettyOrientation('ORGWIDTH', 'ORGHEIGHT'));
+        Engine.Add('ORGPRETTYFILESIZE', PrettySize('ORGFILESIZE'));
+        Engine.Add('ORGSIZE', LargerSize('ORGWIDTH', 'ORGHEIGHT'));
 
         // Add the global vars
         for j:=0 to FSysVars.Count-1 do
-          ImgVars.Load(FSysVars.Keys[j], FSysVars.Values[j]);
+          Engine.Load(FSysVars.Keys[j], FSysVars.Values[j]);
 
         // Solve the vars (dependencies between the vars)
-        ImgVars.Delimiters := DOSDELIMITERS;
-        ImgVars.Solve;
+        Engine.Delimiters := DOSDELIMITERS;
+        Engine.Solve;
         // Todo: check errors of solving
 
         // Compile the Fragments
         // Add the fragments
         for Fragment in FListFragments.Values do begin
-          ImgVars.Delimiters := FDelimiters[LowerCase(Fragment.Extension)];
-          ImgVars.Load(Fragment.Name, ImgVars.Compile(Fragment.Template));
+          Engine.Delimiters := FDelimiters[LowerCase(Fragment.Extension)];
+          Engine.Load(Fragment.Name, Engine.Compile(Fragment.Template));
         end;
 
-        inc(Stats.Dependencies, ImgVars.Stats.DepsTotal + ImgVars.Stats.Solved);
-        inc(Stats.Solved, ImgVars.Stats.Solved);
+        // Update processing statistics
+        inc(Stats.Dependencies, Engine.Stats.DepsTotal + Engine.Stats.Solved);
+        inc(Stats.Solved, Engine.Stats.Solved);
 
         // Build the lists of fragments
         for Fragment in FListFragments.Values do
-          Lists[Fragment.Name] := Lists[Fragment.Name] + ImgVars[Fragment.Name];
+          Lists[Fragment.Name] := Lists[Fragment.Name] + Engine[Fragment.Name];
       end;
 
       // 4. Add the builded lists as global variables
@@ -305,7 +306,7 @@ begin
 
     finally
       Lists.Free;
-      ImgVars.Free;
+      Engine.Free;
       FileSource.Free;
     end;
     result := true;

@@ -48,7 +48,7 @@ type
   protected
     procedure KeyNotify(constref AKey: string; ACollectionNotification: TCollectionNotification); override;
   public
-    constructor Create; overload;
+    constructor Create;
     procedure Clear; override;
     procedure SetDefaults;
     procedure Load(Ini :TCustomIniFile; const Group :string = ''; Mode :TLoadMode = lmEasygoing);
@@ -196,8 +196,8 @@ type
     procedure SetAsText(const AValue: string); override;
     function GetAsText :string; override;
     procedure SetDefault; override;
-  public
     procedure LoadDef(Ini :TCustomIniFile; const Section :string); override;
+  public
     constructor Create(Settings :TSettings; const Key :string); override;
     class function ClassDefault :string; override;
     function IsEqual(Other :TSetting) :boolean; override;
@@ -292,6 +292,8 @@ type
   function TryStrToBoolean(const Str :string; out Value :boolean) :boolean;
   function StrToBoolean(const Str :string) :boolean;
   function BooleanToStr(const Value :boolean) :string;
+  function MemoTextToStr(const Value :string; const CRLFReplacement :string) :string;
+  function StrToMemoText(const Value :string; const CRLFReplacement :string) :string;
 
 implementation
 
@@ -1087,8 +1089,6 @@ end;
 procedure TStringsSetting.SetAsText(const AValue: string);
 var
   v :TStringArray;
-  Equal :boolean;
-  i :integer;
 begin
   v := AValue.Split(LINESEP);
   if FValue.IsEqual(v) then Exit;
@@ -1110,6 +1110,16 @@ procedure TStringsSetting.Assign(Source: TSetting);
 begin
   inherited;
   FValue := Copy((Source as TStringsSetting).FValue);
+end;
+
+function MemoTextToStr(const Value :string; const CRLFReplacement :string) :string;
+begin
+  result := ReplaceStr(Value, #13#10, CRLFReplacement);
+end;
+
+function StrToMemoText(const Value :string; const CRLFReplacement :string) :string;
+begin
+  result := ReplaceStr(Value, CRLFReplacement, #13#10);
 end;
 
 { TPicktextSetting }

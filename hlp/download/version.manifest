@@ -1,4 +1,4 @@
 App=ImageResize
-Version=4.2.1
-Date=2024-11-17
-Hint=New: Sharpening
+Version=4.3.0
+Date=2025-09-07
+Hint=New: Filters sharpen and denoise

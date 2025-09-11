@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.7\n"
 
 #: aboutdlg.scptavailable
 msgid "Available"
@@ -73,7 +73,7 @@ msgstr "Tags-Datei '%s' nicht gefunden."
 #: galleryprocessor.serrinvalidfragmentfmt
 #, object-pascal-format
 msgid "Invalid list fragment \"%s\" (Fragment.NAME.ext expected)."
-msgstr ""
+msgstr "Ungültiges Listenfragment \"%s\" (Fragment.NAME.ext erwartet)"
 
 #: galleryprocessor.smsgbuildinglists
 msgid "Building lists..."
@@ -125,25 +125,23 @@ msgid "Cosine"
 msgstr "Cosinus"
 
 #: imgres.scptdenoisedefault
-#, fuzzy
 msgctxt "imgres.scptdenoisedefault"
 msgid "Default"
 msgstr "Voreinstellung"
 
 #: imgres.scptdenoisehigh
 msgid "High"
-msgstr ""
+msgstr "Hoch"
 
 #: imgres.scptdenoiselow
 msgid "Low"
-msgstr ""
+msgstr "Gering"
 
 #: imgres.scptdenoisemedium
 msgid "Medium"
-msgstr ""
+msgstr "Mittel"
 
 #: imgres.scptdenoisenone
-#, fuzzy
 msgctxt "imgres.scptdenoisenone"
 msgid "None"
 msgstr "Keine"
@@ -274,6 +272,16 @@ msgctxt "imgres.serrinexpected"
 msgid "integer expected"
 msgstr "Ganzzahl erwartet"
 
+#: imgres.serrinvaliddenoisenamefmt
+#, object-pascal-format
+msgid "Invalid denoise name '%s', None, Low, Medium or High expected."
+msgstr "Ungültiger Entrauschen-Bezeichner '%s', None, Low, Medium oder High erwartet."
+
+#: imgres.serrinvaliddenoisestrfmt
+#, object-pascal-format
+msgid "Invalid denoise value '%s', None, Low, Medium or High expected."
+msgstr "Ungültiger Entrauschen-Wert '%s', Keine, Niedrig, Mittel oder Hoch erwartet."
+
 #: imgres.serrinvalidindexdigitsfmt
 #, object-pascal-format
 msgid "Invalid INDEX digits number '%s'"
@@ -378,8 +386,9 @@ msgid "Multiple sizes but placeholder SIZE or SIZENAME not found in either folde
 msgstr "Mehrfache Größe, aber Platzhalter SIZE oder SIZENAME nicht gefunden im Verzeichnisnamen oder in der Dateinamen-Vorlage"
 
 #: imgres.sinfresultfmt
-#, object-pascal-format
-msgid "Images: %d, Filter: %s, Sizes: %d, Tasks: %d, Successful: %d, Failed: %d, Elapsed: %.2fs"
+#, object-pascal-format, fuzzy
+#| msgid "Images: %d, Filter: %s, Sizes: %d, Tasks: %d, Successful: %d, Failed: %d, Elapsed: %.2fs"
+msgid "Images: %d, Interpolation: %s, Sizes: %d, Tasks: %d, Successful: %d, Failed: %d, Elapsed: %.2fs"
 msgstr "Bilder: %d, Filter: %s, Größen: %d, Tasks: %d, erfolgreich: %d, fehlerhaft: %d, vergangen: %.2fs"
 
 #: imgres.smsgcreatingfolderfmt
@@ -539,6 +548,10 @@ msgstr ""
 "Geben Sie die Platzhalter $(SIZE) oder $(SIZENAME)  entweder im Zielordnernamen\n"
 "oder in der Dateiname-Vorlage des Umbenennens an, um den Dateinamenskonflikt zu lösen."
 
+#: maindlg.serrinvaliddenoisevalue
+msgid "Invalid denoise value"
+msgstr "Ungültiger Wert für Entrauschen"
+
 #: maindlg.serrinvalidjpgquality
 msgid "Invalid JPEG quality"
 msgstr "Ungültige JPEG-Qualität"
@@ -610,11 +623,6 @@ msgstr "Warnung: Unerwartetes Projekt-Format %s (%s erwartet)"
 msgid "Warning: Unexpected settings format %s (%s expected)"
 msgstr "Warnung: Unerwartetes Einstellungen-Format %s (%s erwartet)"
 
-#: maindlg.smsgprojectdescriptionfmt
-#, object-pascal-format
-msgid "Description: \"%s\""
-msgstr "Beschreibung: \"%s\""
-
 #: maindlg.smsgprojectloadedfromfmt
 #, object-pascal-format
 msgid "Project '%s' loaded"
@@ -635,6 +643,11 @@ msgstr ""
 "Das Projekt wurde geändert.\n"
 "\n"
 "Wollen Sie die Änderungen speichern?"
+
+#: maindlg.smsgtitlefmt
+#, object-pascal-format
+msgid "Title: \"%s\""
+msgstr ""
 
 #: maindlg.surlwebhelp
 msgid "http://www.atomek.de/imageresize/hlp42/gui/en"
@@ -1012,6 +1025,14 @@ msgstr "&Öffnen"
 msgid "Load saved settings"
 msgstr "Lädt gespeicherte Einstellungen"
 
+#: tmaindialog.actionparaminfo.caption
+msgid "&Info"
+msgstr ""
+
+#: tmaindialog.actionparaminfo.hint
+msgid "Describe your project here"
+msgstr ""
+
 #: tmaindialog.actionparampresentation.caption
 msgctxt "tmaindialog.actionparampresentation.caption"
 msgid "Presentation"
@@ -1266,6 +1287,10 @@ msgstr "Zeitstempel"
 msgid "Title"
 msgstr "Titel"
 
+#: tmaindialog.comboboxdenoise.hint
+msgid "Enter a median filtering level (Default is None)"
+msgstr "Geben Sie einen Entrausch-Stufe ein (Voreinstellung ist \"Keine\")"
+
 #: tmaindialog.comboboxinterpolation.hint
 msgid ""
 "When resampling an image the interpolation algorithm\n"
@@ -1447,6 +1472,10 @@ msgstr ""
 "Wenn mehrere Größen angegeben werden, muss der Platzhalter $(SIZE) im Pfad\n"
 " an der Stelle eingefügt werden, wo die aktuelle Größe erscheinen soll."
 
+#: tmaindialog.groupboxfilter.caption
+msgid "Filter"
+msgstr "Filter"
+
 #: tmaindialog.groupboxinterpolationquality.caption
 msgctxt "tmaindialog.groupboxinterpolationquality.caption"
 msgid "Interpolation"
@@ -1473,11 +1502,6 @@ msgstr "PNG"
 #: tmaindialog.groupboxrename.caption
 msgid "Strategy"
 msgstr "Strategie"
-
-#: tmaindialog.groupboxsharpen.caption
-msgctxt "tmaindialog.groupboxsharpen.caption"
-msgid "Sharpen"
-msgstr "Schärfen"
 
 #: tmaindialog.groupboxshuffle.caption
 msgid "Shuffle"
@@ -1559,13 +1583,17 @@ msgctxt "tmaindialog.label16.caption"
 msgid "%"
 msgstr "%"
 
+#: tmaindialog.label17.caption
+msgid "Title:"
+msgstr ""
+
 #: tmaindialog.label18.caption
 msgid "File Selection:"
 msgstr "Dateiauswahl:"
 
 #: tmaindialog.label19.caption
-msgid "Amount (0..100..):"
-msgstr "Betrag (0..100..)"
+msgid "Description:"
+msgstr ""
 
 #: tmaindialog.label2.caption
 msgctxt "tmaindialog.label2.caption"
@@ -1617,9 +1645,19 @@ msgstr "Größenbenennung:"
 msgid "Horizontal:"
 msgstr "Horizontal:"
 
+#: tmaindialog.labeldenoise.caption
+msgctxt "tmaindialog.labeldenoise.caption"
+msgid "Denoise:"
+msgstr "Entrauschen:"
+
 #: tmaindialog.labelrentemplate.caption
 msgid "Template:"
 msgstr "Vorlage:"
+
+#: tmaindialog.labelsharpen.caption
+msgctxt "tmaindialog.labelsharpen.caption"
+msgid "Sharpen (0..100..):"
+msgstr "Schärfen (0..100..)"
 
 #: tmaindialog.labelshuffleseed.caption
 msgctxt "tmaindialog.labelshuffleseed.caption"
@@ -1680,6 +1718,10 @@ msgstr "1 Einfach - ein Verzeichnis für jede Größe"
 #: tmaindialog.saveasdialogtagsreport.title
 msgid "Save Tags Report as"
 msgstr "Tags Report speichern als"
+
+#: tmaindialog.tabsheetinfo.caption
+msgid "TabSheetInfo"
+msgstr ""
 
 #: tmaindialog.toolbuttonabout.hint
 msgid "License and Vendor Infos"

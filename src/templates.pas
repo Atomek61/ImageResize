@@ -498,16 +498,16 @@ begin
   FFnCallsRegExpr := TRegExpr.Create(FNCPATTERN);
   FFunctions := TDictionary<string, TTemplateFunction>.Create;
   if RegisterDefaultFunctions then begin
-    RegisterFunction('lower', FnLower);
-    RegisterFunction('upper', FnUpper);
-    RegisterFunction('ifmt', FnIFmt);
-    RegisterFunction('slice', FnSlice);
     RegisterFunction('add', FnAdd);
-    RegisterFunction('fmt', FnFmt);
-    RegisterFunction('title', FnTitle);
-    RegisterFunction('ext', FnExt);
     RegisterFunction('dext', FnDext);
+    RegisterFunction('ext', FnExt);
+    RegisterFunction('fmt', FnFmt);
+    RegisterFunction('ifmt', FnIFmt);
+    RegisterFunction('lower', FnLower);
     RegisterFunction('numin', FnNumIn);
+    RegisterFunction('slice', FnSlice);
+    RegisterFunction('title', FnTitle);
+    RegisterFunction('upper', FnUpper);
   end;
 end;
 

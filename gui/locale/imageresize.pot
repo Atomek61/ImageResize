@@ -261,6 +261,16 @@ msgctxt "imgres.serrinexpected"
 msgid "integer expected"
 msgstr ""
 
+#: imgres.serrinvaliddenoisenamefmt
+#, object-pascal-format
+msgid "Invalid denoise name '%s', None, Low, Medium or High expected."
+msgstr ""
+
+#: imgres.serrinvaliddenoisestrfmt
+#, object-pascal-format
+msgid "Invalid denoise value '%s', None, Low, Medium or High expected."
+msgstr ""
+
 #: imgres.serrinvalidindexdigitsfmt
 #, object-pascal-format
 msgid "Invalid INDEX digits number '%s'"
@@ -366,7 +376,7 @@ msgstr ""
 
 #: imgres.sinfresultfmt
 #, object-pascal-format
-msgid "Images: %d, Filter: %s, Sizes: %d, Tasks: %d, Successful: %d, Failed: %d, Elapsed: %.2fs"
+msgid "Images: %d, Interpolation: %s, Sizes: %d, Tasks: %d, Successful: %d, Failed: %d, Elapsed: %.2fs"
 msgstr ""
 
 #: imgres.smsgcreatingfolderfmt
@@ -524,6 +534,10 @@ msgstr ""
 msgid "Enter placeholder $(SIZE) or $(SIZENAME) to either the target folder or the file template"
 msgstr ""
 
+#: maindlg.serrinvaliddenoisevalue
+msgid "Invalid denoise value"
+msgstr ""
+
 #: maindlg.serrinvalidjpgquality
 msgid "Invalid JPEG quality"
 msgstr ""
@@ -595,11 +609,6 @@ msgstr ""
 msgid "Warning: Unexpected settings format %s (%s expected)"
 msgstr ""
 
-#: maindlg.smsgprojectdescriptionfmt
-#, object-pascal-format
-msgid "Description: \"%s\""
-msgstr ""
-
 #: maindlg.smsgprojectloadedfromfmt
 #, object-pascal-format
 msgid "Project '%s' loaded"
@@ -616,6 +625,11 @@ msgid ""
 "The project has been modified.\n"
 "\n"
 "Do you want to save the changes?"
+msgstr ""
+
+#: maindlg.smsgtitlefmt
+#, object-pascal-format
+msgid "Title: \"%s\""
 msgstr ""
 
 #: maindlg.surlwebhelp
@@ -990,6 +1004,14 @@ msgstr ""
 msgid "Load saved settings"
 msgstr ""
 
+#: tmaindialog.actionparaminfo.caption
+msgid "&Info"
+msgstr ""
+
+#: tmaindialog.actionparaminfo.hint
+msgid "Describe your project here"
+msgstr ""
+
 #: tmaindialog.actionparampresentation.caption
 msgctxt "tmaindialog.actionparampresentation.caption"
 msgid "Presentation"
@@ -1231,6 +1253,10 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
+#: tmaindialog.comboboxdenoise.hint
+msgid "Enter a median filtering level (Default is None)"
+msgstr ""
+
 #: tmaindialog.comboboxinterpolation.hint
 msgid ""
 "When resampling an image the interpolation algorithm\n"
@@ -1372,6 +1398,10 @@ msgid ""
 "shall insert the current size ."
 msgstr ""
 
+#: tmaindialog.groupboxfilter.caption
+msgid "Filter"
+msgstr ""
+
 #: tmaindialog.groupboxinterpolationquality.caption
 msgctxt "tmaindialog.groupboxinterpolationquality.caption"
 msgid "Interpolation"
@@ -1397,11 +1427,6 @@ msgstr ""
 
 #: tmaindialog.groupboxrename.caption
 msgid "Strategy"
-msgstr ""
-
-#: tmaindialog.groupboxsharpen.caption
-msgctxt "tmaindialog.groupboxsharpen.caption"
-msgid "Sharpen"
 msgstr ""
 
 #: tmaindialog.groupboxshuffle.caption
@@ -1476,12 +1501,16 @@ msgctxt "tmaindialog.label16.caption"
 msgid "%"
 msgstr ""
 
+#: tmaindialog.label17.caption
+msgid "Title:"
+msgstr ""
+
 #: tmaindialog.label18.caption
 msgid "File Selection:"
 msgstr ""
 
 #: tmaindialog.label19.caption
-msgid "Amount (0..100..):"
+msgid "Description:"
 msgstr ""
 
 #: tmaindialog.label2.caption
@@ -1534,8 +1563,18 @@ msgstr ""
 msgid "Horizontal:"
 msgstr ""
 
+#: tmaindialog.labeldenoise.caption
+msgctxt "tmaindialog.labeldenoise.caption"
+msgid "Denoise:"
+msgstr ""
+
 #: tmaindialog.labelrentemplate.caption
 msgid "Template:"
+msgstr ""
+
+#: tmaindialog.labelsharpen.caption
+msgctxt "tmaindialog.labelsharpen.caption"
+msgid "Sharpen (0..100..):"
 msgstr ""
 
 #: tmaindialog.labelshuffleseed.caption
@@ -1590,6 +1629,10 @@ msgstr ""
 
 #: tmaindialog.saveasdialogtagsreport.title
 msgid "Save Tags Report as"
+msgstr ""
+
+#: tmaindialog.tabsheetinfo.caption
+msgid "TabSheetInfo"
 msgstr ""
 
 #: tmaindialog.toolbuttonabout.hint
