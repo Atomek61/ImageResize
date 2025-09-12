@@ -2,11 +2,11 @@ object MainDialog: TMainDialog
   Left = 782
   Height = 679
   Top = 313
-  Width = 901
+  Width = 1086
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'ImageResize'
   ClientHeight = 679
-  ClientWidth = 901
+  ClientWidth = 1086
   Constraints.MinHeight = 640
   Constraints.MinWidth = 900
   Font.Height = -12
@@ -25,11 +25,11 @@ object MainDialog: TMainDialog
     Left = 0
     Height = 512
     Top = 64
-    Width = 901
+    Width = 1086
     Align = alTop
     BevelOuter = bvNone
     ClientHeight = 512
-    ClientWidth = 901
+    ClientWidth = 1086
     Color = 15850953
     Constraints.MinHeight = 456
     ParentBackground = False
@@ -39,13 +39,13 @@ object MainDialog: TMainDialog
       Left = 7
       Height = 400
       Top = 40
-      Width = 393
+      Width = 578
       HelpType = htKeyword
       HelpKeyword = 'HTML/index.html#srcfilelist'
       Anchors = [akTop, akLeft, akRight]
       BevelOuter = bvNone
       ClientHeight = 400
-      ClientWidth = 393
+      ClientWidth = 578
       ParentBackground = False
       ParentColor = False
       TabOrder = 0
@@ -53,7 +53,7 @@ object MainDialog: TMainDialog
         Left = 4
         Height = 62
         Top = 4
-        Width = 385
+        Width = 570
         AutoSize = True
         BorderSpacing.Around = 4
         ButtonHeight = 60
@@ -82,24 +82,24 @@ object MainDialog: TMainDialog
         Left = 4
         Height = 326
         Top = 70
-        Width = 385
+        Width = 570
         TabStop = False
-        ActivePage = TabSheetSrcFolder
+        ActivePage = TabSheetSrcFilenames
         Align = alClient
         BorderSpacing.Around = 4
         ShowTabs = False
         Style = tsFlatButtons
-        TabIndex = 1
+        TabIndex = 0
         TabOrder = 1
         object TabSheetSrcFilenames: TTabSheet
           ClientHeight = 318
-          ClientWidth = 377
+          ClientWidth = 562
           object MemoSrcFilenames: TMemo
             Left = 8
             Height = 263
             Hint = 'Enter a list of files with absolute or relative paths.'#13#10'A relative path refers to the current directory, which is the directory'#13#10'where the project file was stored.'
             Top = 32
-            Width = 365
+            Width = 550
             Anchors = [akTop, akLeft, akRight, akBottom]
             ScrollBars = ssAutoVertical
             TabOrder = 0
@@ -123,7 +123,7 @@ object MainDialog: TMainDialog
           object ButtonBrowseSrcFiles: TBitBtn
             AnchorSideRight.Control = ButtonClearSrcFiles
             AnchorSideBottom.Control = MemoSrcFilenames
-            Left = 311
+            Left = 496
             Height = 25
             Hint = 'Browse for one or more images'
             Top = 4
@@ -140,7 +140,7 @@ object MainDialog: TMainDialog
             AnchorSideRight.Control = MemoSrcFilenames
             AnchorSideRight.Side = asrBottom
             AnchorSideBottom.Control = MemoSrcFilenames
-            Left = 342
+            Left = 527
             Height = 25
             Hint = 'Clear image list'
             Top = 4
@@ -159,7 +159,7 @@ object MainDialog: TMainDialog
             AnchorSideRight.Control = MemoSrcFilenames
             AnchorSideRight.Side = asrBottom
             AnchorSideBottom.Side = asrBottom
-            Left = 262
+            Left = 447
             Height = 16
             Top = 295
             Width = 111
@@ -171,13 +171,13 @@ object MainDialog: TMainDialog
         end
         object TabSheetSrcFolder: TTabSheet
           ClientHeight = 318
-          ClientWidth = 377
+          ClientWidth = 562
           object ButtonBrowseSrcFolder: TBitBtn
             AnchorSideLeft.Control = EditSrcFolder
             AnchorSideLeft.Side = asrBottom
             AnchorSideTop.Control = EditSrcFolder
             AnchorSideTop.Side = asrCenter
-            Left = 345
+            Left = 530
             Height = 25
             Hint = 'Select a folder with images'
             Top = 31
@@ -207,7 +207,7 @@ object MainDialog: TMainDialog
             Height = 23
             Hint = 'Enter a source folder with your images'
             Top = 32
-            Width = 337
+            Width = 522
             Anchors = [akTop, akLeft, akRight]
             TabOrder = 0
             OnChange = EditSrcFolderChange
@@ -240,7 +240,7 @@ object MainDialog: TMainDialog
       end
     end
     object PanelParams: TPanel
-      Left = 406
+      Left = 591
       Height = 400
       Top = 40
       Width = 488
@@ -2159,13 +2159,13 @@ object MainDialog: TMainDialog
       Left = 192
       Height = 51
       Top = 448
-      Width = 486
+      Width = 671
       HelpType = htKeyword
       HelpKeyword = 'HTML/index.html#dstfolder'
       Anchors = [akTop, akLeft, akRight]
       BevelOuter = bvNone
       ClientHeight = 51
-      ClientWidth = 486
+      ClientWidth = 671
       ParentBackground = False
       ParentColor = False
       TabOrder = 2
@@ -2174,7 +2174,7 @@ object MainDialog: TMainDialog
         Height = 23
         Hint = 'Enter a destination for the resampled images.'#13#10'If multiple sizes are entered, insert placeholder $(SIZE)'#13#10'or $(SIZENAME) into the path where the program'#13#10'shall insert the current size .'
         Top = 7
-        Width = 411
+        Width = 596
         Anchors = [akTop, akLeft, akRight]
         TabOrder = 0
         OnChange = EditTargetFolderChange
@@ -2185,7 +2185,7 @@ object MainDialog: TMainDialog
         AnchorSideTop.Control = EditTargetFolder
         AnchorSideTop.Side = asrCenter
         AnchorSideBottom.Side = asrBottom
-        Left = 420
+        Left = 605
         Height = 25
         Top = 6
         Width = 31
@@ -2201,7 +2201,7 @@ object MainDialog: TMainDialog
         AnchorSideLeft.Side = asrBottom
         AnchorSideTop.Control = EditTargetFolder
         AnchorSideTop.Side = asrCenter
-        Left = 451
+        Left = 636
         Height = 25
         Top = 6
         Width = 31
@@ -2216,7 +2216,7 @@ object MainDialog: TMainDialog
         AnchorSideTop.Side = asrBottom
         AnchorSideRight.Control = EditTargetFolder
         AnchorSideRight.Side = asrBottom
-        Left = 359
+        Left = 544
         Height = 19
         Hint = 'No image or folder will be created, but'#13#10'.imgtags and .tagsreport on demand.'
         Top = 30
@@ -2229,10 +2229,9 @@ object MainDialog: TMainDialog
       end
       object Label22: TLabel
         Left = 8
-        Height = 20
+        Height = 15
         Top = 32
         Width = 93
-        AutoSize = False
         Caption = 'Current directory:'
         Font.Color = clGrayText
         Font.Height = -12
@@ -2245,7 +2244,7 @@ object MainDialog: TMainDialog
         Left = 110
         Height = 20
         Top = 32
-        Width = 241
+        Width = 426
         Anchors = [akTop, akLeft, akRight]
         AutoSize = False
         BorderSpacing.Left = 9
@@ -2255,7 +2254,7 @@ object MainDialog: TMainDialog
       end
     end
     object ButtonExecute: TBGRASpeedButton
-      Left = 701
+      Left = 886
       Height = 37
       Top = 453
       Width = 193
@@ -2274,7 +2273,7 @@ object MainDialog: TMainDialog
     object LabelStep2: TLabel
       AnchorSideLeft.Control = ImageStep2
       AnchorSideLeft.Side = asrBottom
-      Left = 451
+      Left = 636
       Height = 25
       Top = 8
       Width = 212
@@ -2297,7 +2296,7 @@ object MainDialog: TMainDialog
       Images = ImagesModule.ImageList32x32
     end
     object ImageStep2: TImage
-      Left = 412
+      Left = 597
       Height = 32
       Top = 5
       Width = 32
@@ -2316,7 +2315,7 @@ object MainDialog: TMainDialog
       Images = ImagesModule.ImageList32x32
     end
     object BitBtn1: TBitBtn
-      Left = 865
+      Left = 1050
       Height = 31
       Top = 3
       Width = 27
@@ -2330,7 +2329,7 @@ object MainDialog: TMainDialog
       Left = 0
       Height = 3
       Top = 506
-      Width = 901
+      Width = 1086
       Align = alBottom
       BorderSpacing.Bottom = 3
       OnPaint = ProgressBarPaint
@@ -2340,7 +2339,7 @@ object MainDialog: TMainDialog
     Left = 0
     Height = 64
     Top = 0
-    Width = 901
+    Width = 1086
     AutoSize = True
     ButtonHeight = 64
     ButtonWidth = 80
@@ -2427,7 +2426,7 @@ object MainDialog: TMainDialog
     Left = 4
     Height = 95
     Top = 580
-    Width = 897
+    Width = 1082
     Align = alClient
     BorderSpacing.Left = 4
     BorderSpacing.Top = 4

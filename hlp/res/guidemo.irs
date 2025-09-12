@@ -1,7 +1,7 @@
 [Common]
 Type=IRS
-Version=420
-CurrentDir=D:\Mf\dev\Lazarus\ImageResize\hlp\res
+Version=430
+CurrentDir=C:\MyPhotos
 
 [Presentation.Slideshow200]
 Title=Überschrift
@@ -18,17 +18,19 @@ ThmbnSize=120
 Gap=3
 
 [Project]
+Title=
 Description=
 Source=Folder
-SourceFolder=C:\MyPhotos\May2024
+SourceFolder=C:\MyPhotos\September 2025\org\
 SourceMasks=*.jpg
 SourceFilenames=srcA\IMG2742.jpg|srcA\IMG2743.jpg|srcA\IMG2744.png|srcA\IMG2745.jpg|srcA\IMG2746.jpg|
 SizeNames=1,120,THUMBNAIL|0,800,DOCUMENT|1,1920,SCREEN|1,2560,SCREEN
-TargetFolder=C:\MyPhotos\May2024\gallery
+TargetFolder=C:\MyPhotos\September 2025\img$(SIZE)
 Interpolation=Default
 JPEGQuality=Default
 PNGCompression=Default
 Sharpen=Default
+Denoise=Default
 MrkEnabled=0
 MrkFilename=
 MrkSize=20

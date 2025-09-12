@@ -3,7 +3,7 @@
   <ProjectSession>
     <PathDelim Value="\"/>
     <Version Value="12"/>
-    <BuildModes Active="Debug"/>
+    <BuildModes Active="Release"/>
     <Units Count="109">
       <Unit0>
         <Filename Value="imageresizecli.pas"/>
@@ -18,8 +18,8 @@
         <Filename Value="..\src\imgres.pas"/>
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="591"/>
-        <CursorPos X="45" Y="604"/>
+        <TopLine Value="592"/>
+        <CursorPos Y="604"/>
         <ExtraEditorCount Value="1"/>
         <ExtraEditor1>
           <EditorIndex Value="-1"/>

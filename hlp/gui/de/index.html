@@ -67,6 +67,7 @@
     <a href="#watermark">Wasserzeichen</a><br/>
     <a href="#quality">Qualität</a><br/>
     <a href="#tagging">Taggen</a><br/>
+    <a href="#info">Projektbeschreibung</a><br/>
     <a href="#presentation">Präsentation</a><br/>
     <a href="#saving">Öffnen und Speichern</a><br/>
     <a href="#settings">Einstellungen</a><br/>
@@ -517,6 +518,24 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
     </p>
     <div class="chfot"><a href="#contents">Inhalt</a></div>
 
+    <h1 id="info"><img class="icon-right" src="../img/info.svg"/>Beschreibung</h1>
+    <p>
+      Diese Einstellungen dienen nur der Dokumentation des Projektes und haben keinen Einfluss auf die Bilderzeugung. Die Angaben werden in der Projekt-Datei gespeichert und nicht in den Bildern.
+    </p>
+    <p>
+      Um Bildern eine Beschreibung zuzufügen, schauen Sie unter <a href="#tagging">Tagging</a>.
+    </p>
+    <h2>Titel</h2>
+    <p>
+      Der <i>Titel</i> ist eine einzeilige Kurzbeschreibung des Projektes. Sie erscheint als Info im Meldungsfenster beim Laden des Projektes.
+    </p>
+    <h2>Beschreibung</h2>
+    <p>
+      Die <i>Beschreibung</i> kann einige Zeilen mit zusätzlichen Informationen zum Projekt enthalten.
+    </p>
+    <div class="chfot"><a href="#contents">Inhalt</a></div>
+
+
     <h1 id="presentation"><img class="icon-right" src="../img/cinema.svg"/> Präsentation</h1>
     <p>
       Die wichtigste Neuerung der Version 4.0 ist die Einführung der Präsentation ihrer Bilder. Die Präsentation ist eine Web-Gallerie, die Sie mit ihrem Webbrowser betrachten können.
@@ -821,7 +840,7 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
     </table>
 
     <h2>Variablen im Zielordner und Wasserzeichendateinamen</h2>
-    <table class="simple-table">
+    <table class="simple-table var-table">
       <tr>
         <td>SIZE</td><td>Gewählte Zielgröße des Bildes als Pixelbreite/-höhe</td>
       </tr><tr>
@@ -830,7 +849,7 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
     </table>
 
     <h2>Variablen beim Umbenennen der Zieldateien</h2>
-    <table class="simple-table">
+    <table class="simple-table var-table">
       <tr>
         <td>INDEX</td><td>Laufende Nummer des Bildes beginnend bei 0. Soll das erste Bild mit einer anderen Zahl als 0 beginnen, kann die Funktion <span class="vf">.add(n)</span> verwendet werden. Soll die Nummer mit führenden Nullen aufgefüllt werden, kann die Funktion <span class="vf">fmt(m)</span> angehängt werdem, wobei m die Zahl der Stellen ist. wird statt einer Zahl, das Schlüsselwort <i>auto</i> verwendet, wird die Zahl der Stellen anhand der Gesamtzahl der zu verwendetenden Bilder bestimmt. Beispiel: INDEX=5 und Vorlage="img$(SIZE.add(1).fmt(3)).$(FILEEXT)" => "img006.jpg</td>
       </tr><tr>
@@ -849,7 +868,7 @@ DSC04288.jpg, "Heimfahrt durchs Watt, herrlich", (c) 2023 ATOMEK</pre>
     </table>
 
     <h2>Variablen in Präsentationen</h2>
-    <table class="simple-table">
+    <table class="simple-table var-table">
       <tr>
         <td>IMGINDEX</td><td>Laufende Nummer des Bildes beginnend bei 0</td>
       </tr><tr>

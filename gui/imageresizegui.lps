@@ -12,6 +12,7 @@
         <CursorPos X="10" Y="29"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="maindlg.pas"/>
@@ -20,8 +21,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="995"/>
-        <CursorPos X="42" Y="1007"/>
+        <TopLine Value="1993"/>
+        <CursorPos Y="1993"/>
         <ExtraEditorCount Value="1"/>
         <ExtraEditor1>
           <EditorIndex Value="-1"/>
@@ -31,6 +32,7 @@
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="aboutdlg.pas"/>
@@ -67,6 +69,7 @@
           <Item0 Y="646" Left="1" Top="631"/>
         </Bookmarks>
         <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\updateutils.pas"/>
@@ -122,6 +125,7 @@
         <TopLine Value="34"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="settings.pas"/>
@@ -131,6 +135,7 @@
         <CursorPos Y="1119"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\animator.pas"/>
@@ -180,6 +185,7 @@
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="presentations.pas"/>
@@ -217,6 +223,7 @@
         <EditorIndex Value="5"/>
         <UsageCount Value="202"/>
         <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="colorfrm.pas"/>
@@ -545,7 +552,7 @@
         <EditorIndex Value="3"/>
         <TopLine Value="108"/>
         <CursorPos X="10" Y="129"/>
-        <UsageCount Value="13"/>
+        <UsageCount Value="15"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -621,7 +628,7 @@
         <EditorIndex Value="10"/>
         <TopLine Value="3592"/>
         <CursorPos Y="3610"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="25"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -661,7 +668,7 @@
         <EditorIndex Value="7"/>
         <TopLine Value="175"/>
         <CursorPos X="14" Y="175"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="27"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -1084,7 +1091,7 @@
         <EditorIndex Value="1"/>
         <TopLine Value="859"/>
         <CursorPos X="14" Y="878"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="13"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -1273,33 +1280,7 @@
         <UsageCount Value="20"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="28">
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="442" Column="66" TopLine="406"/>
-      </Position>
-      <Position>
-        <Filename Value="appsettings.pas"/>
-        <Caret Line="236" Column="25" TopLine="215"/>
-      </Position>
-      <Position>
-        <Filename Value="appsettings.pas"/>
-      </Position>
-      <Position>
-        <Filename Value="imageresizegui.lpr"/>
-        <Caret Line="29" Column="10"/>
-      </Position>
-      <Position>
-        <Filename Value="appsettings.pas"/>
-        <Caret Line="122" Column="23" TopLine="107"/>
-      </Position>
-      <Position>
-        <Filename Value="appsettings.pas"/>
-      </Position>
-      <Position>
-        <Filename Value="maindlg.pas"/>
-        <Caret Line="833" Column="32" TopLine="820"/>
-      </Position>
+    <JumpHistory HistoryIndex="29">
       <Position>
         <Filename Value="maindlg.pas"/>
         <Caret Line="25" Column="52"/>
@@ -1384,6 +1365,38 @@
       <Position>
         <Filename Value="settings.pas"/>
         <Caret Line="295" TopLine="275"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1009" Column="42" TopLine="999"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1993" Column="3" TopLine="1993"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1468" Column="3" TopLine="1466"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="2007" Column="3" TopLine="2004"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="2001" Column="3" TopLine="1995"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1993" Column="3" TopLine="1993"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1994" Column="3" TopLine="1994"/>
+      </Position>
+      <Position>
+        <Filename Value="maindlg.pas"/>
+        <Caret Line="1993" Column="3" TopLine="1993"/>
       </Position>
     </JumpHistory>
     <CustomSessionData Count="2">

@@ -38,7 +38,11 @@ Filename: {app}\ImageResize.exe; Description: "Start {#PROGNAME} now"; Flags: po
 Source: bin\ImageResize.exe; DestDir: "{app}"; 
 Source: bin\*.dll; DestDir: "{app}"; 
 Source: bin\locale\*.po; DestDir: "{app}\locale"; 
-Source: bin\presentations\*.*; DestDir: "{app}\presentations"; Flags: recursesubdirs;
+Source: bin\presentations\gallery\*.*; DestDir: "{app}\presentations\gallery"; Flags: recursesubdirs;
+Source: bin\presentations\info\*.*; DestDir: "{app}\presentations\info"; Flags: recursesubdirs;
+Source: bin\presentations\pinboard\*.*; DestDir: "{app}\presentations\pinboard"; Flags: recursesubdirs;
+Source: bin\presentations\simple\*.*; DestDir: "{app}\presentations\simple"; Flags: recursesubdirs;
+Source: bin\presentations\slideshow\*.*; DestDir: "{app}\presentations\slideshow"; Flags: recursesubdirs;
 Source: bin\imgres.exe; DestDir: "{win}"; Tasks: installconsoleapp; 
 Source: hlp\gui\*.*; DestDir: "{app}\hlp\gui"; Tasks: localhelp; Flags: recursesubdirs;
 Source: hlp\interpolations\*.*; DestDir: "{app}\hlp\interpolations"; Tasks: localhelp; Flags: recursesubdirs;

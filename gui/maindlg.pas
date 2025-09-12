@@ -19,10 +19,10 @@ uses
   Dialogs, StdCtrls, ComCtrls, ActnList, ExtCtrls, imgres, AboutDlg, IniFiles,
   StrUtils, LMessages, LCLIntf, Buttons, ImgList, LCLType, LazHelpHTML, Menus,
   BGRABitmap, BGRABitmapTypes, BGRASpeedButton, BGRAGraphicControl,
-  RichMemo, MrkEditDlg, WinDirs, UpdateUtils, Settings,
+  BCLeaLCDDisplay, RichMemo, MrkEditDlg, WinDirs, UpdateUtils, Settings,
   AppSettings, Logging, LoggingRichMemo, StringArrays, Presentations,
-  PresentationDlg, TagIds, LazFileUtils, Translations, Language,
-  ControlShot, IniFilesHelper, ImagesMod, Templates;
+  PresentationDlg, TagIds, LazFileUtils, Translations, Language, ControlShot,
+  IniFilesHelper, ImagesMod, Templates;
 
 const
   LM_RUN                = LM_USER + 1;

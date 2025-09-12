@@ -1,7 +1,7 @@
 # Image Resize
 A free Lazarus web image scaling and watermarking utility
 
-The ImageResize programs depends on packages BGRABitmapPack, dExif, RichMemo
+The ImageResize programs depends on packages BGRABitmapPack, dExif, RichMemo and my HtmlLabel component
 
 Documentation: www.atomek.de/imageresize/index.html
 
@@ -9,9 +9,9 @@ Binaries for Windows 10: www.atomek.de/imageresize/download/InstallImageResize.z
 
 License: see license.txt
 
-I developed it with Lazarus IDE 3.0 and FreePascal 3.2.2 and Windows 10 64-bit.
+I developed it with Lazarus IDE 4.2 and FreePascal 3.2.2 and Windows 10 64-bit.
 
-jan@atomek.de, www.atomek.de
+www.atomek.de
 
 Folders:
 bin - binaries

@@ -386,10 +386,9 @@ msgid "Multiple sizes but placeholder SIZE or SIZENAME not found in either folde
 msgstr "Mehrfache Größe, aber Platzhalter SIZE oder SIZENAME nicht gefunden im Verzeichnisnamen oder in der Dateinamen-Vorlage"
 
 #: imgres.sinfresultfmt
-#, object-pascal-format, fuzzy
-#| msgid "Images: %d, Filter: %s, Sizes: %d, Tasks: %d, Successful: %d, Failed: %d, Elapsed: %.2fs"
+#, object-pascal-format
 msgid "Images: %d, Interpolation: %s, Sizes: %d, Tasks: %d, Successful: %d, Failed: %d, Elapsed: %.2fs"
-msgstr "Bilder: %d, Filter: %s, Größen: %d, Tasks: %d, erfolgreich: %d, fehlerhaft: %d, vergangen: %.2fs"
+msgstr "Bilder: %d, Interpolation: %s, Größen: %d, Tasks: %d, erfolgreich: %d, fehlerhaft: %d, vergangen: %.2fs"
 
 #: imgres.smsgcreatingfolderfmt
 #, object-pascal-format
@@ -647,7 +646,7 @@ msgstr ""
 #: maindlg.smsgtitlefmt
 #, object-pascal-format
 msgid "Title: \"%s\""
-msgstr ""
+msgstr "Titel \"%s\""
 
 #: maindlg.surlwebhelp
 msgid "http://www.atomek.de/imageresize/hlp42/gui/en"
@@ -1027,11 +1026,11 @@ msgstr "Lädt gespeicherte Einstellungen"
 
 #: tmaindialog.actionparaminfo.caption
 msgid "&Info"
-msgstr ""
+msgstr "&Info"
 
 #: tmaindialog.actionparaminfo.hint
 msgid "Describe your project here"
-msgstr ""
+msgstr "Beschreibe dein Projekt hier"
 
 #: tmaindialog.actionparampresentation.caption
 msgctxt "tmaindialog.actionparampresentation.caption"
@@ -1585,7 +1584,7 @@ msgstr "%"
 
 #: tmaindialog.label17.caption
 msgid "Title:"
-msgstr ""
+msgstr "Titel:"
 
 #: tmaindialog.label18.caption
 msgid "File Selection:"
@@ -1593,7 +1592,7 @@ msgstr "Dateiauswahl:"
 
 #: tmaindialog.label19.caption
 msgid "Description:"
-msgstr ""
+msgstr "Beschreibung:"
 
 #: tmaindialog.label2.caption
 msgctxt "tmaindialog.label2.caption"
@@ -1721,7 +1720,7 @@ msgstr "Tags Report speichern als"
 
 #: tmaindialog.tabsheetinfo.caption
 msgid "TabSheetInfo"
-msgstr ""
+msgstr "TabSheetInfo"
 
 #: tmaindialog.toolbuttonabout.hint
 msgid "License and Vendor Infos"
@@ -2110,4 +2109,3 @@ msgstr "Speichern"
 msgctxt "webutils.serrinvalidhtmlcolorfmt"
 msgid "Invalid web color '%s'."
 msgstr "Ungültige Web-Farbe '%s'."
-
